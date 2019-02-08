@@ -23,6 +23,7 @@ namespace LinuxNetStatLab
 
             var prev = new RawNetStatReader(new StringReader(GetRaw())).Items;
             var prevTicks = sw.ElapsedTicks;
+            Console.Clear();
             while (true)
             {
                 Thread.Sleep(666);
@@ -39,7 +40,6 @@ namespace LinuxNetStatLab
                     }
                 }
 
-                Console.Clear();
                 Console.SetCursorPosition(0,0);
                 var pidInfo = string.Format("{0}", PID == 0 ? "ANY" : PID.ToString("0"));
                 if (PID != 0) pidInfo += " " + Process.GetProcessById(PID).ProcessName;
