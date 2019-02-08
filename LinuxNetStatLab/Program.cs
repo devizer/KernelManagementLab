@@ -40,23 +40,27 @@ namespace LinuxNetStatLab
                     }
                 }
 
-                Console.SetCursorPosition(0,0);
                 var pidInfo = string.Format("{0}", PID == 0 ? "ANY" : PID.ToString("0"));
                 if (PID != 0) pidInfo += " " + Process.GetProcessById(PID).ProcessName;
-                Console.WriteLine("PID: {0}", pidInfo);
+                StringBuilder report = new StringBuilder();
+                report.AppendLine(string.Format("PID: {0}", pidInfo));
                 for (int i = 0; i < current.Count; i++)
                 {
                     if (i > 0 && (i % 2) == 0)
-                        Console.WriteLine();
+                        report.AppendLine();
 
                     var item = current[i];
                     var value = item.Long == 0 ? "" : (item.Long / duration).ToString("0.###");
                     var info = string.Format("{0,-36}: {1}", item.Group + "." + item.Key, value);
-                    Console.Write(string.Format("{0,-52}  ", info));
+                    report.AppendFormat("{0,-52}  ", info);
 
                     prev = next;
                     prevTicks = nextTicks;
                 }
+
+                Console.SetCursorPosition(0, 0);
+                Console.Write(report);
+
 
             }
 
