@@ -46,7 +46,7 @@ namespace LinuxNetStatLab
                 report.AppendLine(string.Format("PID: {0}", pidInfo));
                 for (int i = 0; i < current.Count; i++)
                 {
-                    if (i > 0 && (i % 2) == 0)
+                    if (i > 0 && (i % 3) == 0)
                         report.AppendLine();
 
                     var item = current[i];
