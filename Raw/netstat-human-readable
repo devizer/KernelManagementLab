@@ -1,0 +1,100 @@
+Ip:
+    7791716 total packets received
+    21 forwarded
+    0 incoming packets discarded
+    7709098 incoming packets delivered
+    3806325 requests sent out
+    15 outgoing packets dropped
+Icmp:
+    74184 ICMP messages received
+    80 input ICMP message failed.
+    ICMP input histogram:
+        destination unreachable: 173
+        timeout in transit: 304
+        redirects: 8
+        echo requests: 73699
+    74007 ICMP messages sent
+    0 ICMP messages failed
+    ICMP output histogram:
+        destination unreachable: 293
+        redirect: 19
+        echo replies: 73695
+IcmpMsg:
+        InType3: 173
+        InType5: 8
+        InType8: 73699
+        InType11: 304
+        OutType0: 73695
+        OutType3: 293
+        OutType5: 19
+Tcp:
+    4513 active connections openings
+    282 passive connection openings
+    623 failed connection attempts
+    731 connection resets received
+    6 connections established
+    7464082 segments received
+    11578342 segments send out
+    2867 segments retransmited
+    1 bad segments received.
+    161545 resets sent
+Udp:
+    202342 packets received
+    130 packets to unknown port received.
+    0 packet receive errors
+    18252 packets sent
+UdpLite:
+TcpExt:
+    439 packets pruned from receive queue because of socket buffer overrun
+    296 ICMP packets dropped because they were out-of-window
+    387 TCP sockets finished time wait in fast timer
+    18 packets rejects in established connections because of timestamp
+    5306 delayed acks sent
+    40 delayed acks further delayed because of locked socket
+    Quick ack mode was activated 1150 times
+    5099319 packets directly queued to recvmsg prequeue.
+    90362411 bytes directly in process context from backlog
+    1530528233 bytes directly received in process context from prequeue
+    231 packets dropped from prequeue
+    1407039 packet headers predicted
+    4112326 packets header predicted and directly queued to user
+    260517 acknowledgments not containing data payload received
+    1522618 predicted acknowledgments
+    834 times recovered from packet loss by selective acknowledgements
+    4 bad SACK blocks received
+    Detected reordering 1 times using FACK
+    Detected reordering 2 times using SACK
+    5 congestion windows recovered without slow start by DSACK
+    1 congestion windows recovered without slow start after partial ack
+    TCPLostRetransmit: 26
+    1 timeouts after SACK recovery
+    1830 fast retransmits
+    53 forward retransmits
+    873 retransmits in slow start
+    44 other TCP timeouts
+    5 SACK retransmits failed
+    5 times receiver scheduled too late for direct processing
+    125934 packets collapsed in receive queue due to low socket buffer
+    1150 DSACKs sent for old packets
+    26618 DSACKs received
+    3026 connections reset due to unexpected data
+    1 connections aborted due to timeout
+    TCPDSACKIgnoredNoUndo: 1587
+    TCPSackShifted: 58445
+    TCPSackMerged: 28827
+    TCPSackShiftFallback: 6949
+    TCPBacklogDrop: 24
+    IPReversePathFilter: 802
+    TCPRcvCoalesce: 8227
+    TCPChallengeACK: 1
+    TCPSYNChallenge: 1
+IpExt:
+    InNoRoutes: 2
+    InMcastPkts: 3785
+    InBcastPkts: 150221
+    OutBcastPkts: 1441
+    InOctets: 8141505700
+    OutOctets: 12598618010
+    InMcastOctets: 121120
+    InBcastOctets: 13951855
+    OutBcastOctets: 332818
