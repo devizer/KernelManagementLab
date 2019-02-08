@@ -11,8 +11,12 @@ namespace LinuxNetStatLab
 {
     class Program
     {
+        private static int PID = 0;
         static void Main(string[] args)
         {
+
+            if (args.Length >= 1) int.TryParse(args[0], out PID);
+            
             ReformatCopyOfNetStat();
 
             Stopwatch sw = Stopwatch.StartNew();
@@ -36,6 +40,9 @@ namespace LinuxNetStatLab
                 }
 
                 Console.SetCursorPosition(0,0);
+                var pidInfo = string.Format("{0}", PID == 0 ? "ANY" : PID.ToString("0"));
+                if (PID != 0) pidInfo += " " + Process.GetProcessById(PID).ProcessName;
+                Console.WriteLine("PID: {0}", pidInfo);
                 for (int i = 0; i < current.Count; i++)
                 {
                     if (i > 0 && (i % 2) == 0)
@@ -57,7 +64,7 @@ namespace LinuxNetStatLab
 
         static string GetRaw()
         {
-            var file = "/proc/net/netstat";
+            var file = PID > 0 ? string.Format("/proc/{0:0}/net/netstat") : "/proc/net/netstat";
             if (Environment.OSVersion.Platform == PlatformID.Win32NT) file = "netstat-global";
             using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (StreamReader rdr = new StreamReader(fs, new UTF8Encoding(false)))
