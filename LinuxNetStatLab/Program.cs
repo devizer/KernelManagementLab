@@ -50,7 +50,7 @@ namespace LinuxNetStatLab
                         report.AppendLine();
 
                     var item = current[i];
-                    var value = item.Long == 0 ? "" : (item.Long / duration).ToString("0.###");
+                    var value = item.Long == 0 ? "" : (item.Long / duration).ToString("n1");
                     var info = string.Format("{0,-36}: {1}", item.Group + "." + item.Key, value);
                     report.AppendFormat("{0,-52}  ", info);
 
