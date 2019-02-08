@@ -1,6 +1,6 @@
 work=$HOME/KernelManagementLab
 cd $HOME
-rf -rf work
+rm -rf $work
 git clone https://github.com/devizer/KernelManagementLab
 cd KernelManagementLab
 git pull
