@@ -64,7 +64,7 @@ namespace LinuxNetStatLab
 
         static string GetRaw()
         {
-            var file = PID > 0 ? string.Format("/proc/{0:0}/net/netstat") : "/proc/net/netstat";
+            var file = PID > 0 ? string.Format("/proc/{0}/net/netstat", PID) : "/proc/net/netstat";
             if (Environment.OSVersion.Platform == PlatformID.Win32NT) file = "netstat-global";
             using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (StreamReader rdr = new StreamReader(fs, new UTF8Encoding(false)))
