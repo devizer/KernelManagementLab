@@ -43,8 +43,11 @@ namespace LinuxNetStatLab
 
                     var item = current[i];
                     var value = 1d * item.Long / duration;
-                    var info = string.Format("{0,-36}: {1}", item.Group + "." + item.Key, item.Long.ToString("0"));
-                    Console.Write(string.Format("{0,-50}  ", info));
+                    var info = string.Format("{0,-36}: {1}", item.Group + "." + item.Key, item.Long.ToString("0.000"));
+                    Console.Write(string.Format("{0,-52}  ", info));
+
+                    prev = next;
+                    prevTicks = nextTicks;
                 }
 
             }
