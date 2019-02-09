@@ -52,7 +52,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KernelManagementLab\KernelManagementJam\KernelManagementJam.csproj">
+    <ProjectReference Include="..\KernelManagementJam\KernelManagementJam.csproj">
       <Project>{70135162-6d76-4f89-8805-743fc7a8a67f}</Project>
       <Name>KernelManagementJam</Name>
     </ProjectReference>
