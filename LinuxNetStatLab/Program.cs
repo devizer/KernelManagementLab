@@ -71,9 +71,9 @@ namespace LinuxNetStatLab
                 Console.Write(report);
 
                 var userKey = GetConsoleKey(666);
-                if (userKey?.KeyChar == '+')
+                if (userKey?.Key == ConsoleKey.RightArrow)
                     LabelWidth = Math.Min(60, LabelWidth + 1);
-                else if (userKey?.KeyChar == '-')
+                else if (userKey?.Key == ConsoleKey.LeftArrow)
                     LabelWidth = Math.Max(4, LabelWidth - 1);
 
                 if (userKey != null)
