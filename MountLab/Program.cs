@@ -39,6 +39,28 @@ namespace MountLab
 
 
             }
+
+            Console.WriteLine(Environment.NewLine + "DRIVES");
+            var drives = DriveInfo.GetDrives();
+            foreach (var di in drives)
+            {
+
+                string driveInfo;
+                try
+                {
+                    driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, ",
+                        di.IsReady, di.AvailableFreeSpace, di.TotalSize, di.VolumeLabel);
+
+                }
+                catch (Exception ex)
+                {
+                    driveInfo = ex.GetType().Name + ": " + ex.Message;
+                }
+
+                Console.WriteLine(di.RootDirectory + " --> " + driveInfo);
+
+
+            }
         }
 
 
