@@ -12,6 +12,9 @@ namespace LinuxNetStatLab
     class Program
     {
         private static int PID = 0;
+
+        private static int LabelWidth = 36;
+
         static void Main(string[] args)
         {
 
@@ -26,7 +29,9 @@ namespace LinuxNetStatLab
             Console.Clear();
             while (true)
             {
-                Thread.Sleep(666);
+                Thread.Sleep(1);
+                var totalWidth = Console.WindowWidth;
+                var totalColumns = Math.Max(1, totalWidth / (LabelWidth + 16));
                 var next = new RawNetStatReader(new StringReader(GetRaw())).Items;
                 var nextTicks = sw.ElapsedTicks;
 
@@ -46,25 +51,50 @@ namespace LinuxNetStatLab
                 report.AppendLine(string.Format("PID: {0}", pidInfo));
                 for (int i = 0; i < current.Count; i++)
                 {
-                    if (i > 0 && (i % 3) == 0)
+                    if (i > 0 && (i % totalColumns) == 0)
                         report.AppendLine();
 
                     var item = current[i];
-                    var value = item.Long == 0 ? "" : (item.Long / duration).ToString("n1");
-                    var info = string.Format("{0,-36}: {1}", item.Group + "." + item.Key, value);
-                    report.AppendFormat("{0,-52}  ", info);
-
-                    prev = next;
-                    prevTicks = nextTicks;
+                    var value = item.Long == 0 ? "" : (item.Long / duration).ToString("n0");
+                    var label = item.Group + "." + item.Key;
+                    if (label.Length < LabelWidth) label += new string(' ', LabelWidth - label.Length);
+                    else if (label.Length > LabelWidth) label = label.Substring(0, LabelWidth);
+                    var info = string.Format("{0}: {1,14}", label, value);
+                    report.AppendFormat(info);
                 }
 
+                prev = next;
+                prevTicks = nextTicks;
+
+                Console.Clear();
                 Console.SetCursorPosition(0, 0);
                 Console.Write(report);
+
+                var userKey = GetConsoleKey(666);
+                if (userKey?.KeyChar == '+')
+                    LabelWidth = Math.Min(60, LabelWidth + 1);
+                else if (userKey?.KeyChar == '-')
+                    LabelWidth = Math.Max(4, LabelWidth - 1);
 
 
             }
 
 
+        }
+
+        static ConsoleKeyInfo? GetConsoleKey(long milliseconds)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            do
+            {
+                if (Console.KeyAvailable)
+                    return Console.ReadKey();
+
+                Thread.Sleep(1);
+
+            } while (sw.ElapsedMilliseconds <= milliseconds);
+
+            return null;
         }
 
         static string GetRaw()
