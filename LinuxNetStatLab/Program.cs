@@ -76,7 +76,11 @@ namespace LinuxNetStatLab
                 else if (userKey?.KeyChar == '-')
                     LabelWidth = Math.Max(4, LabelWidth - 1);
 
-                if (userKey != null) Console.Write($"  '{userKey.Value.KeyChar}'");
+                if (userKey != null)
+                {
+                    Console.Write($"  '{userKey.Value.KeyChar}', {userKey.Value.Key}");
+                    Thread.Sleep(111);
+                }
 
 
             }
