@@ -2,10 +2,11 @@ work=$HOME/KernelManagementLab; \
 cd $HOME; \
 rm -rf $work; \
 git clone https://github.com/devizer/KernelManagementLab; \
-cd KernelManagementLab; 
-xbuild /t:Rebuild /p:Configuration=Debug; \
+cd KernelManagementLab; \
+ 
 git pull; \
-cd LinuxNetStatLab; \
-cd bin/Debug; pdb2mdb LinuxNetStatLab.exe; mono LinuxNetStatLab.exe 538
+xbuild /t:Rebuild /p:Configuration=Debug; \
+cd MountLab/bin/Debug; \
+pdb2mdb MountLab.exe; mono MountLab.exe
 
 
