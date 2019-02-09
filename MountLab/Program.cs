@@ -23,8 +23,9 @@ namespace MountLab
                 try
                 {
                     var di = new DriveInfo(mount.MountPath);
-                    driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, ",
-                        di.IsReady, di.AvailableFreeSpace, di.TotalSize, di.VolumeLabel);
+                    driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, Fmt: {4}",
+                        di.IsReady, di.AvailableFreeSpace, di.TotalSize, di.VolumeLabel,
+                        di.DriveFormat);
 
                     double msec = sw.ElapsedTicks / (double) Stopwatch.Frequency;
                     driveInfo = string.Format("[{0:0.00} msec] ", msec) + driveInfo;
@@ -48,8 +49,9 @@ namespace MountLab
                 string driveInfo;
                 try
                 {
-                    driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, ",
-                        di.IsReady, di.AvailableFreeSpace, di.TotalSize, di.VolumeLabel);
+                    driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, Fmt: {4}",
+                        di.IsReady, di.AvailableFreeSpace, di.TotalSize, di.VolumeLabel,
+                        di.DriveFormat);
 
                 }
                 catch (Exception ex)
