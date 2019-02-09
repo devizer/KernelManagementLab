@@ -79,7 +79,7 @@ namespace LinuxNetStatLab
                 if (userKey != null)
                 {
                     Console.Write($"  '{userKey.Value.KeyChar}', {userKey.Value.Key}");
-                    Thread.Sleep(111);
+                    Thread.Sleep(333);
                 }
 
 
