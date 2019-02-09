@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LinuxNetStatLab
 {
-    class RawNetStatReader
+    public class RawNetStatReader
     {
         public readonly TextReader Reader;
 
@@ -60,7 +60,7 @@ namespace LinuxNetStatLab
     public class NetStatReport
     {
         public double Duration { get; set; }
-        public IReadOnlyList<NetStatRow> Rows { get; set; }
+        public IList<NetStatRow> Rows { get; set; }
     }
 
     public class NetStatRow

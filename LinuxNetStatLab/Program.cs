@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace LinuxNetStatLab
 
         static void Main(string[] args)
         {
+            var splitted = SpaceSeparatedDecoder.DecodeIntoColumns(@"tmpf /with\040space /fuck\134off /fuck-по-русски-off /fuck\\off");
+            Console.WriteLine(string.Join(" ", splitted));
 
             if (args.Length >= 1) int.TryParse(args[0], out PID);
             
