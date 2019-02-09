@@ -31,7 +31,7 @@ namespace LinuxNetStatLab
             {
                 Thread.Sleep(1);
                 var totalWidth = Console.WindowWidth;
-                var totalColumns = Math.Max(1, totalWidth / (LabelWidth + 16));
+                var totalColumns = Math.Max(1, totalWidth / (LabelWidth + 18));
                 var next = new RawNetStatReader(new StringReader(GetRaw())).Items;
                 var nextTicks = sw.ElapsedTicks;
 
@@ -59,7 +59,7 @@ namespace LinuxNetStatLab
                     var label = item.Group + "." + item.Key;
                     if (label.Length < LabelWidth) label += new string(' ', LabelWidth - label.Length);
                     else if (label.Length > LabelWidth) label = label.Substring(0, LabelWidth);
-                    var info = string.Format("{0}: {1,14}", label, value);
+                    var info = string.Format("{0}: {1,14}  ", label, value);
                     report.AppendFormat(info);
                 }
 
