@@ -64,23 +64,15 @@ namespace KernelManagementJam
 
         static bool? TryBooleanValue(string fileName)
         {
-            if (File.Exists(fileName))
-            {
                 var rawRo = SmallFileReader.ReadFirstLine(fileName);
                 return !string.IsNullOrEmpty(rawRo) && rawRo != "0";
-            }
-
-            return null;
         }
 
         static long? TryLongValue(string fileName)
         {
-            if (File.Exists(fileName))
-            {
-                var raw = SmallFileReader.ReadFirstLine(fileName);
-                if (raw != null && long.TryParse(raw, out var size))
-                    return size;
-            }
+            var raw = SmallFileReader.ReadFirstLine(fileName);
+            if (raw != null && long.TryParse(raw, out var size))
+                return size;
 
             return null;
         }

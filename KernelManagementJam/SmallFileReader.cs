@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -28,16 +29,30 @@ namespace KernelManagementJam
 
         public static string ReadFirstLine(string fileName)
         {
+            if (!File.Exists(fileName))
+            {
+                AppendSingleLinerLog(String.Format("[{0}] single-line file not found"));
+                return null;
+            }
+
             using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (StreamReader rdr = new StreamReader(fs, FileEncoding))
             {
                 var ret = rdr.ReadLine();
 
-                using (FileStream dump = new FileStream("One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter wr = new StreamWriter(dump, FileEncoding))
-                    wr.WriteLine("[{0}] first line: '{1}'", fileName, ret);
+                var logLine = string.Format("[{0}] first line: '{1}'", fileName, ret);
+                AppendSingleLinerLog(logLine);
 
                 return ret;
+            }
+        }
+
+        private static void AppendSingleLinerLog(string logLine)
+        {
+            using (FileStream dump = new FileStream("One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            using (StreamWriter wr = new StreamWriter(dump, FileEncoding))
+            {
+                wr.WriteLine(logLine);
             }
         }
     }
