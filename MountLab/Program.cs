@@ -35,7 +35,7 @@ namespace MountLab
                 try
                 {
                     driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, Fmt: {4}",
-                        di.IsReady, di.AvailableFreeSpace, di.TotalSize, di.VolumeLabel,
+                        di.IsReady, Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
                         di.DriveFormat);
                 }
                 catch (Exception ex)
@@ -59,7 +59,7 @@ namespace MountLab
                 {
                     var di = new DriveInfo(mount.MountPath);
                     driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, Fmt: {4}",
-                        di.IsReady, di.AvailableFreeSpace, di.TotalSize, di.VolumeLabel,
+                        di.IsReady, Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
                         di.DriveFormat);
 
                     double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
@@ -86,6 +86,23 @@ namespace MountLab
             {
                 wr.Write(json);
             }
+        }
+    }
+
+    static class Formatter
+    {
+        public static string FormatBytes(long number)
+        {
+            if (number == 0)
+                return "0";
+            else if (number < 9999)
+                return number.ToString("n0") + "B";
+            else if (number < 9999999)
+                return (number / 1024d).ToString("n1") + "K";
+            else if (number < 9999999999)
+                return (number / 1024d / 1024d).ToString("n1") + "M";
+            else 
+                return (number / 1024d / 1024d / 1024d).ToString("n1") + "G";
         }
     }
 }
