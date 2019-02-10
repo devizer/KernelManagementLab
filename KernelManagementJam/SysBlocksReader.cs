@@ -41,7 +41,8 @@ namespace KernelManagementJam
 
                 blockDevice.Device = ParseSnapshot(SysBlockPath + "/" + blockDevice.ShortKey);
 
-                ret.Add(blockDevice);
+                if ((blockDevice.Device.Size ?? 0) > 0)
+                    ret.Add(blockDevice);
             }
 
             return ret;
