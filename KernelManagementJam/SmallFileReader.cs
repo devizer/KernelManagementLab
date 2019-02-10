@@ -31,7 +31,13 @@ namespace KernelManagementJam
             using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (StreamReader rdr = new StreamReader(fs, FileEncoding))
             {
-                return rdr.ReadLine();
+                var ret = rdr.ReadLine();
+
+                using (FileStream dump = new FileStream("One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using (StreamWriter wr = new StreamWriter(dump, FileEncoding))
+                    wr.WriteLine("[{0}] first line: '{1}'", fileName, ret);
+
+                return ret;
             }
         }
     }
