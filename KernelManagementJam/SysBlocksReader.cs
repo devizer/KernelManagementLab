@@ -15,18 +15,19 @@ namespace KernelManagementJam
   */
     public class SysBlocksReader
     {
+        static readonly string SysBlockPath = "/sys/block";
         public static List<BlockDeviceWithVolumes> GetSnapshot()
         {
             List<BlockDeviceWithVolumes> ret = new List<BlockDeviceWithVolumes>();
             DirectoryInfo[] sysBlockFolders;
             try
             {
-                var di = new DirectoryInfo("/sys/block");
+                var di = new DirectoryInfo(SysBlockPath);
                 sysBlockFolders = di.GetDirectories();
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("The sysfs filesystem is not available via /sys/block path", e);
+                throw new InvalidOperationException("The sysfs filesystem is not available via " + SysBlockPath + " path", e);
             }
 
             foreach (var sysBlockFolder in sysBlockFolders)
@@ -34,9 +35,11 @@ namespace KernelManagementJam
                 Mono.Unix.UnixSymbolicLinkInfo i = new Mono.Unix.UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name);
                 BlockDeviceWithVolumes blockDevice = new BlockDeviceWithVolumes()
                 {
-                    DevKey = sysBlockFolder.Name,
+                    ShortKey = sysBlockFolder.Name,
                     DevFileType = i.FileType.ToString(),
                 };
+
+                blockDevice.Device = ParseSnapshot(SysBlockPath + "/" + blockDevice.ShortKey);
 
                 ret.Add(blockDevice);
             }
@@ -46,13 +49,29 @@ namespace KernelManagementJam
 
         static BlockSnapshot ParseSnapshot(string basePath)
         {
-            throw new NotImplementedException();
+            BlockSnapshot ret = new BlockSnapshot();
+
+            var rawSize = SmallFileReader.ReadFirstLine(basePath + "/size");
+            long size;
+            if (!long.TryParse(rawSize, out size)) size = 0;
+            ret.Size = size;
+
+            var rawRo = SmallFileReader.ReadFirstLine(basePath + "/ro");
+            ret.IsReadonly = !string.IsNullOrEmpty(rawRo) && rawRo != "0";
+
+            var rawRemovable = SmallFileReader.ReadFirstLine(basePath + "/removable");
+            ret.IsRemovable = !string.IsNullOrEmpty(rawRemovable) && rawRemovable != "0";
+
+            var rawHwSectorSize = SmallFileReader.ReadFirstLine(basePath + "/queue/hw_sector_size");
+            // ret.IsRemovable = !string.IsNullOrEmpty(rawRemovable) && rawRemovable != "0";
+
+            return ret;
         }
     }
 
     public class BlockDeviceWithVolumes
     {
-        public string DevKey { get; set; }
+        public string ShortKey { get; set; }
         public string DevFileType { get; set; }
 
         public BlockSnapshot Device { get; set; }
@@ -68,14 +87,14 @@ namespace KernelManagementJam
 
     public struct BlockSnapshot
     {
-        public bool IsReadonly { get; set; }
-        public bool IsRemovable { get; set; }
+        public bool? IsReadonly { get; set; }
+        public bool? IsRemovable { get; set; }
         public BlockStatistics Statistics { get; set; }
         // zero for unused loop-devices
-        public long Size { get; set; }
-        public int HwSectorSize { get; set; }
-        public int LogicalBlockSize { get; set; }
-        public int PhysicalBlockSize { get; set; }
+        public long? Size { get; set; }
+        public int? HwSectorSize { get; set; }
+        public int? LogicalBlockSize { get; set; }
+        public int? PhysicalBlockSize { get; set; }
     }
 
     /*

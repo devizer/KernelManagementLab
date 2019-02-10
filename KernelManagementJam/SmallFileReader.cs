@@ -7,6 +7,7 @@ namespace KernelManagementJam
     class SmallFileReader
     {
         static readonly UTF8Encoding FileEncoding = new UTF8Encoding(false);
+
         public static IEnumerable<string> ReadLines(string fileName)
         {
             string content;
@@ -22,6 +23,15 @@ namespace KernelManagementJam
             {
                 yield return line;
                 line = lines.ReadLine();
+            }
+        }
+
+        public static string ReadFirstLine(string fileName)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (StreamReader rdr = new StreamReader(fs, FileEncoding))
+            {
+                return rdr.ReadLine();
             }
         }
     }
