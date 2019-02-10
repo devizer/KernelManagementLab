@@ -50,6 +50,7 @@
     <Compile Include="ProcMountsParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawNetStatReader.cs" />
+    <Compile Include="SysBlocksReader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

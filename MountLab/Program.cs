@@ -27,12 +27,12 @@ namespace MountLab
                         di.IsReady, di.AvailableFreeSpace, di.TotalSize, di.VolumeLabel,
                         di.DriveFormat);
 
-                    double msec = sw.ElapsedTicks / (double) Stopwatch.Frequency;
+                    double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                     driveInfo = string.Format("[{0:0.00} msec] ", msec) + driveInfo;
                 }
                 catch (Exception ex)
                 {
-                    double msec = sw.ElapsedTicks / (double)Stopwatch.Frequency;
+                    double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                     driveInfo = string.Format("[{0:0.00} msec] ", msec) + ex.GetType().Name + ": " + ex.Message;
                 }
 

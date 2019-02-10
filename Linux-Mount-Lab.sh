@@ -5,8 +5,6 @@ git clone https://github.com/devizer/KernelManagementLab; \
 cd KernelManagementLab; \
  
 git pull; \
-xbuild /t:Rebuild /p:Configuration=Debug; \
+xbuild /t:Rebuild /p:Configuration=Debug /v:m; \
 cd MountLab/bin/Debug; \
 pdb2mdb MountLab.exe; mono MountLab.exe
-
-
