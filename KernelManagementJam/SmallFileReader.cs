@@ -31,7 +31,7 @@ namespace KernelManagementJam
         {
             if (!File.Exists(fileName))
             {
-                AppendSingleLinerLog(String.Format("[{0}] single-line file not found"));
+                AppendSingleLinerLog(String.Format("[{0}] single-line file not found", fileName));
                 return null;
             }
 
