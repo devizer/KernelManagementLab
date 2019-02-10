@@ -22,10 +22,10 @@ namespace MountLab
             }
 
             DumpProcMounts();
-            DumpNamagedDrives();
+            DumpManagedDrives();
         }
 
-        private static void DumpNamagedDrives()
+        private static void DumpManagedDrives()
         {
             Console.WriteLine(Environment.NewLine + "DRIVES");
             var drives = DriveInfo.GetDrives();

@@ -187,5 +187,20 @@ namespace KernelManagementJam
         public bool IsValid { get; set; }
 
         public static BlockStatistics Empty => new BlockStatistics();
+
+        public bool IsDead
+        {
+            get
+            {
+                return ReadOperations == 0 &&
+                       ReadOperationsMerged == 0 &&
+                       ReadSectors == 0 &&
+                       ReadWaitingMilliseconds == 0 &&
+                       WriteOperations == 0 &&
+                       WriteOperationsMerged == 0 &&
+                       WriteSectors == 0 &&
+                       WriteWaitingMilliseconds == 0;
+            }
+        }
     }
 }

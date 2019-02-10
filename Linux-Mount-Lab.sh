@@ -9,4 +9,3 @@ nuget restore *.sln; \
 xbuild /t:Rebuild /p:Configuration=Debug /v:m; \
 cd MountLab/bin/Debug; \
 pdb2mdb MountLab.exe; mono MountLab.exe
-
