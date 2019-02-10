@@ -59,8 +59,6 @@ namespace KernelManagementJam
                     }
 
                     ret.Add(blockDevice);
-
-
                 }
             }
 
@@ -143,6 +141,11 @@ namespace KernelManagementJam
 
         public BlockSnapshot Device { get; set; }
         public IList<BlockVolumeInfo> Volumes { get; set; }
+
+        public BlockDeviceWithVolumes()
+        {
+            Volumes = new List<BlockVolumeInfo>();
+        }
     }
 
     public class BlockVolumeInfo
