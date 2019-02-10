@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -60,8 +61,40 @@ namespace KernelManagementJam
             ret.LogicalBlockSize = TryIntValue(basePath + "/queue/logical_block_size");
             ret.PhysicalBlockSize = TryIntValue(basePath + "/queue/physical_block_size");
 
+            ret.Statistics = ParseStatistic(basePath + "/stat");
+
             return ret;
         }
+
+        private static BlockStatistics ParseStatistic(string filePath)
+        {
+            var firstLine = SmallFileReader.ReadFirstLine(filePath);
+            if (firstLine == null) return BlockStatistics.Empty;
+
+            var rawColumns = firstLine.Trim().Split(' ').Where(x => x.Length > 0);
+            List<long> columns = new List<long>(8);
+            foreach (var rawColumn in rawColumns)
+            {
+                if (!long.TryParse(rawColumn, out var column))
+                    Trace.WriteLine($"Invalid block device value '{firstLine}' from file [{filePath}]");
+
+                columns.Add(column);
+            }
+
+            return new BlockStatistics
+            {
+                ReadOperations = columns[0],
+                ReadOperationsMerged = columns[1],
+                ReadSectors = columns[2],
+                ReadWaitingMilliseconds = columns[3],
+                WriteOperations = columns[4],
+                WriteOperationsMerged = columns[5],
+                WriteSectors = columns[6],
+                WriteWaitingMilliseconds = columns[7],
+                IsValid = true,
+            };
+        }
+
 
         static bool? TryBooleanValue(string fileName)
         {
@@ -150,5 +183,9 @@ namespace KernelManagementJam
         public long WriteSectors { get; set; }
         //7
         public long WriteWaitingMilliseconds { get; set; }
+
+        public bool IsValid { get; set; }
+
+        public static BlockStatistics Empty => new BlockStatistics();
     }
 }
