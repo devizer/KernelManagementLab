@@ -3,21 +3,35 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LinuxNetStatLab
 {
-/*
- * 0: filesystem|/dev/device_plus_partition
- * 1: mount-point
- * 2: file-system-type
- * 3: options
- * 4: priority
- * 5: something else
- */
+
+    public class MountEntry
+    {
+        // May be a symbolic link to /dev/zzz
+        public string Device { get; set; }
+        // May be multiple
+        public string MountPath { get; set; }
+
+        public string FileSystem { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Device)}: {Device}, {nameof(MountPath)}: {MountPath}, {nameof(FileSystem)}: {FileSystem}";
+        }
+    }
+
+
+    /*
+     * 0: filesystem|/dev/device_plus_partition
+     * 1: mount-point
+     * 2: file-system-type
+     * 3: options
+     * 4: priority
+     * 5: something else
+     */
 
     /*
      * Special characters encoded as \040
@@ -64,18 +78,6 @@ namespace LinuxNetStatLab
                     }
                 } while (line != null);
             }
-        }
-    }
-
-    public class MountEntry
-    {
-        public string Device { get; set; }
-        public string MountPath { get; set; }
-        public string FileSystem { get; set; }
-
-        public override string ToString()
-        {
-            return $"{nameof(Device)}: {Device}, {nameof(MountPath)}: {MountPath}, {nameof(FileSystem)}: {FileSystem}";
         }
     }
 

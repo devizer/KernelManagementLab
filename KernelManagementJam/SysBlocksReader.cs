@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KernelManagementJam
@@ -14,16 +15,46 @@ namespace KernelManagementJam
   */
     public class SysBlocksReader
     {
-        public object GetSnapshot()
+        public static List<BlockDeviceWithVolumes> GetSnapshot()
+        {
+            List<BlockDeviceWithVolumes> ret = new List<BlockDeviceWithVolumes>();
+            DirectoryInfo[] sysBlockFolders;
+            try
+            {
+                var di = new DirectoryInfo("/sys/block");
+                sysBlockFolders = di.GetDirectories();
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("The sysfs filesystem is not available via /sys/block path", e);
+            }
+
+            foreach (var sysBlockFolder in sysBlockFolders)
+            {
+                Mono.Unix.UnixSymbolicLinkInfo i = new Mono.Unix.UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name);
+                BlockDeviceWithVolumes blockDevice = new BlockDeviceWithVolumes()
+                {
+                    DevKey = sysBlockFolder.Name,
+                    DevFileType = i.FileType.ToString(),
+                };
+
+                ret.Add(blockDevice);
+            }
+
+            return ret;
+        }
+
+        static BlockSnapshot ParseSnapshot(string basePath)
         {
             throw new NotImplementedException();
         }
     }
 
-
-    public class BlockDevicesList
+    public class BlockDeviceWithVolumes
     {
         public string DevKey { get; set; }
+        public string DevFileType { get; set; }
+
         public BlockSnapshot Device { get; set; }
         public IList<BlockVolumeInfo> Volumes { get; set; }
     }
