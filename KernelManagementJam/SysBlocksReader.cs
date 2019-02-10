@@ -51,21 +51,44 @@ namespace KernelManagementJam
         {
             BlockSnapshot ret = new BlockSnapshot();
 
-            var rawSize = SmallFileReader.ReadFirstLine(basePath + "/size");
-            long size;
-            if (!long.TryParse(rawSize, out size)) size = 0;
-            ret.Size = size;
+            ret.Size = TryLongValue(basePath + "/size");
+            ret.IsReadonly = TryBooleanValue(basePath + "/ro");
+            ret.IsRemovable = TryBooleanValue(basePath + "/removable");
 
-            var rawRo = SmallFileReader.ReadFirstLine(basePath + "/ro");
-            ret.IsReadonly = !string.IsNullOrEmpty(rawRo) && rawRo != "0";
-
-            var rawRemovable = SmallFileReader.ReadFirstLine(basePath + "/removable");
-            ret.IsRemovable = !string.IsNullOrEmpty(rawRemovable) && rawRemovable != "0";
-
-            var rawHwSectorSize = SmallFileReader.ReadFirstLine(basePath + "/queue/hw_sector_size");
-            // ret.IsRemovable = !string.IsNullOrEmpty(rawRemovable) && rawRemovable != "0";
+            ret.HwSectorSize = TryIntValue(basePath + "/queue/hw_sector_size");
+            ret.LogicalBlockSize = TryIntValue(basePath + "/queue/logical_block_size");
+            ret.PhysicalBlockSize = TryIntValue(basePath + "/queue/physical_block_size");
 
             return ret;
+        }
+
+        static bool? TryBooleanValue(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                var rawRo = SmallFileReader.ReadFirstLine(fileName);
+                return !string.IsNullOrEmpty(rawRo) && rawRo != "0";
+            }
+
+            return null;
+        }
+
+        static long? TryLongValue(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                var raw = SmallFileReader.ReadFirstLine(fileName);
+                if (raw != null && long.TryParse(raw, out var size))
+                    return size;
+            }
+
+            return null;
+        }
+
+        static int? TryIntValue(string fileName)
+        {
+            var ret = TryLongValue(fileName);
+            return ret.HasValue ? (int) ret.Value : (int?) null;
         }
     }
 
