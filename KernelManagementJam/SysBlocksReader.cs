@@ -43,7 +43,25 @@ namespace KernelManagementJam
                 blockDevice.Device = ParseSnapshot(SysBlockPath + "/" + blockDevice.ShortKey);
 
                 if ((blockDevice.Device.Size ?? 0) > 0)
+                {
+                    var di = new DirectoryInfo(SysBlockPath + "/" + sysBlockFolder.Name);
+                    var volumesFolders = di.GetDirectories(sysBlockFolder.Name + "*");
+                    foreach (var volumesFolder in volumesFolders)
+                    {
+                        var blockVolumeInfo = new BlockVolumeInfo()
+                        {
+                            DevKey = sysBlockFolder.Name,
+                            VolumeKey = volumesFolder.Name,
+                        };
+
+                        blockVolumeInfo.Volume = ParseSnapshot(SysBlockPath + "/" + blockDevice.ShortKey + "/" + blockVolumeInfo.VolumeKey);
+                        blockDevice.Volumes.Add(blockVolumeInfo);
+                    }
+
                     ret.Add(blockDevice);
+
+
+                }
             }
 
             return ret;
@@ -130,8 +148,8 @@ namespace KernelManagementJam
     public class BlockVolumeInfo
     {
         public string DevKey { get; set; }
-        public BlockSnapshot Volume { get; set; }
         public string VolumeKey { get; set; }
+        public BlockSnapshot Volume { get; set; }
     }
 
     public struct BlockSnapshot
