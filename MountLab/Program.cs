@@ -130,7 +130,7 @@ namespace MountLab
                 try
                 {
                     var di = new DriveInfo(mount.MountPath);
-                    driveInfo = string.Format("{0,2} | {1,9} | {2,9} | {3,7} | {4,15}",
+                    driveInfo = string.Format("{0,2} | {1,9} | {2,9} | {3,-7} | {4,-15}",
                         di.IsReady == true ? "OK" : "--",
                         Formatter.FormatBytes(di.AvailableFreeSpace),
                         Formatter.FormatBytes(di.TotalSize),
