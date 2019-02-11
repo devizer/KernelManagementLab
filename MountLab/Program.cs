@@ -103,7 +103,7 @@ namespace MountLab
 
                 try
                 {
-                    UnixDriveInfo di = UnixDriveInfo.GetForSpecialFile(mount.MountPath);
+                    UnixDriveInfo di = new UnixDriveInfo(mount.MountPath);
                     var diInfo = new
                     {
                         di.Name,
