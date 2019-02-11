@@ -117,7 +117,7 @@ namespace MountLab
                         di.TotalSize,
                         di.VolumeLabel,
                     };
-                    DebugDumper.Trace($"UnixDriveInfo.GetForSpecialFile for {mount.MountPath}{Environment.NewLine}{diInfo.AsJson()}");
+                    DebugDumper.Trace($"UnixDriveInfo.GetForSpecialFile for {mount}{Environment.NewLine}{diInfo.AsJson()}");
                 }
                 catch (Exception ex)
                 {
