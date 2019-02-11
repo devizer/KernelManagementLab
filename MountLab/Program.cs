@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using ConsoleTables;
 using KernelManagementJam;
 using LinuxNetStatLab;
 using Mono.Unix;
@@ -30,69 +29,34 @@ namespace MountLab
         {
             Console.WriteLine(Environment.NewLine + "DRIVES");
             var drives = DriveInfo.GetDrives();
+            ConsoleTable report = new ConsoleTable("Name", "Mount", "", "-Free", "-Total", "Format");
             foreach (var di in drives)
             {
                 string driveInfo;
                 try
                 {
-                    var freeInfo = $"{Formatter.FormatBytes(di.AvailableFreeSpace)} of {Formatter.FormatBytes(di.TotalSize)}";
-                    driveInfo = string.Format("{0,-2} [{1,-19}], Free: {2,-20}, Fmt: {3,-12}",
+                    report.AddRow(di.Name, di.RootDirectory.FullName,
                         di.IsReady ? "OK" : "--",
-                        di.VolumeLabel, 
-                        freeInfo,
-                        di.DriveFormat);
+                        Formatter.FormatBytes(di.AvailableFreeSpace),
+                        Formatter.FormatBytes(di.TotalSize),
+                        di.DriveType + " " + di.DriveFormat
+                    );
                 }
                 catch (Exception ex)
                 {
-                    driveInfo = ex.GetType().Name + ": " + ex.Message.Replace(Environment.NewLine, " ");
+                    report.AddRow(
+                        di.Name, 
+                        di.RootDirectory.FullName,
+                        di.IsReady ? "OK" : "--",
+                        "",
+                        "",
+                        ex.GetType().Name + " " + ex.Message.Replace(Environment.NewLine, " "));
                 }
-
-                Console.WriteLine("{0,-22} {1}", di.RootDirectory, driveInfo);
-            }
-        }
-
-        private static void DumpProcMounts_Wrong()
-        {
-            bool isWin = Environment.OSVersion.Platform == PlatformID.Win32NT;
-            var mounts = ProcMountsParser.Parse(isWin ? "mounts" : "/proc/mounts").Entries;
-            List<dynamic> report = new List<dynamic>();
-            foreach (var mount in mounts)
-            {
-                string driveInfo = null;
-                Stopwatch sw = Stopwatch.StartNew();
-                try
-                {
-                    var di = new DriveInfo(mount.MountPath);
-                    double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
-
-                    report.Add(new
-                    {
-                        mount.Device,
-                        mount.MountPath,
-                        mount.FileSystem,
-                        IsReady = di.IsReady + string.Format(", {0:0.00} msec", msec),
-                        di.DriveFormat,
-                        Free = Formatter.FormatBytes(di.AvailableFreeSpace),
-                        Total = Formatter.FormatBytes(di.TotalSize),
-                    });
-                }
-                catch (Exception ex)
-                {
-                    double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
-                    report.Add(new
-                    {
-                        mount.Device,
-                        mount.MountPath,
-                        mount.FileSystem,
-                        IsReady = ex.GetType().Name,
-                    });
-
-                }
-
             }
 
-            ConsoleTable.From(report).Write(Format.Alternative);
+            Console.WriteLine(report.ToString());
         }
+
 
         private static void DumpProcMounts()
         {
