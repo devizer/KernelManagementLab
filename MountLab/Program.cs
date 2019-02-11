@@ -29,13 +29,12 @@ namespace MountLab
         {
             Console.WriteLine(Environment.NewLine + "DRIVES");
             var drives = DriveInfo.GetDrives();
-            ConsoleTable report = new ConsoleTable("Name", "Mount", "", "-Free", "-Total", "Format");
+            ConsoleTable report = new ConsoleTable("Path", "", "-Free", "-Total", "Format");
             foreach (var di in drives)
             {
-                string driveInfo;
                 try
                 {
-                    report.AddRow(di.Name, di.RootDirectory.FullName,
+                    report.AddRow(di.RootDirectory.FullName,
                         di.IsReady ? "OK" : "--",
                         Formatter.FormatBytes(di.AvailableFreeSpace),
                         Formatter.FormatBytes(di.TotalSize),
@@ -45,7 +44,6 @@ namespace MountLab
                 catch (Exception ex)
                 {
                     report.AddRow(
-                        di.Name, 
                         di.RootDirectory.FullName,
                         di.IsReady ? "OK" : "--",
                         "",
