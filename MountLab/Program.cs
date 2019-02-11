@@ -35,7 +35,7 @@ namespace MountLab
                 string driveInfo;
                 try
                 {
-                    driveInfo = string.Format("{0,-21} [{3,-12}], Free: {1,-12} of {2,-12}, Fmt: {4,-12}",
+                    driveInfo = string.Format("{0,-6} [{3,-12}], Free: {1,-12} of {2,-12}, Fmt: {4,-12}",
                         di.IsReady, Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
                         di.DriveFormat);
                 }
@@ -123,7 +123,7 @@ namespace MountLab
 
                 string driveInfo = null;
                 Stopwatch sw = Stopwatch.StartNew();
-                var mountInfo = string.Format("{0,-23} | {1,-12} | {2,-31} | ", mount.Device, mount.FileSystem, mount.MountPath);
+                var mountInfo = string.Format("{0,-32} | {1,-12} | {2,-31} | ", mount.Device, mount.FileSystem, mount.MountPath);
                 try
                 {
                     var di = new DriveInfo(mount.MountPath);
