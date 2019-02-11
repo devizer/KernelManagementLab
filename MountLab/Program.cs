@@ -42,7 +42,7 @@ namespace MountLab
                 }
                 catch (Exception ex)
                 {
-                    driveInfo = ex.GetType().Name + ": " + ex.Message;
+                    driveInfo = ex.GetType().Name + ": " + ex.Message.Replace(Environment.NewLine, " ");
                 }
 
                 Console.WriteLine(di.RootDirectory + " --> " + driveInfo);
