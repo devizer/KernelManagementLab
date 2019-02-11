@@ -23,6 +23,7 @@ namespace MountLab
             DumpProcMounts();
             DumpManagedDrives();
             DumpUnixDrives();
+            DumpUnixDriveInfo();
         }
 
         private static void DumpManagedDrives()
