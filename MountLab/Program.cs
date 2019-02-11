@@ -83,10 +83,24 @@ namespace MountLab
 
             var drives = UnixDriveInfo.GetDrives();
 
-            foreach (var unixDriveInfo in drives)
+            List<dynamic> objs = new List<dynamic>();
+            foreach (var i in drives)
             {
-                DebugDumper.Dump(drives, "UnixDriveInfo.GetDrives.js");
+                objs.Add(new
+                {
+                    i.Name,
+                    i.AvailableFreeSpace,
+                    i.DriveFormat,
+                    i.IsReady,
+                    i.DriveType,
+                    i.MaximumFilenameLength,
+                    i.RootDirectory.FullName,
+                    i.TotalFreeSpace,
+                    i.TotalSize,
+                    i.VolumeLabel,
+                });
             }
+            DebugDumper.Dump(objs, "UnixDriveInfo.GetDrives.js");
         }
 
 
