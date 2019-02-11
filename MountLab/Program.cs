@@ -44,7 +44,7 @@ namespace MountLab
                     driveInfo = ex.GetType().Name + ": " + ex.Message.Replace(Environment.NewLine, " ");
                 }
 
-                Console.WriteLine(di.RootDirectory + " --> " + driveInfo);
+                Console.WriteLine("{0,22} {1}", di.RootDirectory, driveInfo);
             }
         }
 
