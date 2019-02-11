@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using LinuxNetStatLab;
 
 namespace KernelManagementJam
 {
@@ -223,5 +224,15 @@ namespace KernelManagementJam
                        WriteWaitingMilliseconds == 0;
             }
         }
+    }
+
+    // Similar to System.IO.DriveInfo and Mono.Unix.UnixDriveInfo
+    public class DriveDetails
+    {
+        public MountEntry MountEntry { get; set; }
+        public bool IsReady { get; set; }
+        public long FreeSpace { get; set; }
+        public long TotalSize { get; set; }
+        public string Format { get; set; }
     }
 }
