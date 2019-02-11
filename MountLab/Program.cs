@@ -35,8 +35,11 @@ namespace MountLab
                 string driveInfo;
                 try
                 {
-                    driveInfo = string.Format("{0,-2} [{3,-19}], Free: {1,-12} of {2,-12}, Fmt: {4,-12}",
-                        di.IsReady ? "OK" : "--", Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
+                    var freeInfo = $"{Formatter.FormatBytes(di.AvailableFreeSpace)} of {Formatter.FormatBytes(di.TotalSize)}";
+                    driveInfo = string.Format("{0,-2} [{1,-19}], Free: {2,-20}, Fmt: {3,-12}",
+                        di.IsReady ? "OK" : "--",
+                        di.VolumeLabel, 
+                        freeInfo,
                         di.DriveFormat);
                 }
                 catch (Exception ex)
