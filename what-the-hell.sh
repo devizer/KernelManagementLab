@@ -1,9 +1,9 @@
-mkdir "/with space"
-mount -t tmpfs tmpfs "/with space"
-mkdir /fuck\\off
-mount -t tmpfs tmpfs /fuck\\off
-mkdir "/fuck-по-русски-off"
-mount -t tmpfs tmpfs  "/fuck-по-русски-off"
+mkdir -p "/media/with space"
+mount -t tmpfs tmpfs "/media/with space"
+mkdir -p /media/fuck\\off
+mount -t tmpfs tmpfs /media/fuck\\off
+mkdir -p "/media/fuck-по-русски-off"
+mount -t tmpfs tmpfs  "/media/fuck-по-русски-off"
 cat /proc/mounts
 exit;
 

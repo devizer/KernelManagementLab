@@ -35,7 +35,7 @@ namespace MountLab
                 string driveInfo;
                 try
                 {
-                    driveInfo = string.Format("{0,-12} [{3,-12}], Free: {1,-12} of {2,-12}, Fmt: {4,-12}",
+                    driveInfo = string.Format("{0,-21} [{3,-12}], Free: {1,-12} of {2,-12}, Fmt: {4,-12}",
                         di.IsReady, Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
                         di.DriveFormat);
                 }
