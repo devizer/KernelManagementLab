@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleTables;
 using KernelManagementJam;
 using LinuxNetStatLab;
 using Mono.Unix;
@@ -49,6 +50,49 @@ namespace MountLab
             }
         }
 
+        private static void DumpProcMounts_Wrong()
+        {
+            bool isWin = Environment.OSVersion.Platform == PlatformID.Win32NT;
+            var mounts = ProcMountsParser.Parse(isWin ? "mounts" : "/proc/mounts").Entries;
+            List<dynamic> report = new List<dynamic>();
+            foreach (var mount in mounts)
+            {
+                string driveInfo = null;
+                Stopwatch sw = Stopwatch.StartNew();
+                try
+                {
+                    var di = new DriveInfo(mount.MountPath);
+                    double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
+
+                    report.Add(new
+                    {
+                        mount.Device,
+                        mount.MountPath,
+                        mount.FileSystem,
+                        IsReady = di.IsReady + string.Format(", {0:0.00} msec", msec),
+                        di.DriveFormat,
+                        Free = Formatter.FormatBytes(di.AvailableFreeSpace),
+                        Total = Formatter.FormatBytes(di.TotalSize),
+                    });
+                }
+                catch (Exception ex)
+                {
+                    double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
+                    report.Add(new
+                    {
+                        mount.Device,
+                        mount.MountPath,
+                        mount.FileSystem,
+                        IsReady = ex.GetType().Name,
+                    });
+
+                }
+
+            }
+
+            ConsoleTable.From(report).Write(Format.Alternative);
+        }
+
         private static void DumpProcMounts()
         {
             bool isWin = Environment.OSVersion.Platform == PlatformID.Win32NT;
@@ -57,12 +101,16 @@ namespace MountLab
             {
                 string driveInfo = null;
                 Stopwatch sw = Stopwatch.StartNew();
+                var mountInfo = string.Format("{0,-11} | {1,-12} | {2,-26} | ", mount.Device, mount.FileSystem, mount.MountPath);
                 try
                 {
                     var di = new DriveInfo(mount.MountPath);
-                    driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, Fmt: {4}",
-                        di.IsReady, Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
-                        di.DriveFormat);
+                    driveInfo = string.Format("{0,2} | {1,9} | {2,9} | {3,7} | {4,15}",
+                        di.IsReady == true ? "OK" : "--",
+                        Formatter.FormatBytes(di.AvailableFreeSpace),
+                        Formatter.FormatBytes(di.TotalSize),
+                        di.DriveFormat, di.VolumeLabel
+                    );
 
                     double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                     driveInfo = string.Format("[{0:0.00} msec] ", msec) + driveInfo;
@@ -73,7 +121,7 @@ namespace MountLab
                     driveInfo = string.Format("[{0:0.00} msec] ", msec) + ex.GetType().Name + ": " + ex.Message.Replace(Environment.NewLine, " ");
                 }
 
-                Console.WriteLine(mount + " --> " + driveInfo);
+                Console.WriteLine(mountInfo + "" + driveInfo);
             }
         }
 
