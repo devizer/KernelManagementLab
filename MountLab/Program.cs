@@ -97,9 +97,6 @@ namespace MountLab
             var mounts = ProcMountsParser.Parse(isWin ? "mounts" : "/proc/mounts").Entries;
             foreach (var mount in mounts)
             {
-                string driveInfo = null;
-                Stopwatch sw = Stopwatch.StartNew();
-                var mountInfo = string.Format("{0,-23} | {1,-12} | {2,-31} | ", mount.Device, mount.FileSystem, mount.MountPath);
 
                 try
                 {
@@ -122,9 +119,11 @@ namespace MountLab
                 catch (Exception ex)
                 {
                     DebugDumper.Trace($"FAILED UnixDriveInfo.GetForSpecialFile for {mount.MountPath}{Environment.NewLine}{ex}");
-
                 }
 
+                string driveInfo = null;
+                Stopwatch sw = Stopwatch.StartNew();
+                var mountInfo = string.Format("{0,-23} | {1,-12} | {2,-31} | ", mount.Device, mount.FileSystem, mount.MountPath);
                 try
                 {
                     var di = new DriveInfo(mount.MountPath);
