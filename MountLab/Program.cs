@@ -101,7 +101,7 @@ namespace MountLab
             {
                 string driveInfo = null;
                 Stopwatch sw = Stopwatch.StartNew();
-                var mountInfo = string.Format("{0,-23} | {1,-12} | {2,-26} | ", mount.Device, mount.FileSystem, mount.MountPath);
+                var mountInfo = string.Format("{0,-23} | {1,-12} | {2,-31} | ", mount.Device, mount.FileSystem, mount.MountPath);
                 try
                 {
                     var di = new DriveInfo(mount.MountPath);
