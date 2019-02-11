@@ -50,7 +50,7 @@ namespace MountLab
             using (FileStream dump = new FileStream("app.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(dump, new UTF8Encoding(false)))
             {
-                wr.WriteLine(DateTime.Now.ToString("YYYY MM DD HH:mm:ss") + " " + info);
+                wr.WriteLine(DateTime.Now.ToString("yyyy MM dd HH:mm:ss") + " " + info);
             }
         }
     }
