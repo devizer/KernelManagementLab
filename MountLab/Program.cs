@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KernelManagementJam;
 using LinuxNetStatLab;
+using Mono.Unix;
 using Newtonsoft.Json;
 
 namespace MountLab
@@ -23,6 +24,7 @@ namespace MountLab
 
             DumpProcMounts();
             DumpManagedDrives();
+            DumpUnixDrives();
         }
 
         private static void DumpManagedDrives()
@@ -74,6 +76,22 @@ namespace MountLab
                 Console.WriteLine(mount + " --> " + driveInfo);
             }
         }
+
+        static void DumpUnixDrives()
+        {
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT) return;
+
+            var drives = UnixDriveInfo.GetDrives();
+
+            foreach (var unixDriveInfo in drives)
+            {
+                DebugDumper.Dump(drives, "UnixDriveInfo.GetDrives.js");
+            }
+        }
+
+
+
+
     }
 
     class DebugDumper
