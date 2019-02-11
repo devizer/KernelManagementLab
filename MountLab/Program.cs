@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ConsoleTables;
 using KernelManagementJam;
 using LinuxNetStatLab;
 using Mono.Unix;
-using Newtonsoft.Json;
 
 namespace MountLab
 {
@@ -37,7 +35,7 @@ namespace MountLab
                 string driveInfo;
                 try
                 {
-                    driveInfo = string.Format("IsReady: {0}, Label: [{3}], Free: {1} / {2}, Fmt: {4}",
+                    driveInfo = string.Format("{0,-12} [{3,-12}], Free: {1,-12} of {2,-12}, Fmt: {4,-12}",
                         di.IsReady, Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
                         di.DriveFormat);
                 }
@@ -102,6 +100,31 @@ namespace MountLab
                 string driveInfo = null;
                 Stopwatch sw = Stopwatch.StartNew();
                 var mountInfo = string.Format("{0,-23} | {1,-12} | {2,-31} | ", mount.Device, mount.FileSystem, mount.MountPath);
+
+                try
+                {
+                    UnixDriveInfo di = UnixDriveInfo.GetForSpecialFile(mount.MountPath);
+                    var diInfo = new
+                    {
+                        di.Name,
+                        di.AvailableFreeSpace,
+                        di.DriveFormat,
+                        di.IsReady,
+                        di.DriveType,
+                        di.MaximumFilenameLength,
+                        RootDirectory = di.RootDirectory.FullName,
+                        di.TotalFreeSpace,
+                        di.TotalSize,
+                        di.VolumeLabel,
+                    };
+                    DebugDumper.Trace($"UnixDriveInfo.GetForSpecialFile for {mount.MountPath}{Environment.NewLine}{diInfo.AsJson()}");
+                }
+                catch (Exception ex)
+                {
+                    DebugDumper.Trace($"FAILED UnixDriveInfo.GetForSpecialFile for {mount.MountPath}{Environment.NewLine}{ex}");
+
+                }
+
                 try
                 {
                     var di = new DriveInfo(mount.MountPath);
@@ -149,52 +172,6 @@ namespace MountLab
                 });
             }
             DebugDumper.Dump(objs, "UnixDriveInfo.GetDrives.js");
-        }
-
-
-
-
-    }
-
-    class DebugDumper
-    {
-        public static void Dump(object anObject, string fileName)
-        {
-
-            JsonSerializer ser = new JsonSerializer()
-            {
-                Formatting = Formatting.Indented,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            };
-
-            StringBuilder json = new StringBuilder();
-            StringWriter jwr = new StringWriter(json);
-            ser.Serialize(jwr, anObject);
-            jwr.Flush();
-
-            // string json = JsonConvert.SerializeObject(anObject, Formatting.Indented, settings);
-            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
-            using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
-            {
-                wr.Write(json);
-            }
-        }
-    }
-
-    static class Formatter
-    {
-        public static string FormatBytes(long number)
-        {
-            if (number == 0)
-                return "0";
-            else if (number < 9999)
-                return number.ToString("n0") + "B";
-            else if (number < 9999999)
-                return (number / 1024d).ToString("n1") + "K";
-            else if (number < 9999999999)
-                return (number / 1024d / 1024d).ToString("n1") + "M";
-            else 
-                return (number / 1024d / 1024d / 1024d).ToString("n1") + "G";
         }
     }
 }
