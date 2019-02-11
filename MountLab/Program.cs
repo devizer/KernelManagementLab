@@ -70,7 +70,7 @@ namespace MountLab
                 catch (Exception ex)
                 {
                     double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
-                    driveInfo = string.Format("[{0:0.00} msec] ", msec) + ex.GetType().Name + ": " + ex.Message;
+                    driveInfo = string.Format("[{0:0.00} msec] ", msec) + ex.GetType().Name + ": " + ex.Message.Replace(Environment.NewLine, " ");
                 }
 
                 Console.WriteLine(mount + " --> " + driveInfo);
