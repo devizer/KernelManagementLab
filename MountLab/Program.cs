@@ -94,7 +94,7 @@ namespace MountLab
                     i.IsReady,
                     i.DriveType,
                     i.MaximumFilenameLength,
-                    i.RootDirectory.FullName,
+                    RootDirectory = i.RootDirectory.FullName,
                     i.TotalFreeSpace,
                     i.TotalSize,
                     i.VolumeLabel,
