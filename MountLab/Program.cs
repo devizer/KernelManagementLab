@@ -35,8 +35,8 @@ namespace MountLab
                 string driveInfo;
                 try
                 {
-                    driveInfo = string.Format("{0,-6} [{3,-12}], Free: {1,-12} of {2,-12}, Fmt: {4,-12}",
-                        di.IsReady, Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
+                    driveInfo = string.Format("{0,-2} [{3,-12}], Free: {1,-12} of {2,-12}, Fmt: {4,-12}",
+                        di.IsReady ? "OK" : "--", Formatter.FormatBytes(di.AvailableFreeSpace), Formatter.FormatBytes(di.TotalSize), di.VolumeLabel,
                         di.DriveFormat);
                 }
                 catch (Exception ex)
@@ -44,7 +44,7 @@ namespace MountLab
                     driveInfo = ex.GetType().Name + ": " + ex.Message.Replace(Environment.NewLine, " ");
                 }
 
-                Console.WriteLine("{0,22} {1}", di.RootDirectory, driveInfo);
+                Console.WriteLine("{0,-22} {1}", di.RootDirectory, driveInfo);
             }
         }
 
