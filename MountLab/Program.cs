@@ -95,7 +95,7 @@ namespace MountLab
             var mounts = ProcMountsParser.Parse(isWin ? "mounts" : "/proc/mounts").Entries;
             ConsoleTable report = new ConsoleTable(
                 "Device", "FS", "Path", // from /proc/mounts
-                "", "Free", "Total", "Label", "msec",""
+                "", "-Free", "-Total", "Label", "msec",""
             );
 
             foreach (var mount in mounts)
