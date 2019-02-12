@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using Mono.Unix;
 
 namespace KernelManagementJam
@@ -15,6 +16,37 @@ namespace KernelManagementJam
         public long FreeSpace { get; set; }
         public long TotalSize { get; set; }
         public string Format { get; set; }
+
+        public bool IsTmpFs => (MountEntry?.FileSystem ?? "").EndsWith("tmpfs", StringComparison.InvariantCultureIgnoreCase);
+
+        public bool IsNetworkShare
+        {
+            get
+            {
+                var fs = MountEntry?.FileSystem ?? "";
+                bool isNfs = fs.StartsWith("nfs");
+                const StringComparison cmp = StringComparison.CurrentCultureIgnoreCase;
+                bool isSsh = fs.IndexOf("sshfs", cmp) >= 0;
+                bool isCifs = fs.IndexOf("cifs", cmp) >= 0;
+                bool isFtp = fs.IndexOf("ftpfs#", cmp) >= 0 || fs.IndexOf("ftp://", cmp) >= 0 || fs.IndexOf("ftps://", cmp) >= 0;
+                bool isWebDav = IsWebDav();
+                return isNfs || isSsh || isCifs || isFtp || isWebDav;
+            }
+        }
+
+        bool IsWebDav()
+        {
+            try
+            {
+                Uri u = new Uri(MountEntry?.FileSystem ?? "");
+                const StringComparison cmp = StringComparison.CurrentCultureIgnoreCase;
+                return !string.IsNullOrEmpty(u.Host) && ("http".Equals(u.Scheme, cmp) || "https".Equals(u.Scheme, cmp));
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 
     public class ProcMountsAnalyzer
