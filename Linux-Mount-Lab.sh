@@ -1,5 +1,6 @@
 work=$HOME/KernelManagementLab; \
-cd $HOME; \
+# work=/mnt/ftp-client/KernelManagementLab; \
+cd $(dirname $work); \
 rm -rf $work; \
 git clone https://github.com/devizer/KernelManagementLab; \
 cd KernelManagementLab; \

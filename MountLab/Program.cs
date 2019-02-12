@@ -86,7 +86,6 @@ namespace MountLab
                     DebugDumper.Trace($"FAILED UnixDriveInfo.GetForSpecialFile for {mount.MountPath}{Environment.NewLine}{ex}{Environment.NewLine}");
                 }
             }
-
         }
 
         private static void DumpProcMounts()
@@ -129,7 +128,7 @@ namespace MountLab
                         details = new DriveDetails()
                         {
                             MountEntry = mount,
-                            IsReady = di.IsReady,
+                            IsReady = di.IsReady && di.TotalSize > 0,
                             Format = di.DriveType.ToString(),
                             FreeSpace = di.TotalFreeSpace,
                             TotalSize = di.TotalSize,
