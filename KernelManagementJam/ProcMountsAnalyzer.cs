@@ -19,8 +19,8 @@ namespace KernelManagementJam
 
     public class ProcMountsAnalyzer
     {
+        public List<DriveDetails> Details { get; private set; }
         public List<MountEntry> ArgMountEntries { get; private set; }
-        public List<DriveDetails> Details { get; private set; } 
         public string RawDetailsLog { get; private set; }
 
         public static ProcMountsAnalyzer Create(IEnumerable<MountEntry> mountEntries)
