@@ -28,7 +28,7 @@ namespace KernelManagementJam
             }
         }
 
-        private bool IsFtp
+        public bool IsFtp
         {
             get
             {
@@ -37,22 +37,22 @@ namespace KernelManagementJam
             }
         }
 
-        private bool IsCifs
+        public bool IsCifs
         {
             get { return (MountEntry?.FileSystem ?? "").IndexOf("cifs", CMP) >= 0; }
         }
 
-        private bool IsSsh
+        public bool IsSsh
         {
             get { return (MountEntry?.FileSystem ?? "").IndexOf("sshfs", CMP) >= 0; }
         }
 
-        private bool IsNfs
+        public bool IsNfs
         {
             get { return (MountEntry?.FileSystem ?? "").StartsWith("nfs", CMP); }
         }
 
-        private bool IsWebDav
+        public bool IsWebDav
         {
             get
             {
