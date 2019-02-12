@@ -38,7 +38,7 @@ namespace KernelManagementJam
         {
             try
             {
-                Uri u = new Uri(MountEntry?.FileSystem ?? "");
+                Uri u = new Uri(MountEntry?.Device ?? "");
                 const StringComparison cmp = StringComparison.CurrentCultureIgnoreCase;
                 return !string.IsNullOrEmpty(u.Host) && ("http".Equals(u.Scheme, cmp) || "https".Equals(u.Scheme, cmp));
             }
