@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using Mono.Unix;
+using Newtonsoft.Json;
 
 namespace KernelManagementJam
 {
@@ -73,6 +74,8 @@ namespace KernelManagementJam
     {
         public List<DriveDetails> Details { get; private set; }
         public List<MountEntry> ArgMountEntries { get; private set; }
+
+        [JsonIgnore]
         public string RawDetailsLog { get; private set; }
 
         public static ProcMountsAnalyzer Create(IEnumerable<MountEntry> mountEntries)
