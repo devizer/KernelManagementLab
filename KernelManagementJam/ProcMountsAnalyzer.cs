@@ -78,7 +78,7 @@ namespace KernelManagementJam
         [JsonIgnore]
         public string RawDetailsLog { get; private set; }
 
-        public static ProcMountsAnalyzer Create(IEnumerable<MountEntry> mountEntries)
+        public static ProcMountsAnalyzer Create(IEnumerable<MountEntry> mountEntries, bool skipDetailsLog = false)
         {
             Stopwatch startAt = Stopwatch.StartNew();
             var report = new ConsoleTable(
@@ -132,32 +132,36 @@ namespace KernelManagementJam
                 var msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 if (details != null)
                 {
-                    report.AddRow(
-                        mount.Device, mount.FileSystem, mount.MountPath,
-                        details.IsReady ? "OK" : "--", Formatter.FormatBytes(details.FreeSpace), Formatter.FormatBytes(details.TotalSize),
-                        details.Format, $"{msec:f2}"
-                    );
+                    if (!skipDetailsLog)
+                        report.AddRow(
+                            mount.Device, mount.FileSystem, mount.MountPath,
+                            details.IsReady ? "OK" : "--", Formatter.FormatBytes(details.FreeSpace), Formatter.FormatBytes(details.TotalSize),
+                            details.Format, $"{msec:f2}"
+                        );
 
                     allDetails.Add(details);
                 }
                 else if (error != null)
                 {
                     var errorInfo = error.GetType().Name + ": " + error.Message.Replace(Environment.NewLine, " ");
-                    report.AddRow(
-                        mount.Device, mount.FileSystem, mount.MountPath,
-                        "--", "", "",
-                        "", $"{msec:f2}", errorInfo
-                    );
+
+                    if (!skipDetailsLog)
+                        report.AddRow(
+                            mount.Device, mount.FileSystem, mount.MountPath,
+                            "--", "", "",
+                            "", $"{msec:f2}", errorInfo
+                        );
                 }
             }
 
             var totalMsec = startAt.ElapsedTicks * 1000d / Stopwatch.Frequency;
             var footer = $"Total time taken: {totalMsec:n1} milliseconds";
+            var log = skipDetailsLog ? footer : report + Environment.NewLine + Environment.NewLine + footer;
             var ret = new ProcMountsAnalyzer
             {
                 ArgMountEntries = mountEntries.ToList(),
                 Details = allDetails,
-                RawDetailsLog = report + Environment.NewLine + Environment.NewLine + footer
+                RawDetailsLog = log
             };
 
             return ret;
