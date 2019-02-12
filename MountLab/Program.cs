@@ -146,7 +146,7 @@ namespace MountLab
                 {
                     report.AddRow(
                         mount.Device, mount.FileSystem, mount.MountPath,
-                        "OK", Formatter.FormatBytes(details.FreeSpace), Formatter.FormatBytes(details.TotalSize),
+                        details.IsReady ? "OK" : "--", Formatter.FormatBytes(details.FreeSpace), Formatter.FormatBytes(details.TotalSize),
                         details.Format, $"{msec:f2}"
                     );
                 }
