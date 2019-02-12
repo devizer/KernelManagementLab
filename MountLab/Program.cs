@@ -90,7 +90,9 @@ namespace MountLab
             IList<MountEntry> mounts = ProcMountsParser.Parse(isWin ? "mounts" : "/proc/mounts").Entries;
 
             ProcMountsAnalyzer analyz = ProcMountsAnalyzer.Create(mounts);
+            var logDetails = analyz.RawDetailsLog;
             analyz = ProcMountsAnalyzer.Create(mounts, skipDetailsLog: true);
+            Console.WriteLine(logDetails);
             Console.WriteLine(analyz.RawDetailsLog);
 
             DebugDumper.Dump(analyz, "ProcMountsAnalyzer.js");
