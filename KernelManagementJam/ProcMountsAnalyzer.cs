@@ -28,7 +28,7 @@ namespace KernelManagementJam
             Stopwatch startAt = Stopwatch.StartNew();
             var report = new ConsoleTable(
                 "Device", "FS", "Path", // from /proc/mounts
-                "", "-Free", "-Total", "Label", "msec", ""
+                "", "-Free", "-Total", "Type", "msec", ""
             );
 
             var allDetails = new List<DriveDetails>();
