@@ -5,13 +5,13 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace LinuxNetStatLab
+namespace KernelManagementJam
 {
-
     public class MountEntry
     {
         // May be a symbolic link to /dev/zzz
         public string Device { get; set; }
+
         // May be multiple
         public string MountPath { get; set; }
 
@@ -38,7 +38,7 @@ namespace LinuxNetStatLab
      */
     public class ProcMountsParser
     {
-        static readonly UTF8Encoding FileEncoding = new UTF8Encoding(false);
+        private static readonly UTF8Encoding FileEncoding = new UTF8Encoding(false);
         public IList<MountEntry> Entries { get; private set; }
 
         public static ProcMountsParser Parse()
@@ -48,7 +48,7 @@ namespace LinuxNetStatLab
 
         public static ProcMountsParser Parse(string fakeMountsFilePath)
         {
-            ProcMountsParser ret = new ProcMountsParser();
+            var ret = new ProcMountsParser();
             ret.ParseImpl(fakeMountsFilePath);
             return ret;
         }
@@ -56,11 +56,11 @@ namespace LinuxNetStatLab
         private void ParseImpl(string fileName)
         {
             Entries = new List<MountEntry>();
-            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (StreamReader rdr = new StreamReader(fs, FileEncoding))
+            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var rdr = new StreamReader(fs, FileEncoding))
             {
                 var content = rdr.ReadToEnd();
-                StringReader lines = new StringReader(content);
+                var lines = new StringReader(content);
                 string line = null;
                 do
                 {
@@ -68,14 +68,12 @@ namespace LinuxNetStatLab
                     if (line == null) break;
                     var columns = SpaceSeparatedDecoder.DecodeIntoColumns(line);
                     if (columns.Length >= 4)
-                    {
-                        Entries.Add(new MountEntry()
+                        Entries.Add(new MountEntry
                         {
                             Device = columns[0],
                             MountPath = columns[1],
-                            FileSystem = columns[2],
+                            FileSystem = columns[2]
                         });
-                    }
                 } while (line != null);
             }
         }
@@ -85,24 +83,20 @@ namespace LinuxNetStatLab
     {
         public static string[] DecodeIntoColumns(string rawLine)
         {
-            List<string> ret = new List<string>();
+            var ret = new List<string>();
             var arr = rawLine.Split(' ');
-            foreach (var s in arr)
-            {
-                ret.Add(DecodeSpecialChars(s));
-            }
+            foreach (var s in arr) ret.Add(DecodeSpecialChars(s));
 
             return ret.ToArray();
         }
 
         public static string DecodeSpecialChars(string encodedString)
         {
-            StringBuilder ret = new StringBuilder();
-            for (int i = 0; i < encodedString.Length; i++)
-            {
+            var ret = new StringBuilder();
+            for (var i = 0; i < encodedString.Length; i++)
                 if (encodedString[i] == '\\')
                 {
-                    bool isOk = false;
+                    var isOk = false;
                     if (i + 1 < encodedString.Length && encodedString[i + 1] == '\\')
                     {
                         // Ubuntu 18 in docker on macOS
@@ -112,25 +106,26 @@ namespace LinuxNetStatLab
                     }
                     else if (i + 3 < encodedString.Length)
                     {
-                        string part = encodedString.Substring(i + 1, 3);
+                        var part = encodedString.Substring(i + 1, 3);
                         int octal;
-                        bool isOctal = Int32.TryParse(part, NumberStyles.Integer, new CultureInfo("en-US"), out octal);
+                        var isOctal = int.TryParse(part, NumberStyles.Integer, new CultureInfo("en-US"), out octal);
                         if (isOctal)
                         {
-                            int integer = Convert.ToInt32(octal.ToString("0"), 8);
+                            var integer = Convert.ToInt32(octal.ToString("0"), 8);
                             isOk = true;
                             ret.Append((char) integer);
                         }
+
                         i += 3;
                     }
 
                     if (!isOk)
                         Trace.WriteLine(string.Format("Improperly encoded string: [{0}]", encodedString));
-
                 }
                 else
+                {
                     ret.Append(encodedString[i]);
-            }
+                }
 
             return ret.ToString();
         }

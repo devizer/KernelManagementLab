@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using LinuxNetStatLab;
+using Mono.Unix;
 
 namespace KernelManagementJam
 {
- /*
-  * first level at /sys/blocks - device names as folders
-  *   - ro file: 0 if not readonly
-  *   - removable: 0 if not removable
-  *   - stat - io counter
-  */
+    /*
+     * first level at /sys/blocks - device names as folders
+     *   - ro file: 0 if not readonly
+     *   - removable: 0 if not removable
+     *   - stat - io counter
+     */
     public class SysBlocksReader
     {
-        static readonly string SysBlockPath = "/sys/block";
+        private static readonly string SysBlockPath = "/sys/block";
+
         public static List<BlockDeviceWithVolumes> GetSnapshot()
         {
-            List<BlockDeviceWithVolumes> ret = new List<BlockDeviceWithVolumes>();
+            var ret = new List<BlockDeviceWithVolumes>();
             DirectoryInfo[] sysBlockFolders;
             try
             {
@@ -34,11 +33,11 @@ namespace KernelManagementJam
 
             foreach (var sysBlockFolder in sysBlockFolders)
             {
-                Mono.Unix.UnixSymbolicLinkInfo i = new Mono.Unix.UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name);
-                BlockDeviceWithVolumes blockDevice = new BlockDeviceWithVolumes()
+                var i = new UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name);
+                var blockDevice = new BlockDeviceWithVolumes
                 {
                     ShortKey = sysBlockFolder.Name,
-                    DevFileType = i.FileType.ToString(),
+                    DevFileType = i.FileType.ToString()
                 };
 
                 blockDevice.Device = ParseSnapshot(SysBlockPath + "/" + blockDevice.ShortKey);
@@ -49,10 +48,10 @@ namespace KernelManagementJam
                     var volumesFolders = di.GetDirectories(sysBlockFolder.Name + "*");
                     foreach (var volumesFolder in volumesFolders)
                     {
-                        var blockVolumeInfo = new BlockVolumeInfo()
+                        var blockVolumeInfo = new BlockVolumeInfo
                         {
                             DevKey = sysBlockFolder.Name,
-                            VolumeKey = volumesFolder.Name,
+                            VolumeKey = volumesFolder.Name
                         };
 
                         blockVolumeInfo.Volume = ParseSnapshot(SysBlockPath + "/" + blockDevice.ShortKey + "/" + blockVolumeInfo.VolumeKey);
@@ -66,9 +65,9 @@ namespace KernelManagementJam
             return ret;
         }
 
-        static BlockSnapshot ParseSnapshot(string basePath)
+        private static BlockSnapshot ParseSnapshot(string basePath)
         {
-            BlockSnapshot ret = new BlockSnapshot();
+            var ret = new BlockSnapshot();
 
             ret.Size = TryLongValue(basePath + "/size");
             ret.IsReadonly = TryBooleanValue(basePath + "/ro");
@@ -89,7 +88,7 @@ namespace KernelManagementJam
             if (firstLine == null) return BlockStatistics.Empty;
 
             var rawColumns = firstLine.Trim().Split(' ').Where(x => x.Length > 0);
-            List<long> columns = new List<long>(8);
+            var columns = new List<long>(8);
             foreach (var rawColumn in rawColumns)
             {
                 if (!long.TryParse(rawColumn, out var column))
@@ -108,18 +107,18 @@ namespace KernelManagementJam
                 WriteOperationsMerged = columns[5],
                 WriteSectors = columns[6],
                 WriteWaitingMilliseconds = columns[7],
-                IsValid = true,
+                IsValid = true
             };
         }
 
 
-        static bool? TryBooleanValue(string fileName)
+        private static bool? TryBooleanValue(string fileName)
         {
-                var rawRo = SmallFileReader.ReadFirstLine(fileName);
-                return !string.IsNullOrEmpty(rawRo) && rawRo != "0";
+            var rawRo = SmallFileReader.ReadFirstLine(fileName);
+            return !string.IsNullOrEmpty(rawRo) && rawRo != "0";
         }
 
-        static long? TryLongValue(string fileName)
+        private static long? TryLongValue(string fileName)
         {
             var raw = SmallFileReader.ReadFirstLine(fileName);
             if (raw != null && long.TryParse(raw, out var size))
@@ -128,7 +127,7 @@ namespace KernelManagementJam
             return null;
         }
 
-        static int? TryIntValue(string fileName)
+        private static int? TryIntValue(string fileName)
         {
             var ret = TryLongValue(fileName);
             return ret.HasValue ? (int) ret.Value : (int?) null;
@@ -137,16 +136,16 @@ namespace KernelManagementJam
 
     public class BlockDeviceWithVolumes
     {
+        public BlockDeviceWithVolumes()
+        {
+            Volumes = new List<BlockVolumeInfo>();
+        }
+
         public string ShortKey { get; set; }
         public string DevFileType { get; set; }
 
         public BlockSnapshot Device { get; set; }
         public IList<BlockVolumeInfo> Volumes { get; set; }
-
-        public BlockDeviceWithVolumes()
-        {
-            Volumes = new List<BlockVolumeInfo>();
-        }
     }
 
     public class BlockVolumeInfo
@@ -160,7 +159,9 @@ namespace KernelManagementJam
     {
         public bool? IsReadonly { get; set; }
         public bool? IsRemovable { get; set; }
+
         public BlockStatistics Statistics { get; set; }
+
         // zero for unused loop-devices
         public long? Size { get; set; }
         public int? HwSectorSize { get; set; }
@@ -190,19 +191,25 @@ namespace KernelManagementJam
     {
         //0
         public long ReadOperations { get; set; }
+
         //1
         public long ReadOperationsMerged { get; set; }
+
         //2
         public long ReadSectors { get; set; }
+
         //3
         public long ReadWaitingMilliseconds { get; set; }
 
         //4
         public long WriteOperations { get; set; }
+
         //5
         public long WriteOperationsMerged { get; set; }
+
         //6
         public long WriteSectors { get; set; }
+
         //7
         public long WriteWaitingMilliseconds { get; set; }
 
@@ -210,29 +217,13 @@ namespace KernelManagementJam
 
         public static BlockStatistics Empty => new BlockStatistics();
 
-        public bool IsDead
-        {
-            get
-            {
-                return ReadOperations == 0 &&
-                       ReadOperationsMerged == 0 &&
-                       ReadSectors == 0 &&
-                       ReadWaitingMilliseconds == 0 &&
-                       WriteOperations == 0 &&
-                       WriteOperationsMerged == 0 &&
-                       WriteSectors == 0 &&
-                       WriteWaitingMilliseconds == 0;
-            }
-        }
-    }
-
-    // Similar to System.IO.DriveInfo and Mono.Unix.UnixDriveInfo
-    public class DriveDetails
-    {
-        public MountEntry MountEntry { get; set; }
-        public bool IsReady { get; set; }
-        public long FreeSpace { get; set; }
-        public long TotalSize { get; set; }
-        public string Format { get; set; }
+        public bool IsDead => ReadOperations == 0 &&
+                              ReadOperationsMerged == 0 &&
+                              ReadSectors == 0 &&
+                              ReadWaitingMilliseconds == 0 &&
+                              WriteOperations == 0 &&
+                              WriteOperationsMerged == 0 &&
+                              WriteSectors == 0 &&
+                              WriteWaitingMilliseconds == 0;
     }
 }

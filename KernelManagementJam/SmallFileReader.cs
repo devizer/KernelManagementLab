@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace KernelManagementJam
 {
-    class SmallFileReader
+    internal class SmallFileReader
     {
-        static readonly UTF8Encoding FileEncoding = new UTF8Encoding(false);
+        private static readonly UTF8Encoding FileEncoding = new UTF8Encoding(false);
 
         public static IEnumerable<string> ReadLines(string fileName)
         {
             string content;
-            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (StreamReader rdr = new StreamReader(fs, FileEncoding))
+            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var rdr = new StreamReader(fs, FileEncoding))
             {
                 content = rdr.ReadToEnd();
             }
 
-            StringReader lines = new StringReader(content);
-            string line = lines.ReadLine();
+            var lines = new StringReader(content);
+            var line = lines.ReadLine();
             while (line != null)
             {
                 yield return line;
@@ -31,12 +30,12 @@ namespace KernelManagementJam
         {
             if (!File.Exists(fileName))
             {
-                AppendSingleLinerLog(String.Format("[{0}] single-line file not found", fileName));
+                AppendSingleLinerLog(string.Format("[{0}] single-line file not found", fileName));
                 return null;
             }
 
-            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (StreamReader rdr = new StreamReader(fs, FileEncoding))
+            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var rdr = new StreamReader(fs, FileEncoding))
             {
                 var ret = rdr.ReadLine();
 
@@ -49,8 +48,8 @@ namespace KernelManagementJam
 
         private static void AppendSingleLinerLog(string logLine)
         {
-            using (FileStream dump = new FileStream("One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-            using (StreamWriter wr = new StreamWriter(dump, FileEncoding))
+            using (var dump = new FileStream("One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            using (var wr = new StreamWriter(dump, FileEncoding))
             {
                 wr.WriteLine(logLine);
             }
