@@ -11,6 +11,7 @@ namespace KernelManagementJam
     // Similar to System.IO.DriveInfo and Mono.Unix.UnixDriveInfo
     public class DriveDetails
     {
+        private const StringComparison CMP = System.StringComparison.CurrentCultureIgnoreCase;
         public MountEntry MountEntry { get; set; }
         public bool IsReady { get; set; }
         public long FreeSpace { get; set; }
@@ -23,29 +24,47 @@ namespace KernelManagementJam
         {
             get
             {
-                var fs = MountEntry?.FileSystem ?? "";
-                var d = MountEntry?.Device ?? "";
-                const StringComparison cmp = StringComparison.CurrentCultureIgnoreCase;
-                bool isNfs = fs.StartsWith("nfs", cmp);
-                bool isSsh = fs.IndexOf("sshfs", cmp) >= 0;
-                bool isCifs = fs.IndexOf("cifs", cmp) >= 0;
-                bool isFtp = d.IndexOf("ftpfs#", cmp) >= 0 || d.IndexOf("ftp://", cmp) >= 0 || d.IndexOf("ftps://", cmp) >= 0;
-                bool isWebDav = IsWebDav();
-                return isNfs || isSsh || isCifs || isFtp || isWebDav;
+                return IsNfs || IsSsh || IsCifs || IsFtp || IsWebDav;
             }
         }
 
-        bool IsWebDav()
+        private bool IsFtp
         {
-            try
+            get
             {
-                Uri u = new Uri(MountEntry?.Device ?? "");
-                const StringComparison cmp = StringComparison.CurrentCultureIgnoreCase;
-                return !string.IsNullOrEmpty(u.Host) && ("http".Equals(u.Scheme, cmp) || "https".Equals(u.Scheme, cmp));
+                return (MountEntry?.Device ?? "").IndexOf("ftpfs#", CMP) >= 0 || (MountEntry?.Device ?? "").IndexOf("ftp://", CMP) >= 0 ||
+                       (MountEntry?.Device ?? "").IndexOf("ftps://", CMP) >= 0;
             }
-            catch
+        }
+
+        private bool IsCifs
+        {
+            get { return (MountEntry?.FileSystem ?? "").IndexOf("cifs", CMP) >= 0; }
+        }
+
+        private bool IsSsh
+        {
+            get { return (MountEntry?.FileSystem ?? "").IndexOf("sshfs", CMP) >= 0; }
+        }
+
+        private bool IsNfs
+        {
+            get { return (MountEntry?.FileSystem ?? "").StartsWith("nfs", CMP); }
+        }
+
+        private bool IsWebDav
+        {
+            get
             {
-                return false;
+                try
+                {
+                    Uri u = new Uri(MountEntry?.Device ?? "");
+                    return !string.IsNullOrEmpty(u.Host) && ("http".Equals(u.Scheme, CMP) || "https".Equals(u.Scheme, CMP));
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
     }
