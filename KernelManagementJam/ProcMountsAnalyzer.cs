@@ -24,11 +24,12 @@ namespace KernelManagementJam
             get
             {
                 var fs = MountEntry?.FileSystem ?? "";
-                bool isNfs = fs.StartsWith("nfs");
+                var d = MountEntry?.Device ?? "";
                 const StringComparison cmp = StringComparison.CurrentCultureIgnoreCase;
+                bool isNfs = fs.StartsWith("nfs", cmp);
                 bool isSsh = fs.IndexOf("sshfs", cmp) >= 0;
                 bool isCifs = fs.IndexOf("cifs", cmp) >= 0;
-                bool isFtp = fs.IndexOf("ftpfs#", cmp) >= 0 || fs.IndexOf("ftp://", cmp) >= 0 || fs.IndexOf("ftps://", cmp) >= 0;
+                bool isFtp = d.IndexOf("ftpfs#", cmp) >= 0 || d.IndexOf("ftp://", cmp) >= 0 || d.IndexOf("ftps://", cmp) >= 0;
                 bool isWebDav = IsWebDav();
                 return isNfs || isSsh || isCifs || isFtp || isWebDav;
             }
