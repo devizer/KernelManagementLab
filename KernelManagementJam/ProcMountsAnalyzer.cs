@@ -72,6 +72,10 @@ namespace KernelManagementJam
                 var msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 if (details != null)
                 {
+                    UnixSymbolicLinkInfo sym = new UnixSymbolicLinkInfo(mount.Device);
+                    Console.WriteLine(sym.ContentsPath); //Will output something like ../../sda
+                    details.DeviceResolved = sym.ContentsPath;
+
                     if (!skipDetailsLog)
                         report.AddRow(
                             mount.Device, mount.FileSystem, mount.MountPath,
