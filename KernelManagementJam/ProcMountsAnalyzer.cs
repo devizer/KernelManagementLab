@@ -88,7 +88,7 @@ namespace KernelManagementJam
                         details.DebugInfo = new
                         {
                             sym.IsSymbolicLink,
-                            sym.IsBlockDevice,
+                            new UnixSymbolicLinkInfo(details.DeviceResolved).IsBlockDevice,
                         };
                     }
 
