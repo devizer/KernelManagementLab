@@ -3,72 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using Mono.Unix;
 using Newtonsoft.Json;
 
 namespace KernelManagementJam
 {
     // Similar to System.IO.DriveInfo and Mono.Unix.UnixDriveInfo
-    public class DriveDetails
-    {
-        private const StringComparison CMP = System.StringComparison.CurrentCultureIgnoreCase;
-        public MountEntry MountEntry { get; set; }
-        public bool IsReady { get; set; }
-        public long FreeSpace { get; set; }
-        public long TotalSize { get; set; }
-        public string Format { get; set; }
-
-        public bool IsTmpFs => (MountEntry?.FileSystem ?? "").EndsWith("tmpfs", StringComparison.InvariantCultureIgnoreCase);
-
-        public bool IsNetworkShare
-        {
-            get
-            {
-                return IsNfs || IsSsh || IsCifs || IsFtp || IsWebDav;
-            }
-        }
-
-        public bool IsFtp
-        {
-            get
-            {
-                return (MountEntry?.Device ?? "").IndexOf("ftpfs#", CMP) >= 0 || (MountEntry?.Device ?? "").IndexOf("ftp://", CMP) >= 0 ||
-                       (MountEntry?.Device ?? "").IndexOf("ftps://", CMP) >= 0;
-            }
-        }
-
-        public bool IsCifs
-        {
-            get { return (MountEntry?.FileSystem ?? "").IndexOf("cifs", CMP) >= 0; }
-        }
-
-        public bool IsSsh
-        {
-            get { return (MountEntry?.FileSystem ?? "").IndexOf("sshfs", CMP) >= 0; }
-        }
-
-        public bool IsNfs
-        {
-            get { return (MountEntry?.FileSystem ?? "").StartsWith("nfs", CMP); }
-        }
-
-        public bool IsWebDav
-        {
-            get
-            {
-                try
-                {
-                    Uri u = new Uri(MountEntry?.Device ?? "");
-                    return !string.IsNullOrEmpty(u.Host) && ("http".Equals(u.Scheme, CMP) || "https".Equals(u.Scheme, CMP));
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-    }
 
     public class ProcMountsAnalyzer
     {

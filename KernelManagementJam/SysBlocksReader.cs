@@ -77,7 +77,12 @@ namespace KernelManagementJam
             ret.LogicalBlockSize = TryIntValue(basePath + "/queue/logical_block_size");
             ret.PhysicalBlockSize = TryIntValue(basePath + "/queue/physical_block_size");
 
+
+
             ret.Statistics = ParseStatistic(basePath + "/stat");
+
+            ret.LoopBackingFile = SmallFileReader.ReadFirstLine(basePath + "/loop/backing_file");
+
 
             return ret;
         }
@@ -167,6 +172,11 @@ namespace KernelManagementJam
         public int? HwSectorSize { get; set; }
         public int? LogicalBlockSize { get; set; }
         public int? PhysicalBlockSize { get; set; }
+
+        // if not null then it is a loop block device
+        public string LoopBackingFile { get; set; }
+
+
     }
 
     /*
