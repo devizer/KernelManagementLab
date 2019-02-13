@@ -12,6 +12,11 @@ namespace MountLab
     {
         static void Main(string[] args)
         {
+            var path1 = Path.Combine("/one/two/three", "../target");
+            var path2 = Path.Combine("/one/two/three", "/target");
+            Console.WriteLine($"path1: [{path1}], path2: [{path2}]");
+
+
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
                 var blockDevices = SysBlocksReader.GetSnapshot();
