@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace KernelManagementJam
 {
@@ -73,6 +74,7 @@ namespace KernelManagementJam
             }
         }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public object DebugInfo { get; set; }
     }
 }
