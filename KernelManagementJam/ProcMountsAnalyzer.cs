@@ -72,7 +72,15 @@ namespace KernelManagementJam
                     }
                 }
                 else
+                {
                     error = new Exception("MountPath doesn't exist");
+//                    details = new DriveDetails
+//                    {
+//                        MountEntry = mount,
+//                        IsReady = false,
+//                    };
+
+                }
 
                 var msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 if (details != null)
