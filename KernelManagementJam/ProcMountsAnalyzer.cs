@@ -22,7 +22,7 @@ namespace KernelManagementJam
         {
             Stopwatch startAt = Stopwatch.StartNew();
             var report = new ConsoleTable(
-                "Device", "FS", "Path", // from /proc/mounts
+                "Device", "Block", "FS", "Path", // from /proc/mounts
                 "", "-Free", "-Total", "Type", "msec", ""
             );
 
@@ -82,7 +82,7 @@ namespace KernelManagementJam
 
                     if (!skipDetailsLog)
                         report.AddRow(
-                            mount.Device, mount.FileSystem, mount.MountPath,
+                            mount.Device, details.BlockDeviceResolved, mount.FileSystem, mount.MountPath,
                             details.IsReady ? "OK" : "--", Formatter.FormatBytes(details.FreeSpace), Formatter.FormatBytes(details.TotalSize),
                             details.Format, $"{msec:f2}"
                         );
@@ -95,7 +95,7 @@ namespace KernelManagementJam
 
                     if (!skipDetailsLog)
                         report.AddRow(
-                            mount.Device, mount.FileSystem, mount.MountPath,
+                            mount.Device, null, mount.FileSystem, mount.MountPath,
                             "--", "", "",
                             "", $"{msec:f2}", errorInfo
                         );
