@@ -83,16 +83,19 @@ namespace KernelManagementJam
                             var resolved = Path.Combine(mount.Device, sym.ContentsPath);
                             resolved = new DirectoryInfo(resolved).FullName;
                             details.DeviceResolved = resolved;
-
-                            details.DebugInfo = new
-                            {
-                                new UnixSymbolicLinkInfo(resolved).IsSymbolicLink,
-                                new UnixSymbolicLinkInfo(resolved).IsBlockDevice,
-                            };
-
                         }
-
                     }
+
+                    UnixFileSystemInfo info;
+                    if (UnixFileSystemInfo.TryGetFileSystemEntry(details.DeviceResolved, out info))
+                    {
+                        details.DebugInfo = new
+                        {
+                            DeviceIsBlockDevice = info.IsBlockDevice,
+                            DeviceIsSymbolicLink = info.IsSymbolicLink,
+                        };
+                    }
+
 
                     if (!skipDetailsLog)
                         report.AddRow(
