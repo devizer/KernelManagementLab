@@ -79,7 +79,10 @@ namespace KernelManagementJam
                     {
                         UnixSymbolicLinkInfo sym = new UnixSymbolicLinkInfo(mount.Device);
                         if (sym.IsSymbolicLink)
-                            details.DeviceResolved = sym.ContentsPath;
+                        {
+                            details.DeviceResolved = sym.ContentsPath + ": " + Path.Combine(mount.Device, details.DeviceResolved);
+                            ;
+                        }
                     }
 
                     if (!skipDetailsLog)
