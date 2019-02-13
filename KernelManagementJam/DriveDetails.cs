@@ -8,11 +8,16 @@ namespace KernelManagementJam
         private const StringComparison CMP = System.StringComparison.CurrentCultureIgnoreCase;
         public MountEntry MountEntry { get; set; }
         // Same as MountEntry.Device, but resolved and only if it is a block device
-        public string DeviceResolved { get; set; }
+        public string BlockDeviceResolved { get; set; }
         public bool IsReady { get; set; }
         public long FreeSpace { get; set; }
         public long TotalSize { get; set; }
         public string Format { get; set; }
+
+        public bool IsBlockDevice
+        {
+            get { return !string.IsNullOrEmpty(BlockDeviceResolved); }
+        }
 
         public bool IsTmpFs
         {

@@ -74,10 +74,10 @@ namespace KernelManagementJam
                 {
                     
                     Console.WriteLine($"Try {mount.Device}");
-                    details.DeviceResolved = null;
+                    details.BlockDeviceResolved = null;
                     var resolved = FileSystemHelper.Resolve(mount.Device);
                     if (FileSystemHelper.IsBlockDevice(resolved))
-                        details.DeviceResolved = resolved;
+                        details.BlockDeviceResolved = resolved;
 
 
                     if (!skipDetailsLog)
