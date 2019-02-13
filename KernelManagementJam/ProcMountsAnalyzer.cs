@@ -82,7 +82,7 @@ namespace KernelManagementJam
                         {
                             var resolved = Path.Combine(mount.Device, sym.ContentsPath);
                             resolved = new DirectoryInfo(resolved).FullName;
-                            Console.WriteLine($"mount.Device: {mount.Device}, sym.ContentsPath: {sym.ContentsPath}, resolved: {resolved}, resolved.FullName, {new DirectoryInfo(resolved).FullName}");
+                            Console.WriteLine($"mount.Device: {mount.Device}, isDirectory: {sym.IsDirectory}, sym.ContentsPath: {sym.ContentsPath}, resolved: {resolved}, resolved.FullName, {new DirectoryInfo(resolved).FullName}");
                             details.DeviceResolved = resolved;
                         }
                     }
