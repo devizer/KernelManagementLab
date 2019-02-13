@@ -53,5 +53,11 @@ namespace KernelManagementJam
 
             return false;
         }
+
+        public static bool Exists(string path)
+        {
+            return (File.Exists(path) || Directory.Exists(path));
+        }
+
     }
 }

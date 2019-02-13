@@ -33,41 +33,46 @@ namespace KernelManagementJam
                 string driveInfo = null;
                 var sw = Stopwatch.StartNew();
                 DriveDetails details = null;
-                try
+                if (FileSystemHelper.Exists(mount.MountPath))
                 {
-                    // TRY System.IO.DriveInfo
-                    var di = new DriveInfo(mount.MountPath);
-                    details = new DriveDetails
-                    {
-                        MountEntry = mount,
-                        IsReady = di.IsReady,
-                        Format = di.DriveType.ToString(),
-                        FreeSpace = di.TotalFreeSpace,
-                        TotalSize = di.TotalSize
-                    };
-                }
-                catch (Exception exNet)
-                {
-                    error = exNet;
-                    // TRY UnixDriveInfo 
                     try
                     {
-                        var di = new UnixDriveInfo(mount.MountPath);
+                        // TRY System.IO.DriveInfo
+                        var di = new DriveInfo(mount.MountPath);
                         details = new DriveDetails
                         {
                             MountEntry = mount,
-                            IsReady = di.IsReady && di.TotalSize > 0,
+                            IsReady = di.IsReady,
                             Format = di.DriveType.ToString(),
                             FreeSpace = di.TotalFreeSpace,
                             TotalSize = di.TotalSize
                         };
-                        error = null;
                     }
-                    catch (Exception exUnix)
+                    catch (Exception exNet)
                     {
-                        // error = exUnix;
+                        error = exNet;
+                        // TRY UnixDriveInfo 
+                        try
+                        {
+                            var di = new UnixDriveInfo(mount.MountPath);
+                            details = new DriveDetails
+                            {
+                                MountEntry = mount,
+                                IsReady = di.IsReady && di.TotalSize > 0,
+                                Format = di.DriveType.ToString(),
+                                FreeSpace = di.TotalFreeSpace,
+                                TotalSize = di.TotalSize
+                            };
+                            error = null;
+                        }
+                        catch (Exception exUnix)
+                        {
+                            // error = exUnix;
+                        }
                     }
                 }
+                else
+                    error = new Exception("MountPath doesn't exist");
 
                 var msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 if (details != null)
