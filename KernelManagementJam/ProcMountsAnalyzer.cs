@@ -72,9 +72,14 @@ namespace KernelManagementJam
                 var msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 if (details != null)
                 {
-                    UnixSymbolicLinkInfo sym = new UnixSymbolicLinkInfo(mount.Device);
+                    
                     Console.WriteLine($"Try {mount.Device}");
-                    details.DeviceResolved = sym.IsSymbolicLink ? sym.ContentsPath : mount.Device;
+                    details.DeviceResolved = mount.Device;
+                    if (Directory.Exists(details.DeviceResolved) || File.Exists(details.DeviceResolved))
+                    {
+                        UnixSymbolicLinkInfo sym = new UnixSymbolicLinkInfo(mount.Device);
+                        details.DeviceResolved = sym.ContentsPath;
+                    }
 
                     if (!skipDetailsLog)
                         report.AddRow(
