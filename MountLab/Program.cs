@@ -33,10 +33,10 @@ namespace MountLab
             Func<string, string> asCurrentPath = x => x.Replace("/", Path.DirectorySeparatorChar.ToString());
             var path1 = Path.Combine(asCurrentPath("/one/two/three"), asCurrentPath("../target"));
             var path2 = Path.Combine(asCurrentPath("/one/two/three"), asCurrentPath("/target"));
-            Console.WriteLine($"path1: [{path1}], path2: [{path2}]");
+            DebugDumper.Trace($"path1: [{path1}], path2: [{path2}]");
             var path1abs = new DirectoryInfo(path1).FullName;
             var path2abs = new DirectoryInfo(path2).FullName;
-            Console.WriteLine($"path1 abs: [{path1abs}], path2 ans: [{path2abs}]");
+            DebugDumper.Trace($"path1 abs: [{path1abs}], path2 ans: [{path2abs}]");
         }
 
         private static void DumpManagedDrives()
