@@ -73,8 +73,8 @@ namespace KernelManagementJam
                 if (details != null)
                 {
                     UnixSymbolicLinkInfo sym = new UnixSymbolicLinkInfo(mount.Device);
-                    Console.WriteLine(sym.ContentsPath); //Will output something like ../../sda
-                    details.DeviceResolved = sym.ContentsPath;
+                    Console.WriteLine($"Try {mount.Device}");
+                    details.DeviceResolved = sym.IsSymbolicLink ? sym.ContentsPath : mount.Device;
 
                     if (!skipDetailsLog)
                         report.AddRow(
