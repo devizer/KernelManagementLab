@@ -105,9 +105,9 @@ namespace MountLab
             Func<DriveDetails, bool> isBlock = x => x.MountEntry.Device.StartsWith("/dev/");
             var args = new[]
             {
-                new {Title = "Block-Volumes", Predicate = isBlock},
-                new {Title = "Net-Volumes", Predicate = isNetwork},
-                new {Title = "Ram-Disks", Predicate = isRam},
+                new {Title = "Vols-Block", Predicate = isBlock},
+                new {Title = "Vols-Net", Predicate = isNetwork},
+                new {Title = "Vols-Ram", Predicate = isRam},
             };
 
             foreach (var volType in args)
