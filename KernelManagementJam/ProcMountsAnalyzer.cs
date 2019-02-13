@@ -78,7 +78,8 @@ namespace KernelManagementJam
                     if (Directory.Exists(details.DeviceResolved) || File.Exists(details.DeviceResolved))
                     {
                         UnixSymbolicLinkInfo sym = new UnixSymbolicLinkInfo(mount.Device);
-                        details.DeviceResolved = sym.ContentsPath;
+                        if (sym.IsSymbolicLink)
+                            details.DeviceResolved = sym.ContentsPath;
                     }
 
                     if (!skipDetailsLog)
