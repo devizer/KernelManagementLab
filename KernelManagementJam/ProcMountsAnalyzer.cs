@@ -87,12 +87,14 @@ namespace KernelManagementJam
                     }
 
                     UnixFileSystemInfo info;
+                    if (File.Exists(details.DeviceResolved) || Directory.Exists(details.DeviceResolved))
                     if (UnixFileSystemInfo.TryGetFileSystemEntry(details.DeviceResolved, out info))
                     {
                         details.DebugInfo = new
                         {
                             DeviceIsBlockDevice = info.IsBlockDevice,
                             DeviceIsSymbolicLink = info.IsSymbolicLink,
+                            info.IsDirectory,
                         };
                     }
 
