@@ -36,11 +36,11 @@ namespace KernelManagementJam
                 var i = new UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name);
                 var blockDevice = new BlockDeviceWithVolumes
                 {
-                    ShortKey = sysBlockFolder.Name,
+                    DiskKey = sysBlockFolder.Name,
                     DevFileType = i.FileType.ToString()
                 };
 
-                blockDevice.Device = ParseSnapshot(SysBlockPath + "/" + blockDevice.ShortKey);
+                blockDevice.Device = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
 
                 if ((blockDevice.Device.Size ?? 0) > 0)
                 {
@@ -50,11 +50,11 @@ namespace KernelManagementJam
                     {
                         var blockVolumeInfo = new BlockVolumeInfo
                         {
-                            DevKey = sysBlockFolder.Name,
+                            DiskKey = sysBlockFolder.Name,
                             VolumeKey = volumesFolder.Name
                         };
 
-                        blockVolumeInfo.Volume = ParseSnapshot(SysBlockPath + "/" + blockDevice.ShortKey + "/" + blockVolumeInfo.VolumeKey);
+                        blockVolumeInfo.Volume = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey + "/" + blockVolumeInfo.VolumeKey);
                         blockDevice.Volumes.Add(blockVolumeInfo);
                     }
 
@@ -93,7 +93,7 @@ namespace KernelManagementJam
             if (firstLine == null) return BlockStatistics.Empty;
 
             var rawColumns = firstLine.Trim().Split(' ').Where(x => x.Length > 0);
-            var columns = new List<long>(8);
+            var columns = new List<long>(15);
             foreach (var rawColumn in rawColumns)
             {
                 if (!long.TryParse(rawColumn, out var column))
@@ -102,7 +102,7 @@ namespace KernelManagementJam
                 columns.Add(column);
             }
 
-            return new BlockStatistics
+            var blockStatistics = new BlockStatistics
             {
                 ReadOperations = columns[0],
                 ReadOperationsMerged = columns[1],
@@ -114,6 +114,17 @@ namespace KernelManagementJam
                 WriteWaitingMilliseconds = columns[7],
                 IsValid = true
             };
+
+            int pos = 7, columnsCount = columns.Count;
+            if (++pos < columnsCount) blockStatistics.InFlightRequests = columns[pos];
+            if (++pos < columnsCount) blockStatistics.IoMilliseconds = columns[pos];
+            if (++pos < columnsCount) blockStatistics.TimeInQueue = columns[pos];
+            if (++pos < columnsCount) blockStatistics.DiscardRequests = columns[pos];
+            if (++pos < columnsCount) blockStatistics.DiscardMerges = columns[pos];
+            if (++pos < columnsCount) blockStatistics.DiscardSectors = columns[pos];
+            if (++pos < columnsCount) blockStatistics.DiscardTicks = columns[pos];
+
+            return blockStatistics;
         }
 
 
@@ -146,7 +157,7 @@ namespace KernelManagementJam
             Volumes = new List<BlockVolumeInfo>();
         }
 
-        public string ShortKey { get; set; }
+        public string DiskKey { get; set; }
         public string DevFileType { get; set; }
 
         public BlockSnapshot Device { get; set; }
@@ -155,7 +166,7 @@ namespace KernelManagementJam
 
     public class BlockVolumeInfo
     {
-        public string DevKey { get; set; }
+        public string DiskKey { get; set; }
         public string VolumeKey { get; set; }
         public BlockSnapshot Volume { get; set; }
     }
@@ -222,6 +233,30 @@ namespace KernelManagementJam
 
         //7
         public long WriteWaitingMilliseconds { get; set; }
+
+        // 8
+        public long InFlightRequests { get; set; }
+
+        // 9
+        public long IoMilliseconds { get; set; }
+
+        // 10. milliseconds,  total wait time for all requests
+        public long? TimeInQueue { get; set; }
+
+        // 11. number of discard I/Os processed
+        public long? DiscardRequests { get; set; }
+
+        // 12. requests, number of discard I/Os merged with in-queue I/O
+        public long? DiscardMerges { get; set; }
+
+        // 13. number of sectors discarded
+        public long? DiscardSectors { get; set; }
+
+        // 14. milliseconds,  total wait time for discard requests
+        public long? DiscardTicks { get; set; }
+
+
+
 
         public bool IsValid { get; set; }
 
