@@ -70,6 +70,7 @@ namespace KernelManagementJam
                             v = v + pad;
                     }
 
+                    if (x == cols - 1) v = (v ?? "").TrimEnd();
                     ret.Append(v);
                 }
 
