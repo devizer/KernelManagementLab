@@ -85,8 +85,7 @@ namespace KernelManagementJam
                 var msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 if (details != null)
                 {
-                    
-                    Console.WriteLine($"Try {mount.Device}");
+                    // Console.WriteLine($"Try {mount.Device}");
                     details.BlockDeviceResolved = null;
                     var resolved = FileSystemHelper.Resolve(mount.Device);
                     if (FileSystemHelper.IsBlockDevice(resolved))
