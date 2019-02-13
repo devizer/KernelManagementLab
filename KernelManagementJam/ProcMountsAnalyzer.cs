@@ -74,30 +74,10 @@ namespace KernelManagementJam
                 {
                     
                     Console.WriteLine($"Try {mount.Device}");
-                    details.DeviceResolved = mount.Device;
-                    if (Directory.Exists(details.DeviceResolved) || File.Exists(details.DeviceResolved))
-                    {
-                        UnixSymbolicLinkInfo sym = new UnixSymbolicLinkInfo(mount.Device);
-                        if (sym.IsSymbolicLink)
-                        {
-                            var resolved = Path.Combine(mount.Device, sym.ContentsPath);
-                            resolved = new DirectoryInfo(resolved).FullName;
-                            Console.WriteLine($"mount.Device: {mount.Device}, isDirectory: {sym.IsDirectory}, sym.ContentsPath: {sym.ContentsPath}, resolved: {resolved}, resolved.FullName, {new DirectoryInfo(resolved).FullName}");
-                            details.DeviceResolved = resolved;
-                        }
-                    }
-
-                    UnixFileSystemInfo info;
-                    if (File.Exists(details.DeviceResolved) || Directory.Exists(details.DeviceResolved))
-                    if (UnixFileSystemInfo.TryGetFileSystemEntry(details.DeviceResolved, out info))
-                    {
-                        details.DebugInfo = new
-                        {
-                            DeviceIsBlockDevice = info.IsBlockDevice,
-                            DeviceIsSymbolicLink = info.IsSymbolicLink,
-                            info.IsDirectory,
-                        };
-                    }
+                    details.DeviceResolved = null;
+                    var resolved = FileSystemHelper.Resolve(mount.Device);
+                    if (FileSystemHelper.IsBlockDevice(resolved))
+                        details.DeviceResolved = resolved;
 
 
                     if (!skipDetailsLog)
