@@ -72,5 +72,7 @@ namespace KernelManagementJam
                 }
             }
         }
+
+        public object DebugInfo { get; set; }
     }
 }

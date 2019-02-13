@@ -84,6 +84,12 @@ namespace KernelManagementJam
                             resolved = new DirectoryInfo(resolved).FullName;
                             details.DeviceResolved = resolved;
                         }
+
+                        details.DebugInfo = new
+                        {
+                            sym.IsSymbolicLink,
+                            sym.IsBlockDevice,
+                        };
                     }
 
                     if (!skipDetailsLog)
