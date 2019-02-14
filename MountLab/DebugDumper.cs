@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
@@ -45,6 +46,7 @@ namespace MountLab
 
         }
 
+        [Conditional("DEBUG")]
         public static void Trace(string info)
         {
             using (FileStream dump = new FileStream("app.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))

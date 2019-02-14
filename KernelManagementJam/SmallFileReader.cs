@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -46,6 +47,7 @@ namespace KernelManagementJam
             }
         }
 
+        [Conditional("DEBUG")]
         private static void AppendSingleLinerLog(string logLine)
         {
             using (var dump = new FileStream("One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
