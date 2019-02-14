@@ -30,7 +30,6 @@ namespace KernelManagementJam
             foreach (var mount in mountEntries)
             {
                 Exception error = null;
-                string driveInfo = null;
                 var sw = Stopwatch.StartNew();
                 DriveDetails details = null;
                 if (FileSystemHelper.Exists(mount.MountPath))
@@ -67,7 +66,7 @@ namespace KernelManagementJam
                         }
                         catch (Exception exUnix)
                         {
-                            // error = exUnix;
+                            Debug.WriteLine($"Information! Nigher Managed DriveInfo or UnixDriveInfo can't proceed a MountPath {mount.MountPath}{Environment.NewLine}{exUnix}");
                         }
                     }
                 }

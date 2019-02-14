@@ -115,8 +115,7 @@ namespace MountLab
             Console.WriteLine(logDetails);
             Console.WriteLine(analyz.RawDetailsLog);
 
-            DebugDumper.DumpText(logDetails + analyz.RawDetailsLog, "ProcMountsAnalyzer.report");
-
+            DebugDumper.DumpText(logDetails + Environment.NewLine + analyz.RawDetailsLog, "ProcMountsAnalyzer.report");
             DebugDumper.Dump(analyz, "ProcMountsAnalyzer.js");
 
             // Group by
@@ -135,8 +134,6 @@ namespace MountLab
                 var filtered = analyz.Details.Where(volType.Predicate).ToList();
                 DebugDumper.Dump(filtered, volType.Title + ".js");
             }
-
-
 
         }
 
