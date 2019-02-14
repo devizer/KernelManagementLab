@@ -29,6 +29,15 @@ namespace MountLab
             }
         }
 
+        public static void DumpText(string content, string fileName)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+            using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
+            {
+                wr.Write(content);
+            }
+        }
+
         public static string AsJson(this object arg)
         {
             JsonSerializer ser = new JsonSerializer()
