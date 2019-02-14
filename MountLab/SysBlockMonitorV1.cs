@@ -64,7 +64,7 @@ namespace MountLab
                     int volIndex = 0;
                     foreach (var vol in block.Volumes)
                     {
-                        bool isLast = volIndex < block.Volumes.Count;
+                        bool isLast = ++volIndex == block.Volumes.Count;
                         var prevVol = prevBlock.Volumes.Where(x => vol.VolumeKey.Equals(x.VolumeKey)).FirstOrDefault();
                         if (prevVol == null) continue;
 
