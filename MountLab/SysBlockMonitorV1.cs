@@ -69,7 +69,7 @@ namespace MountLab
                         if (prevVol == null) continue;
 
 
-                        List<object> cellsOfVol = new List<object> { null, (isLast ? " └── " : " ├── ") + vol.VolumeKey, null };
+                        List<object> cellsOfVol = new List<object> { null, (isLast ? " └─ " : " ├─ ") + vol.VolumeKey, null };
                         AddStat(cellsOfVol, vol, prevVol, duration);
                         report.AddRow(cellsOfVol.ToArray());
                     }
