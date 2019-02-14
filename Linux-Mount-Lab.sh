@@ -9,4 +9,5 @@ nuget restore *.sln; \
 if [ "$(command -v msbuild)" == "" ]; then cmd=xbuild; else cmd=msbuild; fi; echo Building using [$cmd]; \
 eval time $cmd /t:Rebuild /p:Configuration=Release /v:m; \
 cd MountLab/bin/Release; \
+bash repack.sh; \
 pdb2mdb KernelManagementJam.dll; mono MountLab.exe Monitor-V1
