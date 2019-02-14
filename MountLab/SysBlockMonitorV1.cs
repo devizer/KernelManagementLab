@@ -68,7 +68,7 @@ namespace MountLab
 
                         List<object> cellsOfVol = new List<object> { null, " |-- " + vol.VolumeKey, null };
                         AddStat(cellsOfVol, vol, prevVol, duration);
-                        report.AddRow(cellsOfDisk.ToArray());
+                        report.AddRow(cellsOfVol.ToArray());
                     }
                 }
 
