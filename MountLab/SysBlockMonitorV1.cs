@@ -27,27 +27,27 @@ namespace MountLab
 
                 ConsoleTable report = new ConsoleTable("", "Dev", "Mount",
                     "-RdOps",
-                    "-±RdOps",
+                    "-±",
                     "-RdOps-M",
-                    "-±RdOps-M",
+                    "-±",
                     "-RdSct",
-                    "-±RdSct",
+                    "-±",
                     "-RdWait",
-                    "-±RdWait",
+                    "-±",
                     "-WrOps",
-                    "-±WrOps",
+                    "-±",
                     "-WrOps-M",
-                    "-±WrOps-M",
+                    "-±",
                     "-WrSct",
-                    "-±WrSct",
+                    "-±",
                     "-WrWait",
-                    "-±WrWait",
+                    "-±",
                     "-QueReqs",
-                    "-±QueReqs",
+                    "-±",
                     "-mSec",
-                    "-±mSec",
+                    "-±",
                     "-TimeInQueue",
-                    "-±TimeInQueue"
+                    "-±"
                 );
 
                 int pos = 0;
