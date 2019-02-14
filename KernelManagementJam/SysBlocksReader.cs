@@ -15,7 +15,17 @@ namespace KernelManagementJam
      */
     public class SysBlocksReader
     {
-        private static readonly string SysBlockPath = "/sys/block";
+        private static bool IsFakeLinux => Environment.OSVersion.Platform == PlatformID.Win32NT;
+
+        private static string SysBlockPath
+        {
+            get
+            {
+                return IsFakeLinux
+                    ? "pseudo-root/sys/block"
+                    : "/sys/block";
+            }
+        } 
 
         public static List<WithDeviceWithVolumes> GetSnapshot()
         {
@@ -33,11 +43,14 @@ namespace KernelManagementJam
 
             foreach (var sysBlockFolder in sysBlockFolders)
             {
-                var i = new UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name);
+                var devFileType = IsFakeLinux
+                    ? "BlockDevice"
+                    : new UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name).FileType.ToString();
+
                 var blockDevice = new WithDeviceWithVolumes
                 {
                     DiskKey = sysBlockFolder.Name,
-                    DevFileType = i.FileType.ToString()
+                    DevFileType = devFileType
                 };
 
                 blockDevice.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using KernelManagementJam;
@@ -11,6 +12,13 @@ namespace MountLab
     {
         public static void RunMonV1()
         {
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                try {  Directory.Delete("pseudo-root", true);}
+                catch { }
+                System.IO.Compression.ZipFile.ExtractToDirectory("pseudo-root.zip", ".");
+            }
+
             Stopwatch sw = Stopwatch.StartNew();
             List<WithDeviceWithVolumes> prev = SysBlocksReader.GetSnapshot();
             var prevTicks = sw.ElapsedTicks;
