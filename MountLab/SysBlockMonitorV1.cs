@@ -15,6 +15,8 @@ namespace MountLab
             var prevGrouped = AsDictionary(prev, x => x.DiskKey);
             var prevTicks = sw.ElapsedTicks;
 
+            Console.Clear();
+
             while (true)
             {
                 Thread.Sleep(1);
