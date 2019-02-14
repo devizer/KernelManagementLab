@@ -72,6 +72,7 @@ namespace MountLab
                 }
 
                 var reportAsString = report.ToString();
+                Console.Clear();
                 Console.SetCursorPosition(0,0);
                 Console.WriteLine(reportAsString);
 
