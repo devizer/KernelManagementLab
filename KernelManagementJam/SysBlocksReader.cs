@@ -17,9 +17,9 @@ namespace KernelManagementJam
     {
         private static readonly string SysBlockPath = "/sys/block";
 
-        public static List<BlockDeviceWithVolumes> GetSnapshot()
+        public static List<WithDeviceWithVolumes> GetSnapshot()
         {
-            var ret = new List<BlockDeviceWithVolumes>();
+            var ret = new List<WithDeviceWithVolumes>();
             DirectoryInfo[] sysBlockFolders;
             try
             {
@@ -34,27 +34,27 @@ namespace KernelManagementJam
             foreach (var sysBlockFolder in sysBlockFolders)
             {
                 var i = new UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name);
-                var blockDevice = new BlockDeviceWithVolumes
+                var blockDevice = new WithDeviceWithVolumes
                 {
                     DiskKey = sysBlockFolder.Name,
                     DevFileType = i.FileType.ToString()
                 };
 
-                blockDevice.Device = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
+                blockDevice.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
 
-                if ((blockDevice.Device.Size ?? 0) > 0)
+                if ((blockDevice.StatisticSnapshot.Size ?? 0) > 0)
                 {
                     var di = new DirectoryInfo(SysBlockPath + "/" + sysBlockFolder.Name);
                     var volumesFolders = di.GetDirectories(sysBlockFolder.Name + "*");
                     foreach (var volumesFolder in volumesFolders)
                     {
-                        var blockVolumeInfo = new BlockVolumeInfo
+                        var blockVolumeInfo = new WithVolumeInfo
                         {
                             DiskKey = sysBlockFolder.Name,
                             VolumeKey = volumesFolder.Name
                         };
 
-                        blockVolumeInfo.Volume = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey + "/" + blockVolumeInfo.VolumeKey);
+                        blockVolumeInfo.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey + "/" + blockVolumeInfo.VolumeKey);
                         blockDevice.Volumes.Add(blockVolumeInfo);
                     }
 
@@ -150,25 +150,30 @@ namespace KernelManagementJam
         }
     }
 
-    public class BlockDeviceWithVolumes
+    public interface IWithStatisticSnapshot
     {
-        public BlockDeviceWithVolumes()
+        BlockSnapshot StatisticSnapshot { get; set; }
+    }
+
+    public class WithDeviceWithVolumes : IWithStatisticSnapshot
+    {
+        public WithDeviceWithVolumes()
         {
-            Volumes = new List<BlockVolumeInfo>();
+            Volumes = new List<WithVolumeInfo>();
         }
 
         public string DiskKey { get; set; }
         public string DevFileType { get; set; }
 
-        public BlockSnapshot Device { get; set; }
-        public IList<BlockVolumeInfo> Volumes { get; set; }
+        public BlockSnapshot StatisticSnapshot { get; set; }
+        public IList<WithVolumeInfo> Volumes { get; set; }
     }
 
-    public class BlockVolumeInfo
+    public class WithVolumeInfo : IWithStatisticSnapshot
     {
         public string DiskKey { get; set; }
         public string VolumeKey { get; set; }
-        public BlockSnapshot Volume { get; set; }
+        public BlockSnapshot StatisticSnapshot { get; set; }
     }
 
     public struct BlockSnapshot

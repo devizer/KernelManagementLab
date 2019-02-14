@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using KernelManagementJam;
 
@@ -11,7 +12,7 @@ namespace MountLab
         public static void RunMonV1()
         {
             Stopwatch sw = Stopwatch.StartNew();
-            List<BlockDeviceWithVolumes> prev = SysBlocksReader.GetSnapshot();
+            List<WithDeviceWithVolumes> prev = SysBlocksReader.GetSnapshot();
             var prevTicks = sw.ElapsedTicks;
             var prevGrouped = AsDictionary(prev, x => x.DiskKey);
 
@@ -21,7 +22,7 @@ namespace MountLab
             {
                 Thread.Sleep(1);
 
-                List<BlockDeviceWithVolumes> next = SysBlocksReader.GetSnapshot();
+                List<WithDeviceWithVolumes> next = SysBlocksReader.GetSnapshot();
                 var nextTicks = sw.ElapsedTicks;
                 var duration = (nextTicks - prevTicks) / (double) Stopwatch.Frequency;
 
@@ -51,24 +52,24 @@ namespace MountLab
                 );
 
                 int pos = 0;
-                foreach (BlockDeviceWithVolumes block in next)
+                foreach (WithDeviceWithVolumes block in next)
                 {
                     pos++;
                     var isFound = prevGrouped.TryGetValue(block.DiskKey, out var prevBlock);
                     if (!isFound) continue;
-                    List<object> cells = new List<object> {pos, block.DiskKey, null};
-                    Add(cells, x => x.ReadOperations, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.ReadOperationsMerged, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.ReadSectors, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.ReadWaitingMilliseconds, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.WriteOperations, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.WriteOperationsMerged, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.WriteSectors, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.WriteWaitingMilliseconds, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.InFlightRequests, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.IoMilliseconds, block.Device, prevBlock.Device, duration);
-                    Add(cells, x => x.TimeInQueue, block.Device, prevBlock.Device, duration);
-                    report.AddRow(cells.ToArray());
+                    List<object> cellsOfDisk = new List<object> {pos, block.DiskKey, null};
+                    AddStat(cellsOfDisk, block, prevBlock, duration);
+                    report.AddRow(cellsOfDisk.ToArray());
+
+                    foreach (var vol in block.Volumes)
+                    {
+                        var prevVol = prevBlock.Volumes.Where(x => vol.VolumeKey.Equals(x.VolumeKey)).FirstOrDefault();
+                        if (prevVol == null) continue;
+
+                        List<object> cellsOfVol = new List<object> { null, " |-- " + vol.VolumeKey, null };
+                        AddStat(cellsOfVol, vol, prevVol, duration);
+                        report.AddRow(cellsOfDisk.ToArray());
+                    }
                 }
 
                 var reportAsString = report.ToString();
@@ -83,6 +84,21 @@ namespace MountLab
 
                 Thread.Sleep(1000);
             }
+        }
+
+        static void AddStat(List<object> cells, IWithStatisticSnapshot next, IWithStatisticSnapshot prev, double duration)
+        {
+            Add(cells, x => x.ReadOperations, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.ReadOperationsMerged, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.ReadSectors, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.ReadWaitingMilliseconds, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.WriteOperations, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.WriteOperationsMerged, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.WriteSectors, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.WriteWaitingMilliseconds, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.InFlightRequests, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.IoMilliseconds, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            Add(cells, x => x.TimeInQueue, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
         }
 
         static List<object> Add(List<object> cells, Func<BlockStatistics, long> field, BlockSnapshot next, BlockSnapshot prev, double duration)
