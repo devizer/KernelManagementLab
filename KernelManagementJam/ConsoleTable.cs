@@ -43,7 +43,7 @@ namespace KernelManagementJam
             copy.Add(header.Select(x => Convert.ToString(x)).ToList());
             copy.AddRange(content);
             var cols = copy.Max(x => x.Count);
-            var width = Enumerable.Repeat(3, cols).ToList();
+            var width = Enumerable.Repeat(1, cols).ToList();
             for (var y = 0; y < copy.Count; y++)
             {
                 var row = copy[y];
