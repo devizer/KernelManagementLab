@@ -85,7 +85,7 @@ namespace MountLab
             }
         }
 
-        static List<object> Add(List<object> cells, Func<BlockStatistics, long> field, BlockSnapshot prev, BlockSnapshot next)
+        static List<object> Add(List<object> cells, Func<BlockStatistics, long> field, BlockSnapshot next, BlockSnapshot prev)
         {
             long nextValue = field(next.Statistics);
             long prevValue = field(prev.Statistics);
@@ -94,7 +94,7 @@ namespace MountLab
             return cells;
         }
 
-        static List<object> Add(List<object> cells, Func<BlockStatistics, long?> field, BlockSnapshot prev, BlockSnapshot next)
+        static List<object> Add(List<object> cells, Func<BlockStatistics, long?> field, BlockSnapshot next, BlockSnapshot prev)
         {
             long? nextValue = field(next.Statistics);
             long? prevValue = field(prev.Statistics);
