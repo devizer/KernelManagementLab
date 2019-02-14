@@ -93,7 +93,7 @@ namespace MountLab
                 prevGrouped = AsDictionary(prev, x => x.DiskKey);
 
 
-                Thread.Sleep(55);
+                Thread.Sleep(1000);
             }
         }
 
