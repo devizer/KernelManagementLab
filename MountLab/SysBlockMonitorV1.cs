@@ -8,7 +8,7 @@ namespace MountLab
 {
     class SysBlockMonitorV1
     {
-        public static void Run()
+        public static void RunMonV1()
         {
             Stopwatch sw = Stopwatch.StartNew();
             List<BlockDeviceWithVolumes> prev = SysBlocksReader.GetSnapshot();
@@ -74,6 +74,11 @@ namespace MountLab
                 var reportAsString = report.ToString();
                 Console.SetCursorPosition(0,0);
                 Console.WriteLine(reportAsString);
+
+                prev = next;
+                prevGrouped = AsDictionary(prev, x => x.DiskKey);
+                prevTicks = nextTicks;
+
 
                 Thread.Sleep(1000);
             }
