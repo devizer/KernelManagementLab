@@ -90,7 +90,7 @@ namespace MountLab
             long nextValue = field(next.Statistics);
             long prevValue = field(prev.Statistics);
             cells.Add(nextValue);
-            cells.Add(nextValue - prevValue);
+            cells.Add(Convert.ToInt64((nextValue - prevValue) / duration));
             return cells;
         }
 
@@ -99,7 +99,7 @@ namespace MountLab
             long? nextValue = field(next.Statistics);
             long? prevValue = field(prev.Statistics);
             cells.Add(nextValue.HasValue ? nextValue.Value : (object) null);
-            cells.Add(nextValue.HasValue ? (nextValue.Value - prevValue.Value) : (object) null);
+            cells.Add(nextValue.HasValue ? Convert.ToInt64((nextValue.Value - prevValue.Value)/duration) : (object) null);
             return cells;
         }
 
