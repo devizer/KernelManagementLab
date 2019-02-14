@@ -25,6 +25,9 @@ namespace MountLab
             DumpManagedDrives();
             DumpUnixDrives();
             DumpUnixDriveInfo();
+
+            if ("Monitor-V1".Equals(args.FirstOrDefault(), StringComparison.InvariantCultureIgnoreCase))
+                SysBlockMonitorV1.Run();
         }
 
         private static void PathNormalizationLab()
