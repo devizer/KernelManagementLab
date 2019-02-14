@@ -30,40 +30,6 @@ namespace KernelManagementJam
 
         public static string ReadFirstLine(string fileName)
         {
-            try
-            {
-                using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                using (var rdr = new StreamReader(fs, FileEncoding))
-                {
-                    var ret = rdr.ReadLine();
-                    return ret;
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-            if (!File.Exists(fileName))
-            {
-                AppendSingleLinerLog(string.Format("[{0}] single-line file not found", fileName));
-                return null;
-            }
-
-            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (var rdr = new StreamReader(fs, FileEncoding))
-            {
-                var ret = rdr.ReadLine();
-
-                var logLine = string.Format("[{0}] first line: '{1}'", fileName, ret);
-                AppendSingleLinerLog(logLine);
-
-                return ret;
-            }
-        }
-
-        public static string ReadFirstLine_Slow(string fileName)
-        {
             if (!File.Exists(fileName))
             {
                 AppendSingleLinerLog(string.Format("[{0}] single-line file not found", fileName));
