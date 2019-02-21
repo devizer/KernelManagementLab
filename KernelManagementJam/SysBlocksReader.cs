@@ -109,10 +109,11 @@ namespace KernelManagementJam
             var columns = new List<long>(15);
             foreach (var rawColumn in rawColumns)
             {
-                if (!long.TryParse(rawColumn, out var column))
+                long columnValue;
+                if (!long.TryParse(rawColumn, out columnValue))
                     Trace.WriteLine($"Invalid block device value '{firstLine}' from file [{filePath}]");
 
-                columns.Add(column);
+                columns.Add(columnValue);
             }
 
             var blockStatistics = new BlockStatistics
@@ -150,7 +151,8 @@ namespace KernelManagementJam
         private static long? TryLongValue(string fileName)
         {
             var raw = SmallFileReader.ReadFirstLine(fileName);
-            if (raw != null && long.TryParse(raw, out var size))
+            long size;
+            if (raw != null && long.TryParse(raw, out size))
                 return size;
 
             return null;
