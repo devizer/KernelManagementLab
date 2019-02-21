@@ -63,7 +63,8 @@ namespace MountLab
                 foreach (WithDeviceWithVolumes block in next)
                 {
                     pos++;
-                    var isFound = prevGrouped.TryGetValue(block.DiskKey, out var prevBlock);
+                    WithDeviceWithVolumes prevBlock;
+                    var isFound = prevGrouped.TryGetValue(block.DiskKey, out prevBlock);
                     if (!isFound) continue;
                     List<object> cellsOfDisk = new List<object> {pos, block.DiskKey, null};
                     AddStat(cellsOfDisk, block, prevBlock, duration);
