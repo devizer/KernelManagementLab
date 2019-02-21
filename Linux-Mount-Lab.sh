@@ -7,9 +7,9 @@ cd KernelManagementLab; \
 git pull; \
 nuget restore *.sln; \
 if [ "$(command -v msbuild)" == "" ]; then cmd=xbuild; else cmd=msbuild; fi; echo Building using [$cmd]; \
-eval time xbuild4 /t:Rebuild /p:Configuration=Release /v:m; \
-cd MountLab/bin/Release; \
+eval time xbuild /t:Rebuild /p:Configuration=Release /v:m; \
+cd MountLab/bin/Release; pdb2mdb *.exe *.dll; \
 bash repack.sh; \
-cd ..; mono --profile=log:noalloc MountLab.exe Monitor-V1
+cd .; mono --profile=log:noalloc MountLab.exe Monitor-V1
 
 # pdb2mdb KernelManagementJam.dll; mono MountLab.exe Monitor-V1
