@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MountLab", "MountLab\MountL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KernelManagementJam", "KernelManagementJam\KernelManagementJam.csproj", "{70135162-6D76-4F89-8805-743FC7A8A67F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.Dashboard", "Universe.Dashboard\Universe.Dashboard.csproj", "{59AF751A-1F00-4753-8C2D-1A9B67B187B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,12 +51,20 @@ Global
 		{70135162-6D76-4F89-8805-743FC7A8A67F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70135162-6D76-4F89-8805-743FC7A8A67F}.Release|x86.ActiveCfg = Release|Any CPU
 		{70135162-6D76-4F89-8805-743FC7A8A67F}.Release|x86.Build.0 = Release|Any CPU
+		{59AF751A-1F00-4753-8C2D-1A9B67B187B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59AF751A-1F00-4753-8C2D-1A9B67B187B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59AF751A-1F00-4753-8C2D-1A9B67B187B3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{59AF751A-1F00-4753-8C2D-1A9B67B187B3}.Debug|x86.Build.0 = Debug|Any CPU
+		{59AF751A-1F00-4753-8C2D-1A9B67B187B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59AF751A-1F00-4753-8C2D-1A9B67B187B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59AF751A-1F00-4753-8C2D-1A9B67B187B3}.Release|x86.ActiveCfg = Release|Any CPU
+		{59AF751A-1F00-4753-8C2D-1A9B67B187B3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {EEEC5BAC-CB1C-4C8D-A0E5-673DA9BA9245}
+										SolutionGuid = {EEEC5BAC-CB1C-4C8D-A0E5-673DA9BA9245}
 		SolutionGuid = {233981C4-D342-4336-BEF8-16C56B3CD85E}
 	EndGlobalSection
 EndGlobal
