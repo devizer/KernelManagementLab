@@ -1,0 +1,29 @@
+.c3-line { 
+    stroke-width: 3px !important;
+}
+
+#chart __circle { r: 1.5 !important;}
+
+/*it doesnt work*/
+#chart .c3-axis-x .tick:first-child text {
+    text-anchor: start !important;
+} 
+
+/*aaa.c3-circle._expanded_ {*/
+    /*stroke-width: 1px;*/
+    /*stroke: white;*/
+/*}*/
+
+/*aaa.c3-selected-circle {*/
+    /*stroke-width: 8px !important;*/
+/*}*/
+
+/*.c3-target.c3-focused path.c3-line, .c3-target.c3-focused path.c3-step {*/
+    /*stroke-width: 4px !important;*/
+/*}*/
+
+/*.c3-selected-circle {*/
+    /*fill: white;*/
+    /*stroke-width: 11px !important;*/
+/*}*/
+

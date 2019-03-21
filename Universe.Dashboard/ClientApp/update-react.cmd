@@ -1,0 +1,1 @@
+call npm update react babel-polyfill react-dom
