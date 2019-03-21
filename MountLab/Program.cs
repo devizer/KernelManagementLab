@@ -39,7 +39,7 @@ namespace MountLab
             DebugDumper.Trace($"path1: [{path1}], path2: [{path2}]");
             var path1abs = new DirectoryInfo(path1).FullName;
             var path2abs = new DirectoryInfo(path2).FullName;
-            DebugDumper.Trace($"path1 abs: [{path1abs}], path2 ans: [{path2abs}]");
+            DebugDumper.Trace($"path1 abs: [{path1abs}], path2 abs: [{path2abs}]");
         }
 
         private static void DumpManagedDrives()
