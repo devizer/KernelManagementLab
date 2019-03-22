@@ -8,7 +8,7 @@ using Universe.Dashboard.DAL;
 namespace Universe.Dashboard.DAL.Migrations
 {
     [DbContext(typeof(DashboardContext))]
-    [Migration("20190322024148_InitialCreate")]
+    [Migration("20190322025546_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace Universe.Dashboard.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Info");
+                    b.ToTable("DbInfo");
                 });
 #pragma warning restore 612, 618
         }

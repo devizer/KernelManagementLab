@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Universe.Dashboard.DAL;
 
 namespace ReactGraphLab
 {
@@ -24,6 +26,15 @@ namespace ReactGraphLab
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+
+            services.AddDbContext<DashboardContext>(options =>
+            {
+                options.ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbPath);
+            });
+            
+            // As same db is used for both design and runtime we pre-cache and pre-jit db access
+            new DashboardContext().Database.Migrate();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

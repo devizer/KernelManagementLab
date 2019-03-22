@@ -7,7 +7,7 @@ namespace Universe.Dashboard.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Info",
+                name: "DbInfo",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -16,14 +16,14 @@ namespace Universe.Dashboard.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Info", x => x.Id);
+                    table.PrimaryKey("PK_DbInfo", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Info");
+                name: "DbInfo");
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Universe.Dashboard.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Info");
+                    b.ToTable("DbInfo");
                 });
 #pragma warning restore 612, 618
         }

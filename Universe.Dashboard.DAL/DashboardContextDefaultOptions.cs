@@ -1,12 +1,16 @@
 using System;
 using System.IO;
 using System.Threading;
+using SQLitePCL;
 
 namespace Universe.Dashboard.DAL
 {
-    public class DashboardContextDesign
+    public static class DashboardContextDefaultOptions
     {
         public static string DbPath => _DbPath.Value;
+
+        // All the implementation is exclusive
+        private const LazyThreadSafetyMode ExclusiveMode = LazyThreadSafetyMode.ExecutionAndPublication;
 
         private static Lazy<string> _DbPath = new Lazy<string>(() =>
         {
@@ -16,8 +20,11 @@ namespace Universe.Dashboard.DAL
                 Directory.CreateDirectory(directoryName);
 
             Console.WriteLine($"Universe.Dashboard.DAL DB: {ret}");
+            DashboardContextGarbageCollector.CleanUpPrevVersions(ret);
+            
             return ret;
-        }, LazyThreadSafetyMode.ExecutionAndPublication);
+        }, ExclusiveMode);
+
 
         private static string GetDbFileName()
         {
@@ -30,9 +37,11 @@ namespace Universe.Dashboard.DAL
             }
             
             var dir2 = new DirectoryInfo(dir).FullName;
-            var relPath = new[] {".local", "WebDashboard", "history.sqlite"};
+            var ver = typeof(DashboardContext).Assembly.GetName().Version.ToString();
+            var relPath = new[] {".cache", "Web-Dashboard", $"history-{ver}.sqlite"};
             var fullPath = Path.Combine(dir2, string.Join(Path.DirectorySeparatorChar.ToString(), relPath));
             return fullPath;
         }
+
     }
 }

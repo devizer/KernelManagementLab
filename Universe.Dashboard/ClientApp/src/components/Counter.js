@@ -3,7 +3,7 @@ import "c3/c3.css"
 import "./MyC3.css"
 let c3 = require('c3');
 
-export class Counter extends Component {
+export class Counter_kill extends Component {
     static displayName = Counter.name;
 
     chart = null;
