@@ -1,22 +1,23 @@
 using System;
 using System.IO;
+using System.Threading;
 
 namespace Universe.Dashboard.DAL
 {
     public class DashboardContextDesign
     {
-        public static string DbPath => _DbPath.Value; 
-        
+        public static string DbPath => _DbPath.Value;
+
         private static Lazy<string> _DbPath = new Lazy<string>(() =>
         {
             var ret = GetDbFileName();
-            if (!Directory.Exists(Path.GetDirectoryName(ret)))
-                Directory.CreateDirectory((Path.GetDirectoryName(ret)));
-            
-            Console.WriteLine($"Universe.Dashboard.DAL DB: {ret}");
+            var directoryName = Path.GetDirectoryName(ret);
+            if (!Directory.Exists(directoryName))
+                Directory.CreateDirectory(directoryName);
 
+            Console.WriteLine($"Universe.Dashboard.DAL DB: {ret}");
             return ret;
-        });
+        }, LazyThreadSafetyMode.ExecutionAndPublication);
 
         private static string GetDbFileName()
         {
