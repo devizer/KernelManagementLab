@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace MountLab
+namespace KernelManagementJam.DebugUtils
 {
     public static class DebugDumper
     {
@@ -21,6 +21,8 @@ namespace MountLab
             ser.Serialize(jwr, anObject);
             jwr.Flush();
 
+            CheckDir(fileName);
+
             // string json = JsonConvert.SerializeObject(anObject, Formatting.Indented, settings);
             using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
@@ -31,6 +33,7 @@ namespace MountLab
 
         public static void DumpText(string content, string fileName)
         {
+            CheckDir(fileName);
             using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
             {
@@ -64,5 +67,18 @@ namespace MountLab
                 wr.WriteLine(DateTime.Now.ToString("yyyy MM dd HH:mm:ss") + " " + info);
             }
         }
+        
+        private static void CheckDir(string fileName)
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+            }
+            catch
+            {
+            }
+        }
+
+
     }
 }

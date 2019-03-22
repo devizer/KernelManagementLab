@@ -9,7 +9,21 @@ export default class App extends Component {
 
     constructor (props) {
         super(props);
+
+        fetch('api/Test1/BeCrazy')
+            .then(response => {
+                console.log(`Response.Status: ${response.status}`);
+                console.log(response);
+                console.log(response.body);
+                return response.ok ? response.json() : {error: response.status, details: response.json()}
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => console.log(error));
+
         
+        return;
         fetch('api/Health/PingDb')
             .then(response => {
                 console.log(`Response.Status: ${response.status}`);

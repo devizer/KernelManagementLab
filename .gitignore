@@ -329,3 +329,5 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 /Universe.Dashboard/ClientApp/yarn.lock
+**/debug-dumps
+/Universe.Dashboard/ClientApp/package-lock.json

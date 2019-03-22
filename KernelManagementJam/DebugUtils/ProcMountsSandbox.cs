@@ -7,7 +7,7 @@ namespace KernelManagementJam
 {
     public class ProcMountsSandbox
     {
-        private static void DumpProcMounts()
+        public static void DumpProcMounts()
         {
             bool isWin = Environment.OSVersion.Platform == PlatformID.Win32NT;
             IList<MountEntry> mounts = ProcMountsParser.Parse(isWin ? "mounts" : "/proc/mounts").Entries;
@@ -18,8 +18,8 @@ namespace KernelManagementJam
             Console.WriteLine(logDetails);
             Console.WriteLine(analyz.RawDetailsLog);
 
-            DebugDumper.DumpText(logDetails + Environment.NewLine + analyz.RawDetailsLog, "ProcMountsAnalyzer.report");
-            DebugDumper.Dump(analyz, "ProcMountsAnalyzer.js");
+            DebugDumper.DumpText(logDetails + Environment.NewLine + analyz.RawDetailsLog, "debug-dumps/ProcMountsAnalyzer.report");
+            DebugDumper.Dump(analyz, "debug-dumps/ProcMountsAnalyzer.js");
 
             // Group by
             Func<DriveDetails, bool> isNetwork = x => x.IsNetworkShare;
@@ -35,7 +35,7 @@ namespace KernelManagementJam
             foreach (var volType in args)
             {
                 var filtered = analyz.Details.Where(volType.Predicate).ToList();
-                DebugDumper.Dump(filtered, volType.Title + ".js");
+                DebugDumper.Dump(filtered, "debug-dumps/" + volType.Title + ".js");
             }
 
         }

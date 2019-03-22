@@ -51,7 +51,8 @@ namespace KernelManagementJam
         [Conditional("DEBUG")]
         private static void AppendSingleLinerLog(string logLine)
         {
-            using (var dump = new FileStream("One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            if (!Directory.Exists("debug-dumps")) Directory.CreateDirectory("debug-dumps");
+            using (var dump = new FileStream("debug-dumps/One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (var wr = new StreamWriter(dump, FileEncoding))
             {
                 wr.WriteLine(logLine);

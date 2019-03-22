@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using KernelManagementJam;
 using Microsoft.AspNetCore.Mvc;
 using Universe.Dashboard.DAL;
 
@@ -30,11 +31,13 @@ namespace ReactGraphLab.Controllers
             var msec = sw.ElapsedTicks / (double) Stopwatch.Frequency;
             var location = DashboardContextDefaultOptions.DbFullPath;
             var size = new FileInfo(location).Length;
+            var sizeInfo = Formatter.FormatBytes(size);
             return new DbHealpthStatus()
             {
                 Location = location,
                 Size = size,
                 Latency = msec,
+                HumanSize = sizeInfo,
             };
         }
 
@@ -43,6 +46,7 @@ namespace ReactGraphLab.Controllers
             public double Latency { get; set; }
             public string Location { get; set; }
             public long Size { get; set; }
+            public string HumanSize { get; set; }
         }
 
         
