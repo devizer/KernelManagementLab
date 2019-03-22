@@ -7,12 +7,12 @@ namespace Universe.Dashboard.DAL
 {
     public static class DashboardContextDefaultOptions
     {
-        public static string DbPath => _DbPath.Value;
+        public static string DbFullPath => _DbPath.Value;
+
+        private static Lazy<string> _DbPath = new Lazy<string>(GetSmartyDbName, LazyThreadSafetyMode.ExecutionAndPublication);
 
         // All the implementation is exclusive
-        private const LazyThreadSafetyMode ExclusiveMode = LazyThreadSafetyMode.ExecutionAndPublication;
-
-        private static Lazy<string> _DbPath = new Lazy<string>(() =>
+        private static string GetSmartyDbName()
         {
             var ret = GetDbFileName();
             var directoryName = Path.GetDirectoryName(ret);
@@ -21,10 +21,8 @@ namespace Universe.Dashboard.DAL
 
             Console.WriteLine($"Universe.Dashboard.DAL DB: {ret}");
             DashboardContextGarbageCollector.CleanUpPrevVersions(ret);
-            
             return ret;
-        }, ExclusiveMode);
-
+        }
 
         private static string GetDbFileName()
         {

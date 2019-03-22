@@ -6,7 +6,7 @@ namespace Universe.Dashboard.DAL
     {
         public static DbContextOptions DesignTimeOptions =>
             new DbContextOptionsBuilder()
-                .ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbPath)
+                .ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbFullPath)
                 .Options;
 
         public static DbContextOptionsBuilder ApplyDashboardDbOptions(this DbContextOptionsBuilder optionsBuilder, string fullFileName)

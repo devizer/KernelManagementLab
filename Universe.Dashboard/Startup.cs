@@ -29,10 +29,11 @@ namespace ReactGraphLab
 
             services.AddDbContext<DashboardContext>(options =>
             {
-                options.ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbPath);
+                options.ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbFullPath);
             });
             
             // As same db is used for both design and runtime we pre-cache and pre-jit db access
+            // using default ctor
             new DashboardContext().Database.Migrate();
 
         }

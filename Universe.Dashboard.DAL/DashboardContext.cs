@@ -5,17 +5,16 @@ namespace Universe.Dashboard.DAL
 {
     public class DashboardContext : DbContext
     {
-        
+
         public DbSet<DbInfo> DbInfo { get; set; }
 
         public DashboardContext() : base(DashboardContextOptions.DesignTimeOptions)
         {
-            Console.WriteLine("DashboardContext()");
+            Console.WriteLine("Warning! DashboardContext() (default constructor is for design-time only");
         }
 
         public DashboardContext(DbContextOptions<DashboardContext> options) : base(options)
         {
-            Console.WriteLine("DashboardContext(DbContextOptions options)");
         }
 
     }
