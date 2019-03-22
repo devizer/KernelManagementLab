@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace MountLab
 {
-    static class DebugDumper
+    public static class DebugDumper
     {
         public static void Dump(object anObject, string fileName)
         {
