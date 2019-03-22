@@ -1,6 +1,6 @@
 namespace Universe.Dashboard.DAL
 {
-    public class Info
+    public class DbInfo
     {
         public int Id { get; set; }
         public string Version { get; set; }
