@@ -61,7 +61,9 @@ namespace KernelManagementJam.DebugUtils
         [Conditional("DEBUG")]
         public static void Trace(string info)
         {
-            using (FileStream dump = new FileStream("app.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            var fileName = "debug-dumps/app.log";
+            CheckDir(fileName);
+            using (FileStream dump = new FileStream(fileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(dump, new UTF8Encoding(false)))
             {
                 wr.WriteLine(DateTime.Now.ToString("yyyy MM dd HH:mm:ss") + " " + info);
