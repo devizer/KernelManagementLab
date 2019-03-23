@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -46,6 +47,7 @@ namespace MountLab
         private static void DumpManagedDrives()
         {
             Console.WriteLine(Environment.NewLine + "DRIVES");
+            Stopwatch sw = Stopwatch.StartNew();
             var drives = DriveInfo.GetDrives();
             ConsoleTable report = new ConsoleTable("Path", "", "-Free", "-Total", "Format");
             foreach (var di in drives)
@@ -71,6 +73,8 @@ namespace MountLab
             }
 
             Console.WriteLine(report.ToString());
+            Console.WriteLine($"DriveInfo.GetDrives() took {sw.Elapsed}");
+            
         }
 
         static void DumpUnixDriveInfo()
