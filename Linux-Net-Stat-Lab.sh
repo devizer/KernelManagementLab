@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 work=$HOME/Transient-Builds/KernelManagementLab; 
 # work=/mnt/ftp-client/KernelManagementLab; 
 mkdir -p "$(dirname $work)" 
