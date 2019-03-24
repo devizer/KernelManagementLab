@@ -17,6 +17,7 @@ namespace LinuxNetStatLab
 
         private static int LabelWidth = 36;
 
+        
         static void Main(string[] args)
         {
             var splitted = SpaceSeparatedDecoder.DecodeIntoColumns(@"tmpf /with\040space /fuck\134off /fuck-по-русски-off /fuck\\off");
@@ -114,7 +115,7 @@ namespace LinuxNetStatLab
             using (FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (StreamReader rdr = new StreamReader(fs, new UTF8Encoding(false)))
             {
-                return rdr.ReadToEnd();
+                 return rdr.ReadToEnd();
             }
         }
 

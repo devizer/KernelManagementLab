@@ -8,7 +8,7 @@ git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab/MountLab
 time dotnet build -f netcoreapp2.2 -c Release
 cd bin/Release/netcoreapp2.2
-time dotnet MountLab.dll
+time dotnet MountLab.dll Monitor-V1
 
 function ignore() { 
 git pull; 
