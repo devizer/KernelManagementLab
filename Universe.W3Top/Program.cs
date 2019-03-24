@@ -28,6 +28,7 @@ namespace ReactGraphLab
             {
                 var loggerFactory = scope.ServiceProvider.GetService<ILoggerFactory>();
                 DebugPreciseTimer(loggerFactory);
+                NetStatTimer.Process(loggerFactory);
             }
             
             webHost.Run();

@@ -13,11 +13,11 @@ namespace KernelManagementJam
         public RawNetStatReader(TextReader reader)
         {
             Reader = reader;
-            Items = new List<NetStatRow>();
+            NetStatItems = new List<NetStatRow>();
             Read();
         }
 
-        public List<NetStatRow> Items { get; }
+        public List<NetStatRow> NetStatItems { get; }
 
         private void Read()
         {
@@ -46,7 +46,7 @@ namespace KernelManagementJam
                     }
 
                     for (var k = 0; k < keys.Length; k++) 
-                        Items.Add(new NetStatRow
+                        NetStatItems.Add(new NetStatRow
                         {
                             Group = group, 
                             Key = keys[k], 

@@ -33,7 +33,7 @@ namespace LinuxNetStatLab
 
             Stopwatch sw = Stopwatch.StartNew();
 
-            var prev = new RawNetStatReader(new StringReader(GetRaw())).Items;
+            var prev = new RawNetStatReader(new StringReader(GetRaw())).NetStatItems;
             var prevTicks = sw.ElapsedTicks;
             Console.Clear();
             while (true)
@@ -41,7 +41,7 @@ namespace LinuxNetStatLab
                 Thread.Sleep(1);
                 var totalWidth = Console.WindowWidth;
                 var totalColumns = Math.Max(1, totalWidth / (LabelWidth + 18));
-                var next = new RawNetStatReader(new StringReader(GetRaw())).Items;
+                var next = new RawNetStatReader(new StringReader(GetRaw())).NetStatItems;
                 var nextTicks = sw.ElapsedTicks;
 
                 var duration = (nextTicks - prevTicks) * 1d / Stopwatch.Frequency;
@@ -131,7 +131,7 @@ namespace LinuxNetStatLab
                 using (FileStream fs = new FileStream(rawName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 using (StreamReader rdr = new StreamReader(fs, Encoding.ASCII))
                 {
-                    var items = new RawNetStatReader(rdr).Items;
+                    var items = new RawNetStatReader(rdr).NetStatItems;
                     using (FileStream fsr = new FileStream(rawName + ".report", FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                     using (StreamWriter wr = new StreamWriter(fsr, Encoding.ASCII))
                     {

@@ -80,11 +80,11 @@ namespace Universe.Dashboard.Agent
                                     timer.Logger.LogWarning(
                                         "Background iteration '{agent}' failed: {exception}",
                                         timer.Name,
-                                        ex.GetExeptionDigest()
+                                        ex.GetExceptionDigest()
                                     );
                                 }
                                 else
-                                    Console.WriteLine($"Background iteration '{timer.Name}' failed: {ex.GetExeptionDigest()}");
+                                    Console.WriteLine($"Background iteration '{timer.Name}' failed: {ex.GetExceptionDigest()}");
                             }
                         }
                         
@@ -107,7 +107,7 @@ namespace Universe.Dashboard.Agent
     
     public static class ExceptionExtensions
     {
-        public static string GetExeptionDigest(this Exception ex)
+        public static string GetExceptionDigest(this Exception ex)
         {
             List<string> ret = new List<string>();
             while (ex != null)
@@ -118,7 +118,5 @@ namespace Universe.Dashboard.Agent
 
             return string.Join(" --> ", ret);
         }
-
     }
-
 }

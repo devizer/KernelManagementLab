@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 
@@ -93,7 +94,38 @@ namespace KernelManagementJam
         public long TxFifoErrors { get; set; }       // 13
         public long Collisions { get; set; }         // 14
         public long TxHeartbeatErrors { get; set; }  // 15
-        public long TxCompressed { get; set; }       // 16 
+        public long TxCompressed { get; set; }       // 16
+
+        public static NetDevInterfaceRow operator -(NetDevInterfaceRow next, NetDevInterfaceRow prev)
+        {
+            return Delta(next, prev);
+        }
+        public static NetDevInterfaceRow Delta(NetDevInterfaceRow next, NetDevInterfaceRow prev)
+        {
+            return new NetDevInterfaceRow()
+            {
+                Name = next.Name,
+
+                RxBytes = next.RxBytes - prev.RxBytes, // 1
+                RxPackets = next.RxPackets - prev.RxPackets, // 2
+                RxErrors = next.RxErrors - prev.RxErrors, // 3
+                RxDrops = next.RxDrops - prev.RxDrops, // 4
+                RxFifoErrors = next.RxFifoErrors - prev.RxFifoErrors, // 5
+                RxFrameErrors = next.RxFrameErrors - prev.RxFrameErrors, // 6
+                RxCompressed = next.RxCompressed - prev.RxCompressed, // 7   
+                Multicast = next.Multicast - prev.Multicast, // 8
+
+                TxBytes = next.TxBytes - prev.TxBytes, // 9
+                TxPackets = next.TxPackets - prev.TxPackets, // 10
+                TxErrors = next.TxErrors - prev.TxErrors, // 11
+                TxDrops = next.TxDrops - prev.TxDrops, // 12
+                TxFifoErrors = next.TxFifoErrors - prev.TxFifoErrors, // 13
+                Collisions = next.Collisions - prev.Collisions, // 14
+                TxHeartbeatErrors = next.TxHeartbeatErrors - prev.TxHeartbeatErrors, // 15
+                TxCompressed = next.TxCompressed - prev.TxCompressed, // 16
+            };
+
+        }
         
     }
 }
