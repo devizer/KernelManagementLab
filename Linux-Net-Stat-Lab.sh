@@ -5,7 +5,7 @@ mkdir -p "$(dirname $work)"
 cd $(dirname $work); 
 rm -rf $work; 
 git clone https://github.com/devizer/KernelManagementLab; 
-cd KernelManagementLab/LinuxNextStatLab
+cd KernelManagementLab/LinuxNetStatLab
 dotnet run
 
 
