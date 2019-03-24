@@ -3,6 +3,7 @@ using Mono.Unix;
 
 namespace KernelManagementJam
 {
+    // May be slow?
     public class FileSystemHelper
     {
         public static string Resolve(string path)
