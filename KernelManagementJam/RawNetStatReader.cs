@@ -45,7 +45,13 @@ namespace KernelManagementJam
                         Debugger.Break();
                     }
 
-                    for (var k = 0; k < keys.Length; k++) Items.Add(new NetStatRow {Group = group, Key = keys[k], Long = long.Parse(values[k])});
+                    for (var k = 0; k < keys.Length; k++) 
+                        Items.Add(new NetStatRow
+                        {
+                            Group = group, 
+                            Key = keys[k], 
+                            Long = long.Parse(values[k])
+                        });
                 }
             }
         }

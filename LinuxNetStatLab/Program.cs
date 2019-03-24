@@ -20,6 +20,10 @@ namespace LinuxNetStatLab
         
         static void Main(string[] args)
         {
+            NetDevLab.JustParse();
+            var elapsed = NetDevLab.JustParse();
+            Console.WriteLine($"NetDevParser took {elapsed}");
+            
             var splitted = SpaceSeparatedDecoder.DecodeIntoColumns(@"tmpf /with\040space /fuck\134off /fuck-по-русски-off /fuck\\off");
             Console.WriteLine(string.Join(" ", splitted));
 

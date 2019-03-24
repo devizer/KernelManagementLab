@@ -13,8 +13,7 @@ namespace KernelManagementJam
         public NetDevParser(TextReader arg)
         {
             Arg = arg;
-            Interfaces = new List<NetDevInterfaceRow>();
-            Parse();
+            Interfaces = new List<NetDevInterfaceRow>(Parse());
         }
 
         IEnumerable<NetDevInterfaceRow> Parse()
