@@ -4,6 +4,7 @@ import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Poc1Chart } from './components/Poc1Chart';
 import { Poc2Chart } from './components/Poc2Chart';
+import dataSourceListener from './stores/DataSourceListener';
 
 export default class App extends Component {
     static displayName = App.name;
@@ -36,6 +37,14 @@ export default class App extends Component {
                 console.log(data);
             })
             .catch(error => console.log(error));
+    }
+    
+    componentDidMount() {
+        dataSourceListener.start();
+    }
+    
+    componentWillUnmount() {
+        dataSourceListener.stop();
     }
 
 
