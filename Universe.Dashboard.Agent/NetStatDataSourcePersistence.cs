@@ -8,10 +8,9 @@ namespace Universe.Dashboard.Agent
     {
         // x64: 338/67
         // Arm: 5200/518
-        public static void Flush()
+        public static void Flush(DashboardContext db)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            DashboardContext db = new DashboardContext();
             HistoryLogic history = new HistoryLogic(db);
             // It is NOT thread safe
             history.Save("NetStatDataSource.By_1_Seconds", NetStatDataSource.Instance.By_1_Seconds);

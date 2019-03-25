@@ -1,6 +1,8 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,8 @@ namespace ReactGraphLab
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            services.AddHostedService<MeasurementAgent>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
@@ -45,10 +49,10 @@ namespace ReactGraphLab
             lifetime.ApplicationStopping.Register(() =>
             {
                 PreciseTimer.Shutdown.Set();
-                NetStatDataSourcePersistence.Flush();
+                // NetStatDataSourcePersistence.Flush();
             });
             
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || true)
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -73,6 +77,10 @@ namespace ReactGraphLab
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
+                ISpaBuilder spaCopy = spa;
+                spa.Options.StartupTimeout = TimeSpan.FromSeconds(120);
+                // spa.Options.DefaultPage = "/index.cshtml";
+                
 
                 if (env.IsDevelopment())
                 {

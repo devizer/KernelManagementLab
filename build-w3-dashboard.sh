@@ -6,6 +6,7 @@ cd $(dirname $work);
 rm -rf $work; 
 git clone https://github.com/devizer/KernelManagementLab; 
 cd KernelManagementLab/Universe.W3Top
+time dotnet publish -c Release -o bin/arm/ --self-contained -r linux-arm
 time dotnet build -f netcoreapp2.2 -c Release -o bin/
 cd bin/
 export ASPNETCORE_ENVIRONMENT=Production
