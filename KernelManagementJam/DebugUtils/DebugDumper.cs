@@ -8,6 +8,7 @@ namespace KernelManagementJam.DebugUtils
 {
     public static class DebugDumper
     {
+        [Conditional("DEBUG")]
         public static void Dump(object anObject, string fileName)
         {
             JsonSerializer ser = new JsonSerializer()
