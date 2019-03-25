@@ -7,7 +7,7 @@ namespace Universe.Dashboard.Agent
     public static class NetStatDataSourcePersistence
     {
         // x64: 338/67
-        // Arm: 5200/
+        // Arm: 5200/518
         public static void Flush()
         {
             Stopwatch sw = Stopwatch.StartNew();
