@@ -55,7 +55,6 @@ namespace KernelManagementJam.DebugUtils
             jwr.Flush();
 
             return json.ToString();
-
         }
 
         [Conditional("DEBUG")]

@@ -12,4 +12,5 @@ namespace Universe.Dashboard.Agent
         
         public List<NetDevInterfaceRow> InterfacesStat { get; set; }
     }
+    
 }

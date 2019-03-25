@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
 
@@ -43,7 +41,12 @@ namespace ReactGraphLab
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
-            lifetime.ApplicationStopping.Register(() => { PreciseTimer.Shutdown.Set(); });
+            lifetime.ApplicationStopping.Register(() =>
+            {
+                PreciseTimer.Shutdown.Set();
+                NetStatDataSourcePersistence.Flush();
+            });
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -54,8 +57,6 @@ namespace ReactGraphLab
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 // app.UseHsts();
             }
-
-            ILogger logger;
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
