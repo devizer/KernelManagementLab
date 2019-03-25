@@ -10,7 +10,7 @@ time dotnet build -f netcoreapp2.2 -c Release -o bin/
 cd bin/
 export ASPNETCORE_ENVIRONMENT=Production
 export ASPNETCORE_URLS="http://localhost:5010;https://0.0.0.0:5011"
-dotnet Universe.W3Top.dll
+time dotnet Universe.W3Top.dll
 
 function ignore() { 
 git pull; 

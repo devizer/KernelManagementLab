@@ -35,6 +35,7 @@ namespace ReactGraphLab
             // As same db is used for both design and runtime we pre-cache and pre-jit db access
             // using default ctor
             new DashboardContext().Database.Migrate();
+            NetStatDataSourcePersistence.PreJit();
 
         }
 
