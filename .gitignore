@@ -331,3 +331,4 @@ ASALocalRun/
 /Universe.Dashboard/ClientApp/yarn.lock
 **/debug-dumps
 /Universe.Dashboard/ClientApp/package-lock.json
+/Universe.W3Top/ClientApp/package-lock.json
