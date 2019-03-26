@@ -20,7 +20,7 @@ namespace Universe.Dashboard.Agent
 
         public static IServiceProvider Services;
         public static readonly ManualResetEvent Shutdown = new ManualResetEvent(false);
-        public static Action AllTheTimerFinished = delegate { };
+        // public static Action AllTheTimerFinished = delegate { };
         static List<Timer> Timers = new List<Timer>();
         private static object SyncTimers = new object();
             
@@ -96,7 +96,7 @@ namespace Universe.Dashboard.Agent
                         }
                         
                         // It is raised after finish of all the timers
-                        AllTheTimerFinished();
+                        // AllTheTimerFinished();
 
                         FlushDataSource();
                     }
@@ -127,8 +127,11 @@ namespace Universe.Dashboard.Agent
                 var hubContext = scope.ServiceProvider.GetService<IHubContext<DataSourceHub>>();
                 hubContext.Clients.All.SendAsync("ReceiveDataSource", NetStatDataSource.Instance.By_1_Seconds);
             }
+
+#if DEBUG            
+            // Console.WriteLine($"DataSource flushed: {sw.Elapsed}" );
+#endif
             
-            Console.WriteLine($"DataSource flushed: {sw.Elapsed}" ); 
 
 
         }
