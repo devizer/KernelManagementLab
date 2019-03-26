@@ -25,7 +25,6 @@ class DataSourceListener {
             // 1006: server terminated
             console.warn("SignalR connection closed" + (error ? " with error" : ""));
             this.markConnectionState(false);
-            self.isConnected = false;
         })
     }
 

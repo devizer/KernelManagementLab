@@ -12,7 +12,7 @@ cd KernelManagementLab/Universe.W3Top
 export ASPNETCORE_ENVIRONMENT=Development
 export ASPNETCORE_ENVIRONMENT=Production
 export ASPNETCORE_URLS="http://localhost:5010;https://0.0.0.0:5011"
-cd ClientApp; time yarn install && yarn build; cd ..
+cd ClientApp; time yarn install; cd ..
 time dotnet publish -c Release -o bin/ --self-contained -r linux-arm
 cd bin
 ./Universe.W3Top
