@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
@@ -117,12 +118,16 @@ namespace Universe.Dashboard.Agent
                 Console.WriteLine("Skipping Broadcasting: Services are not yet configured");
                 return;
             }
+            
+            Stopwatch sw = Stopwatch.StartNew();
             using (var scope = Services.CreateScope())
             {
-                Console.WriteLine("Broadcasting DataSource");
                 var hubContext = scope.ServiceProvider.GetService<IHubContext<DataSourceHub>>();
                 hubContext.Clients.All.SendAsync("ReceiveDataSource", NetStatDataSource.Instance.By_1_Seconds);
             }
+            
+            Console.WriteLine($"DataSource flushed: {sw.Elapsed}" ); 
+
 
         }
     }
