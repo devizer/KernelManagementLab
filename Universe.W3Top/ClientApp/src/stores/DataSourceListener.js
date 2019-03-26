@@ -14,7 +14,7 @@ class DataSourceListener {
 
         this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
         let isProd = process.env.NODE_ENV === "production";
-        this.connection.on("ReceiveDataSource", function (dataSource) {
+        this.connection.on("ReceiveDataSource", dataSource => {
             // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             if (!isProd) {
                 console.log('DataSource RECEIVED ' + (new Date().toLocaleTimeString()));
@@ -58,11 +58,11 @@ class DataSourceListener {
     tryToConnect()
     {
         let me = this;
-        this.connection.start().then(function () {
+        this.connection.start().then(() => {
             me.markConnectionState(true);
             console.log("SignalR connection established");
             DataSourceActions.ConnectionStatusUpdated(true);
-        }).catch(function (err) {
+        }).catch(err => {
             me.markConnectionState(false);
             console.warn("SignalR connection error. " + err.toString());
             DataSourceActions.ConnectionStatusUpdated(false);
