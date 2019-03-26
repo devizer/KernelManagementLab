@@ -9,7 +9,6 @@ class DataSourceListener {
         this.markConnectionState = this.markConnectionState.bind(this);
         this.tryToConnect = this.tryToConnect.bind(this);
         
-        this.timerId = setInterval(this.watchdog, 1000);
         this.isConnected = false;
         this.needConnection = false;
 
@@ -25,18 +24,21 @@ class DataSourceListener {
             // 1006: server terminated
             console.warn("SignalR connection closed" + (error ? " with error" : ""));
             this.markConnectionState(false);
-        })
+            DataSourceActions.ConnectionStatusUpdated(false);
+        });
+
+        this.timerId = setInterval(this.watchdog, 1000);
     }
 
     start() {
-        this.needConnection = true;
+        this.markConnectionState(true);
         this.tryToConnect();
     }
 
     stop()
     {
         console.log("Closing SignalR connection");
-        this.needConnection = false;
+        this.markConnectionState(false);
         this.connection.stop();
         // clearInterval(this.timerId);
     }
@@ -55,9 +57,11 @@ class DataSourceListener {
         this.connection.start().then(function () {
             me.markConnectionState(true);
             console.log("SignalR connection established");
+            DataSourceActions.ConnectionStatusUpdated(true);
         }).catch(function (err) {
             me.markConnectionState(false);
-            return console.warn("SignalR connection error. " + err.toString());
+            console.warn("SignalR connection error. " + err.toString());
+            DataSourceActions.ConnectionStatusUpdated(false);
         });
     }
 

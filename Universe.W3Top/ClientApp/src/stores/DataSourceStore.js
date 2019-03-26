@@ -8,14 +8,20 @@ class DataSourceStore extends EventEmitter {
         super();
         // local copy per message
         this.activeDataSource = {kind: 'empty'};
+        this.connectionStatus = false;
     }
 
     // single handler for the app for each kind of message
     handleActions(action) {
         switch (action.type) {
-            // a casr per message
+            // a cast per message
             case DataSourceActions.DATA_SOURCE_UPDATED_ACTION: {
                 this.activeDataSource = action.value;
+                this.emit("storeUpdated");
+                break;
+            }
+            case DataSourceActions.CONNECTION_STATUS_UPDATED_ACTION: {
+                this.connectionStatus = action.value;
                 this.emit("storeUpdated");
                 break;
             }
