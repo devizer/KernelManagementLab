@@ -10,14 +10,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Universe.Dashboard.Agent
 {
-    
+   
     public class NetStatTimer
     {
         private static readonly UTF8Encoding Utf8Encoding = new UTF8Encoding(false);
 
-        public static void Process(ILoggerFactory loggerFactory)
+        public static void Process()
         {
-            var logger = loggerFactory.CreateLogger("NetStat::Timer");
             Stopwatch sw = Stopwatch.StartNew();
             
             var prevNetStat = new RawNetStatReader(new StringReader(GetRawNetStat())).NetStatItems;
@@ -25,7 +24,7 @@ namespace Universe.Dashboard.Agent
 
             var prevNetDev = GetNetDevInterfaces();
             
-            PreciseTimer.AddListener("NetStat::Timer", logger, () =>
+            PreciseTimer.AddListener("NetStat::Timer", () =>
             {
                 List<NetStatRow> nextNetStat = new RawNetStatReader(new StringReader(GetRawNetStat())).NetStatItems;
                 IList<NetDevInterfaceRow> nextNetDev = GetNetDevInterfaces();
@@ -49,7 +48,9 @@ namespace Universe.Dashboard.Agent
                 var outOctetsRow = ipExtList.FirstOrDefault(x => x.Key == "OutOctets");
                 long currentInOctects = inOctetsRow?.Long ?? 0; 
                 long currentOutOctects = outOctetsRow?.Long ?? 0;
+                // Total received
                 long currentInOctectsPerSec = (long)(currentInOctects / duration); 
+                // Total sent
                 long currentOutOctectsPerSec = (long)(currentOutOctects / duration);
                 
                 // Net/Dev interfaces
@@ -99,8 +100,8 @@ namespace Universe.Dashboard.Agent
                 return rdr.ReadToEnd();
             }
         }
-        
-        public static IList<NetDevInterfaceRow> GetNetDevInterfaces()
+
+        private static IList<NetDevInterfaceRow> GetNetDevInterfaces()
         {
             using(FileStream fs = new FileStream("/proc/net/dev", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {

@@ -25,24 +25,18 @@ namespace ReactGraphLab
             var webHost = CreateWebHostBuilder(args).Build();
 
             PreciseTimer.Services = webHost.Services;
-            
-            using (var scope = webHost.Services.CreateScope())
-            {
-                var loggerFactory = scope.ServiceProvider.GetService<ILoggerFactory>();
-                DebugPreciseTimer(loggerFactory);
-                NetStatTimer.Process(loggerFactory);
-            }
+            NetStatTimer.Process();
+            DebugPreciseTimer();
             
             webHost.Run();
         }
 
-        static void DebugPreciseTimer(ILoggerFactory loggerFactory)
+        static void DebugPreciseTimer()
         {
             var name = "PreciseTimer::Debugger";
-            var logger = loggerFactory.CreateLogger(name);
             Stopwatch sw = null;
             int counter = -1;
-            PreciseTimer.AddListener(name, logger, () =>
+            PreciseTimer.AddListener(name,() =>
             {
                 return;
                 counter = (counter + 1) % 4;

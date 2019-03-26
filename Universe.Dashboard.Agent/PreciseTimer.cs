@@ -29,8 +29,10 @@ namespace Universe.Dashboard.Agent
             SetupTick();
         }
 
-        public static void AddListener(string name, ILogger logger, Action tick)
+        public static void AddListener(string name, Action tick)
         {
+            var loggerFactory = Services.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger($"Agent {name}");
             lock (SyncTimers)
                 Timers.Add(new Timer
                 {
