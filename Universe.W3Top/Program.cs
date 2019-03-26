@@ -23,6 +23,8 @@ namespace ReactGraphLab
         {
             DebugDumps();
             var webHost = CreateWebHostBuilder(args).Build();
+
+            PreciseTimer.Services = webHost.Services;
             
             using (var scope = webHost.Services.CreateScope())
             {
@@ -42,6 +44,7 @@ namespace ReactGraphLab
             int counter = -1;
             PreciseTimer.AddListener(name, logger, () =>
             {
+                return;
                 counter = (counter + 1) % 4;
                 if (counter == 0) throw new Exception("Fail simulation");
                 long startAt = 0;

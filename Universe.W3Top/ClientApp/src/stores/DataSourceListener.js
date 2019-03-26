@@ -24,8 +24,8 @@ class DataSourceListener {
     
     stop()
     {
-        console.log("Closing SignalR connection");
-        this.connection.stop();
+        //console.log("Closing SignalR connection");
+        //this.connection.stop();
     }
 }
 

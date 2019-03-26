@@ -28,10 +28,10 @@ namespace Universe.Dashboard.Agent
             _timer = new Timer(new TimerCallback(Tick), null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
             return Task.CompletedTask;
         }
-
+        
         private void Tick(object state)
         {
-            Console.WriteLine("MeasurementAgent::Tick()");
+            // Console.WriteLine("MeasurementAgent::Tick()");
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ReactGraphLab;
 
 namespace Universe.Dashboard.Agent
 {
@@ -13,7 +16,8 @@ namespace Universe.Dashboard.Agent
             public Action Tick;
             public string Name;
         }
-        
+
+        public static IServiceProvider Services;
         public static readonly ManualResetEvent Shutdown = new ManualResetEvent(false);
         public static Action AllTheTimerFinished = delegate { };
         static List<Timer> Timers = new List<Timer>();
@@ -90,6 +94,8 @@ namespace Universe.Dashboard.Agent
                         
                         // It is raised after finish of all the timers
                         AllTheTimerFinished();
+
+                        FlushDataSource();
                     }
                     else
                     {
@@ -102,6 +108,22 @@ namespace Universe.Dashboard.Agent
             }) {IsBackground = true};
             waiter.Start();
             waiterStarted.WaitOne();
+        }
+
+        private static void FlushDataSource()
+        {
+            if (Services == null)
+            {
+                Console.WriteLine("Skipping Broadcasting: Services are not yet configured");
+                return;
+            }
+            using (var scope = Services.CreateScope())
+            {
+                Console.WriteLine("Broadcasting DataSource");
+                var hubContext = scope.ServiceProvider.GetService<IHubContext<DataSourceHub>>();
+                hubContext.Clients.All.SendAsync("ReceiveDataSource", NetStatDataSource.Instance.By_1_Seconds);
+            }
+
         }
     }
     
