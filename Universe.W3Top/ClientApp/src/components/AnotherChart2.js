@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import "c3/c3.css"
 import "./MyC3.css"
+import nextUniqueId from "../NextUniqueId"
 let c3 = require('c3');
 
 export class AnotherChart2 extends Component {
     static displayName = AnotherChart2.name;
 
-    static domIdCounter = 0;
-    domId = 'chart_II_';
+    // static domIdCounter = 0;
+    domId = nextUniqueId("cart2y");
     chart = null;
     jsonData = {};
     pointCurrent = Math.round(Math.random()*1000);
@@ -47,10 +48,6 @@ export class AnotherChart2 extends Component {
 
     constructor (props) {
         super(props);
-
-        AnotherChart2.domIdCounter++;
-        this.domId = `chart_II_${AnotherChart2.domIdCounter}`;
-
     }
 
     incrementCounter () {

@@ -13,10 +13,13 @@ class DataSourceListener {
         this.needConnection = false;
 
         this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
+        let isProd = process.env.NODE_ENV === "production";
         this.connection.on("ReceiveDataSource", function (dataSource) {
             // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            console.log('DataSource RECEIVED ' + (new Date().toLocaleTimeString()));
-            console.log(dataSource);
+            if (!isProd) {
+                console.log('DataSource RECEIVED ' + (new Date().toLocaleTimeString()));
+                console.log(dataSource);
+            }
             DataSourceActions.DataSourceUpdated(dataSource);
         });
 
@@ -31,15 +34,16 @@ class DataSourceListener {
     }
 
     start() {
-        this.markConnectionState(true);
         this.tryToConnect();
+        this.needConnection = true;
     }
 
     stop()
     {
-        console.log("Closing SignalR connection");
-        this.markConnectionState(false);
         this.connection.stop();
+        console.log("Closing SignalR connection");
+        this.needConnection = false;
+        DataSourceActions.ConnectionStatusUpdated(false);
         // clearInterval(this.timerId);
     }
 
