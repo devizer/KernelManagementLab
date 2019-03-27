@@ -3,6 +3,8 @@ import * as signalR from '@aspnet/signalr'
 
 class DataSourceListener {
     
+    static isProd = process.env.NODE_ENV === "production";
+    
     constructor()
     {
         this.watchdog = this.watchdog.bind(this);
@@ -13,10 +15,9 @@ class DataSourceListener {
         this.needConnection = false;
 
         this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
-        let isProd = process.env.NODE_ENV === "production";
         this.connection.on("ReceiveDataSource", dataSource => {
             // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            if (!isProd) {
+            if (!DataSourceListener.isProd) {
                 console.log('DataSource RECEIVED ' + (new Date().toLocaleTimeString()));
                 console.log(dataSource);
             }
@@ -72,7 +73,9 @@ class DataSourceListener {
     // available for callbacks
     watchdog()
     {
-        console.log(`watchdog. isConnected: ${this.isConnected}. needConnection: ${this.needConnection}`);
+        if (DataSourceListener.isProd)
+            console.log(`watchdog. isConnected: ${this.isConnected}. needConnection: ${this.needConnection}`);
+        
         var me = this;
         if (this.needConnection) {
             if (!this.isConnected) {
