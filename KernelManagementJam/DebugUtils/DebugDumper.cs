@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace KernelManagementJam.DebugUtils
 {
@@ -16,6 +17,17 @@ namespace KernelManagementJam.DebugUtils
                 Formatting = minify ? Formatting.Indented : Formatting.None,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             };
+
+            DefaultContractResolver contractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy
+                {
+                    OverrideSpecifiedNames = false,
+                    ProcessDictionaryKeys = true,
+                }
+            };
+
+            ser.ContractResolver = contractResolver;
 
             StringBuilder json = new StringBuilder();
             StringWriter jwr = new StringWriter(json);
