@@ -59,6 +59,7 @@ namespace Universe.Dashboard.Agent
                         return;
                 }
             }) {IsBackground = true};
+            ticker.Name = "Agent::Ticker";
             ticker.Start();
 
             ManualResetEvent waiterStarted = new ManualResetEvent(false);
@@ -109,6 +110,7 @@ namespace Universe.Dashboard.Agent
                 Console.WriteLine("PreciseTimer has been shut down...");
 
             }) {IsBackground = true};
+            waiter.Name = "Agent::Waiter";
             waiter.Start();
             waiterStarted.WaitOne();
         }
@@ -134,21 +136,6 @@ namespace Universe.Dashboard.Agent
             
 
 
-        }
-    }
-    
-    public static class ExceptionExtensions
-    {
-        public static string GetExceptionDigest(this Exception ex)
-        {
-            List<string> ret = new List<string>();
-            while (ex != null)
-            {
-                ret.Add("[" + ex.GetType().Name + "] " + ex.Message);
-                ex = ex.InnerException;
-            }
-
-            return string.Join(" --> ", ret);
         }
     }
 }

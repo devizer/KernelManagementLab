@@ -9,11 +9,11 @@ namespace KernelManagementJam.DebugUtils
     public static class DebugDumper
     {
         [Conditional("DEBUG")]
-        public static void Dump(object anObject, string fileName)
+        public static void Dump(object anObject, string fileName, bool minify = false)
         {
             JsonSerializer ser = new JsonSerializer()
             {
-                Formatting = Formatting.Indented,
+                Formatting = minify ? Formatting.Indented : Formatting.None,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             };
 

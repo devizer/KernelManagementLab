@@ -88,7 +88,12 @@ namespace Universe.Dashboard.Agent
 
         static void Dump_By_1_Seconds()
         {
-            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "/tmp/debug-dumps/NetStatDataSource.Instance.By_1_Seconds.json");
+            var copy = NetStatDataSource.Instance.By_1_Seconds;
+            var viewModel = NetDataSourceView.AsViewModel(copy);
+            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "/tmp/debug-dumps/NetStatDataSource.1s.json");
+            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "/tmp/debug-dumps/NetStatDataSource.1s.min.json", true);
+            DebugDumper.Dump(viewModel, "/tmp/debug-dumps/NetStat.ViewModel.1s.json");
+            DebugDumper.Dump(viewModel, "/tmp/debug-dumps/NetStat.ViewModel.1s.min.json", true);
         }
         
         static string GetRawNetStat()
