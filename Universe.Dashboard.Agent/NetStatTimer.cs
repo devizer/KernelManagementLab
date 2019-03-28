@@ -86,6 +86,7 @@ namespace Universe.Dashboard.Agent
             });
         }
 
+        [Conditional("DUMPS")]
         static void Dump_By_1_Seconds()
         {
             var copy = NetStatDataSource.Instance.By_1_Seconds;

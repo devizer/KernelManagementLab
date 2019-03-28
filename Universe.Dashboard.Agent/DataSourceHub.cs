@@ -1,7 +1,5 @@
 using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using Universe.Dashboard.Agent;
 
 namespace ReactGraphLab
 {
@@ -11,13 +9,6 @@ namespace ReactGraphLab
         {
             Console.WriteLine("DataSourceHub::ctor");
         }
-
-
-//        public async Task ReceiveDataSource(object dataSource)
-//        {
-//            Console.WriteLine("DataSourceHub::ReceiveDataSource()");
-//            await Clients.All.SendAsync("ReceiveDataSource", dataSource);
-//        }
 
         protected override void Dispose(bool disposing)
         {

@@ -69,8 +69,8 @@ namespace Universe.Dashboard.Agent
                 waiterStarted.Set();
                 while (!Shutdown.WaitOne(0))
                 {
-                    int kind = WaitHandle.WaitAny(new[] {(WaitHandle)oneSecWaiter, (WaitHandle)Shutdown});
-                    if (kind == 0)
+                    int indexWaiter = WaitHandle.WaitAny(new[] {(WaitHandle)oneSecWaiter, (WaitHandle)Shutdown});
+                    if (indexWaiter == 0)
                     {
                         // TODO: All the timers should be executed in a separate thread.
                         List<Timer> copyOfTimers;
@@ -103,6 +103,7 @@ namespace Universe.Dashboard.Agent
                     }
                     else
                     {
+                        // Shutdown had been requested
                         break;
                     }
                 }
@@ -119,7 +120,7 @@ namespace Universe.Dashboard.Agent
         {
             if (Services == null)
             {
-                Console.WriteLine("Skipping Broadcasting: Services are not yet configured");
+                Console.WriteLine("Skipping Broadcasting: Services are not yet injected");
                 return;
             }
             
@@ -137,8 +138,8 @@ namespace Universe.Dashboard.Agent
                 hubContext.Clients.All.SendAsync("ReceiveDataSource", broadcastStorage);
             }
 
-#if DEBUG            
-            // Console.WriteLine($"DataSource flushed: {sw.Elapsed}" );
+#if DUMPS         
+            Console.WriteLine($"DataSource flushed: {sw.Elapsed}" );
 #endif
             
 
