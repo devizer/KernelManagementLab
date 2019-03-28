@@ -27,6 +27,12 @@ namespace Universe.Dashboard.Agent
             {
                 ret.XRange = new {Min = dataSource.First().At, Max = dataSource.Last().At};
             }
+            else
+            {
+                var now = DateTime.UtcNow;
+                ret.XRange = new {Min = now - TimeSpan.FromMinutes(1), Max = now};
+            }
+            
             ret.InterfaceNames = interfaceNameList;
             var xAxisValues = dataSource.Select(x => x.At).ToList();
             ret.X = xAxisValues;
