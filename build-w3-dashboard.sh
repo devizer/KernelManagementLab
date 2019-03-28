@@ -11,14 +11,17 @@ cd $(dirname $work);
 rm -rf $work; 
 git clone https://github.com/devizer/KernelManagementLab; 
 cd KernelManagementLab/Universe.W3Top
+dir=$(pwd)
 
 function run_debug() {
+cd $dir
 export ASPNETCORE_ENVIRONMENT=Development
 cd ClientApp; time (yarn install); cd ..
 dotnet run -c Debug
 }
 
 function run_prod() {
+cd $dir
 export ASPNETCORE_ENVIRONMENT=Production
 cd ClientApp; time (yarn install); cd ..
 time dotnet publish -c Release /p:DefineConstants="TRACE" -o bin/ --self-contained -r $rid
@@ -28,4 +31,3 @@ cd bin
 
 export ASPNETCORE_URLS="http://localhost:5010;https://0.0.0.0:5011"
 run_prod
-

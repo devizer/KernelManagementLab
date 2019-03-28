@@ -131,7 +131,10 @@ namespace Universe.Dashboard.Agent
                 {
                     return;
                 }
-                hubContext.Clients.All.SendAsync("ReceiveDataSource", NetStatDataSource.Instance.By_1_Seconds);
+
+                var localStorage = NetStatDataSource.Instance.By_1_Seconds;
+                var broadcastStorage = NetDataSourceView.AsViewModel(localStorage);
+                hubContext.Clients.All.SendAsync("ReceiveDataSource", broadcastStorage);
             }
 
 #if DEBUG            

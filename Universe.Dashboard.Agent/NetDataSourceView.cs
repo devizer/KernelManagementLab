@@ -23,8 +23,10 @@ namespace Universe.Dashboard.Agent
                 .ToList();
             
             IDictionary<string, object> d = (IDictionary<string,object>)ret;
-            ret.XMin = dataSource.First().At;
-            ret.XMax = dataSource.Last().At;
+            if (dataSource.Any())
+            {
+                ret.XRange = new {Min = dataSource.First().At, Max = dataSource.Last().At};
+            }
             ret.InterfaceNames = interfaceNameList;
             var xAxisValues = dataSource.Select(x => x.At).ToList();
             ret.X = xAxisValues;
