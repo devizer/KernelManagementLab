@@ -65,7 +65,7 @@ namespace Universe.Dashboard.Agent
             };
 
             // InterfaceName, FieldName, Y[]  
-            Dictionary<string, Dictionary<string, List<long>>> buffer = new Dictionary<string, Dictionary<string, List<long>>>();
+            Dictionary<string, Dictionary<string, List<long>>> interfacesView = new Dictionary<string, Dictionary<string, List<long>>>();
             int atPosition = 0;
             foreach (var atStat in dataSource)
             {
@@ -73,7 +73,7 @@ namespace Universe.Dashboard.Agent
                 foreach (var interfaceRow in atStat.InterfacesStat)
                 {
                     var interfaceName = interfaceRow.Name;
-                    var byInterface = buffer.GetOrAdd(interfaceName, _ => new Dictionary<string, List<long>>());
+                    var byInterface = interfacesView.GetOrAdd(interfaceName, _ => new Dictionary<string, List<long>>());
                     foreach (var fieldMetadata in fields)
                     {
                         string fieldName = fieldMetadata.Field;
@@ -83,10 +83,10 @@ namespace Universe.Dashboard.Agent
                     }
                 }
 
-                var missedInterfaced = interfaceNameList.Except(atStat.InterfacesStat.Select(x => x.Name));
-                foreach (var missedInterface in missedInterfaced)
+                var missedInterfaces = interfaceNameList.Except(atStat.InterfacesStat.Select(x => x.Name));
+                foreach (var missedInterface in missedInterfaces)
                 {
-                    var byInterface = buffer.GetOrAdd(missedInterface, _ => new Dictionary<string, List<long>>());
+                    var byInterface = interfacesView.GetOrAdd(missedInterface, _ => new Dictionary<string, List<long>>());
                     foreach (var fieldMetadata in fields)
                     {
                         string fieldName = fieldMetadata.Field;
@@ -97,7 +97,7 @@ namespace Universe.Dashboard.Agent
                 }
             }
 
-            ret.Interfaces = buffer;
+            ret.Interfaces = interfacesView;
             return ret;
         }
     }

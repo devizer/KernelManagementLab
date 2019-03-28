@@ -11,6 +11,9 @@ namespace Universe.Dashboard.Agent
 {
     public static class PreciseTimer
     {
+        public static IServiceProvider Services;
+        public static readonly ManualResetEvent Shutdown = new ManualResetEvent(false);
+
         class Timer
         {
             public ILogger Logger;
@@ -18,8 +21,6 @@ namespace Universe.Dashboard.Agent
             public string Name;
         }
 
-        public static IServiceProvider Services;
-        public static readonly ManualResetEvent Shutdown = new ManualResetEvent(false);
         // public static Action AllTheTimerFinished = delegate { };
         static List<Timer> Timers = new List<Timer>();
         private static object SyncTimers = new object();
@@ -123,7 +124,7 @@ namespace Universe.Dashboard.Agent
                 Console.WriteLine("Skipping Broadcasting: Services are not yet injected");
                 return;
             }
-            
+
             Stopwatch sw = Stopwatch.StartNew();
             using (var scope = Services.CreateScope())
             {
@@ -139,12 +140,9 @@ namespace Universe.Dashboard.Agent
                 hubContext.Clients.All.SendAsync("ReceiveDataSource", broadcastStorage);
             }
 
-#if DUMPS         
-            Console.WriteLine($"DataSource flushed: {sw.Elapsed}" );
+#if DUMPS
+            Console.WriteLine($"DataSource flushed: {sw.Elapsed}");
 #endif
-            
-
-
         }
     }
 }
