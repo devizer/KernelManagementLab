@@ -130,6 +130,7 @@ namespace Universe.Dashboard.Agent
                 var hubContext = scope.ServiceProvider.GetService<IHubContext<DataSourceHub>>();
                 if (hubContext == null)
                 {
+                    Console.WriteLine("Skipping Broadcasting: IHubContext<DataSourceHub> is not yet injected");
                     return;
                 }
 
