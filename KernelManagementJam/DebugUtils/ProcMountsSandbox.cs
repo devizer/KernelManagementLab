@@ -18,8 +18,8 @@ namespace KernelManagementJam
             Console.WriteLine(logDetails);
             Console.WriteLine(analyz.RawDetailsLog);
 
-            DebugDumper.DumpText(logDetails + Environment.NewLine + analyz.RawDetailsLog, "debug-dumps/ProcMountsAnalyzer.report");
-            DebugDumper.Dump(analyz, "debug-dumps/ProcMountsAnalyzer.js");
+            DebugDumper.DumpText(logDetails + Environment.NewLine + analyz.RawDetailsLog, "ProcMountsAnalyzer.report");
+            DebugDumper.Dump(analyz, "ProcMountsAnalyzer.json");
 
             // Group by
             Func<DriveDetails, bool> isNetwork = x => x.IsNetworkShare;
@@ -35,7 +35,7 @@ namespace KernelManagementJam
             foreach (var volType in args)
             {
                 var filtered = analyz.Details.Where(volType.Predicate).ToList();
-                DebugDumper.Dump(filtered, "debug-dumps/" + volType.Title + ".js");
+                DebugDumper.Dump(filtered, volType.Title + ".json");
             }
 
         }

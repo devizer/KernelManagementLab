@@ -20,7 +20,7 @@ namespace MountLab
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
                 var blockDevices = SysBlocksReader.GetSnapshot();
-                DebugDumper.Dump(blockDevices, "debug-dumps/SysBlockSnapshot.json");
+                DebugDumper.Dump(blockDevices, "SysBlockSnapshot.json");
             }
 
             DumpProcMounts();
@@ -137,7 +137,7 @@ namespace MountLab
                     i.VolumeLabel,
                 });
             }
-            DebugDumper.Dump(objs, "debug-dumps/UnixDriveInfo.GetDrives.json");
+            DebugDumper.Dump(objs, "UnixDriveInfo.GetDrives.json");
         }
     }
 }

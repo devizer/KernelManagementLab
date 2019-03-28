@@ -61,7 +61,7 @@ namespace ReactGraphLab
         {
             ProcMountsSandbox.DumpProcMounts();
             List<WithDeviceWithVolumes> snapshot = SysBlocksReader.GetSnapshot();
-            DebugDumper.Dump(snapshot, "debug-dumps/SysBlocks.Snapshot.js");
+            DebugDumper.Dump(snapshot, "SysBlocks.Snapshot.json");
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

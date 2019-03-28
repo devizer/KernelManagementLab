@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using KernelManagementJam.DebugUtils;
 
 namespace KernelManagementJam
 {
@@ -51,8 +52,10 @@ namespace KernelManagementJam
         [Conditional("DEBUG")]
         private static void AppendSingleLinerLog(string logLine)
         {
-            if (!Directory.Exists("debug-dumps")) Directory.CreateDirectory("debug-dumps");
-            using (var dump = new FileStream("debug-dumps/One-Line-Reader.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            var fullFileName = Path.Combine(DebugDumper.DumpDir, "SmallFileReader::One-Line-Reader.log");
+            // CheckDir(fullFileName);
+
+            using (var dump = new FileStream(fullFileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (var wr = new StreamWriter(dump, FileEncoding))
             {
                 wr.WriteLine(logLine);

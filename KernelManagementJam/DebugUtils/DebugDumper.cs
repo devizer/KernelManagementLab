@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -9,12 +10,12 @@ namespace KernelManagementJam.DebugUtils
 {
     public static class DebugDumper
     {
-        [Conditional("DEBUG")]
+        [Conditional("DUMPS")]
         public static void Dump(object anObject, string fileName, bool minify = false)
         {
             JsonSerializer ser = new JsonSerializer()
             {
-                Formatting = minify ? Formatting.Indented : Formatting.None,
+                Formatting = !minify ? Formatting.Indented : Formatting.None,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             };
 
@@ -34,10 +35,11 @@ namespace KernelManagementJam.DebugUtils
             ser.Serialize(jwr, anObject);
             jwr.Flush();
 
-            CheckDir(fileName);
+            var fullFileName = Path.Combine(DumpDir, fileName);
+            // CheckDir(fullFileName);
 
             // string json = JsonConvert.SerializeObject(anObject, Formatting.Indented, settings);
-            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+            using (FileStream fs = new FileStream(fullFileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
             {
                 wr.Write(json);
@@ -46,8 +48,10 @@ namespace KernelManagementJam.DebugUtils
 
         public static void DumpText(string content, string fileName)
         {
-            CheckDir(fileName);
-            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+            var fullFileName = Path.Combine(DumpDir, fileName);
+            // CheckDir(fullFileName);
+
+            using (FileStream fs = new FileStream(fullFileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
             {
                 wr.Write(content);
@@ -70,12 +74,14 @@ namespace KernelManagementJam.DebugUtils
             return json.ToString();
         }
 
-        [Conditional("DEBUG")]
+        [Conditional("DUMPS")]
         public static void Trace(string info)
         {
-            var fileName = "debug-dumps/app.log";
-            CheckDir(fileName);
-            using (FileStream dump = new FileStream(fileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            var fileName = "app.trace.log";
+            var fullFileName = Path.Combine(DumpDir, fileName);
+            // CheckDir(fullFileName);
+
+            using (FileStream dump = new FileStream(fullFileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(dump, new UTF8Encoding(false)))
             {
                 wr.WriteLine(DateTime.Now.ToString("yyyy MM dd HH:mm:ss") + " " + info);
@@ -92,6 +98,29 @@ namespace KernelManagementJam.DebugUtils
             {
             }
         }
+
+
+        public static string DumpDir => _GetDumpDir.Value;
+        private static Lazy<string> _GetDumpDir = new Lazy<string>(() =>
+        {
+            var an = Path.GetFileName(Assembly.GetEntryAssembly().Location);
+            var ret = "dumps-" + an;
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+            {
+                ret = Path.Combine("/tmp", ret);
+            }
+            else
+            {
+                ret = Path.Combine("bin", ret);
+            }
+            
+            ret = new DirectoryInfo(ret).FullName;
+            Console.WriteLine("DUMPS folder: [" + ret + "]");
+            if (!Directory.Exists(ret))
+                Directory.CreateDirectory(ret);
+            
+            return ret;
+        });
 
 
     }

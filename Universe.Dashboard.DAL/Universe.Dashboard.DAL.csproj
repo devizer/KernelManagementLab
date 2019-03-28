@@ -12,4 +12,10 @@
       <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     </ItemGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DUMPS</DefineConstants>
+  </PropertyGroup>
+
+
+
 </Project>

@@ -60,4 +60,10 @@
         </ItemGroup>
     </Target>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DUMPS</DefineConstants>
+  </PropertyGroup>
+
+
+
 </Project>

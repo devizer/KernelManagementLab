@@ -90,10 +90,10 @@ namespace Universe.Dashboard.Agent
         {
             var copy = NetStatDataSource.Instance.By_1_Seconds;
             var viewModel = NetDataSourceView.AsViewModel(copy);
-            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "/tmp/debug-dumps/NetStatDataSource.1s.json");
-            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "/tmp/debug-dumps/NetStatDataSource.1s.min.json", true);
-            DebugDumper.Dump(viewModel, "/tmp/debug-dumps/NetStat.ViewModel.1s.json");
-            DebugDumper.Dump(viewModel, "/tmp/debug-dumps/NetStat.ViewModel.1s.min.json", true);
+            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "NetStatDataSource.1s.json");
+            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "NetStatDataSource.1s.min.json", true);
+            DebugDumper.Dump(viewModel, "NetStat.ViewModel.1s.json");
+            DebugDumper.Dump(viewModel, "NetStat.ViewModel.1s.min.json", true);
         }
         
         static string GetRawNetStat()

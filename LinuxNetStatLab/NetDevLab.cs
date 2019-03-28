@@ -19,7 +19,7 @@ namespace LinuxNetStatLab
                 NetDevParser netDevParser = new NetDevParser(rdr);
                 result = netDevParser.Interfaces;
                 double msec = sw.ElapsedTicks / (double) Stopwatch.Frequency;
-                DebugDumper.Dump(result, "debug-dumps/Interfaces.js");
+                DebugDumper.Dump(result, "Interfaces.json");
                 return msec;
             }
         }
