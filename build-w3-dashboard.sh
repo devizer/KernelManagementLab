@@ -15,7 +15,7 @@ cd KernelManagementLab/Universe.W3Top
 export ASPNETCORE_ENVIRONMENT=Development
 export ASPNETCORE_ENVIRONMENT=Production
 export ASPNETCORE_URLS="http://localhost:5010;https://0.0.0.0:5011"
-cd ClientApp; time yarn install; cd ..
+cd ClientApp; time (yarn install && yarn build); cd ..
 dotnet run -c Debug
 
 function ignore() {

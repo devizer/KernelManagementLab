@@ -19,7 +19,7 @@ class DataSourceListener {
         this.connection.on("ReceiveDataSource", dataSource => {
             // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             let isProd = process.env.NODE_ENV === "production";
-            if (!isProd) {
+            if (!isProd || true) {
                 console.log('DataSource RECEIVED ' + (new Date().toLocaleTimeString()));
                 console.log(dataSource);
             }
