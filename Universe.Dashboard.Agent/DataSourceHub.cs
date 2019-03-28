@@ -10,20 +10,14 @@ namespace ReactGraphLab
         public DataSourceHub()
         {
             Console.WriteLine("DataSourceHub::ctor");
-            // PreciseTimer.AllTheTimerFinished += this.FlushDataSource;
         }
 
-        private void FlushDataSource()
-        {
-            Console.WriteLine("DataSourceHub --> Flushing data source to clients");
-            var dataSource = NetStatDataSource.Instance.By_1_Seconds;
-            ReceiveDataSource(dataSource).Wait();
-        }
 
-        public async Task ReceiveDataSource(object dataSource)
-        {
-            await Clients.All.SendAsync("ReceiveDataSource", dataSource);
-        }
+//        public async Task ReceiveDataSource(object dataSource)
+//        {
+//            Console.WriteLine("DataSourceHub::ReceiveDataSource()");
+//            await Clients.All.SendAsync("ReceiveDataSource", dataSource);
+//        }
 
         protected override void Dispose(bool disposing)
         {

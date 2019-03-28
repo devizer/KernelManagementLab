@@ -16,6 +16,7 @@ dir=$(pwd)
 function run_debug() {
 cd $dir
 export ASPNETCORE_ENVIRONMENT=Development
+rm -rf ClientApp/build 2>/dev/null
 cd ClientApp; time (yarn install); cd ..
 dotnet run -c Debug
 }
