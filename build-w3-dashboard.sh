@@ -11,16 +11,21 @@ cd $(dirname $work);
 rm -rf $work; 
 git clone https://github.com/devizer/KernelManagementLab; 
 cd KernelManagementLab/Universe.W3Top
-# time dotnet publish -c Release -o bin/arm/ --self-contained -r linux-arm
-export ASPNETCORE_ENVIRONMENT=Production
-export ASPNETCORE_ENVIRONMENT=Development
-export ASPNETCORE_URLS="http://localhost:5010;https://0.0.0.0:5011"
-cd ClientApp; time (yarn install && yarn build); cd ..
-dotnet run -c Debug
 
-function ignore() {
+function run_debug() {
+export ASPNETCORE_ENVIRONMENT=Development
+cd ClientApp; time (yarn install); cd ..
+dotnet run -c Debug
+}
+
+function run_prod() {
+export ASPNETCORE_ENVIRONMENT=Production
+cd ClientApp; time (yarn install); cd ..
 time dotnet publish -c Release /p:DefineConstants="TRACE" -o bin/ --self-contained -r $rid
 cd bin
 ./Universe.W3Top
-# time dotnet build -c Release; time dotnet run -c Release
 }
+
+export ASPNETCORE_URLS="http://localhost:5010;https://0.0.0.0:5011"
+run_prod
+
