@@ -1,0 +1,34 @@
+
+    
+    export interface RootObject {
+        XMin: Date;
+        XMax: Date;
+        InterfaceNames: string[];
+        X: Date[];
+        Summary: Summary;
+        Interfaces: any[];
+    }
+
+    export interface Summary {
+        RxTotalOctects: number[];
+        TxTotalOctects: number[];
+    }
+
+    export interface Interface {
+        RxBytes: number[];
+        RxPackets: number[];
+        RxErrors: number[];
+        RxDrops: number[];
+        RxFifoErrors: number[];
+        RxFrameErrors: number[];
+        RxCompressed: number[];
+        Multicast: number[];
+        TxBytes: number[];
+        TxPackets: number[];
+        TxErrors: number[];
+        TxDrops: number[];
+        TxFifoErrors: number[];
+        Collisions: number[];
+        TxHeartbeatErrors: number[];
+        TxCompressed: number[];
+    }

@@ -127,6 +127,10 @@ namespace Universe.Dashboard.Agent
             using (var scope = Services.CreateScope())
             {
                 var hubContext = scope.ServiceProvider.GetService<IHubContext<DataSourceHub>>();
+                if (hubContext == null)
+                {
+                    return;
+                }
                 hubContext.Clients.All.SendAsync("ReceiveDataSource", NetStatDataSource.Instance.By_1_Seconds);
             }
 

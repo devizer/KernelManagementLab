@@ -1,9 +1,10 @@
 import * as DataSourceActions from './DataSourceActions'
 import * as signalR from '@aspnet/signalr'
+// import * as AAA from './DataModel'
 
 class DataSourceListener {
     
-    static isProd = process.env.NODE_ENV === "production";
+    
     
     constructor()
     {
@@ -17,7 +18,8 @@ class DataSourceListener {
         this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
         this.connection.on("ReceiveDataSource", dataSource => {
             // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            if (!DataSourceListener.isProd) {
+            let isProd = process.env.NODE_ENV === "production";
+            if (!isProd) {
                 console.log('DataSource RECEIVED ' + (new Date().toLocaleTimeString()));
                 console.log(dataSource);
             }
@@ -73,7 +75,8 @@ class DataSourceListener {
     // available for callbacks
     watchdog()
     {
-        if (DataSourceListener.isProd)
+        let isProd = process.env.NODE_ENV === "production";
+        if (!isProd)
             console.log(`watchdog. isConnected: ${this.isConnected}. needConnection: ${this.needConnection}`);
         
         var me = this;

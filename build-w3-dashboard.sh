@@ -16,7 +16,11 @@ export ASPNETCORE_ENVIRONMENT=Development
 export ASPNETCORE_ENVIRONMENT=Production
 export ASPNETCORE_URLS="http://localhost:5010;https://0.0.0.0:5011"
 cd ClientApp; time yarn install; cd ..
-time dotnet publish -c Release /p:DefineConstants=TRACE;DEBUG -o bin/ --self-contained -r $rid
+dotnet run -c Debug
+
+function ignore() {
+time dotnet publish -c Release /p:DefineConstants="TRACE" -o bin/ --self-contained -r $rid
 cd bin
 ./Universe.W3Top
 # time dotnet build -c Release; time dotnet run -c Release
+}

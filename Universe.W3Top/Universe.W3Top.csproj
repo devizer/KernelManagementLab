@@ -24,6 +24,7 @@
         <Content Include="ClientApp\src\components\Poc2Chart.js" />
         <Content Include="ClientApp\src\components\SingleAxisChart.js" />
         <Content Include="ClientApp\src\NextUniqueId.js" />
+        <Content Include="ClientApp\src\stores\DataModel.ts.txt" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     </ItemGroup>
