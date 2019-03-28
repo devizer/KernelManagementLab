@@ -76,8 +76,8 @@ class DataSourceListener {
     watchdog()
     {
         let isProd = process.env.NODE_ENV === "production";
-        if (!isProd)
-            console.log(`watchdog. isConnected: ${this.isConnected}. needConnection: ${this.needConnection}`);
+        if (!isProd || true)
+            console.log(`watchdog. isConnected: ${this.isConnected}. needConnection: ${this.needConnection}, state: ${this.connection.state}`);
         
         var me = this;
         if (this.needConnection) {
