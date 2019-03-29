@@ -74,7 +74,7 @@ namespace Universe.Dashboard.Agent
                 };
 
                 var logBy1Seconds = NetStatDataSource.Instance.By_1_Seconds;
-                while (logBy1Seconds.Count >= 60)
+                while (logBy1Seconds.Count >= 60 + 1)
                     logBy1Seconds.RemoveAt(0);
                 
                 logBy1Seconds.Add(point);
