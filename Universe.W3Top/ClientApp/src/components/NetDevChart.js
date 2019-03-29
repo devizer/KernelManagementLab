@@ -93,7 +93,6 @@ export class NetDevChart extends Component {
             destroy.bind(this);
     }
 
-
     _initChart()
     {
         var formatX = x => {
