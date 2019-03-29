@@ -18,6 +18,7 @@
     <ItemGroup>
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
+        <Content Include="ClientApp\src\components\LimitFinder.js" />
         <Content Include="ClientApp\src\components\NetDevChart.js" />
         <Content Include="ClientApp\src\components\AnotherChart2.js" />
         <Content Include="ClientApp\src\components\MyC3.css" />

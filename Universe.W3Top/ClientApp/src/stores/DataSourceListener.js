@@ -1,10 +1,7 @@
 import * as DataSourceActions from './DataSourceActions'
 import * as signalR from '@aspnet/signalr'
-// import * as AAA from './DataModel'
 
 class DataSourceListener {
-    
-    
     
     constructor()
     {
@@ -62,9 +59,9 @@ class DataSourceListener {
     {
         let me = this;
         this.connection.start().then(() => {
+            DataSourceActions.ConnectionStatusUpdated(true);
             me.markConnectionState(true);
             console.log("SignalR connection established");
-            DataSourceActions.ConnectionStatusUpdated(true);
         }).catch(err => {
             me.markConnectionState(false);
             console.warn("SignalR connection error. " + err.toString());
@@ -82,7 +79,9 @@ class DataSourceListener {
         var me = this;
         if (this.needConnection) {
             if (!this.isConnected) {
-                me.tryToConnect();
+                if (this.connection.state === 0) {
+                    me.tryToConnect();
+                }
             }
         }
         else

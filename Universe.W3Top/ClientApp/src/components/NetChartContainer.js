@@ -16,9 +16,9 @@ export class NetChartContainer extends Component {
     
     getEns33(ds)
     {
-        return dataSourceStore.getDataSource().interfaces.ens33;
+        
         try {
-            
+            return dataSourceStore.getDataSource().interfaces.ens33;
         }
         catch(err)
         {
