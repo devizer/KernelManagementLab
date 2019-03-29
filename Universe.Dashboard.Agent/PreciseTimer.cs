@@ -141,7 +141,7 @@ namespace Universe.Dashboard.Agent
             }
 
 #if DUMPS
-            Console.WriteLine($"DataSource flushed: {sw.Elapsed}");
+            // Console.WriteLine($"DataSource flushed: {sw.Elapsed}");
 #endif
         }
     }

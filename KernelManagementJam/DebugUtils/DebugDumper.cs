@@ -10,6 +10,8 @@ namespace KernelManagementJam.DebugUtils
 {
     public static class DebugDumper
     {
+        public static string DumpDir => _GetDumpDir.Value;
+
         [Conditional("DUMPS")]
         public static void Dump(object anObject, string fileName, bool minify = false)
         {
@@ -36,7 +38,7 @@ namespace KernelManagementJam.DebugUtils
             jwr.Flush();
 
             var fullFileName = Path.Combine(DumpDir, fileName);
-            // CheckDir(fullFileName);
+            CheckDir(fullFileName);
 
             // string json = JsonConvert.SerializeObject(anObject, Formatting.Indented, settings);
             using (FileStream fs = new FileStream(fullFileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
@@ -49,7 +51,7 @@ namespace KernelManagementJam.DebugUtils
         public static void DumpText(string content, string fileName)
         {
             var fullFileName = Path.Combine(DumpDir, fileName);
-            // CheckDir(fullFileName);
+            CheckDir(fullFileName);
 
             using (FileStream fs = new FileStream(fullFileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
@@ -79,7 +81,7 @@ namespace KernelManagementJam.DebugUtils
         {
             var fileName = "app.trace.log";
             var fullFileName = Path.Combine(DumpDir, fileName);
-            // CheckDir(fullFileName);
+            CheckDir(fullFileName);
 
             using (FileStream dump = new FileStream(fullFileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (StreamWriter wr = new StreamWriter(dump, new UTF8Encoding(false)))
@@ -90,24 +92,29 @@ namespace KernelManagementJam.DebugUtils
         
         private static void CheckDir(string fileName)
         {
-            try
+            if (Path.GetDirectoryName(fileName) != DumpDir)
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(fileName));
-            }
-            catch
-            {
+                Console.WriteLine($"Checking suspicious directory of file [{fileName}]");
+                if (Directory.Exists(Path.GetDirectoryName(fileName))) return;
+                
+                try
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+                }
+                catch
+                {
+                }
             }
         }
 
 
-        public static string DumpDir => _GetDumpDir.Value;
         private static Lazy<string> _GetDumpDir = new Lazy<string>(() =>
         {
             var an = Path.GetFileName(Assembly.GetEntryAssembly().Location);
             var ret = "dumps-" + an;
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
-                ret = Path.Combine("/tmp", ret);
+                ret = Path.Combine("/home/ubuntu/.TMP2", ret);
             }
             else
             {

@@ -1,66 +1,76 @@
 import React, { Component } from 'react';
-import "c3/c3.css"
-import "./MyC3.css"
+// import PropTypes from 'prop-types';
 import nextUniqueId from "../NextUniqueId"
-// let c3 = require('c3');
-import c3 from 'c3';
+import DataSourceStore from "../stores/DataSourceStore";
+// import c3 from 'c3';
+let c3 = require("c3");
 
-export class SingleAxisChart extends Component {
-    static displayName = SingleAxisChart.name;
+const EnptyLocalDataSource = {
+    x: [],
+    interfaces: [],
+    interfaceNames: [],
+};
+
+export class NetDevChart extends Component {
+    static displayName = NetDevChart.name;
     
     // static domIdCounter = 0;
-    domId = nextUniqueId("chart1y");
+    domId = nextUniqueId("chart_net_dev");
     chart = null;
-    jsonData = {};
-    pointCurrent = Math.round(Math.random()*1000);
+    jsonChart = {};
+    // jsonData = {}; - replaced by this.state.localDataSource 
     pointLimit = 60;
     updateInterval = 1000;
     timerId = null;
 
-    calcNextSceneDataSource() {
-        this.pointCurrent = (this.pointCurrent + 1) % 2000000000;
-        let arrx = [];
-        let arr1 = [];
-        let arr2 = [];
-        let round = n => Math.round(n * 10) / 10.0;
-        for(let x = 0; x <= 60; x += 1)
-        {
-            let y1 = Math.sin(((this.pointCurrent+x) / this.pointLimit) * Math.PI)*40+50 + Math.sin(20*(this.pointCurrent+x))*2;
-            let y2 = Math.sin(((this.pointCurrent*3+x*1.8+17) / this.pointLimit) * Math.PI)*40+50 + Math.cos(20*(this.pointCurrent+x))*2;
-            // console.log(`x = ${x}, y1 = ${y1}, y2 = ${y2}`);
-            arrx.push(x);
-            arr1.push(round(y1));
-            arr2.push(round(y2));
-        }
-
-        this.jsonData = { microSD: arr2, eMMC: arr1, };
-    }
-
     constructor (props) {
         super(props);
-
-        // SingleAxisChart.domIdCounter++;
-        // this.domId = `chart_${SingleAxisChart.domIdCounter}`;
+        
+        this.updateGlobalDataSource = this.updateGlobalDataSource.bind(this);
+        let x = DataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
         
     }
 
-    incrementCounter () {
-        this.setState({
-            currentCount: this.state.currentCount + 1
-        });
+    updateGlobalDataSource() {
+        this.globalDataSource = DataSourceStore.activeDataSource;
+        let localDataSource = this.props.getLocalDataSource(this.globalDataSource);
+        let xValues = this.globalDataSource.x;
+        // console.log(`[[${this.props.name}]] localDataSource`); console.log(localDataSource);
+        // console.log(`[[${this.props.name}]] xValues`); console.log(xValues);
+        
+        let rxBytes = localDataSource.rxBytes;
+        let txBytes = localDataSource.txBytes;
+        let rxPackets = localDataSource.rxPackets;
+        let txPackets = localDataSource.txPackets;
+        let jsonChart = {
+            x: xValues,
+            rxBytes,
+            txBytes,
+            rxPackets,
+            txPackets,
+        };
+        
+        console.log(`[[${this.props.name}]] jsonChart updated`); console.log(jsonChart);
+        
+        this._updateChart();
+        this.jsonChart = jsonChart;
+        
+        // this.setState({
+        //     jsonChart: jsonChart, 
+        // });
     }
-
+    
     componentDidMount() {
-
-        this.calcNextSceneDataSource();
+        
         this._initChart();
 
-        // return;
         this.timerId = setInterval(_ => {
-            this.calcNextSceneDataSource();
-            this._updateChart();
+            // TODO: Update chart if web-secket is disconnected
+            // .... 
             // this.forceUpdate();
         }, this.updateInterval);
+
+
     }
 
     componentWillUnmount() {
@@ -91,20 +101,20 @@ export class SingleAxisChart extends Component {
             if (x === 60) return "";
             return Math.round(60-x);
         };
-
+        
         this.chart = c3.generate({
             bindto: `#${this.domId}`,
             data: {
                 // columns: columns,
-                json : this.jsonData,
+                json : this.jsonChart,
                 type: 'area-spline'
             },
             transition: {
                 duration: 1
             },
             size: {
-                width: 350,
-                height: 130,
+                width: 500,
+                height: 190,
             },
             axis: {
                 x: {
@@ -162,20 +172,14 @@ export class SingleAxisChart extends Component {
 
         });
         
-        // this.chart.
-
     }
 
     _updateChart() {
         if (this.chart === null) return;
         this.chart.load({
-            json: this.jsonData,
+            json: this.jsonChart,
             transition: {
-                duration: 1000
-            },
-            size: {
-                width: 350,
-                height: 100,
+                duration: 1
             },
         });
     }
@@ -185,3 +189,9 @@ export class SingleAxisChart extends Component {
         
     }
 }
+
+// NetDevChart.propTypes = {
+//     getLocalDataSource: PropTypes.func.isRequired,
+//     name: PropTypes.string.isRequired,
+//     description: PropTypes.string.isRequired,
+// };

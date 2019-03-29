@@ -18,9 +18,10 @@
     <ItemGroup>
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
-        <Content Include="ClientApp\src\components\AllTheNetworksStat.js" />
+        <Content Include="ClientApp\src\components\NetDevChart.js" />
         <Content Include="ClientApp\src\components\AnotherChart2.js" />
         <Content Include="ClientApp\src\components\MyC3.css" />
+        <Content Include="ClientApp\src\components\NetChartContainer.js" />
         <Content Include="ClientApp\src\components\Poc2Chart.js" />
         <Content Include="ClientApp\src\components\SingleAxisChart.js" />
         <Content Include="ClientApp\src\NextUniqueId.js" />

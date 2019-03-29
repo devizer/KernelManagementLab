@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import "c3/c3.css"
-import "./MyC3.css"
 import nextUniqueId from "../NextUniqueId"
-// let c3 = require('c3');
 import c3 from 'c3';
 
 export class SingleAxisChart extends Component {
