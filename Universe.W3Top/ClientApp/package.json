@@ -11,6 +11,8 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "array-find": "^1.0.0",
     "babel-polyfill": "^6.26.0",
+    "es6-promise": "^4.2.6",
+    "isomorphic-fetch": "^2.2.1",
     "bootstrap": "^4.3.1",
     "c3": "^0.6.13",
     "flux": "^3.1.3",

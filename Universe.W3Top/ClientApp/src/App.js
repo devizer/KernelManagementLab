@@ -10,23 +10,34 @@ import { Poc2Chart } from './components/Poc2Chart';
 import { NetChartContainer } from './components/NetChartContainer';
 import dataSourceListener from './stores/DataSourceListener';
 
+// fetch for IE11
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
 export default class App extends Component {
     static displayName = App.name;
 
     constructor (props) {
         super(props);
 
-        fetch('api/Test1/BeCrazy')
-            .then(response => {
-                console.log(`Response.Status: ${response.status}`);
-                console.log(response);
-                console.log(response.body);
-                return response.ok ? response.json() : {error: response.status, details: response.json()}
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => console.log(error));
+        try {
+            let apiUrl = 'api/Health/PingDb';
+            fetch(apiUrl)
+                .then(response => {
+                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    console.log(response);
+                    console.log(response.body);
+                    return response.ok ? response.json() : {error: response.status, details: response.json()}
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => console.log(error));
+        }
+        catch(err)
+        {
+            console.log('FETCH failed. ' + err);
+        }
 
         
         return;
