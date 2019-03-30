@@ -20,7 +20,7 @@ export class NetDevChart extends Component {
 
     static ChartSize = {
         width: 500,
-        height: 190,
+        height: 160,
     };
 
 
@@ -161,7 +161,7 @@ export class NetDevChart extends Component {
                         position: 'inner-left'
                     },
                     tick: {
-                        count: 5,
+                        count: 7,
                         format: formatX,
                         // values: [1, 2, 4, 8, 16, 32]
                     }
@@ -219,10 +219,9 @@ export class NetDevChart extends Component {
                     lines: [
                         {value: 60, text: ''},
                     ]
-
                 }
             },
-            // fixed tick&labels withs for Y and Y2 axises
+            // fix tick&labels withs for Y and Y2 axises
             padding: {
                 left: 70,
                 right: 70,
