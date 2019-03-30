@@ -77,9 +77,14 @@ export class NetChartContainer_V2 extends Component {
     renderNormal() {
         return (
             <div id="NetCharts">
-                {this.state.netChartList.map(netChart => 
+                {this.state.netChartList.map(netChart =>
                     <div class="CHART">
                         PlaceHolder for loaded chart: {netChart.name}
+                        <NetDevChart
+                            name={netChart.name}
+                            getLocalDataSource={netChart.getLocalDataSource}
+                            description={netChart.description}
+                        />
                     </div>
                 )}
             </div>
