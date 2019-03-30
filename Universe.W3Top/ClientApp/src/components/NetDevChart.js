@@ -36,19 +36,28 @@ export class NetDevChart extends Component {
         this.updateGlobalDataSource = this.updateGlobalDataSource.bind(this);
         this._updateChart = this._updateChart.bind(this);
         this._initChart = this._initChart.bind(this);
+        this.buildLocalJsonChart = this.buildLocalJsonChart.bind(this);
         let x = DataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
     }
 
     updateGlobalDataSource() {
+        let jsonChart = this.buildLocalJsonChart();
+
+        this.jsonChart = jsonChart;
+        this._updateChart();
+        
+    }
+
+    buildLocalJsonChart() {
         this.globalDataSource = DataSourceStore.activeDataSource;
         let localDataSource = this.props.getLocalDataSource(this.globalDataSource);
         if (Object.keys(localDataSource).length === 0)
             localDataSource = __EmptyJsonChart;
-        
+
         let xValues = this.globalDataSource.x;
         // console.log(`[[${this.props.name}]] localDataSource`); console.log(localDataSource);
         // console.log(`[[${this.props.name}]] xValues`); console.log(xValues);
-        
+
         let rxBytes = localDataSource.rxBytes;
         let txBytes = localDataSource.txBytes;
         let rxPackets = localDataSource.rxPackets;
@@ -61,15 +70,14 @@ export class NetDevChart extends Component {
             txPackets,
         };
 
-        console.log(`[[${this.props.name}]] jsonChart updated`); console.log(jsonChart);
-        
-        this.jsonChart = jsonChart;
-        this._updateChart();
-        
+        console.log(`[[${this.props.name}]] jsonChart updated`);
+        console.log(jsonChart);
+        return jsonChart;
     }
-    
+
     componentDidMount() {
-        
+
+        this.jsonChart = this.buildLocalJsonChart();
         this._initChart();
 
         this.timerId = setInterval(_ => {
@@ -135,7 +143,7 @@ export class NetDevChart extends Component {
 
             },
             transition: {
-                duration: 0
+                duration: null
             },
             size: {
                 width: 500,
@@ -160,7 +168,7 @@ export class NetDevChart extends Component {
                     padding: 0,
                     label: {
                         text: 'Transfer, Kb / s',
-                        position: 'outer-left'
+                        position: 'outer-middle'
                     },
                     tick: {
                         count: 5,
@@ -180,7 +188,7 @@ export class NetDevChart extends Component {
                     },
                     label: {
                         text: 'Packets / s',
-                        position: 'outer-right'
+                        position: 'outer-middle'
                     },
 
                 }

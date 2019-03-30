@@ -97,7 +97,7 @@ export class NetChartContainer_V2 extends Component {
             <div id="NetCharts">
                 {this.state.netChartList.map(netChart =>
                     <div class="CHART">
-                        PlaceHolder for loaded chart: {netChart.name}
+                        network interface <b>{netChart.name}</b>
                         <NetDevChart
                             name={netChart.name}
                             getLocalDataSource={netChart.getLocalDataSource}
