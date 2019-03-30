@@ -14,7 +14,13 @@ const __EmptyJsonChart = {
 
 export class NetDevChart extends Component {
     static displayName = NetDevChart.name;
-    
+
+    static ChartSize = {
+        width: 500,
+        height: 190,
+    };
+
+
     domId = nextUniqueId("chart_net_dev");
     chart = null;
     jsonChart = {};
@@ -143,10 +149,7 @@ export class NetDevChart extends Component {
             transition: {
                 duration: null
             },
-            size: {
-                width: 500,
-                height: 190,
-            },
+            size: NetDevChart.ChartSize,
             axis: {
                 x: {
                     padding: 0,

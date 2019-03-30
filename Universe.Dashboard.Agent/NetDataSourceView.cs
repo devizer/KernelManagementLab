@@ -93,8 +93,17 @@ namespace Universe.Dashboard.Agent
                     }
                 }
             }
+            
+            // Inject IsInactive
+            var totals = NetStatDataSource.Instance.TotalsOfInterfaces;
+//            foreach (var interfacePair in interfacesView)
+//            {
+//                if (!totals.TryGetValue(interfacePair.Key, out var t))
+//                interfacePair.Value["IsInactive"] =   
+//            }
 
             ret.Interfaces = interfacesView;
+            ret.InterfaceTotals = NetStatDataSource.Instance.TotalsOfInterfaces;
             return ret;
         }
     }

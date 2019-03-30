@@ -100,6 +100,27 @@ namespace KernelManagementJam
         {
             return Delta(next, prev);
         }
+
+        public bool IsInactive =>
+            RxBytes == 0 &&
+            RxPackets == 0 &&
+            RxErrors == 0 &&
+            RxDrops == 0 &&
+            RxFifoErrors == 0 &&
+            RxFrameErrors == 0 &&
+            RxCompressed == 0 &&
+            Multicast == 0 &&
+
+            TxBytes == 0 &&
+            TxPackets == 0 &&
+            TxErrors == 0 &&
+            TxDrops == 0 &&
+            TxFifoErrors == 0 &&
+            Collisions == 0 &&
+            TxHeartbeatErrors == 0 &&
+            TxCompressed == 0;
+        
+        
         public static NetDevInterfaceRow Delta(NetDevInterfaceRow next, NetDevInterfaceRow prev)
         {
             return new NetDevInterfaceRow()

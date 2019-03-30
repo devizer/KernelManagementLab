@@ -55,8 +55,10 @@ namespace Universe.Dashboard.Agent
                 
                 // Net/Dev interfaces
                 var currentNetDev = new List<NetDevInterfaceRow>();
+                Dictionary<string,NetDevInterfaceRow> totalsOfInterfaces = new Dictionary<string, NetDevInterfaceRow>();
                 foreach (var nextInterface in nextNetDev)
                 {
+                    totalsOfInterfaces[nextInterface.Name] = nextInterface;
                     // null below means newly created interface
                     var prevInterface = prevNetDev.FirstOrDefault(x => x.Name == nextInterface.Name) ??
                                         new NetDevInterfaceRow();
@@ -78,6 +80,7 @@ namespace Universe.Dashboard.Agent
                     logBy1Seconds.RemoveAt(0);
                 
                 logBy1Seconds.Add(point);
+                NetStatDataSource.Instance.TotalsOfInterfaces = totalsOfInterfaces;
                 Dump_By_1_Seconds();
 
                 prevNetStat = nextNetStat;
@@ -91,6 +94,7 @@ namespace Universe.Dashboard.Agent
         {
             var copy = NetStatDataSource.Instance.By_1_Seconds;
             var viewModel = NetDataSourceView.AsViewModel(copy);
+            DebugDumper.Dump(NetStatDataSource.Instance.TotalsOfInterfaces, "NetStatDataSource.Totals.json");
             DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "NetStatDataSource.1s.json");
             DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "NetStatDataSource.1s.min.json", true);
             DebugDumper.Dump(viewModel, "NetStat.ViewModel.1s.json");

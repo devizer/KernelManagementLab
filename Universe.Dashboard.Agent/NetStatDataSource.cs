@@ -1,9 +1,13 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using KernelManagementJam;
 
 namespace Universe.Dashboard.Agent
 {
     public class NetStatDataSource
     {
+        public Dictionary<string,NetDevInterfaceRow> TotalsOfInterfaces = null;
+        
         // 60 * 1
         public List<NetStatDataSourcePoint> By_1_Seconds;
         

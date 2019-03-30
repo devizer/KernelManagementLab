@@ -6,4 +6,17 @@ export default class Helper
         
         return [false, undefined];
     }
+    
+    static isInterfaceActive(globalDataSource, interfaceName)
+    {
+        let isInactive = globalDataSource.interfaceTotals[interfaceName].isInactive;
+        return !isInactive;
+    }
+
+    static getActiveInterfaceList(globalDataSource, interfaceName)
+    {
+        let isInactive = globalDataSource.interfaceTotals[interfaceName].isInactive;
+        return !isInactive;
+    }
+
 }

@@ -114,7 +114,7 @@ namespace KernelManagementJam.DebugUtils
             var ret = "dumps-" + an;
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
-                ret = Path.Combine("/home/ubuntu/.TMP2", ret);
+                ret = Path.Combine("/tmp", ret);
             }
             else
             {

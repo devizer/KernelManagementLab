@@ -49,17 +49,19 @@ export class NetChartContainer_V2 extends Component {
             let netChartList = [];
             for (let interfaceName in interfaces) {
                 if (interfaces.hasOwnProperty(interfaceName)) {
-                    netChartList.push({
-                        name: interfaceName,
-                        description: `the ${interfaceName} description is not yet completed`,
-                        getLocalDataSource: () => {
-                            try {
-                                return dataSourceStore.getDataSource().interfaces[interfaceName];
-                            } catch {
-                                return {};
+                    if (Helper.isInterfaceActive(globalDataSource, interfaceName)) {
+                        netChartList.push({
+                            name: interfaceName,
+                            description: `the ${interfaceName} description is not yet completed`,
+                            getLocalDataSource: () => {
+                                try {
+                                    return dataSourceStore.getDataSource().interfaces[interfaceName];
+                                } catch {
+                                    return {};
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
 
@@ -97,12 +99,15 @@ export class NetChartContainer_V2 extends Component {
             <div id="NetCharts">
                 {this.state.netChartList.map(netChart =>
                     <div class="CHART">
-                        network interface <b>{netChart.name}</b>
+                        <div style={{width: NetDevChart.ChartSize.width, textAlign: "center"}}>
+                            interface <b>{netChart.name}</b>
+                        </div>
                         <NetDevChart
                             name={netChart.name}
                             getLocalDataSource={netChart.getLocalDataSource}
                             description={netChart.description}
                         />
+                    <br/>
                     </div>
                 )}
             </div>
