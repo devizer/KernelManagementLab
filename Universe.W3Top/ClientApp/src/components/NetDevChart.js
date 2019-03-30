@@ -31,8 +31,6 @@ export class NetDevChart extends Component {
     constructor (props) {
         super(props);
         
-        // this.buildLimits();
-        // this.findLimit = this.findLimit.bind(this);
         this.updateGlobalDataSource = this.updateGlobalDataSource.bind(this);
         this._updateChart = this._updateChart.bind(this);
         this._initChart = this._initChart.bind(this);
