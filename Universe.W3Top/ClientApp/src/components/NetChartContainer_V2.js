@@ -9,6 +9,8 @@ export class NetChartContainer_V2 extends Component {
 
     hasProperty = (obj, name) => typeof obj != 'undefined'  && typeof obj[name] != 'undefined';
     
+    timerId = null;
+    
     constructor(props) {
         super(props);
 
@@ -20,6 +22,22 @@ export class NetChartContainer_V2 extends Component {
             netChartList: this.tryBuildNetChartList(),
         };
         
+    }
+    
+    componentDidMount() {
+        let isAlreadyBound = this.state.netChartList !== null; 
+        if (!isAlreadyBound)
+            this.timerId = setInterval(this.waiterTick.bind(this));
+    }
+    
+    componentWillUnmount() {
+        if (this.timerId !== null)
+            clearInterval(this.timerId);
+    }
+
+    waiterTick()
+    {
+        this.tryInitNetChartList();
     }
 
     tryBuildNetChartList()
