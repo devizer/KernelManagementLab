@@ -8,6 +8,7 @@ import { Layout } from './components/Layout';
 import { Poc1Chart } from './components/Poc1Chart';
 import { Poc2Chart } from './components/Poc2Chart';
 import { NetChartContainer } from './components/NetChartContainer';
+import { NetChartContainer_V2 } from './components/NetChartContainer_V2';
 import dataSourceListener from './stores/DataSourceListener';
 
 // fetch for IE11
@@ -70,6 +71,7 @@ export default class App extends Component {
                 <Route exact path='/1axis' component={Poc1Chart} />
                 <Route exact path='/2axis' component={Poc2Chart} />
                 <Route exact path='/net' component={NetChartContainer} />
+                <Route exact path='/net_v2' component={NetChartContainer_V2} />
             </Layout>
         );
     }

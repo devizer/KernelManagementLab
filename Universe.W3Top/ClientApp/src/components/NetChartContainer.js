@@ -10,8 +10,9 @@ export class NetChartContainer extends Component {
     
     constructor(props) {
         super(props);
-        
+
         this.getEns33 = this.getEns33.bind(this);
+        this.getLo = this.getLo.bind(this);
     }
     
     getEns33(ds)
@@ -26,13 +27,31 @@ export class NetChartContainer extends Component {
         }
     }
 
+    getLo(ds)
+    {
+
+        try {
+            return dataSourceStore.getDataSource().interfaces.lo;
+        }
+        catch(err)
+        {
+            return {};
+        }
+    }
+
+
     render () {
         return (
             <div>
                 <table><tbody><tr><td style={{paddingRight: 40}}>
-                    <NetDevChart 
+                    <NetDevChart
                         name="ens33"
                         getLocalDataSource={ __ => this.getEns33() }
+                        description="192.168.42.42"
+                    />
+                    <NetDevChart
+                        name="lo"
+                        getLocalDataSource={ __ => this.getLo() }
                         description="192.168.42.42"
                     />
                     {/* 

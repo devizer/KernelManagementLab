@@ -35,6 +35,9 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/net">Network</NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/net_v2">Network-V2</NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/1axis">Single Y-axis chart</NavLink>
                 </NavItem>
                 <NavItem>
