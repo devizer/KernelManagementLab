@@ -123,8 +123,8 @@ export class NetDevChart extends Component {
                 names : {
                     rxPackets: "RX:Packets",
                     txPackets: "TX:Packets",
-                    rxBytes: "RX:Bytes",
-                    txBytes: "TX:Bytes",
+                    rxBytes: "RX:KBytes",
+                    txBytes: "TX:KBytes",
                 }
 
             },

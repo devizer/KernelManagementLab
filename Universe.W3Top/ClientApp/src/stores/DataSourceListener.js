@@ -5,7 +5,7 @@ class DataSourceListener {
     
     constructor()
     {
-        this.watchdog = this.watchdog.bind(this);
+        this.watchdogTick = this.watchdogTick.bind(this);
         this.markConnectionState = this.markConnectionState.bind(this);
         this.tryToConnect = this.tryToConnect.bind(this);
         
@@ -17,7 +17,7 @@ class DataSourceListener {
             // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             let isProd = process.env.NODE_ENV === "production";
             if (!isProd || true) {
-                console.log('DataSource RECEIVED ' + (new Date().toLocaleTimeString()));
+                console.log('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()));
                 console.log(dataSource);
             }
             DataSourceActions.DataSourceUpdated(dataSource);
@@ -30,7 +30,7 @@ class DataSourceListener {
             DataSourceActions.ConnectionStatusUpdated(false);
         });
 
-        this.timerId = setInterval(this.watchdog, 1000);
+        this.timerId = setInterval(this.watchdogTick, 1000);
     }
 
     start() {
@@ -70,11 +70,11 @@ class DataSourceListener {
     }
 
     // available for callbacks
-    watchdog()
+    watchdogTick()
     {
         let isProd = process.env.NODE_ENV === "production";
         if (!isProd || true)
-            console.log(`watchdog. isConnected: ${this.isConnected}. needConnection: ${this.needConnection}, state: ${this.connection.state}`);
+            console.log(`[watchdog] isConnected: ${this.isConnected}. needConnection: ${this.needConnection}, state: ${this.connection.state}`);
         
         var me = this;
         if (this.needConnection) {
