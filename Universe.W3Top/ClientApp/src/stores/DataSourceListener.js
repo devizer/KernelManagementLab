@@ -1,5 +1,6 @@
 import * as DataSourceActions from './DataSourceActions'
 import * as signalR from '@aspnet/signalr'
+import Helper from "../Helper";
 
 class DataSourceListener {
     
@@ -8,6 +9,7 @@ class DataSourceListener {
         this.watchdogTick = this.watchdogTick.bind(this);
         this.markConnectionState = this.markConnectionState.bind(this);
         this.tryToConnect = this.tryToConnect.bind(this);
+        this.applyDocumentTitle = this.applyDocumentTitle.bind(this);
         
         this.isConnected = false;
         this.needConnection = false;
@@ -20,6 +22,7 @@ class DataSourceListener {
                 console.log('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()));
                 console.log(dataSource);
             }
+            this.applyDocumentTitle(dataSource);
             DataSourceActions.DataSourceUpdated(dataSource);
         });
 
@@ -31,6 +34,12 @@ class DataSourceListener {
         });
 
         this.timerId = setInterval(this.watchdogTick, 1000);
+    }
+    
+    applyDocumentTitle(globalDataSource)
+    {
+        let [hasHostname, hostname] = Helper.tryGetProperty(globalDataSource, "hostname");
+        document.title = `W3 Top` + (hasHostname? ` (${hostname})` : "");
     }
 
     start() {
