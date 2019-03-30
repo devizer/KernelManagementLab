@@ -129,7 +129,7 @@ export class NetDevChart extends Component {
 
             },
             transition: {
-                duration: 1
+                duration: 0
             },
             size: {
                 width: 500,
