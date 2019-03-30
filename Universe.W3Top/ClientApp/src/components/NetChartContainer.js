@@ -13,6 +13,7 @@ export class NetChartContainer extends Component {
 
         this.getEns33 = this.getEns33.bind(this);
         this.getLo = this.getLo.bind(this);
+        this.getNone = this.getNone.bind(this);
     }
     
     getEns33(ds)
@@ -27,6 +28,11 @@ export class NetChartContainer extends Component {
         }
     }
 
+    getNone()
+    {
+        return {};
+    }
+    
     getLo(ds)
     {
 
@@ -43,16 +49,25 @@ export class NetChartContainer extends Component {
     render () {
         return (
             <div>
+                <h2>Hardcoded interfaces (prototype with live data)</h2>
                 <table><tbody><tr><td style={{paddingRight: 40}}>
+                    <h4>ens33</h4>
                     <NetDevChart
                         name="ens33"
                         getLocalDataSource={ __ => this.getEns33() }
                         description="192.168.42.42"
                     />
+                    <h4>lo</h4>
                     <NetDevChart
                         name="lo"
                         getLocalDataSource={ __ => this.getLo() }
                         description="192.168.42.42"
+                    />
+                    <h4>none</h4>
+                    <NetDevChart
+                        name="none"
+                        getLocalDataSource={ __ => this.getNone() }
+                        description="interface is absent"
                     />
                     {/* 
                     <br/>

@@ -12,6 +12,9 @@ const __EmptyJsonChart = {
     rxPackets: [],
 };
 
+// This component should never be re-rendered.
+// All the state updates are managed by DataSourceStore.on('storeUpdated') callback
+
 export class NetDevChart extends Component {
     static displayName = NetDevChart.name;
 
@@ -85,7 +88,7 @@ export class NetDevChart extends Component {
         this._initChart();
 
         this.timerId = setInterval(_ => {
-            // TODO: Update chart if web-secket is disconnected
+            // TODO: Update chart every second if web-socket is disconnected
             // .... 
             // this.forceUpdate();
         }, this.updateInterval);
@@ -218,6 +221,11 @@ export class NetDevChart extends Component {
                     ]
 
                 }
+            },
+            // fixed tick&labels withs for Y and Y2 axises
+            padding: {
+                left: 70,
+                right: 70,
             },
 
         });
