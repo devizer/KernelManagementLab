@@ -23,6 +23,11 @@ export class NetDevChart extends Component {
     updateInterval = 1000;
     timerId = null;
     
+    prevLimits = {
+        limitBytes: -1,
+        limitPackets: -1
+    };
+    
     constructor (props) {
         super(props);
         
@@ -106,6 +111,7 @@ export class NetDevChart extends Component {
 
         let jsonChart = this.jsonChart;
         let {limitBytes, limitPackets} = this.computeAxisLimits(jsonChart);
+        this.prevLimits = {limitBytes, limitPackets};
 
         let formatTransfer = num => (Math.round(num / 1024.0 * 100.0) / 100).toLocaleString(undefined, {useGrouping: true});
         let formatPackets = num => Math.round(num).toLocaleString(undefined, {useGrouping: true});
@@ -193,8 +199,8 @@ export class NetDevChart extends Component {
             grid: {
                 y: {
                     lines: [
-                        {value: 4000/2, text: '50%'},
-                        {value: 4000, text: '100%', class: 'label-200', position: 'middle'},
+                        {value: limitBytes/2, text: '50%'},
+                        {value: limitBytes, text: '100%', class: 'label-200', position: 'middle'},
                     ]
                 },
                 x : {
@@ -221,22 +227,26 @@ export class NetDevChart extends Component {
 
         // limitBytes & limitPackets
         let {limitBytes, limitPackets} = this.computeAxisLimits(jsonChart);
+        
+        let isSameLimits = this.prevLimits.limitBytes === limitBytes && this.prevLimits.limitPackets === limitPackets;
+        if (!isSameLimits) {
+            console.log(`NEW NET/DEV LIMITS are Bytes: ${limitBytes}, Packets: ${limitPackets}`);
+            this.prevLimits = {limitBytes, limitPackets};
+            this.chart.axis.max({
+                y: limitBytes,
+                y2: limitPackets,
+            });
 
-        console.log(`NEW NET/DEV LIMITS are Bytes: ${limitBytes}, Packets: ${limitPackets}`);
-        this.chart.axis.max({
-            y: limitBytes,
-            y2: limitPackets,
-        });
-
-        this.chart.ygrids([
-            {value: limitBytes/2, text: '50%'},
-            {value: limitBytes, text: '100%', class: 'label-200', position: 'middle'},
-        ]);
+            this.chart.ygrids([
+                {value: limitBytes / 2, text: '50%'},
+                {value: limitBytes, text: '100%', class: 'label-200', position: 'middle'},
+            ]);
+        }
 
         this.chart.load({
             json: this.jsonChart,
             transition: {
-                duration: 1
+                duration: 0
             },
         });
 
