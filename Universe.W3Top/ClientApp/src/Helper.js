@@ -19,4 +19,7 @@ export default class Helper
         return !isInactive;
     }
 
+    static objectIsNotEmpty(obj) {
+        return typeof obj == "object" && Object.keys(obj).length > 0;
+    }
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import nextUniqueId from "../NextUniqueId"
 import DataSourceStore from "../stores/DataSourceStore";
 import { findLimit } from './LimitFinder'
+import Helper from "../Helper";
 let c3 = require("c3");
 
 const __EmptyJsonChart = {
@@ -58,7 +59,7 @@ export class NetDevChart extends Component {
     buildLocalJsonChart() {
         this.globalDataSource = DataSourceStore.activeDataSource;
         let localDataSource = this.props.getLocalDataSource(this.globalDataSource);
-        if (Object.keys(localDataSource).length === 0)
+        if (!Helper.objectIsNotEmpty(localDataSource))
             localDataSource = __EmptyJsonChart;
 
         let xValues = this.globalDataSource.x;
@@ -104,10 +105,12 @@ export class NetDevChart extends Component {
         }
         
         let destroy = () => {
-            let c = this.chart;
-            this.chart = null;
-            c.destroy();
-            console.log(`chart #${this.domId} destroyed`);
+            if (this.chart !== null) {
+                let c = this.chart;
+                this.chart = null;
+                c.destroy();
+                console.log(`chart #${this.domId} destroyed`);
+            }
         };
         
         if (window.requestIdleCallback)
