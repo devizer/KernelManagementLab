@@ -1,6 +1,6 @@
 import * as DataSourceActions from './DataSourceActions'
 import * as signalR from '@aspnet/signalr'
-import Helper from "../Helper";
+import * as Helper from "../Helper";
 
 class DataSourceListener {
     
@@ -38,7 +38,7 @@ class DataSourceListener {
     
     applyDocumentTitle(globalDataSource)
     {
-        let [hasHostname, hostname] = Helper.tryGetProperty(globalDataSource, "hostname");
+        let [hasHostname, hostname] = Helper.Common.tryGetProperty(globalDataSource, "hostname");
         document.title = `W3 Top` + (hasHostname? ` (${hostname})` : "");
     }
 

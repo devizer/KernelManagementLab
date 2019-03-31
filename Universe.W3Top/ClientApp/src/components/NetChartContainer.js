@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AnotherChart2 } from './AnotherChart2';
 import { NetDevChart } from './NetDevChart';
 import dataSourceStore from "../stores/DataSourceStore";
+import * as Helper from "../Helper";
 
 export class NetChartContainer extends Component {
     static displayName = NetChartContainer.name;
@@ -20,7 +21,7 @@ export class NetChartContainer extends Component {
     {
         
         try {
-            return dataSourceStore.getDataSource().interfaces.ens33;
+            return Helper.NetDev.getOptionalInterfacesProperty(dataSourceStore.getDataSource()).ens33;
         }
         catch(err)
         {
@@ -37,7 +38,7 @@ export class NetChartContainer extends Component {
     {
 
         try {
-            return dataSourceStore.getDataSource().interfaces.lo;
+            return Helper.NetDev.getOptionalInterfacesProperty(dataSourceStore.getDataSource()).lo;
         }
         catch(err)
         {
@@ -69,14 +70,6 @@ export class NetChartContainer extends Component {
                         getLocalDataSource={ __ => this.getNone() }
                         description="interface is absent"
                     />
-                    {/* 
-                    <br/>
-                    <NetDevChart
-                        name="lo"
-                        getLocalDataSource={ glo => glo.Interfaces.lo }
-                        description="localhost"
-                    />
-                    */}
                 </td><td>
 
 

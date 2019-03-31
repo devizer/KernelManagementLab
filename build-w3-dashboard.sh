@@ -25,7 +25,7 @@ function run_prod() {
 cd $dir
 export ASPNETCORE_ENVIRONMENT=Production
 cd ClientApp; time (yarn install); cd ..
-time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/ --self-contained -r $rid
+time dotnet publish -c Release /p:DefineConstants="NO_DUMPS" -o bin/ --self-contained -r $rid
 cd bin
 ./Universe.W3Top
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AnotherChart2 } from './AnotherChart2';
 import { NetDevChart } from './NetDevChart';
 import dataSourceStore from "../stores/DataSourceStore";
-import Helper from "../Helper";
+import * as Helper from "../Helper";
 
 export class NetChartContainer_V2 extends Component {
     static displayName = NetChartContainer_V2.name;
@@ -43,29 +43,23 @@ export class NetChartContainer_V2 extends Component {
     tryBuildNetChartList()
     {
         let globalDataSource = dataSourceStore.getDataSource();
-        let [hasInterfaces, interfaces] = Helper.tryGetProperty(globalDataSource, "interfaces");
-        console.log(`hasInterfaces: ${hasInterfaces}, interfaces: ${interfaces}`);
-        if (hasInterfaces) {
-            let netChartList = [];
-            for (let interfaceName in interfaces) {
-                if (interfaces.hasOwnProperty(interfaceName)) {
-                    if (Helper.isInterfaceActive(globalDataSource, interfaceName)) {
-                        netChartList.push({
-                            name: interfaceName,
-                            description: `the ${interfaceName} description is not yet completed`,
-                            getLocalDataSource: () => {
-                                try {
-                                    return dataSourceStore.getDataSource().interfaces[interfaceName];
-                                } catch {
-                                    return {};
-                                }
-                            }
-                        });
+        let interfaces = Helper.NetDev.getOptionalInterfacesProperty(globalDataSource);
+        
+        // activeInterfaceNames.map(interfaceName => {return {}});
+        if (interfaces !== null) {
+            let activeInterfaceNames = Helper.NetDev.getActiveInterfaceList(globalDataSource);
+            // just simple map to this.jsonChart 
+            return activeInterfaceNames.map(interfaceName => {return {
+                name: interfaceName,
+                description: `the ${interfaceName} description is not yet completed`,
+                getLocalDataSource: () => {
+                    try {
+                        return Helper.NetDev.getOptionalInterfacesProperty(dataSourceStore.getDataSource())[interfaceName];
+                    } catch {
+                        return {};
                     }
                 }
-            }
-
-            return netChartList;
+            }});
         }
         
         return null;
