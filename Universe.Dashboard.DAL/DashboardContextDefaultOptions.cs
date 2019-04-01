@@ -35,8 +35,8 @@ namespace Universe.Dashboard.DAL
             }
             
             var dir2 = new DirectoryInfo(dir).FullName;
-            var ver = typeof(DashboardContext).Assembly.GetName().Version.ToString();
-            var relPath = new[] {".cache", "Web-Dashboard", $"history-{ver}.sqlite"};
+            var ver = typeof(DashboardContext).Assembly.GetName().Version.ToString().Replace(".",".");
+            var relPath = new[] {".cache", "W3Top", $"history-{ver}.sqlite"};
             var fullPath = Path.Combine(dir2, string.Join(Path.DirectorySeparatorChar.ToString(), relPath));
             return fullPath;
         }

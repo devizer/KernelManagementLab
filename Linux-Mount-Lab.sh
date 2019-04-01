@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-work=$HOME/Transient-Builds/KernelManagementLab; 
+work=/tmp/Transient-Builds/KernelManagementLab; 
 # work=/mnt/ftp-client/KernelManagementLab; 
 mkdir -p "$(dirname $work)" 
 cd $(dirname $work); 
 rm -rf $work; 
 git clone https://github.com/devizer/KernelManagementLab; 
 cd KernelManagementLab/MountLab
-time dotnet build -f netcoreapp2.2 -c Release
-cd bin/Release/netcoreapp2.2
+time dotnet build -f netcoreapp2.2 -c Release -o bin/out
+cd bin/out
 time dotnet MountLab.dll Monitor-V1
 
 function ignore() { 
