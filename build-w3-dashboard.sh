@@ -30,5 +30,5 @@ cd bin
 ./Universe.W3Top
 }
 
-export ASPNETCORE_URLS="http://localhost:5010;https://0.0.0.0:5011"
+export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 run_prod

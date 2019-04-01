@@ -104,7 +104,6 @@ namespace Universe.Dashboard.Agent
 
             ret.Interfaces = interfacesView;
             ret.InterfaceTotals = NetStatDataSource.Instance.TotalsOfInterfaces;
-            ret.Hostname = Environment.MachineName;
             return ret;
         }
     }

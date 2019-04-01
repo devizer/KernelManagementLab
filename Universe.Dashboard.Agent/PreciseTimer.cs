@@ -135,9 +135,16 @@ namespace Universe.Dashboard.Agent
                     return;
                 }
 
-                var localStorage = NetStatDataSource.Instance.By_1_Seconds;
-                var broadcastStorage = NetDataSourceView.AsViewModel(localStorage);
-                hubContext.Clients.All.SendAsync("ReceiveDataSource", broadcastStorage);
+                var netStateStorage = NetStatDataSource.Instance.By_1_Seconds;
+                var netStatView = NetDataSourceView.AsViewModel(netStateStorage);
+                var broadcastMessage = new
+                {
+                    Hostname = Environment.MachineName,
+                    Net = netStatView,
+                    // Disk = new Dictionary<string,object>()
+                };
+                
+                hubContext.Clients.All.SendAsync("ReceiveDataSource", broadcastMessage);
             }
 
 #if DUMPS

@@ -20,13 +20,19 @@ export class NetDev
     // returns either [null] or [object]
     static getOptionalInterfacesProperty(globalDataSource)
     {
-        let [hasInterfaces, interfaces] = Common.tryGetProperty(globalDataSource, "interfaces");
-        return hasInterfaces ? interfaces : null;
+        let [hasNet, net] = Common.tryGetProperty(globalDataSource, "net");
+        if (hasNet)
+        {
+            let [hasInterfaces, interfaces] = Common.tryGetProperty(net, "interfaces");
+            return hasInterfaces ? interfaces : null;
+        }
+        
+        return null;
     }
     
     static isInterfaceActive(globalDataSource, interfaceName)
     {
-        let isInactive = globalDataSource.interfaceTotals[interfaceName].isInactive;
+        let isInactive = globalDataSource.net.interfaceTotals[interfaceName].isInactive;
         return !isInactive;
     }
 
