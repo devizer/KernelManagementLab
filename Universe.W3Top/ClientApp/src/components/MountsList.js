@@ -70,6 +70,21 @@ export class MountsList extends React.Component {
         )
     }
 
+    getTrProps = (state, rowInfo, instance) => {
+        // rowInfo.row - fields from RwactTable
+        // row.original - fields from data (dataSource)
+        let color = "black";
+        if (rowInfo.original.isBlockDevice) {
+            color = "black";
+        } else if (rowInfo.original.isTmpFs) {
+            color = "#159B30";
+        } else if (rowInfo.original.isNetworkShare) {
+            color = "#161A9E";
+        }
+        return {style: {color: color}};
+    };
+
+
     renderNormal() {
         let pageSize = Math.max(this.state.mounts.length, 1);
         let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
@@ -78,13 +93,13 @@ export class MountsList extends React.Component {
             <div id="Mounts">
                 <br/>
                 <br/>
-                <br/>
                 <ReactTable
                     data={this.state.mounts}
                     showPagination={false}
                     defaultPageSize={pageSize}
                     pageSizeOptions={[pageSize]}
                     pageSize={pageSize}
+                    getTrProps={this.getTrProps}
 
                     columns={[
                         {
