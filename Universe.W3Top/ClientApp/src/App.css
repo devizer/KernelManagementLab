@@ -5,3 +5,11 @@
     padding-bottom: 1em !important; 
     font-size: 19px 
 } 
+
+.disk-legend { text-align: center; padding: 16px 0px }
+.disk-legend-item { display: inline-block; border: 1px dotted lightgray; padding: 0px 8px}
+.disk-kind-network { color: #161A9E }
+.disk-kind-ram { color: #159B30 }
+.disk-kind-block { color: black }
+
+

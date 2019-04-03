@@ -73,15 +73,15 @@ export class MountsList extends React.Component {
     getTrProps = (state, rowInfo, instance) => {
         // rowInfo.row - fields from RwactTable
         // row.original - fields from data (dataSource)
-        let color = "black";
+        let suffix = "";
         if (rowInfo.original.isBlockDevice) {
-            color = "black";
+            suffix = "block";
         } else if (rowInfo.original.isTmpFs) {
-            color = "#159B30";
+            suffix = "ram";
         } else if (rowInfo.original.isNetworkShare) {
-            color = "#161A9E";
+            suffix = "network";
         }
-        return {style: {color: color}};
+        return { className: `disk-kind-${suffix}`};
     };
 
 
@@ -153,6 +153,14 @@ export class MountsList extends React.Component {
                     defaultPageSize={10}
                     className="-highlight"
                 />
+                
+                
+                <div class="disk-legend">
+                    {/* Legend:&nbsp;&nbsp; */}
+                    <span className="disk-legend-item disk-kind-block">Block device</span>&nbsp;&nbsp;
+                    <span className="disk-legend-item disk-kind-network">Network share</span>&nbsp;&nbsp;
+                    <span className="disk-legend-item disk-kind-ram">RAM disk</span>
+                </div>
 
             </div>
         );
