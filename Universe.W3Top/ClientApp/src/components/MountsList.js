@@ -86,16 +86,25 @@ export class MountsList extends React.Component {
                             id: "mountPath",
                             Header: "Mount Path",
                             accessor: x => x.mountEntry.mountPath,
+                            minWidth: 256,
                         },
                         {
                             id: "device",
                             Header: "Device",
                             accessor: x => x.mountEntry.device,
+                            minWidth: 256,
                         },
                         {
                             id: "fs",
                             Header: "FS",
                             accessor: x => x.mountEntry.fileSystem,
+                            minWidth: 100,
+                        },
+                        {
+                            id: "ro",
+                            Header: "R/O",
+                            accessor: x => x.freeSpace > 0 ? "" : "R/O",
+                            width: 45,
                         },
                         {
                             id: "totalSize",
@@ -103,12 +112,14 @@ export class MountsList extends React.Component {
                             accessor: "totalSize",
                             style: rightAlign,
                             Cell: sizeCell,
+                            width: 130,
                         },
                         {
                             Header: "Free",
                             accessor: "freeSpace",
                             style: rightAlign,
                             Cell: sizeCell,
+                            width: 130,
                         },
 
                     ]}
