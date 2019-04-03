@@ -10,11 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { faNetworkWired } from '@fortawesome/free-solid-svg-icons'
 import { faMemory } from '@fortawesome/free-solid-svg-icons'
+import { faFile } from '@fortawesome/free-regular-svg-icons'
 
 const iconStyle = {width:24, marginRight: 12};
 const iconBlock = <FontAwesomeIcon style={iconStyle} icon={faServer}/>;
 const iconRam = <FontAwesomeIcon style={iconStyle} icon={faMemory}/>;
 const iconNet = <FontAwesomeIcon style={iconStyle} icon={faNetworkWired}/>;
+const iconSwap = <FontAwesomeIcon style={iconStyle} icon={faFile}/>;
 
 
 export class MountsList extends React.Component {
@@ -185,7 +187,8 @@ export class MountsList extends React.Component {
                     {/* Legend:&nbsp;&nbsp; */}
                     <span className="disk-legend-item disk-kind-block">{iconBlock} Block device</span>&nbsp;&nbsp;
                     <span className="disk-legend-item disk-kind-network">{iconNet} Network share</span>&nbsp;&nbsp;
-                    <span className="disk-legend-item disk-kind-ram">{iconRam} RAM disk</span>
+                    <span className="disk-legend-item disk-kind-ram">{iconRam} RAM disk</span>&nbsp;&nbsp;
+                    <span className="disk-legend-item disk-kind-swap">{iconSwap} SWAP disk</span>
                 </div>
 
             </div>

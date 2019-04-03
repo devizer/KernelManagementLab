@@ -141,8 +141,10 @@ namespace Universe.Dashboard.Agent
                 Interlocked.Increment(ref MessageId);
                 var netStateStorage = NetStatDataSource.Instance.By_1_Seconds;
                 var netStatView = NetDataSourceView.AsViewModel(netStateStorage);
+                var toSkip = new[] {"run", "sys", "dev"};
                 var mounts = MountsDataSource.Mounts
                     .Where(x => x.TotalSize > 0)
+                    .Where(x => !toSkip.Any( skip => x.MountEntry.MountPath == $"/{skip}" || x.MountEntry.MountPath.StartsWith($"/{skip}/")))
                     .ToList();
                 
                 var broadcastMessage = new
