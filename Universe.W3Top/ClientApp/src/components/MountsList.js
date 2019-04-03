@@ -4,6 +4,7 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
+import DataSourceStore from "../stores/DataSourceStore";
 
 export class MountsList extends React.Component {
 
@@ -24,7 +25,9 @@ export class MountsList extends React.Component {
     componentDidMount() {
         let isAlreadyBound = this.state.mounts !== null;
         if (!isAlreadyBound)
-            this.timerId = setInterval(this.waiterTick.bind(this));
+            this.timerId = setInterval(this.waiterTick.bind(this), 1000);
+
+        let x = DataSourceStore.on('storeUpdated', this.tryInitMountsSource);
     }
 
     componentWillUnmount() {
@@ -34,15 +37,14 @@ export class MountsList extends React.Component {
 
     waiterTick()
     {
-        this.tryInitMountsSource();
+        if (this.state.mounts === null)
+            this.tryInitMountsSource();
     }
-
-
 
     // used by timer callback
     tryInitMountsSource()
     {
-        if (this.state.mounts === null)
+        if (this.state.mounts === null || true)
         {
             let mounts = this.tryBuildMountsSource();
             if (mounts !== null) {
@@ -70,10 +72,13 @@ export class MountsList extends React.Component {
 
     renderNormal() {
         let pageSize = Math.max(this.state.mounts.length, 1);
-        let sizeCell = row => <span>{Helper.Common.formatBytes(row.value)}</span>;
+        let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
         let rightAlign = {textAlign: "right" };
         return (
             <div id="Mounts">
+                <br/>
+                <br/>
+                <br/>
                 <ReactTable
                     data={this.state.mounts}
                     showPagination={false}
@@ -131,7 +136,7 @@ export class MountsList extends React.Component {
                         }
                     ]}
                     defaultPageSize={10}
-                    className="-striped -highlight"
+                    className="-highlight"
                 />
 
             </div>

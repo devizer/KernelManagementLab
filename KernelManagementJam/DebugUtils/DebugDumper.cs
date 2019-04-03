@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
@@ -12,10 +13,13 @@ namespace KernelManagementJam.DebugUtils
     {
         public static string DumpDir => _GetDumpDir.Value;
 
-        public static bool IsDumpsEnabled
+        public static bool AreDumpsEnabled
         {
             get
             {
+                var raw = Environment.GetEnvironmentVariable("DUMPS_Are_Enabled");
+                string[] yes = new[] {"On", "True", "1"};
+                return yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
 #if DUMPS
                 return true;
 #else
@@ -27,6 +31,8 @@ namespace KernelManagementJam.DebugUtils
         [Conditional("DUMPS")]
         public static void Dump(object anObject, string fileName, bool minify = false)
         {
+            if (!AreDumpsEnabled) return;
+            
             JsonSerializer ser = new JsonSerializer()
             {
                 Formatting = !minify ? Formatting.Indented : Formatting.None,
@@ -62,6 +68,8 @@ namespace KernelManagementJam.DebugUtils
 
         public static void DumpText(string content, string fileName)
         {
+            if (!AreDumpsEnabled) return;
+
             var fullFileName = Path.Combine(DumpDir, fileName);
             CheckDir(fullFileName);
 
@@ -91,6 +99,7 @@ namespace KernelManagementJam.DebugUtils
         [Conditional("DUMPS")]
         public static void Trace(string info)
         {
+            if (!AreDumpsEnabled) return;
             var fileName = "app.trace.log";
             var fullFileName = Path.Combine(DumpDir, fileName);
             CheckDir(fullFileName);

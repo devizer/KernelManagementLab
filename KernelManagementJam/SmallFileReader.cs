@@ -33,7 +33,8 @@ namespace KernelManagementJam
         {
             if (!File.Exists(fileName))
             {
-                AppendSingleLinerLog(string.Format("[{0}] single-line file not found", fileName));
+                
+                AppendSingleLinerLog(() => string.Format("[{0}] single-line file not found", fileName));
                 return null;
             }
 
@@ -42,23 +43,24 @@ namespace KernelManagementJam
             {
                 var ret = rdr.ReadLine();
 
-                var logLine = string.Format("[{0}] first line: '{1}'", fileName, ret);
-                AppendSingleLinerLog(logLine);
+                AppendSingleLinerLog(() => string.Format("[{0}] first line: '{1}'", fileName, ret));
 
                 return ret;
             }
         }
 
         [Conditional("DEBUG")]
-        private static void AppendSingleLinerLog(string logLine)
+        private static void AppendSingleLinerLog(Func<string> logLine)
         {
+            if (!DebugDumper.AreDumpsEnabled) return;
+
             var fullFileName = Path.Combine(DebugDumper.DumpDir, "SmallFileReader::One-Line-Reader.log");
             // CheckDir(fullFileName);
 
             using (var dump = new FileStream(fullFileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             using (var wr = new StreamWriter(dump, FileEncoding))
             {
-                wr.WriteLine(logLine);
+                wr.WriteLine(logLine());
             }
         }
     }

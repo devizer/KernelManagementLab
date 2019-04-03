@@ -30,5 +30,6 @@ cd bin
 ./Universe.W3Top
 }
 
+export DUMPS_Are_Enabled=Off
 export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 run_prod
