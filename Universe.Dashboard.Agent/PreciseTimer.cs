@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
+using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -117,6 +119,7 @@ namespace Universe.Dashboard.Agent
             waiterStarted.WaitOne();
         }
 
+        private static long MessageId = 0;
         private static void FlushDataSource()
         {
             if (Services == null)
@@ -135,16 +138,25 @@ namespace Universe.Dashboard.Agent
                     return;
                 }
 
+                Interlocked.Increment(ref MessageId);
                 var netStateStorage = NetStatDataSource.Instance.By_1_Seconds;
                 var netStatView = NetDataSourceView.AsViewModel(netStateStorage);
+                var mounts = MountsDataSource.Mounts
+                    .Where(x => x.TotalSize > 0)
+                    .ToList();
+                
                 var broadcastMessage = new
                 {
+                    MessageId = MessageId,
                     Hostname = Environment.MachineName,
+                    Mounts = mounts,
                     Net = netStatView,
                     // Disk = new Dictionary<string,object>()
                 };
                 
                 hubContext.Clients.All.SendAsync("ReceiveDataSource", broadcastMessage);
+                DebugDumper.Dump(broadcastMessage, "BroadcastMessage.json");
+                DebugDumper.Dump(broadcastMessage, "BroadcastMessage.min.json", minify: true);
             }
 
 #if DUMPS

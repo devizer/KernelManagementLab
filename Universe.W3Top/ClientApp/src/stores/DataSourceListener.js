@@ -16,7 +16,6 @@ class DataSourceListener {
 
         this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
         this.connection.on("ReceiveDataSource", dataSource => {
-            // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             let isProd = process.env.NODE_ENV === "production";
             if (!isProd || true) {
                 console.log('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()));
@@ -49,8 +48,8 @@ class DataSourceListener {
 
     stop()
     {
-        this.connection.stop();
         console.log("Closing SignalR connection");
+        this.connection.stop();
         this.needConnection = false;
         DataSourceActions.ConnectionStatusUpdated(false);
         // clearInterval(this.timerId);
@@ -66,13 +65,12 @@ class DataSourceListener {
     // available for callbacks
     tryToConnect()
     {
-        let me = this;
         this.connection.start().then(() => {
             DataSourceActions.ConnectionStatusUpdated(true);
-            me.markConnectionState(true);
+            this.markConnectionState(true);
             console.log("SignalR connection established");
         }).catch(err => {
-            me.markConnectionState(false);
+            this.markConnectionState(false);
             console.warn("SignalR connection error. " + err.toString());
             DataSourceActions.ConnectionStatusUpdated(false);
         });
@@ -85,11 +83,10 @@ class DataSourceListener {
         if (!isProd || true)
             console.log(`[watchdog] isConnected: ${this.isConnected}. needConnection: ${this.needConnection}, state: ${this.connection.state}`);
         
-        var me = this;
         if (this.needConnection) {
             if (!this.isConnected) {
                 if (this.connection.state === 0) {
-                    me.tryToConnect();
+                    this.tryToConnect();
                 }
             }
         }

@@ -20,6 +20,7 @@
         <Content Remove="$(SpaRoot)**" />
         <Content Include="ClientApp\src\App.css" />
         <Content Include="ClientApp\src\components\LimitFinder.js" />
+        <Content Include="ClientApp\src\components\MountsList.js" />
         <Content Include="ClientApp\src\components\NetChartContainer_V2.js" />
         <Content Include="ClientApp\src\components\NetChartProps.js" />
         <Content Include="ClientApp\src\components\NetDevChart.js" />

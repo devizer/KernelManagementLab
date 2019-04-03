@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Threading;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +41,12 @@ namespace ReactGraphLab
             // As same db is used for both design and runtime we pre-cache and pre-jit db access
             // using default ctor
             new DashboardContext().Database.Migrate();
+            
+            Stopwatch sw = Stopwatch.StartNew();
+            Console.WriteLine("Waiting for a first round of /proc/mounts diagnostic: ");
+            MountsDataSource.IsFirstIterationReady.WaitOne();
+            Console.WriteLine($"First round of /proc/mounts diagnostic is ready, {sw.ElapsedMilliseconds:n0} milliseconds");
+
             NetStatDataSourcePersistence.PreJit();
             
             services.AddSignalR();

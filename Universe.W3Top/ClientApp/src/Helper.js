@@ -1,11 +1,10 @@
 import * as Enumerable from "linq-es2015"
 
-export class Common
-{
+export class Common {
     static tryGetProperty(obj, propertyName) {
         if (typeof obj == "object" && (propertyName in obj))
-            return [true, obj[propertyName]]
-        
+            return [true, obj[propertyName]];
+
         return [false, null];
     }
 
@@ -13,6 +12,43 @@ export class Common
     static objectIsNotEmpty(obj) {
         return typeof obj == "object" && Object.keys(obj).length > 0;
     }
+
+    static htmlEncode(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    static formatBytes(number) {
+
+        let format = num => (Math.round(num * 100.0) / 100).toLocaleString(undefined, {useGrouping: true});
+        if (number == 0)
+            return "0";
+
+        if (number < 1999)
+            return format(number) + " B";
+
+        if (number < 1999999)
+            return format((number / 1024.0)) + " Kb";
+
+        if (number < 1999999999)
+            return format((number / 1024.00 / 1024.00)) + " Mb";
+
+        if (number < 1999999999999)
+            return format((number / 1024 / 1024 / 1024)) + " Gb";
+
+        return format((number / 1024 / 1024 / 1024 / 1024)) + " Tb";
+    }
+}
+
+
+
+export class Disks
+{
+    static getOptionalMountsProperty(globalDataSource)
+    {
+        let [hasMounts, mounts] = Common.tryGetProperty(globalDataSource, "mounts");
+        return hasMounts ? mounts : null;
+    }
+    
 }
 
 export class NetDev
@@ -30,6 +66,8 @@ export class NetDev
         return null;
     }
     
+    // metadata check is skipped for performance - should not be used outside of 
+    // Helper.NetDev class
     static isInterfaceActive(globalDataSource, interfaceName)
     {
         let isInactive = globalDataSource.net.interfaceTotals[interfaceName].isInactive;

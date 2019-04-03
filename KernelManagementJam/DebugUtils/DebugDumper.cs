@@ -12,6 +12,18 @@ namespace KernelManagementJam.DebugUtils
     {
         public static string DumpDir => _GetDumpDir.Value;
 
+        public static bool IsDumpsEnabled
+        {
+            get
+            {
+#if DUMPS
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+        
         [Conditional("DUMPS")]
         public static void Dump(object anObject, string fileName, bool minify = false)
         {

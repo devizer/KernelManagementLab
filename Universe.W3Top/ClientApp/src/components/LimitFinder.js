@@ -16,7 +16,7 @@ export function findLimit(num)
     if (__limitFinder_Thresholds === null)
         buildLimits();
 
-    num=num*1.03;
+    num = num * 1.03;
     for(let i=0; i < __limitFinder_Thresholds.length; i++) {
         if (num > __limitFinder_Thresholds[i]) continue;
         return __limitFinder_Thresholds[i];
