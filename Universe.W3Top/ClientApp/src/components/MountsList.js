@@ -6,6 +6,17 @@ import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
 import DataSourceStore from "../stores/DataSourceStore";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faServer } from '@fortawesome/free-solid-svg-icons'
+import { faNetworkWired } from '@fortawesome/free-solid-svg-icons'
+import { faMemory } from '@fortawesome/free-solid-svg-icons'
+
+const iconStyle = {width:24, marginRight: 12};
+const iconBlock = <FontAwesomeIcon style={iconStyle} icon={faServer}/>;
+const iconRam = <FontAwesomeIcon style={iconStyle} icon={faMemory}/>;
+const iconNet = <FontAwesomeIcon style={iconStyle} icon={faNetworkWired}/>;
+
+
 export class MountsList extends React.Component {
 
     timerId = null;
@@ -84,6 +95,20 @@ export class MountsList extends React.Component {
         return { className: `disk-kind-${suffix}`};
     };
 
+    
+    
+    mountPathCell(rowInfo){
+        let icon = <span/>;
+        if (rowInfo.original.isBlockDevice) {
+            icon = iconBlock; 
+        } else if (rowInfo.original.isTmpFs) {
+            icon = iconRam;
+        } else if (rowInfo.original.isNetworkShare) {
+            icon = iconNet;
+        }
+        
+        return <span>{icon}{rowInfo.original.mountEntry.mountPath}</span>;
+    }
 
     renderNormal() {
         let pageSize = Math.max(this.state.mounts.length, 1);
@@ -107,6 +132,7 @@ export class MountsList extends React.Component {
                             Header: "Mount Path",
                             accessor: x => x.mountEntry.mountPath,
                             minWidth: 256,
+                            Cell: this.mountPathCell
                         },
                         {
                             id: "device",
@@ -146,8 +172,8 @@ export class MountsList extends React.Component {
                     
                     defaultSorted={[
                         {
-                            id: "totalSize",
-                            desc: true
+                            id: "mountPath",
+                            desc: false
                         }
                     ]}
                     defaultPageSize={10}
@@ -157,9 +183,9 @@ export class MountsList extends React.Component {
                 
                 <div class="disk-legend">
                     {/* Legend:&nbsp;&nbsp; */}
-                    <span className="disk-legend-item disk-kind-block">Block device</span>&nbsp;&nbsp;
-                    <span className="disk-legend-item disk-kind-network">Network share</span>&nbsp;&nbsp;
-                    <span className="disk-legend-item disk-kind-ram">RAM disk</span>
+                    <span className="disk-legend-item disk-kind-block">{iconBlock} Block device</span>&nbsp;&nbsp;
+                    <span className="disk-legend-item disk-kind-network">{iconNet} Network share</span>&nbsp;&nbsp;
+                    <span className="disk-legend-item disk-kind-ram">{iconRam} RAM disk</span>
                 </div>
 
             </div>
