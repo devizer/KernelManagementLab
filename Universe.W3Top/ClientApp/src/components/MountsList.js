@@ -103,7 +103,7 @@ export class MountsList extends React.Component {
     mountPathCell(rowInfo){
         let icon = iconUnknown;
         if (rowInfo.original.isBlockDevice) {
-            icon = iconUnknown; //iconBlock; 
+            icon = iconBlock; 
         } else if (rowInfo.original.isTmpFs) {
             icon = iconRam;
         } else if (rowInfo.original.isNetworkShare) {
