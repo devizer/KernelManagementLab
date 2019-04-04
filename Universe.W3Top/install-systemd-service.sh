@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 dotnet=$(command -v dotnet)
 pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
-echo Installing w3top service located at $scriptpath
+if [[ -z "$HTTP_PORT" ]]; then HTTP_PORT=5050; fi 
+echo Configuring w3top service located at $scriptpath using http://<ip|name>:$HTTP_PORT
 echo '
 [Unit]
 Description=W3Top service. 
@@ -14,13 +15,12 @@ PIDFile=/var/run/w3top.pid
 WorkingDirectory='$scriptpath'
 ExecStart='$dotnet' '$scriptpath'/Universe.W3Top.dll
 Restart=on-failure
-# Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
 KillSignal=SIGINT
 SyslogIdentifier=w3top
 User=root
 Environment=PID_FILE_FULL_PATH=/var/run/w3top.pid
-Environment=ASPNETCORE_URLS=http://0.0.0.0:5050
+Environment=ASPNETCORE_URLS=http://0.0.0.0:'$HTTP_PORT'
 Environment=FORCE_HTTPS_REDIRECT=False
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
