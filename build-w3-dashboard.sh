@@ -40,6 +40,7 @@ if [[ -z $INSTALL_DIR ]]; then INSTALL_DIR=/opt/w3top; fi
 sudo mkdir -p $INSTALL_DIR
 sudo rm -rf $INSTALL_DIR/*
 sudo cp -fR * $INSTALL_DIR
+bash $INSTALL_DIR/install-systemd-service.sh
 }
 
 export DUMPS_Are_Enabled=Off
