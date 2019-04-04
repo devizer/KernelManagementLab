@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,6 +53,13 @@ namespace ReactGraphLab
             services.AddSignalR();
         }
 
+        static bool NeedHttpRedirect()
+        {
+            var raw = Environment.GetEnvironmentVariable("FORCE_HTTPS_REDIRECT");
+            string[] yes = new[] {"On", "True", "1"};
+            return yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
@@ -72,7 +80,12 @@ namespace ReactGraphLab
                 // app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            if (!env.IsDevelopment())
+            {
+                if (NeedHttpRedirect()) app.UseHsts();
+            }
+
+            if (NeedHttpRedirect()) app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             

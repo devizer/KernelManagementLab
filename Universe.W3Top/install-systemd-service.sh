@@ -17,12 +17,12 @@ RestartSec=10
 KillSignal=SIGINT
 SyslogIdentifier=w3top
 User=root
+Environment=PID_FILE_FULL_PATH=/var/run/w3top.pid
+Environment=ASPNETCORE_URLS=http://0.0.0.0:5050;https://0.0.0.0:5051
+Environment=FORCE_HTTPS_REDIRECT=False
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
-Environment=ASPNETCORE_URLS="http://0.0.0.0:5050;https://0.0.0.0:5051"
-Environment=ENABLE_HTTPS_REDIRECT=False
 Environment=DUMPS_ARE_ENABLED=False
-Environment=PID_FILE_FULL_PATH=/var/run/w3top.pid
 
 [Install]
 WantedBy=multi-user.target
