@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 dotnet=$(command -v dotnet)
 pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
-
+echo Installing w3top service located at $scriptpath
 echo '
 [Unit]
 Description=W3Top service with 
