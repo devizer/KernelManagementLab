@@ -30,6 +30,7 @@ Environment=DUMPS_ARE_ENABLED=False
 WantedBy=multi-user.target
 ' | sudo tee /etc/systemd/system/w3top.service >/dev/null
 
+sudo systemctl stop w3top    >/dev/null 2>&1 || true
 sudo systemctl disable w3top >/dev/null 2>&1 || true
 sudo systemctl enable w3top
 sudo systemctl daemon-reload
