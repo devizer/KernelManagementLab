@@ -30,6 +30,19 @@ cd bin
 ./Universe.W3Top
 }
 
+function reinstall_serive() {
+cd $dir
+export ASPNETCORE_ENVIRONMENT=Production
+cd ClientApp; time (yarn install); cd ..
+time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service
+cd bin/service
+if [[ -z $INSTALL_DIR ]]; then INSTALL_DIR=/opt/w3top; fi
+sudo mkdir -p $INSTALL_DIR
+sudo rm -rf $INSTALL_DIR/*
+sudo cp -fR * $INSTALL_DIR
+}
+
 export DUMPS_Are_Enabled=Off
 export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
-run_prod
+# run_prod
+reinstall_serive

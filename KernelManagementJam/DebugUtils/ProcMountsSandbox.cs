@@ -15,8 +15,8 @@ namespace KernelManagementJam
             ProcMountsAnalyzer analyz = ProcMountsAnalyzer.Create(mounts);
             string logDetails = analyz.RawDetailsLog;
             analyz = ProcMountsAnalyzer.Create(mounts, skipDetailsLog: true);
-            Console.WriteLine(logDetails);
-            Console.WriteLine(analyz.RawDetailsLog);
+            // Console.WriteLine(logDetails);
+            // Console.WriteLine(analyz.RawDetailsLog);
 
             DebugDumper.DumpText(logDetails + Environment.NewLine + analyz.RawDetailsLog, "ProcMountsAnalyzer.report");
             DebugDumper.Dump(analyz, "ProcMountsAnalyzer.json");
@@ -39,6 +39,5 @@ namespace KernelManagementJam
             }
 
         }
-
     }
 }
