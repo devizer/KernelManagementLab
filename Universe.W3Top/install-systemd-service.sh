@@ -4,14 +4,16 @@ pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
 echo Installing w3top service located at $scriptpath
 echo '
 [Unit]
-Description=W3Top service with 
+Description=W3Top service. 
+Documentation=https://github.com/devizer/KernelManagementLab
+After=network.target
 
 [Service]
 Type=simple
 PIDFile=/var/run/w3top.pid
 WorkingDirectory='$scriptpath'
 ExecStart='$dotnet' '$scriptpath'/Universe.W3Top.dll
-Restart=always
+Restart=on-failure
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
 KillSignal=SIGINT

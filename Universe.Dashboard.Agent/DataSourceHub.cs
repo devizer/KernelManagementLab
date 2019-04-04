@@ -7,12 +7,16 @@ namespace ReactGraphLab
     {
         public DataSourceHub()
         {
+#if DEBUG
             Console.WriteLine("DataSourceHub::ctor");
+#endif
         }
 
         protected override void Dispose(bool disposing)
         {
+#if DEBUG
             Console.WriteLine($"DataSourceHub::DISPOSE(disposing={disposing})");
+#endif
         }
     }
 }

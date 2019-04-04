@@ -13,6 +13,7 @@ import { faMemory } from '@fortawesome/free-solid-svg-icons'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
 
 const iconStyle = {width:24, marginRight: 12};
+const iconUnknown = <span style={iconStyle}>&nbsp;</span>;
 const iconBlock = <FontAwesomeIcon style={iconStyle} icon={faServer}/>;
 const iconRam = <FontAwesomeIcon style={iconStyle} icon={faMemory}/>;
 const iconNet = <FontAwesomeIcon style={iconStyle} icon={faNetworkWired}/>;
@@ -100,7 +101,7 @@ export class MountsList extends React.Component {
     
     
     mountPathCell(rowInfo){
-        let icon = <span/>;
+        let icon = iconUnknown;
         if (rowInfo.original.isBlockDevice) {
             icon = iconBlock; 
         } else if (rowInfo.original.isTmpFs) {

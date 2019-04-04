@@ -30,7 +30,7 @@ cd bin
 ./Universe.W3Top
 }
 
-function reinstall_serive() {
+function reinstall_service() {
 cd $dir
 export ASPNETCORE_ENVIRONMENT=Production
 cd ClientApp; time (yarn install); cd ..
@@ -46,4 +46,4 @@ bash $INSTALL_DIR/install-systemd-service.sh
 export DUMPS_Are_Enabled=Off
 export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 # run_prod
-reinstall_serive
+reinstall_service
