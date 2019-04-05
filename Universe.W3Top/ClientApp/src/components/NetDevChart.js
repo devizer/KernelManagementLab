@@ -78,8 +78,7 @@ export class NetDevChart extends Component {
             txPackets,
         };
 
-        console.log(`[[${this.props.name}]] jsonChart updated`);
-        console.log(jsonChart);
+        Helper.toConsole(`[[${this.props.name}]] jsonChart updated`, jsonChart);
         return jsonChart;
     }
 

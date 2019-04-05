@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# set -e
 dotnet=$(command -v dotnet)
 pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
 if [[ ! -f "$scriptpath/Universe.W3Top.dll" ]]; then echo publish the project first; exit; fi
