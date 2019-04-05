@@ -2,7 +2,7 @@ import * as Enumerable from "linq-es2015"
 
 export const toConsole = function(caption, obj) {
     if (process.env.NODE_ENV !== 'production') {
-        console.log(`**** ${caption} ****`);
+        console.log(`--===**** ${caption} ****===--`);
         console.log(obj);
         console.log('\r\n');
     }
