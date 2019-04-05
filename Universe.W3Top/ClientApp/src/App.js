@@ -65,7 +65,7 @@ export default class App extends Component {
     componentWillUnmount() {
         dataSourceListener.stop();
     }
-
+    
 
     render () {
         return (

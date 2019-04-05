@@ -2,7 +2,7 @@ let __limitFinder_Thresholds = null;
 
 export function findLimit(num)
 {
-    let buildLimits = () => {
+    const buildLimits = () => {
         let base = [4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 100];
         __limitFinder_Thresholds = [];
         for (var i = 0; i < 14; i++) {
@@ -11,7 +11,7 @@ export function findLimit(num)
                 base[j] = base[j] * 10;
             }
         }
-    }
+    };
     
     if (__limitFinder_Thresholds === null)
         buildLimits();

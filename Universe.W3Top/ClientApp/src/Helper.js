@@ -1,6 +1,21 @@
 import * as Enumerable from "linq-es2015"
 
+export const toConsole = function(caption, obj) {
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(`**** ${caption} ****`);
+        console.log(obj);
+        console.log('\r\n');
+    }
+}
+
+export const log = function(caption) {
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(`${caption}`);
+    }
+}
+
 export class Common {
+    
     static tryGetProperty(obj, propertyName) {
         if (typeof obj == "object" && (propertyName in obj))
             return [true, obj[propertyName]];

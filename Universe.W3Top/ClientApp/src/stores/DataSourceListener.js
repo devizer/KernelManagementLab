@@ -18,8 +18,7 @@ class DataSourceListener {
         this.connection.on("ReceiveDataSource", dataSource => {
             let isProd = process.env.NODE_ENV === "production";
             if (!isProd || true) {
-                console.log('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()));
-                console.log(dataSource);
+                Helper.toConsole('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()), dataSource);
             }
             this.applyDocumentTitle(dataSource);
             DataSourceActions.DataSourceUpdated(dataSource);
@@ -79,9 +78,7 @@ class DataSourceListener {
     // available for callbacks
     watchdogTick()
     {
-        let isProd = process.env.NODE_ENV === "production";
-        if (!isProd || true)
-            console.log(`[watchdog] isConnected: ${this.isConnected}. needConnection: ${this.needConnection}, state: ${this.connection.state}`);
+        Helper.log(`[watchdog] isConnected: ${this.isConnected}. needConnection: ${this.needConnection}, state: ${this.connection.state}`);
         
         if (this.needConnection) {
             if (!this.isConnected) {
