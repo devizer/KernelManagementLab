@@ -1,7 +1,7 @@
 import "c3/c3.css"
 import "./components/MyC3.css"
 import "./App.css"
-
+import AppGitInfo from './AppGitInfo'
 
 import 'babel-polyfill';
 import React, { Component } from 'react';
@@ -23,6 +23,8 @@ export default class App extends Component {
 
     constructor (props) {
         super(props);
+
+        this.logVersionInfo();
 
         try {
             let apiUrl = 'api/Health/PingDb';
@@ -56,6 +58,12 @@ export default class App extends Component {
                 console.log(data);
             })
             .catch(error => console.log(error));
+    }
+    
+    logVersionInfo()
+    {
+        AppGitInfo.BuildAt = new Date(AppGitInfo.CommitDate*1000).toLocaleString();
+        console.log(AppGitInfo);
     }
     
     componentDidMount() {

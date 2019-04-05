@@ -13,6 +13,10 @@ git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab/Universe.W3Top
 dir=$(pwd)
 
+pushd ../build
+./inject-git-info.ps1
+popd
+
 function run_debug() {
 cd $dir
 export ASPNETCORE_ENVIRONMENT=Development
