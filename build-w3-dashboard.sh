@@ -4,7 +4,7 @@ echo "The current OS architecture: $rid"
 
 work=$HOME
 if [[ -d "/ssd" ]]; then work=/ssd; fi
-work=$work/Transient-Builds/KernelManagementLab; 
+work=$work/Transient-Builds/KernelManagementLab;
 # work=/mnt/ftp-client/KernelManagementLab; 
 mkdir -p "$(dirname $work)" 
 cd $(dirname $work); 

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using Universe.Dashboard.Agent;
 
@@ -11,6 +12,8 @@ namespace ReactGraphLab
         private static readonly string ServiceKey = "w3top";
         public static void CreatePidFile()
         {
+            var entryAssembly = Assembly.GetEntryAssembly();
+            var title = $"{Path.GetDirectoryName(entryAssembly.Location)} ver {entryAssembly.GetName().Version}";
             var pidFile = Environment.GetEnvironmentVariable("PID_FILE_FULL_PATH");
             if (string.IsNullOrEmpty(pidFile))
             {
@@ -36,7 +39,7 @@ namespace ReactGraphLab
                 {
                     wr.WriteLine(Process.GetCurrentProcess().Id);
                 }
-                Console.WriteLine($"PID file created: {pidFile}");
+                Console.WriteLine($"PID file for {title} created: {pidFile}");
             }
             catch (Exception ex)
             {
