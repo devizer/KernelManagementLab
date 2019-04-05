@@ -62,7 +62,7 @@ export default class App extends Component {
     
     logVersionInfo()
     {
-        AppGitInfo.BuildAt = new Date(AppGitInfo.CommitDate*1000).toLocaleString();
+        AppGitInfo.CommitAt = new Date(AppGitInfo.CommitDate*1000).toLocaleString();
         console.log(AppGitInfo);
     }
     

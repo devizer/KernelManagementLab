@@ -37,6 +37,6 @@ WantedBy=multi-user.target
 ' | sudo tee /etc/systemd/system/w3top.service >/dev/null
 
 sudo systemctl enable w3top
-sudo systemctl daemon-reload
-sudo systemctl start w3top
+sudo systemctl daemon-reload || true
+sudo systemctl start w3top || true
 sudo journalctl -fu w3top.service
