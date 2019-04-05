@@ -3,10 +3,11 @@ dotnet=$(command -v dotnet)
 pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
 if [[ ! -f "$scriptpath/Universe.W3Top.dll" ]]; then echo publish the project first; exit; fi
 if [[ -z "$HTTP_PORT" ]]; then HTTP_PORT=5050; fi
-echo Configuring w3top service located at $scriptpath using http://<ip|name>:$HTTP_PORT
+echo Configuring w3top service located at $scriptpath using 'http://<ip|name>:'$HTTP_PORT
 
 sudo systemctl stop w3top    >/dev/null 2>&1 || true
 sudo systemctl disable w3top >/dev/null 2>&1 || true
+
 echo '
 [Unit]
 Description=W3Top service.

@@ -13,9 +13,9 @@ git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab/Universe.W3Top
 dir=$(pwd)
 
-pushd ../build
+pushd ../build >/dev/null
 ./inject-git-info.ps1
-popd
+popd >/dev/null
 
 function run_debug() {
 cd $dir
