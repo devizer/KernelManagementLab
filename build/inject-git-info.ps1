@@ -50,6 +50,7 @@ $jsonInfo = @{
   Branch = $branch;
   CommitCount = $commitCount;
   CommitDate = [long]$commitDate;
+  BuildDate = [long] ([System.DateTime]::UtcNow - (new-object System.DateTime 1970, 1, 1, 0, 0, 0, ([DateTimeKind]::Utc) )).TotalSeconds;
   Version = "$version.$build.$commitCount"
 }
 SaveAsJson $jsonInfo "AppGitInfo.json"

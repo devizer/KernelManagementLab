@@ -1,6 +1,7 @@
 {
-  "CommitCount": 256,
+  "Version": "1.3.53.265",
+  "CommitDate": 1554618815,
+  "BuildDate":  1554619746,
   "Branch": "master",
-  "CommitDate": 1554501271,
-  "Version": "1.3.50.256"
+  "CommitCount": 265
 }
