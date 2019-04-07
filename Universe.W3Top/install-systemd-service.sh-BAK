@@ -2,7 +2,7 @@
 set -e
 dotnet=$(command -v dotnet)
 pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
-if [[ ! -f "$scriptpath/Universe.W3Top" ]]; then echo publish the project first; exit; fi
+if [[ ! -f "$scriptpath/Universe.W3Top.dll" ]]; then echo publish the project first; exit; fi
 if [[ -z "$HTTP_PORT" ]]; then HTTP_PORT=5050; fi
 echo Configuring w3top service located at $scriptpath using 'http://<ip|name>:'$HTTP_PORT
 
@@ -19,7 +19,7 @@ After=network.target
 Type=simple
 PIDFile=/var/run/w3top.pid
 WorkingDirectory='$scriptpath'
-ExecStart='$scriptpath'/Universe.W3Top
+ExecStart='$dotnet' '$scriptpath'/Universe.W3Top.dll
 Restart=on-failure
 RestartSec=10
 KillSignal=SIGINT
