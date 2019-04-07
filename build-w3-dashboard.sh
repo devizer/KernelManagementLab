@@ -63,4 +63,5 @@ function deploy_to_gae()
 export DUMPS_Are_Enabled=Off
 export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 # run_prod
-reinstall_service
+# reinstall_service
+deploy_to_gae
