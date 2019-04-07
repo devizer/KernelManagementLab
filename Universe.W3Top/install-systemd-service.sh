@@ -39,4 +39,4 @@ WantedBy=multi-user.target
 sudo systemctl enable w3top
 sudo systemctl daemon-reload || true
 sudo systemctl start w3top || true
-sudo journalctl -fu w3top.service
+# sudo journalctl -fu w3top.service

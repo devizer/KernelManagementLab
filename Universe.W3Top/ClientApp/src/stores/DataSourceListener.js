@@ -16,10 +16,7 @@ class DataSourceListener {
 
         this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
         this.connection.on("ReceiveDataSource", dataSource => {
-            let isProd = process.env.NODE_ENV === "production";
-            if (!isProd || true) {
-                Helper.toConsole('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()), dataSource);
-            }
+            Helper.toConsole('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()), dataSource);
             this.applyDocumentTitle(dataSource);
             DataSourceActions.DataSourceUpdated(dataSource);
         });
