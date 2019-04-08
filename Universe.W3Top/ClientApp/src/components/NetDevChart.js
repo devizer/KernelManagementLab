@@ -23,6 +23,8 @@ export class NetDevChart extends Component {
         width: 500,
         height: 160,
     };
+    
+    static Padding = 70;
 
 
     domId = nextUniqueId("chart_net_dev");
@@ -72,10 +74,12 @@ export class NetDevChart extends Component {
         let txPackets = localDataSource.txPackets;
         let jsonChart = {
             // x: xValues,
+            // totals: localDataSource.totals,
             rxBytes,
             txBytes,
             rxPackets,
             txPackets,
+            
         };
 
         Helper.toConsole(`[[${this.props.name}]] jsonChart updated`, jsonChart);
@@ -225,8 +229,8 @@ export class NetDevChart extends Component {
             },
             // fix tick&labels withs for Y and Y2 axises
             padding: {
-                left: 70,
-                right: 70,
+                left: NetDevChart.Padding,
+                right: NetDevChart.Padding,
             },
 
         });

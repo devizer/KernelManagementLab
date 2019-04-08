@@ -33,6 +33,7 @@
         <Content Include="ClientApp\src\components\AnotherChart2.js" />
         <Content Include="ClientApp\src\components\MyC3.css" />
         <Content Include="ClientApp\src\components\NetChartContainer.js" />
+        <Content Include="ClientApp\src\components\NetDevChartHeader.js" />
         <Content Include="ClientApp\src\components\Poc2Chart.js" />
         <Content Include="ClientApp\src\components\SingleAxisChart.js" />
         <Content Include="ClientApp\src\Helper.js" />

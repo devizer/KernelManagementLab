@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AnotherChart2 } from './AnotherChart2';
 import { NetDevChart } from './NetDevChart';
+import { NetDevChartHeader } from './NetDevChartHeader';
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
 
@@ -28,7 +29,9 @@ export class NetChartContainer_V2 extends Component {
         let isAlreadyBound = this.state.netChartList !== null; 
         if (!isAlreadyBound)
             this.timerId = setInterval(this.waiterTick.bind(this));
+
     }
+
     
     componentWillUnmount() {
         if (this.timerId !== null)
@@ -49,17 +52,30 @@ export class NetChartContainer_V2 extends Component {
         if (interfaces !== null) {
             let activeInterfaceNames = Helper.NetDev.getActiveInterfaceList(globalDataSource);
             // just simple map to this.jsonChart 
-            return activeInterfaceNames.map(interfaceName => {return {
-                name: interfaceName,
-                description: `the ${interfaceName} description is not yet completed`,
-                getLocalDataSource: () => {
-                    try {
-                        return Helper.NetDev.getOptionalInterfacesProperty(dataSourceStore.getDataSource())[interfaceName];
-                    } catch {
-                        return {};
-                    }
+            return activeInterfaceNames.map(interfaceName => {
+                return {
+                    name: interfaceName,
+                    description: `the ${interfaceName} description is not yet completed`,
+                    getLocalDataSource: () => {
+                        try {
+                            let glo = dataSourceStore.getDataSource();
+                            let ret = Helper.NetDev.getOptionalInterfacesProperty(glo)[interfaceName];
+                            ret.totals = glo.net.interfaceTotals[interfaceName];
+                            return ret;
+                        } catch {
+                            return {};
+                        }
+                    },
+                    getTotals: () => {
+                        try {
+                            let glo = dataSourceStore.getDataSource();
+                            return glo.net.interfaceTotals[interfaceName];
+                        } catch {
+                            return {};
+                        }
+                    },
                 }
-            }});
+            });
         }
         
         return null;
@@ -92,10 +108,9 @@ export class NetChartContainer_V2 extends Component {
         return (
             <div id="NetCharts">
                 {this.state.netChartList.map(netChart =>
-                    <div class="CHART">
-                        <div style={{width: NetDevChart.ChartSize.width, textAlign: "center"}}>
-                            interface <b>{netChart.name}</b>
-                        </div>
+                    <div class="CHART" key={netChart.name}>
+                        <NetDevChartHeader name={netChart.name}/>
+                        
                         <NetDevChart
                             name={netChart.name}
                             getLocalDataSource={netChart.getLocalDataSource}
