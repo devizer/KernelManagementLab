@@ -17,7 +17,7 @@ namespace KernelManagementJam.DebugUtils
         {
             get
             {
-                var raw = Environment.GetEnvironmentVariable("DUMPS_Are_Enabled");
+                var raw = Environment.GetEnvironmentVariable("DUMPS_ARE_ENABLED");
                 string[] yes = new[] {"On", "True", "1"};
                 return yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
 #if DUMPS
