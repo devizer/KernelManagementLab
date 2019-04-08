@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-set -e
 dotnet=$(command -v dotnet)
+set -e
 pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
-if [[ ! -f "$scriptpath/Universe.W3Top" ]]; then echo publish the project first; exit; fi
+if [[ ! -f "$scriptpath/Universe.W3Top" ]]; then echo publish the project first; exit 1; fi
 if [[ -z "$HTTP_PORT" ]]; then HTTP_PORT=5050; fi
 echo Configuring w3top service located at $scriptpath using 'http://<ip|name>:'$HTTP_PORT
 
@@ -38,5 +38,5 @@ WantedBy=multi-user.target
 
 sudo systemctl enable w3top
 sudo systemctl daemon-reload || true
-sudo systemctl start w3top || true
+sudo systemctl start w3top
 # sudo journalctl -fu w3top.service
