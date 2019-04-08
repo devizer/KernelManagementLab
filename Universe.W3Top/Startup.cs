@@ -50,7 +50,11 @@ namespace ReactGraphLab
 
             NetStatDataSourcePersistence.PreJit();
             
-            services.AddSignalR();
+            services.AddSignalR(x =>
+            {
+                x.EnableDetailedErrors = true;
+                x.HandshakeTimeout = TimeSpan.FromSeconds(2);
+            });
         }
 
         static bool NeedHttpRedirect()
