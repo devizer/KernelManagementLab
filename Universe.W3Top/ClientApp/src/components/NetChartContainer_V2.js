@@ -98,9 +98,9 @@ export class NetChartContainer_V2 extends Component {
 
     renderLoading() {
         return (
-            <h1 id="NetCharts_is_Waiting_for_connection" style={{textAlign: "center"}}>
-                Network History is Waiting for connection
-            </h1>
+            <h6 id="NetCharts_is_Waiting_for_connection" style={{textAlign: "center", paddingTop: 200}}>
+                Waiting for connection
+            </h6>
         )
     }
     

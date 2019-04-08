@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# wget -q -nv --no-check-certificate -O - https://raw.githubusercontent.com/devizer/KernelManagementLab/master/build-w3-dashboard.sh | bash
+# wget -q -nv --no-check-certificate -O - https://raw.githubusercontent.com/devizer/KernelManagementLab/master/build-w3-dashboard.sh | bash -s deploy_to_gae  
 if [[ $(uname -m) == armv7* ]]; then rid=linux-arm; elif [[ $(uname -m) == aarch64 ]]; then rid=linux-arm64; elif [[ $(uname -m) == x86_64 ]]; then rid=linux-x64; fi; if [[ $(uname -s) == Darwin ]]; then rid=osx-x64; fi;
 echo "The current OS architecture: $rid"
 
@@ -60,9 +60,10 @@ function deploy_to_gae()
   gsutil cp w3top.tar.xz gs://pet-projects-binaries/
 }
 
-
 export DUMPS_ARE_ENABLED=Off
 export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 # run_prod
 # reinstall_service
-deploy_to_gae
+cmd="$1"
+if [[ -z "$cmd" ]]; then cmd=reinstall_service; fi; 
+eval $cmd
