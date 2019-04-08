@@ -108,7 +108,7 @@ export class NetChartContainer_V2 extends Component {
         return (
             <div id="NetCharts">
                 {this.state.netChartList.map(netChart =>
-                    <div class="CHART" key={netChart.name}>
+                    <div className="CHART" key={netChart.name}>
                         <NetDevChartHeader name={netChart.name}/>
                         
                         <NetDevChart

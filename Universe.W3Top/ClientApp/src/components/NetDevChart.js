@@ -97,7 +97,7 @@ export class NetDevChart extends Component {
             // this.forceUpdate();
         }, this.updateInterval);
         
-        console.log("NetDevChart::componentDidMount COMPLETED SUCCESSFULLY");
+        console.log(`NetDevChart::componentDidMount COMPLETED SUCCESSFULLY for ${this.props.name}`);
     }
 
     componentWillUnmount() {
