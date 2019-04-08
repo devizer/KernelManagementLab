@@ -36,31 +36,31 @@ cd bin
 }
 
 function reinstall_service() {
-cd $dir
-export ASPNETCORE_ENVIRONMENT=Production
-cd ClientApp; time (yarn install); cd ..
-# time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service
-time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
-cd bin/service
-if [[ -z $INSTALL_DIR ]]; then INSTALL_DIR=/opt/w3top; fi
-sudo mkdir -p $INSTALL_DIR
-sudo rm -rf $INSTALL_DIR/*
-sudo cp -fR * $INSTALL_DIR
-sudo chmod -x $INSTALL_DIR/*.dll
-bash $INSTALL_DIR/install-systemd-service.sh
+  cd $dir
+  export ASPNETCORE_ENVIRONMENT=Production
+  cd ClientApp; time (yarn install); cd ..
+  # time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service
+  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
+  cd bin/service
+  if [[ -z $INSTALL_DIR ]]; then INSTALL_DIR=/opt/w3top; fi
+  sudo mkdir -p $INSTALL_DIR
+  sudo rm -rf $INSTALL_DIR/*
+  sudo cp -fR * $INSTALL_DIR
+  sudo chmod -x $INSTALL_DIR/*.dll
+  bash $INSTALL_DIR/install-systemd-service.sh
 }
 
 function deploy_to_gae()
 {
-   reinstall_service
-   cd $INSTALL_DIR
-   cd ..
-   time sudo bash -c 'tar cf - w3top | pv | xz -6 > w3top.tar.xz'; ls -la w3top.tar.xz
-   gsutil cp w3top.tar.xz gs://pet-projects-binaries/
+  reinstall_service
+  cd $INSTALL_DIR
+  cd ..
+  time sudo bash -c 'tar cf - w3top | pv | xz -6 > w3top.tar.xz'; ls -la w3top.tar.xz
+  gsutil cp w3top.tar.xz gs://pet-projects-binaries/
 }
 
 
-export DUMPS_Are_Enabled=Off
+export DUMPS_ARE_ENABLED=Off
 export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 # run_prod
 # reinstall_service
