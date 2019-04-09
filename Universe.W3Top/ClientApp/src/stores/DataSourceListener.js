@@ -83,7 +83,11 @@ class DataSourceListener {
     // available for callbacks
     watchdogTick()
     {
-        Helper.log(`[watchdog] isConnected: ${this.isConnected}. needConnection: ${this.needConnection}, state: ${this.connection.state}`);
+        if (this.isConnected !== this.needConnection)
+        console.warn(`[watchdog] isConnected: ${this.isConnected}
+needConnection: ${this.needConnection},
+isConnecting: ${this.isConnecting}
+state: ${this.connection.state}`);
         
         if (this.needConnection) {
             if (!this.isConnected && !this.isConnecting) {
