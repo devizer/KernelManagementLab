@@ -53,7 +53,7 @@ namespace ReactGraphLab
             services.AddSignalR(x =>
             {
                 x.EnableDetailedErrors = true;
-                x.HandshakeTimeout = TimeSpan.FromSeconds(2);
+                // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
         }
 
