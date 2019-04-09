@@ -56,8 +56,8 @@ function deploy_to_gae()
   reinstall_service
   cd $INSTALL_DIR
   cd ..
-  time sudo bash -c 'tar cf - w3top | pv | xz -6 > w3top.tar.xz'; ls -la w3top.tar.xz
-  gsutil cp w3top.tar.xz gs://pet-projects-binaries/
+  time sudo bash -c 'tar cf - w3top | pv | gzip -9 > w3top.tar.gz'; ls -la w3top.tar.xz
+  gsutil cp w3top.tar.gz gs://pet-projects-binaries/
 }
 
 export DUMPS_ARE_ENABLED=Off

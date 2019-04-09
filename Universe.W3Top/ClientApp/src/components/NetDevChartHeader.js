@@ -9,6 +9,10 @@ import {NetDevChart} from "./NetDevChart";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons'
 import { faArrowAltCircleDown } from '@fortawesome/free-regular-svg-icons'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
+
+const iconSent = faArrowUp, iconReceived = faArrowDown;
 
 
 export class NetDevChartHeader extends Component {
@@ -33,30 +37,38 @@ export class NetDevChartHeader extends Component {
             position: "relative",
             width: NetDevChart.ChartSize.width,
             // width: "100%",
-            marginBottom: "9px",
+            marginBottom: 4,
             marginTop: "15px",
         },
         center: {
+            paddingTop: 3,
+            fontSize: 16,
             position: "absolute",
             left: 0, top: 0,
             textAlign: "center",
             width: "100%",
         },
         left: {
+            paddingTop: 8,
+            fontSize: 12,
+            verticalAlign: "bottom",
             position: "absolute",
             left: 0, top: 0,
             textAlign: "left",
             width: "100%",
-            paddingLeft: NetDevChart.Padding - 26,
+            paddingLeft: NetDevChart.Padding - 4,
             paddingRight: NetDevChart.Padding,
         },
         right: {
+            paddingTop: 8,
+            fontSize: 12,
+            verticalAlign: "bottom",
             position: "absolute",
             left: 0, top: 0,
             textAlign: "right",
             width: "100%",
             paddingLeft: NetDevChart.Padding,
-            paddingRight: NetDevChart.Padding - 26,
+            paddingRight: NetDevChart.Padding - 4,
         },
     };
     
@@ -80,9 +92,9 @@ export class NetDevChartHeader extends Component {
         
         return (
             <div style={this.dd.container}>&nbsp;
-                <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {format(totals.rxBytes)}</span></div>
-                <div style={this.dd.center}>interface <b>{this.props.name}</b></div>
-                <div style={this.dd.right}><span title={"TOTAL SENT"}>{format(totals.txBytes)} <FontAwesomeIcon icon={faArrowAltCircleUp} /></span></div>
+                <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={iconReceived} /> {format(totals.rxBytes)}</span></div>
+                <div style={this.dd.center}>interface <b>{this.props.name.toUpperCase()}</b></div>
+                <div style={this.dd.right}><span title={"TOTAL SENT"}>{format(totals.txBytes)} <FontAwesomeIcon icon={iconSent} /></span></div>
             </div>
         )
     };

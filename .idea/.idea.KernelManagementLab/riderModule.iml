@@ -2,8 +2,6 @@
 <module type="RIDER_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$USER_HOME$/.nuget/packages/sqlite.native/3.12.2/runtimes/win7-x64/native/sqlite3.dll" />
-    <content url="file://$USER_HOME$/.nuget/packages/sqlite.native/3.12.2/runtimes/win7-x86/native/sqlite3.dll" />
     <content url="file://$MODULE_DIR$/../.." />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
