@@ -252,7 +252,7 @@ export class NetDevChart extends Component {
         
         let isSameLimits = this.prevLimits.limitBytes === limitBytes && this.prevLimits.limitPackets === limitPackets;
         if (!isSameLimits) {
-            console.log(`NEW NET/DEV LIMITS are Bytes: ${limitBytes}, Packets: ${limitPackets}`);
+            console.log(`NEW NET/DEV LIMITS for ${this.props.name} are Bytes: ${limitBytes}, Packets: ${limitPackets}`);
             this.prevLimits = {limitBytes, limitPackets};
             this.chart.axis.max({
                 y: limitBytes,
