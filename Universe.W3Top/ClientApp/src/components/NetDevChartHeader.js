@@ -80,9 +80,9 @@ export class NetDevChartHeader extends Component {
         
         return (
             <div style={this.dd.container}>&nbsp;
-                <div style={this.dd.left}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {format(totals.rxBytes)}</div>
+                <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {format(totals.rxBytes)}</span></div>
                 <div style={this.dd.center}>interface <b>{this.props.name}</b></div>
-                <div style={this.dd.right}>{format(totals.txBytes)} <FontAwesomeIcon icon={faArrowAltCircleUp} /></div>
+                <div style={this.dd.right}><span title={"TOTAL SENT"}>{format(totals.txBytes)} <FontAwesomeIcon icon={faArrowAltCircleUp} /></span></div>
             </div>
         )
     };

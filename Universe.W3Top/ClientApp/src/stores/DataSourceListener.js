@@ -17,8 +17,12 @@ class DataSourceListener {
         this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
         this.connection.on("ReceiveDataSource", dataSource => {
             Helper.toConsole('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()), dataSource);
-            this.applyDocumentTitle(dataSource);
-            DataSourceActions.DataSourceUpdated(dataSource);
+            try {
+                DataSourceActions.DataSourceUpdated(dataSource);
+                this.applyDocumentTitle(dataSource);
+            } catch(err){
+                console.error(err);
+            }
         });
 
         this.connection.onclose(error => {
