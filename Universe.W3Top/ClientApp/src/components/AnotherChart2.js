@@ -139,7 +139,7 @@ export class AnotherChart2 extends Component {
                     padding: 0,
                     label: {
                         text: 'Transfer, Mb/s',
-                        position: 'outer-left'
+                        position: 'outer-middle'
                     },
                     tick: {
                         count: 5,
@@ -159,7 +159,7 @@ export class AnotherChart2 extends Component {
                     },
                     label: {
                         text: 'IOPS',
-                        position: 'outer-right'
+                        position: 'outer-middle'
                     },
 
                 }

@@ -122,7 +122,7 @@ export class SingleAxisChart extends Component {
                     padding: 0,
                     label: {
                         text: 'Busy',
-                        position: 'outer-left'
+                        position: 'outer-middle'
                     },
                     tick: {
                         count: 5,
