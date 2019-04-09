@@ -60,16 +60,8 @@ export class NetChartContainer_V2 extends Component {
                         try {
                             let glo = dataSourceStore.getDataSource();
                             let ret = Helper.NetDev.getOptionalInterfacesProperty(glo)[interfaceName];
-                            ret.totals = glo.net.interfaceTotals[interfaceName];
+                            // ret.totals = glo.net.interfaceTotals[interfaceName];
                             return ret;
-                        } catch {
-                            return {};
-                        }
-                    },
-                    getTotals: () => {
-                        try {
-                            let glo = dataSourceStore.getDataSource();
-                            return glo.net.interfaceTotals[interfaceName];
                         } catch {
                             return {};
                         }
@@ -110,7 +102,6 @@ export class NetChartContainer_V2 extends Component {
                 {this.state.netChartList.map(netChart =>
                     <div className="CHART" key={netChart.name}>
                         <NetDevChartHeader name={netChart.name}/>
-                        
                         <NetDevChart
                             name={netChart.name}
                             getLocalDataSource={netChart.getLocalDataSource}

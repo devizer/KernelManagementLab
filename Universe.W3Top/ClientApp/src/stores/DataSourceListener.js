@@ -15,7 +15,9 @@ class DataSourceListener {
         this.needConnection = false;
         this.isConnecting = false;
 
-        this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
+        let hub = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub");
+        // hub.
+        this.connection = hub.build();
         this.connection.on("ReceiveDataSource", dataSource => {
             Helper.toConsole('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()), dataSource);
             try {

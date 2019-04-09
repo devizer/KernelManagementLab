@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -49,10 +50,19 @@ namespace ReactGraphLab
             Console.WriteLine($"First round of /proc/mounts diagnostic is ready, {sw.ElapsedMilliseconds:n0} milliseconds");
 
             NetStatDataSourcePersistence.PreJit();
+
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+                builder =>
+                {
+                    builder.AllowAnyMethod().AllowAnyHeader()
+                        .AllowAnyOrigin()
+                        .AllowCredentials();
+                }));
             
             services.AddSignalR(x =>
             {
                 x.EnableDetailedErrors = true;
+                x.SupportedProtocols = new List<string>() {"longPolling"};
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
         }
@@ -93,6 +103,7 @@ namespace ReactGraphLab
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             
+            app.UseCors("CorsPolicy");
             app.UseSignalR(routes =>
             {
                 routes.MapHub<DataSourceHub>("/dataSourceHub");
