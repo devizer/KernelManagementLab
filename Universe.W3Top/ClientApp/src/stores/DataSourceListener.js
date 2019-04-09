@@ -13,6 +13,7 @@ class DataSourceListener {
         
         this.isConnected = false;
         this.needConnection = false;
+        this.isConnecting = false;
 
         this.connection = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub").build();
         this.connection.on("ReceiveDataSource", dataSource => {
@@ -29,6 +30,7 @@ class DataSourceListener {
             // 1006: server terminated
             console.warn("SignalR connection closed" + (error ? " with error" : ""));
             this.markConnectionState(false);
+            this.isConnecting = false;
             DataSourceActions.ConnectionStatusUpdated(false);
         });
 
@@ -65,11 +67,13 @@ class DataSourceListener {
     // available for callbacks
     tryToConnect()
     {
+        this.isConnecting = true;
         this.connection.start().then(() => {
             DataSourceActions.ConnectionStatusUpdated(true);
             this.markConnectionState(true);
             console.log("SignalR connection established");
         }).catch(err => {
+            this.isConnecting = false;
             this.markConnectionState(false);
             console.warn("SignalR connection error. " + err.toString());
             DataSourceActions.ConnectionStatusUpdated(false);
@@ -82,7 +86,7 @@ class DataSourceListener {
         Helper.log(`[watchdog] isConnected: ${this.isConnected}. needConnection: ${this.needConnection}, state: ${this.connection.state}`);
         
         if (this.needConnection) {
-            if (!this.isConnected) {
+            if (!this.isConnected && !this.isConnecting) {
                 if (this.connection.state === 0) {
                     this.tryToConnect();
                 }
@@ -92,6 +96,7 @@ class DataSourceListener {
         {
             if (this.isConnected) {
                 this.markConnectionState(false);
+                this.isConnecting = false;
                 this.connection.stop();
             }
         }
