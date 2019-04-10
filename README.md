@@ -1,9 +1,9 @@
-### W3-Top
+## W3-Top
 Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relays on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
 Supported architectures are restricted by dotnet-sdk: x86_64, arm and arm64.
 
-#### Install from source
+### Install from source
 The easiest way to (re)install it as a SystemD service, namely w3top, is to build from source:
 
 ```bash
@@ -25,7 +25,7 @@ script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and
 wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
 ```
 
-##### Runtime Dependency: libMonoPosixHelper.so
+### Runtime Dependency: libMonoPosixHelper.so
 W3-Top requires libMonoPosixHelper.so for querying info about linux-kind filesystems meta-info. It can be installed using:
 
 ```bash
