@@ -1,11 +1,10 @@
-# Install from source
+### W3-Top
+Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relays on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
-1. Install build tools: dotnet-sdk, nodejs (with yarn) and powershell for Debian and derivatives, Fedora/CentOS/RedHat
-```bash
-wget -q -nv --no-check-certificate -O - https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh | bash -s dotnet node pwsh
-```
+Supported architectures are restricted by dotnet-sdk: x86_64, arm and arm64.
 
-2. Clone, build and (re)install w3top service as a SystemD unit
+#### Install from source
+The easiest way to (re)install it as a SystemD service, namely w3top, is to build from source:
 
 ```bash
 export HTTP_PORT=5050
@@ -14,25 +13,24 @@ script=https://raw.githubusercontent.com/devizer/KernelManagementLab/master/buil
 wget -q -nv --no-check-certificate -O - $script | bash -s reinstall_service 
 ```
 
-3. Managing w3top.service:
+Service's journal is available using traditional SystemD's journal:
 
 ```bash
-# Manage service
-systemctl enable/disable/start/restart/stop w3top
-# following service logs
 journalctl -fu w3top.service
 ```
 
-# Runtime Dependency: libMonoPosixHelper.so
-It requires libMonoPosixHelper.so for quering info about linux-kind filesystem metainfo.
-
-For Fedora/CentOS/RedHat it can be installed using
-
+The build script above depends on dotnet sdk 2.2, nodejs 10.5+ (with yarn) and powershell:. Portable versions of them can be installed using one-liner below:
 ```bash
-yum install mono-core
+wget -q -nv --no-check-certificate -O - https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh | bash -s dotnet node pwsh
 ```
 
-For Debian/Ubuntu derivatives it can be installed using
+##### Runtime Dependency: libMonoPosixHelper.so
+W3-Top requires libMonoPosixHelper.so for querying info about linux-kind filesystems meta-info. It can be installed using:
+
 ```bash
-apt install mono-runtime-common
+# Debian/CentOS/RedHat
+sudo yum install mono-core
+
+# Debian/Ubuntu derivatives
+sudo apt install mono-runtime-common
 ```
