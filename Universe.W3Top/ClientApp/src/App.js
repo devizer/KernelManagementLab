@@ -5,7 +5,7 @@ import AppGitInfo from './AppGitInfo'
 
 import 'babel-polyfill';
 import React, { Component } from 'react';
-import { Route } from 'react-router';
+import { Route, Switch, Router } from 'react-router';
 import { Layout } from './components/Layout';
 import { Poc1Chart } from './components/Poc1Chart';
 import { Poc2Chart } from './components/Poc2Chart';
@@ -75,16 +75,25 @@ export default class App extends Component {
         dataSourceListener.stop();
     }
     
+    static _404 = () => (
+        <h6 style={{textAlign: "center"}}>
+            <img src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2611.png" width={24}/>&nbsp;
+            404 had been happened
+        </h6>
+    );
 
     render () {
         return (
             <Layout>
-                <Route exact path='/' component={Poc1Chart} />
-                <Route exact path='/1axis' component={Poc1Chart} />
-                <Route exact path='/2axis' component={Poc2Chart} />
-                <Route exact path='/net' component={NetChartContainer} />
-                <Route exact path='/net_v2' component={NetChartContainer_V2} />
-                <Route exact path='/disk_v1' component={MountsList} />
+                    <Switch>
+                        <Route exact path='/' component={Poc1Chart} />
+                        <Route exact path='/1-axis' component={Poc1Chart} />
+                        <Route exact path='/2-axis' component={Poc2Chart} />
+                        <Route exact path='/net-v1' component={NetChartContainer} />
+                        <Route exact path='/net-v2' component={NetChartContainer_V2} />
+                        <Route exact path='/disk-v1' component={MountsList} />
+                        <Route path="*" component={App._404} />
+                    </Switch>
             </Layout>
         );
     }
