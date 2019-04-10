@@ -19,7 +19,7 @@ Service's journal is available using traditional SystemD's journal:
 journalctl -fu w3top.service
 ```
 
-The build script above depends on dotnet sdk 2.2, nodejs 10.5+ (with yarn) and powershell:. Portable versions of them can be installed using one-liner below:
+The build script above depends on dotnet sdk 2.2, nodejs 10.5+ (with yarn) and powershell:. Official portable versions of them can be installed using one-liner below:
 ```bash
 script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh
 wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
@@ -29,7 +29,7 @@ wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
 W3-Top requires libMonoPosixHelper.so for querying info about linux-kind filesystems meta-info. It can be installed using:
 
 ```bash
-# Debian/CentOS/RedHat
+# Fedora/CentOS/RedHat
 sudo yum install mono-core
 
 # Debian/Ubuntu derivatives
