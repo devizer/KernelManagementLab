@@ -21,7 +21,8 @@ journalctl -fu w3top.service
 
 The build script above depends on dotnet sdk 2.2, nodejs 10.5+ (with yarn) and powershell:. Portable versions of them can be installed using one-liner below:
 ```bash
-wget -q -nv --no-check-certificate -O - https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh | bash -s dotnet node pwsh
+script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh
+wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
 ```
 
 ##### Runtime Dependency: libMonoPosixHelper.so
