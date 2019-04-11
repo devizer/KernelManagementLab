@@ -1,11 +1,11 @@
 {
-  "name": "Kernel Dashboard",
-  "short_name": "Kernel Dashboard",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
+  "name": "W3 Top",
+  "short_name": "W3 Top",
+  "theme_color": "#2196f3",
+  "background_color": "#2196f3",
   "display": "standalone",
   "Scope": "/",
-  "start_url": "./?utm_source=web_app_manifest",
+  "start_url": "/?utm_source=web_app_manifest",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",
