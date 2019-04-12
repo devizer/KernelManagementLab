@@ -38,16 +38,16 @@ export class Common {
         if (number == 0)
             return "0";
 
-        if (number < 1999)
+        if (number < 1499)
             return format(number) + " B";
 
-        if (number < 1999999)
+        if (number < 1499999)
             return format((number / 1024.0)) + " Kb";
 
-        if (number < 1999999999)
+        if (number < 1499999999)
             return format((number / 1024.00 / 1024.00)) + " Mb";
 
-        if (number < 1999999999999)
+        if (number < 1499999999999)
             return format((number / 1024 / 1024 / 1024)) + " Gb";
 
         return format((number / 1024 / 1024 / 1024 / 1024)) + " Tb";
