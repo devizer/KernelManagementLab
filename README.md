@@ -26,7 +26,7 @@ wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
 ```
 
 ### Runtime Dependency: libMonoPosixHelper.so
-Minimum version is `4.6`
+Minimum version is **`4.6`**
 
 W3-Top requires libMonoPosixHelper.so for querying info about linux-kind filesystems meta-info. It can be installed using:
 
@@ -36,4 +36,11 @@ sudo yum install mono-core
 
 # Debian/Ubuntu derivatives
 sudo apt install mono-runtime-common
+```
+
+### Unininstall
+```bash
+sudo systemctl disable w3top.service
+sudo rm -f /etc/systemd/system/w3top.service 
+sudo rm -rf /opt/w3top
 ```
