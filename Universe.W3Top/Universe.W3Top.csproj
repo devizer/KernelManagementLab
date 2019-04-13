@@ -8,6 +8,13 @@
         <SpaRoot>ClientApp\</SpaRoot>
         <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+  <ServerGarbageCollection>false</ServerGarbageCollection>
+  <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+  <RetainVMGarbageCollection>false</RetainVMGarbageCollection>
+  <ThreadPoolMinThreads>8</ThreadPoolMinThreads>
+  <ThreadPoolMaxThreads>50</ThreadPoolMaxThreads>
+
     </PropertyGroup>
 
     <ItemGroup>
