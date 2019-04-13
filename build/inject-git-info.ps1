@@ -54,6 +54,7 @@ $jsonInfo = @{
   Version = "$version.$build.$commitCount"
 }
 SaveAsJson $jsonInfo "AppGitInfo.json"
+Write-Host (Get-Content "AppGitInfo.json")
 Copy-Item "AppGitInfo.json" ..\Universe.W3Top\ClientApp\src\AppGitInfo.json -Force
 
 foreach($t in @("OfflinePrepare", "WindowsBootAnalyzer")) {
