@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # wget -q -nv --no-check-certificate -O - https://raw.githubusercontent.com/devizer/KernelManagementLab/master/build-w3-dashboard.sh | bash -s reinstall_service  
+set -e
+set -u
 if [[ $(uname -m) == armv7* ]]; then rid=linux-arm; elif [[ $(uname -m) == aarch64 ]]; then rid=linux-arm64; elif [[ $(uname -m) == x86_64 ]]; then rid=linux-x64; fi; if [[ $(uname -s) == Darwin ]]; then rid=osx-x64; fi;
 echo "The current OS architecture: $rid"
 
@@ -43,7 +45,7 @@ function reinstall_service() {
   # time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service
   time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
   cd bin/service
-  if [[ -z $INSTALL_DIR ]]; then INSTALL_DIR=/opt/w3top; fi
+  if [[ -z "${INSTALL_DIR-}" ]]; then INSTALL_DIR=/opt/w3top; fi
   sudo mkdir -p $INSTALL_DIR
   sudo rm -rf $INSTALL_DIR/*
   sudo cp -fR * $INSTALL_DIR
@@ -65,5 +67,5 @@ export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 # run_prod
 # reinstall_service
 cmd="$1"
-if [[ -z "$cmd" ]]; then cmd=reinstall_service; fi; 
+if [[ -z "$cmd" ]]; then cmd=reinstall_service; fi;
 eval $cmd
