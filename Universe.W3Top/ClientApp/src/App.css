@@ -21,6 +21,7 @@
 .disk-kind-block { color: black }
 
 .disk-no-data { 
+    margin-top: 32px;
     color: lightslategrey !important;
     display: inline-block;
     border: 1px dotted silver;

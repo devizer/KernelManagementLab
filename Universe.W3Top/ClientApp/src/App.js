@@ -14,6 +14,8 @@ import { NetChartContainer_V2 } from './components/NetChartContainer_V2';
 import { MountsList } from './components/MountsList';
 import dataSourceListener from './stores/DataSourceListener';
 
+require('typeface-roboto')
+
 // fetch for IE11
 require('es6-promise').polyfill();
 require('isomorphic-fetch');

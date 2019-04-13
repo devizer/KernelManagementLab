@@ -113,7 +113,7 @@ export class MountsList extends React.Component {
     }
 
     renderNormal() {
-        let pageSize = Math.max(this.state.mounts.length, 6);
+        let pageSize = this.state.mounts.length === 0 ? 6 : Math.max(this.state.mounts.length, 1);
         let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
         let rightAlign = {textAlign: "right" };
         return (
