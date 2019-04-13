@@ -73,30 +73,29 @@ export class MountsList extends React.Component {
     {
         let globalDataSource = dataSourceStore.getDataSource();
         let mounts = Helper.Disks.getOptionalMountsProperty(globalDataSource);
-        return mounts;
-    }
-
-    renderLoading() {
-        return (
-            <h1 id="Mounts_is_Waiting_for_connection" style={{textAlign: "center"}}>
-                Mounts is waiting for connection
-            </h1>
-        )
+        return mounts == null ? [] : mounts;
     }
 
     getTrProps = (state, rowInfo, instance) => {
         // rowInfo.row - fields from RwactTable
         // row.original - fields from data (dataSource)
         let suffix = "";
-        if (rowInfo.original.isBlockDevice) {
-            suffix = "block";
-        } else if (rowInfo.original.isTmpFs) {
-            suffix = "ram";
-        } else if (rowInfo.original.isNetworkShare) {
-            suffix = "network";
+        if (rowInfo !== undefined && rowInfo.original !== undefined) {
+            if (rowInfo.original.isBlockDevice) {
+                suffix = "block";
+            } else if (rowInfo.original.isTmpFs) {
+                suffix = "ram";
+            } else if (rowInfo.original.isNetworkShare) {
+                suffix = "network";
+            }
         }
         return { className: `disk-kind-${suffix}`};
     };
+
+    getNoDataProps()
+    {
+        return { className: "disk-no-data" };
+    }
 
     
     
@@ -114,7 +113,7 @@ export class MountsList extends React.Component {
     }
 
     renderNormal() {
-        let pageSize = Math.max(this.state.mounts.length, 1);
+        let pageSize = Math.max(this.state.mounts.length, 6);
         let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
         let rightAlign = {textAlign: "right" };
         return (
@@ -123,11 +122,13 @@ export class MountsList extends React.Component {
                 <br/>
                 <ReactTable
                     data={this.state.mounts}
+                    noDataText="Waiting for server connection"
                     showPagination={false}
                     defaultPageSize={pageSize}
                     pageSizeOptions={[pageSize]}
                     pageSize={pageSize}
                     getTrProps={this.getTrProps}
+                    getNoDataProps={this.getNoDataProps}
 
                     columns={[
                         {
@@ -186,9 +187,9 @@ export class MountsList extends React.Component {
                 
                 <div class="disk-legend">
                     {/* Legend:&nbsp;&nbsp; */}
-                    <span className="disk-legend-item disk-kind-block">{iconBlock} Block device</span>&nbsp;&nbsp;
-                    <span className="disk-legend-item disk-kind-network">{iconNet} Network share</span>&nbsp;&nbsp;
-                    <span className="disk-legend-item disk-kind-ram">{iconRam} RAM disk</span>&nbsp;&nbsp;
+                    <span className="disk-legend-item disk-kind-block">{iconBlock} Block device</span>
+                    <span className="disk-legend-item disk-kind-network">{iconNet} Network share</span>
+                    <span className="disk-legend-item disk-kind-ram">{iconRam} RAM disk</span>
                     <span className="disk-legend-item disk-kind-swap">{iconSwap} SWAP disk</span>
                 </div>
 
@@ -197,13 +198,7 @@ export class MountsList extends React.Component {
     }
 
     render () {
-        return (
-            <div id="Mounts">
-                {this.state.mounts === null ? this.renderLoading() : this.renderNormal()}
-            </div>
-        );
+        return this.renderNormal();
     }
-
-
 
 }

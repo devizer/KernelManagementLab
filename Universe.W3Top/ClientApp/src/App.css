@@ -4,14 +4,25 @@
     padding-top: 1em !important;
     padding-bottom: 1em !important; 
     font-size: 19px 
-} 
+}
 
+.disk-legend-item { 
+    display: inline-block; 
+    border: 1px dotted lightgray; 
+    padding: 8px 8px; 
+    margin: 8px 8px;
+    width: 190px;
+}
 .disk-legend { text-align: center; padding: 16px 0px }
-.disk-legend-item { display: inline-block; border: 1px dotted lightgray; padding: 8px 8px; margin: 8px 8px}
 .disk-kind-network { color: /* #161A9E */ #b35800 }
 .disk-kind-ram { color: #157626 }
 .disk-kind-swap { color: #ff227b
 }
 .disk-kind-block { color: black }
 
-
+.disk-no-data { 
+    color: lightslategrey !important;
+    display: inline-block;
+    border: 1px dotted silver;
+    backgroundColor: white;
+}
