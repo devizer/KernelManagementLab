@@ -61,8 +61,7 @@ export class NetChartContainer_V2 extends Component {
                     return t.rxBytes + t.txBytes;
                 }
                 catch{
-                    // TODO: Add warning?
-                    return 0;
+                    console.warn(`globalDataSource missed .net.interfaceTotals['${name}']`);
                 }
             };
             
