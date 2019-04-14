@@ -27,7 +27,6 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 
 
-
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -112,6 +111,15 @@ class PersistentDrawerLeft extends React.Component {
         const { classes, theme } = this.props;
         const { open } = this.state;
 
+        const MainMenuLink = (text,to) => {
+            return (
+                <ListItem button component={NavLink} tag={Link} to={to} key={`${text}@MainMenu`} onClick={() => this.handleDrawerClose()}>
+                    <ListItemIcon><FlareIcon/></ListItemIcon>
+                    <ListItemText primary={text} />
+                </ListItem>
+            );
+        };
+
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -131,7 +139,7 @@ class PersistentDrawerLeft extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" color="inherit" noWrap>
-                            Persistent drawer
+                            W3 Top
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -164,32 +172,15 @@ class PersistentDrawerLeft extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem button component={NavLink} tag={Link} to="/disk-v1">
-                            <ListItemIcon><FlareIcon/></ListItemIcon>
-                            <ListItemText primary={"Disks"} />
-                        </ListItem>
-                        <ListItem button component={NavLink} tag={Link} to="/net-v2">
-                            <ListItemIcon><FlareIcon/></ListItemIcon>
-                            <ListItemText primary={"Network-V2"} />
-                        </ListItem>
+                        {MainMenuLink("Disks", "/disk-v1")}
+                        {MainMenuLink("Network-V2", "/net-v2")}
                         <Divider />
-
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
+                        {MainMenuLink("Network", "/net-v1")}
+                        <Divider />
+                        {MainMenuLink("Single Y-axis chart", "/1-axis")}
+                        {MainMenuLink("Double Y-axis one", "/2-axis")}
                     </List>
                     <Divider />
-                    <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
                 </Drawer>
                 <main
                     className={classNames(classes.content, {
@@ -208,18 +199,6 @@ class PersistentDrawerLeft extends React.Component {
                         Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus
                         at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
                         ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-                    </Typography>
-                    <Typography paragraph>
-                        Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                        facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                        tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                        consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus
-                        sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-                        In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-                        et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique
-                        sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo
-                        viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-                        ultrices sagittis orci a.
                     </Typography>
                 </main>
             </div>
