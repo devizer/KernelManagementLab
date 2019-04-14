@@ -13,7 +13,7 @@ export class Layout extends Component {
         {/*<NavMenu />*/}
         <MaterialNav />
         {/*<Container>*/}
-        <div style={{padding: "8px"}}>
+        <div style={{padding: "0px 24px"}}>
           {this.props.children}
         {/*</Container>*/}
         </div>
