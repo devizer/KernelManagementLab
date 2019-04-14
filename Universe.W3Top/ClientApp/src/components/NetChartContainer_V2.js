@@ -4,6 +4,7 @@ import { NetDevChart } from './NetDevChart';
 import { NetDevChartHeader } from './NetDevChartHeader';
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
+import * as Enumerable from "linq-es2015";
 
 export class NetChartContainer_V2 extends Component {
     static displayName = NetChartContainer_V2.name;
@@ -42,7 +43,7 @@ export class NetChartContainer_V2 extends Component {
     {
         this.tryInitNetChartList();
     }
-
+    
     tryBuildNetChartList()
     {
         let globalDataSource = dataSourceStore.getDataSource();
@@ -51,8 +52,26 @@ export class NetChartContainer_V2 extends Component {
         // activeInterfaceNames.map(interfaceName => {return {}});
         if (interfaces !== null) {
             let activeInterfaceNames = Helper.NetDev.getActiveInterfaceList(globalDataSource);
-            // just simple map to this.jsonChart 
-            return activeInterfaceNames.map(interfaceName => {
+            // just simple map to this.jsonChart
+            let glo = dataSourceStore.getDataSource();
+            
+            let getTotals = name => {
+                try {
+                    let t = globalDataSource.net.interfaceTotals[name];
+                    return t.rxBytes + t.txBytes;
+                }
+                catch{
+                    // TODO: Add warning?
+                    return 0;
+                }
+            };
+            
+            let sortedNames = Enumerable.asEnumerable(activeInterfaceNames)
+                .OrderByDescending(name => getTotals(name))
+                .ThenBy(name => name)
+                .ToArray();
+            
+            return sortedNames.map(interfaceName => {
                 return {
                     name: interfaceName,
                     description: `the ${interfaceName} description is not yet completed`,
