@@ -9,6 +9,7 @@ import { Route, Switch, Router } from 'react-router';
 import { Layout } from './components/Layout';
 import { Poc1Chart } from './components/Poc1Chart';
 import { Poc2Chart } from './components/Poc2Chart';
+import MNav from "./components/MaterialNav"
 import { NetChartContainer } from './components/NetChartContainer';
 import { NetChartContainer_V2 } from './components/NetChartContainer_V2';
 import { MountsList } from './components/MountsList';
@@ -89,6 +90,7 @@ export default class App extends Component {
             <Layout>
                     <Switch>
                         <Route exact path='/' component={Poc1Chart} />
+                        <Route exact path='/material-nav' component={MNav} />
                         <Route exact path='/1-axis' component={Poc1Chart} />
                         <Route exact path='/2-axis' component={Poc2Chart} />
                         <Route exact path='/net-v1' component={NetChartContainer} />

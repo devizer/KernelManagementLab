@@ -18,7 +18,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.App"  />
+        <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     </ItemGroup>
     
@@ -31,6 +31,7 @@
         <Content Remove="$(SpaRoot)**" />
         <Content Include="ClientApp\src\App.css" />
         <Content Include="ClientApp\src\components\LimitFinder.js" />
+        <Content Include="ClientApp\src\components\MaterialNav.js" />
         <Content Include="ClientApp\src\components\MountsList.js" />
         <Content Include="ClientApp\src\components\MyTable.css" />
         <Content Include="ClientApp\src\components\NetChartContainer_V2.js" />

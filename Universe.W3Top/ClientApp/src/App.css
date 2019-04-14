@@ -27,3 +27,13 @@
     border: 1px dotted silver;
     backgroundColor: white;
 }
+
+.version span {
+    color: #AAAAAA !important;
+    font-size: 11px;
+}
+
+.version svg {
+    color: #FFF !important;
+    font-size: 12px;
+ }

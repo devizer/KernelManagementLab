@@ -35,10 +35,11 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/disk-v1">Disk</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/net-v1">Network</NavLink>
-                </NavItem>
-                <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/net-v2">Network-V2</NavLink>
+                </NavItem>
+                
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/net-v1">Network</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/1-axis">Single Y-axis chart</NavLink>
@@ -46,6 +47,10 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/2-axis">Double Y-axis chart</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/material-nav">Alt-NAV</NavLink>
+                </NavItem>
+
               </ul>
             </Collapse>
           </Container>
