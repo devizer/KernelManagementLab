@@ -74,6 +74,11 @@ namespace ReactGraphLab
             Console.WriteLine("Waiting for a first round of /proc/mounts diagnostic: ");
             MountsDataSource.IsFirstIterationReady.WaitOne();
             Console.WriteLine($"First round of /proc/mounts diagnostic is ready, {sw.ElapsedMilliseconds:n0} milliseconds");
+            
+            Console.WriteLine("Waiting for a first round of /proc/swaps diagnostic: ");
+            SwapsDataSource.IsFirstIterationReady.WaitOne();
+            Console.WriteLine($"First round of /proc/swaps diagnostic is ready, {sw.ElapsedMilliseconds:n0} milliseconds");
+
 
             NetStatDataSourcePersistence.PreJit();
 

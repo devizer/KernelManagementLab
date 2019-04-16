@@ -28,14 +28,14 @@ namespace Universe.Dashboard.Agent
                 IsFirstIterationReady.WaitOne();
                 lock (Sync) return _Mounts;
             }
-            set
+            private set
             {
                 lock (Sync) _Mounts = value;
             }
         }
 
 
-        public static void LaunchListener()
+        private static void LaunchListener()
         {
             ThreadPool.QueueUserWorkItem(state =>
             {

@@ -19,6 +19,14 @@ namespace KernelManagementJam
             get { return !string.IsNullOrEmpty(BlockDeviceResolved); }
         }
 
+        public bool IsSwap
+        {
+            get
+            {
+                return (MountEntry?.FileSystem ?? "").StartsWith("swap", CMP);
+            }
+        }
+
         public bool IsTmpFs
         {
             get

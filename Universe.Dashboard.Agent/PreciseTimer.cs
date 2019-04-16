@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
@@ -142,11 +143,28 @@ namespace Universe.Dashboard.Agent
                 var netStateStorage = NetStatDataSource.Instance.By_1_Seconds;
                 var netStatView = NetDataSourceView.AsViewModel(netStateStorage);
                 var toSkip = new[] {"run", "sys", "dev"};
-                var mounts = MountsDataSource.Mounts
+                List<DriveDetails> mounts = MountsDataSource.Mounts
                     .Where(x => x.TotalSize > 0)
                     .Where(x => !toSkip.Any( skip => x.MountEntry.MountPath == $"/{skip}" || x.MountEntry.MountPath.StartsWith($"/{skip}/")))
                     .ToList();
 
+                var swapsOriginal = SwapsDataSource.Swaps;
+                var swaps = swapsOriginal.Select(x => new DriveDetails()
+                {
+                    MountEntry = new MountEntry()
+                    {
+                        MountPath = x.FileName,
+                        Device = "swap",
+                        FileSystem = "swap",
+                    },
+                    FreeSpace = (x.Size - x.Used) * 1024,
+                    TotalSize = (x.Size) * 1024,
+                    IsReady = true,
+                    Format = "swap",
+                });
+                
+                mounts.AddRange(swaps);
+                
                 var hostInfo = new
                 {
                     Os = CrossInfo.OsDisplayName,

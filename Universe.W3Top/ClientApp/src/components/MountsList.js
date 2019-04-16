@@ -87,6 +87,8 @@ export class MountsList extends React.Component {
                 suffix = "ram";
             } else if (rowInfo.original.isNetworkShare) {
                 suffix = "network";
+            } else if (rowInfo.original.isSwap) {
+                suffix = "swap";
             }
         }
         return { className: `disk-kind-${suffix}`};
@@ -107,6 +109,8 @@ export class MountsList extends React.Component {
             icon = iconRam;
         } else if (rowInfo.original.isNetworkShare) {
             icon = iconNet;
+        }else if (rowInfo.original.isSwap) {
+            icon = iconSwap;
         }
         
         return <span>{icon}{rowInfo.original.mountEntry.mountPath}</span>;
