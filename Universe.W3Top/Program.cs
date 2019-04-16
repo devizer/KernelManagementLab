@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Universe;
 using Universe.Dashboard.Agent;
 
 namespace ReactGraphLab
@@ -21,6 +22,7 @@ namespace ReactGraphLab
         public static void Main(string[] args)
         {
             PidFileSupport.CreatePidFile();
+            JitCrossInfo();
             DebugDumps();
             var webHost = CreateWebHostBuilder(args).Build();
 
@@ -30,6 +32,13 @@ namespace ReactGraphLab
             
             webHost.Run();
         }
+
+        static void JitCrossInfo()
+        {
+            var info = CrossInfo.HumanReadableEnvironment(4);
+            Console.WriteLine($"System Environment:{Environment.NewLine}{info}");
+        }
+
 
         static void DebugPreciseTimer()
         {

@@ -13,7 +13,7 @@ namespace ReactGraphLab
         public static void CreatePidFile()
         {
             var entryAssembly = Assembly.GetEntryAssembly();
-            var title = $"{Path.GetDirectoryName(entryAssembly.Location)} ver {entryAssembly.GetName().Version}";
+            var title = $"{Path.GetFileName(entryAssembly.Location)} ver {entryAssembly.GetName().Version}";
             var pidFile = Environment.GetEnvironmentVariable("PID_FILE_FULL_PATH");
             if (string.IsNullOrEmpty(pidFile))
             {

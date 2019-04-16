@@ -111,9 +111,9 @@ class PersistentDrawerLeft extends React.Component {
         const { classes, theme } = this.props;
         const { open } = this.state;
 
-        const MainMenuLink = (text,to) => {
+        const MainMenuLink = (text,routeTo) => {
             return (
-                <ListItem button component={NavLink} tag={Link} to={to} key={`${text}@MainMenu`} onClick={() => this.handleDrawerClose()}>
+                <ListItem button component={NavLink} tag={Link} to={routeTo} key={`${text}@MainMenu`} onClick={() => this.handleDrawerClose()}>
                     <ListItemIcon><FlareIcon/></ListItemIcon>
                     <ListItemText primary={text} />
                 </ListItem>
