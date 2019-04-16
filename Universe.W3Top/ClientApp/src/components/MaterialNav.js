@@ -127,6 +127,7 @@ class PersistentDrawerLeft extends React.Component {
           paddingBottom: 10,
           verticalAlign: "top",
           color: "#888",
+          borderBottom: "1px dotted white",
       },
       val: {
           fontWeight: "normal",
@@ -138,7 +139,13 @@ class PersistentDrawerLeft extends React.Component {
           width: 240,
           display: "inline-block", 
           paddingBottom: 0
-      }
+      },
+        ready: {
+            borderBottom: "1px dotted white",
+            display: "inline-block",
+            paddingBottom: 0
+        }
+
     };
     
     
@@ -149,8 +156,10 @@ class PersistentDrawerLeft extends React.Component {
         
         const SysValueNotReady = () => (<span style={this.sis.notReady}>&nbsp;</span>);
         const SysRow = (def,value) => { return (
-            <tr><td style={this.sis.def}>{def}</td>
-                <td style={this.sis.val}>{value ? value : <SysValueNotReady/>}</td></tr>
+            <tr>
+                <td style={this.sis.def}>{def}</td>
+                <td style={this.sis.val}>{ <span style={this.sis.ready}>{value}</span> ? value : <SysValueNotReady/>}</td>
+            </tr>
         )};
 
         const MainMenuLink = (text,routeTo) => {

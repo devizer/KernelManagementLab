@@ -5,10 +5,11 @@
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Universe.W3Top" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <envs>
+      <env name="DUMPS_ARE_ENABLED" value="True" />
       <env name="ASPNETCORE_ENVIRONMENT" value="Development" />
       <env name="ASPNETCORE_URLS" value="http://localhost:5010;https://0.0.0.0:5011" />
       <env name="PID_FILE_FULL_PATH" value="$USER_HOME$/.local/w3top.pid" />
-      <env name="DUMPS_ARE_ENABLED" value="True" />
+      <env name="RESPONSE_COMPRESSION" value="True" />
     </envs>
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />

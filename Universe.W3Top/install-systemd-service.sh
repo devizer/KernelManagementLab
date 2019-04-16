@@ -31,6 +31,8 @@ Environment=FORCE_HTTPS_REDIRECT=False
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 Environment=DUMPS_ARE_ENABLED=False
+Environment=RESPONSE_COMPRESSION=True
+
 
 [Install]
 WantedBy=multi-user.target

@@ -18,6 +18,24 @@ namespace ReactGraphLab
 {
     public class Startup
     {
+        private static bool NeedRessponseCompression
+        {
+            get
+            {
+                var raw = Environment.GetEnvironmentVariable("RESPONSE_COMPRESSION");
+                string[] yes = new[] {"On", "True", "1"};
+                return yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
+        static bool NeedHttpRedirect()
+        {
+            var raw = Environment.GetEnvironmentVariable("FORCE_HTTPS_REDIRECT");
+            string[] yes = new[] {"On", "True", "1"};
+            return yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +47,8 @@ namespace ReactGraphLab
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            if (NeedRessponseCompression) services.AddResponseCompression();
             
             services.AddHostedService<MeasurementAgent>();
 
@@ -54,9 +74,12 @@ namespace ReactGraphLab
             services.AddCors(options => options.AddPolicy("CorsPolicy",
                 builder =>
                 {
-                    builder.AllowAnyMethod().AllowAnyHeader()
+                    builder
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
                         .AllowAnyOrigin()
-                        .AllowCredentials();
+                        // .AllowCredentials()
+                        ;
                 }));
             
             services.AddSignalR(x =>
@@ -65,13 +88,6 @@ namespace ReactGraphLab
                 x.SupportedProtocols = new List<string>() {"longPolling"};
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
-        }
-
-        static bool NeedHttpRedirect()
-        {
-            var raw = Environment.GetEnvironmentVariable("FORCE_HTTPS_REDIRECT");
-            string[] yes = new[] {"On", "True", "1"};
-            return yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -129,6 +145,8 @@ namespace ReactGraphLab
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            if (NeedRessponseCompression) app.UseResponseCompression();
         }
     }
 }
