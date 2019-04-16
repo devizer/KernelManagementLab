@@ -17,6 +17,9 @@ namespace MountLab
             Environment.SetEnvironmentVariable("DUMPS_ARE_ENABLED", "True");
             PathNormalizationLab();
 
+            var swaps = SwapsParser.Parse();
+            DebugDumper.Dump(swaps, "ProcSwaps.json");
+
 
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {
