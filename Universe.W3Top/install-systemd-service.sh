@@ -4,6 +4,7 @@ set -e
 pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
 if [[ ! -f "$scriptpath/Universe.W3Top" ]]; then echo ERROR: publish the project first; exit 1; fi
 if [[ -z "$HTTP_PORT" ]]; then HTTP_PORT=5050; fi
+if [[ -z "$RESPONSE_COMPRESSION" ]]; then RESPONSE_COMPRESSION=True; fi
 echo Configuring w3top service located at $scriptpath using 'http://<ip|name>:'$HTTP_PORT
 
 sudo systemctl stop w3top    >/dev/null 2>&1 || true
@@ -31,7 +32,7 @@ Environment=FORCE_HTTPS_REDIRECT=False
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 Environment=DUMPS_ARE_ENABLED=False
-Environment=RESPONSE_COMPRESSION=True
+Environment=RESPONSE_COMPRESSION='$RESPONSE_COMPRESSION'
 
 
 [Install]

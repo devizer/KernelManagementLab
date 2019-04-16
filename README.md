@@ -9,6 +9,7 @@ The easiest way to (re)install it as a SystemD service, namely w3top, is to buil
 ```bash
 export HTTP_PORT=5050
 export INSTALL_DIR=/opt/w3top
+export RESPONSE_COMPRESSION=True
 script=https://raw.githubusercontent.com/devizer/KernelManagementLab/master/build-w3-dashboard.sh
 wget -q -nv --no-check-certificate -O - $script | bash -s reinstall_service 
 ```
