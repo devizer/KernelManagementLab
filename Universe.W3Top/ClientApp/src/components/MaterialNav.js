@@ -22,9 +22,12 @@ import Icon from '@material-ui/core/Icon';
 import StarIcon from '@material-ui/icons/Star';
 import FlareIcon from '@material-ui/icons/Flare';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import AppGitInfo from "../AppGitInfo"
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
+
+import AppGitInfo from "../AppGitInfo"
+import dataSourceStore from "../stores/DataSourceStore";
+import * as Helper from "../Helper";
 
 
 const drawerWidth = 240;
@@ -78,6 +81,7 @@ const styles = theme => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
+        paddingBottom: theme.spacing.unit,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -106,6 +110,15 @@ class PersistentDrawerLeft extends React.Component {
     handleDrawerClose = () => {
         this.setState({ open: false });
     };
+    
+    componentDidMount() {
+        let x = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource.bind(this));
+    }
+
+    updateGlobalDataSource()
+    {
+        this.setState({system: dataSourceStore.getDataSource().system});
+    }
 
     render() {
         const { classes, theme } = this.props;
@@ -120,6 +133,10 @@ class PersistentDrawerLeft extends React.Component {
             );
         };
 
+        let [hasSystem, system] = Helper.Common.tryGetProperty(dataSourceStore.getDataSource(), "system");
+        if (!hasSystem) system = {};
+        let [hasHostname, hostname] = Helper.Common.tryGetProperty(dataSourceStore.getDataSource(), "hostname");
+        
         return (
             <div className={classes.root}>
                 <CssBaseline />
@@ -188,7 +205,20 @@ class PersistentDrawerLeft extends React.Component {
                     })}
                 >
                     <div className={classes.drawerHeader} />
-                    <Typography paragraph>
+
+                    <Typography paragraph className={classNames(!hasHostname && classes.hide)}>
+                        Host Name: <b>{hostname}</b>
+                    </Typography>
+                    <Typography paragraph className={classNames(!hasSystem && classes.hide)}>
+                        OS: <b>{hasSystem ? system.os : "..."}</b>
+                    </Typography>
+                    <Typography paragraph className={classNames(!hasSystem && classes.hide)}>
+                        Processor: <b>{system.processor}</b>
+                    </Typography>
+                    <Typography paragraph className={classNames(!hasSystem && classes.hide)}>
+                        Memory: <b>{system.memory}</b>
+                    </Typography>
+                    <Typography paragraph className={classes.hide}>
                         <FlareIcon /> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                         incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
                         elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in

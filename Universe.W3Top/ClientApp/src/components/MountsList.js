@@ -118,8 +118,6 @@ export class MountsList extends React.Component {
         let rightAlign = {textAlign: "right" };
         return (
             <div id="Mounts">
-                <br/>
-                <br/>
                 <ReactTable
                     data={this.state.mounts}
                     noDataText="Waiting for server connection"

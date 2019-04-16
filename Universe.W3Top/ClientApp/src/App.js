@@ -89,7 +89,7 @@ export default class App extends Component {
         return (
             <Layout>
                     <Switch>
-                        <Route exact path='/' component={Poc1Chart} />
+                        <Route exact path='/' component={NetChartContainer_V2} />
                         <Route exact path='/material-nav' component={MNav} />
                         <Route exact path='/1-axis' component={Poc1Chart} />
                         <Route exact path='/2-axis' component={Poc2Chart} />

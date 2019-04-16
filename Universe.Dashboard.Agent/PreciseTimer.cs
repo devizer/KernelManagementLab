@@ -146,11 +146,21 @@ namespace Universe.Dashboard.Agent
                     .Where(x => x.TotalSize > 0)
                     .Where(x => !toSkip.Any( skip => x.MountEntry.MountPath == $"/{skip}" || x.MountEntry.MountPath.StartsWith($"/{skip}/")))
                     .ToList();
+
+                var hostInfo = new
+                {
+                    Os = CrossInfo.OsDisplayName,
+                    Processor = CrossInfo.ProcessorName,
+                    Memory = CrossInfo.TotalMemory == null
+                        ? "n/a"
+                        : string.Format("{0:n0} Mb", CrossInfo.TotalMemory / 1024),
+                };
                 
                 var broadcastMessage = new
                 {
                     MessageId = MessageId,
                     Hostname = Environment.MachineName,
+                    System = hostInfo,
                     Mounts = mounts,
                     Net = netStatView,
                     // Disk = new Dictionary<string,object>()
