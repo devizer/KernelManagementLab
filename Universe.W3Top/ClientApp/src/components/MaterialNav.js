@@ -119,10 +119,39 @@ class PersistentDrawerLeft extends React.Component {
     {
         this.setState({system: dataSourceStore.getDataSource().system});
     }
+    
+    sis = {
+      def: {
+          textAlign: "right",
+          paddingRight: 12,
+          paddingBottom: 10,
+          verticalAlign: "top",
+          color: "#888",
+      },
+      val: {
+          fontWeight: "normal",
+          verticalAlign: "top",
+          paddingBottom: 10,
+      },
+      notReady: {
+          borderBottom: "1px dotted grey",
+          width: 240,
+          display: "inline-block", 
+          paddingBottom: 0
+      }
+    };
+    
+    
 
     render() {
         const { classes, theme } = this.props;
         const { open } = this.state;
+        
+        const SysValueNotReady = () => (<span style={this.sis.notReady}>&nbsp;</span>);
+        const SysRow = (def,value) => { return (
+            <tr><td style={this.sis.def}>{def}</td>
+                <td style={this.sis.val}>{value ? value : <SysValueNotReady/>}</td></tr>
+        )};
 
         const MainMenuLink = (text,routeTo) => {
             return (
@@ -206,18 +235,13 @@ class PersistentDrawerLeft extends React.Component {
                 >
                     <div className={classes.drawerHeader} />
 
-                    <Typography paragraph className={classNames(!hasHostname && classes.hide)}>
-                        Host Name: <b>{hostname}</b>
-                    </Typography>
-                    <Typography paragraph className={classNames(!hasSystem && classes.hide)}>
-                        OS: <b>{hasSystem ? system.os : "..."}</b>
-                    </Typography>
-                    <Typography paragraph className={classNames(!hasSystem && classes.hide)}>
-                        Processor: <b>{system.processor}</b>
-                    </Typography>
-                    <Typography paragraph className={classNames(!hasSystem && classes.hide)}>
-                        Memory: <b>{system.memory}</b>
-                    </Typography>
+                    <table border="0" cellSpacing="0" cellPadding="0">
+                        {SysRow("host", hostname)}
+                        {SysRow("os", system.os)}
+                        {SysRow("cpu", system.processor)}
+                        {SysRow("ram", system.memory)}
+                    </table>
+                    
                     <Typography paragraph className={classes.hide}>
                         <FlareIcon /> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                         incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
