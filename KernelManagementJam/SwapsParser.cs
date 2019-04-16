@@ -31,7 +31,7 @@ namespace KernelManagementJam
                 rawRow = reader.ReadLine();
                 if (rawRow == null) break;
                 
-                string[] arr = rawRow.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                string[] arr = rawRow.Split(new[] {' ', '\t'}, StringSplitOptions.RemoveEmptyEntries);
                 if (arr.Length < 5) continue;
                 string name = arr[0];
                 string typeRaw = arr[1];
