@@ -158,7 +158,7 @@ class PersistentDrawerLeft extends React.Component {
         const SysRow = (def,value) => { return (
             <tr>
                 <td style={this.sis.def}>{def}</td>
-                <td style={this.sis.val}>{ <span style={this.sis.ready}>{value}</span> ? value : <SysValueNotReady/>}</td>
+                <td style={this.sis.val}>{ value ? <span style={this.sis.ready}>{value}</span> : <SysValueNotReady/>}</td>
             </tr>
         )};
 

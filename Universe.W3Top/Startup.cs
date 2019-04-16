@@ -24,7 +24,8 @@ namespace ReactGraphLab
             {
                 var raw = Environment.GetEnvironmentVariable("RESPONSE_COMPRESSION");
                 string[] yes = new[] {"On", "True", "1"};
-                return yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
+                var needRessponseCompression = yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
+                return needRessponseCompression;
             }
         }
 
@@ -125,6 +126,7 @@ namespace ReactGraphLab
                 routes.MapHub<DataSourceHub>("/dataSourceHub");
             });
 
+            if (NeedRessponseCompression) app.UseResponseCompression();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -146,7 +148,6 @@ namespace ReactGraphLab
                 }
             });
 
-            if (NeedRessponseCompression) app.UseResponseCompression();
         }
     }
 }
