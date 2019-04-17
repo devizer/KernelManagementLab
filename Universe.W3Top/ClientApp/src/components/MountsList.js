@@ -121,7 +121,7 @@ export class MountsList extends React.Component {
         let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
         let rightAlign = {textAlign: "right" };
         return (
-            <div id="Mounts">
+            <div id="Mounts" style={{marginTop: 12}}>
                 <ReactTable
                     data={this.state.mounts}
                     noDataText="Waiting for server connection"
