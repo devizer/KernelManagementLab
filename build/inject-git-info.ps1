@@ -43,7 +43,7 @@ $commitDate = $lines[0].Split(" ")[0]
 # AssemblyInfo.cs
 $version = GetVersion
 $build = IncrementBuild
-"[assembly: System.Reflection.AssemblyVersion(`"$version.$build.$commitCount`")]" > AssemblyVersion.cs
+"[assembly: System.Reflection.AssemblyVersion(`"$version.$commitCount.$build`")]" > AssemblyVersion.cs
 
 # AppGitInfo.json
 $jsonInfo = @{
@@ -51,7 +51,7 @@ $jsonInfo = @{
   CommitCount = $commitCount;
   CommitDate = [long]$commitDate;
   BuildDate = [long] ([System.DateTime]::UtcNow - (new-object System.DateTime 1970, 1, 1, 0, 0, 0, ([DateTimeKind]::Utc) )).TotalSeconds;
-  Version = "$version.$build.$commitCount"
+  Version = "$version.$commitCount.$build"
 }
 SaveAsJson $jsonInfo "AppGitInfo.json"
 Write-Host (Get-Content "AppGitInfo.json")
