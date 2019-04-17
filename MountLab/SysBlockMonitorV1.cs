@@ -31,6 +31,9 @@ namespace MountLab
                 Thread.Sleep(1);
 
                 List<WithDeviceWithVolumes> next = SysBlocksReader.GetSnapshot().OrderBy(x => x.DiskKey).ToList();
+                foreach (var device in next)
+                    device.Volumes = device.Volumes.OrderBy(x => x.VolumeKey).ToList();
+                
                 var nextTicks = sw.ElapsedTicks;
                 var duration = (nextTicks - prevTicks) / (double) Stopwatch.Frequency;
 
