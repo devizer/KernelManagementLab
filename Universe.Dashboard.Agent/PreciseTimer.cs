@@ -153,8 +153,8 @@ namespace Universe.Dashboard.Agent
                 {
                     MountEntry = new MountEntry()
                     {
-                        MountPath = x.FileName,
-                        Device = "swap",
+                        MountPath = $"priority is {x.Priority}",
+                        Device = x.FileName,
                         FileSystem = "swap",
                     },
                     FreeSpace = (x.Size - x.Used) * 1024,
