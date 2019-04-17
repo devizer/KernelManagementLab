@@ -1,9 +1,11 @@
-##### 1.5
-- Added swap partitions and files to live Mounts page
-##### 1.4
-- Publishing to cloud: http://w3-top-on-xeon.devizer.tech, http://w3-top-on-pi.devizer.tech 
-##### 1.3 
+##### 1.7
+- Added swap partitions and files to live Mounts page. Now Mounts page unites links from `/proc/swaps` and `/proc/mounts` sources 
+##### 1.6 
+- Added host info (name, os, cpu, ram) to the header
+##### 1.5 
 - Bootstrap navigation replaced by Material UI drawler
+##### 1.4 
+- Publishing to cloud: http://w3-top-on-xeon.devizer.tech, http://w3-top-on-pi.devizer.tech 
 ##### 1.2
 - Added live Mounts page
 - Rewritten signalR's DataSource and its watchdog.
@@ -15,4 +17,3 @@
 - 2-Axis Chart prototype
 ##### 0.1
 - C3 Chart prototype
-
