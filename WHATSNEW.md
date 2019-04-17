@@ -3,7 +3,7 @@
 ![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps.png "mounts and swaps") 
 ##### 1.6 
 - Added host info (name, os, cpu, ram) to the header
-![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Networks-Live-Chart.png "mounts and swaps")
+![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Networks-Live-Chart.png "Network metrics live chart")
 ##### 1.5 
 - Bootstrap navigation replaced by Material UI drawler
 ##### 1.4 
