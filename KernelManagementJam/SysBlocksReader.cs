@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Mono.Unix;
 
 namespace KernelManagementJam
@@ -102,7 +103,7 @@ namespace KernelManagementJam
         private static BlockStatistics ParseStatistic(string filePath)
         {
             var firstLine = SmallFileReader.ReadFirstLine(filePath);
-            if (firstLine == null) return BlockStatistics.Empty;
+            if (firstLine == null) return BlockStatistics.Zero;
 
             var rawColumns = firstLine.Trim().Split(' ').Where(x => x.Length > 0);
             var columns = new List<long>(15);
@@ -274,12 +275,9 @@ namespace KernelManagementJam
         // 14. milliseconds,  total wait time for discard requests
         public long? DiscardTicks { get; set; }
 
-
-
-
         public bool IsValid { get; set; }
 
-        public static BlockStatistics Empty => new BlockStatistics();
+        public static BlockStatistics Zero => new BlockStatistics();
 
         public bool IsDead => ReadOperations == 0 &&
                               ReadOperationsMerged == 0 &&
@@ -312,11 +310,13 @@ namespace KernelManagementJam
             };
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static long GetDelta(long next, long prev, double duration)
         {
             return (long) ((next - prev) / duration);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static long? GetDelta(long? next, long? prev, double duration)
         {
             if (!next.HasValue) return null;

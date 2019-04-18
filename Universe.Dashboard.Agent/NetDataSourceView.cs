@@ -39,7 +39,7 @@ namespace Universe.Dashboard.Agent
                 TxTotalOctects = dataSource.Select(x => x.TxTotalOctets),
             };
 
-
+            
             var fields = new[]
             {
                 new {Field = "RxBytes", GetField = (Func<NetDevInterfaceRow,long>) (row => row.RxBytes)},

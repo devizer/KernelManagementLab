@@ -29,19 +29,20 @@ namespace Universe.Dashboard.Agent
                 double duration = (nextTicks - prevTicks) * 1d / Stopwatch.Frequency;
                 
                 DebugDumper.Dump(next, "SysBlock.Timer.Tick.Next.json");
-                Console.WriteLine("SysBlock::Timer --> Temp Tick1");
+                // Console.WriteLine("SysBlock::Timer --> Temp Tick1");
 
                 List<DiskVolStatModel> nextDelta = new List<DiskVolStatModel>();
                 foreach (var pair in nextPlain)
                 {
                     var nextStat = pair.Value;
-                    if (!prevPlain.TryGetValue(pair.Key, out var prevStat))
-                        prevStat = BlockStatistics.Empty;
+                    var diskOrVolumeKey = pair.Key;
+                    if (!prevPlain.TryGetValue(diskOrVolumeKey, out var prevStat))
+                        prevStat = BlockStatistics.Zero;
 
                     var delta = BlockStatistics.GetDelta(nextStat, prevStat, duration);
                     nextDelta.Add(new DiskVolStatModel()
                     {
-                        DiskVolKey = pair.Key,
+                        DiskVolKey = diskOrVolumeKey,
                         Stat = delta,
                     });
                 }
@@ -54,7 +55,6 @@ namespace Universe.Dashboard.Agent
                     BlockDiskStat = nextDelta,
                 };
 
-                
                 var logBy1Seconds = BlockDiskDataSource.Instance.By_1_Seconds;
                 while (logBy1Seconds.Count >= 60 + 1)
                     logBy1Seconds.RemoveAt(0);
