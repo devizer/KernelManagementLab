@@ -228,8 +228,8 @@ class PersistentDrawerLeft extends React.Component {
                     <Divider />
                     <List>
                         {MainMenuLink("Live Mounts", "/mounts")}
-                        {MainMenuLink("Disks Live Chart", "/disks")}
                         {MainMenuLink("Network Live Chart", "/net-v2")}
+                        {MainMenuLink("Disks Live Chart (in progress)", "/disks")}
                         <Divider />
                         {MainMenuLink("Network", "/net-v1")}
                         <Divider />
