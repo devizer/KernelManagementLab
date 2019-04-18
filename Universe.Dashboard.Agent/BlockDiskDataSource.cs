@@ -39,5 +39,4 @@ namespace Universe.Dashboard.Agent
         public string DiskVolKey { get; set; }
         public BlockStatistics Stat { get; set; }
     }
-
 }
