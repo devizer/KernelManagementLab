@@ -93,7 +93,6 @@ namespace KernelManagementJam
 
 
             ret.Statistics = ParseStatistic(basePath + "/stat");
-
             ret.LoopBackingFile = SmallFileReader.ReadFirstLine(basePath + "/loop/backing_file");
 
 
@@ -290,5 +289,39 @@ namespace KernelManagementJam
                               WriteOperationsMerged == 0 &&
                               WriteSectors == 0 &&
                               WriteWaitingMilliseconds == 0;
+
+        public static BlockStatistics GetDelta(BlockStatistics next, BlockStatistics prev, double duration)
+        {
+            return new BlockStatistics()
+            {
+                ReadOperations = GetDelta(next.ReadOperations, prev.ReadOperations , duration),
+                ReadOperationsMerged = GetDelta(next.ReadOperationsMerged, prev.ReadOperationsMerged , duration),
+                ReadSectors = GetDelta(next.ReadSectors, prev.ReadSectors , duration),
+                ReadWaitingMilliseconds = GetDelta(next.ReadWaitingMilliseconds, prev.ReadWaitingMilliseconds , duration),
+                WriteOperations = GetDelta(next.WriteOperations, prev.WriteOperations , duration),
+                WriteOperationsMerged = GetDelta(next.WriteOperationsMerged, prev.WriteOperationsMerged , duration),
+                WriteSectors = GetDelta(next.WriteSectors, prev.WriteSectors , duration),
+                WriteWaitingMilliseconds = GetDelta(next.WriteWaitingMilliseconds, prev.WriteWaitingMilliseconds , duration),
+                InFlightRequests = GetDelta(next.InFlightRequests, prev.InFlightRequests , duration),
+                IoMilliseconds = GetDelta(next.IoMilliseconds, prev.IoMilliseconds , duration),
+                TimeInQueue = GetDelta(next.TimeInQueue, prev.TimeInQueue , duration),
+                DiscardRequests = GetDelta(next.DiscardRequests, prev.DiscardRequests , duration),
+                DiscardMerges = GetDelta(next.DiscardMerges, prev.DiscardMerges, duration),
+                DiscardSectors = GetDelta(next.DiscardSectors, prev.DiscardSectors, duration),
+                DiscardTicks = GetDelta(next.DiscardTicks, prev.DiscardTicks , duration),
+            };
+        }
+
+        static long GetDelta(long next, long prev, double duration)
+        {
+            return (long) ((next - prev) / duration);
+        }
+
+        static long? GetDelta(long? next, long? prev, double duration)
+        {
+            if (!next.HasValue) return null;
+            long p = prev ?? 0;
+            return (long) ((next.Value - p) / duration);
+        }
     }
 }

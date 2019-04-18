@@ -74,12 +74,11 @@ namespace MountLab
                     report.AddRow(cellsOfDisk.ToArray());
 
                     int volIndex = 0;
-                    foreach (var vol in block.Volumes)
+                    foreach (WithVolumeInfo vol in block.Volumes)
                     {
                         bool isLast = ++volIndex == block.Volumes.Count;
                         var prevVol = prevBlock.Volumes.Where(x => vol.VolumeKey.Equals(x.VolumeKey)).FirstOrDefault();
                         if (prevVol == null) continue;
-
 
                         List<object> cellsOfVol = new List<object> { null, (isLast ? " └─ " : " ├─ ") + vol.VolumeKey, null };
                         AddStat(cellsOfVol, vol, prevVol, duration);

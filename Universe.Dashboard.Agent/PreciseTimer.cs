@@ -153,7 +153,7 @@ namespace Universe.Dashboard.Agent
                 {
                     MountEntry = new MountEntry()
                     {
-                        MountPath = $"priority is {x.Priority}",
+                        MountPath = $"[priority = {x.Priority}]",
                         Device = x.FileName,
                         FileSystem = "swap",
                     },

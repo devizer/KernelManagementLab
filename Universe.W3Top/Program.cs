@@ -28,6 +28,7 @@ namespace ReactGraphLab
 
             PreciseTimer.Services = webHost.Services;
             NetStatTimer.Process();
+            BlockDiskTimer.Process();
             DebugPreciseTimer();
             
             webHost.Run();
