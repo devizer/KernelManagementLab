@@ -1,5 +1,5 @@
 ##### 1.7
-- Added swap partitions and files to live Mounts page. Now Mounts page unites links from `/proc/swaps` and `/proc/mounts` sources:
+- Added swap partitions and files for live Mounts page. Now Mounts page unites links from `/proc/swaps` and `/proc/mounts` sources:
 ![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps.png "mounts and swaps") 
 ##### 1.6 
 - Added host info (name, os, cpu, ram) to the header
