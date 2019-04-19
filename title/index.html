@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <title>devizer.tech live</title>
+  <style>
+    body { background-color: #EEEEEE}
+    .card-body { 
+      background-color: white !important;
+      border-radius: 6px;
+      /*height: 300px*/
+    }
+    .card-body p {
+      margin-block-start: 0em;
+      margin-block-end: 0.7em;
+
+    }
+    .card-title {
+      text-shadow: 1px 1px 0px #969696, 1px 13px 5px #aba8a8;
+      margin-bottom: 1em;
+      margin-top: 1em;
+    }
+    a { white-space: nowrap }
+    .crd {
+      margin-bottom: 32px;
+      /*height: 100%;*/
+    }
+  </style>
+  
+</head>
+<body>
+<div class="container-fluid content-row">
+
+  <h4 class="center">devizer.tech live</h4>
+
+  <div class="row d-flex align-items-stretch" style="height: 100%">
+
+    <div class="col-sm-6 crd">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">W3 Top</h5>
+          <p class="card-text">It isn't grafana, htop, atop, iotop or gnome-system-monitor. It's all together with web interface</p>
+          <p class="card-text">Live W3 Top app
+            &nbsp;<a href="http://w3-top-on-xeon.devizer.tech" >on Xeon...</a>,
+            &nbsp;<a href="http://w3-top-on-xeon.devizer.tech" >on PI-board...</a>
+          </p>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 crd">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Reactive Report</h5>
+          <p class="card-text">
+            It isn't known why, but built-in Windows' event viewer doesn't show amount of time since windows boot time.
+            This React + Material UI app displays events grouped by a boot time and includes duration since corresponding boot</p>
+          <!-- a href="http://reactive-report.devizer.tech">Open a ...</a -->
+          <a href="https://devizer.github.io/ReactiveReport">Open an Reactive Report</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 crd">
+      <div class="card  h-100">
+        <div class="card-body">
+          <h5 class="card-title">H3 Overclocker</h5>
+          <p class="card-text">
+            It allows us to manage frequency range of CPU and memory and to control number of online cores.
+            <br/>It displays temperature, frequency and usage of memory and CPU.
+            <br/>It designed for touch and supports ancient browsers including IE9, iOS&nbsp;7+ and Android&nbsp;4.4+.
+          </p>
+          <p>
+            Live:
+            <a href="http://h3overclocker-live.devizer.tech" >An Orange PI+</a>. 
+            Please don't downclock it <span nowrap>below 480Mhz</span> as it is the only bare metal linux at my home <span nowrap>( ͡° ͜ʖ ͡°)</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 crd">
+      <div class="card  h-100">
+        <div class="card-body">
+          <h5 class="card-title">Touch galleries</h5>
+          <p class="card-text">We like 
+            <a href="http://touch-galleries.devizer.tech/Kitty">kittens</a>,
+            <a href="http://touch-galleries.devizer.tech/History">history</a> and
+            <a href="http://touch-galleries.devizer.tech/Trucks">trucks</a>. 
+            Google Cloud's nosql DataStore is engaged for counting of likes and stars. 
+          </p>
+          <a href="http://touch-galleries.devizer.tech">Open ...</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function() {
+    return;
+    var cards = $(".card-body");
+    var height=0;
+    cards.each(function(cardIndex, card) {
+      var h = $(card).height();
+      if (h > height) height=h;
+    });
+    cards.height(height+"px");
+  });
+</script>
+
+</body>
+</html>
