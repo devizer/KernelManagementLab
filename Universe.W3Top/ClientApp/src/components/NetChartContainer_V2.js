@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { AnotherChart2 } from './AnotherChart2';
 import { NetDevChart } from './NetDevChart';
 import { NetDevChartHeader } from './NetDevChartHeader';
 import dataSourceStore from "../stores/DataSourceStore";
@@ -104,11 +103,10 @@ export class NetChartContainer_V2 extends Component {
             }
         }
     }
-    
 
     renderLoading() {
         return (
-            <h6 id="NetCharts_is_Waiting_for_connection" style={{textAlign: "center", paddingTop: 200}}>
+            <h6 id="NetCharts_is_Waiting_for_connection" style={{textAlign: "center", paddingTop: 80}}>
                 Waiting for connection
             </h6>
         )

@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Universe.Dashboard.Agent
 {
-   
     public class NetStatTimer
     {
         private static readonly UTF8Encoding Utf8Encoding = new UTF8Encoding(false);

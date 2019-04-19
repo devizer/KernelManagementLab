@@ -4,6 +4,7 @@ import nextUniqueId from "../NextUniqueId"
 import dataSourceStore from "../stores/DataSourceStore";
 import { findLimit } from './LimitFinder'
 import * as Helper from "../Helper";
+import {BlockDevChart} from "./BlockStatChart";
 import {NetDevChart} from "./NetDevChart";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -14,15 +15,15 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 
 const iconSent = faArrowUp, iconReceived = faArrowDown;
 
-export class NetDevChartHeader extends Component {
-    static displayName = NetDevChartHeader.name;
-    
+export class BlockStatDevChartHeader extends Component {
+    static displayName = BlockStatDevChartHeader.name;
+
     constructor(props) {
         super(props);
-        
+
         this.updateGlobalDataSource = this.updateGlobalDataSource.bind(this);
     }
-    
+
     componentDidMount() {
         let x = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
     }
@@ -71,29 +72,30 @@ export class NetDevChartHeader extends Component {
             paddingRight: NetDevChart.Padding - 4,
         },
     };
-    
+
     render() {
 
         let totals;
         try {
             let glo = dataSourceStore.getDataSource();
-            totals = glo.net.interfaceTotals[this.props.name];
+            // totals = glo.net.interfaceTotals[this.props.name];
+            totals = {rxBytes: 42*1024, txBytes: 42*1024*1024*1024};
         }
         catch{
             totals = {rxBytes: 0, txBytes: 0};
         }
-        
+
         if (!Helper.Common.objectIsNotEmpty(totals))
             totals = {rxBytes: 0, txBytes: 0};
-            
+
 
         let format = x => x > 0 ? Helper.Common.formatBytes(x) : "";
         // totals = {rxBytes: 0, txBytes: 0};
-        
+
         return (
             <div style={this.dd.container}>&nbsp;
                 <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={iconReceived} /> {format(totals.rxBytes)}</span></div>
-                <div style={this.dd.center}>interface <b>{this.props.name.toUpperCase()}</b></div>
+                <div style={this.dd.center}>disk|vol <b>{this.props.name.toUpperCase()}</b></div>
                 <div style={this.dd.right}><span title={"TOTAL SENT"}>{format(totals.txBytes)} <FontAwesomeIcon icon={iconSent} /></span></div>
             </div>
         )
@@ -101,6 +103,6 @@ export class NetDevChartHeader extends Component {
 
 }
 
-NetDevChartHeader.propTypes = {
+BlockStatDevChartHeader.propTypes = {
     name: PropTypes.string.isRequired,
 };

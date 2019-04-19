@@ -30,7 +30,10 @@ namespace MountLab
             {
                 Thread.Sleep(1);
 
-                List<WithDeviceWithVolumes> next = SysBlocksReader.GetSnapshot();
+                List<WithDeviceWithVolumes> next = SysBlocksReader.GetSnapshot().OrderBy(x => x.DiskKey).ToList();
+                foreach (var device in next)
+                    device.Volumes = device.Volumes.OrderBy(x => x.VolumeKey).ToList();
+                
                 var nextTicks = sw.ElapsedTicks;
                 var duration = (nextTicks - prevTicks) / (double) Stopwatch.Frequency;
 
@@ -71,12 +74,11 @@ namespace MountLab
                     report.AddRow(cellsOfDisk.ToArray());
 
                     int volIndex = 0;
-                    foreach (var vol in block.Volumes)
+                    foreach (WithVolumeInfo vol in block.Volumes)
                     {
                         bool isLast = ++volIndex == block.Volumes.Count;
                         var prevVol = prevBlock.Volumes.Where(x => vol.VolumeKey.Equals(x.VolumeKey)).FirstOrDefault();
                         if (prevVol == null) continue;
-
 
                         List<object> cellsOfVol = new List<object> { null, (isLast ? " └─ " : " ├─ ") + vol.VolumeKey, null };
                         AddStat(cellsOfVol, vol, prevVol, duration);
@@ -107,7 +109,9 @@ namespace MountLab
             Add(cells, x => x.WriteOperationsMerged, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
             Add(cells, x => x.WriteSectors, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
             Add(cells, x => x.WriteWaitingMilliseconds, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            // queue size
             Add(cells, x => x.InFlightRequests, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
+            // busy (0-100) %%
             Add(cells, x => x.IoMilliseconds, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
             Add(cells, x => x.TimeInQueue, next.StatisticSnapshot, prev.StatisticSnapshot, duration);
         }
