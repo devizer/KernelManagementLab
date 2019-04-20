@@ -28,10 +28,14 @@ wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
 
 ### Runtime Dependency: libMonoPosixHelper.so
 Minimum version is **`4.6`**
+Xamarin already prepared it for most of runtimes of dotnet core, but for for all.
 
 W3-Top requires libMonoPosixHelper.so for querying info about linux-kind filesystems meta-info. It can be installed using:
 
 ```bash
+# Alpine Linux
+sudo apk add mono
+
 # Fedora/CentOS/RedHat
 sudo yum install mono-core
 

@@ -15,20 +15,27 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="59" column="46" selection-start-line="59" selection-start-column="46" selection-end-line="59" selection-end-column="46" />
+            <state relative-caret-position="189">
+              <caret line="109" column="49" selection-start-line="109" selection-start-column="49" selection-end-line="109" selection-end-column="49" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#836#842#0" expanded="true" />
-                <element signature="e#915#921#0" expanded="true" />
-                <element signature="e#2754#2760#0" expanded="true" />
-                <element signature="e#2774#2780#0" expanded="true" />
+                <element signature="e#3594#3600#0" expanded="true" />
+                <element signature="e#4633#4639#0" expanded="true" />
+                <element signature="e#5487#5493#0" expanded="true" />
+                <element signature="e#3988#3994#0" expanded="true" />
+                <element signature="e#4008#4014#0" expanded="true" />
+                <element signature="e#6647#6653#1" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>and supp</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -95,12 +102,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1555675058494</updated>
-      <workItem from="1555675062526" duration="11057000" />
+      <workItem from="1555675062526" duration="20119000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11057000" />
+    <option name="totallyTimeSpent" value="20119000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -160,14 +167,16 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="59" column="46" selection-start-line="59" selection-start-column="46" selection-end-line="59" selection-end-column="46" />
+        <state relative-caret-position="189">
+          <caret line="109" column="49" selection-start-line="109" selection-start-column="49" selection-end-line="109" selection-end-column="49" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#836#842#0" expanded="true" />
-            <element signature="e#915#921#0" expanded="true" />
-            <element signature="e#2754#2760#0" expanded="true" />
-            <element signature="e#2774#2780#0" expanded="true" />
+            <element signature="e#3594#3600#0" expanded="true" />
+            <element signature="e#4633#4639#0" expanded="true" />
+            <element signature="e#5487#5493#0" expanded="true" />
+            <element signature="e#3988#3994#0" expanded="true" />
+            <element signature="e#4008#4014#0" expanded="true" />
+            <element signature="e#6647#6653#1" expanded="true" />
           </folding>
         </state>
       </provider>
