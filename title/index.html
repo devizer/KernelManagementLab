@@ -1,116 +1,176 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-  
-  
-  <title>devizer.tech live</title>
-  <style>
-    body { background-color: #EEEEEE}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.css" integrity="sha256-bNPGnNxsIr8mZ4p5VH3uYQorlucOUehl8ml0jm1LZ2I=" crossorigin="anonymous" />
 
-    .header-logo {
-      font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-      font-size: 2.25rem;
-      text-align: center;
-      padding: 0.2rem;
-    }
-    .card-body { 
-      background-color: white !important;
-      border-radius: 6px;
-      /*height: 300px*/
-    }
-    .card-body p {
-      margin-block-start: 0em;
-      margin-block-end: 0.7em;
 
-    }
-    .card-title {
-      text-shadow: 1px 1px 0px #969696, 1px 13px 5px #aba8a8;
-      margin-bottom: 1em;
-      margin-top: 1em;
-    }
-    a { white-space: nowrap }
-    .crd {
-      margin-bottom: 32px;
-      /*height: 100%;*/
-    }
-  </style>
-  
+
+    <title>devizer.tech live</title>
+    <style>
+        body { background-color: #EEEEEE}
+
+        .the-header {
+            /*#aba8a8*/
+            text-shadow: 0px 0px 0px #969696, 1px 13px 5px #bbb8b8; 
+            /*font-family: "Playfair Display", Georgia, "Times New Roman", serif;*/
+            /*text-decoration: underline;*/
+        }
+
+        .card-title  .the-icon {
+            min-width: 30px;
+            padding-right: 10px;
+            display: inline-block;
+        }
+
+        .header-logo {
+            font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+            font-size: 2.25rem;
+            text-align: center;
+            padding: 0.2rem;
+        }
+        .card-body {
+            background-color: white !important;
+            border-radius: 6px;
+            /*height: 300px*/
+        }
+        .card-body p {
+            margin-block-start: 0em;
+            margin-block-end: 0.7em;
+        }
+
+        .card-title {
+            margin-bottom: 1em;
+            margin-top: 0.1em;
+        }
+        
+        a { 
+            white-space: nowrap; 
+            color: #0074D9; 
+            /*text-decoration: underline*/
+            border-bottom: 1px dotted #7FDBFF;
+        }
+
+        a:hover {
+            white-space: nowrap;
+            color: #0074D9;
+            text-decoration: none;
+            border-bottom: 1px solid #7FDBFF;
+        }
+
+        .crd {
+            margin-bottom: 32px;
+            /*height: 100%;*/
+        }
+
+        .a-title a {
+            color: #111;
+            text-decoration: none;
+            border-bottom: none;
+        }
+
+        .navy { color: #001F3F; }
+        .blue { color: #0074D9; }
+        .aqua { color: #7FDBFF; }
+        .teal { color: #39CCCC; }
+        .olive { color: #3D9970; }
+        .green { color: #2ECC40; }
+        .lime { color: #01FF70; }
+        .yellow { color: #FFDC00; }
+        .orange { color: #AA5412; }
+        .red { color: #FF4136; }
+        .fuchsia { color: #F012BE; }
+        .purple { color: #B10DC9; }
+        .maroon { color: #85144B; }
+        .white { color: #FFFFFF; }
+        .silver { color: #DDDDDD; }
+        .gray { color: #AAAAAA; }
+        .black { color: #111111; }
+
+    </style>
+
 </head>
 <body>
 <div class="container content-row">
 
-  <h4 class="header-logo">devizer.tech labs</h4>
+    <h4 class="header-logo">devizer.tech labs</h4>
 
-  <div class="row d-flex align-items-stretch" style="height: 100%">
+    <div class="row d-flex align-items-stretch" style="height: 100%">
 
-    <div class="col-sm-6 crd">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">W3 Top</h5>
-          <p class="card-text">It isn't grafana, htop, atop, iotop or gnome-system-monitor. It's all together with web interface</p>
-          <p class="card-text">Live W3 Top app
-            &nbsp;<a href="http://w3-top-on-xeon.devizer.tech" >on Xeon...</a>,
-            &nbsp;<a href="http://w3-top-on-pi.devizer.tech" >on PI-board...</a>
-          </p>
-          
+        <div class="col-sm-6 crd">
+            <div class="card h-100 black">
+                <div class="card-body">
+                    <h5 class="card-title a-title"><a href="http://w3-top-on-xeon.devizer.tech" ><i class="icon-star-empty the-icon"></i> <span class="display-inline the-header">W3 Top</span>&nbsp;&#x21E2;</a></h5>
+                    <hr/>
+                    <p class="card-text">It isn't grafana, htop, atop, iotop or gnome-system-monitor. It's all together with web interface</p>
+                    <p class="card-text">Live W3 Top app
+                        <a href="http://w3-top-on-xeon.devizer.tech" >on Xeon... <i class="icon-external-link"></i></a>,
+                        <a href="http://w3-top-on-pi.devizer.tech" >on PI-board... <i class="icon-external-link"></i></a>
+                    </p>
+                    <p>
+                        Single-liner of SystemD service <a href="https://github.com/devizer/KernelManagementLab#install-from-source">installer from source</a>
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="col-sm-6 crd">
+            <div class="card h-100 black">
+                <div class="card-body">
+                    <h5 class="card-title a-title"><a href="https://devizer.github.io/ReactiveReport"><i class="icon-heart-empty the-icon"></i> <span class="display-inline the-header">Reactive Report</span>&nbsp;&#x21E2;</a></h5>
+                    <hr/>
+                    <p class="card-text">
+                        It isn't known why, but built-in Windows' event viewer doesn't show amount of time since windows boot time.
+                        This React + Material UI app displays events grouped by a boot time and includes duration since corresponding boot</p>
+                    <!-- a href="http://reactive-report.devizer.tech">Open a ...</a -->
+                    <a href="https://devizer.github.io/ReactiveReport">Open an Reactive Report</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 crd">
+            <div class="card  h-100 black">
+                <div class="card-body">
+                    <h5 class="card-title a-title"><a href="http://h3overclocker-live.devizer.tech" ><i class="icon-bookmark-empty the-icon"></i> <span class="display-inline the-header">H3 Overclocker</span>&nbsp;&#x21E2;</a></h5>
+                    <hr/>
+                    <p class="card-text">
+                        It allows us to manage frequency range of CPU and memory and to control number of online cores.
+                        <br/>It displays temperature, frequency and usage of memory and CPU.
+                        <br/>It designed for touch and also supports ancient browsers including IE9, iOS&nbsp;7+ and Android&nbsp;4.4+.
+                    </p>
+                    <p>
+                        Live:
+                        <a href="http://h3overclocker-live.devizer.tech" >An Orange PI+</a>.
+                        Please don't downclock it <span nowrap>below 480Mhz</span> as it is the only bare metal linux at my home <span nowrap>( ͡° ͜ʖ ͡°)</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 crd">
+            <div class="card  h-100 black">
+                <div class="card-body">
+                    <h5 class="card-title a-title"><a href="http://touch-galleries.devizer.tech"><i class="icon-camera-retro the-icon"></i> <span class="display-inline the-header">Touch Galleries</span>&nbsp;&#x21E2;</a></h5>
+                    <hr/>
+                    <p class="card-text">We like
+                        <a href="http://touch-galleries.devizer.tech/Kitty">kittens</a>,
+                        <a href="http://touch-galleries.devizer.tech/History">history</a> and
+                        <a href="http://touch-galleries.devizer.tech/Trucks">trucks</a>.
+                        Google Cloud's nosql DataStore is engaged for counting of likes and stars.
+                    </p>
+                    <a href="http://touch-galleries.devizer.tech">Open ...</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="col-sm-6 crd">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Reactive Report</h5>
-          <p class="card-text">
-            It isn't known why, but built-in Windows' event viewer doesn't show amount of time since windows boot time.
-            This React + Material UI app displays events grouped by a boot time and includes duration since corresponding boot</p>
-          <!-- a href="http://reactive-report.devizer.tech">Open a ...</a -->
-          <a href="https://devizer.github.io/ReactiveReport">Open an Reactive Report</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 crd">
-      <div class="card  h-100">
-        <div class="card-body">
-          <h5 class="card-title">H3 Overclocker</h5>
-          <p class="card-text">
-            It allows us to manage frequency range of CPU and memory and to control number of online cores.
-            <br/>It displays temperature, frequency and usage of memory and CPU.
-            <br/>It designed for touch and supports ancient browsers including IE9, iOS&nbsp;7+ and Android&nbsp;4.4+.
-          </p>
-          <p>
-            Live:
-            <a href="http://h3overclocker-live.devizer.tech" >An Orange PI+</a>. 
-            Please don't downclock it <span nowrap>below 480Mhz</span> as it is the only bare metal linux at my home <span nowrap>( ͡° ͜ʖ ͡°)</span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 crd">
-      <div class="card  h-100">
-        <div class="card-body">
-          <h5 class="card-title">Touch galleries</h5>
-          <p class="card-text">We like 
-            <a href="http://touch-galleries.devizer.tech/Kitty">kittens</a>,
-            <a href="http://touch-galleries.devizer.tech/History">history</a> and
-            <a href="http://touch-galleries.devizer.tech/Trucks">trucks</a>. 
-            Google Cloud's nosql DataStore is engaged for counting of likes and stars. 
-          </p>
-          <a href="http://touch-galleries.devizer.tech">Open ...</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  
 </div>
 
 
@@ -121,16 +181,16 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <script>
-  $(document).ready(function() {
-    return;
-    var cards = $(".card-body");
-    var height=0;
-    cards.each(function(cardIndex, card) {
-      var h = $(card).height();
-      if (h > height) height=h;
+    $(document).ready(function() {
+        return;
+        var cards = $(".card-body");
+        var height=0;
+        cards.each(function(cardIndex, card) {
+            var h = $(card).height();
+            if (h > height) height=h;
+        });
+        cards.height(height+"px");
     });
-    cards.height(height+"px");
-  });
 </script>
 
 </body>
