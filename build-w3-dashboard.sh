@@ -66,6 +66,6 @@ export DUMPS_ARE_ENABLED=Off
 export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 # run_prod
 # reinstall_service
-cmd="$1"
-if [[ -z "$cmd" ]]; then cmd=reinstall_service; fi;
+# cmd="$1"
+cmd="${1:-reinstall_service}"
 eval $cmd
