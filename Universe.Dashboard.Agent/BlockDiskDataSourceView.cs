@@ -63,6 +63,7 @@ namespace Universe.Dashboard.Agent
 
             dynamic ret = new ExpandoObject();
             ret.BlockNames = blockNames;
+            ret.BlockTotals = BlockDiskDataSource.Instance.Totals;
             ret.Blocks = blocksView;
             return ret;
 

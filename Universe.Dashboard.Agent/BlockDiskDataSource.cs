@@ -7,7 +7,8 @@ namespace Universe.Dashboard.Agent
     public class BlockDiskDataSource
     {
         public Dictionary<string,BlockStatistics> TotalBlockDisks { get; set; }
-        
+        public List<DiskVolStatModel> Totals { get; set; }
+
         public List<BlockDiskDataSourcePoint> By_1_Seconds;
         public List<BlockDiskDataSourcePoint> By_5_Seconds;
         public List<BlockDiskDataSourcePoint> By_15_Seconds;
@@ -16,6 +17,7 @@ namespace Universe.Dashboard.Agent
         
         public static readonly BlockDiskDataSource Instance = new BlockDiskDataSource()
         {
+            Totals = new List<DiskVolStatModel>(),
             By_1_Seconds = new List<BlockDiskDataSourcePoint>(),
             By_5_Seconds = new List<BlockDiskDataSourcePoint>(),
             By_15_Seconds = new List<BlockDiskDataSourcePoint>(),

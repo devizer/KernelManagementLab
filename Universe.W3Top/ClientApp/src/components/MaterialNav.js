@@ -216,7 +216,7 @@ class PersistentDrawerLeft extends React.Component {
                                         <ListItemText primary={"v" + AppGitInfo.Version} className={"version"} />
                                     </ListItem>
                             </List>
-
+                            
                             
                             {/*<small><InfoOutlinedIcon stye={{width: "9px", fontSize: 44}}/> v{AppGitInfo.Version}</small>*/}
                         </td><td width="24px">

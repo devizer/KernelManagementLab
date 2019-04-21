@@ -31,6 +31,7 @@ namespace Universe.Dashboard.Agent
                 DebugDumper.Dump(next, "SysBlock.Timer.Tick.Next.json");
                 // Console.WriteLine("SysBlock::Timer --> Temp Tick1");
 
+                List<DiskVolStatModel> totals = new List<DiskVolStatModel>();
                 List<DiskVolStatModel> nextDelta = new List<DiskVolStatModel>();
                 foreach (var pair in nextPlain)
                 {
@@ -42,8 +43,16 @@ namespace Universe.Dashboard.Agent
                     var delta = BlockStatistics.GetDelta(nextStat, prevStat, duration);
                     nextDelta.Add(new DiskVolStatModel()
                     {
+                        Kind = "Not Implemented",
                         DiskVolKey = diskOrVolumeKey,
                         Stat = delta,
+                    });
+                    
+                    totals.Add(new DiskVolStatModel()
+                    {
+                        Kind = "Not Implemented",
+                        DiskVolKey = diskOrVolumeKey,
+                        Stat = nextStat,
                     });
                 }
 
@@ -60,6 +69,8 @@ namespace Universe.Dashboard.Agent
                     logBy1Seconds.RemoveAt(0);
                 
                 logBy1Seconds.Add(point);
+                BlockDiskDataSource.Instance.Totals = totals;
+
 
                 DebugDumper.Dump(logBy1Seconds, "BlockDiskDataSource.1s.json");
                 DebugDumper.Dump(logBy1Seconds, "BlockDiskDataSource.1s.min.json", minify: true);

@@ -142,6 +142,8 @@ namespace Universe.Dashboard.Agent
                 Interlocked.Increment(ref MessageId);
                 var netStateStorage = NetStatDataSource.Instance.By_1_Seconds;
                 var netStatView = NetDataSourceView.AsViewModel(netStateStorage);
+                var blockStatStorage = BlockDiskDataSource.Instance.By_1_Seconds;
+                var blockStatView = BlockDiskDataSourceView.AsViewModel(blockStatStorage);
                 var toSkip = new[] {"run", "sys", "dev"};
                 List<DriveDetails> mounts = MountsDataSource.Mounts
                     .Where(x => x.TotalSize > 0)
@@ -179,6 +181,7 @@ namespace Universe.Dashboard.Agent
                     MessageId = MessageId,
                     Hostname = Environment.MachineName,
                     System = hostInfo,
+                    Block = blockStatView,
                     Mounts = mounts,
                     Net = netStatView,
                     // Disk = new Dictionary<string,object>()
