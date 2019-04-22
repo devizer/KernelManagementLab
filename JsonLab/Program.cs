@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
@@ -33,6 +31,14 @@ namespace MyBenchmarks
         }
 
         [Benchmark]
+        public void NothingToDo()
+        {
+            
+        }
+
+
+        /*
+        [Benchmark]
         public string Standard()
         {
             JsonSerializer ser = new JsonSerializer()
@@ -59,6 +65,7 @@ namespace MyBenchmarks
 
             return json.ToString();
         }
+        */
 
 //        [Benchmark]
 //        public string Custom()
@@ -71,7 +78,9 @@ namespace MyBenchmarks
     {
         public static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<StandardVsCustomSerializer>();
+            // var summary = BenchmarkRunner.Run<StandardVsCustomSerializer>();
+            var summary2 = BenchmarkRunner.Run<Md5VsSha256>();
+
         }
     }
 }
