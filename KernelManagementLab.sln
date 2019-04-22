@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.Dashboard.DAL", "U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.Dashboard.Agent", "Universe.Dashboard.Agent\Universe.Dashboard.Agent.csproj", "{E35FA273-230F-44EF-9E58-2ED194615F1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonLab", "JsonLab\JsonLab.csproj", "{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,14 @@ Global
 		{E35FA273-230F-44EF-9E58-2ED194615F1C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E35FA273-230F-44EF-9E58-2ED194615F1C}.Release|x86.ActiveCfg = Release|Any CPU
 		{E35FA273-230F-44EF-9E58-2ED194615F1C}.Release|x86.Build.0 = Release|Any CPU
+		{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}.Debug|x86.Build.0 = Debug|Any CPU
+		{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}.Release|x86.ActiveCfg = Release|Any CPU
+		{14118F65-0FF7-4D6A-955A-F81FB49BD2FB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
