@@ -20,14 +20,14 @@ export class BlockChartContainer_V2 extends Component {
 
         this.state = {
             visibleDeviceNames: [],
-            netChartList: this.tryBuildBlockChartList(),
+            blockChartList: this.tryBuildBlockChartList(),
         };
         
-        console.log(`BlockChartContainer_V2::ctor. this.state.netChartList is [${this.state.netChartList}]`);
+        console.log(`BlockChartContainer_V2::ctor. this.state.blockChartList is [${this.state.blockChartList}]`);
     }
 
     componentDidMount() {
-        let isAlreadyBound = this.state.netChartList !== null;
+        let isAlreadyBound = this.state.blockChartList !== null;
         if (!isAlreadyBound)
             this.timerId = setInterval(this.waiterTick.bind(this));
     }
@@ -45,12 +45,12 @@ export class BlockChartContainer_V2 extends Component {
     // used by timer callback
     tryInitBlockChartList()
     {
-        if (this.state.netChartList === null)
+        if (this.state.blockChartList === null)
         {
-            let netChartList = this.tryBuildBlockChartList();
-            if (netChartList !== null) {
+            let blockChartList = this.tryBuildBlockChartList();
+            if (blockChartList !== null) {
                 this.setState({
-                    netChartList: netChartList,
+                    blockChartList: blockChartList,
                 });
             }
         }
@@ -59,14 +59,16 @@ export class BlockChartContainer_V2 extends Component {
     tryBuildBlockChartList()
     {
         let globalDataSource = dataSourceStore.getDataSource();
-        return ["/dev/hdd1", "/dev/loop42"].map((x) => {
-            return {name: x};
-        });
+        let [hasBlock, block] = Helper.Common.tryGetProperty(globalDataSource, "block");
+        if (hasBlock) {
+            let blockNames = globalDataSource.block.blockNames.map((x) => {
+                return {name: x};
+            });
+
+            return blockNames;
+        }
         
-        this.setState({
-            visibleDeviceNames: ["/dev/hdd1", "/dev/loop42"],
-            netChartList: ["/dev/hdd1", "/dev/loop42"],
-        });
+        return null;
     }
 
 
@@ -81,7 +83,7 @@ export class BlockChartContainer_V2 extends Component {
     render () {
         return (
             <div id="BlockChartContainer_V2">
-                {this.state.netChartList === null ? this.renderLoading() : this.renderNormal()}
+                {this.state.blockChartList === null ? this.renderLoading() : this.renderNormal()}
             </div>
         );
     }
@@ -89,7 +91,7 @@ export class BlockChartContainer_V2 extends Component {
     renderNormal() {
         return (
             <div id="NetCharts">
-                {this.state.netChartList.map(netChart =>
+                {this.state.blockChartList.map(netChart =>
                     <div className="CHART" key={netChart.name}>
                         <BlockStatDevChartHeader name={netChart.name}/>
                         <BlockStatChart name={netChart.name} />

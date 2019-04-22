@@ -13,6 +13,8 @@ import { faArrowAltCircleDown } from '@fortawesome/free-regular-svg-icons'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 
+import * as Enumerable from "linq-es2015";
+
 const iconSent = faArrowUp, iconReceived = faArrowDown;
 
 export class BlockStatDevChartHeader extends Component {
@@ -25,12 +27,16 @@ export class BlockStatDevChartHeader extends Component {
     }
 
     componentDidMount() {
-        let x = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
+        let x = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource.bind(this));
     }
 
     updateGlobalDataSource()
     {
         this.forceUpdate();
+        console.log("BlockStatDevChartHeader::updateGlobalDataSource");
+//         let [has] = Helper.Common.tryGetProperty()
+        // dataSourceStore.getDataSource().block.
+        
     }
 
     dd = {
@@ -78,8 +84,11 @@ export class BlockStatDevChartHeader extends Component {
         let totals;
         try {
             let glo = dataSourceStore.getDataSource();
-            // totals = glo.net.interfaceTotals[this.props.name];
-            totals = {rxBytes: 42*1024, txBytes: 42*1024*1024*1024};
+            // TODO: use associative array
+            let totalsRaw = Enumerable.asEnumerable(glo.block.blockTotals)
+                .FirstOrDefault(x => x.diskVolKey === this.props.name);
+            
+            totals = {rxBytes: totalsRaw.stat.readSectors*512, txBytes: totalsRaw.stat.writeSectors*512};  
         }
         catch{
             totals = {rxBytes: 0, txBytes: 0};
@@ -87,7 +96,6 @@ export class BlockStatDevChartHeader extends Component {
 
         if (!Helper.Common.objectIsNotEmpty(totals))
             totals = {rxBytes: 0, txBytes: 0};
-
 
         let format = x => x > 0 ? Helper.Common.formatBytes(x) : "";
         // totals = {rxBytes: 0, txBytes: 0};
