@@ -61,6 +61,22 @@ namespace Universe.Dashboard.Agent
                 }
             }
 
+            foreach (Dictionary<string,List<long>> byDisk in blocksView.Values)
+            {
+                foreach (KeyValuePair<string, List<long>> pair2 in byDisk)
+                {
+                    if (pair2.Key.EndsWith("Sectors"))
+                    {
+                        List<long> longs = pair2.Value;
+                        for(int i=0;i<longs.Count; i++)
+                        {
+                            // AHAHA
+                            longs[i] = longs[i] * 512;
+                        }
+                    }
+                }
+            }
+
             dynamic ret = new ExpandoObject();
             ret.BlockNames = blockNames;
             ret.BlockTotals = BlockDiskDataSource.Instance.Totals;

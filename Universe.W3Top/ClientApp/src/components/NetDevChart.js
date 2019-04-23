@@ -286,7 +286,6 @@ export class NetDevChart extends Component {
 
     render () {
         return <div id={this.domId} />
-        
     }
 }
 
