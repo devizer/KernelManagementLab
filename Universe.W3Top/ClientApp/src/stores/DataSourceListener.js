@@ -21,7 +21,7 @@ class DataSourceListener {
         this.connection = hub.build();
         this.connection.on("ReceiveDataSource", dataSource => {
 
-            let [hasMessageId, messageId] = Helper.Common.tryGetProperty(dataSource, messageId);
+            let [hasMessageId, messageId] = Helper.Common.tryGetProperty(dataSource, "messageId");
             messageId = messageId || "<unknown-message>";
 
             Helper.toConsole(`DataSource RECEIVED [${messageId}] at ` + (new Date().toLocaleTimeString()), dataSource);

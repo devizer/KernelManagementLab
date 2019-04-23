@@ -247,7 +247,7 @@ export class NetDevChart extends Component {
 
         let jsonChart = this.jsonChart;
 
-        let [hasMessageId, messageId] = Helper.Common.tryGetProperty(DataSourceStore.getDataSource(), messageId);
+        let [hasMessageId, messageId] = Helper.Common.tryGetProperty(DataSourceStore.getDataSource(), "messageId");
         messageId = messageId || "<unknown-message>";
 
         // limitBytes & limitPackets

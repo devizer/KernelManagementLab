@@ -99,7 +99,7 @@ export class BlockStatChart extends React.Component {
 
         let jsonChart = this.jsonChart;
 
-        let [hasMessageId, messageId] = Helper.Common.tryGetProperty(DataSourceStore.getDataSource(), messageId);
+        let [hasMessageId, messageId] = Helper.Common.tryGetProperty(DataSourceStore.getDataSource(), "messageId");
         messageId = messageId || "<unknown-message>";
 
 
@@ -128,7 +128,6 @@ export class BlockStatChart extends React.Component {
             },
             done: () => {console.log(`BLOCK-CHART::UPDATED ${messageId} @ ${this.props.name}`)}
         });
-
     }
 
 
