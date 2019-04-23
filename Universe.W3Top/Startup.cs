@@ -29,7 +29,7 @@ namespace ReactGraphLab
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
-            if (StartupOptions.NeedRessponseCompression) services.AddResponseCompression(x =>
+            if (StartupOptions.NeedResponseCompression) services.AddResponseCompression(x =>
                 {
                     x.MimeTypes = CompressedMimeTypes.List;
                 });
@@ -105,7 +105,7 @@ namespace ReactGraphLab
             }
 
             if (StartupOptions.NeedHttpRedirect) app.UseHttpsRedirection();
-            if (StartupOptions.NeedRessponseCompression) app.UseResponseCompression();
+            if (StartupOptions.NeedResponseCompression) app.UseResponseCompression();
             
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

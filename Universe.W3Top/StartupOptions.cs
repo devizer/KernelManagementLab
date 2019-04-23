@@ -5,7 +5,7 @@ namespace ReactGraphLab
 {
     class StartupOptions
     {
-        public static bool NeedRessponseCompression => GetBooleanEnvVar("FORCE_HTTPS_REDIRECT");
+        public static bool NeedResponseCompression => GetBooleanEnvVar("RESPONSE_COMPRESSION");
 
         public static bool NeedHttpRedirect => GetBooleanEnvVar("FORCE_HTTPS_REDIRECT");
 
