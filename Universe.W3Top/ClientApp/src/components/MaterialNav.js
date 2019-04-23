@@ -232,8 +232,8 @@ class PersistentDrawerLeft extends React.Component {
                         {MainMenuLink("Network Live Chart", "/net-v2")}
                         {MainMenuLink("Disks Live Chart (in progress)", "/disks")}
                         <Divider />
-                        <ListSubheader disableSticky={true} style={{paddingTop:16, paddingBottom:16, textAlign: "center", lineHeight: "1rem"}}>SAND-BOX<br/>please ignore</ListSubheader>
-                        {MainMenuLink("Network", "/net-v1")}
+                        <ListSubheader disableSticky={true} style={{paddingTop:32, paddingBottom:16, textAlign: "center", lineHeight: "1rem"}}>SAND-BOX<br/>please ignore</ListSubheader>
+                        {MainMenuLink("Missed network", "/net-v1")}
                         <Divider />
                         {MainMenuLink("Single Y-axis chart", "/1-axis")}
                         {MainMenuLink("Double Y-axis one", "/2-axis")}
