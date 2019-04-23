@@ -102,9 +102,9 @@ export class BlockStatDevChartHeader extends Component {
 
         return (
             <div style={this.dd.container}>&nbsp;
-                <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={iconReceived} /> {format(totals.rxBytes)}</span></div>
+                <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={iconSent} /> {format(totals.rxBytes)}</span></div>
                 <div style={this.dd.center}>disk|vol <b>{this.props.name.toUpperCase()}</b></div>
-                <div style={this.dd.right}><span title={"TOTAL SENT"}>{format(totals.txBytes)} <FontAwesomeIcon icon={iconSent} /></span></div>
+                <div style={this.dd.right}><span title={"TOTAL SENT"}>{format(totals.txBytes)} <FontAwesomeIcon icon={iconReceived} /></span></div>
             </div>
         )
     };
