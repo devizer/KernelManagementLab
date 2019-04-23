@@ -247,6 +247,9 @@ export class NetDevChart extends Component {
 
         let jsonChart = this.jsonChart;
 
+        let [hasMessageId, messageId] = Helper.Common.tryGetProperty(DataSourceStore.getDataSource(), messageId);
+        messageId = messageId || "<unknown-message>";
+
         // limitBytes & limitPackets
         let {limitBytes, limitPackets} = this.computeAxisLimits(jsonChart);
         
@@ -270,6 +273,7 @@ export class NetDevChart extends Component {
             transition: {
                 duration: 0
             },
+            done: () => {console.log(`NET-CHART::UPDATED ${messageId} @ ${this.props.name}`)}
         });
 
     }

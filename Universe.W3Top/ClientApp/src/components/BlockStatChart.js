@@ -99,6 +99,10 @@ export class BlockStatChart extends React.Component {
 
         let jsonChart = this.jsonChart;
 
+        let [hasMessageId, messageId] = Helper.Common.tryGetProperty(DataSourceStore.getDataSource(), messageId);
+        messageId = messageId || "<unknown-message>";
+
+
         // limitBytes & limitPackets
         let {limitBytes, limitPackets} = this.computeAxisLimits(jsonChart);
 
@@ -122,6 +126,7 @@ export class BlockStatChart extends React.Component {
             transition: {
                 duration: 0
             },
+            done: () => {console.log(`BLOCK-CHART::UPDATED ${messageId} @ ${this.props.name}`)}
         });
 
     }

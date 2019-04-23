@@ -1,6 +1,7 @@
 import * as DataSourceActions from './DataSourceActions'
 import * as signalR from '@aspnet/signalr'
 import * as Helper from "../Helper";
+import DataSourceStore from "./DataSourceStore";
 
 class DataSourceListener {
     
@@ -19,7 +20,11 @@ class DataSourceListener {
         // hub.
         this.connection = hub.build();
         this.connection.on("ReceiveDataSource", dataSource => {
-            Helper.toConsole('DataSource RECEIVED at ' + (new Date().toLocaleTimeString()), dataSource);
+
+            let [hasMessageId, messageId] = Helper.Common.tryGetProperty(dataSource, messageId);
+            messageId = messageId || "<unknown-message>";
+
+            Helper.toConsole(`DataSource RECEIVED [${messageId}] at ` + (new Date().toLocaleTimeString()), dataSource);
             try {
                 DataSourceActions.DataSourceUpdated(dataSource);
                 this.applyDocumentTitle(dataSource);
@@ -39,10 +44,14 @@ class DataSourceListener {
         this.timerId = setInterval(this.watchdogTick, 1000);
     }
     
+    first = true;
     applyDocumentTitle(globalDataSource)
     {
-        let [hasHostname, hostname] = Helper.Common.tryGetProperty(globalDataSource, "hostname");
-        document.title = `W3 Top` + (hasHostname? ` (${hostname})` : "");
+        if (this.first) {
+            let [hasHostname, hostname] = Helper.Common.tryGetProperty(globalDataSource, "hostname");
+            document.title = `W3 Top` + (hasHostname ? ` (${hostname})` : "");
+            this.first = false;
+        }
     }
 
     start() {
