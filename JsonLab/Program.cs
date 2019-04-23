@@ -13,7 +13,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace MyBenchmarks
 {
-    [ClrJob(true), CoreJob]
+    [CoreJob]
     [RankColumn]
     public class StandardVsCustomSerializer
     {
