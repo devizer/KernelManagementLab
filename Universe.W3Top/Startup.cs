@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -17,27 +16,6 @@ namespace ReactGraphLab
 {
     public class Startup
     {
-        private static bool NeedRessponseCompression
-        {
-            get
-            {
-                var raw = Environment.GetEnvironmentVariable("RESPONSE_COMPRESSION");
-                string[] yes = new[] {"On", "True", "1"};
-                var needRessponseCompression = yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
-                return needRessponseCompression;
-            }
-        }
-
-        private static bool NeedHttpRedirect
-        {
-            get
-            {
-                var raw = Environment.GetEnvironmentVariable("FORCE_HTTPS_REDIRECT");
-                string[] yes = new[] {"On", "True", "1"};
-                return yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
-            }
-        }
-
 
         public Startup(IConfiguration configuration)
         {
@@ -51,7 +29,7 @@ namespace ReactGraphLab
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
-            if (NeedRessponseCompression) services.AddResponseCompression(x =>
+            if (StartupOptions.NeedRessponseCompression) services.AddResponseCompression(x =>
                 {
                     x.MimeTypes = CompressedMimeTypes.List;
                 });
@@ -123,10 +101,12 @@ namespace ReactGraphLab
 
             if (!env.IsDevelopment())
             {
-                if (NeedHttpRedirect) app.UseHsts();
+                if (StartupOptions.NeedHttpRedirect) app.UseHsts();
             }
 
-            if (NeedHttpRedirect) app.UseHttpsRedirection();
+            if (StartupOptions.NeedHttpRedirect) app.UseHttpsRedirection();
+            if (StartupOptions.NeedRessponseCompression) app.UseResponseCompression();
+            
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             
@@ -136,7 +116,6 @@ namespace ReactGraphLab
                 routes.MapHub<DataSourceHub>("/dataSourceHub");
             });
 
-            if (NeedRessponseCompression) app.UseResponseCompression();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
