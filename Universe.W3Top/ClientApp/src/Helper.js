@@ -34,7 +34,7 @@ export class Common {
 
     static formatBytes(number) {
 
-        let format = num => (Math.round(num * 100.0) / 100).toLocaleString(undefined, {useGrouping: true});
+        let format = num => (Math.round(num * 10.0) / 10).toLocaleString(undefined, {useGrouping: true});
         if (number == 0)
             return "0";
 
