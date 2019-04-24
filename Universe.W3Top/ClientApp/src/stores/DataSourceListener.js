@@ -52,9 +52,10 @@ class DataSourceListener {
                     console.log(response.body);
                     return response.ok ? response.json() : {error: response.status, details: response.json()}
                 })
-                .then(data => {
-                    this.applyDocumentTitle(data);
-                    console.log(data);
+                .then(briefInfo => {
+                    this.applyDocumentTitle(briefInfo);
+                    DataSourceActions.BriefUpdated(briefInfo);
+                    Helper.toConsole("BRIEF INFO", briefInfo);
                 })
                 .catch(error => console.log(error));
         }

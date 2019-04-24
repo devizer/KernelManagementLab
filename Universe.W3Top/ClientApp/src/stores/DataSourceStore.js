@@ -9,6 +9,7 @@ class DataSourceStore extends EventEmitter {
         // local copy per message
         this.activeDataSource = {kind: 'empty'};
         this.connectionStatus = false;
+        this.briefInfo = null;
     }
 
     // single handler for the app for each kind of message
@@ -25,6 +26,11 @@ class DataSourceStore extends EventEmitter {
                 this.emit("storeUpdated");
                 break;
             }
+            case DataSourceActions.BRIEF_UPDATED_ACTION: {
+                this.briefInfo = action.value;
+                this.emit("briefUpdated");
+                break;
+            }
             default: {
             }
         }
@@ -33,6 +39,10 @@ class DataSourceStore extends EventEmitter {
     // a method per message
     getDataSource() {
         return this.activeDataSource;
+    }
+
+    getBriefInfo() {
+        return this.briefInfo;
     }
 }
 

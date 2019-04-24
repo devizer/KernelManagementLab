@@ -113,12 +113,22 @@ class PersistentDrawerLeft extends React.Component {
     };
     
     componentDidMount() {
-        let x = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource.bind(this));
+        let x1 = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource.bind(this));
+        let x2 = dataSourceStore.on('briefUpdated', this.updateBrief.bind(this));
     }
 
     updateGlobalDataSource()
     {
-        this.setState({system: dataSourceStore.getDataSource().system});
+        console.log("DATASOURCE UPDATED handler AT MaterialNav");
+        let system = dataSourceStore.getDataSource().system;
+        if (Helper.Common.objectIsNotEmpty(system))
+            this.setState({system: system});
+    }
+
+    updateBrief()
+    {
+        console.log("BRIEF UPDATED handler AT MaterialNav");
+        this.setState({system: dataSourceStore.getBriefInfo().system});
     }
     
     sis = {
@@ -172,9 +182,12 @@ class PersistentDrawerLeft extends React.Component {
             );
         };
 
-        let [hasSystem, system] = Helper.Common.tryGetProperty(dataSourceStore.getDataSource(), "system");
-        if (!hasSystem) system = {};
-        let hostname = Helper.System.getHostName(dataSourceStore.getDataSource());
+        let system = this.state.system;
+        if (!Helper.Common.objectIsNotEmpty(system)) system = {};
+        // let hostname = Helper.Common.tryGetProperty(dataSourceStore.getDataSource(), "hostname"); 
+        // let [hasSystem, system] = Helper.Common.tryGetProperty(dataSourceStore.getDataSource(), "system");
+        // if (!hasSystem) system = {};
+        // let hostname = Helper.System.getHostName(dataSourceStore.getDataSource());
         
         return (
             <div className={classes.root}>
@@ -209,7 +222,7 @@ class PersistentDrawerLeft extends React.Component {
                     }}
                 >
                     <div className={classes.drawerHeader}>
-                        <table border="0" cellPadding={0} cellSpacing={0} style={{width: "100%"}}><tr><td style={{textAlign: "left"}}>
+                        <table border="0" cellPadding={0} cellSpacing={0} style={{width: "100%"}}><tbody><tr><td style={{textAlign: "left"}}>
 
                             <List>
                                     <ListItem button={false}>
@@ -224,7 +237,7 @@ class PersistentDrawerLeft extends React.Component {
                         <IconButton onClick={this.handleDrawerClose}>
                             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                         </IconButton>
-                        </td></tr></table>
+                        </td></tr></tbody></table>
                     </div>
                     <Divider />
                     <List>
@@ -247,12 +260,12 @@ class PersistentDrawerLeft extends React.Component {
                 >
                     <div className={classes.drawerHeader} />
 
-                    <table border="0" cellSpacing="0" cellPadding="0">
-                        {SysRow("host", hostname)}
+                    <table border="0" cellSpacing="0" cellPadding="0"><tbody>
+                        {SysRow("host", system.hostname)}
                         {SysRow("os", system.os)}
                         {SysRow("cpu", system.processor)}
                         {SysRow("ram", system.memory)}
-                    </table>
+                    </tbody></table>
                     
                     <Typography paragraph className={classes.hide}>
                         <FlareIcon /> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
