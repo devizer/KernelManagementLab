@@ -8,7 +8,7 @@
 ##### 1.6 
 - Added host info (name, os, cpu, ram) to the header
 ![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Networks-Live-Chart.png "Network metrics live chart")
-##### 1.5 
+##### 1.5
 - Bootstrap navigation replaced by Material UI drawler
 ##### 1.4 
 - Publishing to cloud: http://w3-top-on-xeon.devizer.tech, http://w3-top-on-pi.devizer.tech
