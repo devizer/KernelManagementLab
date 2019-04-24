@@ -7,6 +7,7 @@ using Universe.Dashboard.DAL;
 
 namespace ReactGraphLab.Controllers
 {
+    
     [Route("api/[controller]")]
     public class HealthController
     {

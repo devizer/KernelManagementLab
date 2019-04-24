@@ -54,7 +54,20 @@ export class Common {
     }
 }
 
-
+export class System
+{
+    static getHostName(message)
+    {
+        try {
+            let hostname = message.system.hostname;
+            if (hostname.length >= 0) {
+                return hostname; 
+            }
+        }catch{}
+        
+        return null;
+    }
+}
 
 export class Disks
 {

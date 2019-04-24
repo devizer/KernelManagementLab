@@ -9,6 +9,17 @@ namespace Universe.Dashboard.Agent
     public class NetDataSourceView
     {
 
+        public static List<string> GetInterfaceNames()
+        {
+            var totals = NetStatDataSource.Instance.TotalsOfInterfaces;
+            if (totals == null) return null;
+            return totals
+                .Select(x => new {Name = x.Key, Sum = x.Value.RxBytes + x.Value.TxBytes})
+                .OrderByDescending(x => x.Sum)
+                .Select(x => x.Name)
+                .ToList();
+        }
+
         public static object AsViewModel(List<NetStatDataSourcePoint> dataSource)
         {
             dynamic ret = new ExpandoObject();

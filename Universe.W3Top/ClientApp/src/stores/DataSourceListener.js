@@ -42,15 +42,41 @@ class DataSourceListener {
         });
 
         this.timerId = setInterval(this.watchdogTick, 1000);
+
+        try {
+            let apiUrl = 'api/BriefInfo';
+            fetch(apiUrl)
+                .then(response => {
+                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    console.log(response);
+                    console.log(response.body);
+                    return response.ok ? response.json() : {error: response.status, details: response.json()}
+                })
+                .then(data => {
+                    this.applyDocumentTitle(data);
+                    console.log(data);
+                })
+                .catch(error => console.log(error));
+        }
+        catch(err)
+        {
+            console.log('FETCH failed. ' + err);
+        }
+
+
     }
     
     first = true;
-    applyDocumentTitle(globalDataSource)
+    applyDocumentTitle(message)
     {
         if (this.first) {
-            let [hasHostname, hostname] = Helper.Common.tryGetProperty(globalDataSource, "hostname");
-            document.title = `W3 Top` + (hasHostname ? ` (${hostname})` : "");
-            this.first = false;
+            try {
+                let hostname = Helper.System.getHostName(message);
+                if (hostname !== null) {
+                    document.title = `W3 Top (${hostname})`;
+                    this.first = false;
+                }
+            }catch{}
         }
     }
 

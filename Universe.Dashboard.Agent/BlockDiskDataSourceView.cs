@@ -8,6 +8,17 @@ namespace Universe.Dashboard.Agent
 {
     public class BlockDiskDataSourceView
     {
+        public static List<string> GetDiskOrVolNames()
+        {
+            List<DiskVolStatModel> totals = BlockDiskDataSource.Instance.Totals;
+            if (totals == null) return null;
+
+            return totals
+                .Select(x => x.DiskVolKey)
+                .OrderBy(x => x)
+                .ToList();
+        }
+        
         public static object AsViewModel(List<BlockDiskDataSourcePoint> dataSource)
         {
             var blockNames = dataSource

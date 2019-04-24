@@ -140,8 +140,10 @@ namespace Universe.Dashboard.Agent
                 }
 
                 Interlocked.Increment(ref MessageId);
+
                 var netStateStorage = NetStatDataSource.Instance.By_1_Seconds;
                 var netStatView = NetDataSourceView.AsViewModel(netStateStorage);
+                
                 var blockStatStorage = BlockDiskDataSource.Instance.By_1_Seconds;
                 var blockStatView = BlockDiskDataSourceView.AsViewModel(blockStatStorage);
                 var toSkip = new[] {"run", "sys", "dev"};
@@ -169,6 +171,7 @@ namespace Universe.Dashboard.Agent
                 
                 var hostInfo = new
                 {
+                    Hostname = Environment.MachineName,
                     Os = CrossInfo.OsDisplayName,
                     Processor = CrossInfo.ProcessorName,
                     Memory = CrossInfo.TotalMemory == null
@@ -179,7 +182,7 @@ namespace Universe.Dashboard.Agent
                 var broadcastMessage = new
                 {
                     MessageId = MessageId,
-                    Hostname = Environment.MachineName,
+                    // Hostname = Environment.MachineName,
                     System = hostInfo,
                     Block = blockStatView,
                     Mounts = mounts,

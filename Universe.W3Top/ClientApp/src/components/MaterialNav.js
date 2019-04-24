@@ -174,7 +174,7 @@ class PersistentDrawerLeft extends React.Component {
 
         let [hasSystem, system] = Helper.Common.tryGetProperty(dataSourceStore.getDataSource(), "system");
         if (!hasSystem) system = {};
-        let [hasHostname, hostname] = Helper.Common.tryGetProperty(dataSourceStore.getDataSource(), "hostname");
+        let hostname = Helper.System.getHostName(dataSourceStore.getDataSource());
         
         return (
             <div className={classes.root}>
