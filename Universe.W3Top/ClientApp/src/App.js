@@ -29,39 +29,6 @@ export default class App extends Component {
         super(props);
 
         this.logVersionInfo();
-
-        try {
-            let apiUrl = 'api/Health/PingDb';
-            fetch(apiUrl)
-                .then(response => {
-                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                    console.log(response);
-                    console.log(response.body);
-                    return response.ok ? response.json() : {error: response.status, details: response.json()}
-                })
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(error => console.log(error));
-        }
-        catch(err)
-        {
-            console.log('FETCH failed. ' + err);
-        }
-
-        
-        return;
-        fetch('api/Health/PingDb')
-            .then(response => {
-                console.log(`Response.Status: ${response.status}`);
-                console.log(response);
-                console.log(response.body);
-                return response.ok ? response.json() : {error: response.status, details: response.json()}
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => console.log(error));
     }
     
     logVersionInfo()

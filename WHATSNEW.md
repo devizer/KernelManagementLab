@@ -1,5 +1,7 @@
+##### 1.9
+- Improved header load time via BriefInfo API method
 ##### 1.8
-- Disks live charts is in progress
+- Added Disks live charts without queue length and busy metrics
 ##### 1.7
 - Added swap partitions and files for live Mounts page. Now Mounts page unites links from `/proc/swaps` and `/proc/mounts` sources:
 ![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps.png "mounts and swaps") 
