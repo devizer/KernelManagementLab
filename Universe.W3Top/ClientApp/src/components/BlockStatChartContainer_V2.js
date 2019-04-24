@@ -76,7 +76,7 @@ export class BlockChartContainer_V2 extends Component {
         let style = {textAlign: "center", paddingTop: NetDevChart.ChartSize.height/2, width: NetDevChart.ChartSize.width};
         return (
             <h6 id="BlockCharts_is_Waiting_for_connection" style={style}>
-                Waiting for connection
+                Waiting for curved lines
             </h6>
         )
     }
