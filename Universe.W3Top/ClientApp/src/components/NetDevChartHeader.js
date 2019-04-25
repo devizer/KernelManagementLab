@@ -26,6 +26,10 @@ export class NetDevChartHeader extends Component {
     componentDidMount() {
         let x = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
     }
+    
+    componentWillUnmount() {
+        dataSourceStore.removeListener('storeUpdated', this.updateGlobalDataSource);
+    }
 
     updateGlobalDataSource()
     {

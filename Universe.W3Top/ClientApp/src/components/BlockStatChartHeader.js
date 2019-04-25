@@ -27,7 +27,11 @@ export class BlockStatDevChartHeader extends Component {
     }
 
     componentDidMount() {
-        let x = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource.bind(this));
+        let x = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
+    }
+    
+    componentWillUnmount() {
+        dataSourceStore.removeListener('storeUpdated', this.updateGlobalDataSource);
     }
 
     updateGlobalDataSource()
