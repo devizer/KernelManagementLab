@@ -114,6 +114,8 @@ export class NetDevChart extends Component {
     }
 
     componentWillUnmount() {
+        DataSourceStore.removeListener('storeUpdated', this.updateGlobalDataSource);
+        
         if (this.timerId)
         {
             clearInterval(this.timerId);
@@ -133,6 +135,7 @@ export class NetDevChart extends Component {
             window.requestIdleCallback(destroy.bind(this));
         else 
             destroy.bind(this);
+
     }
 
     _initChart()

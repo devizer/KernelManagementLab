@@ -187,7 +187,7 @@ export class MountsList extends React.Component {
                 />
                 
                 
-                <div class="disk-legend">
+                <div className="disk-legend">
                     {/* Legend:&nbsp;&nbsp; */}
                     <span className="disk-legend-item disk-kind-block">{iconBlock} Block device</span>
                     <span className="disk-legend-item disk-kind-network">{iconNet} Network share</span>

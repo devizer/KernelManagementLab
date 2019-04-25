@@ -61,6 +61,31 @@ export class BlockStatChart extends React.Component {
 
         console.log(`NetDevChart::componentDidMount COMPLETED SUCCESSFULLY for ${this.props.name}`);
     }
+    
+    componentWillUnmount() {
+        DataSourceStore.removeListener('storeUpdated', this.updateGlobalDataSource);
+
+        if (this.timerId)
+        {
+            clearInterval(this.timerId);
+            this.timerId = 0;
+        }
+
+        let destroy = () => {
+            if (this.chart !== null) {
+                let c = this.chart;
+                this.chart = null;
+                c.destroy();
+                console.log(`chart #${this.domId} destroyed`);
+            }
+        };
+
+        if (window.requestIdleCallback)
+            window.requestIdleCallback(destroy.bind(this));
+        else
+            destroy.bind(this);
+
+    }
 
     buildLocalJsonChart() {
         this.globalDataSource = DataSourceStore.activeDataSource;
