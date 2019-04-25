@@ -9,6 +9,7 @@ export const toConsole = function(caption, obj) {
 }
 
 export const isDocumentHidden = function() {
+    // https://www.w3.org/TR/page-visibility-2/#idl-def-document-visibilitystate
     let isHidden = false;
     if (document && document.visibilityState && document.visibilityState !== 'visible') { isHidden = true; }
     return isHidden;
