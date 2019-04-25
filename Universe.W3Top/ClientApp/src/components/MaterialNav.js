@@ -103,6 +103,26 @@ class PersistentDrawerLeft extends React.Component {
     state = {
         open: false,
     };
+    
+    constructor(props) {
+        super(props);
+        
+        this.updateBrief = this.updateBrief.bind(this);
+        this.updateGlobalDataSource = this.updateGlobalDataSource.bind(this);
+    }
+    
+
+    componentDidMount() {
+        let x1 = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
+        let x2 = dataSourceStore.on('briefUpdated', this.updateBrief);
+    }
+    
+    // It is never called, but 
+    componentWillUnmount() {
+        let x1 = dataSourceStore.removeListener('storeUpdated', this.updateGlobalDataSource);
+        let x2 = dataSourceStore.removeListener('briefUpdated', this.updateBrief);
+    }
+
 
     handleDrawerOpen = () => {
         this.setState({ open: true });
@@ -112,11 +132,6 @@ class PersistentDrawerLeft extends React.Component {
         this.setState({ open: false });
     };
     
-    componentDidMount() {
-        let x1 = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource.bind(this));
-        let x2 = dataSourceStore.on('briefUpdated', this.updateBrief.bind(this));
-    }
-
     updateGlobalDataSource()
     {
         Helper.log("DATASOURCE UPDATED handler AT MaterialNav");
