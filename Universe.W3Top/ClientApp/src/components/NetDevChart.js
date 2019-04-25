@@ -275,7 +275,6 @@ export class NetDevChart extends Component {
             },
             done: () => {Helper.log(`NET-CHART::UPDATED ${messageId} @ ${this.props.name}`)}
         });
-
     }
 
     computeAxisLimits(jsonChart) {
