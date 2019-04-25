@@ -273,7 +273,7 @@ export class NetDevChart extends Component {
             transition: {
                 duration: 0
             },
-            done: () => {console.log(`NET-CHART::UPDATED ${messageId} @ ${this.props.name}`)}
+            done: () => {Helper.log(`NET-CHART::UPDATED ${messageId} @ ${this.props.name}`)}
         });
 
     }

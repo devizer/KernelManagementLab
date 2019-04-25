@@ -1,8 +1,8 @@
 {
   "name": "W3 Top",
   "short_name": "W3 Top",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
   "display": "standalone",
   "Scope": "/",
   "start_url": "/?utm_source=web_app_manifest",

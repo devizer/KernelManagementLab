@@ -119,7 +119,7 @@ class PersistentDrawerLeft extends React.Component {
 
     updateGlobalDataSource()
     {
-        console.log("DATASOURCE UPDATED handler AT MaterialNav");
+        Helper.log("DATASOURCE UPDATED handler AT MaterialNav");
         let system = dataSourceStore.getDataSource().system;
         if (Helper.Common.objectIsNotEmpty(system))
             this.setState({system: system});

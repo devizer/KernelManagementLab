@@ -126,7 +126,7 @@ export class BlockStatChart extends React.Component {
             transition: {
                 duration: 0
             },
-            done: () => {console.log(`BLOCK-CHART::UPDATED ${messageId} @ ${this.props.name}`)}
+            done: () => {Helper.log(`BLOCK-CHART::UPDATED ${messageId} @ ${this.props.name}`)}
         });
     }
 
