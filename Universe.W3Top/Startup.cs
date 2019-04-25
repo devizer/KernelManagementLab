@@ -27,7 +27,10 @@ namespace ReactGraphLab
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            services
+                .AddMvc(options => { options.Filters.Add(new KillerActionFilter()); })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             if (StartupOptions.NeedResponseCompression) services.AddResponseCompression(x =>
                 {
@@ -37,7 +40,11 @@ namespace ReactGraphLab
             services.AddHostedService<MeasurementAgent>();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+                
+            });
 
             services.AddDbContext<DashboardContext>(options =>
             {
@@ -82,6 +89,10 @@ namespace ReactGraphLab
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
+            app.UseMiddleware<PreventSpaHtmlCachingMiddleware>();
+            if (!env.IsProduction())
+                app.UseMiddleware<KillerMiddleware>();
+            
             lifetime.ApplicationStopping.Register(() =>
             {
                 PreciseTimer.Shutdown.Set();
@@ -121,15 +132,13 @@ namespace ReactGraphLab
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
+                
             });
 
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
-                ISpaBuilder spaCopy = spa;
                 spa.Options.StartupTimeout = TimeSpan.FromSeconds(120);
-                // spa.Options.DefaultPage = "/index.cshtml";
-                
 
                 if (env.IsDevelopment())
                 {
