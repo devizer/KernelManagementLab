@@ -165,11 +165,13 @@ class PersistentDrawerLeft extends React.Component {
         const { classes, theme } = this.props;
         const { open } = this.state;
         
+        const asHtml = (raw) => <span dangerouslySetInnerHTML={{__html: raw}} />;
+        const infoAsComponent = (info) => asHtml(Helper.Common.formatInfoHeader(info));
         const SysValueNotReady = () => (<span style={this.sis.notReady}>&nbsp;</span>);
         const SysRow = (def,value) => { return (
             <tr>
                 <td style={this.sis.def}>{def}</td>
-                <td style={this.sis.val}>{ value ? <span style={this.sis.ready}>{value}</span> : <SysValueNotReady/>}</td>
+                <td style={this.sis.val}>{ value ? <span style={this.sis.ready}>{infoAsComponent(value)}</span> : <SysValueNotReady/>}</td>
             </tr>
         )};
 

@@ -941,7 +941,7 @@ BuildVersion:	14B25
                 var archSuffix = string.IsNullOrEmpty(arch) ? "" : " (" + arch + ")";
                 var s1 = Linux_OsName();
                 var s2 = ExecUName("-r");
-                return s1 + (!string.IsNullOrEmpty(s2) ? ("; Kernel " + s2) : "") + archSuffix;
+                return s1 + (!string.IsNullOrEmpty(s2) ? (", Kernel " + s2) : "") + archSuffix;
             }
 
             else if (ThePlatform == Platform.MacOSX)

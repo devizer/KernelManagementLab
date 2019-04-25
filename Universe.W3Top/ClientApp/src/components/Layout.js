@@ -12,11 +12,11 @@ export class Layout extends Component {
       <div>
         {/*<NavMenu />*/}
         <MaterialNav />
-        {/*<Container>*/}
-        <div style={{padding: "0px 24px"}}>
+        <Container fluid={true}>
+        {/*<div style={{padding: "0px 24px"}}>*/}
           {this.props.children}
-        {/*</Container>*/}
-        </div>
+        </Container>
+        {/*</div>*/}
       </div>
     );
   }
