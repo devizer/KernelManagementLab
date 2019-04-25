@@ -8,12 +8,12 @@ namespace ReactGraphLab
         public void OnActionExecuting(ActionExecutingContext context)
         {
             // do something before the action executes
-            Console.WriteLine($"OnActionExecuting: {context.HttpContext.Request.Path}");
+            // Console.WriteLine($"OnActionExecuting: {context.HttpContext.Request.Path}");
         }
 
         public void OnActionExecuted(ActionExecutedContext actionContext)
         {
-            Console.WriteLine($"KillerActionFilter OnActionExecuted at {actionContext.HttpContext.Request.Path}");
+            // Console.WriteLine($"KillerActionFilter OnActionExecuted at {actionContext.HttpContext.Request.Path}");
             var context = actionContext.HttpContext;
             if ((context.Response.ContentType ?? "").StartsWith("text/html", StringComparison.OrdinalIgnoreCase))
             {
