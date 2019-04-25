@@ -261,6 +261,11 @@ export class BlockStatChart extends React.Component {
 
 
     updateGlobalDataSource() {
+        if (Helper.isDocumentHidden()) {
+            Helper.log(`chart ${this.domId} is on hidden page. chart update postponed ${new Date()}`)
+            return;
+        }
+
         let jsonChart = this.buildLocalJsonChart();
         this.jsonChart = jsonChart;
         this._updateChart();

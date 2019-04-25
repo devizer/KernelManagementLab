@@ -26,7 +26,6 @@ export class NetDevChart extends Component {
     
     static Padding = 70;
 
-
     domId = nextUniqueId("chart_net_dev");
     chart = null;
     jsonChart = {};
@@ -51,6 +50,12 @@ export class NetDevChart extends Component {
     }
 
     updateGlobalDataSource() {
+
+        if (Helper.isDocumentHidden()) {
+            Helper.log(`chart ${this.domId} is on hidden page. chart update postponed ${new Date()}`)
+            return;
+        }
+        
         let jsonChart = this.buildLocalJsonChart();
 
         this.jsonChart = jsonChart;

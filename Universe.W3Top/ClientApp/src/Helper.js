@@ -8,6 +8,12 @@ export const toConsole = function(caption, obj) {
     }
 }
 
+export const isDocumentHidden = function() {
+    let isHidden = false;
+    if (document && document.visibilityState && document.visibilityState !== 'visible') { isHidden = true; }
+    return isHidden;
+}
+
 export const log = function(caption) {
     if (process.env.NODE_ENV !== 'production') {
         console.log(`${caption}`);
