@@ -29,6 +29,7 @@ export default class App extends Component {
         super(props);
 
         this.logVersionInfo();
+        console.log(`window.jQuery is ${typeof window.$}`)
     }
     
     logVersionInfo()

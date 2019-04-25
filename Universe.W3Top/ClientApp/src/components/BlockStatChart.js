@@ -1,3 +1,4 @@
+import * as DomClass from "dom-helpers/class";
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import nextUniqueId from "../NextUniqueId"
@@ -39,8 +40,9 @@ export class BlockStatChart extends React.Component {
     constructor (props) {
         super(props);
 
+        this.refChart = React.createRef();
         this.updateGlobalDataSource = this.updateGlobalDataSource.bind(this);
-        // this._updateChart = this._updateChart.bind(this);
+        this._updateChart = this._updateChart.bind(this);
         this._initChart = this._initChart.bind(this);
         // this.buildLocalJsonChart = this.buildLocalJsonChart.bind(this);
         let x = DataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
@@ -261,9 +263,15 @@ export class BlockStatChart extends React.Component {
 
 
     updateGlobalDataSource() {
+        let inactiveChartClassName = "inactive-chart";
         if (Helper.isDocumentHidden()) {
+            if (this.refChart.current) DomClass.addClass(this.refChart.current, inactiveChartClassName);
             Helper.log(`chart ${this.domId} is on hidden page. chart update postponed ${new Date()}`)
             return;
+        }
+        else{
+            // Helper.toConsole("this.refChart", this.refChart);
+            if (this.refChart.current) DomClass.removeClass(this.refChart.current, inactiveChartClassName);
         }
 
         let jsonChart = this.buildLocalJsonChart();
@@ -291,7 +299,7 @@ export class BlockStatChart extends React.Component {
     }
 
     render () {
-        return <div id={this.domId} />
+        return <div id={this.domId} ref={this.refChart} />
     }
 
 
