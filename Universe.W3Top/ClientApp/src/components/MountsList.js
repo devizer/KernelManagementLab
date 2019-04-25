@@ -45,6 +45,8 @@ export class MountsList extends React.Component {
     }
 
     componentWillUnmount() {
+        DataSourceStore.removeListener('storeUpdated', this.tryInitMountsSource);
+        
         if (this.timerId !== null)
             clearInterval(this.timerId);
     }
