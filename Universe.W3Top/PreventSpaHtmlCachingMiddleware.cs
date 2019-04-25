@@ -36,13 +36,15 @@ namespace ReactGraphLab
                 var msec = startAt.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 context.Response.Headers.Add("X-Duration-in-Milliseconds", msec.ToString("0.00"));
 
-                Console.WriteLine($"Path: [{context.Request.Path}], PathBase: {context.Request.PathBase}");
                 var type = context.Response.ContentType ?? "";
                 bool isIt2 =
                     type.StartsWith("text/html;", StringComparison.OrdinalIgnoreCase)
                     || type.Equals("text/html", StringComparison.OrdinalIgnoreCase);
 
-                if (isIt2)
+                string path = context.Request.Path == null ? null : context.Request.Path.ToString(); 
+                bool isIt3 = "/index.html".Equals(path, StringComparison.InvariantCultureIgnoreCase);
+
+                if (isIt2 && isIt3)
                 {
                     context.Response.Headers.Remove("ETag");
                     
