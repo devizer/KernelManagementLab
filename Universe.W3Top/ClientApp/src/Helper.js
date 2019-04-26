@@ -9,7 +9,7 @@ export const toConsole = function(caption, obj) {
 }
 
 export const runInBackground = callBack => {
-    if (typeof callback !== "function") console.warn("callback is not a function");
+    if (typeof callBack !== "function") console.warn(`callback is not a function. it's a ${typeof callBack}`);
     
     if (window && window.requestIdleCallback)
         window.requestIdleCallback(callBack);
