@@ -37,9 +37,7 @@ export class BlockStatDevChartHeader extends Component {
     updateGlobalDataSource()
     {
         this.forceUpdate();
-        console.log("BlockStatDevChartHeader::updateGlobalDataSource");
-//         let [has] = Helper.Common.tryGetProperty()
-        // dataSourceStore.getDataSource().block.
+        // console.log("BlockStatDevChartHeader::updateGlobalDataSource");
         
     }
 

@@ -8,7 +8,16 @@ export const toConsole = function(caption, obj) {
     }
 }
 
-export const isDocumentHidden = function() {
+export const runInBackground = callBack => {
+    if (typeof callback !== "function") console.warn("callback is not a function");
+    
+    if (window && window.requestIdleCallback)
+        window.requestIdleCallback(callBack);
+    else
+        callBack();
+}
+
+export const isDocumentHidden = () => {
     // https://www.w3.org/TR/page-visibility-2/#idl-def-document-visibilitystate
     let isHidden = false;
     if (document && document.visibilityState && document.visibilityState !== 'visible') { isHidden = true; }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import nextUniqueId from "../NextUniqueId"
 import c3 from 'c3';
+import * as Helper from "../Helper";
 
 export class AnotherChart2 extends Component {
     static displayName = AnotherChart2.name;
@@ -81,10 +82,7 @@ export class AnotherChart2 extends Component {
             console.log(`chart #${this.domId} destroyed`);
         };
 
-        if (window.requestIdleCallback)
-            window.requestIdleCallback(destroy.bind(this));
-        else
-            destroy.bind(this);
+        Helper.runInBackground(destroy);
     }
 
 
@@ -195,6 +193,7 @@ export class AnotherChart2 extends Component {
     }
 
     _updateChart() {
+        if (Helper.isDocumentHidden()) return;
         if (this.chart === null) return;
         this.chart.load({
             json: this.jsonData,

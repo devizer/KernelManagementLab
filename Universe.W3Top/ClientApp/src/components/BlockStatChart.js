@@ -80,10 +80,7 @@ export class BlockStatChart extends React.Component {
             }
         };
 
-        if (window.requestIdleCallback)
-            window.requestIdleCallback(destroy.bind(this));
-        else
-            destroy.bind(this);
+        Helper.runInBackground(destroy);
 
     }
 

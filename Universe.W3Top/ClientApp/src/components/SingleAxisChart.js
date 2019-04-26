@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import nextUniqueId from "../NextUniqueId"
 import c3 from 'c3';
+import * as Helper from "../Helper";
 
 export class SingleAxisChart extends Component {
     static displayName = SingleAxisChart.name;
@@ -46,12 +47,12 @@ export class SingleAxisChart extends Component {
             currentCount: this.state.currentCount + 1
         });
     }
-
+    
     componentDidMount() {
-
+        
         this.calcNextSceneDataSource();
         this._initChart();
-
+        
         // return;
         this.timerId = setInterval(_ => {
             this.calcNextSceneDataSource();
@@ -59,25 +60,22 @@ export class SingleAxisChart extends Component {
             // this.forceUpdate();
         }, this.updateInterval);
     }
-
+    
     componentWillUnmount() {
         if (this.timerId)
         {
             clearInterval(this.timerId);
             this.timerId = 0;
         }
-
+        
         let destroy = () => {
             let c = this.chart;
             this.chart = null;
             c.destroy();
             console.log(`chart #${this.domId} destroyed`);
         };
-        
-        if (window.requestIdleCallback)
-            window.requestIdleCallback(destroy.bind(this));
-        else 
-            destroy.bind(this);
+
+        Helper.runInBackground(destroy);
     }
 
 
@@ -164,6 +162,7 @@ export class SingleAxisChart extends Component {
     }
 
     _updateChart() {
+        if (Helper.isDocumentHidden()) return;
         if (this.chart === null) return;
         this.chart.load({
             json: this.jsonData,

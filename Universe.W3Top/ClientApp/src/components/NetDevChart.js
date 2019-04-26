@@ -5,6 +5,7 @@ import nextUniqueId from "../NextUniqueId"
 import DataSourceStore from "../stores/DataSourceStore";
 import { findLimit } from './LimitFinder'
 import * as Helper from "../Helper";
+import {Help} from "@material-ui/icons";
 let c3 = require("c3");
 
 const __EmptyJsonChart = {
@@ -131,11 +132,7 @@ export class NetDevChart extends Component {
             }
         };
         
-        if (window.requestIdleCallback)
-            window.requestIdleCallback(destroy.bind(this));
-        else 
-            destroy.bind(this);
-
+        Helper.runInBackground(destroy);
     }
 
     _initChart()
