@@ -121,6 +121,7 @@ export class MountsList extends React.Component {
         let pageSize = this.state.mounts.length === 0 ? 6 : Math.max(this.state.mounts.length, 1);
         let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
         let rightAlign = {textAlign: "right" };
+        let centerAlign = {textAlign: "center" };
         return (
             <div id="Mounts" style={{marginTop: 12}}>
                 <ReactTable
@@ -157,7 +158,8 @@ export class MountsList extends React.Component {
                             id: "ro",
                             Header: "R/O",
                             accessor: x => x.freeSpace > 0 ? "" : "R/O",
-                            width: 45,
+                            style: centerAlign,
+                            width: 60,
                         },
                         {
                             id: "totalSize",

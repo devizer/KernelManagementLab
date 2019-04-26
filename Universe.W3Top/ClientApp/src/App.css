@@ -7,12 +7,24 @@
     font-size: 16px 
 }
 
+.ReactTable .rt-thead.-header {
+    box-shadow: 0 1px 0px 0 rgba(0, 0, 0, 0.8) !important;
+}
+
+.ReactTable .rt-thead {
+    background-color: #F2F2F2;
+    color: #111;
+}
+
+
+
+
 .disk-legend-item { 
     display: inline-block; 
     border: 1px dotted lightgray; 
     padding: 8px 8px; 
     margin: 8px 8px;
-    width: 180px;
+    width: 170px;
 }
 .disk-legend { text-align: center; padding: 14px 0px }
 .disk-kind-network { color: /* #161A9E */ #b35800 }

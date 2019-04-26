@@ -7,7 +7,7 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.9);
 }
 
 .ReactTable * {
@@ -75,7 +75,9 @@
 }
 
 .ReactTable .rt-thead.-header {
-    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.15)
+    box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.15);
+    background-color: blue;
+    color: white;
 }
 
 .ReactTable .rt-thead .rt-tr {

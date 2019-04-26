@@ -113,9 +113,9 @@ namespace KernelManagementJam.DebugUtils
         
         private static void CheckDir(string fileName)
         {
-            if (Path.GetDirectoryName(fileName) != DumpDir)
+            if (true || Path.GetDirectoryName(fileName) != DumpDir)
             {
-                Console.WriteLine($"Checking suspicious directory of file [{fileName}]");
+                // Console.WriteLine($"Checking suspicious directory of file [{fileName}]");
                 if (Directory.Exists(Path.GetDirectoryName(fileName))) return;
                 
                 try
