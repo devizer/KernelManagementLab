@@ -19,7 +19,6 @@ const iconRam = <FontAwesomeIcon style={iconStyle} icon={faMemory}/>;
 const iconNet = <FontAwesomeIcon style={iconStyle} icon={faNetworkWired}/>;
 const iconSwap = <FontAwesomeIcon style={iconStyle} icon={faFile}/>;
 
-
 export class MountsList extends React.Component {
 
     timerId = null;
@@ -126,7 +125,7 @@ export class MountsList extends React.Component {
             <div id="Mounts" style={{marginTop: 12}}>
                 <ReactTable
                     data={this.state.mounts}
-                    noDataText="Waiting for server connection"
+                    noDataText="Waiting for cells"
                     showPagination={false}
                     defaultPageSize={pageSize}
                     pageSizeOptions={[pageSize]}
@@ -184,7 +183,7 @@ export class MountsList extends React.Component {
                             desc: false
                         }
                     ]}
-                    defaultPageSize={10}
+                    defaultPageSize={pageSize}
                     className="-highlight"
                 />
                 

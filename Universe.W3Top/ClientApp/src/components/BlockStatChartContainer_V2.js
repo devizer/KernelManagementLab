@@ -23,7 +23,7 @@ export class BlockChartContainer_V2 extends Component {
             blockChartList: this.tryBuildBlockChartList(),
         };
         
-        console.log(`BlockChartContainer_V2::ctor. this.state.blockChartList is [${this.state.blockChartList}]`);
+        Helper.toConsole(`BlockChartContainer_V2::ctor. this.state.blockChartList`, this.state.blockChartList);
     }
 
     componentDidMount() {
