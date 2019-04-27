@@ -23,7 +23,7 @@ namespace ReactGraphLab
         {
             PidFileSupport.CreatePidFile();
             JitCrossInfo();
-            DebugDumps();
+            CheckCompliance();
             var webHost = CreateWebHostBuilder(args).Build();
 
             PreciseTimer.Services = webHost.Services;
@@ -67,11 +67,33 @@ namespace ReactGraphLab
             });
         }
 
-        private static void DebugDumps()
+        private static void CheckCompliance()
         {
-            ProcMountsSandbox.DumpProcMounts();
-            List<WithDeviceWithVolumes> snapshot = SysBlocksReader.GetSnapshot();
-            DebugDumper.Dump(snapshot, "SysBlocks.Snapshot.json");
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
+                Stopwatch sw = Stopwatch.StartNew(); 
+                    
+                try
+                {
+                    ProcMountsSandbox.DumpProcMounts();
+                    Console.WriteLine($"ProcMountsParser(/proc/mounts) successfully pre-jitted in {sw.Elapsed} seconds");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Warning! ProcMountsParser(/proc/mounts) fails. Mounts page may not work properly. " + ex.GetExceptionDigest() + Environment.NewLine + ex);
+                }
+
+                try
+                {
+                    List<WithDeviceWithVolumes> snapshot = SysBlocksReader.GetSnapshot();
+                    DebugDumper.Dump(snapshot, "SysBlocks.Snapshot.json");
+                    Console.WriteLine($"SysBlocksReader(/sys/block) successfully pre-jitted in {sw.Elapsed} seconds");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Warning! SysBlocksReader(/sys/block) fails. Disks activity live chart page may not work properly. " + ex.GetExceptionDigest() + Environment.NewLine + ex);
+                }
+            });
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
