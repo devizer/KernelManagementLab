@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,10 @@ namespace ReactGraphLab
     {
         private readonly RequestDelegate _next;
         private static readonly string[] Paths = {"/", "/index.html"};
+
+        private static readonly Lazy<string> _Ver = new Lazy<string>(() =>
+            Assembly.GetEntryAssembly().GetName().Version.ToString()
+        ); 
 
         public PreventSpaHtmlCachingMiddleware(RequestDelegate next)
         {
@@ -35,6 +40,7 @@ namespace ReactGraphLab
             {
                 var msec = startAt.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 context.Response.Headers.Add("X-Duration-in-Milliseconds", msec.ToString("0.00"));
+                context.Response.Headers.Add("X-Ver", _Ver.ToString());
 
                 var type = context.Response.ContentType ?? "";
                 bool isIt2 =
