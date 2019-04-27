@@ -40,7 +40,7 @@ namespace ReactGraphLab
             {
                 var msec = startAt.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 context.Response.Headers.Add("X-Duration-in-Milliseconds", msec.ToString("0.00"));
-                context.Response.Headers.Add("X-Ver", _Ver.ToString());
+                context.Response.Headers.Add("X-Ver", _Ver.Value);
 
                 var type = context.Response.ContentType ?? "";
                 bool isIt2 =
