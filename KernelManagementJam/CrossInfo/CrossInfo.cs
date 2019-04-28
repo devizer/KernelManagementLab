@@ -767,7 +767,9 @@ BuildVersion:	14B25
         model_name = model_name ?? cpu_model;
 
         if (string.IsNullOrEmpty(model_name) && !string.IsNullOrEmpty(processor))
-            model_name = processor + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
+            model_name = processor;
+
+        model_name = model_name + (string.IsNullOrEmpty(hardware) ? "" : (( !string.IsNullOrEmpty(model_name) ? ", " : "") + hardware));
 
         if (string.IsNullOrEmpty(model_name))
             model_name = ExecUName("-m");
@@ -989,6 +991,8 @@ BuildVersion:	14B25
             {
                 key = line.Substring(0, pos);
                 value = pos < line.Length - 1 ? line.Substring(pos + 1, line.Length - pos - 1) : "";
+                key = key.Trim(' ').Trim('\t');
+                value = value.Trim(' ').Trim('\t');
             }
         }
 
