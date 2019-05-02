@@ -1,5 +1,10 @@
 .inactive-chart { opacity: 0.5}
 
+text.c3-axis-x-label { 
+    color: gray !important;
+    fill: gray !important;
+}
+
 .c3-line { 
     stroke-width: 3px !important;
 }

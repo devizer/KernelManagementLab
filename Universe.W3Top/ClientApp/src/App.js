@@ -1,5 +1,4 @@
 import "c3/c3.css"
-import "./components/MyC3.css"
 import "./App.css"
 import AppGitInfo from './AppGitInfo'
 
@@ -15,6 +14,8 @@ import { NetChartContainer_V2 } from './components/NetChartContainer_V2';
 import { BlockChartContainer_V2 } from './components/BlockStatChartContainer_V2';
 import { MountsList } from './components/MountsList';
 import dataSourceListener from './stores/DataSourceListener';
+import "./components/MyC3.css"
+
 
 require('typeface-roboto')
 
