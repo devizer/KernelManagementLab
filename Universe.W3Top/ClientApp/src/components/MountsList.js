@@ -182,14 +182,14 @@ export class MountsList extends React.Component {
                             accessor: "totalSize",
                             style: rightAlign,
                             Cell: sizeCell,
-                            width: 120,
+                            minWidth: 120,
                         },
                         {
                             Header: "Free",
                             accessor: "freeSpace",
                             style: rightAlign,
                             Cell: sizeCell,
-                            width: 120,
+                            minWidth: 120,
                         },
 
                     ]}
