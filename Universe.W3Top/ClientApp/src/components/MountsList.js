@@ -122,6 +122,19 @@ export class MountsList extends React.Component {
         let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
         let rightAlign = {textAlign: "right" };
         let centerAlign = {textAlign: "center" };
+
+        const getColumnWidth = (rows, minWidth, accessor, headerText) => {
+            const maxWidth = 400;
+            const magicSpacing = 10;
+            const getValue = row => typeof accessor === "function" ? accessor(row) : row[accessor];
+            const cellLength = Math.max(
+                ...rows.map(row => (`${getValue(row)}` || '').length),
+                headerText.length,
+                minWidth / magicSpacing
+            );
+            return Math.min(maxWidth, cellLength * magicSpacing)
+        }
+        
         return (
             <div id="Mounts" style={{marginTop: 12}}>
                 <ReactTable
@@ -139,14 +152,16 @@ export class MountsList extends React.Component {
                             id: "mountPath",
                             Header: "Mount Path",
                             accessor: x => x.mountEntry.mountPath,
-                            minWidth: 256,
-                            Cell: this.mountPathCell
+                            // minWidth: 256,
+                            Cell: this.mountPathCell,
+                            minWidth: getColumnWidth(this.state.mounts, 80, x => x.mountEntry.mountPath, "Mount Path"),
                         },
                         {
                             id: "device",
                             Header: "Device",
                             accessor: x => x.mountEntry.device,
-                            minWidth: 256,
+                            // minWidth: 256,
+                            minWidth: getColumnWidth(this.state.mounts, 80,x => x.mountEntry.device, "Device"),
                         },
                         {
                             id: "fs",
@@ -167,14 +182,14 @@ export class MountsList extends React.Component {
                             accessor: "totalSize",
                             style: rightAlign,
                             Cell: sizeCell,
-                            width: 130,
+                            width: 120,
                         },
                         {
                             Header: "Free",
                             accessor: "freeSpace",
                             style: rightAlign,
                             Cell: sizeCell,
-                            width: 130,
+                            width: 120,
                         },
 
                     ]}

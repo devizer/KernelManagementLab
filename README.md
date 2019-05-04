@@ -1,5 +1,5 @@
 ## W3-Top
-Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relays on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
+Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relies on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
 Supported architectures are restricted by dotnet-sdk: x86_64, arm and arm64.
 
