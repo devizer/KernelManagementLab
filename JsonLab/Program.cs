@@ -25,12 +25,18 @@ namespace MyBenchmarks
         [Params(true, false)]
         public bool Minify;
 
+        private long[] VaryLongs = new[] { 0, 1L, 12L, 123L, 1234L, 12345678987654321L, -1L, -12L, -123L, -1234L, -12345678987654321L };
+
         [GlobalSetup]
         public void Setup()
         {
             List<object> list = new List<object>();
             for (int i = 0; i < N; i++)
-                list.Add(new[] { 0, 1L, 12L, 123L, 1234L, 12345678987654321L, -1L, -12L, -123L, -1234L, -12345678987654321L }.Concat(Enumerable.Range(0,61).Select(x => 42L)).ToArray());
+            {
+                // list.Add(VaryLongs.Concat(Enumerable.Range(0, 61).Select(x => 42L)).ToList());
+                list.Add(new long[] { 42L});
+                
+            }
 
             data = list;
         }
@@ -106,6 +112,8 @@ namespace MyBenchmarks
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine(long.MaxValue);
+            Console.WriteLine(long.MinValue);
             // GenerateToBuffer();
             DebugCustomSerializer();
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");

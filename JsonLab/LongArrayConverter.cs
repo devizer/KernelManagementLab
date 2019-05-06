@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace JsonLab
 {
@@ -39,15 +37,16 @@ namespace JsonLab
                         if (i < lastIndex) b.Append(',');
                     }
                 }
-                else if (value is List<long> list)
+                else if (value is ICollection<long> collection)
                 {
-                    int l = list.Count;
+                    int l = collection.Count;
                     int lastIndex = l - 1;
+                    int i = 0;
                     b = new StringBuilder(l + l);
-                    for (int i = 0; i < l; i++)
+                    foreach (long item in collection)
                     {
-                        ToBuilder(b, list[i]);
-                        if (i < lastIndex) b.Append(',');
+                        ToBuilder(b, item);
+                        if (i++ < lastIndex) b.Append(',');
                     }
                 }
                 else
@@ -74,13 +73,25 @@ namespace JsonLab
         public override bool CanConvert(Type objectType)
         {
             // Console.WriteLine($"CAN CONVERT: {objectType}");
-            return objectType == ListType || objectType == ArrayType;
+            return objectType == ArrayType || typeof(ICollection<long>).IsAssignableFrom(objectType);
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void ToBuilder(StringBuilder b, long arg)
         {
+            if (arg == 9223372036854775807L)
+            {
+                b.Append("9223372036854775807");
+                return;
+            }
+
+            if (arg == -9223372036854775808L)
+            {
+                b.Append("-9223372036854775808");
+                return;
+            }
+
             if (arg < 0)
             {
                 arg = -arg;

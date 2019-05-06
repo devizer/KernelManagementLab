@@ -1,0 +1,1 @@
+while true; do siege -c50 -t7s -b http://w3-top.devizer.tech/?siege; sleep 1; done
