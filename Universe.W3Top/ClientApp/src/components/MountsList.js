@@ -154,7 +154,7 @@ export class MountsList extends React.Component {
                             accessor: x => x.mountEntry.mountPath,
                             // minWidth: 256,
                             Cell: this.mountPathCell,
-                            minWidth: getColumnWidth(this.state.mounts, 80, x => x.mountEntry.mountPath, "Mount Path"),
+                            minWidth: getColumnWidth(this.state.mounts, 80, x => x.mountEntry.mountPath, "Mount Path a1a2a3a4a5"),
                         },
                         {
                             id: "device",
