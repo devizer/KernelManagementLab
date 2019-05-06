@@ -6,7 +6,7 @@
 - Added Disks live charts without queue length and busy metrics
 ##### 1.7
 - Added swap partitions and files for live Mounts page. Now Mounts page unites links from `/proc/swaps` and `/proc/mounts` sources:
-![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps.png "mounts and swaps") 
+![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps-v2.png "mounts and swaps") 
 ##### 1.6 
 - Added host info (name, os, cpu, ram) to the header
 ![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Networks-Live-Chart.png "Network metrics live chart")
