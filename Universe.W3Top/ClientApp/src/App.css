@@ -26,7 +26,7 @@
     border: 1px dotted lightgray; 
     padding: 8px 8px; 
     margin: 8px 8px;
-    width: 150px;
+    width: 160px;
 }
 .disk-legend { text-align: center; padding: 14px 0px }
 .disk-kind-network { color: /* #161A9E */ #b35800 }

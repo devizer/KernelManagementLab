@@ -207,10 +207,10 @@ export class MountsList extends React.Component {
                 
                 <div className="disk-legend">
                     {/* Legend:&nbsp;&nbsp; */}
-                    <span className="disk-legend-item disk-kind-block">{iconBlock} Block device</span>
-                    <span className="disk-legend-item disk-kind-network">{iconNet} Network share</span>
-                    <span className="disk-legend-item disk-kind-ram">{iconRam} RAM disk</span>
-                    <span className="disk-legend-item disk-kind-swap">{iconSwap} SWAP disk</span>
+                    <span className="disk-legend-item disk-kind-block">{iconBlock}&nbsp;Block&nbsp;device</span>
+                    <span className="disk-legend-item disk-kind-network">{iconNet}&nbsp;Network&nbsp;share</span>
+                    <span className="disk-legend-item disk-kind-ram">{iconRam}&nbsp;RAM&nbsp;disk</span>
+                    <span className="disk-legend-item disk-kind-swap">{iconSwap}&nbsp;SWAP&nbsp;disk</span>
                 </div>
 
             </div>
