@@ -123,7 +123,8 @@ export class MountsList extends React.Component {
         let rightAlign = {textAlign: "right" };
         let centerAlign = {textAlign: "center" };
 
-        const getColumnWidth = (rows, minWidth, accessor, headerText) => {
+        let rows = this.state.mounts;
+        const getColumnWidth = (minWidth, accessor, headerText) => {
             const maxWidth = 400;
             const magicSpacing = 10;
             const getValue = row => typeof accessor === "function" ? accessor(row) : row[accessor];
@@ -133,7 +134,7 @@ export class MountsList extends React.Component {
                 minWidth / magicSpacing
             );
             return Math.min(maxWidth, cellLength * magicSpacing)
-        }
+        };
         
         return (
             <div id="Mounts" style={{marginTop: 12}}>
@@ -154,14 +155,14 @@ export class MountsList extends React.Component {
                             accessor: x => x.mountEntry.mountPath,
                             // minWidth: 256,
                             Cell: this.mountPathCell,
-                            minWidth: getColumnWidth(this.state.mounts, 80, x => x.mountEntry.mountPath, "Mount Path a1a2a3a4a5"),
+                            minWidth: getColumnWidth(80, x => x.mountEntry.mountPath, "Mount Path a1a2a3a4a5"),
                         },
                         {
                             id: "device",
                             Header: "Device",
                             accessor: x => x.mountEntry.device,
                             // minWidth: 256,
-                            minWidth: getColumnWidth(this.state.mounts, 80,x => x.mountEntry.device, "Device"),
+                            minWidth: getColumnWidth(80,x => x.mountEntry.device, "Device"),
                         },
                         {
                             id: "fs",
@@ -182,14 +183,16 @@ export class MountsList extends React.Component {
                             accessor: "totalSize",
                             style: rightAlign,
                             Cell: sizeCell,
-                            minWidth: 120,
+                            // minWidth: 120,
+                            minWidth: getColumnWidth(80,"totalSize", "Size"),
                         },
                         {
                             Header: "Free",
                             accessor: "freeSpace",
                             style: rightAlign,
                             Cell: sizeCell,
-                            minWidth: 120,
+                            // minWidth: 120,
+                            minWidth: getColumnWidth(80,"freeSpace", "Free"),
                         },
 
                     ]}
