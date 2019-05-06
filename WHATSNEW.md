@@ -1,4 +1,4 @@
-##### 1.10
+##### 1.10.416
 - Muted chart updating when app is minimized, on background tab or screen is locked. Fixed memory leaks on unmount
 ##### 1.9
 - Improved header load time via BriefInfo API method
