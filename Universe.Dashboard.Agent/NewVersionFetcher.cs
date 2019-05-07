@@ -50,7 +50,7 @@ namespace Universe.Dashboard.Agent
                     {
                         var jsonString = response.Content.ReadAsStringAsync().Result;
                         var newVer = JObject.Parse(jsonString);
-                        Console.WriteLine($"New Ver: {newVer["Version"]}");
+                        // Console.WriteLine($"New Ver: {newVer["Version"]}");
                         NewVersionDataSource.NewVersion = newVer;
                         
                     }
