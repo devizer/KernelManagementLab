@@ -1,11 +1,14 @@
+##### 1.11
+- Implemented installation using precompiled binaries: install-w3top-service.sh
+- Added newVer property to BriefInfo response and broadcast message
 ##### 1.10.416
 - Muted chart updating when app is minimized, on background tab or screen is locked. Fixed memory leaks on unmount
 ##### 1.9
-- Improved header load time via BriefInfo API method
+- Improved header load time via new BriefInfo API method
 ##### 1.8
 - Added Disks live charts without queue length and busy metrics
 ##### 1.7
-- Added swap partitions and files for live Mounts page. Now Mounts page unites links from `/proc/swaps` and `/proc/mounts` sources:
+- Added swap partitions and files for live Mounts page. Now Mounts page unites references from `/proc/swaps` and `/proc/mounts` sources:
 ![Mounts](https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps-v2.png "mounts and swaps") 
 ##### 1.6 
 - Added host info (name, os, cpu, ram) to the header

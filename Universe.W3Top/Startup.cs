@@ -55,6 +55,7 @@ namespace ReactGraphLab
             // using default ctor
             new DashboardContext().Database.Migrate();
             
+            NewVersionFetcher.Configure();
             Stopwatch sw = Stopwatch.StartNew();
             Console.WriteLine("Waiting for a first round of /proc/mounts diagnostic: ");
             MountsDataSource.IsFirstIterationReady.WaitOne();

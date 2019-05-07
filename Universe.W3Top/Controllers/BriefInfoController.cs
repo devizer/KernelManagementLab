@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Universe;
 using Universe.Dashboard.Agent;
 
@@ -27,6 +28,7 @@ namespace ReactGraphLab.Controllers
                 System = hostInfo,
                 InterfaceNames = NetDataSourceView.GetInterfaceNames(),
                 BlockNames = BlockDiskDataSourceView.GetDiskOrVolNames(),
+                NewVer = NewVersionDataSource.NewVersion,
             };
 
             return ret;
@@ -38,6 +40,7 @@ namespace ReactGraphLab.Controllers
         public dynamic System;
         public List<string> InterfaceNames;
         public List<string> BlockNames;
+        public JObject NewVer;
     }
 
 }

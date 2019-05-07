@@ -182,6 +182,7 @@ namespace Universe.Dashboard.Agent
                 var broadcastMessage = new
                 {
                     MessageId = MessageId,
+                    NewVer = NewVersionDataSource.NewVersion,
                     // Hostname = Environment.MachineName,
                     System = hostInfo,
                     Block = blockStatView,
