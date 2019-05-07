@@ -13,7 +13,7 @@ if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
 if [[ -d "/ssd" ]]; then work=/ssd/transient-builds; fi
 
 clone=$work/publish/w3top-bin
-say "Clone location is [$clone]"
+say "Clean w3top-bin clone location: [$clone]"
 rm -rf $clone; mkdir -p $(dirname $clone)
 say "Loading working copy"
 git clone git@github.com:devizer/w3top-bin $clone
@@ -42,11 +42,14 @@ cd ClientApp; time (yarn install); cd ..
 for r in linux-x64 linux-arm linux-arm64; do
 
   say "Building $r [$ver]"
-  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/$r/w3top --self-contained -r $r
+  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
   pushd bin/$r
+  chmod 644 *.dll
+  chmod 755 Universe.W3Top
+  chmod 755 install-systemd-service.sh
 
   say "Compressing $r [$ver] as GZIP"
-  time sudo bash -c "tar cf - w3top | pv | gzip -9 > ../w3top-$r.tar.gz"
+  time sudo bash -c "tar cf - . | pv | gzip -9 > ../w3top-$r.tar.gz"
   cp ../w3top-$r.tar.gz $clone/public/
   # say "Compressing $r [$ver] as XZ"
   # time sudo bash -c "tar cf - w3top | pv | xz -1 -z > ../w3top-$r.tar.xz"
