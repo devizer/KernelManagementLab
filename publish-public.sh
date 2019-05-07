@@ -13,10 +13,13 @@ if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
 if [[ -d "/ssd" ]]; then work=/ssd/transient-builds; fi
 
 clone=$work/publish/w3top-bin
+say "Clone location is [$clone]"
 rm -rf $clone; mkdir -p $(dirname $clone)
+say "Loading working copy"
 git clone git@github.com:devizer/w3top-bin $clone
 
 work=$work/publish/KernelManagementLab;
+say "Loading source to [$work]"
 # work=/mnt/ftp-client/KernelManagementLab;
 mkdir -p "$(dirname $work)"
 cd $(dirname $work);
@@ -29,11 +32,14 @@ pushd ../build >/dev/null
 ./inject-git-info.ps1
 popd >/dev/null
 
+verFile=../build/AppGitInfo.json
+ver=$(cat $verFile | jq -r ".Version")
+cp $verFile $clone/public/version.json
+
+say "yarn install [$ver]"
 cd ClientApp; time (yarn install); cd ..
+
 for r in linux-x64 linux-arm linux-arm64; do
-  verFile=../build/AppGitInfo.json
-  ver=$(cat $verFile | jq -r ".Version")
-  cp $verFile $clone/public/version.json
 
   say "Building $r [$ver]"
   time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/$r/w3top --self-contained -r $r
@@ -45,7 +51,7 @@ for r in linux-x64 linux-arm linux-arm64; do
   # say "Compressing $r [$ver] as XZ"
   # time sudo bash -c "tar cf - w3top | pv | xz -1 -z > ../w3top-$r.tar.xz"
   # say "Compressing $r [$ver] as 7z"
-  # 7z a "../w3top-$r.7z" -m0=lzma -mx=1 -mfb=256 -md=256m -ms=on 
+  # 7z a "../w3top-$r.7z" -m0=lzma -mx=1 -mfb=256 -md=256m -ms=on
 
   popd
 done
@@ -57,3 +63,7 @@ git commit -am "Update $ver"
 say "Publish binaries [$ver]"
 git push
 popd >/dev/null
+
+say "Collecting garbage"
+bash $clone/git-gc/defrag.sh
+
