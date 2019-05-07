@@ -1,5 +1,5 @@
-##### 1.11
-- Implemented installation using precompiled binaries: install-w3top-service.sh
+##### 1.11.424
+- Implemented installation using precompiled binaries: [install-w3top-service.sh](https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries)
 - Added newVer property to BriefInfo response and broadcast message
 ##### 1.10.416
 - Muted chart updating when app is minimized, on background tab or screen is locked. Fixed memory leaks on unmount
