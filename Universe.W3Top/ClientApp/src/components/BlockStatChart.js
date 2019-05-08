@@ -59,7 +59,7 @@ export class BlockStatChart extends React.Component {
             // this.forceUpdate();
         }, this.updateInterval);
 
-        console.log(`NetDevChart::componentDidMount COMPLETED SUCCESSFULLY for ${this.props.name}`);
+        console.log(`BlockStatChart::componentDidMount COMPLETED SUCCESSFULLY for ${this.props.name}`);
     }
     
     componentWillUnmount() {
