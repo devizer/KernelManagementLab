@@ -9,13 +9,8 @@ namespace JsonLab
     public class LongArrayConverter : JsonConverter
     {
         private readonly Type ArrayType = typeof(long[]);
-        private readonly Type ListType = typeof(List<long>);
 
         public static readonly LongArrayConverter Instance = new LongArrayConverter();
-
-        public LongArrayConverter()
-        {
-        }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -29,24 +24,33 @@ namespace JsonLab
                 if (value is long[] arr)
                 {
                     int l = arr.Length;
-                    int lastIndex = l - 1;
                     b = new StringBuilder(l + l);
+                    int pos = 0;
                     for (int i = 0; i < l; i++)
                     {
-                        ToBuilder(b, arr[i]);
-                        if (i < lastIndex) b.Append(',');
+                        if (pos++ != 0) b.Append(',');
+                        HeaplessAppend(b, arr[i]);
+                    }
+                }
+                else if (value is List<long> list)
+                {
+                    int l = list.Count;
+                    b = new StringBuilder(l + l);
+                    for(int pos=0; pos < l; pos++)
+                    {
+                        if (pos != 0) b.Append(',');
+                        HeaplessAppend(b, list[pos]);
                     }
                 }
                 else if (value is ICollection<long> collection)
                 {
                     int l = collection.Count;
-                    int lastIndex = l - 1;
-                    int i = 0;
                     b = new StringBuilder(l + l);
+                    int pos = 0;
                     foreach (long item in collection)
                     {
-                        ToBuilder(b, item);
-                        if (i++ < lastIndex) b.Append(',');
+                        if (pos++ != 0) b.Append(',');
+                        HeaplessAppend(b, item);
                     }
                 }
                 else
@@ -78,43 +82,43 @@ namespace JsonLab
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void ToBuilder(StringBuilder b, long arg)
+        static void HeaplessAppend(StringBuilder builder, long arg)
         {
             if (arg == 9223372036854775807L)
             {
-                b.Append("9223372036854775807");
+                builder.Append("9223372036854775807");
                 return;
             }
 
             if (arg == -9223372036854775808L)
             {
-                b.Append("-9223372036854775808");
+                builder.Append("-9223372036854775808");
                 return;
             }
 
             if (arg < 0)
             {
                 arg = -arg;
-                b.Append('-');
+                builder.Append('-');
             }
 
             if (arg == 0)
-                b.Append('0');
+                builder.Append('0');
 
             else if (arg < 10)
             {
-                b.Append((char)(48 + arg));
+                builder.Append((char)(48 + arg));
             }
             else if (arg < 100)
             {
-                b.Append((char)(48 + (arg / 10)));
-                b.Append((char)(48 + (arg % 10)));
+                builder.Append((char)(48 + (arg / 10)));
+                builder.Append((char)(48 + (arg % 10)));
             }
             else if (arg < 1000)
             {
-                b.Append((char)(48 + arg / 100));
-                b.Append((char)(48 + (arg / 10) % 10));
-                b.Append((char)(48 + arg % 10));
+                builder.Append((char)(48 + arg / 100));
+                builder.Append((char)(48 + (arg / 10) % 10));
+                builder.Append((char)(48 + arg % 10));
             }
             else if (arg < 10000)
             {
@@ -124,10 +128,10 @@ namespace JsonLab
                 var p1a = p2a / 10;
                 var p1 = p1a % 10;
                 var p0 = p1a / 10;
-                b.Append((char)(48 + p0));
-                b.Append((char)(48 + p1));
-                b.Append((char)(48 + p2));
-                b.Append((char)(48 + p3));
+                builder.Append((char)(48 + p0));
+                builder.Append((char)(48 + p1));
+                builder.Append((char)(48 + p2));
+                builder.Append((char)(48 + p3));
             }
             else
             {
@@ -215,26 +219,26 @@ namespace JsonLab
                     }
                 }
                 bool hasMeaning = false;
-                if (!hasMeaning && p19 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p19));
-                if (!hasMeaning && p18 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p18));
-                if (!hasMeaning && p17 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p17));
-                if (!hasMeaning && p16 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p16));
-                if (!hasMeaning && p15 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p15));
-                if (!hasMeaning && p14 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p14));
-                if (!hasMeaning && p13 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p13));
-                if (!hasMeaning && p12 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p12));
-                if (!hasMeaning && p11 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p11));
-                if (!hasMeaning && p10 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p10));
-                if (!hasMeaning && p9 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p9));
-                if (!hasMeaning && p8 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p8));
-                if (!hasMeaning && p7 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p7));
-                if (!hasMeaning && p6 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p6));
-                if (!hasMeaning && p5 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p5));
-                if (!hasMeaning && p4 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p4));
-                if (!hasMeaning && p3 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p3));
-                if (!hasMeaning && p2 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p2));
-                if (!hasMeaning && p1 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p1));
-                if (!hasMeaning && p0 != 0) hasMeaning = true; if (hasMeaning) b.Append((char)(48 + p0));
+                if (!hasMeaning && p19 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p19));
+                if (!hasMeaning && p18 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p18));
+                if (!hasMeaning && p17 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p17));
+                if (!hasMeaning && p16 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p16));
+                if (!hasMeaning && p15 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p15));
+                if (!hasMeaning && p14 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p14));
+                if (!hasMeaning && p13 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p13));
+                if (!hasMeaning && p12 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p12));
+                if (!hasMeaning && p11 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p11));
+                if (!hasMeaning && p10 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p10));
+                if (!hasMeaning && p9 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p9));
+                if (!hasMeaning && p8 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p8));
+                if (!hasMeaning && p7 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p7));
+                if (!hasMeaning && p6 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p6));
+                if (!hasMeaning && p5 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p5));
+                if (!hasMeaning && p4 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p4));
+                if (!hasMeaning && p3 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p3));
+                if (!hasMeaning && p2 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p2));
+                if (!hasMeaning && p1 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p1));
+                if (!hasMeaning && p0 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p0));
             }
         }
     }
