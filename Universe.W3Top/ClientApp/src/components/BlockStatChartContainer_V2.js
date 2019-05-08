@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BlockStatChart } from './BlockStatChart';
-import { NetDevChartHeader } from './NetDevChartHeader';
+import { BlockStatSecondChart } from './BlockStatSecondChart';
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
 import * as Enumerable from "linq-es2015";
@@ -91,18 +91,17 @@ export class BlockChartContainer_V2 extends Component {
 
     renderNormal() {
         return (
-            <div id="NetCharts">
+            <div id="BlockCharts">
                 {this.state.blockChartList.map(netChart =>
-                    <div className="CHART" key={netChart.name}>
+                    <div key={netChart.name}>
                         <BlockStatDevChartHeader name={netChart.name}/>
                         <BlockStatChart name={netChart.name} />
+                        <BlockStatSecondChart name={netChart.name} />
                         <br/>
                     </div>
                 )}
             </div>
         );
     }
-
-
 
 }

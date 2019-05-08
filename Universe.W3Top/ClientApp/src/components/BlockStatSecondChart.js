@@ -23,7 +23,7 @@ export class BlockStatSecondChart extends React.Component {
 
     static Padding = 70;
 
-    domId = nextUniqueId("chart_block_stat");
+    domId = nextUniqueId("chart_block_V2");
     chart = null;
     pointLimit = 60;
     updateInterval = 1000;
@@ -41,7 +41,6 @@ export class BlockStatSecondChart extends React.Component {
         this.updateGlobalDataSource = this.updateGlobalDataSource.bind(this);
         this._updateChart = this._updateChart.bind(this);
         this._initChart = this._initChart.bind(this);
-        // this.buildLocalJsonChart = this.buildLocalJsonChart.bind(this);
         let x = DataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
     }
 
@@ -143,10 +142,141 @@ export class BlockStatSecondChart extends React.Component {
         return {limitQueue, limitBusy: 1000};
     }
 
+    _initChart()
+    {
+        var formatX = x => {
+            if (x === 0) return "60";
+            if (x === 60) return "";
+            return Math.round(60-x);
+        };
+
+        let jsonChart = this.jsonChart;
+        let {limitQueue, limitBusy} = this.computeAxisLimits(jsonChart);
+        this.prevLimits = {limitQueue, limitBusy};
+
+        let formatQueue = num => Math.round(num).toLocaleString(undefined, {useGrouping: true});
+        let formatBusy = num => (Math.round(num) / 10).toLocaleString(undefined, {useGrouping: true});
+
+        this.chart = c3.generate({
+            bindto: `#${this.domId}`,
+            data: {
+                // columns: columns,
+                json : this.jsonChart,
+                type: 'area-spline',
+                axes : {
+                    queue : "y",
+                    busy : "y2",
+                },
+                names : {
+                    queue: "Queue",
+                    busy: "Busy",
+                }
+
+            },
+            transition: {
+                duration: null
+            },
+            size: NetDevChart.ChartSize,
+            axis: {
+                x: {
+                    padding: 0,
+                    label: {
+                        text: '60 seconds',
+                        position: 'inner-left'
+                    },
+                    tick: {
+                        count: 7,
+                        format: formatX,
+                        // values: [1, 2, 4, 8, 16, 32]
+                    }
+                },
+                y: {
+                    min: 0,
+                    max: limitQueue,
+                    padding: 0,
+                    label: {
+                        text: 'Queue',
+                        position: 'outer-middle'
+                    },
+                    tick: {
+                        count: 5,
+                        format: formatQueue,
+                        // values: [1, 2, 4, 8, 16, 32]
+                    }
+                },
+                y2 : {
+                    max: limitBusy,
+                    min: 0,
+                    padding: 0,
+                    show: true,
+                    tick: {
+                        count: 5,
+                        format: formatBusy,
+                        // values: [1, 2, 4, 8, 16, 32]
+                    },
+                    label: {
+                        text: 'Busy, %%',
+                        position: 'outer-middle'
+                    },
+
+                }
+
+            },
+            point: {
+                r: 1.5,
+                select: {r:8},
+                focus: {
+                    expand: {
+                        r: 4
+                    }
+                }
+            },
+
+            grid: {
+                y: {
+                    lines: [
+                        {value: limitQueue/2, text: '50%'},
+                        {value: limitQueue, text: '100%', class: 'label-200', position: 'middle'},
+                    ]
+                },
+                x : {
+                    lines: [
+                        {value: 60, text: ''},
+                    ]
+                }
+            },
+            // fix tick&labels withs for Y and Y2 axises
+            padding: {
+                left: NetDevChart.Padding,
+                right: NetDevChart.Padding,
+            },
+
+        });
+
+    }
+
+    updateGlobalDataSource() {
+        let inactiveChartClassName = "inactive-chart";
+        if (Helper.isDocumentHidden()) {
+            if (this.refChart.current) DomClass.addClass(this.refChart.current, inactiveChartClassName);
+            Helper.log(`chart ${this.domId} is on hidden page. chart update postponed ${new Date()}`)
+            return;
+        }
+        else{
+            // Helper.toConsole("this.refChart", this.refChart);
+            if (this.refChart.current) DomClass.removeClass(this.refChart.current, inactiveChartClassName);
+        }
+
+        let jsonChart = this.buildLocalJsonChart();
+        this.jsonChart = jsonChart;
+        this._updateChart();
+    }
 
 
 
-
+    render () {
+        return <div id={this.domId} ref={this.refChart} />
+    }
 
 }
 
