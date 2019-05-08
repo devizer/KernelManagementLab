@@ -17,14 +17,16 @@ namespace Universe.Dashboard.Agent
         public static void Configure()
         {
             var tryFail = NewVersionDataSource.NewVersion;
+            int waitDurationOnFail = 1;
             Thread t = new Thread(() =>
             {
                 while (!PreciseTimer.Shutdown.WaitOne(0))
                 {
                     bool isOk = Iteration();
                     FirstRoundDone.Set();
-                    var sleepDuration = isOk ? 5*60*1000 : 1000;
-                    PreciseTimer.Shutdown.WaitOne(sleepDuration);
+                    waitDurationOnFail = isOk ? 1 : Math.Min(60, waitDurationOnFail * 2);
+                    var sleepDuration = isOk ? 5*60 : waitDurationOnFail;
+                    PreciseTimer.Shutdown.WaitOne(sleepDuration*1000);
                 }
             }) { IsBackground = true, Name = "New Version Fetcher"};
             
@@ -60,7 +62,7 @@ namespace Universe.Dashboard.Agent
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"INFO: New version info was not fetched via {Url}. {ex.GetExceptionDigest()}");
+                Console.WriteLine($"INFO: Info about new version was not fetched via {Url}. {ex.GetExceptionDigest()}");
                 return false;
             }
         }
