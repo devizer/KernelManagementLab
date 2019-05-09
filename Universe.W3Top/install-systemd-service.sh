@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 dotnet=$(command -v dotnet)
 set -e
+set -u
 pushd `dirname $0` > /dev/null; scriptpath=`pwd`; popd > /dev/null
 if [[ ! -f "$scriptpath/Universe.W3Top" ]]; then echo ERROR: publish the project first; exit 1; fi
-if [[ -z "$HTTP_PORT" ]]; then HTTP_PORT=5050; fi
-if [[ -z "$RESPONSE_COMPRESSION" ]]; then RESPONSE_COMPRESSION=True; fi
-echo Configuring w3top service $("$scriptpath/Universe.W3Top" --version) located at $scriptpath for 'http://<ip|name>:'$HTTP_PORT listener
+HTTP_PORT="${HTTP_PORT:-5050}"
+RESPONSE_COMPRESSION="${RESPONSE_COMPRESSION:-True}"
+
+ver=$("$scriptpath/Universe.W3Top" --version)
+echo Configuring w3top service $ver located at $scriptpath for 'http://<ip|name>:'$HTTP_PORT listener
 
 sudo systemctl stop w3top    >/dev/null 2>&1 || true
 sudo systemctl disable w3top >/dev/null 2>&1 || true
@@ -34,8 +37,7 @@ Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 Environment=DUMPS_ARE_ENABLED=False
 Environment=RESPONSE_COMPRESSION='$RESPONSE_COMPRESSION'
 Environment=BLOCK_DEVICE_VISIBILITY_THRESHOLD=2048
-
-
+Environment=INSTALL_DIR='$scriptpath'
 
 [Install]
 WantedBy=multi-user.target
