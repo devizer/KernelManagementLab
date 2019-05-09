@@ -6,6 +6,7 @@ import DataSourceStore from "../stores/DataSourceStore";
 import { findLimit } from './LimitFinder'
 import * as Helper from "../Helper";
 import {NetDevChart} from "./NetDevChart";
+import MomentFormat from 'moment';
 let c3 = require("c3");
 
 const __EmptyJsonChart = {
@@ -176,6 +177,9 @@ export class BlockStatSecondChart extends React.Component {
                     busy: "Busy",
                 }
 
+            },
+            tooltip: {
+                format: { title: Helper.Chart.tooltipTitleFormat(1) }
             },
             transition: {
                 duration: null

@@ -1,4 +1,5 @@
 import * as Enumerable from "linq-es2015"
+import MomentFormat from 'moment';
 
 export const toConsole = function(caption, obj) {
     if (process.env.NODE_ENV !== 'production') {
@@ -27,6 +28,17 @@ export const isDocumentHidden = () => {
 export const log = function(caption) {
     if (process.env.NODE_ENV !== 'production') {
         console.log(`${caption}`);
+    }
+}
+
+export class Chart {
+    static tooltipTitleFormat(secondsPer) {
+        if (!secondsPer) secondsPer = 1;
+        return (x,index) => {
+            let mo = MomentFormat();
+            mo.add((x-60) * secondsPer, 'seconds');
+            return mo.format("LTS");
+        }
     }
 }
 

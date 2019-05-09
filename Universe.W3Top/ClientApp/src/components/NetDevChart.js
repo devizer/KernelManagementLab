@@ -6,6 +6,10 @@ import DataSourceStore from "../stores/DataSourceStore";
 import { findLimit } from './LimitFinder'
 import * as Helper from "../Helper";
 import {Help} from "@material-ui/icons";
+
+import MomentFormat from 'moment';
+
+
 let c3 = require("c3");
 
 const __EmptyJsonChart = {
@@ -149,6 +153,7 @@ export class NetDevChart extends Component {
 
         let formatTransfer = num => (Math.round(num / 1024.0 * 100.0) / 100).toLocaleString(undefined, {useGrouping: true});
         let formatPackets = num => Math.round(num).toLocaleString(undefined, {useGrouping: true});
+        
 
         this.chart = c3.generate({
             bindto: `#${this.domId}`,
@@ -167,6 +172,9 @@ export class NetDevChart extends Component {
                     txBytes: "TX:KBytes",
                 }
 
+            }, 
+            tooltip: {
+                format: { title: Helper.Chart.tooltipTitleFormat(1) }
             },
             transition: {
                 duration: null
