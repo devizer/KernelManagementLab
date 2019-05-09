@@ -13,6 +13,8 @@ const __EmptyJsonChart = {
     busy: [],
 };
 
+const __customColors = {queue: '#9467BD', busy: "#8C564B"};
+
 export class BlockStatSecondChart extends React.Component {
     static displayName = BlockStatSecondChart.name;
 
@@ -163,6 +165,7 @@ export class BlockStatSecondChart extends React.Component {
                 // columns: columns,
                 json : this.jsonChart,
                 type: 'area-spline',
+                colors: __customColors,
                 axes : {
                     queue : "y",
                     busy : "y2",
