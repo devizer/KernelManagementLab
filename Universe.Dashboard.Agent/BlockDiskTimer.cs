@@ -96,6 +96,39 @@ namespace Universe.Dashboard.Agent
             foreach (WithDeviceWithVolumes block in snapshot)
             {
                 var diskStat = block.StatisticSnapshot.Statistics;
+                var volumes = block.Volumes
+                    .Where(volume => !volume.StatisticSnapshot.Statistics.IsDead && IsActive(volume.StatisticSnapshot))
+                    .ToArray();
+                
+                if (volumes.Length == 1)
+                {
+                    var singleVolume = volumes.First();
+                    var volStat = singleVolume.StatisticSnapshot.Statistics;
+                    ret[singleVolume.VolumeKey] = volStat;
+                    continue;
+                }
+                
+                if (!diskStat.IsDead && IsActive(block.StatisticSnapshot))
+                    ret[block.DiskKey] = diskStat;
+                
+                foreach (WithVolumeInfo volume in volumes)
+                {
+                    ret[volume.VolumeKey] = volume.StatisticSnapshot.Statistics;
+                }
+            }
+
+            return ret;
+        }
+
+        // Key:
+        //      .VolumeKey for volumes
+        //      .DiskKey for disks
+        static Dictionary<string, BlockStatistics> AsPlainVolsAndDisks__Legacy(List<WithDeviceWithVolumes> snapshot)
+        {
+            Dictionary<string, BlockStatistics> ret = new Dictionary<string, BlockStatistics>();
+            foreach (WithDeviceWithVolumes block in snapshot)
+            {
+                var diskStat = block.StatisticSnapshot.Statistics;
                 if (block.Volumes.Count == 1)
                 {
                     var singleVolume = block.Volumes.First();
