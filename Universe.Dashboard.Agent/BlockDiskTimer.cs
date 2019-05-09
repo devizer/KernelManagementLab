@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace Universe.Dashboard.Agent
 {
@@ -100,7 +102,9 @@ namespace Universe.Dashboard.Agent
                     var volStat = singleVolume.StatisticSnapshot.Statistics;
                     if (!volStat.IsDead)
                     {
-                        ret[singleVolume.VolumeKey] = volStat;
+                        if (IsActive(singleVolume.StatisticSnapshot))
+                            ret[singleVolume.VolumeKey] = volStat;
+                        
                         continue;
                     }
                 }
@@ -110,12 +114,37 @@ namespace Universe.Dashboard.Agent
                 
                 foreach (WithVolumeInfo volume in block.Volumes)
                 {
-                    if (!volume.StatisticSnapshot.Statistics.IsDead)
+                    if (!volume.StatisticSnapshot.Statistics.IsDead && IsActive(volume.StatisticSnapshot))
                         ret[volume.VolumeKey] = volume.StatisticSnapshot.Statistics;
                 }
             }
 
             return ret;
+        }
+
+        static bool IsActive(BlockSnapshot snapshot)
+        {
+            int? blockSize = snapshot.HwSectorSize ?? snapshot.LogicalBlockSize ?? snapshot.PhysicalBlockSize;
+            var traffic = (snapshot.Statistics.ReadSectors + snapshot.Statistics.WriteSectors) * (blockSize ?? 512);
+            var threshold = BlockDiskEnv.BlockDeviceVisibilityThreshold * 1024;
+            return (threshold == 0 && traffic > 0) || (traffic >= threshold * 1024);
+        }
+
+        class BlockDiskEnv
+        {
+            private const string VisibilityThresholdEnvName = "BLOCK_DEVICE_VISIBILITY_THRESHOLD";
+            private const long DefaultBlockDeviceVisibilityThreshold = 2048;
+
+            public static long BlockDeviceVisibilityThreshold => _BlockDeviceVisibilityThreshold.Value;  
+
+            private static Lazy<long> _BlockDeviceVisibilityThreshold = new Lazy<long>(() =>
+            {
+                var raw = Environment.GetEnvironmentVariable(VisibilityThresholdEnvName);
+                long.TryParse(VisibilityThresholdEnvName, out var ret);
+                ret = Math.Max(ret, 0);
+                return ret;
+            });
+            
         }
     }
 }   
