@@ -140,7 +140,7 @@ namespace Universe.Dashboard.Agent
             private static Lazy<long> _BlockDeviceVisibilityThreshold = new Lazy<long>(() =>
             {
                 var raw = Environment.GetEnvironmentVariable(VisibilityThresholdEnvName);
-                long.TryParse(VisibilityThresholdEnvName, out var ret);
+                long.TryParse(raw, out var ret);
                 ret = Math.Max(ret, 0);
                 Console.WriteLine($"BLOCK_DEVICE_VISIBILITY_THRESHOLD: {ret} Kb");
                 return ret;

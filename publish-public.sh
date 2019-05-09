@@ -70,3 +70,5 @@ popd >/dev/null
 say "Collecting garbage"
 bash $clone/git-gc/defrag.sh
 
+say "DONE"
+
