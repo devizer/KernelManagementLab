@@ -127,7 +127,7 @@ namespace Universe.Dashboard.Agent
             int? blockSize = snapshot.HwSectorSize ?? snapshot.LogicalBlockSize ?? snapshot.PhysicalBlockSize;
             var traffic = (snapshot.Statistics.ReadSectors + snapshot.Statistics.WriteSectors) * (blockSize ?? 512);
             var threshold = BlockDiskEnv.BlockDeviceVisibilityThreshold * 1024;
-            return (threshold == 0 && traffic > 0) || (traffic >= threshold * 1024);
+            return (threshold == 0 && traffic > 0) || (traffic >= threshold);
         }
 
         class BlockDiskEnv
@@ -142,6 +142,7 @@ namespace Universe.Dashboard.Agent
                 var raw = Environment.GetEnvironmentVariable(VisibilityThresholdEnvName);
                 long.TryParse(VisibilityThresholdEnvName, out var ret);
                 ret = Math.Max(ret, 0);
+                Console.WriteLine($"BLOCK_DEVICE_VISIBILITY_THRESHOLD: {ret} Kb");
                 return ret;
             });
             
