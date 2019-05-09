@@ -15,34 +15,12 @@ function run_prod() {
   cd $dir
   export ASPNETCORE_ENVIRONMENT=Production
   cd ClientApp; time (yarn install); cd ..
-  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/local
+  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/local  --self-contained -r $rid
   cd bin/local
+  echo VERSION: $(dotnet ./Universe.W3Top.dll --version)
   dotnet ./Universe.W3Top.dll
 }
 
-function reinstall_service() {
-  cd $dir
-  export ASPNETCORE_ENVIRONMENT=Production
-  cd ClientApp; time (yarn install); cd ..
-  # time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service
-  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
-  cd bin/service
-  if [[ -z "${INSTALL_DIR-}" ]]; then INSTALL_DIR=/opt/w3top; fi
-  sudo mkdir -p $INSTALL_DIR
-  sudo rm -rf $INSTALL_DIR/*
-  sudo cp -fR * $INSTALL_DIR
-  sudo chmod -x $INSTALL_DIR/*.dll
-  bash $INSTALL_DIR/install-systemd-service.sh
-}
-
-function deploy_to_gae()
-{
-  reinstall_service
-  cd $INSTALL_DIR
-  cd ..
-  time sudo bash -c 'tar cf - w3top | pv | gzip -9 > w3top.tar.gz'; ls -la w3top.tar.gz
-  gsutil cp w3top.tar.gz gs://pet-projects-europe/
-}
 
 export DUMPS_ARE_ENABLED=On
 export ASPNETCORE_URLS="http://0.0.0.0:5055;https://0.0.0.0:5056"

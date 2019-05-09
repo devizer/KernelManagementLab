@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using KernelManagementJam;
@@ -21,6 +23,13 @@ namespace ReactGraphLab
         
         public static void Main(string[] args)
         {
+            if (args.Length > 0 && args[0].Equals("--version", StringComparison.OrdinalIgnoreCase))
+            {
+                var entryAssembly = Assembly.GetEntryAssembly();
+                Console.WriteLine(entryAssembly.GetName().Version);
+                return;
+            }
+
             PidFileSupport.CreatePidFile();
             JitCrossInfo();
             CheckCompliance();
