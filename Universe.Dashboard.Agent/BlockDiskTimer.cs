@@ -93,10 +93,25 @@ namespace Universe.Dashboard.Agent
             Dictionary<string, BlockStatistics> ret = new Dictionary<string, BlockStatistics>();
             foreach (WithDeviceWithVolumes block in snapshot)
             {
-                ret[block.DiskKey] = block.StatisticSnapshot.Statistics;
+                var diskStat = block.StatisticSnapshot.Statistics;
+                if (block.Volumes.Count == 1)
+                {
+                    var singleVolume = block.Volumes.First();
+                    var volStat = singleVolume.StatisticSnapshot.Statistics;
+                    if (!volStat.IsDead)
+                    {
+                        ret[singleVolume.VolumeKey] = volStat;
+                        continue;
+                    }
+                }
+                
+                if (!diskStat.IsDead)
+                    ret[block.DiskKey] = diskStat;
+                
                 foreach (WithVolumeInfo volume in block.Volumes)
                 {
-                    ret[volume.VolumeKey] = volume.StatisticSnapshot.Statistics;
+                    if (!volume.StatisticSnapshot.Statistics.IsDead)
+                        ret[volume.VolumeKey] = volume.StatisticSnapshot.Statistics;
                 }
             }
 
