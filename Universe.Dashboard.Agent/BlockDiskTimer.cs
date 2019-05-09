@@ -109,7 +109,7 @@ namespace Universe.Dashboard.Agent
                     }
                 }
                 
-                if (!diskStat.IsDead)
+                if (!diskStat.IsDead && IsActive(block.StatisticSnapshot))
                     ret[block.DiskKey] = diskStat;
                 
                 foreach (WithVolumeInfo volume in block.Volumes)
