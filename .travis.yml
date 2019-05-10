@@ -4,6 +4,7 @@ dist: bionic
 dotnet: 2.2
 script:
  - export CI=false
+ - sudo ls -la
  - apt-cache policy dotnet-sdk-2.2
  - apt-cache search dotnet-sdk
  - url=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash -s dotnet node pwsh
