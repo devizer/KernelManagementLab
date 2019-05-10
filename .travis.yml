@@ -1,5 +1,6 @@
 language: csharp
 mono: none
+dist: bionic
 dotnet: 2.2
 script:
  - apt-cache policy dotnet-sdk-2.2
