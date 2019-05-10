@@ -1,7 +1,9 @@
 language: csharp
 mono: none
-dotnet: 2.2.203
+dotnet: 2.2
 script:
+ - apt-cache policy dotnet-sdk-2.2
+ - apt-cache search dotnet-sdk
  - dotnet restore
  - dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r linux-x64 /v:n
 
