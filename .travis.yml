@@ -7,6 +7,9 @@ matrix:
     - name: "Ubuntu 16.04"
       os: linux
       dist: xenial
+    - name: "Windows"
+      os: windows
+
       # 10.10 (xcode6.4) and 10.11 (xcode7.3) are not supported
     - name: "OS X 10.12"
       os: osx
