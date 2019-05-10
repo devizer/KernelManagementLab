@@ -19,5 +19,6 @@ script:
  - apt-cache search dotnet-sdk
  - url=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash -s dotnet node pwsh
  - dotnet restore
- - dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r linux-x64 /v:m
+ - pushd Universe.W3Top/ClientApp; time yarn install; popd
+ - time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r linux-x64 /v:m
 
