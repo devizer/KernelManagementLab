@@ -1,14 +1,14 @@
 language: minimal
 matrix:
   include:
+    - name: "Windows 1803"
+      os: windows
     - name: "Ubuntu 14.04"
       os: linux
       dist: trusty
     - name: "Ubuntu 16.04"
       os: linux
       dist: xenial
-    - name: "Windows 1803"
-      os: windows
 
       # 10.10 (xcode6.4) and 10.11 (xcode7.3) are not supported
     - name: "OS X 10.12"
@@ -21,9 +21,7 @@ matrix:
 script:
  - 'rm "$(command -v node)" 2>/dev/null || true'
  - export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1; export DOTNET_CLI_TELEMETRY_OPTOUT=1; export CI=false
- - sudo ls -la
- - apt-cache policy dotnet-sdk-2.2 || true
- - apt-cache search dotnet-sdk || true
+ - sudo ls -la || true; apt-cache policy dotnet-sdk-2.2 || true; apt-cache search dotnet-sdk || true
  - url=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash -s dotnet node pwsh
  - dotnet restore
  - pushd Universe.W3Top/ClientApp; time yarn install; popd
