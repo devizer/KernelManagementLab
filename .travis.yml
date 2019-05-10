@@ -3,5 +3,5 @@ mono: none
 dotnet: 2.2.203
 script:
  - dotnet restore
- - dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r linux-x64
+ - dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r linux-x64 /v:n
 
