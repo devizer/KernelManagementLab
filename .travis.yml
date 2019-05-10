@@ -1,8 +1,6 @@
 language: minimal
 matrix:
   include:
-    - name: "Windows 1803"
-      os: windows
     - name: "Ubuntu 14.04"
       os: linux
       dist: trusty
