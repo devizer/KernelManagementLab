@@ -17,6 +17,7 @@ matrix:
       osx_image: xcode10.2
 
 script:
+ - nvm use 8; npm --version
  - 'echo TRAVIS_OS_NAME is "$TRAVIS_OS_NAME"'
  - 'rm "$(command -v node)" 2>/dev/null || true'
  - export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1; export DOTNET_CLI_TELEMETRY_OPTOUT=1; export CI=false
