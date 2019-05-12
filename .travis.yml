@@ -1,0 +1,29 @@
+language: node_js
+matrix:
+  include:
+    - name: "Ubuntu 14.04"
+      os: linux
+      dist: trusty
+    - name: "Ubuntu 16.04"
+      os: linux
+      dist: xenial
+
+      # 10.10 (xcode6.4) and 10.11 (xcode7.3) are not supported
+    - name: "OS X 10.12"
+      os: osx
+      osx_image: xcode8.3
+    - name: "OS X 10.14"
+      os: osx
+      osx_image: xcode10.2
+
+script:
+ - # (nvm ls; nvm ls-remote) || true
+ - (time nvm install node; echo "node is $(node --version)"; echo "npm is $(npm --version)"; echo "yarn is $(yarn --version)") || true
+ - 'echo TRAVIS_OS_NAME is "$TRAVIS_OS_NAME"'
+ - 'rm "$(command -v node)" 2>/dev/null || true'
+ - export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1; export DOTNET_CLI_TELEMETRY_OPTOUT=1; export CI=false
+ - sudo ls -la || true; apt-cache policy dotnet-sdk-2.2 || true; apt-cache search dotnet-sdk || true
+ - url=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash -s dotnet node pwsh
+ - dotnet restore /v:m
+ - pushd Universe.W3Top/ClientApp; time yarn install; popd
+ - time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r linux-x64 /v:m
