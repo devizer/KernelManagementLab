@@ -15,7 +15,10 @@ const __EmptyJsonChart = {
 };
 
 // const __customColors = {queue: '#9467BD', busy: "#8C564B"};
-const __customColors = {queue: '#17BECF', busy: "#40A08782"};
+// const __customColors = {queue: '#17BECF', busy: "#40A08782"};
+const __customColors = {queue: '#17BECF', busy: "#E2A5D0"};
+
+
 
 export class BlockStatSecondChart extends React.Component {
     static displayName = BlockStatSecondChart.name;
