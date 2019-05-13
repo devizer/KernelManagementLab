@@ -7,6 +7,7 @@ if [[ ! -f "$scriptpath/Universe.W3Top" ]]; then echo ERROR: publish the project
 HTTP_PORT="${HTTP_PORT:-5050}"
 RESPONSE_COMPRESSION="${RESPONSE_COMPRESSION:-True}"
 
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 ver=$("$scriptpath/Universe.W3Top" --version)
 echo Configuring w3top service $ver located at $scriptpath for 'http://<ip|name>:'$HTTP_PORT listener
 
@@ -38,6 +39,7 @@ Environment=DUMPS_ARE_ENABLED=False
 Environment=RESPONSE_COMPRESSION='$RESPONSE_COMPRESSION'
 Environment=BLOCK_DEVICE_VISIBILITY_THRESHOLD=2048
 Environment=INSTALL_DIR='$scriptpath'
+Environment=DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
 [Install]
 WantedBy=multi-user.target

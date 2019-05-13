@@ -39,7 +39,7 @@ cp $verFile $clone/public/version.json
 say "yarn install [$ver]"
 cd ClientApp; time (yarn install); cd ..
 
-for r in linux-x64 linux-arm linux-arm64; do
+for r in rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 
   say "Building $r [$ver]"
   time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
