@@ -44,9 +44,10 @@ namespace KernelManagementJam
 
             foreach (var sysBlockFolder in sysBlockFolders)
             {
-                var devFileType = IsFakeLinux
+                var devCandidatePath = "/dev/" + sysBlockFolder.Name;
+                var devFileType = IsFakeLinux || /* temp as docker */  !File.Exists(devCandidatePath)
                     ? "BlockDevice"
-                    : new UnixSymbolicLinkInfo("/dev/" + sysBlockFolder.Name).FileType.ToString();
+                    : new UnixSymbolicLinkInfo(devCandidatePath).FileType.ToString();
 
                 var blockDevice = new WithDeviceWithVolumes
                 {
