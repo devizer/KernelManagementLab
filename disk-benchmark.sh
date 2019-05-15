@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-# wget -q -nv --no-check-certificate -O - https://raw.githubusercontent.com/devizer/KernelManagementLab/master/build-w3-dashboard.sh | bash -s reinstall_service  
 set -e
-set -u
 
-rm -rf KernelManagementLab
+rm -rf KernelManagementLab || true
 git clone https://github.com/devizer/KernelManagementLab
-cd KernelManagementLab/Universe.W3Top
+cd KernelManagementLab/BenchmarkLab
 eval dotnet run $BENCH
