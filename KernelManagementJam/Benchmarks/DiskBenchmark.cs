@@ -13,6 +13,7 @@ namespace Universe.Benchmark.DiskBench
     {
         public ProgressInfo Prorgess { get; private set; }
         private string WorkFolder { get; }
+        private int StepDuration { get; }
         private long FileSize { get; }
         private int RandomAccessBlockSize { get; }
         static readonly string TempName = "benchmark.tmp";
@@ -27,12 +28,14 @@ namespace Universe.Benchmark.DiskBench
         private ProgressStep _cleanUp;
         private ProgressStep _allocate;
 
-        public DiskBenchmark(string workFolder, long fileSize, int randomAccessBlockSize)
+        public DiskBenchmark(string workFolder, long fileSize = 4L*1024*1024*1024, int randomAccessBlockSize = 4*1024, int stepDuration = 20000)
         {
             WorkFolder = workFolder;
             FileSize = fileSize;
             TempFile = Path.Combine(new DirectoryInfo(WorkFolder).FullName, TempName);
             RandomAccessBlockSize = randomAccessBlockSize;
+            StepDuration = stepDuration;
+            BuildProgress();
         }
 
         public void Perform()
@@ -41,7 +44,7 @@ namespace Universe.Benchmark.DiskBench
             
             Func<FileStream> getFile = () =>
             {
-                return new FileStream(TempName, FileMode.Open, FileAccess.ReadWrite, FileShare.None,
+                return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
                     this.RandomAccessBlockSize, FileOptions.WriteThrough);
             };
 
@@ -64,16 +67,15 @@ namespace Universe.Benchmark.DiskBench
                 return count;
             };
             
-            const int seconds = 30;
             try
             {
                 Allocate();
                 SeqRead();
                 SeqWrite();
-                RandomAccess(_rndRead1T, 1, getFile, doRead, seconds*1000);
-                RandomAccess(_rndWrite1T, 1, getFile, doWrite, seconds*1000);
-                RandomAccess(_rndReadN, 16, getFile, doRead, seconds*1000);
-                RandomAccess(_rndWriteN, 16, getFile, doWrite, seconds*1000);
+                RandomAccess(_rndRead1T, 1, getFile, doRead, StepDuration);
+                RandomAccess(_rndWrite1T, 1, getFile, doWrite, StepDuration);
+                RandomAccess(_rndReadN, 16, getFile, doRead, StepDuration);
+                RandomAccess(_rndWriteN, 16, getFile, doWrite, StepDuration);
             }
             finally
             {
@@ -117,6 +119,7 @@ namespace Universe.Benchmark.DiskBench
         private void Allocate()
         {
             byte[] buffer = new byte[128 * 1024];
+            new Random().NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, FileOptions.WriteThrough))
             {
                 _allocate.Start();
@@ -130,10 +133,12 @@ namespace Universe.Benchmark.DiskBench
                 }
                 _allocate.Complete();
             }
+            Sync();
         }
         
         private void SeqRead()
         {
+            Sync();
             byte[] buffer = new byte[1024 * 1024];
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
             {
@@ -153,15 +158,18 @@ namespace Universe.Benchmark.DiskBench
 
         private void SeqWrite()
         {
+            Sync();
             byte[] buffer = new byte[1024 * 1024];
+            new Random().NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite, buffer.Length, FileOptions.WriteThrough))
             {
                 _seqWrite.Start();
                 long len = 0;
-                while (len < this.FileSize - buffer.Length)
+                while (len < this.FileSize)
                 {
-                    fs.Write(buffer, 0, buffer.Length);
-                    len += buffer.Length;
+                    var count = (int)Math.Min(buffer.Length, this.FileSize - buffer.Length);
+                    fs.Write(buffer, 0, count);
+                    len += count;
                     _seqWrite.Progress(len / (double) FileSize, len);
                     if (len >= FileSize) fs.Position = 0;
                 }
@@ -171,6 +179,7 @@ namespace Universe.Benchmark.DiskBench
 
         private void RandomAccess(ProgressStep step, int numThreads, Func<FileStream> getFileStream, Func<FileStream,byte[],int> doStuff, long msecDuration)
         {
+            Sync();
             List<Thread> threads = new List<Thread>();
             CountdownEvent started = new CountdownEvent(numThreads);
             CountdownEvent finished = new CountdownEvent(numThreads);
@@ -199,6 +208,7 @@ namespace Universe.Benchmark.DiskBench
                         using (FileStream fs = getFileStream())
                         {
                             byte[] buffer = new byte[RandomAccessBlockSize];
+                            new Random().NextBytes(buffer);
                             started.Signal();
                             started.Wait();
                             Stopwatch stopwatch = getStopwatch();
@@ -236,6 +246,30 @@ namespace Universe.Benchmark.DiskBench
             {
                 throw new AggregateException($"At least single thread failed, for example {errors.First().Message}", errors);
             }
+        }
+
+        static void Sync()
+        {
+            try
+            {
+                using (Process p = Process.Start("sync"))
+                {
+                    p.Start();
+                    p.WaitForExit();
+                }
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                File.WriteAllText("/proc/sys/vm/drop_caches", "1");
+            }
+            catch 
+            {
+            }
+
         }
 
     }

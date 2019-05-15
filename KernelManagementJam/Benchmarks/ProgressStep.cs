@@ -44,7 +44,7 @@ namespace Universe.DiskBench
         {
             PerCents = perCents;
             Seconds = StartAt.ElapsedMilliseconds / 1000d;
-            Bytes += bytes;
+            Bytes = bytes;
         }
 
 
