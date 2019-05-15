@@ -118,7 +118,7 @@ namespace Universe.Benchmark.DiskBench
 
         private void Allocate()
         {
-            byte[] buffer = new byte[128 * 1024];
+            byte[] buffer = new byte[Math.Min(128 * 1024, this.FileSize)];
             new Random().NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, FileOptions.WriteThrough))
             {
@@ -139,7 +139,7 @@ namespace Universe.Benchmark.DiskBench
         private void SeqRead()
         {
             Sync();
-            byte[] buffer = new byte[1024 * 1024];
+            byte[] buffer = new byte[Math.Min(1024 * 1024, this.FileSize)];
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
             {
                 _seqRead.Start();
@@ -167,7 +167,7 @@ namespace Universe.Benchmark.DiskBench
                 long len = 0;
                 while (len < this.FileSize)
                 {
-                    var count = (int)Math.Min(buffer.Length, this.FileSize - buffer.Length);
+                    var count = (int)Math.Max(1, Math.Min(buffer.Length, this.FileSize - buffer.Length));
                     fs.Write(buffer, 0, count);
                     len += count;
                     _seqWrite.Progress(len / (double) FileSize, len);

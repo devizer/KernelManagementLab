@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using KernelManagementJam;
 using NDesk.Options;
@@ -40,9 +41,17 @@ namespace Universe.DiskBench
                 p.WriteOptionDescriptions(Console.Out);
                 return 0;
             }
+            
+            Disk = new DirectoryInfo(Disk).FullName;
+            // JIT
+            DiskBenchmark jit = new DiskBenchmark(Disk, 1024, 128, 1);
+            jit.Perform();
+
 
             DiskBenchmark dbench = new DiskBenchmark(Disk, FileSize*1024L, BlockSize, stepDuration:RandomDuration);
             ManualResetEvent done = new ManualResetEvent(false);
+            
+            
 
             Action updateProgress = () =>
             {
