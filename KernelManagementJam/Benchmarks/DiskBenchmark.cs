@@ -4,8 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
+using Microsoft.Win32.SafeHandles;
+using Mono.Posix;
 using Universe.DiskBench;
+using FileMode = System.IO.FileMode;
 
 namespace Universe.Benchmark.DiskBench
 {
@@ -50,6 +55,9 @@ namespace Universe.Benchmark.DiskBench
 
             Func<FileStream> getFileReader = () =>
             {
+                if (false && RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    return OpenFileStreamWithoutCacheOnLinux(this.RandomAccessBlockSize); 
+                        
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
                     this.RandomAccessBlockSize, FileOptions.WriteThrough | GetReadOptions());
             };
@@ -146,7 +154,8 @@ namespace Universe.Benchmark.DiskBench
         {
             Sync();
             byte[] buffer = new byte[Math.Min(1024 * 1024, this.FileSize)];
-            using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
+            // using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
+            using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
             {
                 _seqRead.Start();
                 long len = 0;
@@ -231,7 +240,7 @@ namespace Universe.Benchmark.DiskBench
                     }
                     catch (Exception ex)
                     {
-                        started.Signal();
+                        // started.Signal();
                         errors.Add(ex);
                     }
 
@@ -263,6 +272,18 @@ namespace Universe.Benchmark.DiskBench
                 return (FileOptions) FILE_FLAG_NO_BUFFERING;
             else
                 return (FileOptions) O_DIRECT;
+            
+        }
+
+        FileStream OpenFileStreamWithoutCacheOnLinux(int bufferSize)
+        {
+            var openFlags = /* Mono.Unix.Native.OpenFlags.O_DIRECT | */ Mono.Unix.Native.OpenFlags.O_RDONLY;
+            int handle = Mono.Unix.Native.Syscall.open(TempFile, openFlags);
+            IntPtr rawHandle = new IntPtr(handle);
+            SafeFileHandle fh = new SafeFileHandle(rawHandle, false);
+            FileStream fs = new FileStream(fh, FileAccess.Read, bufferSize, false);
+            
+            return fs;
         }
 
         static void Sync()

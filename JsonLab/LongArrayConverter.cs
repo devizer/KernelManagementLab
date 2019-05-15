@@ -9,8 +9,10 @@ namespace JsonLab
     public class LongArrayConverter : JsonConverter
     {
         private readonly Type ArrayType = typeof(long[]);
+        private bool Heapless = true;
 
-        public static readonly LongArrayConverter Instance = new LongArrayConverter();
+        public static readonly LongArrayConverter Instance = new LongArrayConverter() {Heapless = false};
+        public static readonly LongArrayConverter HeaplessInstance = new LongArrayConverter() {Heapless = true};
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -29,7 +31,7 @@ namespace JsonLab
                     for (int i = 0; i < l; i++)
                     {
                         if (pos++ != 0) b.Append(',');
-                        HeaplessAppend(b, arr[i]);
+                        HeaplessAppend(b, arr[i], Heapless);
                     }
                 }
                 else if (value is List<long> list)
@@ -39,7 +41,7 @@ namespace JsonLab
                     for(int pos=0; pos < l; pos++)
                     {
                         if (pos != 0) b.Append(',');
-                        HeaplessAppend(b, list[pos]);
+                        HeaplessAppend(b, list[pos], Heapless);
                     }
                 }
                 else if (value is ICollection<long> collection)
@@ -50,7 +52,7 @@ namespace JsonLab
                     foreach (long item in collection)
                     {
                         if (pos++ != 0) b.Append(',');
-                        HeaplessAppend(b, item);
+                        HeaplessAppend(b, item, Heapless);
                     }
                 }
                 else
@@ -82,8 +84,14 @@ namespace JsonLab
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void HeaplessAppend(StringBuilder builder, long arg)
+        static void HeaplessAppend(StringBuilder builder, long arg, bool heapless)
         {
+            if (!heapless)
+            {
+                builder.Append(Convert.ToString(arg));
+                return;
+            }
+
             if (arg == 9223372036854775807L)
             {
                 builder.Append("9223372036854775807");

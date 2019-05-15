@@ -13,6 +13,7 @@ namespace MyBenchmarks
 {
     [CoreJob]
     [RankColumn]
+    [MemoryDiagnoser]
     public class StandardVsCustomSerializer
     {
         public enum CollectionFlavour
@@ -57,6 +58,12 @@ namespace MyBenchmarks
         public string Optimized()
         {
             return Serialize(optionalConverter: LongArrayConverter.Instance);
+        }
+
+        [Benchmark]
+        public string OptimizedHeapless()
+        {
+            return Serialize(optionalConverter: LongArrayConverter.HeaplessInstance);
         }
 
         [Benchmark]
