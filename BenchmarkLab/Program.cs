@@ -1,31 +1,53 @@
 ﻿using System;
 using System.Threading;
 using KernelManagementJam;
+using NDesk.Options;
 using Universe.Benchmark.DiskBench;
 
 namespace Universe.DiskBench
 {
     class Program
     {
-        private static readonly long DefaultFileSize = 10000L*1024*1024;
+        private static long FileSize = 4096 * 1024; // Kb
+        private static int BlockSize = 4096;
+        private static string Disk = ".";
+        private static int RandomDuration = 30000;
 
         static int Main(string[] args)
         {
-            if (args.Length == 0)
+
+
+            bool nologo = false;
+            bool help = false;
+            var p = new OptionSet(StringComparer.InvariantCultureIgnoreCase)
             {
-                Console.WriteLine("arg is path ot disk");
-                return 1;
+                {"d|Disk=", "Path ot disk. Default is current", v => Disk = v},
+                {"s|Size=", "Working Size (Kb) default is 4096*1024", v => FileSize = int.Parse(v)},
+                {"b|Block=", "Random access block size, default is 4096", v => BlockSize = int.Parse(v)},
+                {"t|Time=", "Random access duration (milliseconds), default is 30000", v => RandomDuration = int.Parse(v)},
+                {"h|?|Help", "Display this help", v => help = v != null},
+                {"n|nologo", "Hide logo", v => nologo = v != null}
+            };
+
+            p.Parse(args);
+            if (!nologo)
+            {
+                Console.WriteLine(@"Disk Benchmark tool is a sandbox of the KernelManagementJam for w3top app");
             }
 
-            var folder = args[0];
-            
-            DiskBenchmark dbench = new DiskBenchmark(folder, DefaultFileSize, 4*1024, stepDuration:30000);
+            if (help)
+            {
+                p.WriteOptionDescriptions(Console.Out);
+                return 0;
+            }
+
+            DiskBenchmark dbench = new DiskBenchmark(Disk, FileSize*1024L, BlockSize, stepDuration:RandomDuration);
             ManualResetEvent done = new ManualResetEvent(false);
 
             Action updateProgress = () =>
             {
                 Console.Clear();
-                Console.WriteLine($"Folder: {folder}, Size: {Formatter.FormatBytes(DefaultFileSize)}");
+                Console.WriteLine($"Disk: {Disk}, Size: {Formatter.FormatBytes(FileSize*1024L)}, Block: {BlockSize} bytes");
                 WriteProgress(dbench.Prorgess.Clone());
             };
 
@@ -36,8 +58,6 @@ namespace Universe.DiskBench
                     updateProgress();
                 } while (!done.WaitOne(499));
             });
-            
-            
             
             ThreadPool.QueueUserWorkItem(_ => { 
                 dbench.Perform();
@@ -60,14 +80,13 @@ namespace Universe.DiskBench
                     s += " " + new DateTime(0).Add(TimeSpan.FromSeconds(step.Seconds.Value)).ToString("HH:mm:ss");
 
                 var b = step.Bytes == 0 || !step.Seconds.HasValue ? "" : Formatter.FormatBytes((long) (step.Bytes / step.Seconds.Value)) + "/s";
-                if (b != "") s += " " + b.PadLeft(8);
+                if (b != "") s += " " + b.PadLeft(9);
 
                 s += " " + step.Name;
                 
                 Console.WriteLine(s);
             }
         }
-        
         
     }
 }
