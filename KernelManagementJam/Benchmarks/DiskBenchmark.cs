@@ -42,10 +42,16 @@ namespace Universe.Benchmark.DiskBench
         {
             Random random = new Random();
             
-            Func<FileStream> getFile = () =>
+            Func<FileStream> getFileWriter = () =>
             {
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
                     this.RandomAccessBlockSize, FileOptions.WriteThrough);
+            };
+
+            Func<FileStream> getFileReader = () =>
+            {
+                return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
+                    this.RandomAccessBlockSize, FileOptions.WriteThrough | GetReadOptions());
             };
 
             Func<FileStream, byte[], int> doRead = (fs, buffer) =>
@@ -72,10 +78,10 @@ namespace Universe.Benchmark.DiskBench
                 Allocate();
                 SeqRead();
                 SeqWrite();
-                RandomAccess(_rndRead1T, 1, getFile, doRead, StepDuration);
-                RandomAccess(_rndWrite1T, 1, getFile, doWrite, StepDuration);
-                RandomAccess(_rndReadN, 16, getFile, doRead, StepDuration);
-                RandomAccess(_rndWriteN, 16, getFile, doWrite, StepDuration);
+                RandomAccess(_rndRead1T, 1, getFileReader, doRead, StepDuration);
+                RandomAccess(_rndWrite1T, 1, getFileWriter, doWrite, StepDuration);
+                RandomAccess(_rndReadN, 16, getFileReader, doRead, StepDuration);
+                RandomAccess(_rndWriteN, 16, getFileWriter, doWrite, StepDuration);
             }
             finally
             {
@@ -246,6 +252,17 @@ namespace Universe.Benchmark.DiskBench
             {
                 throw new AggregateException($"At least single thread failed, for example {errors.First().Message}", errors);
             }
+        }
+
+        static FileOptions GetReadOptions()
+        {
+            const int O_DIRECT = 0x4000;
+            const int FILE_FLAG_NO_BUFFERING = 0x20000000;
+
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                return (FileOptions) FILE_FLAG_NO_BUFFERING;
+            else
+                return (FileOptions) O_DIRECT;
         }
 
         static void Sync()
