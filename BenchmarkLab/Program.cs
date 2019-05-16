@@ -43,14 +43,15 @@ namespace Universe.DiskBench
             }
             
             Disk = new DirectoryInfo(Disk).FullName;
+            
             // JIT
-            DiskBenchmark jit = new DiskBenchmark(Disk, 1024*1024, 1024*1024, 1);
+            var tempSize = 32*1024;
+            DiskBenchmark jit = new DiskBenchmark(Disk, tempSize, tempSize, 1);
             jit.Perform();
-
+            // return 0;
 
             DiskBenchmark dbench = new DiskBenchmark(Disk, FileSize*1024L, BlockSize, stepDuration:RandomDuration);
             ManualResetEvent done = new ManualResetEvent(false);
-            
             
 
             Action updateProgress = () =>

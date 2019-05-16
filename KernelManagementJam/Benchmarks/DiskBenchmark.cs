@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
+using KernelManagementJam.Benchmarks;
 using Microsoft.Win32.SafeHandles;
 using Mono.Posix;
 using Universe.DiskBench;
@@ -53,16 +54,17 @@ namespace Universe.Benchmark.DiskBench
                     this.RandomAccessBlockSize, FileOptions.WriteThrough);
             };
 
-            Func<FileStream> getFileReader = () =>
+            Func<Stream> getFileReader = () =>
             {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                    return OpenFileStreamWithoutCacheOnLinux(this.RandomAccessBlockSize); 
+                    // return OpenFileStreamWithoutCacheOnLinux_Legacy(this.RandomAccessBlockSize);
+                    return new LinuxDirectReadonlyFileStream(TempFile, RandomAccessBlockSize);
                         
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
                     this.RandomAccessBlockSize, FileOptions.WriteThrough | GetReadOptions());
             };
 
-            Func<FileStream, byte[], int> doRead = (fs, buffer) =>
+            Func<Stream, byte[], int> doRead = (fs, buffer) =>
             {
                 long maxIndex = FileSize / RandomAccessBlockSize;
                 long pos = RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
@@ -71,7 +73,7 @@ namespace Universe.Benchmark.DiskBench
                 return fs.Read(buffer, 0, count);
             };
 
-            Func<FileStream, byte[], int> doWrite = (fs, buffer) =>
+            Func<Stream, byte[], int> doWrite = (fs, buffer) =>
             {
                 long maxIndex = FileSize / RandomAccessBlockSize;
                 long pos = RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
@@ -154,8 +156,8 @@ namespace Universe.Benchmark.DiskBench
         {
             Sync();
             byte[] buffer = new byte[Math.Min(1024 * 1024, this.FileSize)];
-            // using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
-            using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
+            using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
+            // using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
             {
                 _seqRead.Start();
                 long len = 0;
@@ -192,7 +194,7 @@ namespace Universe.Benchmark.DiskBench
             }
         }
 
-        private void RandomAccess(ProgressStep step, int numThreads, Func<FileStream> getFileStream, Func<FileStream,byte[],int> doStuff, long msecDuration)
+        private void RandomAccess(ProgressStep step, int numThreads, Func<Stream> getFileStream, Func<Stream,byte[],int> doStuff, long msecDuration)
         {
             Sync();
             List<Thread> threads = new List<Thread>();
@@ -220,7 +222,7 @@ namespace Universe.Benchmark.DiskBench
                 {
                     try
                     {
-                        using (FileStream fs = getFileStream())
+                        using (Stream fs = getFileStream())
                         {
                             byte[] buffer = new byte[RandomAccessBlockSize];
                             new Random().NextBytes(buffer);
@@ -275,7 +277,7 @@ namespace Universe.Benchmark.DiskBench
             
         }
 
-        FileStream OpenFileStreamWithoutCacheOnLinux(int bufferSize)
+        FileStream OpenFileStreamWithoutCacheOnLinux_Legacy(int bufferSize)
         {
             var openFlags = Mono.Unix.Native.OpenFlags.O_LARGEFILE | Mono.Unix.Native.OpenFlags.O_SYNC | Mono.Unix.Native.OpenFlags.O_DIRECT |  Mono.Unix.Native.OpenFlags.O_RDONLY;
             int handle = Mono.Unix.Native.Syscall.open(TempFile, openFlags);
