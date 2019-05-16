@@ -103,6 +103,31 @@ namespace KernelManagementJam.Tests
 
             CleanUp(oDirectFile);
         }
-        
+
+        [Test]
+        public void _4_O_DirectCheck_OfCurrent()
+        {
+            string dir = new DirectoryInfo(".").FullName;
+            Console.WriteLine($"Checking O_DIRECT support for {dir}");
+            Console.WriteLine($"O_DIRECT is supported:  {ODirectCheck.IsO_DirectSupported(dir)}");
+        }
+
+        [Test]
+        public void _4_O_DirectCheck_OfTmp()
+        {
+            string dir = "/tmp";
+            Console.WriteLine($"Checking O_DIRECT support for {dir}");
+            Console.WriteLine($"O_DIRECT is supported:  {ODirectCheck.IsO_DirectSupported(dir)}");
+        }
+
+        [Test]
+        public void _4_O_DirectCheck_Another()
+        {
+            string dir = "/transient-builds";
+            Console.WriteLine($"Checking O_DIRECT support for {dir}");
+            Console.WriteLine($"O_DIRECT is supported:  {ODirectCheck.IsO_DirectSupported(dir)}");
+        }
+
+
     }
 }
