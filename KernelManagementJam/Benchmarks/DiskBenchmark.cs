@@ -55,7 +55,7 @@ namespace Universe.Benchmark.DiskBench
 
             Func<FileStream> getFileReader = () =>
             {
-                if (false && RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     return OpenFileStreamWithoutCacheOnLinux(this.RandomAccessBlockSize); 
                         
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
@@ -277,11 +277,11 @@ namespace Universe.Benchmark.DiskBench
 
         FileStream OpenFileStreamWithoutCacheOnLinux(int bufferSize)
         {
-            var openFlags = /* Mono.Unix.Native.OpenFlags.O_DIRECT | */ Mono.Unix.Native.OpenFlags.O_RDONLY;
+            var openFlags = Mono.Unix.Native.OpenFlags.O_LARGEFILE | Mono.Unix.Native.OpenFlags.O_SYNC | Mono.Unix.Native.OpenFlags.O_DIRECT |  Mono.Unix.Native.OpenFlags.O_RDONLY;
             int handle = Mono.Unix.Native.Syscall.open(TempFile, openFlags);
             IntPtr rawHandle = new IntPtr(handle);
             SafeFileHandle fh = new SafeFileHandle(rawHandle, false);
-            FileStream fs = new FileStream(fh, FileAccess.Read, bufferSize, false);
+            FileStream fs = new FileStream(fh, FileAccess.ReadWrite, bufferSize, false);
             
             return fs;
         }

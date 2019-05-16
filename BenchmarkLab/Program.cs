@@ -44,7 +44,7 @@ namespace Universe.DiskBench
             
             Disk = new DirectoryInfo(Disk).FullName;
             // JIT
-            DiskBenchmark jit = new DiskBenchmark(Disk, 8192, 512, 1);
+            DiskBenchmark jit = new DiskBenchmark(Disk, 1024*1024, 1024*1024, 1);
             jit.Perform();
 
 
