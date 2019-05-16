@@ -35,3 +35,12 @@ Disk: /home/Administrator/KernelManagementLab/BenchmarkLab, Size: 100M, Block: 4
 [Completed] 100.1% 00:00:30    487M/s Random Read, 16 threads
 [Completed] 100.0% 00:00:30 6686.4K/s Random Write, 16 threads
 
+Disk: /home/Administrator/KernelManagementLab/BenchmarkLab, Size: 4000M, Block: 4096 bytes
+[Completed] 100.0% 00:02:12   30.2M/s Allocate
+[Completed] 100.0% 00:00:44   89.5M/s Sequential read
+[Completed] 100.0% 00:01:53   35.3M/s Sequential write
+[Completed] 100.0% 00:00:30  252.7K/s Random Read, 1 thread
+[Completed] 100.0% 00:00:30 3906.7K/s Random Write, 1 thread
+[Completed] 100.3% 00:00:30 2345.9K/s Random Read, 16 threads
+[Completed] 100.0% 00:00:30 5605.9K/s Random Write, 16 threads
+
