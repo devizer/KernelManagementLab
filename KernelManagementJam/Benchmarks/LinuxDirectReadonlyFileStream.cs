@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Mono.Unix;
+using Mono.Unix.Native;
 
 namespace KernelManagementJam.Benchmarks
 {
@@ -19,6 +20,7 @@ namespace KernelManagementJam.Benchmarks
             
             var openFlags = /* Mono.Unix.Native.OpenFlags.O_SYNC |  Mono.Unix.Native.OpenFlags.O_DIRECT | */ Mono.Unix.Native.OpenFlags.O_RDONLY;
             _fileDescriptor = Mono.Unix.Native.Syscall.open(FileName, openFlags);
+            bool isError = 0 != Mono.Unix.Native.Syscall.posix_fadvise(_fileDescriptor, 0, 0, PosixFadviseAdvice.POSIX_FADV_NOREUSE | PosixFadviseAdvice.POSIX_FADV_DONTNEED);
             _back = new UnixStream(_fileDescriptor, true);
             _back.AdviseFileAccessPattern(FileAccessPattern.NoReuse | FileAccessPattern.Random | FileAccessPattern.FlushCache);
         }
