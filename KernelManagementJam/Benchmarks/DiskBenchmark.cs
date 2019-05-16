@@ -288,7 +288,7 @@ namespace Universe.Benchmark.DiskBench
             return fs;
         }
 
-        static void Sync()
+        public static void Sync()
         {
             try
             {
@@ -302,12 +302,30 @@ namespace Universe.Benchmark.DiskBench
             {
             }
 
+            bool isDropOk = false;
             try
             {
                 File.WriteAllText("/proc/sys/vm/drop_caches", "1");
+                isDropOk = true;
             }
             catch 
             {
+            }
+
+            if (!isDropOk)
+            {
+                try
+                {
+                    using (Process p = Process.Start("sudo", "sh -c \"echo 1 > /proc/sys/vm/drop_caches\""))
+                    // using (Process p = Process.Start("sudo", "sh -c \"echo 1 > ~/im-dotnet-sh\""))
+                    {
+                        p.Start();
+                        p.WaitForExit();
+                    }
+                }
+                catch
+                {
+                }
             }
 
         }
