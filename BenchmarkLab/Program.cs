@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using KernelManagementJam;
 using NDesk.Options;
@@ -57,7 +58,6 @@ namespace Universe.DiskBench
             Action updateProgress = () =>
             {
                 Console.Clear();
-                Console.WriteLine($"Disk: {Disk}, Size: {Formatter.FormatBytes(FileSize*1024L)}, Block: {BlockSize} bytes");
                 WriteProgress(dbench.Prorgess.Clone());
             };
 
@@ -82,6 +82,9 @@ namespace Universe.DiskBench
 
         static void WriteProgress(ProgressInfo progress)
         {
+
+            StringBuilder buf = new StringBuilder();
+            buf.AppendLine($"Disk: {Disk}, Size: {Formatter.FormatBytes(FileSize*1024L)}, Block: {BlockSize} bytes");
             foreach (var step in progress.Steps)
             {
                 var s = $"[{step.State}]";
@@ -93,9 +96,11 @@ namespace Universe.DiskBench
                 if (b != "") s += " " + b.PadLeft(9);
 
                 s += " " + step.Name;
-                
-                Console.WriteLine(s);
+
+                buf.AppendLine(s);
             }
+            
+            Console.WriteLine(buf);
         }
         
     }

@@ -1,0 +1,37 @@
+Disk: /home/Administrator/KernelManagementLab/BenchmarkLab, Size: 490.6M, Block: 4096 bytes
+[Completed] 100.0% 00:00:16     30M/s Allocate
+[Completed] 100.0% 00:00:05   93.5M/s Sequential read
+[Completed] 100.1% 00:00:13   35.3M/s Sequential write
+[Completed] 100.0% 00:00:30  381.1K/s Random Read, 1 thread
+[Completed] 100.0% 00:00:30 3794.8K/s Random Write, 1 thread
+[Completed] 100.1% 00:00:30 3450.3K/s Random Read, 16 threads
+[Completed] 100.0% 00:00:30 5823.3K/s Random Write, 16 threads
+[Completed] Clean up
+
+Disk: /home/Administrator/KernelManagementLab/BenchmarkLab, Size: 100M, Block: 4096 bytes
+[Completed] 100.0% 00:00:03   30.1M/s Allocate
+[Completed] 100.0% 00:00:00  141.4M/s Sequential read
+[Completed] 100.0% 00:00:02   35.6M/s Sequential write
+[Completed] 100.0% 00:00:30 4180.2K/s Random Read, 1 thread
+[Completed] 100.0% 00:00:30 3875.1K/s Random Write, 1 thread
+[Completed] 100.0% 00:00:30  588.9M/s Random Read, 16 threads
+[Completed] 100.0% 00:00:30 6725.6K/s Random Write, 16 threads
+
+Disk: /home/Administrator/KernelManagementLab/BenchmarkLab, Size: 100M, Block: 4096 bytes
+[Completed] 100.0% 00:00:03   29.1M/s Allocate
+[Completed] 100.0% 00:00:00  134.2M/s Sequential read
+[Completed] 100.0% 00:00:02   35.4M/s Sequential write
+[Completed] 100.1% 00:00:30   2627K/s Random Read, 1 thread
+[Completed] 100.0% 00:00:30 3925.5K/s Random Write, 1 thread
+[Completed] 100.1% 00:00:30    487M/s Random Read, 16 threads
+[Completed] 100.0% 00:00:30 6686.4K/s Random Write, 16 threads
+
+Disk: /home/Administrator/KernelManagementLab/BenchmarkLab, Size: 100M, Block: 4096 bytes
+[Completed] 100.0% 00:00:03   29.1M/s Allocate
+[Completed] 100.0% 00:00:00  134.2M/s Sequential read
+[Completed] 100.0% 00:00:02   35.4M/s Sequential write
+[Completed] 100.1% 00:00:30   2627K/s Random Read, 1 thread
+[Completed] 100.0% 00:00:30 3925.5K/s Random Write, 1 thread
+[Completed] 100.1% 00:00:30    487M/s Random Read, 16 threads
+[Completed] 100.0% 00:00:30 6686.4K/s Random Write, 16 threads
+
