@@ -20,7 +20,7 @@ namespace KernelManagementJam.Benchmarks
             var openFlags = /* Mono.Unix.Native.OpenFlags.O_SYNC |  Mono.Unix.Native.OpenFlags.O_DIRECT | */ Mono.Unix.Native.OpenFlags.O_RDONLY;
             _fileDescriptor = Mono.Unix.Native.Syscall.open(FileName, openFlags);
             _back = new UnixStream(_fileDescriptor, true);
-            _back.AdviseFileAccessPattern(FileAccessPattern.NoReuse);
+            _back.AdviseFileAccessPattern(FileAccessPattern.NoReuse | FileAccessPattern.Random | FileAccessPattern.FlushCache);
         }
 
         public override void Flush()
