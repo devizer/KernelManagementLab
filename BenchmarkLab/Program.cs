@@ -48,7 +48,7 @@ namespace Universe.DiskBench
             var tempSize = 128*1024;
             DiskBenchmark jit = new DiskBenchmark(Disk, tempSize, tempSize, 1);
             jit.Perform();
-            return 0;
+            // return 0;
 
             DiskBenchmark dbench = new DiskBenchmark(Disk, FileSize*1024L, BlockSize, stepDuration:RandomDuration);
             ManualResetEvent done = new ManualResetEvent(false);
