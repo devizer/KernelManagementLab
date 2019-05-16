@@ -290,44 +290,62 @@ namespace Universe.Benchmark.DiskBench
 
         public static void Sync()
         {
-            try
-            {
-                using (Process p = Process.Start("sync"))
-                {
-                    p.Start();
-                    p.WaitForExit();
-                }
-            }
-            catch
-            {
-            }
+            SyncWriteBuffer();
+            FlushReadBuffers();
+        }
 
+        public static void SyncWriteBuffer()
+        {
+
+            StartAndIgnore("sync", "");
+        }
+
+        public static void FlushReadBuffers()
+        {
             bool isDropOk = false;
             try
             {
                 File.WriteAllText("/proc/sys/vm/drop_caches", "1");
                 isDropOk = true;
             }
-            catch 
+            catch
             {
             }
 
             if (!isDropOk)
             {
-                try
+                StartAndIgnore("sudo", "sh -c \"echo 1 > /proc/sys/vm/drop_caches\"");
+            }
+        }
+        
+        static int StartAndIgnore(string fileName, string args)
+        {
+            Stopwatch sw = Stopwatch.StartNew(); 
+            string info = fileName == "sudo" ? args : fileName;
+                
+            try
+            {
+                ProcessStartInfo si = new ProcessStartInfo(fileName, args);
+                si.RedirectStandardError = true;
+                si.RedirectStandardOutput = true;
+                using (Process p = Process.Start(si))
                 {
-                    using (Process p = Process.Start("sudo", "sh -c \"echo 1 > /proc/sys/vm/drop_caches\""))
-                    // using (Process p = Process.Start("sudo", "sh -c \"echo 1 > ~/im-dotnet-sh\""))
-                    {
-                        p.Start();
-                        p.WaitForExit();
-                    }
-                }
-                catch
-                {
+                    p.Start();
+                    p.WaitForExit();
+#if DEBUG
+                    Console.WriteLine($"Process [{info}] successfully finished in {sw.ElapsedMilliseconds:n0} milliseconds");
+#endif
+                    return p.ExitCode;
                 }
             }
-
+            catch
+            {
+#if DEBUG
+                Console.WriteLine($"Process [{info}] failed in {sw.ElapsedMilliseconds:n0} milliseconds");
+#endif
+                return -1;
+            }
+            
         }
 
     }
