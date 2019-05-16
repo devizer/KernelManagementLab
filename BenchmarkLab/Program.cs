@@ -57,7 +57,6 @@ namespace Universe.DiskBench
 
             Action updateProgress = () =>
             {
-                Console.Clear();
                 WriteProgress(dbench.Prorgess.Clone());
             };
 
@@ -100,7 +99,8 @@ namespace Universe.DiskBench
                 buf.AppendLine(s);
             }
             
-            Console.WriteLine(buf);
+            Console.Clear();
+            Console.Write(buf);
         }
         
     }
