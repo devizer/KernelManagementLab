@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Sockets;
 using Mono.Unix;
@@ -23,9 +24,12 @@ namespace KernelManagementJam.Benchmarks
             FileName = fileName;
             BlockSize = blockSize;
             
-            var openFlags = /* Mono.Unix.Native.OpenFlags.O_SYNC |  Mono.Unix.Native.OpenFlags.O_DIRECT | */ Mono.Unix.Native.OpenFlags.O_RDONLY;
-            _fileDescriptor = Mono.Unix.Native.Syscall.open(FileName, openFlags);
-            bool isError = 0 != Mono.Unix.Native.Syscall.posix_fadvise(_fileDescriptor, 0, 0, PosixFadviseAdvice.POSIX_FADV_NOREUSE | PosixFadviseAdvice.POSIX_FADV_DONTNEED);
+            var openFlags = OpenFlags.O_SYNC |  Mono.Unix.Native.OpenFlags.O_DIRECT |  Mono.Unix.Native.OpenFlags.O_RDONLY;
+            _fileDescriptor = Syscall.open(FileName, openFlags);
+            bool isError = 0 != Syscall.posix_fadvise(_fileDescriptor, 0, 0, PosixFadviseAdvice.POSIX_FADV_NOREUSE | PosixFadviseAdvice.POSIX_FADV_DONTNEED);
+            if (isError)
+                DebugLog($"POSIX_FADV_NOREUSE + POSIX_FADV_DONTNEED is not supported for the {Path.GetDirectoryName(new FileInfo(fileName).FullName)} folder");
+            
             _back = new UnixStream(_fileDescriptor, true);
             _back.AdviseFileAccessPattern(FileAccessPattern.NoReuse | FileAccessPattern.Random | FileAccessPattern.FlushCache);
             
@@ -47,7 +51,7 @@ namespace KernelManagementJam.Benchmarks
 
                 var alignedPointer = new IntPtr(addrBuffer);
                 
-                WriteLine($"addrBuffer: {addrBuffer} alignedPointer: {alignedPointer}, TheBuffer pointer: {ptrStart}");
+                DebugLog($"addrBuffer: {addrBuffer} alignedPointer: {alignedPointer}, TheBuffer pointer: {ptrStart}");
 
                 action(alignedPointer);
             }
@@ -58,31 +62,34 @@ namespace KernelManagementJam.Benchmarks
             // it is a readonly - nothing to do
         }
 
-        static void WriteLine(string s)
+        [Conditional("WTH")]
+        static void DebugLog(string s)
         {
-            // Console.WriteLine(s);
+            Console.WriteLine(s);
         }
 
-        public unsafe override int Read(byte[] buffer, int offset, int count)
+        public override unsafe int Read(byte[] buffer, int offset, int count)
         {
             if (count != BlockSize)
                 throw new ArgumentException($"count arg should be equal to block size {BlockSize}");
 
             int ret = -1;
-            WriteLine($"Reading {count} bytes. file description is [{_fileDescriptor}]");
+            DebugLog($"Reading {count} bytes. file description is [{_fileDescriptor}]");
             
             AlignedInterop(alignedPointer =>
             {
                 // http://man7.org/linux/man-pages/man2/read.2.html
                 long num;
-                Errno errno = Stdlib.GetLastError();
+                Errno errno;
+                bool needRetry;
                 do
                 {
                     num = Syscall.read(_fileDescriptor, alignedPointer, (ulong)count);
                     errno = Stdlib.GetLastError();
-                    WriteLine($"syscall.read returns {num}, error: {errno}");
+                    DebugLog($"syscall.read returns {num}, error: {errno}");
+                    needRetry = num == -1 && errno == Errno.EINTR;
                 }
-                while (false && UnixMarshal.ShouldRetrySyscall((int) num));
+                while (needRetry);
                 
                 if (num < 0)
                     throw new InvalidOperationException($"Syscall error {errno}");
@@ -153,9 +160,11 @@ namespace KernelManagementJam.Benchmarks
                     throw new ArgumentException($"Position value should be a multiplier of the block size {BlockSize}");
                    
                 _back.Position = value;
-                // Console.WriteLine($"Set Position to {value}");
+                DebugLog($"Set Position to {value}");
             }
         }
+        
+        
         
         
     }

@@ -26,7 +26,7 @@ namespace KernelManagementJam.Tests
         }
 
         [Test]
-        public void _2_O_Direct()
+        public void _2_O_Direct_Half()
         {
             Environment.CurrentDirectory = "/hdd";
             var size = 1024 * 1024;
@@ -49,6 +49,47 @@ namespace KernelManagementJam.Tests
                     int n = stream.Read(tmp, 0, tmp.Length);
                     Console.WriteLine($"{i+1} / {size / block}: read {n} bytes");
                     readerCopy.Write(tmp, 0, n);
+                }
+            }
+            
+            CollectionAssert.AreEqual(original, readerCopy.ToArray());
+
+            try
+            {
+                File.Delete(oDirectFile);
+            }
+            catch
+            {
+            }
+        }
+        
+        [Test]
+        public void _3_O_Direct()
+        {
+            Environment.CurrentDirectory = "/hdd";
+            var size = 1024 * 1024;
+            var block = 16 * 1024;
+            var oDirectFile = "O_Direct.file";
+            byte[] original = new byte[size];
+            using (FileStream fs = new FileStream(oDirectFile, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                new Random(1).NextBytes(original);
+                fs.Write(original,0, original.Length);
+            }
+
+            MemoryStream readerCopy = new MemoryStream();
+            using (LinuxDirectReadonlyFileStreamV2 stream = new LinuxDirectReadonlyFileStreamV2(oDirectFile, block))
+            {
+                byte[] tmp = new byte[block];
+                int i = 0;
+                while(true)
+                {
+                    // Console.WriteLine($"On Reading {i+1}");
+                    int n = stream.Read(tmp, 0, tmp.Length);
+                    Console.WriteLine($"{i+1} / {size / block}: read {n} bytes");
+                    if (n <= 0) break;
+                    readerCopy.Write(tmp, 0, n);
+                    i++;
                 }
             }
             
