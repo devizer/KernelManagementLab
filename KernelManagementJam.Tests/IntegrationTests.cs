@@ -10,6 +10,9 @@ namespace KernelManagementJam.Tests
     [TestFixture]
     public class IntegrationTests
     {
+        private string CurrentDirectory = "/hdd";
+        private readonly int FileSize = 4 * 1024 * 1024;
+        private readonly int BlockSize = 64 * 1024;
 
         [Test]
         public void _0_Platform()
@@ -28,9 +31,9 @@ namespace KernelManagementJam.Tests
         [Test]
         public void _2_O_Direct_Half()
         {
-            Environment.CurrentDirectory = "/hdd";
-            var size = 1024 * 1024;
-            var block = 16 * 1024;
+            Environment.CurrentDirectory = CurrentDirectory;
+            var size = FileSize;
+            var block = BlockSize;
             var oDirectFile = "O_Direct.file";
             byte[] original = new byte[size];
             using (FileStream fs = new FileStream(oDirectFile, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -45,7 +48,7 @@ namespace KernelManagementJam.Tests
                 byte[] tmp = new byte[block];
                 for (int i = 0; i < size / block; i++)
                 {
-                    Console.WriteLine($"On Reading {i+1}");
+                    // Console.WriteLine($"On Reading {i+1}");
                     int n = stream.Read(tmp, 0, tmp.Length);
                     Console.WriteLine($"{i+1} / {size / block}: read {n} bytes");
                     readerCopy.Write(tmp, 0, n);
@@ -54,6 +57,11 @@ namespace KernelManagementJam.Tests
             
             CollectionAssert.AreEqual(original, readerCopy.ToArray());
 
+            CleanUp(oDirectFile);
+        }
+
+        private static void CleanUp(string oDirectFile)
+        {
             try
             {
                 File.Delete(oDirectFile);
@@ -62,15 +70,13 @@ namespace KernelManagementJam.Tests
             {
             }
         }
-        
+
         [Test]
         public void _3_O_Direct()
         {
-            Environment.CurrentDirectory = "/hdd";
-            var size = 1024 * 1024;
-            var block = 16 * 1024;
+            Environment.CurrentDirectory = CurrentDirectory;
             var oDirectFile = "O_Direct.file";
-            byte[] original = new byte[size];
+            byte[] original = new byte[FileSize];
             using (FileStream fs = new FileStream(oDirectFile, FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 new Random(1).NextBytes(original);
@@ -78,15 +84,15 @@ namespace KernelManagementJam.Tests
             }
 
             MemoryStream readerCopy = new MemoryStream();
-            using (LinuxDirectReadonlyFileStreamV2 stream = new LinuxDirectReadonlyFileStreamV2(oDirectFile, block))
+            using (LinuxDirectReadonlyFileStreamV2 stream = new LinuxDirectReadonlyFileStreamV2(oDirectFile, BlockSize))
             {
-                byte[] tmp = new byte[block];
+                byte[] tmp = new byte[BlockSize];
                 int i = 0;
                 while(true)
                 {
                     // Console.WriteLine($"On Reading {i+1}");
                     int n = stream.Read(tmp, 0, tmp.Length);
-                    Console.WriteLine($"{i+1} / {size / block}: read {n} bytes");
+                    Console.WriteLine($"{i+1} / {FileSize / BlockSize}: read {n} bytes");
                     if (n <= 0) break;
                     readerCopy.Write(tmp, 0, n);
                     i++;
@@ -95,13 +101,7 @@ namespace KernelManagementJam.Tests
             
             CollectionAssert.AreEqual(original, readerCopy.ToArray());
 
-            try
-            {
-                File.Delete(oDirectFile);
-            }
-            catch
-            {
-            }
+            CleanUp(oDirectFile);
         }
         
     }

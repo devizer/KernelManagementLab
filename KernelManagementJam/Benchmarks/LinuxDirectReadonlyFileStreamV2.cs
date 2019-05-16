@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Sockets;
 using Mono.Unix;
 using Mono.Unix.Native;
 
@@ -17,7 +16,6 @@ namespace KernelManagementJam.Benchmarks
 
         private const int AlignmentScale = 16384;
         private byte[] TheBuffer;
-        
 
         public LinuxDirectReadonlyFileStreamV2(string fileName, int blockSize)
         {
@@ -26,6 +24,7 @@ namespace KernelManagementJam.Benchmarks
             
             var openFlags = OpenFlags.O_SYNC |  Mono.Unix.Native.OpenFlags.O_DIRECT |  Mono.Unix.Native.OpenFlags.O_RDONLY;
             _fileDescriptor = Syscall.open(FileName, openFlags);
+            // for x390 a value of POSIX_FADV_NOREUSE is 7 ?:::?
             bool isError = 0 != Syscall.posix_fadvise(_fileDescriptor, 0, 0, PosixFadviseAdvice.POSIX_FADV_NOREUSE | PosixFadviseAdvice.POSIX_FADV_DONTNEED);
             if (isError)
                 DebugLog($"POSIX_FADV_NOREUSE + POSIX_FADV_DONTNEED is not supported for the {Path.GetDirectoryName(new FileInfo(fileName).FullName)} folder");
@@ -98,11 +97,19 @@ namespace KernelManagementJam.Benchmarks
 
                 fixed (byte* output = &buffer[0])
                 {
-                    byte* fileBuffer = (byte*) alignedPointer;
+                    byte* src = (byte*) alignedPointer;
                     byte* dst = output;
-                    for (int i = 0; i < num; i++)
+                    while (num >= 8)
                     {
-                        *dst++ = *fileBuffer++;
+                        *(long*) dst = *(long*) src;
+                        dst += 8;
+                        src += 8;
+                        num -= 8;
+                    }
+                    while (num > 0)
+                    {
+                        *dst++ = *src++;
+                        num--;
                     }
                 }
 
@@ -126,7 +133,7 @@ namespace KernelManagementJam.Benchmarks
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            throw new System.NotSupportedException();
+            throw new NotSupportedException();
         }
 
         public override bool CanRead
@@ -163,9 +170,12 @@ namespace KernelManagementJam.Benchmarks
                 DebugLog($"Set Position to {value}");
             }
         }
-        
-        
-        
-        
+
+
+        public override void Close()
+        {
+            _back.Dispose();
+            Console.WriteLine($"Disposed: {FileName}");
+        }
     }
 }
