@@ -17,11 +17,11 @@
 
 ##### 1.7
 - Added swap partitions and files for live Mounts page. Now Mounts page unites references from `/proc/swaps` and `/proc/mounts` sources:
-<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps-v2.png" Width="882px" title="Mounts and Swaps" alt="Mounts and Swaps"></img>
+<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps-v2.png" width="882px" title="Mounts and Swaps" alt="Mounts and Swaps"></img>
 
 ##### 1.6 
 - Added host info (name, os, cpu, ram) to the header
-![Network metrics live chart](https://github.com/devizer/KernelManagementLab/raw/master/images/Networks-Live-Chart.png "Network metrics live chart")
+<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Networks-Live-Chart.png" width="532px" alt="Network metrics live chart" title="Network metrics live chart"></img>
 
 ##### 1.5
 - Bootstrap navigation replaced by Material UI drawler
