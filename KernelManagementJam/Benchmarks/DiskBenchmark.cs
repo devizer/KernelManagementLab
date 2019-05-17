@@ -62,7 +62,7 @@ namespace Universe.Benchmark.DiskBench
                 // if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 //    return new LinuxDirectReadonlyFileStream(TempFile, RandomAccessBlockSize);
                 
-                if (_isODirectSupported)
+                if (false && _isODirectSupported)
                     return new LinuxDirectReadonlyFileStreamV2(TempFile, this.RandomAccessBlockSize);
                         
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
