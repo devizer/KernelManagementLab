@@ -47,10 +47,10 @@ namespace KernelManagementJam.Benchmarks
                 IntPtr ptrStart = (IntPtr) start;
                 long addrStart = ptrStart.ToInt64();
                 long addrBuffer = addrStart;
-                long delta = addrBuffer % AlignmentScale;
+                long delta = addrBuffer % this.BlockSize;
                 if (delta != 0)
                 {
-                    addrBuffer += -delta + AlignmentScale;
+                    addrBuffer += -delta + this.BlockSize;
                 }
 
                 var alignedPointer = new IntPtr(addrBuffer);
