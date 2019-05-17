@@ -66,7 +66,7 @@ namespace Universe.Benchmark.DiskBench
                     return new LinuxDirectReadonlyFileStreamV2(TempFile, this.RandomAccessBlockSize);
                         
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
-                    this.RandomAccessBlockSize, FileOptions.WriteThrough | GetReadOptions());
+                    this.RandomAccessBlockSize, FileOptions.WriteThrough);
             };
 
             Func<Stream, byte[], int> doRead = (fs, buffer) =>
@@ -74,6 +74,7 @@ namespace Universe.Benchmark.DiskBench
                 long maxIndex = FileSize / RandomAccessBlockSize;
                 long pos = RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
                 int count = (int) Math.Min(FileSize - pos, RandomAccessBlockSize);
+                if (count != RandomAccessBlockSize) return 0; // slip
                 fs.Position = pos;
                 return fs.Read(buffer, 0, count);
             };
@@ -287,17 +288,17 @@ namespace Universe.Benchmark.DiskBench
             }
         }
 
-        static FileOptions GetReadOptions()
-        {
-            const int O_DIRECT = 0x4000;
-            const int FILE_FLAG_NO_BUFFERING = 0x20000000;
-
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                return (FileOptions) FILE_FLAG_NO_BUFFERING;
-            else
-                return (FileOptions) O_DIRECT;
-            
-        }
+//        static FileOptions GetReadOptions()
+//        {
+//            const int O_DIRECT = 0x4000;
+//            const int FILE_FLAG_NO_BUFFERING = 0x20000000;
+//
+//            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+//                return (FileOptions) FILE_FLAG_NO_BUFFERING;
+//            else
+//                return (FileOptions) O_DIRECT;
+//            
+//        }
 
         FileStream OpenFileStreamWithoutCacheOnLinux_Legacy(int bufferSize)
         {
