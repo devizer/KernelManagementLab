@@ -1,26 +1,31 @@
 ##### 1.12.431
 - Implemented Queue and Busy charts for disks
-![Disks metrics live chart](https://github.com/devizer/KernelManagementLab/raw/master/images/Disks-Live-Chart.png)
-
-<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Disks-Live-Chart.png" width="516px" />
+<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Disks-Live-Chart.png" width="516px" Alt="Disks metrics live chart" Title="Disks metrics live chart"></img>
 
 ##### 1.11.424
 - Implemented installation using precompiled binaries: [install-w3top-service.sh](https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries)
 - Added newVer property to BriefInfo response and broadcast message
+
 ##### 1.10.416
 - Muted chart updating when app is minimized, on background tab or screen is locked. Fixed memory leaks on unmount
+
 ##### 1.9
 - Improved header load time via new BriefInfo API method
+
 ##### 1.8
 - Added Disks live charts without queue length and busy metrics
+
 ##### 1.7
 - Added swap partitions and files for live Mounts page. Now Mounts page unites references from `/proc/swaps` and `/proc/mounts` sources:
 ![Mounts and Swaps](https://github.com/devizer/KernelManagementLab/raw/master/images/Mounts-and-Swaps-v2.png "mounts and swaps") 
+
 ##### 1.6 
 - Added host info (name, os, cpu, ram) to the header
 ![Network metrics live chart](https://github.com/devizer/KernelManagementLab/raw/master/images/Networks-Live-Chart.png "Network metrics live chart")
+
 ##### 1.5
 - Bootstrap navigation replaced by Material UI drawler
+
 ##### 1.4 
 - Publishing to cloud: http://w3-top-on-xeon.devizer.tech, http://w3-top-on-pi.devizer.tech
 - Added customizable one line installer:
