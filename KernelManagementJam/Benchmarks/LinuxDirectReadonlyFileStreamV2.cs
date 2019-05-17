@@ -37,7 +37,7 @@ namespace KernelManagementJam.Benchmarks
             _back.AdviseFileAccessPattern(FileAccessPattern.NoReuse | FileAccessPattern.Random |
                                           FileAccessPattern.FlushCache);
 
-            TheBuffer = new byte[BlockSize * 2];
+            TheBuffer = new byte[BlockSize * 4];
         }
 
         unsafe void AlignedInterop(Action<IntPtr> action)
@@ -46,11 +46,13 @@ namespace KernelManagementJam.Benchmarks
             {
                 IntPtr ptrStart = (IntPtr) start;
                 long addrStart = ptrStart.ToInt64();
+                
+                
                 long addrBuffer = addrStart;
                 long delta = addrBuffer % this.BlockSize;
                 if (delta != 0)
                 {
-                    addrBuffer += -delta + this.BlockSize;
+                    addrBuffer += -delta + this.BlockSize*2;
                 }
 
                 var alignedPointer = new IntPtr(addrBuffer);
