@@ -52,7 +52,7 @@ namespace KernelManagementJam.Benchmarks
                 long delta = addrBuffer % this.BlockSize;
                 if (delta != 0)
                 {
-                    addrBuffer += -delta + this.BlockSize*2;
+                    addrBuffer += -delta + this.BlockSize * 1;
                 }
 
                 var alignedPointer = new IntPtr(addrBuffer);
