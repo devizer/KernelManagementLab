@@ -22,6 +22,8 @@ namespace Universe.Benchmark.DiskBench
         private int StepDuration { get; }
         private long FileSize { get; }
         private int RandomAccessBlockSize { get; }
+        private bool DisableODirect { get; }
+        
         static readonly string TempName = "benchmark.tmp";
         private string TempFile;
         
@@ -36,15 +38,64 @@ namespace Universe.Benchmark.DiskBench
         private ProgressStep _checkODirect;
         private bool _isODirectSupported;
 
-        public DiskBenchmark(string workFolder, long fileSize = 4L*1024*1024*1024, int randomAccessBlockSize = 4*1024, int stepDuration = 20000)
+        public DiskBenchmark(
+            string workFolder,
+            long fileSize = 4L * 1024 * 1024 * 1024,
+            int randomAccessBlockSize = 4 * 1024,
+            int stepDuration = 20000,
+            bool disableODirect = false
+        )
         {
             WorkFolder = workFolder;
             FileSize = fileSize;
-            TempFile = Path.Combine(new DirectoryInfo(WorkFolder).FullName, TempName);
             RandomAccessBlockSize = randomAccessBlockSize;
             StepDuration = stepDuration;
+            DisableODirect = disableODirect;
+            
+            TempFile = Path.Combine(new DirectoryInfo(WorkFolder).FullName, TempName);
             BuildProgress();
         }
+        
+        void BuildProgress()
+        {
+            if (DisableODirect)
+            {
+                _checkODirect = new ProgressStep("O_DIRECT is disabled");
+                _isODirectSupported = false;
+                _checkODirect.Start();
+                _checkODirect.Complete();
+            }
+            else
+            {
+                _checkODirect = new ProgressStep("Checking capabilities");
+            }
+                
+            _allocate = new ProgressStep("Allocate");
+            _seqRead = new ProgressStep("Sequential read");
+            _seqWrite = new ProgressStep("Sequential write");
+            _rndRead1T = new ProgressStep("Random Read, 1 thread");
+            _rndWrite1T = new ProgressStep("Random Write, 1 thread");
+            _rndReadN = new ProgressStep("Random Read, 16 threads");
+            _rndWriteN = new ProgressStep("Random Write, 16 threads");
+            _cleanUp = new ProgressStep("Clean up");
+            
+            this.Prorgess = new ProgressInfo()
+            {
+                Steps =
+                {
+                    _checkODirect,
+                    _allocate,
+                    _seqRead,
+                    _seqWrite,
+                    _rndRead1T,
+                    _rndWrite1T,
+                    _rndReadN,
+                    _rndWriteN,
+                    _cleanUp
+                }
+            };
+        }
+
 
         public void Perform()
         {
@@ -62,7 +113,7 @@ namespace Universe.Benchmark.DiskBench
                 // if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 //    return new LinuxDirectReadonlyFileStream(TempFile, RandomAccessBlockSize);
                 
-                if (_isODirectSupported)
+                if (!DisableODirect && _isODirectSupported)
                     return new LinuxDirectReadonlyFileStreamV2(TempFile, this.RandomAccessBlockSize);
                         
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
@@ -91,7 +142,7 @@ namespace Universe.Benchmark.DiskBench
             
             try
             {
-                CheckODirect();
+                if (!DisableODirect) CheckODirect();
                 Allocate();
                 SeqRead();
                 SeqWrite();
@@ -110,48 +161,11 @@ namespace Universe.Benchmark.DiskBench
             }
         }
 
-        void BuildProgress()
-        {
-
-            _checkODirect = new ProgressStep("Checking capabilities");
-            _allocate = new ProgressStep("Allocate");
-            _seqRead = new ProgressStep("Sequential read");
-            _seqWrite = new ProgressStep("Sequential write");
-            _rndRead1T = new ProgressStep("Random Read, 1 thread");
-            _rndWrite1T = new ProgressStep("Random Write, 1 thread");
-            _rndReadN = new ProgressStep("Random Read, 16 threads");
-            _rndWriteN = new ProgressStep("Random Write, 16 threads");
-            _cleanUp = new ProgressStep("Clean up");
-            
-            this.Prorgess = new ProgressInfo()
-            {
-                Steps =
-                {
-                    _checkODirect,
-                    _allocate,
-                    _seqRead,
-                    _seqWrite,
-                    _rndRead1T,
-                    _rndWrite1T,
-                    _rndReadN,
-                    _rndWriteN,
-                    _cleanUp
-                }
-            };
-
-        }
-
         private void CheckODirect()
         {
             _checkODirect.Start();
-            bool isDisabled = true;
-            if (isDisabled)
-            {
-                _checkODirect.Name = "O_DIRECT is disabled";
-                _checkODirect.Complete();
-                return;
-            }
 
+            _isODirectSupported = false;
             try
             {
                 _isODirectSupported = ODirectCheck.IsO_DirectSupported(WorkFolder, 128 * 1024);
@@ -160,7 +174,8 @@ namespace Universe.Benchmark.DiskBench
             {
             }
 
-            _checkODirect.Name = _isODirectSupported ? "O_DIRECT is present" : "No O_DIRECT supported";
+            _checkODirect.Name = _isODirectSupported ? "O_DIRECT is present" : "O_DIRECT is absent";
+            _checkODirect.Complete();
         }
         
         private void Allocate()

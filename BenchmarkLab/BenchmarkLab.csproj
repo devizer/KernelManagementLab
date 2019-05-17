@@ -5,6 +5,7 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <RootNamespace>Universe.Benchmark</RootNamespace>
         <AssemblyName>Universe.Benchmark</AssemblyName>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 
   <ServerGarbageCollection>false</ServerGarbageCollection>
   <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
@@ -13,6 +14,11 @@
   <ThreadPoolMaxThreads>50</ThreadPoolMaxThreads>
 
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="..\build\*.cs" />
+    </ItemGroup>
+
 
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
