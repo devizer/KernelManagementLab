@@ -99,7 +99,7 @@ namespace Universe.DiskBench
                 buf.AppendLine(s);
             }
             
-            Console.Clear();
+            // Console.Clear();
             Console.Write(buf);
         }
         

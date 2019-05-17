@@ -178,7 +178,7 @@ namespace KernelManagementJam.Benchmarks
         public override void Close()
         {
             _back.Dispose();
-            Console.WriteLine($"Disposed: {FileName}");
+            Console.WriteLine($"Disposed: {FileName} #{_fileDescriptor}");
         }
     }
 

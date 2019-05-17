@@ -33,6 +33,8 @@ namespace Universe.Benchmark.DiskBench
         private ProgressStep _rndWriteN;
         private ProgressStep _cleanUp;
         private ProgressStep _allocate;
+        private ProgressStep _checkODirect;
+        private bool _isODirectSupported;
 
         public DiskBenchmark(string workFolder, long fileSize = 4L*1024*1024*1024, int randomAccessBlockSize = 4*1024, int stepDuration = 20000)
         {
@@ -56,9 +58,12 @@ namespace Universe.Benchmark.DiskBench
 
             Func<Stream> getFileReader = () =>
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                    // return OpenFileStreamWithoutCacheOnLinux_Legacy(this.RandomAccessBlockSize);
-                    return new LinuxDirectReadonlyFileStream(TempFile, RandomAccessBlockSize);
+                
+                // if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                //    return new LinuxDirectReadonlyFileStream(TempFile, RandomAccessBlockSize);
+                
+                if (_isODirectSupported)
+                    return new LinuxDirectReadonlyFileStreamV2(TempFile, this.RandomAccessBlockSize);
                         
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
                     this.RandomAccessBlockSize, FileOptions.WriteThrough | GetReadOptions());
@@ -85,6 +90,7 @@ namespace Universe.Benchmark.DiskBench
             
             try
             {
+                CheckODirect();
                 Allocate();
                 SeqRead();
                 SeqWrite();
@@ -106,6 +112,7 @@ namespace Universe.Benchmark.DiskBench
         void BuildProgress()
         {
 
+            _checkODirect = new ProgressStep("Checking capabilities");
             _allocate = new ProgressStep("Allocate");
             _seqRead = new ProgressStep("Sequential read");
             _seqWrite = new ProgressStep("Sequential write");
@@ -119,6 +126,7 @@ namespace Universe.Benchmark.DiskBench
             {
                 Steps =
                 {
+                    _checkODirect,
                     _allocate,
                     _seqRead,
                     _seqWrite,
@@ -132,6 +140,20 @@ namespace Universe.Benchmark.DiskBench
 
         }
 
+        private void CheckODirect()
+        {
+            _checkODirect.Start();
+            try
+            {
+                _isODirectSupported = ODirectCheck.IsO_DirectSupported(WorkFolder, 128 * 1024);
+            }
+            catch
+            {
+            }
+
+            _checkODirect.Name = _isODirectSupported ? "O_DIRECT is present" : "No O_DIRECT supported";
+        }
+        
         private void Allocate()
         {
             byte[] buffer = new byte[Math.Min(128 * 1024, this.FileSize)];
