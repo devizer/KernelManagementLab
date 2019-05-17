@@ -62,7 +62,7 @@ namespace Universe.Benchmark.DiskBench
                 // if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 //    return new LinuxDirectReadonlyFileStream(TempFile, RandomAccessBlockSize);
                 
-                if (false && _isODirectSupported)
+                if (_isODirectSupported)
                     return new LinuxDirectReadonlyFileStreamV2(TempFile, this.RandomAccessBlockSize);
                         
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
@@ -144,6 +144,14 @@ namespace Universe.Benchmark.DiskBench
         private void CheckODirect()
         {
             _checkODirect.Start();
+            bool isDisabled = true;
+            if (isDisabled)
+            {
+                _checkODirect.Name = "O_DIRECT is disabled";
+                _checkODirect.Complete();
+                return;
+            }
+
             try
             {
                 _isODirectSupported = ODirectCheck.IsO_DirectSupported(WorkFolder, 128 * 1024);
