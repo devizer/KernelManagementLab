@@ -1,6 +1,8 @@
 ##### 1.12.431
 - Implemented Queue and Busy charts for disks
 ![Disks metrics live chart](https://github.com/devizer/KernelManagementLab/raw/master/images/Disks-Live-Chart.png)
+
+<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Disks-Live-Chart.png" width="645px" height="750px" />
 ##### 1.11.424
 - Implemented installation using precompiled binaries: [install-w3top-service.sh](https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries)
 - Added newVer property to BriefInfo response and broadcast message
