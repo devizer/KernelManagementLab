@@ -86,6 +86,7 @@ namespace JsonLab
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static void HeaplessAppend(StringBuilder builder, long arg, bool heapless)
         {
+            // Span<byte> buffer = stackalloc byte[20];
             if (!heapless)
             {
                 builder.Append(Convert.ToString(arg));
@@ -110,10 +111,7 @@ namespace JsonLab
                 builder.Append('-');
             }
 
-            if (arg == 0)
-                builder.Append('0');
-
-            else if (arg < 10)
+            if (arg < 10)
             {
                 builder.Append((char)(48 + arg));
             }
@@ -143,8 +141,6 @@ namespace JsonLab
             }
             else
             {
-                // b.Append(Convert.ToString(arg));
-                // return;
                 byte p0 = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0, p6 = 0, p7 = 0, p8 = 0, p9 = 0, p10 = 0, p11 = 0, p12 = 0, p13 = 0, p14 = 0, p15 = 0, p16 = 0, p17 = 0, p18 = 0, p19 = 0;
                 if (arg != 0)
                 {

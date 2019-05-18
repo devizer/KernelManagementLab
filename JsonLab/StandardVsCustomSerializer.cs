@@ -32,7 +32,7 @@ namespace MyBenchmarks
         [Params(true, false)]
         public bool Minify;
 
-        [Params(CollectionFlavour.List, CollectionFlavour.Array, CollectionFlavour.ROList, CollectionFlavour.ROArray)]
+        [Params(CollectionFlavour.Array, CollectionFlavour.List, CollectionFlavour.ROArray, CollectionFlavour.ROList)]
         public CollectionFlavour Kind;
 
         private long[] TheLongs = new[] { 0, 1L, 12L, 123L, 1234L, 12345678987654321L, -1L, -12L, -123L, -1234L, -12345678987654321L };
@@ -55,24 +55,26 @@ namespace MyBenchmarks
         }
 
         [Benchmark]
-        public string Optimized()
-        {
-            return Serialize(optionalConverter: LongArrayConverter.Instance);
-        }
-
-        [Benchmark]
-        public string OptimizedHeapless()
+        public StringBuilder OptimizedHeapless()
         {
             return Serialize(optionalConverter: LongArrayConverter.HeaplessInstance);
         }
 
         [Benchmark]
-        public string Default()
+        public StringBuilder Optimized()
+        {
+            return Serialize(optionalConverter: LongArrayConverter.Instance);
+        }
+
+        [Benchmark]
+        public StringBuilder Default()
         {
             return Serialize();
         }
 
-        private string Serialize(JsonConverter optionalConverter = null)
+
+
+        private StringBuilder Serialize(JsonConverter optionalConverter = null)
         {
             JsonSerializer ser = new JsonSerializer()
             {
@@ -98,7 +100,7 @@ namespace MyBenchmarks
             ser.Serialize(jwr, RootData);
             jwr.Flush();
 
-            return json.ToString();
+            return json;
         }
 
     }

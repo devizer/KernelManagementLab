@@ -26,21 +26,25 @@ namespace MyBenchmarks
             var summary = BenchmarkRunner.Run<StandardVsCustomSerializer>();
             return;
             // var summary2 = BenchmarkRunner.Run<Md5VsSha256>();
-
         }
 
         private static void DebugCustomSerializer()
         {
-            StandardVsCustomSerializer ser = new StandardVsCustomSerializer()
+            foreach (var minify in new[] { true, false, })
             {
-                Minify = false,
-                ArraysCount = 2
-            };
-            ser.Setup();
+                StandardVsCustomSerializer ser = new StandardVsCustomSerializer()
+                {
+                    Minify = minify,
+                    ArraysCount = 20
+                };
+                ser.Setup();
 
-            string jsonStandard = ser.Default();
-            string jsonCustom = ser.Optimized();
-            Console.WriteLine(jsonCustom);
+                string jsonStandard = ser.Default().ToString();
+                string jsonCustom = ser.Optimized().ToString();
+                Console.WriteLine($"SIZE OF [@Minify={minify}] is {jsonStandard.Length:n0} chars");
+                if (minify == false)
+                    Console.WriteLine(jsonCustom);
+            }
         }
 
         static void GenerateToBuffer()
