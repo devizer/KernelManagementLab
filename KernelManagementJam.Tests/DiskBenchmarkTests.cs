@@ -8,11 +8,18 @@ using Universe.Benchmark.DiskBench;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class IntegrationTests
+    public class DiskBenchmarkTests
     {
+        // HDD is preferred
         private string CurrentDirectory = "/hdd";
-        private readonly int FileSize = 4 * 1024 * 1024;
+        private readonly int FileSize = 4 * 1024 * 1024; //Kb
         private readonly int BlockSize = 64 * 1024;
+
+        [SetUp] public void Setup()
+        {
+            if (!Directory.Exists(CurrentDirectory))
+                CurrentDirectory = new DirectoryInfo(Environment.CurrentDirectory).FullName;
+        }
 
         [Test]
         public void _0_Platform()
@@ -116,6 +123,7 @@ namespace KernelManagementJam.Tests
         public void _4_O_DirectCheck_OfTmp()
         {
             string dir = "/tmp";
+            if (!Directory.Exists(dir)) return;
             Console.WriteLine($"Checking O_DIRECT support for {dir}");
             Console.WriteLine($"O_DIRECT is supported:  {ODirectCheck.IsO_DirectSupported(dir)}");
         }
@@ -124,10 +132,9 @@ namespace KernelManagementJam.Tests
         public void _4_O_DirectCheck_Another()
         {
             string dir = "/transient-builds";
+            if (!Directory.Exists(dir)) return;
             Console.WriteLine($"Checking O_DIRECT support for {dir}");
             Console.WriteLine($"O_DIRECT is supported:  {ODirectCheck.IsO_DirectSupported(dir)}");
         }
-
-
     }
 }

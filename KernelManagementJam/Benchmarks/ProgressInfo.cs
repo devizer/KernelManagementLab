@@ -20,11 +20,4 @@ namespace Universe.DiskBench
             return new ProgressInfo() {Steps = steps};
         }
     }
-
-    public enum ProgressStepState
-    {
-        Pending,
-        InProgress,
-        Completed
-    }
 }
