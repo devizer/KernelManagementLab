@@ -19,8 +19,6 @@ namespace Universe.DiskBench
 
         static int Main(string[] args)
         {
-
-
             bool nologo = false;
             bool help = false;
             bool version = false;
