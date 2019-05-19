@@ -8,7 +8,6 @@ namespace KernelManagementJam.Benchmarks
 {
     public class LinuxDirectReadonlyFileStreamV2 : Stream
     {
-        private long _Position = 0;
         public readonly string FileName;
         public readonly int BlockSize;
         private UnixStream _back;
