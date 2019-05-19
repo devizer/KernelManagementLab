@@ -32,7 +32,7 @@ namespace Universe.DiskBench
                 {"b|Block=", "Random access block size, default is 4096", v => BlockSize = int.Parse(v)},
                 {"t|Time=", "Random access duration (milliseconds), default is 30000", v => RandomDuration = int.Parse(v)},
                 {"d|Disable-O-DIRECT", "Disable O_DIRECT, default is auto-detect", v => DisableODirect = !string.IsNullOrEmpty(v)},
-                {"v|version", "Display this help", v => version = v != null},
+                {"v|version", "Display version", v => version = v != null},
                 {"h|?|Help", "Display this help", v => help = v != null},
                 {"n|nologo", "Hide logo", v => nologo = v != null}
             };
