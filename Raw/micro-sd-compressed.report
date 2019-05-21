@@ -30,3 +30,13 @@ Disk: /, Size: 500M, Block: 4096 bytes
 [Completed]  100.0% 00:00:30 5930.3K/s Random Read, 16 threads
 [Completed]  100.9% 00:00:30  825.3K/s Random Write, 16 threads
 [Completed]  Clean up
+
+Disk: /root/KernelManagementLab/BenchmarkLab/bin/temp, Size: 100M, Flavour: FortyTwo, Block: 4096 bytes
+[Completed]  O_DIRECT is present
+[Completed]  100.0% 00:01:50  925.6K/s Allocate
+[Completed]  100.0% 00:00:00  176.4M/s Sequential read
+[Completed]  100.0% 00:00:14 7096.3K/s Sequential write
+[Completed]  100.0% 00:00:30  105.2M/s Random Read, 1 thread
+[Completed]  101.0% 00:00:30   16.1K/s Random Write, 1 thread
+[Completed]  100.0% 00:00:30    114M/s Random Read, 16 threads
+[Completed]  101.5% 00:00:30  179.3K/s Random Write, 16 threads
