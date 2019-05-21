@@ -72,3 +72,4 @@ export ASPNETCORE_URLS="http://0.0.0.0:5010;https://0.0.0.0:5011"
 # cmd="$1"
 cmd="${1:-reinstall_service}"
 eval $cmd
+echo "*** D O N E ***"

@@ -136,11 +136,11 @@ To start|stop w3top service manually:
 fi
 }
 
-# IGNORE_SYSTEMD is for testing only, don't use it
+# IGNORE_SYSTEMD is for testing only, don't use it ever
 if [[ -n "$hasSystemD" ]] && [[ -z "${IGNORE_SYSTEMD:-}" ]]; then
   echo Installing SystemD service: /etc/systemd/system/w3top.service
   Install_SystemD_Service
 else
-  echo Installing Sys V Init service
+  echo Installing Sys V Init service: /etc/init.d/w3top
   Install_SysVInit_Service
 fi
