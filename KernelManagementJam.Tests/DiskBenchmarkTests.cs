@@ -31,7 +31,7 @@ namespace KernelManagementJam.Tests
         public void _1_DiskBenchmark()
         {
             var tempSize = 128*1024;
-            DiskBenchmark jit = new DiskBenchmark(".", tempSize, tempSize, 1);
+            DiskBenchmark jit = new DiskBenchmark(".", tempSize, DataFlavour.Random, tempSize, 1);
             jit.Perform();
         }
 

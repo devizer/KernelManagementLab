@@ -899,7 +899,7 @@ namespace NDesk.Options {
 			option.Invoke (c);
 		}
 
-		public static int OptionWidth = 33;
+		public static int OptionWidth = 28;
 
 		public void WriteOptionDescriptions (TextWriter o)
 		{

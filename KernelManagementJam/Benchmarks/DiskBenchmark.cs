@@ -21,6 +21,8 @@ namespace Universe.Benchmark.DiskBench
         private string WorkFolder { get; }
         private int StepDuration { get; }
         private long FileSize { get; }
+        private DataFlavour Flavour { get; }
+
         private int RandomAccessBlockSize { get; }
         private bool DisableODirect { get; }
         
@@ -41,6 +43,7 @@ namespace Universe.Benchmark.DiskBench
         public DiskBenchmark(
             string workFolder,
             long fileSize = 4L * 1024 * 1024 * 1024,
+            DataFlavour flavour = DataFlavour.Random, 
             int randomAccessBlockSize = 4 * 1024,
             int stepDuration = 20000,
             bool disableODirect = false
@@ -48,6 +51,7 @@ namespace Universe.Benchmark.DiskBench
         {
             WorkFolder = workFolder;
             FileSize = fileSize;
+            Flavour = flavour;
             RandomAccessBlockSize = randomAccessBlockSize;
             StepDuration = stepDuration;
             DisableODirect = disableODirect;
@@ -181,7 +185,8 @@ namespace Universe.Benchmark.DiskBench
         private void Allocate()
         {
             byte[] buffer = new byte[Math.Min(128 * 1024, this.FileSize)];
-            new Random().NextBytes(buffer);
+            // new Random().NextBytes(buffer);
+            new DataGenerator(Flavour).NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, FileOptions.WriteThrough))
             {
                 _allocate.Start();
@@ -223,7 +228,8 @@ namespace Universe.Benchmark.DiskBench
         {
             Sync();
             byte[] buffer = new byte[1024 * 1024];
-            new Random().NextBytes(buffer);
+            // new Random().NextBytes(buffer);
+            new DataGenerator(Flavour).NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite, buffer.Length, FileOptions.WriteThrough))
             {
                 _seqWrite.Start();
@@ -271,7 +277,8 @@ namespace Universe.Benchmark.DiskBench
                         using (Stream fs = getFileStream())
                         {
                             byte[] buffer = new byte[RandomAccessBlockSize];
-                            new Random().NextBytes(buffer);
+                            // new Random().NextBytes(buffer);
+                            new DataGenerator(Flavour).NextBytes(buffer);
                             started.Signal();
                             started.Wait();
                             Stopwatch stopwatch = getStopwatch();

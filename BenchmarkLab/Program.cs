@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using KernelManagementJam;
+using KernelManagementJam.Benchmarks;
 using NDesk.Options;
 using Universe.Benchmark.DiskBench;
 
@@ -16,6 +17,8 @@ namespace Universe.DiskBench
         private static string Disk = ".";
         private static int RandomDuration = 30000;
         private static bool DisableODirect = false;
+        const DataFlavour DefaultFlavour = DataFlavour.Random;
+        static DataFlavour Flavour = DefaultFlavour;
 
         static int Main(string[] args)
         {
@@ -29,6 +32,7 @@ namespace Universe.DiskBench
                 {"s|Size=", "Working Size (Kb) default is 4096*1024", v => FileSize = int.Parse(v)},
                 {"b|Block=", "Random access block size, default is 4096", v => BlockSize = int.Parse(v)},
                 {"t|Time=", "Random access duration (milliseconds), default is 30000", v => RandomDuration = int.Parse(v)},
+                {"f|Flavour=", "Data flavour as random|42|lorem-ipsum|code, default is random", v => Flavour = ParseFlavour(v)},
                 {"d|Disable-O-DIRECT", "Disable O_DIRECT, default is auto-detect", v => DisableODirect = !string.IsNullOrEmpty(v)},
                 {"v|version", "Display version", v => version = v != null},
                 {"h|?|Help", "Display this help", v => help = v != null},
@@ -43,28 +47,39 @@ namespace Universe.DiskBench
                 return 0;
             }
             
-            if (!nologo)
-            {
-                Console.WriteLine($@"Disk Benchmark [v{ver}] tool is a sandbox of the KernelManagementJam for w3top app");
-            }
-
+            var theLogo = $@"Disk Benchmark [v{ver}] tool is a sandbox of the KernelManagementJam for w3top app";
+            
             if (help)
             {
                 p.WriteOptionDescriptions(Console.Out);
+                Console.WriteLine(@"
+If disk/volume supports compression it is important to specify a flavour of the data (-f=VALUE or --flavour=VALUE):
+ - 42 (maximum compression ~99.9%)
+ - lorem-ipsum (high compression ~80%)
+ - code (popular, compression is ~50%)
+ - random (compression impossible)");
+                
                 return 0;
             }
+
+            if (!nologo)
+            {
+                Console.WriteLine(theLogo);
+            }
+
             
             Disk = new DirectoryInfo(Disk).FullName;
             
             // JIT
             var tempSize = 128*1024;
-            DiskBenchmark jit = new DiskBenchmark(Disk, tempSize, tempSize, 1);
+            DiskBenchmark jit = new DiskBenchmark(Disk, tempSize, Flavour, tempSize, 1);
             jit.Perform();
             // return 0;
 
             DiskBenchmark dbench = new DiskBenchmark(
                 Disk, 
                 FileSize*1024L, 
+                Flavour,
                 BlockSize, 
                 RandomDuration, 
                 DisableODirect);
@@ -100,7 +115,7 @@ namespace Universe.DiskBench
         {
 
             StringBuilder buf = new StringBuilder();
-            buf.AppendLine($"Disk: {Disk}, Size: {Formatter.FormatBytes(FileSize*1024L)}, Block: {BlockSize} bytes");
+            buf.AppendLine($"Disk: {Disk}, Size: {Formatter.FormatBytes(FileSize*1024L)}, Flavour: {Flavour}, Block: {BlockSize} bytes");
             foreach (var step in progress.Steps)
             {
                 var s = $"[{step.State}]".PadRight(12);
@@ -118,6 +133,39 @@ namespace Universe.DiskBench
             
             Console.Clear();
             Console.Write(buf);
+        }
+
+        static DataFlavour ParseFlavour(string raw)
+        {
+            switch (raw.ToLower())
+            {
+                case "42":
+                case "forty-two":
+                case "fortytwo":
+                    return DataFlavour.FortyTwo;
+                
+                case "random":
+                    return DataFlavour.Random;
+
+                case "stable-random":
+                    return DataFlavour.StableRandom;
+                
+                case "lorem-ipsum":
+                    return DataFlavour.LoremIpsum;
+
+                case "stable-lorem-ipsum":
+                    return DataFlavour.StableLoremIpsum;
+
+                case "il":
+                case "il-code":
+                case "code":
+                    return DataFlavour.ILCode;
+                
+                default:
+                    return DefaultFlavour;
+
+                    
+            }
         }
         
     }

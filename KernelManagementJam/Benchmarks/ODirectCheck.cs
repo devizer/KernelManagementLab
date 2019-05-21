@@ -36,7 +36,7 @@ namespace KernelManagementJam.Benchmarks
             {
                 ret = false;
 #if DEBUG
-                Console.Write($"O_DIRECT check failed. {ex}");
+                Console.Write($"O_DIRECT check is negative for {Path.GetDirectoryName(fileName)}. {ex}");
 #endif
             }
 
