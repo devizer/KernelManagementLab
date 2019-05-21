@@ -1,3 +1,9 @@
+##### 1.14
+- Added support for legacy Sys V Init service manager. SystemD is preferred if present.
+
+##### 1.13
+- Implemented Disk Benchmark with command line interface and O_DIRECT support
+
 ##### 1.12.431
 - Implemented Queue and Busy charts for disks
 <img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Disks-Live-Chart.png" width="516px" Alt="Disks metrics live chart" Title="Disks metrics live chart"></img>
