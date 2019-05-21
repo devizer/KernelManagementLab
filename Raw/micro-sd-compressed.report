@@ -1,0 +1,32 @@
+BTRFS ssd,compress-force=zlib
+Disk: /root/, Size: 500M, Block: 4096 bytes
+[Completed]  O_DIRECT is present
+[Completed]  100.0% 00:18:43  455.6K/s Allocate
+[Completed]  100.0% 00:00:25   19.7M/s Sequential read
+[Completed]  100.0% 00:06:41 1276.4K/s Sequential write
+[Completed]  100.0% 00:00:30 3570.4K/s Random Read, 1 thread
+[Completed]  100.6% 00:00:30   8961B/s Random Write, 1 thread
+[Completed]  100.1% 00:00:30 3957.6K/s Random Read, 16 threads
+[Completed]  107.4% 00:00:32   37.8K/s Random Write, 16 threads
+
+compress-force=lzo
+[Completed]  100.0% 00:17:05  499.4K/s Allocate
+[Completed]  100.0% 00:00:25   19.7M/s Sequential read
+[Completed]  100.0% 00:04:40 1826.5K/s Sequential write
+[Completed]  100.0% 00:00:30 3609.8K/s Random Read, 1 thread
+[Completed]  103.6% 00:00:31   9221B/s Random Write, 1 thread
+[Completed]  100.0% 00:00:30 4028.5K/s Random Read, 16 threads
+[Completed]  101.1% 00:00:30   62.4K/s Random Write, 16 threads
+
+
+EXT4
+Disk: /, Size: 500M, Block: 4096 bytes
+[Completed]  O_DIRECT is present
+[Completed]  100.0% 00:05:05 1676.8K/s Allocate
+[Completed]  100.0% 00:00:25   19.9M/s Sequential read
+[Completed]  100.0% 00:02:11 3896.8K/s Sequential write
+[Completed]  100.0% 00:00:30 6271.4K/s Random Read, 1 thread
+[Completed]  100.0% 00:00:30   1096K/s Random Write, 1 thread
+[Completed]  100.0% 00:00:30 5930.3K/s Random Read, 16 threads
+[Completed]  100.9% 00:00:30  825.3K/s Random Write, 16 threads
+[Completed]  Clean up
