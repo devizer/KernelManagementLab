@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
+dotnet=$(command -v dotnet)
 set -e
 set -u
 pushd `dirname $0` > /dev/null; ScriptPath=`pwd`; popd > /dev/null
 
-dotnet=$(command -v dotnet)
 if [[ ! -f "$ScriptPath/Universe.W3Top" ]]; then echo ERROR: publish the project first; exit 1; fi
 HTTP_PORT="${HTTP_PORT:-5050}"
 RESPONSE_COMPRESSION="${RESPONSE_COMPRESSION:-True}"
