@@ -1,5 +1,5 @@
 ##### 1.14
-- Added support for legacy Sys V Init service manager. SystemD is preferred if present.
+- Added support for legacy Sys V Init service manager. SystemD is preferred if also present.
 
 ##### 1.13
 - Implemented Disk Benchmark with command line interface and O_DIRECT support
