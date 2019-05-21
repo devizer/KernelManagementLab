@@ -56,19 +56,18 @@ namespace KernelManagementJam.Benchmarks
                 int length = arg.Length;
                 fixed (byte* ptrFrom = &copy[0], ptrTo = &arg[0])
                 {
-                    byte* src = ptrFrom, dst = ptrTo;
+                    byte* dst = ptrTo;
                     while (length > 0)
                     {
-                        Copy(src, dst, readBytes);
+                        Copy(ptrFrom, dst, Math.Min(readBytes, length));
                         length -= readBytes;
-                        src += readBytes;
                         dst += readBytes;
                     }
                 }
             }
         }
 
-        static unsafe void FillLoremIpsum(byte[] arg, bool isStable)
+        static void FillLoremIpsum(byte[] arg, bool isStable)
         {
             string[] words = new[]{"Lorem", "Ipsum", "Dolor", "Sit", "Amet", "Consectetuer",
                 "Adipiscing", "Elit", "Sed", "Diam", "Nonummy", "Nibh", "Euismod",
