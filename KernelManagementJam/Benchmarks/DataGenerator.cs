@@ -7,9 +7,9 @@ namespace KernelManagementJam.Benchmarks
 {
     public class DataGenerator
     {
-        public readonly DataFlavour Flavour;
+        public readonly DataGeneratorFlavour Flavour;
 
-        public DataGenerator(DataFlavour flavour)
+        public DataGenerator(DataGeneratorFlavour flavour)
         {
             Flavour = flavour;
         }
@@ -18,22 +18,22 @@ namespace KernelManagementJam.Benchmarks
         {
             switch (Flavour)
             {
-                case DataFlavour.Random:
-                case DataFlavour.StableRandom:
-                    Random rand = Flavour == DataFlavour.StableRandom ? new Random(42) : new Random();
+                case DataGeneratorFlavour.Random:
+                case DataGeneratorFlavour.StableRandom:
+                    Random rand = Flavour == DataGeneratorFlavour.StableRandom ? new Random(42) : new Random();
                     rand.NextBytes(arg);
                     return;
                 
-                case DataFlavour.FortyTwo:
+                case DataGeneratorFlavour.FortyTwo:
                     Fill42(arg);
                     return;
                 
-                case DataFlavour.LoremIpsum:
-                case DataFlavour.StableLoremIpsum:
-                    FillLoremIpsum(arg, Flavour == DataFlavour.StableLoremIpsum);
+                case DataGeneratorFlavour.LoremIpsum:
+                case DataGeneratorFlavour.StableLoremIpsum:
+                    FillLoremIpsum(arg, Flavour == DataGeneratorFlavour.StableLoremIpsum);
                     return;
                 
-                case DataFlavour.ILCode:
+                case DataGeneratorFlavour.ILCode:
                     FillIlCode(arg);
                     return;
                 
@@ -67,18 +67,24 @@ namespace KernelManagementJam.Benchmarks
             }
         }
 
+        static readonly string[] words = new[]{"Lorem", "Ipsum", "Dolor", "Sit", "Amet", "Consectetuer",
+            "Adipiscing", "Elit", "Sed", "Diam", "Nonummy", "Nibh", "Euismod",
+            "Tincidunt", "Ut", "Laoreet", "Dolore", "Magna", "Aliquam", "Erat"};
+
         static void FillLoremIpsum(byte[] arg, bool isStable)
         {
-            string[] words = new[]{"Lorem", "Ipsum", "Dolor", "Sit", "Amet", "Consectetuer",
-                "Adipiscing", "Elit", "Sed", "Diam", "Nonummy", "Nibh", "Euismod",
-                "Tincidunt", "Ut", "Laoreet", "Dolore", "Magna", "Aliquam", "Erat"};
             
             Random rand = isStable ? new Random(42) : new Random();
             int count = 0, length = arg.Length, wordsCount = words.Length;
             StringBuilder b = new StringBuilder(length);
             while (count < length)
             {
-                if (count > 0) b.Append(' ');
+                if (count > 0)
+                {
+                    count++;
+                    b.Append(' ');
+                }
+                
                 var word = words[rand.Next(wordsCount)];
                 b.Append(word);
                 count += word.Length;
@@ -133,21 +139,5 @@ namespace KernelManagementJam.Benchmarks
                 }
             }
         }
-    }
-
-    public enum DataFlavour
-    {
-        Random,
-        StableRandom,
-        
-        // Text
-        LoremIpsum,
-        StableLoremIpsum,
-        
-        // 42 (maximum compression)
-        FortyTwo,
-        
-        // An MS IL binary 
-        ILCode
     }
 }

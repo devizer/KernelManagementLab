@@ -17,8 +17,8 @@ namespace Universe.DiskBench
         private static string Disk = ".";
         private static int RandomDuration = 30000;
         private static bool DisableODirect = false;
-        const DataFlavour DefaultFlavour = DataFlavour.Random;
-        static DataFlavour Flavour = DefaultFlavour;
+        const DataGeneratorFlavour DefaultFlavour = DataGeneratorFlavour.Random;
+        static DataGeneratorFlavour Flavour = DefaultFlavour;
 
         static int Main(string[] args)
         {
@@ -135,31 +135,31 @@ If disk/volume supports compression it is important to specify a flavour of the 
             Console.Write(buf);
         }
 
-        static DataFlavour ParseFlavour(string raw)
+        static DataGeneratorFlavour ParseFlavour(string raw)
         {
             switch (raw.ToLower())
             {
                 case "42":
                 case "forty-two":
                 case "fortytwo":
-                    return DataFlavour.FortyTwo;
+                    return DataGeneratorFlavour.FortyTwo;
                 
                 case "random":
-                    return DataFlavour.Random;
+                    return DataGeneratorFlavour.Random;
 
                 case "stable-random":
-                    return DataFlavour.StableRandom;
+                    return DataGeneratorFlavour.StableRandom;
                 
                 case "lorem-ipsum":
-                    return DataFlavour.LoremIpsum;
+                    return DataGeneratorFlavour.LoremIpsum;
 
                 case "stable-lorem-ipsum":
-                    return DataFlavour.StableLoremIpsum;
+                    return DataGeneratorFlavour.StableLoremIpsum;
 
                 case "il":
                 case "il-code":
                 case "code":
-                    return DataFlavour.ILCode;
+                    return DataGeneratorFlavour.ILCode;
                 
                 default:
                     return DefaultFlavour;

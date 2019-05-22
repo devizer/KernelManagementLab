@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading;
 using KernelManagementJam.Benchmarks;
 using Microsoft.Win32.SafeHandles;
-using Mono.Posix;
 using Universe.DiskBench;
 using FileMode = System.IO.FileMode;
 
@@ -21,7 +18,7 @@ namespace Universe.Benchmark.DiskBench
         private string WorkFolder { get; }
         private int StepDuration { get; }
         private long FileSize { get; }
-        private DataFlavour Flavour { get; }
+        private DataGeneratorFlavour Flavour { get; }
 
         private int RandomAccessBlockSize { get; }
         private bool DisableODirect { get; }
@@ -43,7 +40,7 @@ namespace Universe.Benchmark.DiskBench
         public DiskBenchmark(
             string workFolder,
             long fileSize = 4L * 1024 * 1024 * 1024,
-            DataFlavour flavour = DataFlavour.Random, 
+            DataGeneratorFlavour flavour = DataGeneratorFlavour.Random, 
             int randomAccessBlockSize = 4 * 1024,
             int stepDuration = 20000,
             bool disableODirect = false

@@ -13,7 +13,7 @@ namespace KernelManagementJam.Tests
     {
         [Test]
         [TestCaseSourceAttribute(typeof(DataGeneratorTests), nameof(GetAllFlavour))]
-        public void Perform(DataFlavour fla)
+        public void Perform(DataGeneratorFlavour fla)
         {
             Console.WriteLine($"Flavour : {fla}");
             // return;
@@ -27,7 +27,7 @@ namespace KernelManagementJam.Tests
 
         [Test]
         [TestCaseSourceAttribute(typeof(DataGeneratorTests), nameof(GetAllFlavour))]
-        public void Measure(DataFlavour fla)
+        public void Measure(DataGeneratorFlavour fla)
         {
             Console.WriteLine($"Flavour : {fla}");
             // return;
@@ -41,7 +41,7 @@ namespace KernelManagementJam.Tests
             }
         }
 
-        private static byte[] Generate(DataFlavour fla, int size)
+        private static byte[] Generate(DataGeneratorFlavour fla, int size)
         {
             DataGenerator dg = new DataGenerator(fla);
             byte[] bytes = new byte[size];
@@ -62,9 +62,9 @@ namespace KernelManagementJam.Tests
             }
         }
 
-        public static DataFlavour[] GetAllFlavour()
+        public static DataGeneratorFlavour[] GetAllFlavour()
         {
-            DataFlavour[] flavours = Enum.GetValues(typeof(DataFlavour)).OfType<DataFlavour>().ToArray();
+            DataGeneratorFlavour[] flavours = Enum.GetValues(typeof(DataGeneratorFlavour)).OfType<DataGeneratorFlavour>().ToArray();
             // flavours = new[] {DataFlavour.Random, DataFlavour.StableRandom, DataFlavour.FortyTwo, DataFlavour.LoremIpsum, DataFlavour.ILCode};
             return flavours;
         }

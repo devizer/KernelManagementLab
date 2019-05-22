@@ -5,10 +5,17 @@ namespace KernelManagementJam.Benchmarks
 {
     public class ODirectCheck
     {
+        private static readonly int DefaultGranularity = 128 * 1024;
+
+        public static bool IsO_DirectSupported(string directory)
+        {
+            return IsO_DirectSupported(directory, DefaultGranularity);
+        }
+
         public static bool IsO_DirectSupported(string directory, int granularity)
         {
             if (granularity % 512 != 0)
-                throw new ArgumentException("granularity argument should be multiplier ");
+                throw new ArgumentException("granularity argument should be multiplier of 512", nameof(granularity));
                 
             string fileName = Path.Combine(
                 new DirectoryInfo(directory).FullName,
@@ -49,11 +56,6 @@ namespace KernelManagementJam.Benchmarks
             }
 
             return ret;
-        }
-
-        public static bool IsO_DirectSupported(string directory)
-        {
-            return IsO_DirectSupported(directory, 128 * 1024);
         }
 
         private static unsafe bool AreEquals(byte[] arrayOne, byte[] arrayTwo)
