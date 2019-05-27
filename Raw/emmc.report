@@ -1,0 +1,20 @@
+Disk: /ssd, Size: 100M, Block: 4096 bytes
+O_DIRECT is present
+[Completed]  100.0% 00:00:08     12M/s Allocate
+[Completed]  100.0% 00:00:02   37.8M/s Sequential read
+[Completed]  100.0% 00:00:06   15.8M/s Sequential write
+[Completed]  100.0% 00:00:20 6196.6K/s Random Read, 1 thread
+[Completed]  100.0% 00:00:20 1252.4K/s Random Write, 1 thread
+[Completed]  100.0% 00:00:20 6521.9K/s Random Read, 16 threads
+[Completed]  100.2% 00:00:20 1306.7K/s Random Write, 16 threads
+
+
+Disk: /ssd, Size: 100M, Block: 4096 bytes
+O_DIRECT is disabled
+[Completed]  100.0% 00:00:08   11.9M/s Allocate
+[Completed]  100.0% 00:00:02   37.9M/s Sequential read
+[Completed]  100.0% 00:00:04   16.6M/s Sequential write
+[Completed]  100.0% 00:00:20  181.8M/s Random Read, 1 thread
+[Completed]  100.0% 00:00:20 1448.9K/s Random Write, 1 thread
+[Completed]  100.0% 00:00:20  769.3M/s Random Read, 16 threads
+[Completed]  100.1% 00:00:20 1489.6K/s Random Write, 16 threads
