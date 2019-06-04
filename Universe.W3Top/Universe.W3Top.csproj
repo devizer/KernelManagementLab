@@ -34,6 +34,7 @@
         <Content Include="ClientApp\src\components\BlockStatChartContainer_V2.js" />
         <Content Include="ClientApp\src\components\BlockStatChartHeader.js" />
         <Content Include="ClientApp\src\components\BlockStatSecondChart.js" />
+        <Content Include="ClientApp\src\components\DiskBenchmarkDialog.js" />
         <Content Include="ClientApp\src\components\LimitFinder.js" />
         <Content Include="ClientApp\src\components\MaterialNav.js" />
         <Content Include="ClientApp\src\components\MountsList.js" />

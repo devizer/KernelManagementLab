@@ -15,6 +15,7 @@ import { BlockChartContainer_V2 } from './components/BlockStatChartContainer_V2'
 import { MountsList } from './components/MountsList';
 import dataSourceListener from './stores/DataSourceListener';
 import "./components/MyC3.css"
+import DiskBenchmarkDialog from "./components/DiskBenchmarkDialog";
 
 
 require('typeface-roboto')
@@ -67,6 +68,7 @@ export default class App extends Component {
                         <Route exact path='/net-v1' component={NetChartContainer} />
                         <Route exact path='/net-v2' component={NetChartContainer_V2} />
                         <Route exact path='/mounts' component={MountsList} />
+                        <Route exact path='/disk-benchmark-lab' component={DiskBenchmarkDialog} />
                         <Route path="*" component={App._404} />
                     </Switch>
             </Layout>

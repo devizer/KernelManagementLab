@@ -31,11 +31,9 @@ namespace ReactGraphLab
             services
                 .AddMvc(options => { options.Filters.Add(new KillerActionFilter()); })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
-            if (StartupOptions.NeedResponseCompression) services.AddResponseCompression(x =>
-                {
-                    x.MimeTypes = CompressedMimeTypes.List;
-                });
+
+            if (StartupOptions.NeedResponseCompression)
+                services.AddResponseCompression(x => { x.MimeTypes = CompressedMimeTypes.List; });
             
             services.AddHostedService<MeasurementAgent>();
 
