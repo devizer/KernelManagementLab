@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace KernelManagementJam
@@ -89,5 +92,18 @@ namespace KernelManagementJam
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public object DebugInfo { get; set; }
+    }
+
+    public static class DriveDetailsExtensions
+    {
+        private static readonly string[] ToSkip = new[] {"run", "sys", "dev"};
+
+        public static IEnumerable<DriveDetails> FilterForHuman(this IEnumerable<DriveDetails> list)
+        {
+            return list
+                .Where(x => x.TotalSize > 0)
+                .Where(x => !ToSkip.Any(skip =>
+                    x.MountEntry.MountPath == $"/{skip}" || x.MountEntry.MountPath.StartsWith($"/{skip}/")));
+        }
     }
 }

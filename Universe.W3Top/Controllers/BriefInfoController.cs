@@ -42,5 +42,4 @@ namespace ReactGraphLab.Controllers
         public List<string> BlockNames;
         public JObject NewVer;
     }
-
 }

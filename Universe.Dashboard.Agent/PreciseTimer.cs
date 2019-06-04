@@ -119,6 +119,8 @@ namespace Universe.Dashboard.Agent
             waiter.Start();
             waiterStarted.WaitOne();
         }
+        
+        
 
         private static long MessageId = 0;
         private static void FlushDataSource()
@@ -146,11 +148,7 @@ namespace Universe.Dashboard.Agent
                 
                 var blockStatStorage = BlockDiskDataSource.Instance.By_1_Seconds;
                 var blockStatView = BlockDiskDataSourceView.AsViewModel(blockStatStorage);
-                var toSkip = new[] {"run", "sys", "dev"};
-                List<DriveDetails> mounts = MountsDataSource.Mounts
-                    .Where(x => x.TotalSize > 0)
-                    .Where(x => !toSkip.Any( skip => x.MountEntry.MountPath == $"/{skip}" || x.MountEntry.MountPath.StartsWith($"/{skip}/")))
-                    .ToList();
+                List<DriveDetails> mounts = MountsDataSource.Mounts.FilterForHuman().ToList();
 
                 var swapsOriginal = SwapsDataSource.Swaps;
                 var swaps = swapsOriginal.Select(x => new DriveDetails()
