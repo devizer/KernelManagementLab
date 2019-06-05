@@ -245,11 +245,40 @@ function DiskBenchmarkDialog() {
         //setActiveStep(0);
     }
 
+    const startBenchmark = () => {
+        try {
+            const apiUrl = 'api/benchmark/disk/start';
+            const payload = {...options, mountPath: selectedDisk.mountEntry.mountPath};
+            const post={
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                method: "POST",
+                body: JSON.stringify(payload)
+                // body: `{"workingSet": 1024, "randomAccessDuration": 30, "blockSize": 4096 }`
+            };
+            fetch(apiUrl, post)
+                .then(response => {
+                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    console.log(response);
+                    console.log(response.body);
+                    return response.ok ? response.json() : {error: response.status, details: response}
+                })
+                .then(benchInfo => {
+                    Helper.toConsole("Disk Benchmark Info", benchInfo);
+                })
+                .catch(error => console.log(error));
+        }
+        catch(err)
+        {
+            console.log('FETCH failed. ' + err);
+        }
+    };
+    
     const handleSelectDisk = (disk) => setSelectedDisk(disk);
     const handleNext = () => {
         setActiveStep(activeStep + 1);
         if (activeStep === 1) // Perform
         {
+            startBenchmark();
             setTimeout(() => {
                 // if (canceled) return;
                 setActiveStep(3);

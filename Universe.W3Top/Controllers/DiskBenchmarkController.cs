@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KernelManagementJam;
 using KernelManagementJam.Benchmarks;
+using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore.Mvc;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.Agent;
@@ -11,7 +12,8 @@ using Universe.DiskBench;
 namespace ReactGraphLab.Controllers
 {
     [Route("api/benchmark/disk")]
-    public class DiskBenchmarkController
+    [ApiController]
+    public class DiskBenchmarkController : ControllerBase 
     {
         private DiskBenchmarkQueue Queue;
 
@@ -27,16 +29,19 @@ namespace ReactGraphLab.Controllers
         }
 
         [HttpPost, Route("start")]
-        BenchmarkResponse StartBenchmark(StartBenchmarkArgs options)
+        public BenchmarkResponse StartBenchmark(StartBenchmarkArgs options)
         {
+            // return new BenchmarkResponse() {Token = Guid.NewGuid()};
+            Console.WriteLine($"StartBenchmark options: {options.AsJson()}");
+
             DiskBenchmark diskBenchmark = new DiskBenchmark(options.MountPath,
-                fileSize: options.WorkingSet*1024L*1024L,
+                fileSize: options.WorkingSet * 1024L * 1024L,
                 DataGeneratorFlavour.ILCode,
                 options.BlockSize,
-                options.RandomAccessDuration,
+                options.RandomAccessDuration * 1000,
                 options.DisableODirect && false,
                 options.Threads
-                );
+            );
             
             Guid token = Guid.NewGuid();
             Queue.Enqueue(token, diskBenchmark);
@@ -70,12 +75,12 @@ namespace ReactGraphLab.Controllers
 
         public class StartBenchmarkArgs
         {
-            public string MountPath;
-            public int WorkingSet;
-            public int RandomAccessDuration;
-            public bool DisableODirect;
-            public int BlockSize;
-            public int Threads;
+            public string MountPath { get; set; }
+            public int WorkingSet { get; set; }
+            public int RandomAccessDuration { get; set; }
+            public bool DisableODirect { get; set; }
+            public int BlockSize { get; set; }
+            public int Threads { get; set; }
         }
 
         public class BenchmarkResponse
