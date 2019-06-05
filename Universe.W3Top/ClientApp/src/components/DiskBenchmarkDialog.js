@@ -62,15 +62,15 @@ const optionStyles = {
         flexWrap: 'wrap',
     },
     textField: {
-        marginLeft: 8,
-        marginRight: 8,
-        width: 200,
+        marginLeft: 0,
+        marginRight: 24,
+        width: 160,
     },
     dense: {
         marginTop: 19,
     },
     menu: {
-        width: 200,
+        width: 160,
     },
 };
 
@@ -230,14 +230,19 @@ function DiskBenchmarkDialog() {
     }
 
     function handleClickOpen() {
+        setDisks(null);
+        setOptions(defaultOptions);
+        setSelectedDisk(null);
         setActiveStep(0);
         setOpen(true);
-        initDisksSource();
-        
     }
 
     function handleClose() {
         setOpen(false);
+        //setDisks(null);
+        //setOptions(defaultOptions);
+        //setSelectedDisk(null);
+        //setActiveStep(0);
     }
 
     const handleSelectDisk = (disk) => setSelectedDisk(disk);
@@ -250,9 +255,12 @@ function DiskBenchmarkDialog() {
                 setActiveStep(3);
             }, 5000);
         }
-    }
+    };
+    
     const handleBack = () => setActiveStep(activeStep - 1);
     const handleReset = () => { 
+        setDisks(null);
+        setOptions(defaultOptions);
         setSelectedDisk(null);
         setActiveStep(0); 
     };

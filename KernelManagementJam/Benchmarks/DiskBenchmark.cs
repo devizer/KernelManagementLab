@@ -51,8 +51,9 @@ namespace Universe.Benchmark.DiskBench
                 DisableODirect = disableODirect,
                 ThreadsNumber = threadsNumber,
             };
-            
-            TempFile = Path.Combine(new DirectoryInfo(Parameters.WorkFolder).FullName, TempName);
+
+            var workFolderFullName = new DirectoryInfo(Parameters.WorkFolder).FullName;
+            TempFile = Path.Combine(workFolderFullName, TempName);
             BuildProgress();
         }
         
@@ -99,8 +100,20 @@ namespace Universe.Benchmark.DiskBench
 
         public void Perform()
         {
+            try
+            {
+                Perform_Impl();
+            }
+            finally
+            {
+                Prorgess.IsCompleted = true;
+            }
+        }
+
+        private void Perform_Impl()
+        {
             Random random = new Random();
-            
+
             Func<FileStream> getFileWriter = () =>
             {
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
@@ -109,13 +122,12 @@ namespace Universe.Benchmark.DiskBench
 
             Func<Stream> getFileReader = () =>
             {
-                
                 // if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 //    return new LinuxDirectReadonlyFileStream(TempFile, RandomAccessBlockSize);
-                
+
                 if (!Parameters.DisableODirect && _isODirectSupported)
                     return new LinuxDirectReadonlyFileStreamV2(TempFile, this.Parameters.RandomAccessBlockSize);
-                        
+
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
                     this.Parameters.RandomAccessBlockSize, FileOptions.WriteThrough);
             };
@@ -139,7 +151,7 @@ namespace Universe.Benchmark.DiskBench
                 fs.Write(buffer, 0, count);
                 return count;
             };
-            
+
             try
             {
                 if (!Parameters.DisableODirect) CheckODirect();
@@ -156,7 +168,7 @@ namespace Universe.Benchmark.DiskBench
                 _cleanUp.Start();
                 if (File.Exists(TempFile))
                     File.Delete(TempFile);
-                
+
                 _cleanUp.Complete();
             }
         }

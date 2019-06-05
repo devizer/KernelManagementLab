@@ -13,6 +13,13 @@ namespace ReactGraphLab.Controllers
     [Route("api/benchmark/disk")]
     public class DiskBenchmarkController
     {
+        private DiskBenchmarkQueue Queue;
+
+        public DiskBenchmarkController(DiskBenchmarkQueue queue)
+        {
+            Queue = queue;
+        }
+
         [HttpGet, Route("get-disks")]
         public List<DriveDetails> GetList()
         {
@@ -31,13 +38,34 @@ namespace ReactGraphLab.Controllers
                 options.Threads
                 );
             
-            throw new NotImplementedException();
+            Guid token = Guid.NewGuid();
+            Queue.Enqueue(token, diskBenchmark);
+            return new BenchmarkResponse()
+            {
+                Token = token,
+                Progress = diskBenchmark.Prorgess.Clone(),
+            };
         }
 
         [HttpPost, Route("get-progress")]
         public BenchmarkResponse GetProgress(Guid benchmarkToken)
         {
-            throw new NotImplementedException();
+            var benchmark = Queue.Find(benchmarkToken);
+            if (benchmark == null)
+            {
+                return new BenchmarkResponse()
+                {
+                    Token = benchmarkToken,
+                    Progress = null,
+                };
+            }
+            
+            return new BenchmarkResponse()
+            {
+                Token = benchmarkToken,
+                Progress = benchmark.Prorgess.Clone(),
+            };
+            
         }
 
         public class StartBenchmarkArgs

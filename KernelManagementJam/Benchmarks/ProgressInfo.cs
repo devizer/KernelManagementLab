@@ -4,6 +4,7 @@ namespace Universe.DiskBench
 {
     public class ProgressInfo
     {
+        public bool IsCompleted { get; set; }
         public List<ProgressStep> Steps { get; private set; }
 
         public ProgressInfo()
@@ -17,7 +18,7 @@ namespace Universe.DiskBench
             foreach (var step in Steps)
                 steps.Add(step.Clone());
 
-            return new ProgressInfo() {Steps = steps};
+            return new ProgressInfo() {IsCompleted = IsCompleted, Steps = steps};
         }
     }
 }

@@ -27,6 +27,13 @@ namespace ReactGraphLab
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            new DashboardContext().Database.Migrate();
+            services.AddDbContext<DashboardContext>(options =>
+            {
+                options.ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbFullPath);
+            });
+
+            services.AddSingleton<DiskBenchmarkQueue>(new DiskBenchmarkQueue(() => new DashboardContext()));
             
             services
                 .AddMvc(options => { options.Filters.Add(new KillerActionFilter()); })
@@ -44,14 +51,9 @@ namespace ReactGraphLab
                 
             });
 
-            services.AddDbContext<DashboardContext>(options =>
-            {
-                options.ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbFullPath);
-            });
             
             // As same db is used for both design and runtime we pre-cache and pre-jit db access
             // using default ctor
-            new DashboardContext().Database.Migrate();
             
             NewVersionFetcher.Configure();
             Stopwatch sw = Stopwatch.StartNew();
