@@ -14,14 +14,8 @@ namespace Universe.Benchmark.DiskBench
 {
     public class DiskBenchmark
     {
+        public DiskBenchmarkOptions Parameters { get; set; }
         public ProgressInfo Prorgess { get; private set; }
-        private string WorkFolder { get; }
-        private int StepDuration { get; }
-        private long FileSize { get; }
-        private DataGeneratorFlavour Flavour { get; }
-
-        private int RandomAccessBlockSize { get; }
-        private bool DisableODirect { get; }
         
         static readonly string TempName = "benchmark.tmp";
         private string TempFile;
@@ -43,23 +37,28 @@ namespace Universe.Benchmark.DiskBench
             DataGeneratorFlavour flavour = DataGeneratorFlavour.Random, 
             int randomAccessBlockSize = 4 * 1024,
             int stepDuration = 20000,
-            bool disableODirect = false
+            bool disableODirect = false,
+            int threadsNumber = 16
         )
         {
-            WorkFolder = workFolder;
-            FileSize = fileSize;
-            Flavour = flavour;
-            RandomAccessBlockSize = randomAccessBlockSize;
-            StepDuration = stepDuration;
-            DisableODirect = disableODirect;
+            Parameters = new DiskBenchmarkOptions()
+            {
+                WorkFolder = workFolder,
+                FileSize = fileSize,
+                Flavour = flavour,
+                RandomAccessBlockSize = randomAccessBlockSize,
+                StepDuration = stepDuration,
+                DisableODirect = disableODirect,
+                ThreadsNumber = threadsNumber,
+            };
             
-            TempFile = Path.Combine(new DirectoryInfo(WorkFolder).FullName, TempName);
+            TempFile = Path.Combine(new DirectoryInfo(Parameters.WorkFolder).FullName, TempName);
             BuildProgress();
         }
         
         void BuildProgress()
         {
-            if (DisableODirect)
+            if (Parameters.DisableODirect)
             {
                 _checkODirect = new ProgressStep("O_DIRECT is disabled");
                 _isODirectSupported = false;
@@ -76,8 +75,8 @@ namespace Universe.Benchmark.DiskBench
             _seqWrite = new ProgressStep("Sequential write");
             _rndRead1T = new ProgressStep("Random Read, 1 thread");
             _rndWrite1T = new ProgressStep("Random Write, 1 thread");
-            _rndReadN = new ProgressStep("Random Read, 16 threads");
-            _rndWriteN = new ProgressStep("Random Write, 16 threads");
+            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads");
+            _rndWriteN = new ProgressStep($"Random Write, {Parameters.ThreadsNumber} threads");
             _cleanUp = new ProgressStep("Clean up");
             
             this.Prorgess = new ProgressInfo()
@@ -105,7 +104,7 @@ namespace Universe.Benchmark.DiskBench
             Func<FileStream> getFileWriter = () =>
             {
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
-                    this.RandomAccessBlockSize, FileOptions.WriteThrough);
+                    this.Parameters.RandomAccessBlockSize, FileOptions.WriteThrough);
             };
 
             Func<Stream> getFileReader = () =>
@@ -114,28 +113,28 @@ namespace Universe.Benchmark.DiskBench
                 // if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 //    return new LinuxDirectReadonlyFileStream(TempFile, RandomAccessBlockSize);
                 
-                if (!DisableODirect && _isODirectSupported)
-                    return new LinuxDirectReadonlyFileStreamV2(TempFile, this.RandomAccessBlockSize);
+                if (!Parameters.DisableODirect && _isODirectSupported)
+                    return new LinuxDirectReadonlyFileStreamV2(TempFile, this.Parameters.RandomAccessBlockSize);
                         
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
-                    this.RandomAccessBlockSize, FileOptions.WriteThrough);
+                    this.Parameters.RandomAccessBlockSize, FileOptions.WriteThrough);
             };
 
             Func<Stream, byte[], int> doRead = (fs, buffer) =>
             {
-                long maxIndex = FileSize / RandomAccessBlockSize;
-                long pos = RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
-                int count = (int) Math.Min(FileSize - pos, RandomAccessBlockSize);
-                if (count != RandomAccessBlockSize) return 0; // slip
+                long maxIndex = Parameters.FileSize / Parameters.RandomAccessBlockSize;
+                long pos = Parameters.RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
+                int count = (int) Math.Min(Parameters.FileSize - pos, Parameters.RandomAccessBlockSize);
+                if (count != Parameters.RandomAccessBlockSize) return 0; // slip
                 fs.Position = pos;
                 return fs.Read(buffer, 0, count);
             };
 
             Func<Stream, byte[], int> doWrite = (fs, buffer) =>
             {
-                long maxIndex = FileSize / RandomAccessBlockSize;
-                long pos = RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
-                int count = (int) Math.Min(FileSize - pos, RandomAccessBlockSize);
+                long maxIndex = Parameters.FileSize / Parameters.RandomAccessBlockSize;
+                long pos = Parameters.RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
+                int count = (int) Math.Min(Parameters.FileSize - pos, Parameters.RandomAccessBlockSize);
                 fs.Position = pos;
                 fs.Write(buffer, 0, count);
                 return count;
@@ -143,14 +142,14 @@ namespace Universe.Benchmark.DiskBench
             
             try
             {
-                if (!DisableODirect) CheckODirect();
+                if (!Parameters.DisableODirect) CheckODirect();
                 Allocate();
                 SeqRead();
                 SeqWrite();
-                RandomAccess(_rndRead1T, 1, getFileReader, doRead, StepDuration);
-                RandomAccess(_rndWrite1T, 1, getFileWriter, doWrite, StepDuration);
-                RandomAccess(_rndReadN, 16, getFileReader, doRead, StepDuration);
-                RandomAccess(_rndWriteN, 16, getFileWriter, doWrite, StepDuration);
+                RandomAccess(_rndRead1T, 1, getFileReader, doRead, Parameters.StepDuration);
+                RandomAccess(_rndWrite1T, 1, getFileWriter, doWrite, Parameters.StepDuration);
+                RandomAccess(_rndReadN, Parameters.ThreadsNumber, getFileReader, doRead, Parameters.StepDuration);
+                RandomAccess(_rndWriteN, Parameters.ThreadsNumber, getFileWriter, doWrite, Parameters.StepDuration);
             }
             finally
             {
@@ -169,7 +168,7 @@ namespace Universe.Benchmark.DiskBench
             _isODirectSupported = false;
             try
             {
-                _isODirectSupported = ODirectCheck.IsO_DirectSupported(WorkFolder, 128 * 1024);
+                _isODirectSupported = ODirectCheck.IsO_DirectSupported(Parameters.WorkFolder, 128 * 1024);
             }
             catch
             {
@@ -181,19 +180,19 @@ namespace Universe.Benchmark.DiskBench
         
         private void Allocate()
         {
-            byte[] buffer = new byte[Math.Min(128 * 1024, this.FileSize)];
+            byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.FileSize)];
             // new Random().NextBytes(buffer);
-            new DataGenerator(Flavour).NextBytes(buffer);
+            new DataGenerator(Parameters.Flavour).NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, FileOptions.WriteThrough))
             {
                 _allocate.Start();
                 long len = 0;
-                while (len < this.FileSize)
+                while (len < this.Parameters.FileSize)
                 {
-                    var count = (int) Math.Min(this.FileSize - len, buffer.Length);
+                    var count = (int) Math.Min(this.Parameters.FileSize - len, buffer.Length);
                     fs.Write(buffer, 0, count);
                     len += count;
-                    _allocate.Progress(len / (double) FileSize, len);
+                    _allocate.Progress(len / (double) Parameters.FileSize, len);
                 }
                 _allocate.Complete();
             }
@@ -203,19 +202,19 @@ namespace Universe.Benchmark.DiskBench
         private void SeqRead()
         {
             Sync();
-            byte[] buffer = new byte[Math.Min(1024 * 1024, this.FileSize)];
+            byte[] buffer = new byte[Math.Min(1024 * 1024, this.Parameters.FileSize)];
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
             // using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
             {
                 _seqRead.Start();
                 long len = 0;
-                while (len < this.FileSize)
+                while (len < this.Parameters.FileSize)
                 {
-                    var count = (int) Math.Min(this.FileSize - len, buffer.Length);
+                    var count = (int) Math.Min(this.Parameters.FileSize - len, buffer.Length);
                     int n = fs.Read(buffer, 0, count);
                     len += n;
-                    _seqRead.Progress(len / (double) FileSize, len);
-                    if (len >= FileSize) fs.Position = 0;
+                    _seqRead.Progress(len / (double) Parameters.FileSize, len);
+                    if (len >= Parameters.FileSize) fs.Position = 0;
                 }
                 _seqRead.Complete();
             }
@@ -226,18 +225,18 @@ namespace Universe.Benchmark.DiskBench
             Sync();
             byte[] buffer = new byte[1024 * 1024];
             // new Random().NextBytes(buffer);
-            new DataGenerator(Flavour).NextBytes(buffer);
+            new DataGenerator(Parameters.Flavour).NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite, buffer.Length, FileOptions.WriteThrough))
             {
                 _seqWrite.Start();
                 long len = 0;
-                while (len < this.FileSize)
+                while (len < this.Parameters.FileSize)
                 {
-                    var count = (int)Math.Max(1, Math.Min(buffer.Length, this.FileSize - buffer.Length));
+                    var count = (int)Math.Max(1, Math.Min(buffer.Length, this.Parameters.FileSize - buffer.Length));
                     fs.Write(buffer, 0, count);
                     len += count;
-                    _seqWrite.Progress(len / (double) FileSize, len);
-                    if (len >= FileSize) fs.Position = 0;
+                    _seqWrite.Progress(len / (double) Parameters.FileSize, len);
+                    if (len >= Parameters.FileSize) fs.Position = 0;
                 }
                 _seqWrite.Complete();
             }
@@ -273,9 +272,9 @@ namespace Universe.Benchmark.DiskBench
                     {
                         using (Stream fs = getFileStream())
                         {
-                            byte[] buffer = new byte[RandomAccessBlockSize];
+                            byte[] buffer = new byte[Parameters.RandomAccessBlockSize];
                             // new Random().NextBytes(buffer);
-                            new DataGenerator(Flavour).NextBytes(buffer);
+                            new DataGenerator(Parameters.Flavour).NextBytes(buffer);
                             started.Signal();
                             started.Wait();
                             Stopwatch stopwatch = getStopwatch();
@@ -395,8 +394,6 @@ namespace Universe.Benchmark.DiskBench
 #endif
                 return -1;
             }
-            
         }
-
     }
 }

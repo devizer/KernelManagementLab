@@ -50,7 +50,12 @@ namespace Universe.DiskBench
 
         public string Duration
         {
-            get { return new DateTime(0).Add(StartAt.Elapsed).ToString("HH:mm:ss"); }
+            get
+            {
+                return StartAt == null
+                    ? null
+                    : new DateTime(0).Add(StartAt.Elapsed).ToString("HH:mm:ss");
+            }
         }
         
         public double? ETA

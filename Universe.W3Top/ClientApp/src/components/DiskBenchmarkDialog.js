@@ -188,7 +188,7 @@ function DiskBenchmarkDialog() {
         setSelectedDisk(null);
         setDisks(null);
         try {
-            let apiUrl = 'api/benchmark/disk/get-list';
+            let apiUrl = 'api/benchmark/disk/get-disks';
             fetch(apiUrl)
                 .then(response => {
                     console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);

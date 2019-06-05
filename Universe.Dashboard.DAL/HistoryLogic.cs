@@ -1,7 +1,4 @@
-using System.IO;
 using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Universe.Dashboard.DAL
 {
@@ -23,7 +20,7 @@ namespace Universe.Dashboard.DAL
                 return false;
             }
 
-            value = ParseJson<T>(entity.JsonBlob);
+            value = JsonDbConverter.ParseJson<T>(entity.JsonBlob);
             return true;
         }
         
@@ -40,10 +37,10 @@ namespace Universe.Dashboard.DAL
             }
             else
             {
-                var json = AsJson(value);
+                var json = JsonDbConverter.AsJson(value);
                 if (entity == null)
                 {
-                    entity = new HistoryCopy() {Key = key, JsonBlob = AsJson(value)};
+                    entity = new HistoryCopy() {Key = key, JsonBlob = json};
                     _DbContext.HistoryCopy.Add(entity);
                 }
                 else
@@ -55,33 +52,6 @@ namespace Universe.Dashboard.DAL
             _DbContext.SaveChanges();
         }
         
-        static string AsJson(object arg)
-        {
-            JsonSerializer ser = new JsonSerializer()
-            {
-                Formatting = Formatting.None,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            };
-
-            StringBuilder json = new StringBuilder();
-            StringWriter jwr = new StringWriter(json);
-            ser.Serialize(jwr, arg);
-            jwr.Flush();
-
-            return json.ToString();
-        }
-
-        static T ParseJson<T>(string asJson)
-        {
-            JsonSerializer ser = new JsonSerializer()
-            {
-                Formatting = Formatting.None,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            };
-
-            JsonTextReader jsonReader = new JsonTextReader(new StringReader(asJson));
-            return ser.Deserialize<T>(jsonReader);
-        }
 
     }
 }
