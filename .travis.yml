@@ -26,5 +26,7 @@ script:
  - url=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash -s dotnet node pwsh
  - dotnet restore /v:m
  - pushd Universe.W3Top/ClientApp; time yarn install; popd
- - time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r linux-x64 /v:m
+ - time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service /v:m
  - time dotnet test
+ - cd Universe.W3Top
+ - time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service2 --self-contained -r linux-x64 /v:m
