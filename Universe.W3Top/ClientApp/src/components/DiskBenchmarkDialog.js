@@ -74,10 +74,6 @@ const optionStyles = {
     },
 };
 
-function getSteps() {
-    return ['Select', 'Tune', 'Perform', "Done"];
-}
-
 const defaultOptions = {
     workingSet: 1024,
     randomAccessDuration: 30,
@@ -129,13 +125,13 @@ function DiskBenchmarkDialog() {
     const handleChangeOption = name => event => {
         let tempOptions = {...options};
         tempOptions[name] = event.target.value;
-        console.log(`Benchmark options [${name}] set to "${event.target.value}"`);
         validateOptions(tempOptions);
         setOptions(tempOptions);
     };
     
     
     function renderStepTuneOptions() {
+        const errorText = value => value ? value : " ";
         return (
             <form className={optionStyles.container} noValidate autoComplete="off">
                 <Typography>Benchmark options:</Typography>
@@ -148,7 +144,7 @@ function DiskBenchmarkDialog() {
                     onChange={handleChangeOption('workingSet')}
                     margin="normal"
                     error={options.errors.workingSet}
-                    helperText={options.errors.workingSet ? options.errors.workingSet : " "}
+                    helperText={errorText(options.errors.workingSet)}
                 />
 
                 <TextField
@@ -159,18 +155,18 @@ function DiskBenchmarkDialog() {
                     onChange={handleChangeOption('blockSize')}
                     margin="normal"
                     error={options.errors.blockSize}
-                    helperText={options.errors.blockSize ? options.errors.blockSize : " "}
+                    helperText={errorText(options.errors.blockSize)}
                 />
 
                 <TextField
                     id="benchmark-options-threads"
-                    label="Threads"
+                    label="Threads Number"
                     style={optionStyles.textField}
                     value={options.threads}
                     onChange={handleChangeOption('threads')}
                     margin="normal"
                     error={options.errors.threads}
-                    helperText={options.errors.threads ? options.errors.threads : " "}
+                    helperText={errorText(options.errors.threads)}
                 />
 
                 <TextField
@@ -181,17 +177,15 @@ function DiskBenchmarkDialog() {
                     onChange={handleChangeOption('randomAccessDuration')}
                     margin="normal"
                     error={options.errors.randomAccessDuration}
-                    helperText={options.errors.randomAccessDuration ? options.errors.randomAccessDuration : " "}
+                    helperText={errorText(options.errors.randomAccessDuration)}
                 />
                 
-                
             </form>
-
-            )
+        )
     }
     
-    
     function initDisksSource() {
+        setSelectedDisk(null);
         setDisks(null);
         try {
             let apiUrl = 'api/benchmark/disk/get-list';
@@ -222,10 +216,12 @@ function DiskBenchmarkDialog() {
             <React.Fragment>
                 {/* <Typography>Choose disk:</Typography> */}   
                 {disks.map(disk => (
-                <React.Fragment>
-                    <Chip label={disk.mountEntry.mountPath} style={styles.diskChips} 
-                        color={disk === selectedDisk ? "primary" : ""}
-                          onClick={() => handleSelectDisk(disk)}
+                <React.Fragment key={disk.mountEntry.mountPath}>
+                    <Chip 
+                        label={disk.mountEntry.mountPath} 
+                        style={styles.diskChips} 
+                        color={disk === selectedDisk ? "primary" : "default"} 
+                        onClick={() => handleSelectDisk(disk)}
                     />{' '}
                 </React.Fragment>
             ))}
@@ -234,8 +230,10 @@ function DiskBenchmarkDialog() {
     }
 
     function handleClickOpen() {
+        setActiveStep(0);
         setOpen(true);
         initDisksSource();
+        
     }
 
     function handleClose() {
@@ -243,16 +241,28 @@ function DiskBenchmarkDialog() {
     }
 
     const handleSelectDisk = (disk) => setSelectedDisk(disk);
-    const handleNext = () => setActiveStep(activeStep + 1);
+    const handleNext = () => {
+        setActiveStep(activeStep + 1);
+        if (activeStep === 1) // Perform
+        {
+            setTimeout(() => {
+                setActiveStep(3);
+            }, 5000);
+        }
+    }
     const handleBack = () => setActiveStep(activeStep - 1);
     const handleReset = () => { 
         setSelectedDisk(null);
         setActiveStep(0); 
     };
 
-    const steps = getSteps();
+    const steps = ['Select', 'Configure', activeStep === 3 ?"Done" : "Run"];
     const classes = styles;
     const fakeContent = (<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>);
+    const nextButtonNames = ["Next »", "Start", "Waiting", "Done", "Done"];
+    const closeButtonNames = ["Cancel", "Cancel", "Cancel", "Cancel", "Close"];
+    const isBackAllowed = activeStep === 1;
+    const isNextDisabled = selectedDisk === null || (activeStep === 1 && !options.errors.isValid) || activeStep === 2;
     
     return (
         <div>
@@ -283,7 +293,7 @@ function DiskBenchmarkDialog() {
                         <div>
                             
                             <Button variant="contained"
-                                    disabled={activeStep === 0}
+                                    disabled={!isBackAllowed}
                                     onClick={handleBack}
                                     style={classes.wizardButton}
                             >
@@ -291,11 +301,11 @@ function DiskBenchmarkDialog() {
                             </Button>
                             
                             <Button variant="contained" 
-                                    disabled={selectedDisk === null || (activeStep === 1 && !options.errors.isValid)}
+                                    disabled={isNextDisabled}
                                     color="primary" 
                                     onClick={handleNext} 
                                     style={classes.wizardButton}>
-                                {activeStep === steps.length - 1 ? 'Finish ' : 'Next »'}
+                                {nextButtonNames[activeStep]}
                             </Button>
 
                             <Button variant="contained"
@@ -303,7 +313,7 @@ function DiskBenchmarkDialog() {
                                     onClick={handleClose}
                                     style={classes.wizardButton}
                             >
-                                Cancel
+                                {closeButtonNames[activeStep]}
                             </Button>
                         </div>
                     )}
