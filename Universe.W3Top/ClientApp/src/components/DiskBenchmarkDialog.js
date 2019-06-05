@@ -16,12 +16,11 @@ import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 import DoneIcon from '@material-ui/icons/Done';
 
+import MenuItem from '@material-ui/core/MenuItem';
 
 import * as Enumerable from "linq-es2015";
 import * as DataSourceActions from "../stores/DataSourceActions";
 import * as Helper from "../Helper";
-
-
 
 
 const styles = {
@@ -57,16 +56,56 @@ const styles = {
     }
 };
 
+const optionStyles = {
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: 8,
+        marginRight: 8,
+        width: 200,
+    },
+    dense: {
+        marginTop: 19,
+    },
+    menu: {
+        width: 200,
+    },
+};
+
 function getSteps() {
     return ['Select', 'Tune', 'Perform', "Done"];
 }
 
+const defaultOptions = {
+    workingSet: 1024,
+    randomAccessDuration: 30,
+    disableODirect: false,
+    blockSize: 4096,
+    threads: 16,
+    errors: {isValid: true},
+};
+
+const validateOptions = (options) => {
+    options.errors = {isValid: true};
+    const numberFields = ["workingSet", "randomAccessDuration", "blockSize", "threads"];
+    numberFields.map(name => {
+        let errorText = Helper.Numbers.isInt(options[name]) && Helper.Numbers.greaterOrEqual(options[name],1)
+            ? null
+            : "Should be a valid number";
+        
+        options.errors[name] = errorText;
+        if (errorText) options.errors.isValid = false; 
+    });
+};
 
 function DiskBenchmarkDialog() {
     const [open, setOpen] = React.useState(true);
     const [activeStep, setActiveStep] = React.useState(0);
     const [disks, setDisks] = React.useState(null);
     const [selectedDisk, setSelectedDisk] = React.useState(null);
+    const [options, setOptions] = React.useState(defaultOptions);
 
     React.useEffect(() => {
         if (disks === null) initDisksSource(); 
@@ -77,7 +116,7 @@ function DiskBenchmarkDialog() {
             case 0:
                 return renderStepSelectDisk();
             case 1:
-                return 'Tune benchmark options...';
+                return renderStepTuneOptions();
             case 2:
                 return 'Perform...';
             case 3:
@@ -86,6 +125,71 @@ function DiskBenchmarkDialog() {
                 return 'Unknown stepIndex';
         }
     }
+
+    const handleChangeOption = name => event => {
+        let tempOptions = {...options};
+        tempOptions[name] = event.target.value;
+        console.log(`Benchmark options [${name}] set to "${event.target.value}"`);
+        validateOptions(tempOptions);
+        setOptions(tempOptions);
+    };
+    
+    
+    function renderStepTuneOptions() {
+        return (
+            <form className={optionStyles.container} noValidate autoComplete="off">
+                <Typography>Benchmark options:</Typography>
+
+                <TextField
+                    id="benchmark-options-working-set"
+                    label="Working Set (Mb)"
+                    style={optionStyles.textField}
+                    value={options.workingSet}
+                    onChange={handleChangeOption('workingSet')}
+                    margin="normal"
+                    error={options.errors.workingSet}
+                    helperText={options.errors.workingSet ? options.errors.workingSet : " "}
+                />
+
+                <TextField
+                    id="benchmark-options-block-size"
+                    label="Block Size (bytes)"
+                    style={optionStyles.textField}
+                    value={options.blockSize}
+                    onChange={handleChangeOption('blockSize')}
+                    margin="normal"
+                    error={options.errors.blockSize}
+                    helperText={options.errors.blockSize ? options.errors.blockSize : " "}
+                />
+
+                <TextField
+                    id="benchmark-options-threads"
+                    label="Threads"
+                    style={optionStyles.textField}
+                    value={options.threads}
+                    onChange={handleChangeOption('threads')}
+                    margin="normal"
+                    error={options.errors.threads}
+                    helperText={options.errors.threads ? options.errors.threads : " "}
+                />
+
+                <TextField
+                    id="benchmark-options-duration"
+                    label="Duration (seconds)"
+                    style={optionStyles.textField}
+                    value={options.randomAccessDuration}
+                    onChange={handleChangeOption('randomAccessDuration')}
+                    margin="normal"
+                    error={options.errors.randomAccessDuration}
+                    helperText={options.errors.randomAccessDuration ? options.errors.randomAccessDuration : " "}
+                />
+                
+                
+            </form>
+
+            )
+    }
+    
     
     function initDisksSource() {
         setDisks(null);
@@ -137,12 +241,11 @@ function DiskBenchmarkDialog() {
     function handleClose() {
         setOpen(false);
     }
-    
-    let handleSelectDisk = (disk) => setSelectedDisk(disk);
 
-    let handleNext = () => setActiveStep(activeStep + 1);
-    let handleBack = () => setActiveStep(activeStep - 1);
-    let handleReset = () => { 
+    const handleSelectDisk = (disk) => setSelectedDisk(disk);
+    const handleNext = () => setActiveStep(activeStep + 1);
+    const handleBack = () => setActiveStep(activeStep - 1);
+    const handleReset = () => { 
         setSelectedDisk(null);
         setActiveStep(0); 
     };
@@ -151,22 +254,10 @@ function DiskBenchmarkDialog() {
     const classes = styles;
     const fakeContent = (<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>);
     
-    // (Enumerable.Range(1,100).ToArray().map(
-    const longFakeContent = () => (
-        <React.Fragment>
-            {Enumerable.Range(1,100).ToArray().map( x=> (
-                <React.Fragment>
-                    <Typography className={classes.instructions}>{101-x}: {getStepContent(activeStep)}</Typography>
-                </React.Fragment>
-            ))}
-        </React.Fragment>
-    );
-    
-
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Open form dialog
+                Open benchmark dialog
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>
                 <DialogTitle id="form-dialog-title">Benchmark a local or network disk</DialogTitle>
@@ -200,7 +291,7 @@ function DiskBenchmarkDialog() {
                             </Button>
                             
                             <Button variant="contained" 
-                                    disabled={selectedDisk === null}
+                                    disabled={selectedDisk === null || (activeStep === 1 && !options.errors.isValid)}
                                     color="primary" 
                                     onClick={handleNext} 
                                     style={classes.wizardButton}>

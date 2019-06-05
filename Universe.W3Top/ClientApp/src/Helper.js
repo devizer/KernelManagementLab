@@ -42,6 +42,35 @@ export class Chart {
     }
 }
 
+export class Numbers
+{
+    static isInRange(arg, minNumber, maxNumber)
+    {
+        const v = Number.parseFloat(arg);
+        return v >= minNumber && v <= maxNumber;
+    }
+
+    static greaterOrEqual(arg, minNumber)
+    {
+        const v = Number.parseFloat(arg);
+        return v >= minNumber;
+    }
+    
+    static isInt(value)
+    {
+        return !isNaN(Numbers.filterInt(value));
+    }
+
+    static filterInt (value) {
+        if (/^(\-|\+)?([0-9]+|Infinity)$/.test(value)) {
+            return Number(value);
+        }
+        
+        return NaN;
+    }
+
+}
+
 export class Common {
     
     static tryGetProperty(obj, propertyName) {
