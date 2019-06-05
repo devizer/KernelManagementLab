@@ -27,3 +27,4 @@ script:
  - dotnet restore /v:m
  - pushd Universe.W3Top/ClientApp; time yarn install; popd
  - time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r linux-x64 /v:m
+ - time dotnet test
