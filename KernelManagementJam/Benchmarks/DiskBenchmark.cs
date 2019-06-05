@@ -61,7 +61,7 @@ namespace Universe.Benchmark.DiskBench
         {
             if (Parameters.DisableODirect)
             {
-                _checkODirect = new ProgressStep("O_DIRECT is disabled");
+                _checkODirect = new ProgressStep("Direct Access is disabled");
                 _isODirectSupported = false;
                 _checkODirect.Start();
                 _checkODirect.Complete();
@@ -186,7 +186,7 @@ namespace Universe.Benchmark.DiskBench
             {
             }
 
-            _checkODirect.Name = _isODirectSupported ? "O_DIRECT is present" : "O_DIRECT is absent";
+            _checkODirect.Name = _isODirectSupported ? "Direct Access is present" : "Direct Access is absent";
             _checkODirect.Complete();
         }
         

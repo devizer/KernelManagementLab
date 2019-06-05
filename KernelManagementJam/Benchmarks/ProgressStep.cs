@@ -37,6 +37,7 @@ namespace Universe.DiskBench
         public void Complete()
         {
             State = ProgressStepState.Completed;
+            // Seconds = StartAt.ElapsedMilliseconds / 1000d;
             StartAt.Stop();
         }
 
@@ -46,6 +47,17 @@ namespace Universe.DiskBench
             Seconds = StartAt.ElapsedMilliseconds / 1000d;
             Bytes = bytes;
         }
+
+        public double? AvgBytesPerSecond
+        {
+            get
+            {
+                var s = Seconds.GetValueOrDefault();
+                return s > 0 ? Bytes / s : (double?) null;
+            }
+        }
+        
+        
 
 
         public string Duration

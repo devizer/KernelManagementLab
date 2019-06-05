@@ -96,12 +96,16 @@ const validateOptions = (options) => {
     });
 };
 
+let timer = null;
+let token = null;
+
 function DiskBenchmarkDialog() {
     const [open, setOpen] = React.useState(true);
     const [activeStep, setActiveStep] = React.useState(0);
     const [disks, setDisks] = React.useState(null);
     const [selectedDisk, setSelectedDisk] = React.useState(null);
     const [options, setOptions] = React.useState(defaultOptions);
+    const [progress, setProgress] = React.useState(null);
 
     React.useEffect(() => {
         if (disks === null) initDisksSource(); 
@@ -114,7 +118,7 @@ function DiskBenchmarkDialog() {
             case 1:
                 return renderStepTuneOptions();
             case 2:
-                return 'Perform...';
+                return renderStepProgress();
             case 3:
                 return 'Welldone';
             default:
@@ -244,6 +248,48 @@ function DiskBenchmarkDialog() {
         //setSelectedDisk(null);
         //setActiveStep(0);
     }
+    
+    const renderStepProgress = function() {
+        const pro = progress ? progress : {isCompleted: false, steps: []};
+        const formatSpeed = (x) => {let ret = Helper.Common.formatBytes(x); return ret === null ? "" : `${ret}/s`};
+        return (
+            <React.Fragment>
+                {pro.steps.map(step => (
+                    <React.Fragment key={step.name}>
+                        <Typography>
+                            {step.state}, {step.name}, {step.duration}, {formatSpeed(step.avgBytesPerSecond)} 
+                        </Typography>
+                    </React.Fragment>
+                ))}
+            </React.Fragment>
+        )
+    };
+    
+    const progressTick = () => {
+        try {
+            const apiUrl = `api/benchmark/disk/get-disk-progress-${token}`;
+            fetch(apiUrl)
+                .then(response => {
+                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    console.log(response);
+                    console.log(response.body);
+                    return response.ok ? response.json() : {error: response.status, details: response}
+                })
+                .then(benchInfo => {
+                    Helper.toConsole("Disk Benchmark Progress", benchInfo);
+                    if (benchInfo.progress)
+                        setProgress(benchInfo.progress);
+                    else {
+                        // clearInterval(timer);timer = 0;
+                    }
+                })
+                .catch(error => Helper.toConsole(`FETCH for ${apiUrl} failed`, error));
+        }
+        catch(err)
+        {
+            console.log('FETCH failed. ' + err);
+        }
+    };
 
     const startBenchmark = () => {
         try {
@@ -255,6 +301,8 @@ function DiskBenchmarkDialog() {
                 body: JSON.stringify(payload)
                 // body: `{"workingSet": 1024, "randomAccessDuration": 30, "blockSize": 4096 }`
             };
+            
+            
             fetch(apiUrl, post)
                 .then(response => {
                     console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -264,6 +312,9 @@ function DiskBenchmarkDialog() {
                 })
                 .then(benchInfo => {
                     Helper.toConsole("Disk Benchmark Info", benchInfo);
+                    token = benchInfo.token;
+                    setProgress(benchInfo.progress);
+                    timer = setInterval(progressTick, 100);
                 })
                 .catch(error => console.log(error));
         }
@@ -279,10 +330,6 @@ function DiskBenchmarkDialog() {
         if (activeStep === 1) // Perform
         {
             startBenchmark();
-            setTimeout(() => {
-                // if (canceled) return;
-                setActiveStep(3);
-            }, 5000);
         }
     };
     

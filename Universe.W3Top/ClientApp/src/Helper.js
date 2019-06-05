@@ -92,7 +92,10 @@ export class Common {
     static formatBytes(number) {
 
         let format = num => (Math.round(num * 100.0) / 100).toLocaleString(undefined, {useGrouping: true});
-        if (number == 0)
+        if (number === null || number === undefined)
+            return null;
+        
+        if (number === 0)
             return "0";
 
         if (number < 1499)
