@@ -246,6 +246,7 @@ function DiskBenchmarkDialog() {
         if (activeStep === 1) // Perform
         {
             setTimeout(() => {
+                // if (canceled) return;
                 setActiveStep(3);
             }, 5000);
         }
