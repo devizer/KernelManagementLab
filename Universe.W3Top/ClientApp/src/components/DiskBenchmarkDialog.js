@@ -22,6 +22,7 @@ import * as Enumerable from "linq-es2015";
 import * as DataSourceActions from "../stores/DataSourceActions";
 import * as Helper from "../Helper";
 
+const PROGRESS_TICK_INTERVAL = 499;
 
 const styles = {
     root: {
@@ -195,20 +196,19 @@ function DiskBenchmarkDialog() {
             let apiUrl = 'api/benchmark/disk/get-disks';
             fetch(apiUrl)
                 .then(response => {
-                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                    console.log(response);
-                    console.log(response.body);
+                    Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    Helper.log(response);
                     return response.ok ? response.json() : {error: response.status, details: response.json()}
                 })
                 .then(disks => {
                     setDisks(disks);
                     Helper.toConsole("DISKS for benchmark", disks);
                 })
-                .catch(error => console.log(error));
+                .catch(error => Helper.log(error));
         }
         catch(err)
         {
-            console.log('FETCH failed. ' + err);
+            console.error('FETCH failed. ' + err);
         }
     }
     
@@ -270,24 +270,28 @@ function DiskBenchmarkDialog() {
             const apiUrl = `api/benchmark/disk/get-disk-progress-${token}`;
             fetch(apiUrl)
                 .then(response => {
-                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                    console.log(response);
-                    console.log(response.body);
+                    Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    Helper.log(response);
+                    Helper.log(response.body);
                     return response.ok ? response.json() : {error: response.status, details: response}
                 })
                 .then(benchInfo => {
                     Helper.toConsole("Disk Benchmark Progress", benchInfo);
-                    if (benchInfo.progress)
+                    if (benchInfo.progress) {
                         setProgress(benchInfo.progress);
+                        if (progress.isCompleted) {
+                            clearInterval(timer);timer = 0; 
+                        }
+                    }
                     else {
-                        // clearInterval(timer);timer = 0;
+                        clearInterval(timer);timer = 0;
                     }
                 })
                 .catch(error => Helper.toConsole(`FETCH for ${apiUrl} failed`, error));
         }
         catch(err)
         {
-            console.log('FETCH failed. ' + err);
+            console.error('FETCH failed. ' + err);
         }
     };
 
@@ -305,22 +309,22 @@ function DiskBenchmarkDialog() {
             
             fetch(apiUrl, post)
                 .then(response => {
-                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                    console.log(response);
-                    console.log(response.body);
+                    Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    Helper.log(response);
+                    Helper.log(response.body);
                     return response.ok ? response.json() : {error: response.status, details: response}
                 })
                 .then(benchInfo => {
-                    Helper.toConsole("Disk Benchmark Info", benchInfo);
+                    Helper.toConsole("Disk Benchmark Info at start", benchInfo);
                     token = benchInfo.token;
                     setProgress(benchInfo.progress);
-                    timer = setInterval(progressTick, 100);
+                    timer = setInterval(progressTick, PROGRESS_TICK_INTERVAL);
                 })
-                .catch(error => console.log(error));
+                .catch(error => Helper.log(error));
         }
         catch(err)
         {
-            console.log('FETCH failed. ' + err);
+            console.error('FETCH failed. ' + err);
         }
     };
     
