@@ -121,7 +121,7 @@ function DiskBenchmarkDialog() {
             case 2:
                 return renderStepProgress();
             case 3:
-                return 'Welldone';
+                return renderStepProgress();
             default:
                 return 'Unknown stepIndex';
         }
@@ -252,12 +252,14 @@ function DiskBenchmarkDialog() {
     const renderStepProgress = function() {
         const pro = progress ? progress : {isCompleted: false, steps: []};
         const formatSpeed = (x) => {let ret = Helper.Common.formatBytes(x); return ret === null ? "" : `${ret}/s`};
+        const statuses = {Pending: "⚪", InProgress: "⇢", Completed: "⚫"};
+        const formatStepStatus = (status) => statuses[status];  
         return (
             <React.Fragment>
                 {pro.steps.map(step => (
                     <React.Fragment key={step.name}>
                         <Typography>
-                            {step.state}, {step.name}, {step.duration}, {formatSpeed(step.avgBytesPerSecond)} 
+                            {formatStepStatus(step.state)} {step.name}, {step.duration}, {formatSpeed(step.avgBytesPerSecond)} 
                         </Typography>
                     </React.Fragment>
                 ))}
@@ -271,19 +273,20 @@ function DiskBenchmarkDialog() {
             fetch(apiUrl)
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                    Helper.log(response);
-                    Helper.log(response.body);
                     return response.ok ? response.json() : {error: response.status, details: response}
                 })
                 .then(benchInfo => {
                     Helper.toConsole("Disk Benchmark Progress", benchInfo);
                     if (benchInfo.progress) {
                         setProgress(benchInfo.progress);
-                        if (progress.isCompleted) {
-                            clearInterval(timer);timer = 0; 
+                        if (benchInfo.progress.isCompleted) {
+                            clearInterval(timer); timer = 0;
+                            token = null;
+                            setActiveStep(3);
                         }
                     }
                     else {
+                        // benchmark failed.
                         clearInterval(timer);timer = 0;
                     }
                 })
@@ -303,15 +306,11 @@ function DiskBenchmarkDialog() {
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                 method: "POST",
                 body: JSON.stringify(payload)
-                // body: `{"workingSet": 1024, "randomAccessDuration": 30, "blockSize": 4096 }`
             };
-            
             
             fetch(apiUrl, post)
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                    Helper.log(response);
-                    Helper.log(response.body);
                     return response.ok ? response.json() : {error: response.status, details: response}
                 })
                 .then(benchInfo => {

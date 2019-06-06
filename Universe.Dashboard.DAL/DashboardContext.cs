@@ -30,6 +30,7 @@ namespace Universe.Dashboard.DAL
                 var e = modelBuilder.Entity<DiskBenchmarkEntity>();
                 e.Property(x => x.Args).HasConversion(JsonDbConverter.Create<DiskBenchmarkOptions>());
                 e.Property(x => x.Report).HasConversion(JsonDbConverter.Create<ProgressInfo>());
+                // e.HasIndex(p => new {p.Token}).IsUnique();
             }
         }
     }

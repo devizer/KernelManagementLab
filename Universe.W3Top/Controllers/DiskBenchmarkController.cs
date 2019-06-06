@@ -7,6 +7,7 @@ using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore.Mvc;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.Agent;
+using Universe.Dashboard.DAL;
 using Universe.DiskBench;
 
 namespace ReactGraphLab.Controllers
@@ -16,10 +17,12 @@ namespace ReactGraphLab.Controllers
     public class DiskBenchmarkController : ControllerBase 
     {
         private DiskBenchmarkQueue Queue;
+        private DashboardContext Db;
 
-        public DiskBenchmarkController(DiskBenchmarkQueue queue)
+        public DiskBenchmarkController(DiskBenchmarkQueue queue, DashboardContext db)
         {
             Queue = queue;
+            Db = db;
         }
 
         [HttpGet, Route("get-disks")]
@@ -58,10 +61,11 @@ namespace ReactGraphLab.Controllers
             var benchmark = Queue.Find(benchmarkToken);
             if (benchmark == null)
             {
+                var progress = Db.DiskBenchmark.FirstOrDefault(x => x.Token == benchmarkToken.ToString())?.Report;
                 return new BenchmarkResponse()
                 {
                     Token = benchmarkToken,
-                    Progress = null,
+                    Progress = progress,
                 };
             }
             

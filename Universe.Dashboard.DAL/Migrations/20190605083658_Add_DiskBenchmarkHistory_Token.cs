@@ -10,6 +10,8 @@ namespace Universe.Dashboard.DAL.Migrations
                 name: "Token",
                 table: "DiskBenchmark",
                 nullable: true);
+
+            migrationBuilder.Sql("Create Unique Index IX_DiskBenchmark_Token On DiskBenchmark(Token);");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

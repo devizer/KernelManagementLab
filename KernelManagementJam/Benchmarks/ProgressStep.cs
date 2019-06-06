@@ -64,9 +64,10 @@ namespace Universe.DiskBench
         {
             get
             {
-                return StartAt == null
+                var seconds = StartAt?.Elapsed.TotalSeconds ?? Seconds; 
+                return !seconds.HasValue
                     ? null
-                    : new DateTime(0).Add(StartAt.Elapsed).ToString("HH:mm:ss");
+                    : new DateTime(0).Add(TimeSpan.FromSeconds(seconds.Value)).ToString("HH:mm:ss");
             }
         }
         
