@@ -20,6 +20,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import * as Enumerable from "linq-es2015";
 import * as DataSourceActions from "../stores/DataSourceActions";
+import { BenchmarkStepStatus } from "./BenchmarkStepStatus"
 import * as Helper from "../Helper";
 
 const PROGRESS_TICK_INTERVAL = 499;
@@ -259,7 +260,11 @@ function DiskBenchmarkDialog() {
                 {pro.steps.map(step => (
                     <React.Fragment key={step.name}>
                         <Typography>
-                            {formatStepStatus(step.state)} {step.name}, {step.duration}, {formatSpeed(step.avgBytesPerSecond)} 
+                            <BenchmarkStepStatus status={step.state}/>
+                            {/* formatStepStatus(step.state) */} 
+                            {step.name}
+                            {step.seconds > 0 ? `, ${step.duration}` : "" }
+                            {step.avgBytesPerSecond > 0 ? `, ${formatSpeed(step.avgBytesPerSecond)}` : ""} 
                         </Typography>
                     </React.Fragment>
                 ))}
@@ -270,7 +275,7 @@ function DiskBenchmarkDialog() {
     const progressTick = () => {
         try {
             const apiUrl = `api/benchmark/disk/get-disk-progress-${token}`;
-            fetch(apiUrl)
+            fetch(apiUrl, {method: "POST"})
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
                     return response.ok ? response.json() : {error: response.status, details: response}

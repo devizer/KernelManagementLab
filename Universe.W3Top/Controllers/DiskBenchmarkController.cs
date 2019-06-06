@@ -55,7 +55,7 @@ namespace ReactGraphLab.Controllers
             };
         }
 
-        [HttpGet, Route("get-disk-progress-{benchmarkToken}")]
+        [HttpPost, Route("get-disk-progress-{benchmarkToken}")]
         public BenchmarkResponse GetProgress(Guid benchmarkToken)
         {
             var benchmark = Queue.Find(benchmarkToken);

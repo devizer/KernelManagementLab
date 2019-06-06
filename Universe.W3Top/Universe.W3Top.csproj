@@ -30,6 +30,7 @@
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
         <Content Include="ClientApp\src\App.css" />
+        <Content Include="ClientApp\src\components\BenchmarkStepStatus.js" />
         <Content Include="ClientApp\src\components\BlockStatChart.js" />
         <Content Include="ClientApp\src\components\BlockStatChartContainer_V2.js" />
         <Content Include="ClientApp\src\components\BlockStatChartHeader.js" />
