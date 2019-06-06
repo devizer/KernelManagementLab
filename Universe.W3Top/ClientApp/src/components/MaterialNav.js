@@ -260,7 +260,9 @@ class PersistentDrawerLeft extends React.Component {
                     <List>
                         {MainMenuLink("Live Mounts", "/mounts")}
                         {MainMenuLink("Network Live Chart", "/net-v2")}
-                        {MainMenuLink("Disks Live Chart (in progress)", "/disks")}
+                        {MainMenuLink("Disks Live Chart", "/disks")}
+                        <Divider />
+                        {MainMenuLink("Disk Benchmark (in progress)", "/disk-benchmark-lab")}
                         <Divider />
                         <ListSubheader disableSticky={true} style={{paddingTop:32, paddingBottom:16, textAlign: "center", lineHeight: "1rem"}}>SAND-BOX<br/>please ignore</ListSubheader>
                         {MainMenuLink("Missed network", "/net-v1")}

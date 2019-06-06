@@ -186,7 +186,7 @@ namespace Universe.Benchmark.DiskBench
             {
             }
 
-            _checkODirect.Name = _isODirectSupported ? "Direct Access is present" : "Direct Access is absent";
+            _checkODirect.Name = _isODirectSupported ? "Direct Access is detected" : "Direct Access is absent";
             _checkODirect.Complete();
         }
         
