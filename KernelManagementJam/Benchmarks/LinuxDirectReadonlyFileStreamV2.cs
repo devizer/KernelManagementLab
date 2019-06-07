@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Mono.Unix;
 using Mono.Unix.Native;
+using Universe;
 
 namespace KernelManagementJam.Benchmarks
 {
@@ -23,9 +24,9 @@ namespace KernelManagementJam.Benchmarks
             FileName = fileName;
             BlockSize = blockSize;
 
-            var openFlags = OpenFlags.O_SYNC 
-                            | Mono.Unix.Native.OpenFlags.O_DIRECT 
-                            | Mono.Unix.Native.OpenFlags.O_RDONLY;
+            bool isMacOs = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX;
+            var openFlags = OpenFlags.O_SYNC | Mono.Unix.Native.OpenFlags.O_RDONLY;
+            if (!isMacOs) openFlags |= Mono.Unix.Native.OpenFlags.O_DIRECT; 
             
             _fileDescriptor = Syscall.open(FileName, openFlags);
             // for x390 a value of POSIX_FADV_NOREUSE is 7 ?:::?
