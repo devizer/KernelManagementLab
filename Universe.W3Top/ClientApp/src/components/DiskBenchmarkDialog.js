@@ -269,9 +269,10 @@ function DiskBenchmarkDialog() {
     
     const renderStepProgress = function() {
         const pro = progress ? progress : {isCompleted: false, steps: []};
-        const formatSpeed = (x) => {let ret = Helper.Common.formatBytes(x); return ret === null ? "" : `${ret}/s`};
+        const formatSpeed = (x) => {let ret = Helper.Common.formatBytes(x,1); return ret === null ? "" : `${ret}/s`};
         const statuses = {Pending: "⚪", InProgress: "⇢", Completed: "⚫"};
         const formatStepStatus = (status) => statuses[status];
+        const progressValue = step => step.perCents >= 0.99999 ? 99.999 : step.perCents * 100.0; 
         return (
             <React.Fragment>
                 <center>
@@ -292,7 +293,7 @@ function DiskBenchmarkDialog() {
                         <tr>
                             <td></td>
                             <td colSpan="3">
-                                <LinearProgress2 value={step.perCents*100} variant={"determinate"} className={"step-progress"}/>
+                                <LinearProgress2 value={progressValue(step)} variant={"determinate"} className={"step-progress"}/>
                             </td>
                         </tr>
                     </React.Fragment>

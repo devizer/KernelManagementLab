@@ -89,9 +89,18 @@ export class Common {
         return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    static formatBytes(number) {
+    static formatBytes(number, fractionCount) {
 
-        let format = num => (Math.round(num * 100.0) / 100).toLocaleString(undefined, {useGrouping: true});
+        if (typeof fractionCount !== "number")
+            fractionCount = 2;
+        
+        let scale = 1;
+        if (fractionCount === 1) scale = 10.0;
+        else if (fractionCount === 2) scale = 100.0;
+        else if (fractionCount === 3) scale = 1000.0;
+        else if (fractionCount > 0) for(let i=0; i<fractionCount; i++) scale=scale*10.0;
+        
+        let format = num => (Math.round(num * scale) / scale).toLocaleString(undefined, {useGrouping: true});
         if (number === null || number === undefined)
             return null;
         
