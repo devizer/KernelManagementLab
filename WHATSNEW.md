@@ -1,5 +1,6 @@
 ##### 1.15
-- The first disk benchmark is here: _screenshost_
+- The first disk benchmark is here:
+<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Disk-Benchmark-V1.15.png" width="630px" Alt="The first disk's benchmark" Title="The first disk's benchmark"></img>
 
 ##### 1.14
 - Added support for legacy Sys V Init service manager. SystemD is preferred if also present.
