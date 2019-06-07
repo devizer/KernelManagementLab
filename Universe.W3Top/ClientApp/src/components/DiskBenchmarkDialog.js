@@ -396,7 +396,7 @@ function DiskBenchmarkDialog() {
                 Open benchmark dialog
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>
-                <DialogTitle id="form-dialog-title">Benchmark a local or network disk</DialogTitle>
+                <DialogTitle id="form-dialog-title" style={{textAlign:"center"}}>Benchmark a local or network disk</DialogTitle>
                 <DialogContent style={{textAlign: "center"}}>
                     <Stepper activeStep={activeStep} alternativeLabel style={styles.root}>
                         {steps.map(label => (
