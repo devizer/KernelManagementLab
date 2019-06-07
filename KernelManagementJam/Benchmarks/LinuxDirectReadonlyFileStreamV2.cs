@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using Mono.Unix;
 using Mono.Unix.Native;
 
@@ -27,11 +29,15 @@ namespace KernelManagementJam.Benchmarks
             
             _fileDescriptor = Syscall.open(FileName, openFlags);
             // for x390 a value of POSIX_FADV_NOREUSE is 7 ?:::?
-            bool isError = 0 != Syscall.posix_fadvise(_fileDescriptor, 0, 0,
-                               PosixFadviseAdvice.POSIX_FADV_NOREUSE | PosixFadviseAdvice.POSIX_FADV_DONTNEED);
-            if (isError)
-                DebugLog(
-                    $"POSIX_FADV_NOREUSE + POSIX_FADV_DONTNEED is not supported for the {Path.GetDirectoryName(new FileInfo(fileName).FullName)} folder");
+            // on macos Syscall.posix_fadvise may be missed.
+            if (PlatformInfo.HasFaAdvice)
+            {
+                bool isError = 0 != Syscall.posix_fadvise(_fileDescriptor, 0, 0,
+                                   PosixFadviseAdvice.POSIX_FADV_NOREUSE | PosixFadviseAdvice.POSIX_FADV_DONTNEED);
+                if (isError)
+                    DebugLog(
+                        $"POSIX_FADV_NOREUSE + POSIX_FADV_DONTNEED is not supported for the {Path.GetDirectoryName(new FileInfo(fileName).FullName)} folder");
+            }
 
             _back = new UnixStream(_fileDescriptor, true);
             _back.AdviseFileAccessPattern(FileAccessPattern.NoReuse | FileAccessPattern.Random |
@@ -182,6 +188,40 @@ namespace KernelManagementJam.Benchmarks
             DebugLog($"Disposed: {FileName} #{_fileDescriptor}");
             
         }
+
+        // It is need on MacOS only
+        static class PlatformInfo
+        {
+
+            public static bool HasFaAdvice => _HasFaAdvice.Value;
+
+            private static Lazy<bool> _HasFaAdvice = new Lazy<bool>(() => { return HasFaAdvice_Impl(); },
+                LazyThreadSafetyMode.ExecutionAndPublication);
+
+            [MethodImpl(MethodImplOptions.NoInlining)]
+            private static bool HasFaAdvice_Impl()
+            {
+                string msg;
+                bool ret;
+                try
+                {
+                    Syscall.posix_fadvise(0, 0, 0, PosixFadviseAdvice.POSIX_FADV_NORMAL);
+                    msg = "Xamarin's Syscall.posix_fadvise is present";
+                    ret = true;
+                }
+                catch (/* EntryPointNotFoundException */ Exception ex)
+                {
+                    msg = "Xamarin's Syscall.posix_fadvise is absent";
+                    ret = false;
+                }
+
+                Console.WriteLine(msg);
+                return ret;
+            }
+
+        }
+
+
     }
 }
 
