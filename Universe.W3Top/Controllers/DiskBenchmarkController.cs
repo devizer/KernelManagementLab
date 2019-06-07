@@ -37,13 +37,14 @@ namespace ReactGraphLab.Controllers
             // return new BenchmarkResponse() {Token = Guid.NewGuid()};
             Console.WriteLine($"StartBenchmark options: {options.AsJson()}");
 
-            DiskBenchmark diskBenchmark = new DiskBenchmark(options.MountPath,
+            DiskBenchmark diskBenchmark = new DiskBenchmark(
+                options.MountPath,
                 fileSize: options.WorkingSet * 1024L * 1024L,
-                DataGeneratorFlavour.ILCode,
-                options.BlockSize,
-                options.RandomAccessDuration * 1000,
-                options.DisableODirect && false,
-                options.Threads
+                flavour: DataGeneratorFlavour.ILCode,
+                randomAccessBlockSize:options.BlockSize,
+                stepDuration:options.RandomAccessDuration * 1000,
+                disableODirect:options.DisableODirect && false,
+                threadsNumber: options.Threads
             );
             
             Guid token = Guid.NewGuid();
