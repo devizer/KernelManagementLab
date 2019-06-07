@@ -52,3 +52,31 @@
     color: #FFF !important;
     font-size: 12px;
  }
+
+
+table.benchmark-progress {
+}
+
+table.benchmark-progress td {
+    padding: 2px 8px;
+    text-align: left;
+}
+
+table.benchmark-progress td.step-duration, table.benchmark-progress td.step-speed  {
+    min-width: 100px;
+    text-align: right;
+}
+
+table.benchmark-progress td.step-status  {
+    width: 28px;
+    max-width: 28px;
+    /* width: 20px; */
+}
+
+/*
+.step-progress {
+    height: 1px !important;
+    color: #666 !important;
+    background-color: #DDD !important;
+    animation-duration: 100ms !important;
+}*/

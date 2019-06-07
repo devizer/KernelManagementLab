@@ -1,4 +1,5 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,6 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -20,10 +22,24 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import * as Enumerable from "linq-es2015";
 import * as DataSourceActions from "../stores/DataSourceActions";
-import { BenchmarkStepStatus } from "./BenchmarkStepStatus"
+import { BenchmarkStepStatusIcon } from "./BenchmarkStepStatusIcon"
 import * as Helper from "../Helper";
 
 const PROGRESS_TICK_INTERVAL = 499;
+const EMPTY_PROGRESS = {isCompleted: false, steps: []};
+
+const ProgressStyle = theme => ({
+    root: {
+        margin: theme.spacing.unit * 0,
+        // color: '#777',
+        animationDuration: "1ms",
+        height: "1px",
+    },
+    colorPrimary: {backgroundColor: '#EEE'},
+    barColorPrimary: {backgroundColor: '#888'}
+});
+const LinearProgress2 = withStyles(ProgressStyle)(LinearProgress); 
+
 
 const styles = {
     root: {
@@ -239,6 +255,7 @@ function DiskBenchmarkDialog() {
         setOptions(defaultOptions);
         setSelectedDisk(null);
         setActiveStep(0);
+        setProgress(EMPTY_PROGRESS);
         setOpen(true);
     }
 
@@ -254,20 +271,34 @@ function DiskBenchmarkDialog() {
         const pro = progress ? progress : {isCompleted: false, steps: []};
         const formatSpeed = (x) => {let ret = Helper.Common.formatBytes(x); return ret === null ? "" : `${ret}/s`};
         const statuses = {Pending: "⚪", InProgress: "⇢", Completed: "⚫"};
-        const formatStepStatus = (status) => statuses[status];  
+        const formatStepStatus = (status) => statuses[status];
         return (
             <React.Fragment>
+                <center>
+                <table className="benchmark-progress" border="0" cellPadding={0} cellSpacing={0}>
                 {pro.steps.map(step => (
                     <React.Fragment key={step.name}>
-                        <Typography>
-                            <BenchmarkStepStatus status={step.state}/>
-                            {/* formatStepStatus(step.state) */} 
-                            {step.name}
-                            {step.seconds > 0 ? `, ${step.duration}` : "" }
-                            {step.avgBytesPerSecond > 0 ? `, ${formatSpeed(step.avgBytesPerSecond)}` : ""} 
-                        </Typography>
+                        <tr>
+                            <td className="step-status">
+                                <BenchmarkStepStatusIcon status={step.state}/>
+                                {/* formatStepStatus(step.state) */}
+                            </td>
+                            <td className="step-name">
+                                {step.name}
+                            </td>
+                            <td className="step-duration">{step.seconds > 0 ? `${step.duration}` : "\xA0" }</td>
+                            <td className="step-speed">{step.avgBytesPerSecond > 0 ? `${formatSpeed(step.avgBytesPerSecond)}` : "\xA0"}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colSpan="3">
+                                <LinearProgress2 value={step.perCents*100} variant={"determinate"} className={"step-progress"}/>
+                            </td>
+                        </tr>
                     </React.Fragment>
                 ))}
+                </table>
+                </center>
             </React.Fragment>
         )
     };
@@ -346,7 +377,8 @@ function DiskBenchmarkDialog() {
         setDisks(null);
         setOptions(defaultOptions);
         setSelectedDisk(null);
-        setActiveStep(0); 
+        setActiveStep(0);
+        setProgress(EMPTY_PROGRESS);
     };
 
     const steps = ['Select', 'Configure', activeStep === 3 ?"Done" : "Run"];
@@ -364,7 +396,7 @@ function DiskBenchmarkDialog() {
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>
                 <DialogTitle id="form-dialog-title">Benchmark a local or network disk</DialogTitle>
-                <DialogContent>
+                <DialogContent style={{textAlign: "center"}}>
                     <Stepper activeStep={activeStep} alternativeLabel style={styles.root}>
                         {steps.map(label => (
                             <Step key={label}>
