@@ -29,7 +29,6 @@ namespace Universe.Dashboard.Agent
             t.Start();
         }
 
-
         public void Enqueue(Guid token, DiskBenchmark benchmark)
         {
             var item = new DiskBenchmarkWithToken() {Token = token, Benchmark = benchmark};
@@ -37,10 +36,34 @@ namespace Universe.Dashboard.Agent
             Waiter.Set();
         }
 
-        public DiskBenchmark Find(Guid token)
+        public EnlistedDiskBenchmark Find(Guid token)
         {
-            lock(SyncQueue) 
-                return Queue.FirstOrDefault(x => x.Token == token)?.Benchmark;
+            lock (SyncQueue)
+            {
+                int index = Queue.FindIndex(x => x.Token == token);
+                if (index < 0)
+                    return new EnlistedDiskBenchmark()
+                    {
+                        Token = token,
+                        Index = -1,
+                        Benchmark = null,
+                    };
+
+                return new EnlistedDiskBenchmark()
+                {
+                    Token = token,
+                    Index = index,
+                    Benchmark = Queue[index].Benchmark,
+                };
+            }
+        }
+
+        public class EnlistedDiskBenchmark
+        {
+            // 0: InProgress, >0: Pending, <0: not found 
+            public int Index;
+            public Guid Token;
+            public DiskBenchmark Benchmark;
         }
 
         public int Count

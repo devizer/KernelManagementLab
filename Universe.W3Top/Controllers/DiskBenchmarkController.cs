@@ -59,8 +59,29 @@ namespace ReactGraphLab.Controllers
         [HttpPost, Route("get-disk-progress-{benchmarkToken}")]
         public BenchmarkResponse GetProgress(Guid benchmarkToken)
         {
-            var benchmark = Queue.Find(benchmarkToken);
-            if (benchmark == null)
+            var enlistedBenchmark = Queue.Find(benchmarkToken);
+            if (enlistedBenchmark.Index >= 0)
+            {
+                var progress = enlistedBenchmark.Benchmark.Prorgess.Clone();
+                if (enlistedBenchmark.Index > 0)
+                {
+                    ProgressStep waitingStep =
+                        new ProgressStep($"Waiting in queue at position {(enlistedBenchmark.Index + 1)}")
+                        {
+                            State = ProgressStepState.InProgress,
+                        };
+
+                    progress.Steps.Insert(0, waitingStep);
+                }
+
+                return new BenchmarkResponse()
+                {
+                    Token = benchmarkToken,
+                    Progress = progress,
+                };
+            }
+
+            else
             {
                 var progress = Db.DiskBenchmark.FirstOrDefault(x => x.Token == benchmarkToken.ToString())?.Report;
                 return new BenchmarkResponse()
@@ -69,13 +90,6 @@ namespace ReactGraphLab.Controllers
                     Progress = progress,
                 };
             }
-            
-            return new BenchmarkResponse()
-            {
-                Token = benchmarkToken,
-                Progress = benchmark.Prorgess.Clone(),
-            };
-            
         }
 
         public class StartBenchmarkArgs
