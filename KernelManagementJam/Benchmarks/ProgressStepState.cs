@@ -4,6 +4,9 @@ namespace Universe.DiskBench
     {
         Pending,
         InProgress,
-        Completed
+        Completed,
+        
+        Error,
+        Skipped,
     }
 }

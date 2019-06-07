@@ -34,6 +34,7 @@ namespace ReactGraphLab
             });
 
             services.AddSingleton<DiskBenchmarkQueue>(new DiskBenchmarkQueue(() => new DashboardContext()));
+            services.AddScoped<DiskBenchmarkDataAccess>();
             
             services
                 .AddMvc(options => { options.Filters.Add(new KillerActionFilter()); })

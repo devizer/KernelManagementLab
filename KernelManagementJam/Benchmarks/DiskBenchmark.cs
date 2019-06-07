@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using KernelManagementJam.Benchmarks;
 using Microsoft.Win32.SafeHandles;
+using Universe.Dashboard.Agent;
 using Universe.DiskBench;
 using FileMode = System.IO.FileMode;
 
@@ -152,6 +153,16 @@ namespace Universe.Benchmark.DiskBench
                 return count;
             };
 
+            Action<Exception> doCleanUp = (ex) =>
+            {
+                _cleanUp.Start();
+                if (File.Exists(TempFile))
+                    File.Delete(TempFile);
+
+                if (ex != null) _cleanUp.Name = "Benchmark failed";
+                _cleanUp.Complete();
+            };
+
             try
             {
                 if (!Parameters.DisableODirect) CheckODirect();
@@ -162,14 +173,24 @@ namespace Universe.Benchmark.DiskBench
                 RandomAccess(_rndWrite1T, 1, getFileWriter, doWrite, Parameters.StepDuration);
                 RandomAccess(_rndReadN, Parameters.ThreadsNumber, getFileReader, doRead, Parameters.StepDuration);
                 RandomAccess(_rndWriteN, Parameters.ThreadsNumber, getFileWriter, doWrite, Parameters.StepDuration);
+                doCleanUp(null);
             }
-            finally
+            catch(Exception ex)
             {
-                _cleanUp.Start();
-                if (File.Exists(TempFile))
-                    File.Delete(TempFile);
+                doCleanUp(ex);
+                bool first = true;
+                foreach (var step in Prorgess.Steps)
+                {
+                    if (step.State == ProgressStepState.InProgress || step.State == ProgressStepState.Pending)
+                    {
+                        step.State = first ? ProgressStepState.Error : ProgressStepState.Skipped;
+                        first = false;
+                    }
+                }
 
-                _cleanUp.Complete();
+                _cleanUp.State = ProgressStepState.Error;
+                Console.WriteLine($"Benchmark for [{Parameters.WorkFolder}] failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
+                throw;
             }
         }
 
@@ -357,7 +378,6 @@ namespace Universe.Benchmark.DiskBench
 
         public static void SyncWriteBuffer()
         {
-
             StartAndIgnore("sync", "");
         }
 

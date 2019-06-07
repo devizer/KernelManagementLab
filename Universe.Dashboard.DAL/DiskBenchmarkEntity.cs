@@ -14,6 +14,8 @@ namespace Universe.Dashboard.DAL
         public string MountPath { get; set; }
         public DiskBenchmarkOptions Args { get; set; }
         public ProgressInfo Report { get; set; }
+        
+        public string ErrorInfo { get; set; }
     }
 
 }

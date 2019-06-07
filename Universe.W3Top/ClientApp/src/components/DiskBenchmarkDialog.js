@@ -306,7 +306,7 @@ function DiskBenchmarkDialog() {
     
     const progressTick = () => {
         try {
-            const apiUrl = `api/benchmark/disk/get-disk-progress-${token}`;
+            const apiUrl = `api/benchmark/disk/get-disk-benchmark-progress-${token}`;
             fetch(apiUrl, {method: "POST"})
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -337,7 +337,7 @@ function DiskBenchmarkDialog() {
 
     const startBenchmark = () => {
         try {
-            const apiUrl = 'api/benchmark/disk/start';
+            const apiUrl = 'api/benchmark/disk/start-disk-benchmark';
             const payload = {...options, mountPath: selectedDisk.mountEntry.mountPath};
             const post={
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },

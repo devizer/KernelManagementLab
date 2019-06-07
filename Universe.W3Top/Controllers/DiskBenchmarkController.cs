@@ -17,12 +17,12 @@ namespace ReactGraphLab.Controllers
     public class DiskBenchmarkController : ControllerBase 
     {
         private DiskBenchmarkQueue Queue;
-        private DashboardContext Db;
+        public DiskBenchmarkDataAccess DbAccess;
 
-        public DiskBenchmarkController(DiskBenchmarkQueue queue, DashboardContext db)
+        public DiskBenchmarkController(DiskBenchmarkQueue queue, DiskBenchmarkDataAccess dbAccess)
         {
             Queue = queue;
-            Db = db;
+            DbAccess = dbAccess;
         }
 
         [HttpGet, Route("get-disks")]
@@ -31,7 +31,7 @@ namespace ReactGraphLab.Controllers
             return MountsDataSource.Mounts.FilterForHuman().OrderBy(x => x.MountEntry.MountPath).ToList();
         }
 
-        [HttpPost, Route("start")]
+        [HttpPost, Route("start-disk-benchmark")]
         public BenchmarkResponse StartBenchmark(StartBenchmarkArgs options)
         {
             // return new BenchmarkResponse() {Token = Guid.NewGuid()};
@@ -56,7 +56,7 @@ namespace ReactGraphLab.Controllers
             };
         }
 
-        [HttpPost, Route("get-disk-progress-{benchmarkToken}")]
+        [HttpPost, Route("get-disk-benchmark-progress-{benchmarkToken}")]
         public BenchmarkResponse GetProgress(Guid benchmarkToken)
         {
             var enlistedBenchmark = Queue.Find(benchmarkToken);
@@ -65,6 +65,7 @@ namespace ReactGraphLab.Controllers
                 var progress = enlistedBenchmark.Benchmark.Prorgess.Clone();
                 if (enlistedBenchmark.Index > 0)
                 {
+                    // add Waiting in queue step
                     ProgressStep waitingStep =
                         new ProgressStep($"Waiting in queue at position {(enlistedBenchmark.Index + 1)}")
                         {
@@ -83,11 +84,12 @@ namespace ReactGraphLab.Controllers
 
             else
             {
-                var progress = Db.DiskBenchmark.FirstOrDefault(x => x.Token == benchmarkToken.ToString())?.Report;
+                var benchmarkResult = DbAccess.GetDiskBenchmarkResult(benchmarkToken);
                 return new BenchmarkResponse()
                 {
                     Token = benchmarkToken,
-                    Progress = progress,
+                    Progress = benchmarkResult?.Report,
+                    ErrorInfo = benchmarkResult == null ? "Unknown Benchmark Session" : benchmarkResult.ErrorInfo 
                 };
             }
         }
@@ -106,6 +108,7 @@ namespace ReactGraphLab.Controllers
         {
             public Guid Token;
             public ProgressInfo Progress;
+            public string ErrorInfo;
         }
     }
 }
