@@ -41,8 +41,11 @@ namespace KernelManagementJam.Benchmarks
             }
 
             _back = new UnixStream(_fileDescriptor, true);
-            _back.AdviseFileAccessPattern(FileAccessPattern.NoReuse | FileAccessPattern.Random |
-                                          FileAccessPattern.FlushCache);
+            if (PlatformInfo.HasFaAdvice)
+                _back.AdviseFileAccessPattern(
+                    FileAccessPattern.NoReuse
+                    | FileAccessPattern.Random
+                    | FileAccessPattern.FlushCache);
 
             TheBuffer = new byte[BlockSize * 4];
         }
