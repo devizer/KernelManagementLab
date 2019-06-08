@@ -67,7 +67,7 @@ namespace ReactGraphLab.Controllers
                 {
                     // add Waiting in queue step
                     ProgressStep waitingStep =
-                        new ProgressStep($"Waiting in queue at position {(enlistedBenchmark.Index + 1)}")
+                        new ProgressStep($"Waiting in queue at position {(enlistedBenchmark.Index + 0)}")
                         {
                             State = ProgressStepState.InProgress,
                         };
