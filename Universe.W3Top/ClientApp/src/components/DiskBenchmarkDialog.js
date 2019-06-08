@@ -44,6 +44,7 @@ const LinearProgress2 = withStyles(ProgressStyle)(LinearProgress);
 const styles = {
     root: {
         width: '99%',
+        paddingTop: 1,
     },
     wizardButton: {
         marginLeft: 0,
