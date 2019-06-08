@@ -83,37 +83,40 @@ namespace Universe.Dashboard.Agent
 
                 if (nextJob != null)
                 {
-                    Exception benchmarkException;
-                    var benchmark = nextJob.Benchmark;
                     try
                     {
-                        benchmark.Perform();
-                        benchmarkException = null;
-                    }
-                    catch (Exception ex)
-                    {
-                        benchmarkException = ex;
-                        // Console.WriteLine($"Disk Benchmark Job failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
+                        Exception benchmarkException;
+                        var benchmark = nextJob.Benchmark;
+                        try
+                        {
+                            benchmark.Perform();
+                            benchmarkException = null;
+                        }
+                        catch (Exception ex)
+                        {
+                            benchmarkException = ex;
+                            // Console.WriteLine($"Disk Benchmark Job failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
+                        }
+
+                        var entity = new DiskBenchmarkEntity()
+                        {
+                            Args = benchmark.Parameters,
+                            Token = nextJob.Token.ToString(),
+                            Report = benchmark.Prorgess, // Progress is complete
+                            CreatedAt = DateTime.UtcNow,
+                            MountPath = benchmark.Parameters.WorkFolder,
+                            ErrorInfo = benchmarkException?.GetExceptionDigest(),
+                        };
+
+                        using (var db = GetDbContext())
+                        {
+                            db.DiskBenchmark.Add(entity);
+                            db.SaveChanges();
+                        }
                     }
                     finally
                     {
                         lock (SyncQueue) Queue.Remove(nextJob);
-                    }
-
-                    var entity = new DiskBenchmarkEntity()
-                    {
-                        Args = benchmark.Parameters,
-                        Token = nextJob.Token.ToString(),
-                        Report = benchmark.Prorgess, // Progress is complete
-                        CreatedAt = DateTime.UtcNow,
-                        MountPath = benchmark.Parameters.WorkFolder,
-                        ErrorInfo = benchmarkException?.GetExceptionDigest(),
-                    };
-                    
-                    using (var db = GetDbContext())
-                    {
-                        db.DiskBenchmark.Add(entity);
-                        db.SaveChanges();
                     }
                 }
 
