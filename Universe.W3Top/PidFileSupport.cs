@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using KernelManagementJam;
 using Universe.Dashboard.Agent;
 
 namespace ReactGraphLab

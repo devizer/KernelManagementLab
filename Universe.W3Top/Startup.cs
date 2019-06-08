@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using KernelManagementJam;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,11 @@ namespace ReactGraphLab
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            new DashboardContext().Database.Migrate();
+            using (StopwatchLog.ToConsole("Create/Upgrade DB"))
+            {
+                new DashboardContext().Database.Migrate();
+            }
+
             services.AddDbContext<DashboardContext>(options =>
             {
                 options.ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbFullPath);
@@ -57,15 +62,16 @@ namespace ReactGraphLab
             // using default ctor
             
             NewVersionFetcher.Configure();
-            Stopwatch sw = Stopwatch.StartNew();
-            Console.WriteLine("Waiting for a first round of /proc/mounts diagnostic: ");
-            MountsDataSource.IsFirstIterationReady.WaitOne();
-            Console.WriteLine($"First round of /proc/mounts diagnostic is ready, {sw.ElapsedMilliseconds:n0} milliseconds");
-            
-            Console.WriteLine("Waiting for a first round of /proc/swaps diagnostic: ");
-            SwapsDataSource.IsFirstIterationReady.WaitOne();
-            Console.WriteLine($"First round of /proc/swaps diagnostic is ready, {sw.ElapsedMilliseconds:n0} milliseconds");
 
+            using (StopwatchLog.ToConsole("Prepare shared /proc/mounts data source"))
+            {
+                MountsDataSource.IsFirstIterationReady.WaitOne();
+            }
+
+            using (StopwatchLog.ToConsole("Prepare shared /proc/swaps data source"))
+            {
+                SwapsDataSource.IsFirstIterationReady.WaitOne();
+            }
 
             DbPreJitter.PreJIT();
 

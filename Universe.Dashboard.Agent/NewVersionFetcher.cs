@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
+using KernelManagementJam;
 using Newtonsoft.Json.Linq;
 
 namespace Universe.Dashboard.Agent
@@ -13,7 +14,7 @@ namespace Universe.Dashboard.Agent
         
         static ManualResetEvent FirstRoundDone = new ManualResetEvent(false);
 
-        // Startup|test must fail if InitialValue is malformed
+        // Startup|test must fail if NewVersionDataSource.InitialValue is malformed
         public static void Configure()
         {
             var tryFail = NewVersionDataSource.NewVersion;

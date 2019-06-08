@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using KernelManagementJam;
 using KernelManagementJam.Benchmarks;
 using Microsoft.Win32.SafeHandles;
-using Universe.Dashboard.Agent;
 using Universe.DiskBench;
 using FileMode = System.IO.FileMode;
 

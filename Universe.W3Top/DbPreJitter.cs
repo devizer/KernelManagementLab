@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using KernelManagementJam;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 
@@ -10,16 +11,18 @@ namespace ReactGraphLab
 
         public static void PreJIT()
         {
-            Stopwatch sw = Stopwatch.StartNew();
-            DashboardContext db = new DashboardContext();
+
+            using (StopwatchLog.ToConsole("PreJIT DB's Metrics History logic"))
             {
-                // Metrics history
+                DashboardContext db = new DashboardContext();
                 HistoryLogic history = new HistoryLogic(db);
                 history.Save("StartAt", new {At = DateTime.UtcNow});
             }
 
+            using (StopwatchLog.ToConsole("PreJIT DB's Disk Benchmark History logic"))
             {
-                // 
+                DashboardContext db = new DashboardContext();
+                
                 DiskBenchmarkDataAccess benchmarkDA = new DiskBenchmarkDataAccess(db);
                 DiskBenchmark benchmark = new DiskBenchmark(".");
 
@@ -48,8 +51,6 @@ namespace ReactGraphLab
                 db.DiskBenchmark.Remove(copy1);
             }
             
-            Console.WriteLine($"DB Logic pre-jitted in {sw.Elapsed}");
-
         }
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Universe.Dashboard.Agent
+namespace KernelManagementJam
 {
     public static class ExceptionExtensions
     {
