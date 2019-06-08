@@ -67,7 +67,7 @@ namespace ReactGraphLab
             Console.WriteLine($"First round of /proc/swaps diagnostic is ready, {sw.ElapsedMilliseconds:n0} milliseconds");
 
 
-            NetStatDataSourcePersistence.PreJit();
+            DbPreJitter.PreJIT();
 
             services.AddCors(options => options.AddPolicy("CorsPolicy",
                 builder =>

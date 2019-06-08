@@ -18,12 +18,5 @@ namespace Universe.Dashboard.Agent
             double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
             Console.WriteLine($"History flushed in {msec:n1} milliseconds");
         }
-
-        public static void PreJit()
-        {
-            DashboardContext db = new DashboardContext();
-            HistoryLogic history = new HistoryLogic(db);
-            history.Save("StartAt", new {At = DateTime.UtcNow});
-        }
     }
 }
