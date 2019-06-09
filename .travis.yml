@@ -41,8 +41,11 @@ script:
 
 - dotnet restore /v:m
 - time dotnet test
-- pushd Universe.W3Top/ClientApp; time yarn install; popd
-- time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service /v:m
+- pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
+
+- |
+  # skipping as we use publish-public.sh
+  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service /v:m
 
 - |
    # publish self-contained
