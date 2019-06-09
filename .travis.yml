@@ -41,7 +41,7 @@ script:
    time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service2 --self-contained -r linux-x64 /v:m
    popd
   
-- export SKIP_GIT_PUSH=true; mkdir -p /transient-builds
+- export SKIP_GIT_PUSH=true; sudo mkdir -p /transient-builds; sudo chown $(whoami) /transient-builds;
 - bash publish-public.sh
 - ls -la /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin || true
 
