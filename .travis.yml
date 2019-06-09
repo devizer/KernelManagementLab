@@ -15,7 +15,9 @@ matrix:
     osx_image: xcode10.2
 script:
 - 
-- (time nvm install node; echo "node is $(node --version)"; echo "npm is $(npm --version);"; npm install yarn -g
+- (time nvm install node; echo "node is $(node --version)"; echo "npm is $(npm --version);"; -
+- nvm use default system; echo "node is $(node --version)"
+- npm install yarn -g || true;
   echo "yarn is $(yarn --version)") || true
 - echo TRAVIS_OS_NAME is "$TRAVIS_OS_NAME"
 - rm "$(command -v node)" 2>/dev/null || true
