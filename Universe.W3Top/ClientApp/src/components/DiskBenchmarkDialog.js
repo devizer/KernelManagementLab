@@ -132,6 +132,7 @@ function DiskBenchmarkDialog(props) {
 
     let needHideOpenButton = false;
     {
+        // do we need to calc it on each render?
         Helper.toConsole(`DiskBenchmarkDialog::props are`, props);
         let queryParams = queryString.parse(props.location.search);
         Helper.toConsole(`DiskBenchmarkDialog::query string is`, queryParams);
