@@ -30,7 +30,7 @@
     },
 
     "files": [
-        {"includePattern": "public/(.*\\.tar\\.gz)$", "uploadPattern": "temp/$1"}
+        {"includePattern": "public/(.*\\.tar\\.gz)$", "uploadPattern": "Nightly/$1"}
     ],
 
     "publish": true
