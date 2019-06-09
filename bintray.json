@@ -1,0 +1,37 @@
+{
+    "package": {
+        "name": "W3Top-Nightly",
+        "repo": "W3-Top",
+        "subject": "devizer",
+        "desc": "W3Top a web-based linux-bound monitor and benchmark UI",
+        "website_url": "https://github.com/devizer/KernelManagementLab",
+        "issue_tracker_url": "https://github.com/devizer/KernelManagementLab/issues",
+        "vcs_url": "https://github.com/devizer/KernelManagementLab",
+        "github_use_tag_release_notes": true,
+        "github_release_notes_file": "RELEASE.txt",
+        "licenses": ["GPL-3.0"],
+        "labels": ["Moninoring", "Benchmark", "Cross-platform"],
+        "public_download_numbers": true,
+        "public_stats": true,
+        "attributes": [{"name": "att1", "values" : ["val1"], "type": "string"},
+                       {"name": "att2", "values" : [1, 2.2, 4], "type": "number"},
+                       {"name": "att5", "values" : ["2014-12-28T19:43:37+0100"], "type": "date"}]
+    },
+
+    "version": {
+        "name": "0.1.2.3",
+        "desc": "Version 0.1.2.3",
+        "released": "2019-01-04",
+        "vcs_tag": "0.1.2.3",
+        "attributes": [{"name": "VerAtt1", "values" : ["VerVal1"], "type": "string"},
+                       {"name": "VerAtt2", "values" : [1, 3.3, 5], "type": "number"},
+                       {"name": "VerAtt3", "values" : ["2015-01-01T19:43:37+0100"], "type": "date"}],
+        "gpgSign": false
+    },
+
+    "files": [
+        {"includePattern": "(*.md)", "uploadPattern": "md-list/$1"}
+    ],
+
+    "publish": true
+}
