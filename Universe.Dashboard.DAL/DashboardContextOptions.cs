@@ -19,6 +19,5 @@ namespace Universe.Dashboard.DAL
 
             return optionsBuilder;
         }
-
     }
 }
