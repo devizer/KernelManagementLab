@@ -23,6 +23,13 @@ script:
   export CI=false
 - sudo ls -la || true; apt-cache policy dotnet-sdk-2.2 || true; apt-cache search dotnet-sdk || true
 
+- |
+  # install pv
+  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    sudo brew install pv
+  else
+    sudo apt-get install pv -y
+  fi;
 
 - |
   # Install Build Tools
