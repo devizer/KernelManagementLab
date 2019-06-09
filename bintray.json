@@ -34,7 +34,8 @@
       "includePattern": "public-bintray/(.*)$",
       "uploadPattern": "Nightly/$1",
       "matrixParams": {
-        "override": 1
+        "override": 1,
+        "publish": 1
       }
     }
   ],
