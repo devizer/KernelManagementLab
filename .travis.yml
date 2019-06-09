@@ -38,7 +38,7 @@ script:
 - |
    # publish self-contained
    pushd Universe.W3Top
-   time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service2 --self-contained -r linux-x64 /v:m
+   # time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service2 --self-contained -r linux-x64 /v:m
    popd
   
 - export SKIP_GIT_PUSH=true; sudo mkdir -p /transient-builds; sudo chown $(whoami) /transient-builds;

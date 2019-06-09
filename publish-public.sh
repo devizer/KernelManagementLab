@@ -13,10 +13,6 @@ if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
 if [[ -d "/ssd" ]]; then work=/ssd/transient-builds; fi
 
 clone=$work/publish/w3top-bin
-say "Clean w3top-bin clone location: [$clone]"
-rm -rf $clone; mkdir -p $(dirname $clone)
-say "Loading working copy"
-git clone git@github.com:devizer/w3top-bin $clone
 
 work=$work/publish/KernelManagementLab;
 say "Loading source to [$work]"
@@ -50,6 +46,7 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 
   say "Compressing $r [$ver] as GZIP"
   time sudo bash -c "tar cf - . | pv | gzip -9 > ../w3top-$r.tar.gz"
+  mkdir -p $clone/public
   cp ../w3top-$r.tar.gz $clone/public/
   # say "Compressing $r [$ver] as XZ"
   # time sudo bash -c "tar cf - w3top | pv | xz -1 -z > ../w3top-$r.tar.xz"
@@ -60,6 +57,11 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 done
 
 if [ -n "${SKIP_GIT_PUSH:-}" ]; then exit; fi
+
+say "Clean w3top-bin clone location: [$clone]"
+rm -rf $clone; mkdir -p $(dirname $clone)
+say "Loading w3top-bin working copy"
+git clone git@github.com:devizer/w3top-bin $clone
 
 
 pushd $clone >/dev/null
