@@ -16,7 +16,7 @@ clone=$work/publish/w3top-bin
 say "Clean w3top-bin clone location: [$clone]"
 rm -rf $clone; mkdir -p $(dirname $clone)
 say "Loading w3top-bin working copy"
-if [ -n "${SKIP_GIT_PUSH:-}" ]; then w3topBinRepo=git@github.com:devizer/w3top-bin; else w3topBinRepo=https://github.com/devizer/w3top-bin; fi
+if [ -n "${SKIP_GIT_PUSH:-}" ]; then w3topBinRepo=https://github.com/devizer/w3top-bin; else w3topBinRepo=git@github.com:devizer/w3top-bin; fi
 git clone ${w3topBinRepo} $clone
 
 work=$work/publish/KernelManagementLab;
