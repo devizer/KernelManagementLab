@@ -30,7 +30,7 @@
     },
 
     "files": [
-        {"includePattern": "(*.md)", "uploadPattern": "md-list/$1"}
+        {"includePattern": "public/(*.tar.gz)", "uploadPattern": "temp/$1"}
     ],
 
     "publish": true

@@ -50,7 +50,9 @@ script:
   
 - export SKIP_GIT_PUSH=true; sudo mkdir -p /transient-builds; sudo chown $(whoami) /transient-builds;
 - bash publish-public.sh
+- echo Current dir is $(pwd)
 - ls -la /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin || true
+- mkdir -p public; cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz public/*
 
 deploy:
 
