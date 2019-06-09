@@ -26,7 +26,7 @@ script:
 - |
   # install pv
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    sudo brew install pv jq
+    brew install pv jq
   else
     sudo apt-get install jq pv -y
   fi;
