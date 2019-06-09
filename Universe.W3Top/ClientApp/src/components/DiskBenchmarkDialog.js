@@ -21,12 +21,16 @@ import DoneIcon from '@material-ui/icons/Done';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import * as Enumerable from "linq-es2015";
+import classNames from "classnames";
+import * as queryString from 'query-string';
 import * as DataSourceActions from "../stores/DataSourceActions";
 import { BenchmarkStepStatusIcon } from "./BenchmarkStepStatusIcon"
 import * as Helper from "../Helper";
 
 const PROGRESS_TICK_INTERVAL = 499;
 const EMPTY_PROGRESS = {isCompleted: false, steps: []};
+
+
 
 const ProgressStyle = theme => ({
     root: {
@@ -118,7 +122,7 @@ const validateOptions = (options) => {
 let timer = null;
 let token = null;
 
-function DiskBenchmarkDialog() {
+function DiskBenchmarkDialog(props) {
     const [open, setOpen] = React.useState(true);
     const [activeStep, setActiveStep] = React.useState(0);
     const [disks, setDisks] = React.useState(null);
@@ -126,8 +130,17 @@ function DiskBenchmarkDialog() {
     const [options, setOptions] = React.useState(defaultOptions);
     const [progress, setProgress] = React.useState(null);
 
+    let needHideOpenButton = false;
+    {
+        Helper.toConsole(`DiskBenchmarkDialog::props are`, props);
+        let queryParams = queryString.parse(props.location.search);
+        Helper.toConsole(`DiskBenchmarkDialog::query string is`, queryParams);
+        needHideOpenButton = queryParams['hide-button'] !== undefined;
+        Helper.log(`DiskBenchmarkDialog::needHideOpenButton ${needHideOpenButton}`);
+    }
+    
     React.useEffect(() => {
-        if (disks === null) initDisksSource(); 
+        if (disks === null) initDisksSource();
     });
 
     function getStepContent(stepIndex) {
@@ -393,7 +406,7 @@ function DiskBenchmarkDialog() {
     
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+            <Button variant="outlined" color="primary" onClick={handleClickOpen} className={classNames(needHideOpenButton && "hidden")}>
                 Open benchmark dialog
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>

@@ -1,5 +1,6 @@
 /*.c3-axis-y2, .c3-axis-y { width: 100px}*/
 
+.hidden { display: none !important;}
 
 .rt-tr .rt-th {
     padding-top: 1rem !important;
