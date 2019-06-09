@@ -31,8 +31,11 @@ script:
 - time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service /v:m
 - time dotnet test
 - cd Universe.W3Top
-- time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service2 --self-contained
-  -r linux-x64 /v:m
+- time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service2 --self-contained -r linux-x64 /v:m
+  
+- export SKIP_GIT_PUSH=true; mkdir -p /transient-builds
+- bash publish-public.sh
+- ls -la /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin || true
 
 deploy:
 

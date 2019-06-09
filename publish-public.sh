@@ -59,6 +59,9 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   popd
 done
 
+if [ -n "${SKIP_GIT_PUSH:-}" ]; then exit; fi
+
+
 pushd $clone >/dev/null
 git add --all .
 say "Commit binaries [$ver]"
