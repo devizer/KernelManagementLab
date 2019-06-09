@@ -26,8 +26,6 @@
   "version": {
     "name": "1.15.599.82",
     "desc": "Nightly biuld 1.15.599.82",
-    "released": "2019-01-04",
-    "vcs_tag": "0.1.2.3",
     "attributes": [
       "@{name=Attention; values=System.Object[]; type=string}"
     ],
