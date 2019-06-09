@@ -16,7 +16,7 @@ matrix:
 script:
 - 
 - (time nvm install node; echo "node is $(node --version)"; echo "npm is $(npm --version)";) 
-- nvm use default system; echo "node is $(node --version)"
+# - nvm use default system; echo "node is $(node --version)"
 - npm install yarn -g || true;
   echo "yarn is $(yarn --version)" || true
 - echo TRAVIS_OS_NAME is "$TRAVIS_OS_NAME"
