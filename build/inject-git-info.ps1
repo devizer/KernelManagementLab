@@ -31,7 +31,7 @@ function SaveContent {
 $branch = & { git rev-parse --abbrev-ref HEAD }
 "Branch: [$branch]"
 
-$commitsRaw = & { TZ=GMT; git log -999999 --date=raw --pretty=format:"%cd" }
+$commitsRaw = & { set TZ=GMT; git log -n 999999 --date=raw --pretty=format:"%cd" }
 $lines = $commitsRaw.Split([Environment]::NewLine)
 $commitCount = $lines.Length
 $commitDate = $lines[0].Split(" ")[0]

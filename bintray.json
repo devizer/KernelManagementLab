@@ -24,8 +24,8 @@
     ]
   },
   "version": {
-    "name": "1.15.601.87",
-    "desc": "Nightly biuld 1.15.601.87",
+    "name": "1.15.603.90",
+    "desc": "Nightly biuld 1.15.603.90",
     "attributes": [
       "@{name=Attention; values=System.Object[]; type=string}"
     ],
