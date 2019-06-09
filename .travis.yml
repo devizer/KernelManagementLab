@@ -60,6 +60,7 @@ script:
 - echo Current dir is $(pwd)
 - ls -la /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin || true
 - mkdir -p public; cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz public/
+- cat bintray.json || true
 
 deploy:
 
