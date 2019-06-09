@@ -16,8 +16,6 @@ matrix:
     os: osx
     osx_image: xcode10.2
 script:
-- TZ=GMT; git log -999999 --date=raw --pretty=format:"%cd" | cat -n
-- git rev-list HEAD | cat -n
 - (time nvm install node; echo "node is $(node --version)"; echo "npm is $(npm --version)";) 
 # - nvm use default system; echo "node is $(node --version)"
 - npm install yarn -g || true;
