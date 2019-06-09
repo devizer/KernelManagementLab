@@ -35,7 +35,8 @@
       "uploadPattern": "Nightly/$1",
       "matrixParams": {
         "override": 1,
-        "publish": 1
+        "publish": 1,
+        "explode": 1
       }
     }
   ],
