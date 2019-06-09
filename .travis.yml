@@ -40,7 +40,7 @@ script:
   (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) |
   bash -s dotnet node pwsh
 
-- pushd build; ./inject-git-info.ps1; popd
+- pushd build; ./inject-git-info.ps1; popd; cat bintray.json || true
 - dotnet restore /v:m
 - time dotnet test
 - pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
