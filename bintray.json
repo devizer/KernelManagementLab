@@ -1,37 +1,43 @@
 {
-    "package": {
-        "name": "W3Top-Nightly",
-        "repo": "W3-Top",
-        "subject": "devizer",
-        "desc": "W3Top a web-based linux-bound monitor and benchmark UI",
-        "website_url": "https://github.com/devizer/KernelManagementLab",
-        "issue_tracker_url": "https://github.com/devizer/KernelManagementLab/issues",
-        "vcs_url": "https://github.com/devizer/KernelManagementLab",
-        "github_use_tag_release_notes": true,
-        "github_release_notes_file": "RELEASE.txt",
-        "licenses": ["GPL-3.0"],
-        "labels": ["Moninoring", "Benchmark", "Cross-platform"],
-        "public_download_numbers": true,
-        "public_stats": true,
-        "attributes": [
-            {"name": "Attention", "values" : ["It's a dry run package", "Please Ignore"], "type": "string"}
-        ]
-    },
-
-    "version": {
-        "name": "0.1.2.3",
-        "desc": "Version 0.1.2.3",
-        "released": "2019-01-04",
-        "vcs_tag": "0.1.2.3",
-        "attributes": [
-            {"name": "Attention", "values" : ["It's a dry run ver", "Please Ignore"], "type": "string"}
-        ],
-        "gpgSign": false
-    },
-
-    "files": [
-        {"includePattern": "public/(.*\\.tar\\.gz)$", "uploadPattern": "Nightly/$1"}
+  "package": {
+    "name": "W3Top-Nightly",
+    "repo": "W3-Top",
+    "subject": "devizer",
+    "desc": "W3Top a web-based linux-bound monitor and benchmark UI",
+    "website_url": "https://github.com/devizer/KernelManagementLab",
+    "issue_tracker_url": "https://github.com/devizer/KernelManagementLab/issues",
+    "vcs_url": "https://github.com/devizer/KernelManagementLab",
+    "github_use_tag_release_notes": true,
+    "github_release_notes_file": "WHATSNEW.md",
+    "licenses": [
+      "GPL-3.0"
     ],
-
-    "publish": true
+    "labels": [
+      "Moninoring",
+      "Benchmark",
+      "Cross-platform"
+    ],
+    "public_download_numbers": true,
+    "public_stats": true,
+    "attributes": [
+      "@{name=Attention; values=System.Object[]; type=string}"
+    ]
+  },
+  "version": {
+    "name": "1.15.599.82",
+    "desc": "Nightly biuld 1.15.599.82",
+    "released": "2019-01-04",
+    "vcs_tag": "0.1.2.3",
+    "attributes": [
+      "@{name=Attention; values=System.Object[]; type=string}"
+    ],
+    "gpgSign": false
+  },
+  "files": [
+    {
+      "includePattern": "public/(.*\\.tar\\.gz)$",
+      "uploadPattern": "Nightly/$1"
+    }
+  ],
+  "publish": true
 }
