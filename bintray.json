@@ -1,6 +1,6 @@
 {
   "package": {
-    "name": "W3Top-Nightly",
+    "name": "W3Top",
     "repo": "W3-Top",
     "subject": "devizer",
     "desc": "W3Top a web-based linux-bound monitor and benchmark UI. Nightly package might not be fully tested and is not recommended for normal usage scenarios",
@@ -36,7 +36,7 @@
       "matrixParams": {
         "override": 1,
         "publish": 1,
-        "explode": 1
+        "explode": 0
       }
     }
   ],
