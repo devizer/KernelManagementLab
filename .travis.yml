@@ -59,7 +59,9 @@ script:
 - bash publish-public.sh
 - echo Current dir is $(pwd)
 - ls -la /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin || true
-- mkdir -p public; cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz public/
+- mkdir -p public-bintray; 
+  cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz public-bintray/;
+  cp build/AppGitInfo.json public-bintray/version.json
 - cat bintray.json || true
 
 deploy:

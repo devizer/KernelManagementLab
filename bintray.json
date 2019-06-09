@@ -33,7 +33,7 @@
   },
   "files": [
     {
-      "includePattern": "public/(.*\\.tar\\.gz)$",
+      "includePattern": "public-bintray/(.*)$",
       "uploadPattern": "Nightly/$1"
     }
   ],
