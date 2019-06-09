@@ -36,7 +36,7 @@ script:
 
 deploy:
 
-provider: bintray
+  provider: bintray
   file: "bintray.json"
   user: "devizer"
   key:
