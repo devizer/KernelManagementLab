@@ -2,7 +2,7 @@
 
 function SaveAsJson { 
   param([object]$anObject, [string]$fileName) 
-  $unixContent = ($anObject | ConvertTo-Json).Replace("`r", "")
+  $unixContent = ($anObject | ConvertTo-Json -Depth 99).Replace("`r", "")
   $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
   [System.IO.File]::WriteAllLines($fileName, $unixContent, $Utf8NoBomEncoding)
 }
