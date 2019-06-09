@@ -20,7 +20,7 @@
     "public_download_numbers": true,
     "public_stats": true,
     "attributes": [
-      {"name": "Attention", "values" : ["This NiGhTlY package might not be fully tested and is not recommended for normal usage scenarios"], "type": "string"},
+      {"name": "Attention", "values" : ["This NiGhTlY package might not be fully tested and is not recommended for normal usage scenarios"], "type": "string"}
     ]
   },
   "version": {
