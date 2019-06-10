@@ -26,7 +26,9 @@ mkdir -p "$(dirname $work)"
 cd $(dirname $work);
 rm -rf $work;
 git clone https://github.com/devizer/KernelManagementLab;
-cd KernelManagementLab/Universe.W3Top
+cd KernelManagementLab
+# repo root
+cd Universe.W3Top
 dir=$(pwd)
 
 pushd ../build >/dev/null
@@ -51,6 +53,7 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   chmod 755 install-systemd-service.sh
 
   say "Compressing $r [$ver] as GZIP"
+  echo $ver > VERSION
   time sudo bash -c "tar cf - . | pv | gzip -9 > ../w3top-$r.tar.gz"
   cp ../w3top-$r.tar.gz $clone/public/
   # say "Compressing $r [$ver] as XZ"
@@ -75,6 +78,13 @@ popd >/dev/null
 
 say "Collecting garbage"
 bash $clone/git-gc/defrag.sh
+
+say "Delete bintray versions except stable [$ver]"
+export VERSION_STABLE="$ver"
+pushd $dir/build
+bash delete-bintray-versions-except-stable.sh
+popd
+
 
 say "DONE: [$ver]"
 

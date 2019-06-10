@@ -44,7 +44,7 @@ script:
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
 
-- gem install dpl; dpl --version || true;
+- time gem search dpl | grep  -E '^dpl' | sort || true;
 
 - |
   # Install Build Tools
