@@ -16,6 +16,8 @@ namespace KernelManagementJam
         public long FreeSpace { get; set; }
         public long TotalSize { get; set; }
         public string Format { get; set; }
+        
+        public bool? IsReadonly { get; set; }
 
         public bool IsBlockDevice
         {

@@ -12,11 +12,14 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
+import DiskAvatarContent from "./DiskAvatarContent"
 
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 import DoneIcon from '@material-ui/icons/Done';
+import { faServer } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -246,7 +249,9 @@ function DiskBenchmarkDialog(props) {
     
     function renderStepSelectDisk() {
         if (disks === null)
-            return (<div>waiting for actual disks info ...</div>);
+            return (<div><i>waiting for actual disks info ...</i></div>);
+
+        const getColorOfSelectedDisk = (disk) => disk.freeSpace > 0 ? "primary" : "secondary";
         
         return (
             <React.Fragment>
@@ -254,9 +259,11 @@ function DiskBenchmarkDialog(props) {
                 {disks.map(disk => (
                 <React.Fragment key={disk.mountEntry.mountPath}>
                     <Chip 
-                        label={disk.mountEntry.mountPath} 
+                        avatar={<Avatar><DiskAvatarContent disk={disk}/></Avatar>}
+                        clickable
+                        label={`${disk.mountEntry.mountPath} (${disk.mountEntry.fileSystem})`} 
                         style={styles.diskChips} 
-                        color={disk === selectedDisk ? "primary" : "default"} 
+                        color={disk === selectedDisk ? getColorOfSelectedDisk(disk) : "default"} 
                         onClick={() => handleSelectDisk(disk)}
                     />{' '}
                 </React.Fragment>
@@ -291,7 +298,7 @@ function DiskBenchmarkDialog(props) {
         return (
             <React.Fragment>
                 <center>
-                <table className="benchmark-progress" border="0" cellPadding={0} cellSpacing={0}>
+                <table className="benchmark-progress" border="0" cellPadding={0} cellSpacing={0}><tbody>
                 {pro.steps.map(step => (
                     <React.Fragment key={step.name}>
                         <tr>
@@ -313,7 +320,7 @@ function DiskBenchmarkDialog(props) {
                         </tr>
                     </React.Fragment>
                 ))}
-                </table>
+                </tbody></table>
                 </center>
             </React.Fragment>
         )
@@ -379,7 +386,11 @@ function DiskBenchmarkDialog(props) {
         }
     };
     
-    const handleSelectDisk = (disk) => setSelectedDisk(disk);
+    const handleSelectDisk = (disk) => {
+        Helper.toConsole("DISK SELECTED", disk);
+        setSelectedDisk(disk);
+    };
+    
     const handleNext = () => {
         setActiveStep(activeStep + 1);
         if (activeStep === 1) // Perform
@@ -404,6 +415,8 @@ function DiskBenchmarkDialog(props) {
     const closeButtonNames = ["Cancel", "Cancel", "Cancel", "Cancel", "Close"];
     const isBackAllowed = activeStep === 1;
     const isNextDisabled = selectedDisk === null || (activeStep === 1 && !options.errors.isValid) || activeStep === 2;
+    const areNextBackButtonsVisible = activeStep <= 1;
+    const getColorOfSelectedDisk = (disk) => disk.freeSpace > 0 ? "primary" : "secondary";
     
     return (
         <div>
@@ -425,7 +438,6 @@ function DiskBenchmarkDialog(props) {
                     {getStepContent(activeStep)}
                 </DialogContent>
                 <DialogActions>
-
                     {activeStep === steps.length ? (
                         <div style={styles.actions}>
                             <Button onClick={handleReset} style={classes.wizardReset}>New Benchmark</Button>
@@ -437,6 +449,7 @@ function DiskBenchmarkDialog(props) {
                                     disabled={!isBackAllowed}
                                     onClick={handleBack}
                                     style={classes.wizardButton}
+                                    className={classNames(!areNextBackButtonsVisible && "hidden")}
                             >
                                 « Back
                             </Button>
@@ -445,7 +458,9 @@ function DiskBenchmarkDialog(props) {
                                     disabled={isNextDisabled}
                                     color="primary" 
                                     onClick={handleNext} 
-                                    style={classes.wizardButton}>
+                                    style={classes.wizardButton}
+                                    className={classNames(!areNextBackButtonsVisible && "hidden")}
+                            >
                                 {nextButtonNames[activeStep]}
                             </Button>
 

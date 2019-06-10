@@ -44,7 +44,8 @@ namespace KernelManagementJam
                             IsReady = di.IsReady,
                             Format = di.DriveType.ToString(),
                             FreeSpace = di.TotalFreeSpace,
-                            TotalSize = di.TotalSize
+                            TotalSize = di.TotalSize,
+                            IsReadonly = di.DriveType == DriveType.CDRom, // WAT?
                         };
                     }
                     catch (Exception exNet)
@@ -60,7 +61,8 @@ namespace KernelManagementJam
                                 IsReady = di.IsReady && di.TotalSize > 0,
                                 Format = di.DriveType.ToString(),
                                 FreeSpace = di.TotalFreeSpace,
-                                TotalSize = di.TotalSize
+                                TotalSize = di.TotalSize,
+                                IsReadonly = di.DriveType == UnixDriveType.CDRom,
                             };
                             error = null;
                         }

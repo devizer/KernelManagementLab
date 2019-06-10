@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Mono.Unix;
 
 namespace KernelManagementJam
@@ -58,6 +59,11 @@ namespace KernelManagementJam
         public static bool Exists(string path)
         {
             return (File.Exists(path) || Directory.Exists(path));
+        }
+
+        public static bool IsReadonly(string device)
+        {
+            throw new NotImplementedException("NO WAY!");
         }
 
     }
