@@ -61,6 +61,7 @@ namespace KernelManagementJam
             return (File.Exists(path) || Directory.Exists(path));
         }
 
+        [Obsolete("/sys/block/.../ro (0|1) should be used, FreeSpace == 0 can be used", true)]
         public static bool IsReadonly(string device)
         {
             throw new NotImplementedException("NO WAY!");
