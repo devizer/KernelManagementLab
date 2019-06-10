@@ -33,5 +33,6 @@ for ver in $jsonVersions2; do
   else
     echo Keep version $ver
   fi
+  echo ""
 done
 
