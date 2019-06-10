@@ -34,9 +34,17 @@ script:
   # install pv
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew install pv jq
+    ruby --version || true; gem --version || true
+    brew install ruby
+    ruby --version || true; gem --version || true
   else
     sudo apt-get install jq pv -y
+    ruby --version || true; gem --version || true
+    sudo apt-get install ruby-dev
+    ruby --version || true; gem --version || true
   fi;
+
+- gem install dpl; dpl --version || true;
 
 - |
   # Install Build Tools
