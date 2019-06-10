@@ -36,6 +36,7 @@ popd >/dev/null
 verFile=../build/AppGitInfo.json
 ver=$(cat $verFile | jq -r ".Version")
 cp $verFile $clone/public/version.json
+echo $ver > $clone/public/version.txt
 
 say "yarn install [$ver]"
 cd ClientApp; time (yarn install); cd ..
