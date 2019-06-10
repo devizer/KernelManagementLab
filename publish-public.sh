@@ -27,6 +27,7 @@ cd $(dirname $work);
 rm -rf $work;
 git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
+root=$(pwd)
 # repo root
 cd Universe.W3Top
 dir=$(pwd)
@@ -81,7 +82,7 @@ bash $clone/git-gc/defrag.sh
 
 say "Delete bintray versions except stable [$ver]"
 export VERSION_STABLE="$ver"
-pushd $dir/build
+pushd $root/build
 bash delete-bintray-versions-except-stable.sh
 popd
 
