@@ -16,6 +16,7 @@ matrix:
     os: osx
     osx_image: xcode10.2
 script:
+- export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 - git branch
 - git rev-parse --abbrev-ref HEAD
 - (time nvm install node; echo "node is $(node --version)"; echo "npm is $(npm --version)";) 
