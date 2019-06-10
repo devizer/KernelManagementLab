@@ -3,7 +3,7 @@
     "name": "W3Top",
     "repo": "W3-Top",
     "subject": "devizer",
-    "desc": "W3Top a web-based linux-bound monitor and benchmark UI. Nightly package might not be fully tested and is not recommended for normal usage scenarios",
+    "desc": "W3Top a web-based linux-bound monitor and benchmark UI. Here is on official storage for one-line installer for W3Top. It is not supposed to direct download archives from here. For installation please use recommended one line installer: https://github.com/devizer/w3top-bin/blob/master/README.md",
     "website_url": "https://github.com/devizer/KernelManagementLab",
     "issue_tracker_url": "https://github.com/devizer/KernelManagementLab/issues",
     "vcs_url": "https://github.com/devizer/KernelManagementLab",
