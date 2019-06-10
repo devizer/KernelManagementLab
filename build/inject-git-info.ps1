@@ -66,6 +66,6 @@ $binTray = Get-Content "../bintray.json" | ConvertFrom-Json
 Write-Host "Old .Version.Name $($binTray.version.name)"
 Write-Host "Old .version.desc $($binTray.version.desc)"
 $binTray.version.name = "$version.$commitCount.$build"
-$binTray.version.desc = "Nightly biuld $version.$commitCount.$build"
+$binTray.version.desc = "Build $version.$commitCount.$build"
 SaveAsJson $binTray "../bintray.json"
 
