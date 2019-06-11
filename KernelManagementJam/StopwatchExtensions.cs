@@ -28,11 +28,11 @@ namespace KernelManagementJam
         
         public static IDisposable ToConsole(string caption)
         {
-            Consolas ret = new Consolas();
-            ret.Caption = caption;
-            ret.Stowatch = Stopwatch.StartNew();
-            return ret;
+            return new Consolas
+            {
+                Caption = caption, 
+                Stowatch = Stopwatch.StartNew()
+            };
         }
-        
     }
 }

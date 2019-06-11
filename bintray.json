@@ -20,17 +20,21 @@
     "public_download_numbers": true,
     "public_stats": true,
     "attributes": [
-      {"name": "Attention", "values" : ["It is not supposed to direct download archives from here. For installation please use recommended one-liner: https://github.com/devizer/w3top-bin/blob/master/README.md"], "type": "string"}
+      {
+        "name": "Attention",
+        "values": [
+          "It is not supposed to direct download archives from here. For installation please use recommended one-liner: https://github.com/devizer/w3top-bin/blob/master/README.md"
+        ],
+        "type": "string"
+      }
     ]
   },
-  
   "version": {
-    "name": "1.15.615.91",
-    "desc": "Nightly biuld 1.15.615.91",
+    "name": "1.15.639.92",
+    "desc": "Build 1.15.639.92",
     "attributes": [],
     "gpgSign": false
   },
-  
   "files": [
     {
       "includePattern": "public-bintray/(.*)$",
@@ -42,6 +46,5 @@
       }
     }
   ],
-  
   "publish": true
 }

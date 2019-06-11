@@ -251,7 +251,12 @@ function DiskBenchmarkDialog(props) {
         if (disks === null)
             return (<div><i>waiting for actual disks info ...</i></div>);
 
-        const getColorOfSelectedDisk = (disk) => disk.freeSpace > 0 ? "primary" : "secondary";
+        const isReadOnly = (disk) => !(disk.freeSpace > 0);
+        const getColorOfSelectedDisk = (disk) => !isReadOnly(disk) ? "primary" : "secondary";
+        const getFsColor = (disk) => {
+            if (disk === selectedDisk) return isReadOnly(disk) ? "#F2DCE4" : "#B9BECE";
+            return "#666";
+        }
         
         return (
             <React.Fragment>
@@ -261,7 +266,7 @@ function DiskBenchmarkDialog(props) {
                     <Chip 
                         avatar={<Avatar><DiskAvatarContent disk={disk}/></Avatar>}
                         clickable
-                        label={`${disk.mountEntry.mountPath} (${disk.mountEntry.fileSystem})`} 
+                        label={(<span><b>{disk.mountEntry.mountPath}</b> <span style={{color:getFsColor(disk)}}>({disk.mountEntry.fileSystem})</span></span>)} 
                         style={styles.diskChips} 
                         color={disk === selectedDisk ? getColorOfSelectedDisk(disk) : "default"} 
                         onClick={() => handleSelectDisk(disk)}

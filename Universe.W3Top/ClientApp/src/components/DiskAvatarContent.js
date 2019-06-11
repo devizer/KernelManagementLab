@@ -7,17 +7,20 @@ import { faMemory } from '@fortawesome/free-solid-svg-icons'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
 
 // const iconStyle = {width:16, minWidth: 16, display: "inline-block", marginRight: 0, fontSize_ignore: 6};
-const iconStyle = {};
-const iconUnknown = <span style={iconStyle}>&nbsp;</span>;
-const iconBlock = <FontAwesomeIcon style={iconStyle} icon={faServer}/>;
-const iconRam = <FontAwesomeIcon style={iconStyle} icon={faMemory}/>;
-const iconNet = <FontAwesomeIcon style={iconStyle} icon={faNetworkWired}/>;
-const iconSwap = <FontAwesomeIcon style={iconStyle} icon={faFile}/>;
+const chipStyle = {};
+
+const chipIcons = {
+    Unknown: <span style={chipStyle}>&nbsp;</span>,
+    Block: <FontAwesomeIcon style={chipStyle} icon={faServer}/>,
+    Ram: <FontAwesomeIcon style={chipStyle} icon={faMemory}/>,
+    Net: <FontAwesomeIcon style={chipStyle} icon={faNetworkWired}/>,
+    Swap: <FontAwesomeIcon style={chipStyle} icon={faFile}/>
+};
 
 export default function DiskAvatarContent (props){
-    if (props.disk.isTmpFs) return iconRam;
-    if (props.disk.isBlockDevice) return iconBlock;
-    if (props.disk.isNetworkShare) return iconNet;
-    if (props.disk.isSwap) return iconSwap;
-    return iconUnknown;
+    if (props.disk.isTmpFs) return chipIcons.Ram;
+    if (props.disk.isBlockDevice) return chipIcons.Block;
+    if (props.disk.isNetworkShare) return chipIcons.Net;
+    if (props.disk.isSwap) return chipIcons.Swap;
+    return chipIcons.Unknown;
 }

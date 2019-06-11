@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import nextUniqueId from "../NextUniqueId"
-import c3 from 'c3';
 import * as Helper from "../Helper";
+
+//import c3 from 'c3';
+const c3 = require('c3');
 
 export class SingleAxisChart extends Component {
     static displayName = SingleAxisChart.name;
