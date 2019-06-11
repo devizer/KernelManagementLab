@@ -67,5 +67,23 @@ namespace KernelManagementJam
             throw new NotImplementedException("NO WAY!");
         }
 
+        public static bool IsSymLink(string fullName)
+        {
+            try
+            {
+                UnixFileSystemInfo info;
+                if (UnixFileSystemInfo.TryGetFileSystemEntry(fullName, out info))
+                {
+                    return info.FileType == FileTypes.SymbolicLink;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
     }
 }

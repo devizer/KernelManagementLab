@@ -138,7 +138,7 @@ namespace Universe.Benchmark.DiskBench
             {
                 long msec = swProgress.ElapsedMilliseconds;
                 long delta = msec - prevMsecs;
-                if (delta > 100)
+                if (delta > 1)
                 {
                     _analyze.Name = $"Analyze metadata {Formatter.FormatBytes(totalSize)}";
                     prevMsecs = msec;
@@ -181,11 +181,14 @@ namespace Universe.Benchmark.DiskBench
             {
                 foreach (var file in files)
                 {
+                    var fileFullName = file.FullName;
+                    if (FileSystemHelper.IsSymLink(fileFullName)) continue;
                     var len = file.Length;
                     if (len >= UnconditionalThreshold)
                     {
-                        result.Add(new FileInfo() {Size = len, FullName = file.FullName});
+                        result.Add(new FileInfo() {Size = len, FullName = fileFullName});
                         totalSize += len;
+                        progress();
                     }
                 }
             }
@@ -203,6 +206,7 @@ namespace Universe.Benchmark.DiskBench
             {
                 foreach (var subDir in subDirs)
                 {
+                    if (FileSystemHelper.IsSymLink(subDir.FullName)) continue;
                     EnumDir(subDir, result, ref totalSize, progress);
                 }
             }
