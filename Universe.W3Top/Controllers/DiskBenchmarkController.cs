@@ -52,7 +52,7 @@ namespace ReactGraphLab.Controllers
             return new BenchmarkResponse()
             {
                 Token = token,
-                Progress = diskBenchmark.Prorgess.Clone(),
+                Progress = diskBenchmark.Progress.Clone(),
             };
         }
 
@@ -62,7 +62,7 @@ namespace ReactGraphLab.Controllers
             var enlistedBenchmark = Queue.Find(benchmarkToken);
             if (enlistedBenchmark.Index >= 0)
             {
-                var progress = enlistedBenchmark.Benchmark.Prorgess.Clone();
+                var progress = enlistedBenchmark.Benchmark.Progress.Clone();
                 if (enlistedBenchmark.Index > 0)
                 {
                     // add Waiting in queue step

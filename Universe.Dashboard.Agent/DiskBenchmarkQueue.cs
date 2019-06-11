@@ -103,7 +103,7 @@ namespace Universe.Dashboard.Agent
                         {
                             Args = benchmark.Parameters,
                             Token = nextJob.Token.ToString(),
-                            Report = benchmark.Prorgess, // Progress is complete
+                            Report = benchmark.Progress, // Progress is complete
                             CreatedAt = DateTime.UtcNow,
                             MountPath = benchmark.Parameters.WorkFolder,
                             ErrorInfo = benchmarkException?.GetExceptionDigest(),

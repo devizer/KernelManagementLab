@@ -31,7 +31,7 @@ namespace ReactGraphLab
                 {
                     Args = benchmark.Parameters,
                     Token = token.ToString(),
-                    Report = benchmark.Prorgess, // Progress is complete
+                    Report = benchmark.Progress, // Progress is complete
                     CreatedAt = DateTime.UtcNow,
                     MountPath = benchmark.Parameters.WorkFolder,
                     ErrorInfo = "in complete",

@@ -72,24 +72,50 @@ If disk/volume supports compression it is important to specify a flavour of the 
             
             // JIT
             var tempSize = 128*1024;
-            DiskBenchmark jit = new DiskBenchmark(Disk, tempSize, Flavour, tempSize, 1);
+            var hasWritePermission = HasWritePermission(Disk);
+            IDiskBenchmark jit;
+            if (hasWritePermission)
+                jit = new DiskBenchmark(Disk, tempSize, Flavour, tempSize, 1);
+            else
+                jit = new ReadonlyDiskBenchmark(new ReadonlyDiskBenchmarkOptions()
+                {
+                    WorkFolder = Disk, 
+                    StepDuration = 1, 
+                    ThreadsNumber = 2,
+                    DisableODirect = false,
+                    WorkingSetSize = 128 * 1024,
+                    RandomAccessBlockSize = 128 * 1024,
+                });
+            
             jit.Perform();
             // return 0;
 
-            DiskBenchmark dbench = new DiskBenchmark(
-                Disk, 
-                FileSize*1024L, 
-                Flavour,
-                BlockSize, 
-                RandomDuration, 
-                DisableODirect);
+            IDiskBenchmark dbench;
+            if (hasWritePermission)
+                dbench = new DiskBenchmark(
+                    Disk,
+                    FileSize * 1024L,
+                    Flavour,
+                    BlockSize,
+                    RandomDuration,
+                    DisableODirect);
+            else
+            dbench = new ReadonlyDiskBenchmark(new ReadonlyDiskBenchmarkOptions()
+            {
+                WorkFolder = Disk,
+                WorkingSetSize = FileSize * 1024L,
+                StepDuration = RandomDuration,
+                ThreadsNumber = 16,
+                DisableODirect = false,
+                RandomAccessBlockSize = BlockSize
+            });
             
             ManualResetEvent done = new ManualResetEvent(false);
             
 
             Action updateProgress = () =>
             {
-                WriteProgress(dbench.Prorgess.Clone());
+                WriteProgress(dbench.Progress.Clone());
             };
 
             ThreadPool.QueueUserWorkItem(_ =>
@@ -164,7 +190,32 @@ If disk/volume supports compression it is important to specify a flavour of the 
                 default:
                     return DefaultFlavour;
 
-                    
+            }
+        }
+
+        static bool HasWritePermission(string folder)
+        {
+            var fullFileName = Path.Combine(folder, DiskBenchmark.BenchmarkTempFile);
+            try
+            {
+                using (FileStream fs = new FileStream(fullFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                try
+                {
+                    File.Delete(fullFileName);
+                }
+                catch
+                {
+                }
             }
         }
         

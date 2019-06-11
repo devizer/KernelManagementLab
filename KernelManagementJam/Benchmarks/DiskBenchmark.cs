@@ -13,14 +13,21 @@ using FileMode = System.IO.FileMode;
 
 namespace Universe.Benchmark.DiskBench
 {
-    public class DiskBenchmark
+    public interface IDiskBenchmark
+    {
+        ProgressInfo Progress { get; }
+        void Perform();
+    }
+    
+    public class DiskBenchmark : IDiskBenchmark
     {
         public DiskBenchmarkOptions Parameters { get; set; }
-        public ProgressInfo Prorgess { get; private set; }
+        public ProgressInfo Progress { get; private set; }
         
-        static readonly string TempName = "benchmark.tmp";
+        public static readonly string BenchmarkTempFile = "bnchmrk.tmp";
         private string TempFile;
         
+        private ProgressStep _allocate;
         private ProgressStep _seqRead;
         private ProgressStep _seqWrite;
         private ProgressStep _rndRead1T;
@@ -28,7 +35,6 @@ namespace Universe.Benchmark.DiskBench
         private ProgressStep _rndReadN;
         private ProgressStep _rndWriteN;
         private ProgressStep _cleanUp;
-        private ProgressStep _allocate;
         private ProgressStep _checkODirect;
         private bool _isODirectSupported;
 
@@ -54,7 +60,7 @@ namespace Universe.Benchmark.DiskBench
             };
 
             var workFolderFullName = new DirectoryInfo(Parameters.WorkFolder).FullName;
-            TempFile = Path.Combine(workFolderFullName, TempName);
+            TempFile = Path.Combine(workFolderFullName, BenchmarkTempFile);
             BuildProgress();
         }
         
@@ -81,7 +87,7 @@ namespace Universe.Benchmark.DiskBench
             _rndWriteN = new ProgressStep($"Random Write, {Parameters.ThreadsNumber} threads");
             _cleanUp = new ProgressStep("Clean up");
             
-            this.Prorgess = new ProgressInfo()
+            this.Progress = new ProgressInfo()
             {
                 Steps =
                 {
@@ -107,7 +113,7 @@ namespace Universe.Benchmark.DiskBench
             }
             finally
             {
-                Prorgess.IsCompleted = true;
+                Progress.IsCompleted = true;
             }
         }
 
@@ -179,7 +185,7 @@ namespace Universe.Benchmark.DiskBench
             {
                 doCleanUp(ex);
                 bool first = true;
-                foreach (var step in Prorgess.Steps)
+                foreach (var step in Progress.Steps)
                 {
                     if (step.State == ProgressStepState.InProgress || step.State == ProgressStepState.Pending)
                     {
@@ -229,12 +235,12 @@ namespace Universe.Benchmark.DiskBench
                 }
                 _allocate.Complete();
             }
-            Sync();
+            LinuxKernelCacheFlusher.Sync();
         }
         
         private void SeqRead()
         {
-            Sync();
+            LinuxKernelCacheFlusher.Sync();
             byte[] buffer = new byte[Math.Min(1024 * 1024, this.Parameters.FileSize)];
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
             // using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
@@ -255,7 +261,7 @@ namespace Universe.Benchmark.DiskBench
 
         private void SeqWrite()
         {
-            Sync();
+            LinuxKernelCacheFlusher.Sync();
             byte[] buffer = new byte[1024 * 1024];
             // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
@@ -277,7 +283,7 @@ namespace Universe.Benchmark.DiskBench
 
         private void RandomAccess(ProgressStep step, int numThreads, Func<Stream> getFileStream, Func<Stream,byte[],int> doStuff, long msecDuration)
         {
-            Sync();
+            LinuxKernelCacheFlusher.Sync();
             List<Thread> threads = new List<Thread>();
             CountdownEvent started = new CountdownEvent(numThreads);
             CountdownEvent finished = new CountdownEvent(numThreads);
@@ -370,62 +376,5 @@ namespace Universe.Benchmark.DiskBench
             return fs;
         }
 
-        public static void Sync()
-        {
-            SyncWriteBuffer();
-            FlushReadBuffers();
-        }
-
-        public static void SyncWriteBuffer()
-        {
-            StartAndIgnore("sync", "");
-        }
-
-        public static void FlushReadBuffers()
-        {
-            bool isDropOk = false;
-            try
-            {
-                File.WriteAllText("/proc/sys/vm/drop_caches", "1");
-                isDropOk = true;
-            }
-            catch
-            {
-            }
-
-            if (!isDropOk)
-            {
-                StartAndIgnore("sudo", "sh -c \"echo 1 > /proc/sys/vm/drop_caches\"");
-            }
-        }
-        
-        static int StartAndIgnore(string fileName, string args)
-        {
-            Stopwatch sw = Stopwatch.StartNew(); 
-            string info = fileName == "sudo" ? args : fileName;
-                
-            try
-            {
-                ProcessStartInfo si = new ProcessStartInfo(fileName, args);
-                si.RedirectStandardError = true;
-                si.RedirectStandardOutput = true;
-                using (Process p = Process.Start(si))
-                {
-                    p.Start();
-                    p.WaitForExit();
-#if DEBUG
-                    Console.WriteLine($"Process [{info}] successfully finished in {sw.ElapsedMilliseconds:n0} milliseconds");
-#endif
-                    return p.ExitCode;
-                }
-            }
-            catch
-            {
-#if DEBUG
-                Console.WriteLine($"Process [{info}] failed in {sw.ElapsedMilliseconds:n0} milliseconds");
-#endif
-                return -1;
-            }
-        }
     }
 }

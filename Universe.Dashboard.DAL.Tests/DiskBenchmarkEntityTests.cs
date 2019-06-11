@@ -44,7 +44,7 @@ namespace Tests
             DiskBenchmark b = new DiskBenchmark("/test-empty-report");
             var entity = new DiskBenchmarkEntity() { CreatedAt = DateTime.UtcNow, MountPath = b.Parameters.WorkFolder};
             entity.Args = b.Parameters;
-            entity.Report = b.Prorgess;
+            entity.Report = b.Progress;
             context.DiskBenchmark.Add(entity);
             context.SaveChanges();
         }
@@ -57,7 +57,7 @@ namespace Tests
             b.Perform();
             var entity = new DiskBenchmarkEntity() { CreatedAt = DateTime.UtcNow, MountPath = b.Parameters.WorkFolder};
             entity.Args = b.Parameters;
-            entity.Report = b.Prorgess;
+            entity.Report = b.Progress;
             context.DiskBenchmark.Add(entity);
             context.SaveChanges();
             
