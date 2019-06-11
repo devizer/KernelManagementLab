@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using KernelManagementJam;
 using KernelManagementJam.Benchmarks;
 using Universe.DiskBench;
@@ -12,8 +13,10 @@ namespace Universe.Benchmark.DiskBench
     public class ReadonlyDiskBenchmark : IDiskBenchmark
     {
         
-        private const int UnconditionalThreshold = 16384;
         public ReadonlyDiskBenchmarkOptions Parameters { get; set; }
+        public bool IsJit = false;
+        
+        private const int UnconditionalThreshold = 16384;
         private FileInfo[] WorkingSet = null;
         
         public ProgressInfo Progress { get; private set; }
@@ -84,32 +87,36 @@ namespace Universe.Benchmark.DiskBench
         
         private void SeqRead()
         {
-            LinuxKernelCacheFlusher.Sync();
             _seqRead.Start();
+            LinuxKernelCacheFlusher.Sync();
             
             byte[] buffer = new byte[1024 * 1024];
-            long totalLen = 0;
+            long sumBytes = 0;
+            _seqRead.Start();
             foreach (var fileInfo in WorkingSet)
             {
                 
                 using (FileStream fs = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
                 {
-                    _seqRead.Start();
                     long len = 0;
                     long fileLen = fileInfo.Size;
                     while (len < fileLen)
                     {
-                        var count = (int) Math.Min(fileLen - len, buffer.Length);
+                        var count = (int) Math.Min(Math.Min(fileLen - len, buffer.Length), Parameters.WorkingSetSize - sumBytes);
+                        if (count <= 0) goto done;
+                        
                         int n = fs.Read(buffer, 0, count);
                         if (n < 0) continue;
                         len += n;
-                        totalLen += n;
-                        _seqRead.Progress(totalLen / (double) Parameters.WorkingSetSize, totalLen);
+                        sumBytes += n;
+                        _seqRead.Progress(sumBytes / (double) Parameters.WorkingSetSize, sumBytes);
                     }
                 }
-
+                
+                // Console.WriteLine($"SEQ READ: {sumBytes:n0} of {Parameters.WorkingSetSize:n0}");
             }
             
+            done:
             _seqRead.Complete();
         }
 
@@ -138,19 +145,21 @@ namespace Universe.Benchmark.DiskBench
             {
                 long msec = swProgress.ElapsedMilliseconds;
                 long delta = msec - prevMsecs;
-                if (delta > 1)
+                if (delta > 222)
                 {
                     _analyze.Name = $"Analyze metadata {Formatter.FormatBytes(totalSize)}";
+                    // Console.WriteLine($"Analyze metadata progress: {files.Count} files total size is {totalSize:n0} bytes");
                     prevMsecs = msec;
                 }
             };
-            
-            EnumDir(root, files, ref totalSize, progress);
+
+            bool abort = false;
+            EnumDir(root, files, ref totalSize, progress, ref abort);
             long bufferSize = 0;
             var query = files.OrderByDescending(x => x.Size).TakeWhile((file) =>
             {
                 bufferSize += file.Size;
-                return bufferSize < Parameters.WorkingSetSize;
+                return true || bufferSize < Parameters.WorkingSetSize;
             });
 
             WorkingSet = query.ToArray();
@@ -166,7 +175,7 @@ namespace Universe.Benchmark.DiskBench
                 throw new Exception($"Insufficient content for readonly disk benchmark. Requested working set {Formatter.FormatBytes(Parameters.WorkingSetSize)}, but available is just {Formatter.FormatBytes(totalSize)}");
         }
 
-        static void EnumDir(DirectoryInfo dir, List<FileInfo> result, ref long totalSize, Action progress)
+        void EnumDir(DirectoryInfo dir, List<FileInfo> result, ref long totalSize, Action progress, ref bool abort)
         {
             System.IO.FileInfo[] files = null;
             try
@@ -182,13 +191,20 @@ namespace Universe.Benchmark.DiskBench
                 foreach (var file in files)
                 {
                     var fileFullName = file.FullName;
-                    if (FileSystemHelper.IsSymLink(fileFullName)) continue;
                     var len = file.Length;
                     if (len >= UnconditionalThreshold)
                     {
+                        if (FileSystemHelper.IsSymLink(fileFullName)) continue;
+                        if (!CanReadFile(fileFullName)) continue;
+
                         result.Add(new FileInfo() {Size = len, FullName = fileFullName});
                         totalSize += len;
                         progress();
+                        if (IsJit && totalSize > Parameters.WorkingSetSize)
+                        {
+                            abort = true;
+                            return;
+                        }
                     }
                 }
             }
@@ -207,10 +223,29 @@ namespace Universe.Benchmark.DiskBench
                 foreach (var subDir in subDirs)
                 {
                     if (FileSystemHelper.IsSymLink(subDir.FullName)) continue;
-                    EnumDir(subDir, result, ref totalSize, progress);
+                    EnumDir(subDir, result, ref totalSize, progress, ref abort);
+                    if (abort) return;
                 }
             }
 
+        }
+
+        static bool CanReadFile(string fullName)
+        {
+            try
+            {
+                byte[] buffer = new byte[1];
+                using (FileStream fs = new FileStream(fullName, FileMode.Open, FileAccess.Read, FileShare.Read, 1))
+                {
+                    fs.Read(buffer, 0, 1);
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+
+            return false;
         }
         #endregion
         

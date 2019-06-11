@@ -85,7 +85,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
                     DisableODirect = false,
                     WorkingSetSize = 128 * 1024,
                     RandomAccessBlockSize = 128 * 1024,
-                });
+                }) { IsJit = true};
             
             jit.Perform();
             // return 0;
@@ -111,7 +111,6 @@ If disk/volume supports compression it is important to specify a flavour of the 
             });
             
             ManualResetEvent done = new ManualResetEvent(false);
-            
 
             Action updateProgress = () =>
             {
@@ -124,6 +123,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
                 {
                     updateProgress();
                 } while (!done.WaitOne(499));
+
             });
             
             ThreadPool.QueueUserWorkItem(_ => { 

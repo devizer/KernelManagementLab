@@ -85,5 +85,23 @@ namespace KernelManagementJam
             }
         }
 
+        public static bool IsRegularFile(string fullName)
+        {
+            try
+            {
+                UnixFileSystemInfo info;
+                if (UnixFileSystemInfo.TryGetFileSystemEntry(fullName, out info))
+                {
+                    return info.FileType == FileTypes.SymbolicLink;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
     }
 }
