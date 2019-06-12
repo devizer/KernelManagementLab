@@ -75,6 +75,24 @@ namespace Universe.Benchmark.DiskBench
             {
                 Perform_Impl();
             }
+            catch (Exception ex)
+            {
+                // In case of fail the first pending step is replaced by ERROR status and the rest are SKIPPED
+                bool first = true;
+                foreach (var step in Progress.Steps)
+                {
+                    if (step.State == ProgressStepState.InProgress || step.State == ProgressStepState.Pending)
+                    {
+                        step.State = first ? ProgressStepState.Error : ProgressStepState.Skipped;
+                        first = false;
+                    }
+                }
+
+                ProgressStep failedStep = new ProgressStep("Benchmark failed.") {State = ProgressStepState.Error};
+                Progress.Steps.Add(failedStep);
+                
+
+            }
             finally
             {
                 Progress.IsCompleted = true;
