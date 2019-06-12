@@ -34,7 +34,7 @@ namespace ReactGraphLab
                     Report = benchmark.Progress, // Progress is complete
                     CreatedAt = DateTime.UtcNow,
                     MountPath = benchmark.Parameters.WorkFolder,
-                    ErrorInfo = "in complete",
+                    ErrorInfo = "incomplete",
                 };
 
                 db.DiskBenchmark.Add(entity);
@@ -49,6 +49,7 @@ namespace ReactGraphLab
                     throw new Exception($"Can't retrieve DiskBenchmarkEntity by token = {token}");
 
                 db.DiskBenchmark.Remove(copy1);
+                db.SaveChanges();
             }
             
         }

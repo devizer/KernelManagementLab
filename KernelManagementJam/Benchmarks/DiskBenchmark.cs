@@ -15,6 +15,7 @@ namespace Universe.Benchmark.DiskBench
 {
     public interface IDiskBenchmark
     {
+        DiskBenchmarkOptions Parameters { get; }
         ProgressInfo Progress { get; }
         void Perform();
     }
@@ -38,6 +39,16 @@ namespace Universe.Benchmark.DiskBench
         private ProgressStep _checkODirect;
         private bool _isODirectSupported;
 
+        public DiskBenchmark(DiskBenchmarkOptions parameters)
+        {
+            Parameters = parameters;
+
+            // copy/pasta from another ctor
+            var workFolderFullName = new DirectoryInfo(Parameters.WorkFolder).FullName;
+            TempFile = Path.Combine(workFolderFullName, BenchmarkTempFile);
+            BuildProgress();
+        }
+
         public DiskBenchmark(
             string workFolder,
             long fileSize = 4L * 1024 * 1024 * 1024,
@@ -59,6 +70,7 @@ namespace Universe.Benchmark.DiskBench
                 ThreadsNumber = threadsNumber,
             };
 
+            // copy/pasta from another ctor
             var workFolderFullName = new DirectoryInfo(Parameters.WorkFolder).FullName;
             TempFile = Path.Combine(workFolderFullName, BenchmarkTempFile);
             BuildProgress();

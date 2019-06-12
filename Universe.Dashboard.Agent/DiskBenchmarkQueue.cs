@@ -14,7 +14,7 @@ namespace Universe.Dashboard.Agent
         public class DiskBenchmarkWithToken
         {
             public Guid Token;
-            public DiskBenchmark Benchmark;
+            public IDiskBenchmark Benchmark;
         }
 
         private readonly Func<DashboardContext> GetDbContext;
@@ -30,7 +30,7 @@ namespace Universe.Dashboard.Agent
             t.Start();
         }
 
-        public void Enqueue(Guid token, DiskBenchmark benchmark)
+        public void Enqueue(Guid token, IDiskBenchmark benchmark)
         {
             var item = new DiskBenchmarkWithToken() {Token = token, Benchmark = benchmark};
             lock(SyncQueue) Queue.Add(item);
@@ -64,7 +64,7 @@ namespace Universe.Dashboard.Agent
             // 0: InProgress, >0: Pending, <0: not found 
             public int Index;
             public Guid Token;
-            public DiskBenchmark Benchmark;
+            public IDiskBenchmark Benchmark;
         }
 
         public int Count
