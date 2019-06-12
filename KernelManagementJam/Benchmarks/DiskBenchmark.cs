@@ -196,6 +196,7 @@ namespace Universe.Benchmark.DiskBench
             catch(Exception ex)
             {
                 doCleanUp(ex);
+                // In case of fail the first pending step is replaced by ERROR status and the rest are SKIPPED
                 bool first = true;
                 foreach (var step in Progress.Steps)
                 {

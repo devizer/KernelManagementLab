@@ -84,6 +84,7 @@ namespace Universe.Benchmark.DiskBench
             AnalyzeMetadata();
             if (!Parameters.DisableODirect) CheckODirect();
             SeqRead();
+            
         }
         
         private void CheckODirect()

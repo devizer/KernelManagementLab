@@ -244,7 +244,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
             {
                 holder.Add(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, 8));
                 n++;
-                if (n % 1000 == 0) Console.Write ($"{n} ");
+                if (n % 1000 == 0) Console.Write ($"{(n/1000)}K ");
             }
         }
         
