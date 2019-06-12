@@ -23,7 +23,9 @@ namespace Universe.DiskBench
 
         static int Main(string[] args)
         {
-            
+
+            // Check_Readonly_O_Direct();
+
             bool nologo = false;
             bool help = false;
             bool version = false;
@@ -139,6 +141,15 @@ If disk/volume supports compression it is important to specify a flavour of the 
             updateProgress();
             return 0;
 
+        }
+
+        private static bool Check_Readonly_O_Direct()
+        {
+            const string fff = "/usr/lib/x86_64-linux-gnu/libLLVM-3.9.so.1";
+            Console.WriteLine($"Checking O_Direct for {fff}");
+            bool has = ODirectCheck.IsO_DirectSupported_Readonly("/usr/lib/x86_64-linux-gnu/libLLVM-3.9.so.1", 16384);
+            Console.WriteLine($"O_Direct for {fff}: [{has}]");
+            return has;
         }
 
         static void WriteProgress(ProgressInfo progress)

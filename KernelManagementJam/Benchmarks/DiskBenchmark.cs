@@ -231,6 +231,8 @@ namespace Universe.Benchmark.DiskBench
         
         private void Allocate()
         {
+            _allocate.Start();
+            LinuxKernelCacheFlusher.Sync();
             byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.WorkingSetSize)];
             // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);

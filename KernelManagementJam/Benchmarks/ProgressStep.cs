@@ -28,6 +28,9 @@ namespace Universe.DiskBench
             Name = name;
         }
 
+        // It is ok to start the same step multiple time.
+        // On first the UI is updated
+        // On last the timer start moment is updated
         public void Start()
         {
             State = ProgressStepState.InProgress;

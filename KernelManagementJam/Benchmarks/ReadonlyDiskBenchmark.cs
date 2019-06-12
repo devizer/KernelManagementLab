@@ -82,8 +82,28 @@ namespace Universe.Benchmark.DiskBench
         {
             Random random = new Random();
             AnalyzeMetadata();
+            if (!Parameters.DisableODirect) CheckODirect();
             SeqRead();
         }
+        
+        private void CheckODirect()
+        {
+            _checkODirect.Start();
+
+            _isODirectSupported = false;
+            var firstFile = WorkingSet[0].FullName;
+            try
+            {
+                _isODirectSupported = ODirectCheck.IsO_DirectSupported_Readonly(firstFile, Parameters.RandomAccessBlockSize);
+            }
+            catch
+            {
+            }
+
+            _checkODirect.Name = _isODirectSupported ? "Direct Access is detected" : "Direct Access is absent";
+            _checkODirect.Complete();
+        }
+
         
         private void SeqRead()
         {

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace KernelManagementJam.Benchmarks
 {
@@ -11,6 +12,57 @@ namespace KernelManagementJam.Benchmarks
         {
             return IsO_DirectSupported(directory, DefaultGranularity);
         }
+        
+        public static bool IsO_DirectSupported_Readonly(string existingFileFullName, int granularity)
+        {
+            if (granularity % 512 != 0)
+                throw new ArgumentException("granularity argument should be multiplier of 512", nameof(granularity));
+
+            string fileName = existingFileFullName;
+
+            byte[] original = new byte[granularity];
+            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read, granularity))
+            {
+                original = PartialReadStream(fs, granularity); 
+            }
+
+            bool ret;
+            try
+            {
+                using (var stream = new LinuxDirectReadonlyFileStreamV2(fileName, granularity))
+                {
+                    var copy = PartialReadStream(stream, granularity);
+                    ret = AreEquals(original, copy);
+                }
+            }
+            catch(Exception ex)
+            {
+                ret = false;
+#if DEBUG
+                Console.Write($"O_DIRECT check is negative for {Path.GetDirectoryName(fileName)}. {ex}");
+#endif
+            }
+
+            return ret;
+        }
+
+        static byte[] PartialReadStream(Stream stream, int bytesCount)
+        {
+            MemoryStream mem = new MemoryStream();
+            int total = 0;
+            byte[] buffer = new byte[Math.Min(bytesCount, 256*1024)];
+            while (total < bytesCount)
+            {
+                int limit = Math.Min(buffer.Length, bytesCount - total);
+                int n = stream.Read(buffer, 0, limit);
+                if (n < 0) break;
+                total += n;
+                mem.Write(buffer, 0, n);
+            }
+
+            return mem.ToArray();
+        }
+
 
         public static bool IsO_DirectSupported(string directory, int granularity)
         {
