@@ -220,7 +220,7 @@ namespace Universe.Benchmark.DiskBench
             _isODirectSupported = false;
             try
             {
-                _isODirectSupported = ODirectCheck.IsO_DirectSupported(Parameters.WorkFolder, 128 * 1024);
+                _isODirectSupported = DiskBenchmarkChecks.IsO_DirectSupported(Parameters.WorkFolder, 128 * 1024);
             }
             catch
             {

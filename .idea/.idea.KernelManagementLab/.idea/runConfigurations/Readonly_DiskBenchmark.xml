@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Readonly DiskBenchmark" type="DotNetProject" factoryName=".NET Project" editBeforeRun="true">
     <option name="EXE_PATH" value="$PROJECT_DIR$/BenchmarkLab/bin/Debug/netcoreapp2.2/Universe.Benchmark.dll" />
-    <option name="PROGRAM_PARAMETERS" value="&quot;-p=/live linux&quot; -s=2000000 -b=512 -t=60000" />
+    <option name="PROGRAM_PARAMETERS" value="&quot;-p=/live linux&quot; -s=2000000 -b=4096 -t=60000" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BenchmarkLab" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <envs>

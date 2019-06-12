@@ -1,10 +1,11 @@
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Universe.Benchmark.DiskBench;
 
 namespace KernelManagementJam.Benchmarks
 {
-    public class ODirectCheck
+    public class DiskBenchmarkChecks
     {
         private static readonly int DefaultGranularity = 128 * 1024;
 
@@ -39,7 +40,7 @@ namespace KernelManagementJam.Benchmarks
             {
                 ret = false;
 #if DEBUG
-                Console.Write($"O_DIRECT check is negative for {Path.GetDirectoryName(fileName)}. {ex}");
+                Console.Write($"O_DIRECT(R/O) check is negative for '{fileName}'. {ex}");
 #endif
             }
 
@@ -95,7 +96,7 @@ namespace KernelManagementJam.Benchmarks
             {
                 ret = false;
 #if DEBUG
-                Console.Write($"O_DIRECT check is negative for {Path.GetDirectoryName(fileName)}. {ex}");
+                Console.Write($"O_DIRECT(R/W) check is negative for '{Path.GetDirectoryName(fileName)}'. {ex}");
 #endif
             }
 
@@ -131,5 +132,32 @@ namespace KernelManagementJam.Benchmarks
 
             return true;
         }
+        
+        public static bool HasWritePermission(string folder)
+        {
+            var fullFileName = Path.Combine(folder, "bnchmrk1.tmp");
+            try
+            {
+                using (FileStream fs = new FileStream(fullFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                try
+                {
+                    File.Delete(fullFileName);
+                }
+                catch
+                {
+                }
+            }
+        }
+
     }
 }

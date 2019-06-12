@@ -116,7 +116,7 @@ namespace KernelManagementJam.Tests
         {
             string dir = new DirectoryInfo(".").FullName;
             Console.WriteLine($"Checking O_DIRECT support for {dir}");
-            Console.WriteLine($"O_DIRECT is supported:  {ODirectCheck.IsO_DirectSupported(dir)}");
+            Console.WriteLine($"O_DIRECT is supported:  {DiskBenchmarkChecks.IsO_DirectSupported(dir)}");
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace KernelManagementJam.Tests
             string dir = "/tmp";
             if (!Directory.Exists(dir)) return;
             Console.WriteLine($"Checking O_DIRECT support for {dir}");
-            Console.WriteLine($"O_DIRECT is supported:  {ODirectCheck.IsO_DirectSupported(dir)}");
+            Console.WriteLine($"O_DIRECT is supported:  {DiskBenchmarkChecks.IsO_DirectSupported(dir)}");
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace KernelManagementJam.Tests
             string dir = "/transient-builds";
             if (!Directory.Exists(dir)) return;
             Console.WriteLine($"Checking O_DIRECT support for {dir}");
-            Console.WriteLine($"O_DIRECT is supported:  {ODirectCheck.IsO_DirectSupported(dir)}");
+            Console.WriteLine($"O_DIRECT is supported:  {DiskBenchmarkChecks.IsO_DirectSupported(dir)}");
         }
     }
 }

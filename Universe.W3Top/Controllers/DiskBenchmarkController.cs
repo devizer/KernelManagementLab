@@ -48,9 +48,11 @@ namespace ReactGraphLab.Controllers
                 ThreadsNumber = options.Threads,
             };
 
-            DiskBenchmark diskBenchmark = new DiskBenchmark(
-                Parameters
-            );
+            bool hasWritePermission = DiskBenchmarkChecks.HasWritePermission(Parameters.WorkFolder);
+            IDiskBenchmark diskBenchmark = 
+                hasWritePermission
+                ? (IDiskBenchmark) new DiskBenchmark(Parameters)
+                : (IDiskBenchmark) new ReadonlyDiskBenchmark(Parameters);
             
             Guid token = Guid.NewGuid();
             Queue.Enqueue(token, diskBenchmark);

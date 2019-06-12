@@ -78,7 +78,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
             
             // JIT
             var tempSize = 128*1024;
-            var hasWritePermission = HasWritePermission(Disk);
+            var hasWritePermission = DiskBenchmarkChecks.HasWritePermission(Disk);
             IDiskBenchmark jit;
             if (hasWritePermission)
                 jit = new DiskBenchmark(Disk, tempSize, Flavour, tempSize, 1);
@@ -147,7 +147,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
         {
             const string fff = "/usr/lib/x86_64-linux-gnu/libLLVM-3.9.so.1";
             Console.WriteLine($"Checking O_Direct for {fff}");
-            bool has = ODirectCheck.IsO_DirectSupported_Readonly("/usr/lib/x86_64-linux-gnu/libLLVM-3.9.so.1", 16384);
+            bool has = DiskBenchmarkChecks.IsO_DirectSupported_Readonly("/usr/lib/x86_64-linux-gnu/libLLVM-3.9.so.1", 16384);
             Console.WriteLine($"O_Direct for {fff}: [{has}]");
             return has;
         }
@@ -208,31 +208,6 @@ If disk/volume supports compression it is important to specify a flavour of the 
             }
         }
 
-        static bool HasWritePermission(string folder)
-        {
-            var fullFileName = Path.Combine(folder, DiskBenchmark.BenchmarkTempFile);
-            try
-            {
-                using (FileStream fs = new FileStream(fullFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
-                {
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-            finally
-            {
-                try
-                {
-                    File.Delete(fullFileName);
-                }
-                catch
-                {
-                }
-            }
-        }
 
         static void FunnyException()
         {

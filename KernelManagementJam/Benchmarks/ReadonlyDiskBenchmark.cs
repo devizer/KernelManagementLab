@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
 using KernelManagementJam;
 using KernelManagementJam.Benchmarks;
 using Universe.DiskBench;
@@ -12,6 +14,7 @@ namespace Universe.Benchmark.DiskBench
 {
     public class ReadonlyDiskBenchmark : IDiskBenchmark
     {
+        // TODO: files may belong to another volume?
         
         public DiskBenchmarkOptions Parameters { get; set; }
         public bool IsJit = false;
@@ -84,8 +87,111 @@ namespace Universe.Benchmark.DiskBench
             AnalyzeMetadata();
             if (!Parameters.DisableODirect) CheckODirect();
             SeqRead();
-            
+
+            try
+            {
+                long totalSize = 0;
+                foreach (var fileInfo in WorkingSet)
+                {
+                    fileInfo.Stream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.Read,
+                        Parameters.RandomAccessBlockSize);
+                    totalSize += fileInfo.Size;
+                    if (totalSize > Parameters.WorkingSetSize) break;
+                }
+
+                FileInfo[] filteredFiles = WorkingSet.Where(x => x.Stream != null).ToArray();
+
+                Func<byte[], int> doRead = (buffer) =>
+                {
+                    int indexFile = (int) Math.Floor(random.NextDouble() * filteredFiles.Length);
+                    FileInfo fileInfo = filteredFiles[indexFile];
+                    long maxIndex = fileInfo.Size / Parameters.RandomAccessBlockSize;
+                    long pos = Parameters.RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
+                    int count = (int) Math.Min(fileInfo.Size - pos, Parameters.RandomAccessBlockSize);
+                    if (count != Parameters.RandomAccessBlockSize) return 0; // slip
+                    fileInfo.Stream.Position = pos;
+                    return fileInfo.Stream.Read(buffer, 0, count);
+                };
+
+                RandomRead(_rndRead1T, 1, doRead, Parameters.StepDuration);
+                RandomRead(_rndReadN, Parameters.ThreadsNumber, doRead, Parameters.StepDuration);
+            }
+            finally
+            {
+                foreach (var fileInfo in WorkingSet)
+                {
+                    fileInfo.Stream?.Close();
+                }
+            }
         }
+
+        private void RandomRead(ProgressStep step, int numThreads, Func<byte[], int> doStuff, int msecDuration)
+        {
+            LinuxKernelCacheFlusher.Sync();
+            List<Thread> threads = new List<Thread>();
+            CountdownEvent started = new CountdownEvent(numThreads);
+            CountdownEvent finished = new CountdownEvent(numThreads);
+            Stopwatch sw = null;
+            object syncStopwatch = new object();
+            Func<Stopwatch> getStopwatch = () =>
+            {
+                if (sw != null) return sw;
+                lock (syncStopwatch)
+                {
+                    if (sw == null) sw = Stopwatch.StartNew();
+                    return sw;
+                }
+            };
+            long totalSize = 0;
+            long prevNotification = 0;
+            step.Start();
+            ConcurrentBag<Exception> errors = new ConcurrentBag<Exception>();
+            
+            for (int t = 0; t < numThreads; t++)
+            {
+                Thread thread = new Thread(_ =>
+                {
+                    try
+                    {
+                        byte[] buffer = new byte[Parameters.RandomAccessBlockSize];
+                        started.Signal();
+                        started.Wait();
+                        Stopwatch stopwatch = getStopwatch();
+                        do
+                        {
+                            int increment = doStuff(buffer);
+                            var total = Interlocked.Add(ref totalSize, increment);
+
+                            long currentStopwatch = stopwatch.ElapsedMilliseconds;
+                            step.Progress(currentStopwatch / (double) msecDuration, total);
+
+                        } while (stopwatch.ElapsedMilliseconds <= msecDuration);
+                    }
+                    catch (Exception ex)
+                    {
+                        // started.Signal();
+                        errors.Add(ex);
+                    }
+
+                    finished.Signal();
+                }) { IsBackground = true};
+                thread.Start();
+                threads.Add(thread);
+            }
+
+            started.Wait();
+            finished.Wait();
+            step.Complete();
+
+            foreach (var thread in threads)
+                thread.Join();
+
+            if (!errors.IsEmpty)
+            {
+                throw new AggregateException($"At least single thread failed, for example {errors.First().Message}", errors);
+            }
+        }
+
         
         private void CheckODirect()
         {
@@ -95,7 +201,7 @@ namespace Universe.Benchmark.DiskBench
             var firstFile = WorkingSet[0].FullName;
             try
             {
-                _isODirectSupported = ODirectCheck.IsO_DirectSupported_Readonly(firstFile, Parameters.RandomAccessBlockSize);
+                _isODirectSupported = DiskBenchmarkChecks.IsO_DirectSupported_Readonly(firstFile, Parameters.RandomAccessBlockSize);
             }
             catch
             {
@@ -150,6 +256,8 @@ namespace Universe.Benchmark.DiskBench
             public long Size;
             // 1 - random, 0.00001 - zero
             public double? ExpressCompression;
+
+            public Stream Stream;
         }
 
         private void AnalyzeMetadata()
