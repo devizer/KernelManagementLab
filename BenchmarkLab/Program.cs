@@ -69,6 +69,8 @@ If disk/volume supports compression it is important to specify a flavour of the 
 
             
             Disk = new DirectoryInfo(Disk).FullName;
+            if (!Directory.Exists(Disk))
+                throw new Exception($"Target path {Disk} does not exists");
             
             // JIT
             var tempSize = 128*1024;
