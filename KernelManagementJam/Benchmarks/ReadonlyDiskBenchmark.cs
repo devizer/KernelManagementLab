@@ -48,7 +48,7 @@ namespace Universe.Benchmark.DiskBench
             }
             else
             {
-                _checkODirect = new ProgressStep("Checking capabilities");
+                _checkODirect = new ProgressStep("Check capabilities");
             }
                 
             _analyze = new ProgressStep("Analyze metadata");
