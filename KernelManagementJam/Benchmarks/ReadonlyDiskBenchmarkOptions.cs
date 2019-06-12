@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Universe.Benchmark.DiskBench
 {
-    public class ReadonlyDiskBenchmarkOptions
+    public class ReadonlyDiskBenchmarkOptions_Obsolete
     {
         public string WorkFolder { get; set; }
         public int StepDuration { get; set;}

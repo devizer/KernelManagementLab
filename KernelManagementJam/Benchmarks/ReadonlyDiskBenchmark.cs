@@ -13,7 +13,7 @@ namespace Universe.Benchmark.DiskBench
     public class ReadonlyDiskBenchmark : IDiskBenchmark
     {
         
-        public ReadonlyDiskBenchmarkOptions Parameters { get; set; }
+        public DiskBenchmarkOptions Parameters { get; set; }
         public bool IsJit = false;
         
         private const int UnconditionalThreshold = 16384;
@@ -28,7 +28,7 @@ namespace Universe.Benchmark.DiskBench
         private ProgressStep _rndReadN;
         private bool _isODirectSupported;
 
-        public ReadonlyDiskBenchmark(ReadonlyDiskBenchmarkOptions parameters)
+        public ReadonlyDiskBenchmark(DiskBenchmarkOptions parameters)
         {
             Parameters = parameters;
             BuildProgress();
@@ -165,7 +165,7 @@ namespace Universe.Benchmark.DiskBench
             WorkingSet = query.ToArray();
             var debugList = string.Join(
                 Environment.NewLine,
-                WorkingSet.Select(x => $"  {Formatter.FormatBytes(x.Size):-11} {x.FullName}")
+                WorkingSet.Select((file,index) => $"  {Formatter.FormatBytes(file.Size):-11} {file.FullName} ({(index+1)})")
             );
             
             Console.WriteLine($"Working set for readonly benchmark of {Parameters.WorkFolder}{Environment.NewLine}{debugList}");

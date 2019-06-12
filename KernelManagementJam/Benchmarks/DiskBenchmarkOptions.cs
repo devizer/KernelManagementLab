@@ -8,11 +8,14 @@ namespace Universe.Benchmark.DiskBench
     {
         public string WorkFolder { get; set; }
         public int StepDuration { get; set;}
-        public long FileSize { get; set;}
+        public long WorkingSetSize { get; set;}
         public int ThreadsNumber { get; set;}
-        [JsonConverter(typeof(StringEnumConverter))]
-        public DataGeneratorFlavour Flavour { get; set;}
         public int RandomAccessBlockSize { get; set;}
         public bool DisableODirect { get; set;}
+        
+        // Ignored by ReadonlyDiskBenchmark
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DataGeneratorFlavour Flavour { get; set;}
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -22,6 +23,7 @@ namespace Universe.DiskBench
 
         static int Main(string[] args)
         {
+            
             bool nologo = false;
             bool help = false;
             bool version = false;
@@ -79,7 +81,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
             if (hasWritePermission)
                 jit = new DiskBenchmark(Disk, tempSize, Flavour, tempSize, 1);
             else
-                jit = new ReadonlyDiskBenchmark(new ReadonlyDiskBenchmarkOptions()
+                jit = new ReadonlyDiskBenchmark(new DiskBenchmarkOptions()
                 {
                     WorkFolder = Disk, 
                     StepDuration = 1, 
@@ -102,7 +104,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
                     RandomDuration,
                     DisableODirect);
             else
-            dbench = new ReadonlyDiskBenchmark(new ReadonlyDiskBenchmarkOptions()
+            dbench = new ReadonlyDiskBenchmark(new DiskBenchmarkOptions()
             {
                 WorkFolder = Disk,
                 WorkingSetSize = FileSize * 1024L,
@@ -218,6 +220,20 @@ If disk/volume supports compression it is important to specify a flavour of the 
                 catch
                 {
                 }
+            }
+        }
+
+        static void FunnyException()
+        {
+            string file = Assembly.GetEntryAssembly().Location;
+            int n = 0;
+            List<object> holder = new List<object>();
+            Console.Write("Opened: ");
+            while (true)
+            {
+                holder.Add(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, 8));
+                n++;
+                if (n % 1000 == 0) Console.Write ($"{n} ");
             }
         }
         

@@ -51,7 +51,7 @@ namespace Universe.Benchmark.DiskBench
             Parameters = new DiskBenchmarkOptions()
             {
                 WorkFolder = workFolder,
-                FileSize = fileSize,
+                WorkingSetSize = fileSize,
                 Flavour = flavour,
                 RandomAccessBlockSize = randomAccessBlockSize,
                 StepDuration = stepDuration,
@@ -141,9 +141,9 @@ namespace Universe.Benchmark.DiskBench
 
             Func<Stream, byte[], int> doRead = (fs, buffer) =>
             {
-                long maxIndex = Parameters.FileSize / Parameters.RandomAccessBlockSize;
+                long maxIndex = Parameters.WorkingSetSize / Parameters.RandomAccessBlockSize;
                 long pos = Parameters.RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
-                int count = (int) Math.Min(Parameters.FileSize - pos, Parameters.RandomAccessBlockSize);
+                int count = (int) Math.Min(Parameters.WorkingSetSize - pos, Parameters.RandomAccessBlockSize);
                 if (count != Parameters.RandomAccessBlockSize) return 0; // slip
                 fs.Position = pos;
                 return fs.Read(buffer, 0, count);
@@ -151,9 +151,9 @@ namespace Universe.Benchmark.DiskBench
 
             Func<Stream, byte[], int> doWrite = (fs, buffer) =>
             {
-                long maxIndex = Parameters.FileSize / Parameters.RandomAccessBlockSize;
+                long maxIndex = Parameters.WorkingSetSize / Parameters.RandomAccessBlockSize;
                 long pos = Parameters.RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
-                int count = (int) Math.Min(Parameters.FileSize - pos, Parameters.RandomAccessBlockSize);
+                int count = (int) Math.Min(Parameters.WorkingSetSize - pos, Parameters.RandomAccessBlockSize);
                 fs.Position = pos;
                 fs.Write(buffer, 0, count);
                 return count;
@@ -219,19 +219,19 @@ namespace Universe.Benchmark.DiskBench
         
         private void Allocate()
         {
-            byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.FileSize)];
+            byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.WorkingSetSize)];
             // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, FileOptions.WriteThrough))
             {
                 _allocate.Start();
                 long len = 0;
-                while (len < this.Parameters.FileSize)
+                while (len < this.Parameters.WorkingSetSize)
                 {
-                    var count = (int) Math.Min(this.Parameters.FileSize - len, buffer.Length);
+                    var count = (int) Math.Min(this.Parameters.WorkingSetSize - len, buffer.Length);
                     fs.Write(buffer, 0, count);
                     len += count;
-                    _allocate.Progress(len / (double) Parameters.FileSize, len);
+                    _allocate.Progress(len / (double) Parameters.WorkingSetSize, len);
                 }
                 _allocate.Complete();
             }
@@ -241,19 +241,19 @@ namespace Universe.Benchmark.DiskBench
         private void SeqRead()
         {
             LinuxKernelCacheFlusher.Sync();
-            byte[] buffer = new byte[Math.Min(1024 * 1024, this.Parameters.FileSize)];
+            byte[] buffer = new byte[Math.Min(1024 * 1024, this.Parameters.WorkingSetSize)];
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
             // using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
             {
                 _seqRead.Start();
                 long len = 0;
-                while (len < this.Parameters.FileSize)
+                while (len < this.Parameters.WorkingSetSize)
                 {
-                    var count = (int) Math.Min(this.Parameters.FileSize - len, buffer.Length);
+                    var count = (int) Math.Min(this.Parameters.WorkingSetSize - len, buffer.Length);
                     int n = fs.Read(buffer, 0, count);
                     len += n;
-                    _seqRead.Progress(len / (double) Parameters.FileSize, len);
-                    if (len >= Parameters.FileSize) fs.Position = 0;
+                    _seqRead.Progress(len / (double) Parameters.WorkingSetSize, len);
+                    if (len >= Parameters.WorkingSetSize) fs.Position = 0;
                 }
                 _seqRead.Complete();
             }
@@ -269,13 +269,13 @@ namespace Universe.Benchmark.DiskBench
             {
                 _seqWrite.Start();
                 long len = 0;
-                while (len < this.Parameters.FileSize)
+                while (len < this.Parameters.WorkingSetSize)
                 {
-                    var count = (int)Math.Max(1, Math.Min(buffer.Length, this.Parameters.FileSize - buffer.Length));
+                    var count = (int)Math.Max(1, Math.Min(buffer.Length, this.Parameters.WorkingSetSize - buffer.Length));
                     fs.Write(buffer, 0, count);
                     len += count;
-                    _seqWrite.Progress(len / (double) Parameters.FileSize, len);
-                    if (len >= Parameters.FileSize) fs.Position = 0;
+                    _seqWrite.Progress(len / (double) Parameters.WorkingSetSize, len);
+                    if (len >= Parameters.WorkingSetSize) fs.Position = 0;
                 }
                 _seqWrite.Complete();
             }
