@@ -101,6 +101,13 @@ namespace ReactGraphLab.Controllers
             }
         }
 
+        [HttpPost, Route("cancel-disk-benchmark-{benchmarkToken}")]
+        public void Cancel(Guid benchmarkToken)
+        {
+            Queue.Cancel(benchmarkToken);
+        }
+
+
         public class StartBenchmarkArgs
         {
             public string MountPath { get; set; }

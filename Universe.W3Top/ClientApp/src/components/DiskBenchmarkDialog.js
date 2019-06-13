@@ -293,7 +293,28 @@ function DiskBenchmarkDialog(props) {
         //setSelectedDisk(null);
         //setActiveStep(0);
     }
-    
+
+    function handleCancel() {
+        setOpen(false);
+        if (token) {
+            try {
+                let apiUrl = `api/benchmark/disk/cancel-disk-benchmark-${token}`;
+                fetch(apiUrl, {method: "POST"})
+                    .then(response => {
+                        Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                        return response.ok ? response.json() : {error: response.status, details: response}
+                    })
+                    .then(disks => {
+                        // nothing to do
+                    })
+                    .catch(error => Helper.log(error));
+            } catch (err) {
+                console.error('FETCH failed. ' + err);
+            }
+        }
+    }
+
+
     const renderStepProgress = function() {
         const pro = progress ? progress : {isCompleted: false, steps: []};
         const formatSpeed = (x) => {let ret = Helper.Common.formatBytes(x,1); return ret === null ? "" : `${ret}/s`};
@@ -417,7 +438,7 @@ function DiskBenchmarkDialog(props) {
     const classes = styles;
     const fakeContent = (<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>);
     const nextButtonNames = ["Next »", "Start", "Waiting", "Done", "Done"];
-    const closeButtonNames = ["Cancel", "Cancel", "Cancel", "Cancel", "Close"];
+    const closeButtonNames = ["Cancel", "Cancel", "Abort", "Close", "Close"];
     const isBackAllowed = activeStep === 1;
     const isNextDisabled = selectedDisk === null || (activeStep === 1 && !options.errors.isValid) || activeStep === 2;
     const areNextBackButtonsVisible = activeStep <= 1;
@@ -448,7 +469,7 @@ function DiskBenchmarkDialog(props) {
                             <Button onClick={handleReset} style={classes.wizardReset}>New Benchmark</Button>
                         </div>
                     ) : (
-                        <div>
+                        <div style={ activeStep === 2 ? styles.actions : {}}>
                             
                             <Button variant="contained"
                                     disabled={!isBackAllowed}
@@ -471,10 +492,19 @@ function DiskBenchmarkDialog(props) {
 
                             <Button variant="contained"
                                     disabled={activeStep === 0 && false}
-                                    onClick={handleClose}
+                                    onClick={handleCancel}
                                     style={classes.wizardButton}
                             >
                                 {closeButtonNames[activeStep]}
+                            </Button>
+
+                            <Button variant="contained"
+                                    disabled={activeStep === 0 && false}
+                                    onClick={handleClose}
+                                    style={classes.wizardButton}
+                                    className={classNames(activeStep < 2 && "hidden")}
+                            >
+                                Background
                             </Button>
                         </div>
                     )}
