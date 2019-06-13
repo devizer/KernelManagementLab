@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -30,8 +30,24 @@ import * as DataSourceActions from "../stores/DataSourceActions";
 import { BenchmarkStepStatusIcon } from "./BenchmarkStepStatusIcon"
 import * as Helper from "../Helper";
 
+var Color = require("color");
+
 const PROGRESS_TICK_INTERVAL = 499;
 const EMPTY_PROGRESS = {isCompleted: false, steps: []};
+
+const mainColorReadWrite="#3182bd";
+const mainColorReadOnly= "#de2d26";
+
+// const getUnselectedColor = (c) => Color(c).lighten(0.8); 
+// const getUnselectedColor = (c) => Color(c).whiten(3);
+const getUnselectedColor = (c) => Color(c).desaturate(0.8).whiten(0.2);
+
+const
+    themeReadWrite = createMuiTheme({ palette: { primary: { main: getUnselectedColor(mainColorReadWrite).hex(), } }, }),
+    themeReadWriteSelected = createMuiTheme({ palette: { primary: { main: mainColorReadWrite, } }, }),
+    themeReadOnly = createMuiTheme({palette: { primary: { main: getUnselectedColor(mainColorReadOnly).hex(), } }, }),
+    themeReadOnlySelected = createMuiTheme({ palette: { primary: { main: mainColorReadOnly, } }, });
+    
 
 
 
@@ -256,21 +272,29 @@ function DiskBenchmarkDialog(props) {
         const getFsColor = (disk) => {
             if (disk === selectedDisk) return isReadOnly(disk) ? "#F2DCE4" : "#B9BECE";
             return "#666";
-        }
+        };
+
+        const getTheme = (disk) =>
+            (disk === selectedDisk)
+                ? (isReadOnly(disk) ? themeReadOnlySelected : themeReadWriteSelected)
+                : (isReadOnly(disk) ? themeReadOnly : themeReadWrite);
         
         return (
             <React.Fragment>
                 {/* <Typography>Choose disk:</Typography> */}   
                 {disks.map(disk => (
                 <React.Fragment key={disk.mountEntry.mountPath}>
+                    <MuiThemeProvider theme={getTheme(disk)}>
                     <Chip 
                         avatar={<Avatar><DiskAvatarContent disk={disk}/></Avatar>}
                         clickable
-                        label={(<span><b>{disk.mountEntry.mountPath}</b> <span style={{color:getFsColor(disk)}}>({disk.mountEntry.fileSystem})</span></span>)} 
+                        label={(<span><b>{disk.mountEntry.mountPath}</b> <span style={{opacity:0.66}}>({disk.mountEntry.fileSystem})</span></span>)} 
                         style={styles.diskChips} 
-                        color={disk === selectedDisk ? getColorOfSelectedDisk(disk) : "default"} 
+                        /*color={disk === selectedDisk ? getColorOfSelectedDisk(disk) : "default"}*/
+                        color={"primary"}
                         onClick={() => handleSelectDisk(disk)}
                     />{' '}
+                    </MuiThemeProvider>
                 </React.Fragment>
             ))}
             </React.Fragment>

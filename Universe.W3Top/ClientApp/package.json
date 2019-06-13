@@ -17,6 +17,7 @@
     "bootstrap": "^4.3.1",
     "c3": "^0.6.13",
     "classnames": "^2.2.6",
+    "color": "^3.1.2",
     "dom-helpers": "^3.4.0",
     "es6-promise": "^4.2.6",
     "flux": "^3.1.3",
