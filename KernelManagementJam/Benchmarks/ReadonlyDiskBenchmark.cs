@@ -113,6 +113,7 @@ namespace Universe.Benchmark.DiskBench
                 {
                     fileInfo.Stream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.Read,
                         Parameters.RandomAccessBlockSize);
+                    
                     totalSize += fileInfo.Size;
                     if (totalSize > Parameters.WorkingSetSize) break;
                 }
@@ -121,6 +122,7 @@ namespace Universe.Benchmark.DiskBench
 
                 Func<byte[], int> doRead = (buffer) =>
                 {
+                    CancelIfRequested();
                     int indexFile = (int) Math.Floor(random.NextDouble() * filteredFiles.Length);
                     FileInfo fileInfo = filteredFiles[indexFile];
                     long maxIndex = fileInfo.Size / Parameters.RandomAccessBlockSize;
@@ -142,6 +144,20 @@ namespace Universe.Benchmark.DiskBench
                 }
             }
         }
+        
+        public bool IsCanceled { get; private set; }
+        public void RequestCancel()
+        {
+            IsCanceled = true;
+        }
+        
+        private void CancelIfRequested()
+        {
+            if (IsCanceled)
+                throw new BenchmarkCanceledException($"Disk benchmark for {Parameters.WorkFolder} canceled"); 
+        }
+
+
 
         private void RandomRead(ProgressStep step, int numThreads, Func<byte[], int> doStuff, int msecDuration)
         {
@@ -233,6 +249,7 @@ namespace Universe.Benchmark.DiskBench
         private void SeqRead()
         {
             _seqRead.Start();
+            CancelIfRequested();
             LinuxKernelCacheFlusher.Sync();
             
             byte[] buffer = new byte[1024 * 1024];
@@ -240,13 +257,14 @@ namespace Universe.Benchmark.DiskBench
             _seqRead.Start();
             foreach (var fileInfo in WorkingSet)
             {
-                
+                CancelIfRequested();
                 using (FileStream fs = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length))
                 {
                     long len = 0;
                     long fileLen = fileInfo.Size;
                     while (len < fileLen)
                     {
+                        CancelIfRequested();
                         var count = (int) Math.Min(Math.Min(fileLen - len, buffer.Length), Parameters.WorkingSetSize - sumBytes);
                         if (count <= 0) goto done;
                         
@@ -325,6 +343,7 @@ namespace Universe.Benchmark.DiskBench
         void EnumDir(DirectoryInfo dir, List<FileInfo> result, ref long totalSize, Action progress, ref bool abort)
         {
             System.IO.FileInfo[] files = null;
+            CancelIfRequested();
             try
             {
                 files = dir.GetFiles();
@@ -337,6 +356,7 @@ namespace Universe.Benchmark.DiskBench
             {
                 foreach (var file in files)
                 {
+                    CancelIfRequested();
                     var fileFullName = file.FullName;
                     var len = file.Length;
                     if (len >= UnconditionalThreshold)
@@ -369,6 +389,7 @@ namespace Universe.Benchmark.DiskBench
             {
                 foreach (var subDir in subDirs)
                 {
+                    CancelIfRequested();
                     if (FileSystemHelper.IsSymLink(subDir.FullName)) continue;
                     EnumDir(subDir, result, ref totalSize, progress, ref abort);
                     if (abort) return;

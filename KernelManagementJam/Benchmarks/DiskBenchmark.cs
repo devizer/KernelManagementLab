@@ -13,13 +13,6 @@ using FileMode = System.IO.FileMode;
 
 namespace Universe.Benchmark.DiskBench
 {
-    public interface IDiskBenchmark
-    {
-        DiskBenchmarkOptions Parameters { get; }
-        ProgressInfo Progress { get; }
-        void Perform();
-    }
-    
     public class DiskBenchmark : IDiskBenchmark
     {
         public DiskBenchmarkOptions Parameters { get; set; }
@@ -115,6 +108,8 @@ namespace Universe.Benchmark.DiskBench
                 }
             };
         }
+        
+        
 
 
         public void Perform()
@@ -153,6 +148,7 @@ namespace Universe.Benchmark.DiskBench
 
             Func<Stream, byte[], int> doRead = (fs, buffer) =>
             {
+                CancelIfRequested();
                 long maxIndex = Parameters.WorkingSetSize / Parameters.RandomAccessBlockSize;
                 long pos = Parameters.RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
                 int count = (int) Math.Min(Parameters.WorkingSetSize - pos, Parameters.RandomAccessBlockSize);
@@ -163,6 +159,7 @@ namespace Universe.Benchmark.DiskBench
 
             Func<Stream, byte[], int> doWrite = (fs, buffer) =>
             {
+                CancelIfRequested();
                 long maxIndex = Parameters.WorkingSetSize / Parameters.RandomAccessBlockSize;
                 long pos = Parameters.RandomAccessBlockSize * (long) Math.Floor(random.NextDouble() * maxIndex);
                 int count = (int) Math.Min(Parameters.WorkingSetSize - pos, Parameters.RandomAccessBlockSize);
@@ -213,6 +210,19 @@ namespace Universe.Benchmark.DiskBench
             }
         }
 
+        public bool IsCanceled { get; private set; }
+        public void RequestCancel()
+        {
+            IsCanceled = true;
+        }
+
+        private void CancelIfRequested()
+        {
+            if (IsCanceled)
+                throw new BenchmarkCanceledException($"Disk benchmark for {Parameters.WorkFolder} canceled"); 
+        }
+
+
         private void CheckODirect()
         {
             _checkODirect.Start();
@@ -243,6 +253,7 @@ namespace Universe.Benchmark.DiskBench
                 long len = 0;
                 while (len < this.Parameters.WorkingSetSize)
                 {
+                    CancelIfRequested();
                     var count = (int) Math.Min(this.Parameters.WorkingSetSize - len, buffer.Length);
                     fs.Write(buffer, 0, count);
                     len += count;
@@ -264,6 +275,7 @@ namespace Universe.Benchmark.DiskBench
                 long len = 0;
                 while (len < this.Parameters.WorkingSetSize)
                 {
+                    CancelIfRequested();
                     var count = (int) Math.Min(this.Parameters.WorkingSetSize - len, buffer.Length);
                     int n = fs.Read(buffer, 0, count);
                     len += n;
@@ -286,6 +298,7 @@ namespace Universe.Benchmark.DiskBench
                 long len = 0;
                 while (len < this.Parameters.WorkingSetSize)
                 {
+                    CancelIfRequested();
                     var count = (int)Math.Max(1, Math.Min(buffer.Length, this.Parameters.WorkingSetSize - buffer.Length));
                     fs.Write(buffer, 0, count);
                     len += count;
@@ -334,6 +347,7 @@ namespace Universe.Benchmark.DiskBench
                             Stopwatch stopwatch = getStopwatch();
                             do
                             {
+                                CancelIfRequested();
                                 int increment = doStuff(fs, buffer);
                                 var total = Interlocked.Add(ref totalSize, increment);
 

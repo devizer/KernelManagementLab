@@ -37,6 +37,25 @@ namespace Universe.Dashboard.Agent
             Waiter.Set();
         }
 
+        public bool Cancel(Guid token)
+        {
+            lock (SyncQueue)
+            {
+                var found = Find(token);
+                if (found == null)
+                    return false;
+
+                if (found.Index > 0)
+                {
+                    Queue.RemoveAt(found.Index);
+                    return true;
+                }
+
+                found.Benchmark.RequestCancel();
+                return true;
+            }
+        }
+
         public EnlistedDiskBenchmark Find(Guid token)
         {
             lock (SyncQueue)
@@ -99,20 +118,23 @@ namespace Universe.Dashboard.Agent
                             // Console.WriteLine($"Disk Benchmark Job failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
                         }
 
-                        var entity = new DiskBenchmarkEntity()
+                        if (!benchmark.IsCanceled)
                         {
-                            Args = benchmark.Parameters,
-                            Token = nextJob.Token.ToString(),
-                            Report = benchmark.Progress, // Progress is complete
-                            CreatedAt = DateTime.UtcNow,
-                            MountPath = benchmark.Parameters.WorkFolder,
-                            ErrorInfo = benchmarkException?.GetExceptionDigest(),
-                        };
+                            var entity = new DiskBenchmarkEntity()
+                            {
+                                Args = benchmark.Parameters,
+                                Token = nextJob.Token.ToString(),
+                                Report = benchmark.Progress, // Progress is complete
+                                CreatedAt = DateTime.UtcNow,
+                                MountPath = benchmark.Parameters.WorkFolder,
+                                ErrorInfo = benchmarkException?.GetExceptionDigest(),
+                            };
 
-                        using (var db = GetDbContext())
-                        {
-                            db.DiskBenchmark.Add(entity);
-                            db.SaveChanges();
+                            using (var db = GetDbContext())
+                            {
+                                db.DiskBenchmark.Add(entity);
+                                db.SaveChanges();
+                            }
                         }
                     }
                     finally
