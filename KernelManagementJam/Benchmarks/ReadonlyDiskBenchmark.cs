@@ -334,10 +334,11 @@ namespace Universe.Benchmark.DiskBench
             );
             
             Console.WriteLine($"Working set for readonly benchmark of {Parameters.WorkFolder}{Environment.NewLine}{debugList}");
-            _analyze.Complete();
             
             if (totalSize < Parameters.WorkingSetSize)
                 throw new Exception($"Insufficient content for readonly disk benchmark. Requested working set {Formatter.FormatBytes(Parameters.WorkingSetSize)}, but available is just {Formatter.FormatBytes(totalSize)}");
+
+            _analyze.Complete();
         }
 
         void EnumDir(DirectoryInfo dir, List<FileInfo> result, ref long totalSize, Action progress, ref bool abort)
