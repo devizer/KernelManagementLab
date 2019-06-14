@@ -16,6 +16,7 @@ import { MountsList } from './components/MountsList';
 import dataSourceListener from './stores/DataSourceListener';
 import "./components/MyC3.css"
 import DiskBenchmarkDialog from "./components/DiskBenchmarkDialog";
+import PopperLab from "./components/Popper-Lab"
 
 
 require('typeface-roboto')
@@ -69,6 +70,7 @@ export default class App extends Component {
                         <Route exact path='/net-v2' component={NetChartContainer_V2} />
                         <Route exact path='/mounts' component={MountsList} />
                         <Route exact path='/disk-benchmark-lab' component={DiskBenchmarkDialog} />
+                        <Route exact path='/popper-lab' component={PopperLab} />
                         <Route path="*" component={App._404} />
                     </Switch>
             </Layout>

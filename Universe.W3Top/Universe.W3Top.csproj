@@ -49,6 +49,7 @@
         <Content Include="ClientApp\src\components\NetChartContainer.js" />
         <Content Include="ClientApp\src\components\NetDevChartHeader.js" />
         <Content Include="ClientApp\src\components\Poc2Chart.js" />
+        <Content Include="ClientApp\src\components\Popper-Lab.js" />
         <Content Include="ClientApp\src\components\SingleAxisChart.js" />
         <Content Include="ClientApp\src\Helper.js" />
         <Content Include="ClientApp\src\NextUniqueId.js" />

@@ -12,6 +12,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
+import Popper from '@material-ui/core/Popper';
 import DiskAvatarContent from "./DiskAvatarContent"
 
 import Avatar from '@material-ui/core/Avatar';
@@ -467,19 +468,26 @@ function DiskBenchmarkDialog(props) {
     const isNextDisabled = selectedDisk === null || (activeStep === 1 && !options.errors.isValid) || activeStep === 2;
     const areNextBackButtonsVisible = activeStep <= 1;
     const getColorOfSelectedDisk = (disk) => disk.freeSpace > 0 ? "primary" : "secondary";
-    
+
+    let errorRef = React.useRef();
+    let errorInfo = "No Error";
+    const idPopperError = errorInfo != null ? 'error-popper' : null;
+
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen} className={classNames(needHideOpenButton && "hidden")}>
                 Open benchmark dialog
             </Button>
+            <Popper id={idPopperError} open={true} anchorEl={errorRef} placement={"top"} >
+                <div>Benchmark failed. {errorInfo}</div>
+            </Popper>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>
                 <DialogTitle id="form-dialog-title" style={{textAlign:"center"}}>Benchmark a local or network disk</DialogTitle>
-                <DialogContent style={{textAlign: "center"}}>
+                <DialogContent style={{textAlign: "center"}} >
                     <Stepper activeStep={activeStep} alternativeLabel style={styles.root}>
                         {steps.map(label => (
                             <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
+                                <StepLabel>{label}</StepLabel> 
                             </Step>
                         ))}
                     </Stepper>
@@ -487,7 +495,8 @@ function DiskBenchmarkDialog(props) {
                     {/*<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>*/}
                     {getStepContent(activeStep)}
                 </DialogContent>
-                <DialogActions>
+                <DialogActions id="disk-benchmark-actions" ref={errorRef}>
+                    <div>
                     {activeStep === steps.length ? (
                         <div style={styles.actions}>
                             <Button onClick={handleReset} style={classes.wizardReset}>New Benchmark</Button>
@@ -532,6 +541,7 @@ function DiskBenchmarkDialog(props) {
                             </Button>
                         </div>
                     )}
+                    </div>
                 </DialogActions>
             </Dialog>
         </div>
