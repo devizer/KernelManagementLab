@@ -7,31 +7,31 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
 function PopperLab(props) {
-    const [anchorError, setAnchorError] = React.useState(null);
+    const [errorAnchor, setAnchorError] = React.useState(null);
 
     function handleClick(event) {
         // setAnchorEl(anchorEl ? null : event.currentTarget);
     }
 
-    const el2 = React.useRef();
+    const errorElement = React.useRef();
     React.useEffect(() => {
         setTimeout(() => {
-            setAnchorError(el2.current);
+            setAnchorError(errorElement.current);
             console.log("POPPER OPENED");
         }, 2000);
     });
 
-    const open = Boolean(anchorError);
-    const id = open ? "error-popper" : null;
+    const errorOpened = Boolean(errorAnchor);
+    const errorId = errorOpened ? "error-popper" : null;
 
     return (
         <div>
             <img src="https://via.placeholder.com/350x150" />
             <button
-                aria-describedby={id}
+                aria-describedby={errorId}
                 type="button"
                 onClick={handleClick}
-                ref={el2}
+                ref={errorElement}
             >
                 Toggle Popper
             </button>
@@ -46,9 +46,9 @@ function PopperLab(props) {
             </Paper>
 
 
-            <Popper id={id} open={open} anchorEl={anchorError} placement="top">
-                <Paper>
-                    <Typography>The content of the Popper.</Typography>
+            <Popper id={errorId} open={errorOpened} anchorEl={errorAnchor} placement="top">
+                <Paper >
+                    <Typography style={{padding:16,color: "darkred"}}>The content of the Popper.</Typography>
                 </Paper>
             </Popper>
         </div>
