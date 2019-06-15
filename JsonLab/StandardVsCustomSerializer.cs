@@ -11,7 +11,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace MyBenchmarks
 {
-    [CoreJob]
+    [CoreJob, ClrJob]
     [RankColumn]
     [MemoryDiagnoser]
     public class StandardVsCustomSerializer
@@ -66,7 +66,7 @@ namespace MyBenchmarks
             return Serialize(optionalConverter: LongArrayConverter.Instance);
         }
 
-        [Benchmark]
+        [Benchmark(Baseline = true)]
         public StringBuilder Default()
         {
             return Serialize();

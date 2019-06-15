@@ -1,0 +1,100 @@
+|------------------ |----- |-------- |------------ |------- |-------- |-----------:|----------:|----------:|------:|-----:|--------:|--------:|------:|----------:|
+| OptimizedHeapless |  Clr |     Clr |          20 |  False |    List |   603.8 us |  2.818 us |  2.636 us |  0.59 |    1 | 30.2734 |       - |     - |  95.97 KB |
+|         Optimized |  Clr |     Clr |          20 |  False |    List |   722.1 us | 11.186 us | 10.464 us |  0.70 |    2 | 45.8984 |       - |     - | 143.37 KB |
+|           Default |  Clr |     Clr |          20 |  False |    List | 1,031.7 us | 19.430 us | 18.175 us |  1.00 |    3 | 58.5938 |       - |     - | 183.62 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |  False |    List |   537.9 us |  4.504 us |  3.993 us |  0.59 |    1 | 20.5078 |       - |     - |  65.16 KB |
+|         Optimized | Core |    Core |          20 |  False |    List |   596.8 us |  5.256 us |  4.917 us |  0.65 |    2 | 36.1328 |       - |     - | 112.73 KB |
+|           Default | Core |    Core |          20 |  False |    List |   913.1 us |  8.859 us |  7.398 us |  1.00 |    3 | 31.2500 |  9.7656 |     - |  98.41 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |  False |   Array |   504.6 us |  2.627 us |  2.329 us |  0.50 |    1 | 28.3203 |       - |     - |  88.55 KB |
+|         Optimized |  Clr |     Clr |          20 |  False |   Array |   611.7 us |  2.687 us |  2.514 us |  0.61 |    2 | 43.9453 |       - |     - | 136.32 KB |
+|           Default |  Clr |     Clr |          20 |  False |   Array | 1,006.4 us |  6.210 us |  5.809 us |  1.00 |    3 | 56.6406 |       - |     - | 177.07 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |  False |   Array |   329.0 us |  1.294 us |  1.210 us |  0.41 |    1 | 20.0195 |       - |     - |  61.54 KB |
+|         Optimized | Core |    Core |          20 |  False |   Array |   396.4 us |  5.938 us |  5.555 us |  0.49 |    2 | 35.1563 |       - |     - | 108.72 KB |
+|           Default | Core |    Core |          20 |  False |   Array |   809.0 us |  2.905 us |  2.718 us |  1.00 |    3 | 30.2734 |       - |     - |  94.88 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |  False |  ROList |   634.9 us |  3.367 us |  3.149 us |  0.62 |    1 | 31.2500 |  0.9766 |     - |  98.98 KB |
+|         Optimized |  Clr |     Clr |          20 |  False |  ROList |   755.0 us |  3.245 us |  3.036 us |  0.73 |    2 | 47.8516 |       - |     - | 147.05 KB |
+|           Default |  Clr |     Clr |          20 |  False |  ROList | 1,029.7 us |  3.773 us |  2.946 us |  1.00 |    3 | 60.5469 |  1.9531 |     - | 186.72 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |  False |  ROList |   918.3 us |  4.548 us |  4.031 us |  0.70 |    1 | 24.4141 |  7.8125 |     - |  76.17 KB |
+|         Optimized | Core |    Core |          20 |  False |  ROList |   986.2 us |  2.545 us |  2.380 us |  0.75 |    2 | 40.0391 |       - |     - | 123.74 KB |
+|           Default | Core |    Core |          20 |  False |  ROList | 1,306.9 us |  6.372 us |  5.960 us |  1.00 |    3 | 35.1563 |  9.7656 |     - |  108.7 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |  False | ROArray |   582.4 us |  2.775 us |  2.595 us |  0.60 |    1 | 33.2031 |  0.9766 |     - | 102.64 KB |
+|         Optimized |  Clr |     Clr |          20 |  False | ROArray |   683.4 us |  2.088 us |  1.953 us |  0.70 |    2 | 48.8281 |       - |     - | 150.47 KB |
+|           Default |  Clr |     Clr |          20 |  False | ROArray |   975.7 us |  8.579 us |  8.025 us |  1.00 |    3 | 62.5000 | 20.5078 |     - | 192.58 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |  False | ROArray |   834.5 us |  2.455 us |  2.297 us |  0.68 |    1 | 25.3906 |  3.9063 |     - |  79.63 KB |
+|         Optimized | Core |    Core |          20 |  False | ROArray |   910.9 us |  6.654 us |  6.224 us |  0.75 |    2 | 41.0156 |       - |     - | 128.41 KB |
+|           Default | Core |    Core |          20 |  False | ROArray | 1,219.3 us | 20.167 us | 18.865 us |  1.00 |    3 | 35.1563 |  5.8594 |     - | 112.98 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |   True |    List |   593.6 us |  3.228 us |  3.019 us |  0.65 |    1 | 30.2734 |       - |     - |  93.89 KB |
+|         Optimized |  Clr |     Clr |          20 |   True |    List |   703.4 us |  1.717 us |  1.522 us |  0.78 |    2 | 45.8984 |       - |     - | 142.57 KB |
+|           Default |  Clr |     Clr |          20 |   True |    List |   907.0 us |  6.660 us |  5.904 us |  1.00 |    3 | 38.0859 |       - |     - | 119.96 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |   True |    List |   525.8 us |  2.092 us |  1.957 us |  0.62 |    1 | 20.5078 |       - |     - |  64.69 KB |
+|         Optimized | Core |    Core |          20 |   True |    List |   586.4 us |  3.394 us |  3.175 us |  0.69 |    2 | 36.1328 |       - |     - | 112.31 KB |
+|           Default | Core |    Core |          20 |   True |    List |   844.8 us |  5.607 us |  5.245 us |  1.00 |    3 | 26.3672 |  8.7891 |     - |  82.11 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |   True |   Array |   501.1 us |  1.446 us |  1.353 us |  0.54 |    1 | 28.3203 |       - |     - |  87.96 KB |
+|         Optimized |  Clr |     Clr |          20 |   True |   Array |   606.2 us |  1.521 us |  1.348 us |  0.66 |    2 | 43.9453 |       - |     - | 135.14 KB |
+|           Default |  Clr |     Clr |          20 |   True |   Array |   922.0 us |  2.568 us |  2.402 us |  1.00 |    3 | 36.1328 |       - |     - | 112.21 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |   True |   Array |   323.4 us |  1.282 us |  1.199 us |  0.43 |    1 | 19.5313 |       - |     - |  60.51 KB |
+|         Optimized | Core |    Core |          20 |   True |   Array |   389.9 us |  3.144 us |  2.941 us |  0.52 |    2 | 35.1563 |       - |     - |    109 KB |
+|           Default | Core |    Core |          20 |   True |   Array |   750.1 us |  2.700 us |  2.526 us |  1.00 |    3 | 24.4141 |       - |     - |  77.82 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |   True |  ROList |   632.3 us |  2.642 us |  2.471 us |  0.67 |    1 | 31.2500 |  0.9766 |     - |  98.87 KB |
+|         Optimized |  Clr |     Clr |          20 |   True |  ROList |   748.1 us |  4.418 us |  4.133 us |  0.79 |    2 | 46.8750 |       - |     - | 146.43 KB |
+|           Default |  Clr |     Clr |          20 |   True |  ROList |   943.4 us |  2.975 us |  2.783 us |  1.00 |    3 | 39.0625 |  0.9766 |     - | 122.95 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |   True |  ROList |   907.5 us |  4.369 us |  4.087 us |  0.74 |    1 | 24.4141 |  7.8125 |     - |  75.79 KB |
+|         Optimized | Core |    Core |          20 |   True |  ROList |   976.5 us |  1.885 us |  1.763 us |  0.80 |    2 | 40.0391 |       - |     - |  123.3 KB |
+|           Default | Core |    Core |          20 |   True |  ROList | 1,228.3 us |  4.903 us |  4.586 us |  1.00 |    3 | 29.2969 |  9.7656 |     - |   92.5 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |   True | ROArray |   575.3 us |  2.298 us |  2.150 us |  0.66 |    1 | 32.2266 |  0.9766 |     - | 101.49 KB |
+|         Optimized |  Clr |     Clr |          20 |   True | ROArray |   677.0 us |  2.573 us |  2.407 us |  0.78 |    2 | 47.8516 |       - |     - | 148.91 KB |
+|           Default |  Clr |     Clr |          20 |   True | ROArray |   871.7 us |  2.526 us |  2.363 us |  1.00 |    3 | 40.0391 |  3.9063 |     - | 125.11 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |   True | ROArray |   819.6 us |  2.763 us |  2.585 us |  0.73 |    1 | 25.3906 |  7.8125 |     - |  79.67 KB |
+|         Optimized | Core |    Core |          20 |   True | ROArray |   892.2 us |  2.406 us |  2.251 us |  0.79 |    2 | 41.0156 |       - |     - | 127.79 KB |
+|           Default | Core |    Core |          20 |   True | ROArray | 1,124.7 us |  5.797 us |  5.422 us |  1.00 |    3 | 31.2500 |  7.8125 |     - |  96.28 KB |
+
+// * Hints *
+Outliers
+  StandardVsCustomSerializer.Default: Clr            -> 1 outlier  was  removed (1.09 ms)
+  StandardVsCustomSerializer.OptimizedHeapless: Core -> 1 outlier  was  removed (556.23 us)
+  StandardVsCustomSerializer.Default: Core           -> 2 outliers were removed (945.32 us, 977.56 us)
+  StandardVsCustomSerializer.OptimizedHeapless: Clr  -> 1 outlier  was  removed (517.91 us)
+  StandardVsCustomSerializer.Default: Clr            -> 3 outliers were removed (1.05 ms..1.06 ms)
+  StandardVsCustomSerializer.OptimizedHeapless: Core -> 1 outlier  was  removed (933.18 us)
+  StandardVsCustomSerializer.Optimized: Clr          -> 1 outlier  was  removed (708.94 us)
+  StandardVsCustomSerializer.Default: Clr            -> 1 outlier  was  removed (921.77 us)
+  StandardVsCustomSerializer.Optimized: Clr          -> 1 outlier  was  removed (611.05 us)
+
+// * Legends *
+  ArraysCount : Value of the 'ArraysCount' parameter
+  Minify      : Value of the 'Minify' parameter
+  Kind        : Value of the 'Kind' parameter
+  Mean        : Arithmetic mean of all measurements
+  Error       : Half of 99.9% confidence interval
+  StdDev      : Standard deviation of all measurements
+  Ratio       : Mean of the ratio distribution ([Current]/[Baseline])
+  Rank        : Relative position of current benchmark mean among all benchmarks (Arabic style)
+  Gen 0       : GC Generation 0 collects per 1000 operations
+  Gen 1       : GC Generation 1 collects per 1000 operations
+  Gen 2       : GC Generation 2 collects per 1000 operations
+  Allocated   : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 us        : 1 Microsecond (0.000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+// ** Remained 0 benchmark(s) to run **
+Run time: 00:15:16 (916.93 sec), executed benchmarks: 48
+
+Global total time: 00:15:36 (936.27 sec), executed benchmarks: 48
