@@ -249,6 +249,34 @@ namespace Universe.Benchmark.DiskBench
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, FileOptions.WriteThrough))
             {
+                fs.Position = Parameters.WorkingSetSize - 1;
+                fs.WriteByte(0);
+                fs.Position = 0;
+                _allocate.Start();
+                
+                long len = 0;
+                while (len < this.Parameters.WorkingSetSize)
+                {
+                    CancelIfRequested();
+                    var count = (int) Math.Min(this.Parameters.WorkingSetSize - len, buffer.Length);
+                    fs.Write(buffer, 0, count);
+                    len += count;
+                    _allocate.Progress(len / (double) Parameters.WorkingSetSize, len);
+                }
+                _allocate.Complete();
+            }
+            LinuxKernelCacheFlusher.Sync();
+        }
+        
+        private void Allocate_Legacy()
+        {
+            _allocate.Start();
+            LinuxKernelCacheFlusher.Sync();
+            byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.WorkingSetSize)];
+            // new Random().NextBytes(buffer);
+            new DataGenerator(Parameters.Flavour).NextBytes(buffer);
+            using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, FileOptions.WriteThrough))
+            {
                 _allocate.Start();
                 long len = 0;
                 while (len < this.Parameters.WorkingSetSize)
