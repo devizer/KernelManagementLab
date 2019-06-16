@@ -16,7 +16,7 @@ function PopperLab(props) {
     const errorElement = React.useRef();
     React.useEffect(() => {
         setTimeout(() => {
-            setAnchorError(errorElement.current);
+            // setAnchorError(errorElement.current);
             console.log("POPPER OPENED");
         }, 2000);
     });
@@ -38,11 +38,11 @@ function PopperLab(props) {
 
             <br/>
             <Paper>
-                <Typography style={{padding:16}}>a paper.</Typography>
+                <Typography style={{padding:16}}>a paper. WTH</Typography>
             </Paper>
             <br/>
             <Paper>
-                <Typography style={{padding:16}}>a paper.</Typography>
+                <Typography style={{padding:16}}>a paper. WTF</Typography>
             </Paper>
 
 

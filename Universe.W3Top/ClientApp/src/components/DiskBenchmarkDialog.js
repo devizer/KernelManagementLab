@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import Paper from '@material-ui/core/Paper';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Stepper from '@material-ui/core/Stepper';
@@ -23,6 +24,7 @@ import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import MenuItem from '@material-ui/core/MenuItem';
+import BenchmarkProgressTable from "./BenchmarkProgressTable";
 
 import * as Enumerable from "linq-es2015";
 import classNames from "classnames";
@@ -30,6 +32,7 @@ import * as queryString from 'query-string';
 import * as DataSourceActions from "../stores/DataSourceActions";
 import { BenchmarkStepStatusIcon } from "./BenchmarkStepStatusIcon"
 import * as Helper from "../Helper";
+// import Paper from "./Popper-Lab";
 
 var Color = require("color");
 
@@ -50,19 +53,6 @@ const
     themeReadOnlySelected = createMuiTheme({ palette: { primary: { main: mainColorReadOnly, } }, });
     
 
-
-
-const ProgressStyle = theme => ({
-    root: {
-        margin: theme.spacing.unit * 0,
-        // color: '#777',
-        animationDuration: "1ms",
-        height: "1px",
-    },
-    colorPrimary: {backgroundColor: '#EEE'},
-    barColorPrimary: {backgroundColor: '#888'}
-});
-const LinearProgress2 = withStyles(ProgressStyle)(LinearProgress); 
 
 
 const styles = {
@@ -90,6 +80,9 @@ const styles = {
     },
     actions: {
         width: "100%",
+        textAlign: "center",
+    },
+    actionButtons: {
         textAlign: "center",
     },
     diskChips : {
@@ -149,6 +142,9 @@ function DiskBenchmarkDialog(props) {
     const [selectedDisk, setSelectedDisk] = React.useState(null);
     const [options, setOptions] = React.useState(defaultOptions);
     const [progress, setProgress] = React.useState(null);
+    const [errorAnchor, setErrorAnchor] = React.useState(null);
+    const [error, setError] = React.useState(null);
+    const errorElement = React.useRef(); // where is popper bound to?
 
     let needHideOpenButton = false;
     {
@@ -165,17 +161,17 @@ function DiskBenchmarkDialog(props) {
     });
 
     function getStepContent(stepIndex) {
+        let renderProgress = () => (<BenchmarkProgressTable progress={progress}/>);
         switch (stepIndex) {
             case 0:
                 return renderStepSelectDisk();
             case 1:
                 return renderStepTuneOptions();
             case 2:
-                return renderStepProgress();
             case 3:
-                return renderStepProgress();
+                return renderProgress();
             default:
-                return 'Unknown stepIndex';
+                return `Unknown stepIndex ${stepIndex}`;
         }
     }
 
@@ -340,43 +336,6 @@ function DiskBenchmarkDialog(props) {
     }
 
 
-    const renderStepProgress = function() {
-        const pro = progress ? progress : {isCompleted: false, steps: []};
-        const formatSpeed = (x) => {let ret = Helper.Common.formatBytes(x,1); return ret === null ? "" : `${ret}/s`};
-        const statuses = {Pending: "⚪", InProgress: "⇢", Completed: "⚫"};
-        const formatStepStatus = (status) => statuses[status];
-        const progressValue = step => step.perCents >= 0.99999 ? 99.999 : step.perCents * 100.0; 
-        return (
-            <React.Fragment>
-                <center>
-                <table className="benchmark-progress" border="0" cellPadding={0} cellSpacing={0}><tbody>
-                {pro.steps.map(step => (
-                    <React.Fragment key={step.name}>
-                        <tr>
-                            <td className="step-status">
-                                <BenchmarkStepStatusIcon status={step.state}/>
-                                {/* formatStepStatus(step.state) */}
-                            </td>
-                            <td className="step-name">
-                                {step.name}
-                            </td>
-                            <td className="step-duration">{step.seconds > 0 ? `${step.duration}` : "\xA0" }</td>
-                            <td className="step-speed">{step.avgBytesPerSecond > 0 ? `${formatSpeed(step.avgBytesPerSecond)}` : "\xA0"}</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td colSpan="3">
-                                <LinearProgress2 value={progressValue(step)} variant={"determinate"} className={"step-progress"}/>
-                            </td>
-                        </tr>
-                    </React.Fragment>
-                ))}
-                </tbody></table>
-                </center>
-            </React.Fragment>
-        )
-    };
-    
     const progressTick = () => {
         try {
             const apiUrl = `api/benchmark/disk/get-disk-benchmark-progress-${token}`;
@@ -469,22 +428,49 @@ function DiskBenchmarkDialog(props) {
     const areNextBackButtonsVisible = activeStep <= 1;
     const getColorOfSelectedDisk = (disk) => disk.freeSpace > 0 ? "primary" : "secondary";
 
-    let errorRef = React.useRef();
-    let errorInfo = "No Error";
-    const idPopperError = errorInfo != null ? 'error-popper' : null;
+
+    const applyError = (text) => {
+        setError(text);
+        setErrorAnchor(text ? errorElement.current : null);
+    };
+    const errorOpened = Boolean(errorAnchor);
+    const errorId = errorOpened ? "error-popper-next2" : null;
+
+    React.useEffect(() => {
+        if (error === null) {
+            setTimeout(() => {
+                // applyError("NO ERROR YET");
+                console.log("POPPER ATCIVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATED");
+            }, 2000);
+        }
+    });
+
+
 
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen} className={classNames(needHideOpenButton && "hidden")}>
-                Open benchmark dialog
+            <Button variant="outlined" color="primary" onClick={handleClickOpen} className={classNames(open && "hidden")}>
+                Start benchmark
             </Button>
-            <Popper id={idPopperError} open={true} anchorEl={errorRef} placement={"top"} >
-                <div>Benchmark failed. {errorInfo}</div>
+
+            <Popper id={errorId} open={errorOpened} anchorEl={errorAnchor} placement="bottom">
+                <React.Fragment>
+                    {Enumerable.Range(1,10).ToArray().map(i => (
+                        <React.Fragment>
+                        <br/>
+                        <Paper >
+                                <Typography style={{padding:16,color: "darkred"}}>{i}: The content of the Popper.</Typography>
+                        </Paper>
+                        </React.Fragment>
+                    ))}
+                </React.Fragment>
             </Popper>
+            
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>
                 <DialogTitle id="form-dialog-title" style={{textAlign:"center"}}>Benchmark a local or network disk</DialogTitle>
                 <DialogContent style={{textAlign: "center"}} >
-                    <Stepper activeStep={activeStep} alternativeLabel style={styles.root}>
+                    {/*<Button variant="contained" ref={errorElement}>WTH</Button>*/}
+                    <Stepper activeStep={activeStep} alternativeLabel style={styles.root}  id="wizard" ref={errorElement}>
                         {steps.map(label => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel> 
@@ -495,14 +481,14 @@ function DiskBenchmarkDialog(props) {
                     {/*<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>*/}
                     {getStepContent(activeStep)}
                 </DialogContent>
-                <DialogActions id="disk-benchmark-actions" ref={errorRef}>
-                    <div>
+                <DialogActions id="disk-benchmark-actions" >
+                    <React.Fragment>
                     {activeStep === steps.length ? (
                         <div style={styles.actions}>
                             <Button onClick={handleReset} style={classes.wizardReset}>New Benchmark</Button>
                         </div>
                     ) : (
-                        <div style={ activeStep === 2 ? styles.actions : {}}>
+                        <div style={ activeStep === 2 ? styles.actions : styles.actions}>
                             
                             <Button variant="contained"
                                     disabled={!isBackAllowed}
@@ -541,7 +527,7 @@ function DiskBenchmarkDialog(props) {
                             </Button>
                         </div>
                     )}
-                    </div>
+                    </React.Fragment>
                 </DialogActions>
             </Dialog>
         </div>

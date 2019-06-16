@@ -88,7 +88,7 @@ namespace Universe.Benchmark.DiskBench
                     }
                 }
 
-                ProgressStep failedStep = new ProgressStep("Benchmark failed.") {State = ProgressStepState.Error};
+                ProgressStep failedStep = new ProgressStep($"Benchmark failed. {ex.GetExceptionDigest()}") {State = ProgressStepState.Error};
                 Progress.Steps.Add(failedStep);
                 
 

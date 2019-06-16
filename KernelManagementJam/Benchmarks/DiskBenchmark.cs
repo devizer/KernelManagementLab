@@ -174,7 +174,7 @@ namespace Universe.Benchmark.DiskBench
                 if (File.Exists(TempFile))
                     File.Delete(TempFile);
 
-                if (ex != null) _cleanUp.Name = "Benchmark failed";
+                if (ex != null) _cleanUp.Name = $"Benchmark failed. {ex.GetExceptionDigest()}";
                 _cleanUp.Complete();
             };
 
