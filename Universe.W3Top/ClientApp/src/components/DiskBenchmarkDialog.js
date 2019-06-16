@@ -14,7 +14,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Popper from '@material-ui/core/Popper';
-import DiskAvatarContent from "./DiskAvatarContent"
 
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
@@ -24,7 +23,9 @@ import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import MenuItem from '@material-ui/core/MenuItem';
+
 import BenchmarkProgressTable from "./BenchmarkProgressTable";
+import DiskAvatarContent from "./DiskAvatarContent"
 
 import * as Enumerable from "linq-es2015";
 import classNames from "classnames";
@@ -41,15 +42,18 @@ const EMPTY_PROGRESS = {isCompleted: false, steps: []};
 
 const mainColorReadWrite="#3182bd";
 const mainColorReadOnly= "#de2d26";
+// const mainColorUnselectedReadOnly= "#DDAAB1";
+const mainColorUnselectedReadOnly = "#E2DEDE";
+
 
 // const getUnselectedColor = (c) => Color(c).lighten(0.8); 
 // const getUnselectedColor = (c) => Color(c).whiten(3);
-const getUnselectedColor = (c) => Color(c).desaturate(0.8).whiten(0.2);
+const getUnselectedColor = (c) => Color(c).desaturate(0.8).lighten(0.9);
 
 const
     themeReadWrite = createMuiTheme({ palette: { primary: { main: getUnselectedColor(mainColorReadWrite).hex(), } }, }),
     themeReadWriteSelected = createMuiTheme({ palette: { primary: { main: mainColorReadWrite, } }, }),
-    themeReadOnly = createMuiTheme({palette: { primary: { main: getUnselectedColor(mainColorReadOnly).hex(), } }, }),
+    themeReadOnly = createMuiTheme({palette: { primary: { main: mainColorUnselectedReadOnly, } }, }),
     themeReadOnlySelected = createMuiTheme({ palette: { primary: { main: mainColorReadOnly, } }, });
     
 
