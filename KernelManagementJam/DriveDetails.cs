@@ -102,10 +102,23 @@ namespace KernelManagementJam
 
         public static IEnumerable<DriveDetails> FilterForHuman(this IEnumerable<DriveDetails> list)
         {
-            return list
+            var filtered = list
                 .Where(x => x.TotalSize > 0)
                 .Where(x => !ToSkip.Any(skip =>
-                    x.MountEntry.MountPath == $"/{skip}" || x.MountEntry.MountPath.StartsWith($"/{skip}/")));
+                    x.MountEntry.MountPath == $"/{skip}" || x.MountEntry.MountPath.StartsWith($"/{skip}/")))
+                .ToArray();
+
+            // double / (root) entries: ext4 (or another) and rootfs
+            var countOfRoot = filtered.Count(x => x.MountEntry?.MountPath == "/");
+            var countOfAnotherRoot = filtered.Count(x => x.MountEntry?.MountPath == "/" && x.MountEntry?.FileSystem != "rootfs" && x.MountEntry?.FileSystem?.Length > 0);
+            if (countOfRoot > 1 && countOfAnotherRoot > 0)
+                filtered = filtered
+                    .Where(x => !(x.MountEntry?.MountPath == "/" && x.MountEntry?.FileSystem == "rootfs"))
+                    .ToArray();
+
+            return filtered;
+
+
         }
     }
 }
