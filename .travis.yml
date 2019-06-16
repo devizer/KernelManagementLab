@@ -59,12 +59,12 @@ script:
 - pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
 
 - |
-  # skipping as we use publish-public.sh
-  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service /v:m
+   time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m
 
 - |
    # publish self-contained
    pushd Universe.W3Top
+   # skipping as we use publish-public.sh
    # time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service2 --self-contained -r linux-x64 /v:m
    popd
   
