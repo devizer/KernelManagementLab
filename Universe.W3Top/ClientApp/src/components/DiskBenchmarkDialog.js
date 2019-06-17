@@ -453,8 +453,8 @@ function DiskBenchmarkDialog(props) {
 
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen} className={classNames(open && "hidden")}>
-                Start benchmark
+            <Button variant="contained" color="secondary" onClick={handleClickOpen} className={classNames(open && "hidden")}>
+                Start disk benchmark
             </Button>
 
             <Popper id={errorId} open={errorOpened} anchorEl={errorAnchor} placement="bottom">
