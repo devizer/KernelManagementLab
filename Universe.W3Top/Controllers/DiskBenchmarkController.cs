@@ -49,10 +49,10 @@ namespace ReactGraphLab.Controllers
             };
 
             bool hasWritePermission = DiskBenchmarkChecks.HasWritePermission(Parameters.WorkFolder);
-            IDiskBenchmark diskBenchmark = 
+            IDiskBenchmark diskBenchmark =
                 hasWritePermission
-                ? (IDiskBenchmark) new DiskBenchmark(Parameters)
-                : (IDiskBenchmark) new ReadonlyDiskBenchmark(Parameters);
+                    ? (IDiskBenchmark) new DiskBenchmark(Parameters)
+                    : (IDiskBenchmark) new ReadonlyDiskBenchmark(Parameters, MountsDataSource.Mounts);
             
             Guid token = Guid.NewGuid();
             Queue.Enqueue(token, diskBenchmark);

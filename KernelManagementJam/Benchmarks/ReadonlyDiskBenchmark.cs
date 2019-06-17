@@ -14,13 +14,16 @@ namespace Universe.Benchmark.DiskBench
 {
     public class ReadonlyDiskBenchmark : IDiskBenchmark
     {
-        // TODO: files may belong to another volume?
-        
+        // Files from another volumes should be used for readonly disk benchmark
+        // It is used to stay in a Parameters.WorkFolder volume
+        public readonly List<DriveDetails> Mounts;
         public DiskBenchmarkOptions Parameters { get; set; }
         public bool IsJit = false;
         
         private const int UnconditionalThreshold = 16384;
         private FileInfo[] WorkingSet = null;
+        
+        [Obsolete("TODO", true)] private string[] NormalizedMountPaths;
         
         public ProgressInfo Progress { get; private set; }
         
@@ -31,12 +34,14 @@ namespace Universe.Benchmark.DiskBench
         private ProgressStep _rndReadN;
         private bool _isODirectSupported;
 
-        public ReadonlyDiskBenchmark(DiskBenchmarkOptions parameters)
+        public ReadonlyDiskBenchmark(DiskBenchmarkOptions parameters, List<DriveDetails> mounts = null)
         {
             Parameters = parameters;
+            Mounts = mounts;
+            
             BuildProgress();
         }
-        
+
         void BuildProgress()
         {
             if (Parameters.DisableODirect)
@@ -306,11 +311,11 @@ namespace Universe.Benchmark.DiskBench
             // configure progress for single threaded analysis
             Stopwatch swProgress = Stopwatch.StartNew();
             long prevMsecs = -1000000000;
-            Action progress = () =>
+            Action<bool> progress = (isCompleted) =>
             {
                 long msec = swProgress.ElapsedMilliseconds;
                 long delta = msec - prevMsecs;
-                if (delta > 222)
+                if (delta > 222 || isCompleted)
                 {
                     _analyze.Name = $"Analyze metadata {Formatter.FormatBytes(totalSize)}";
                     // Console.WriteLine($"Analyze metadata progress: {files.Count} files total size is {totalSize:n0} bytes");
@@ -319,7 +324,8 @@ namespace Universe.Benchmark.DiskBench
             };
 
             bool abort = false;
-            EnumDir(root, files, ref totalSize, progress, ref abort);
+            EnumDir(root, files, ref totalSize, () => progress(false), ref abort);
+            progress(true);
             long bufferSize = 0;
             var query = files.OrderByDescending(x => x.Size).TakeWhile((file) =>
             {
@@ -392,11 +398,76 @@ namespace Universe.Benchmark.DiskBench
                 {
                     CancelIfRequested();
                     if (FileSystemHelper.IsSymLink(subDir.FullName)) continue;
+                    if (!IsBelongToVolume(subDir.FullName)) continue;
                     EnumDir(subDir, result, ref totalSize, progress, ref abort);
                     if (abort) return;
                 }
             }
 
+        }
+        
+        
+        string[] _NormalizerMountPaths;
+        string[] GetNormalizerMountPaths()
+        {
+            if (Mounts == null) return null; 
+            if (_NormalizerMountPaths == null)
+            {
+                var pathSeparator = Path.DirectorySeparatorChar.ToString();
+                Func<DriveDetails, string> getNormalizedMountPath = vol =>
+                {
+                    if (vol.MountEntry != null && vol.MountEntry.MountPath != null &&
+                        !vol.MountEntry.MountPath.EndsWith(pathSeparator))
+                        return vol.MountEntry.MountPath + pathSeparator;
+
+                    return vol.MountEntry?.MountPath;
+                };
+
+                string normalizedWorkFolder = Parameters.WorkFolder;
+                if (!normalizedWorkFolder.EndsWith(pathSeparator)) normalizedWorkFolder += pathSeparator;
+
+                string[] normalizedPaths = Mounts
+                    .Select(x => getNormalizedMountPath(x))
+                    .Where(x => x != null)
+                    .OrderBy(x => x)
+                    .ToArray();
+
+                normalizedPaths = normalizedPaths.Except(normalizedPaths.Where(normalizedWorkFolder.StartsWith)).ToArray();
+
+                _NormalizerMountPaths = normalizedPaths;
+
+#if DEBUG
+                Console.WriteLine($@"Normalizer Mount Paths for readonly benchmark of [{Parameters.WorkFolder}]
+{string.Join(Environment.NewLine, _NormalizerMountPaths.Select(x => $" {{{x}}}"))}");
+
+#endif
+            }
+
+            return _NormalizerMountPaths;
+        }
+        
+
+        private bool IsBelongToVolume(string subFolderFullName)
+        {
+                if (Mounts == null) return true;
+                var pathSeparator = Path.DirectorySeparatorChar.ToString();
+
+                var normalizedPaths = GetNormalizerMountPaths();
+                string normalizedWorkFolder = Parameters.WorkFolder;
+                if (!normalizedWorkFolder.EndsWith(pathSeparator)) normalizedWorkFolder += pathSeparator;
+                var normalizedSubFolderFullName = subFolderFullName;
+                if (!normalizedSubFolderFullName.EndsWith(pathSeparator)) normalizedSubFolderFullName += pathSeparator;
+                
+                var anotherVolumes = normalizedPaths
+                    .Where(mountPath => mountPath != subFolderFullName)
+                    .Where(mountPath => mountPath != normalizedWorkFolder)
+                    .Where(normalizedSubFolderFullName.StartsWith);
+                
+                var ret = !anotherVolumes.Any();
+#if DEBUG
+                Console.WriteLine($" - [{subFolderFullName}] belongs to {Parameters.WorkFolder}: {ret} ({string.Join("; ", anotherVolumes)})");
+#endif
+                return ret;
         }
 
         static bool CanReadFile(string fullName)

@@ -115,7 +115,7 @@ namespace Universe.Dashboard.Agent
                         catch (Exception ex)
                         {
                             benchmarkException = ex;
-                            // Console.WriteLine($"Disk Benchmark Job failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
+                            Console.WriteLine($"Disk Benchmark Job failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
                         }
 
                         if (!benchmark.IsCanceled)
