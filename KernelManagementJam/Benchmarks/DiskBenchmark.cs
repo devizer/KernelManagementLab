@@ -84,12 +84,12 @@ namespace Universe.Benchmark.DiskBench
             }
                 
             _allocate = new ProgressStep("Allocate");
-            _seqRead = new ProgressStep("Sequential read");
-            _seqWrite = new ProgressStep("Sequential write");
-            _rndRead1T = new ProgressStep("Random Read, 1 thread");
-            _rndWrite1T = new ProgressStep("Random Write, 1 thread");
-            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads");
-            _rndWriteN = new ProgressStep($"Random Write, {Parameters.ThreadsNumber} threads");
+            _seqRead = new ProgressStep("Sequential read"){ CanHaveMetrics = true};
+            _seqWrite = new ProgressStep("Sequential write"){CanHaveMetrics = true};
+            _rndRead1T = new ProgressStep("Random Read, 1 thread"){CanHaveMetrics = true};
+            _rndWrite1T = new ProgressStep("Random Write, 1 thread"){CanHaveMetrics = true};
+            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true};
+            _rndWriteN = new ProgressStep($"Random Write, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true};
             _cleanUp = new ProgressStep("Clean up");
             
             this.Progress = new ProgressInfo()

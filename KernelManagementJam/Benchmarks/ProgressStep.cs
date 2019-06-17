@@ -13,6 +13,8 @@ namespace Universe.DiskBench
         [JsonConverter(typeof(StringEnumConverter))]
         public ProgressStepState State { get; set; }
         
+        public bool CanHaveMetrics { get; set; }
+        
         public string Name { get; set; }
         public double? Seconds { get; set; }
         public double? PerCents { get; set; }
@@ -99,6 +101,7 @@ namespace Universe.DiskBench
                 Bytes = Bytes,
                 Seconds = Seconds,
                 Name = Name,
+                CanHaveMetrics = CanHaveMetrics,
             };
         }
     }

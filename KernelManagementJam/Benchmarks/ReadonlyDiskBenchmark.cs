@@ -57,9 +57,9 @@ namespace Universe.Benchmark.DiskBench
             }
                 
             _analyze = new ProgressStep("Analyze metadata");
-            _seqRead = new ProgressStep("Sequential read");
-            _rndRead1T = new ProgressStep("Random Read, 1 thread");
-            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads");
+            _seqRead = new ProgressStep("Sequential read") {CanHaveMetrics = true};
+            _rndRead1T = new ProgressStep("Random Read, 1 thread"){CanHaveMetrics = true};
+            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true};
             
             this.Progress = new ProgressInfo()
             {

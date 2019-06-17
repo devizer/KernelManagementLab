@@ -24,7 +24,7 @@ const BenchmarkProgressTable = function(props) {
     const statuses = {Pending: "⚪", InProgress: "⇢", Completed: "⚫"};
     const formatStepStatus = (status) => statuses[status];
     const progressValue = step => step.perCents >= 0.99999 ? 99.999 : step.perCents * 100.0;
-    const hasMetrics = step => step.seconds > 0 && step.avgBytesPerSecond > 0;
+    const hasMetrics = step => (step.seconds > 0 && step.avgBytesPerSecond > 0) || step.canHaveMetrics;
     return (
         <React.Fragment>
             <center>
