@@ -68,7 +68,7 @@ table.benchmark-progress td.step-speed {
     text-align: right;
 }
 table.benchmark-progress td.step-duration {
-    min-width: 80px;
+    min-width: 88px;
     text-align: right;
 }
 
