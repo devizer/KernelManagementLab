@@ -444,7 +444,7 @@ function DiskBenchmarkDialog(props) {
         if (error === null) {
             setTimeout(() => {
                 // applyError("NO ERROR YET");
-                console.log("POPPER ATCIVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATED");
+                // console.log("POPPER ATCIVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATED");
             }, 2000);
         }
     });
