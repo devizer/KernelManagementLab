@@ -42,6 +42,15 @@ script:
     sudo apt-get install jq pv -y
     ruby --version || true; gem --version || true
     sudo apt-get install ruby-dev
+
+    sudo apt-get -y install mysql-server
+    mysqladmin -u root password secret
+    user=root; password=secret
+    mysql -u $user -p"$password" -e "DROP DATABASE w3top;" 2>/dev/null || true
+    mysql -u $user -p"$password" -e "CREATE DATABASE w3top CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+    mysql -u $user -p"$password" -e "DROP USER 'w3top'@'%';" 2>/dev/null  || true
+    mysql -u $user -p"$password" -e "CREATE USER 'w3top'@'%' IDENTIFIED BY 'w3top'; GRANT ALL PRIVILEGES ON w3top.* TO 'w3top'@'%' WITH GRANT OPTION;"
+
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
 
