@@ -8,22 +8,17 @@ namespace Universe.Dashboard.DAL
 
         public static DbContextOptions Create()
         {
-            var mySqlConnectionString = DashboardContextOptions4MySQL.ConnectionString;
-            if (!string.IsNullOrEmpty(mySqlConnectionString))
-                return DashboardContextOptions4MySQL.DesignTimeOptions;
-
-            return DashboardContextOptions4Sqlite.DesignTimeOptions;
+            return (Family == EF.Family.MySql)
+                ? DashboardContextOptions4MySQL.DesignTimeOptions
+                : DashboardContextOptions4Sqlite.DesignTimeOptions;
         }
 
         public static EF.Family Family
         {
             get
             {
-                var mySqlConnectionString = DashboardContextOptions4MySQL.ConnectionString;
-                if (!string.IsNullOrEmpty(mySqlConnectionString))
-                    return EF.Family.MySql;
-
-                return EF.Family.Sqlite;
+                var cs = DashboardContextOptions4MySQL.ConnectionString;
+                return string.IsNullOrEmpty(cs) ? EF.Family.Sqlite : EF.Family.MySql;  
             }
         }
     }

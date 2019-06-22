@@ -30,7 +30,7 @@ namespace Universe.Dashboard.DAL
                 // return defaultConnectionString;
                 var ret = Environment.GetEnvironmentVariable(CONNECTION_ENV_NAME);
                 // if (string.IsNullOrEmpty(ret)) ret = defaultConnectionString;
-                return ret;
+                return ret?.Trim();
             }
         }
     }
