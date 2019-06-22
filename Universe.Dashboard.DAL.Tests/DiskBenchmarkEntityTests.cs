@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
+using EF = Universe.Dashboard.DAL.EF;
 
 namespace Tests
 {
@@ -69,6 +70,11 @@ namespace Tests
         [TestCaseSource(typeof(DbEnv), nameof(DbEnv.TestParameters))]
         public void Test_REAL(DbParameter dbArg)
         {
+            if (dbArg.Family == EF.Family.Sqlite)
+            {
+                Environment.SetEnvironmentVariable("MYSQL_DATABASE", "");
+            }
+            
             DashboardContext context = dbArg.GetDashboard();
             DiskBenchmark b = new DiskBenchmark(".", 128*1024,DataGeneratorFlavour.Random, 4096, 1);
             b.Perform();
