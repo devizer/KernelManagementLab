@@ -33,6 +33,7 @@ namespace ReactGraphLab
                 switch (DashboardContextOptionsFactory.Family)
                 {
                     case EF.Family.MySql:
+                        Console.WriteLine($"CONNECTION STRING: [{DashboardContextOptions4MySQL.ConnectionString}]");
                         using (StopwatchLog.ToConsole($"Check RDBMS health"))
                         {
                             var exception = EFHealth.WaitFor(dashboardContext, 30000);
