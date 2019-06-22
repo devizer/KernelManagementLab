@@ -94,6 +94,7 @@ export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 case "$1" in
   start)
     echo "Starting w3top"
+    cd "'${ScriptPath}'"
     mkdir -p /tmp
     (nohup "'${ScriptPath}'/Universe.W3Top" 1>/tmp/w3top.log 2>&1 ) &
     ;;
