@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,6 +48,7 @@ CREATE TABLE {0} (
                 try
                 {
                     db.Database.GetDbConnection().Execute("Select null;");
+                    Thread.Sleep(11);
                     return null;
                 }
                 catch (Exception ex)
