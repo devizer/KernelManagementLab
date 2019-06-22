@@ -15,7 +15,9 @@ namespace Tests
         {
             get
             {
-                Environment.SetEnvironmentVariable("MYSQL_DATABASE","Server=localhost;Database=w3top;Port=3306;Uid=w3top;Pwd=w3top;Connect Timeout=5;Pooling=false;");
+                if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
+                    Environment.SetEnvironmentVariable("MYSQL_DATABASE","Server=localhost;Database=w3top;Port=3306;Uid=w3top;Pwd=w3top;Connect Timeout=5;Pooling=false;");
+                
                 List<DbParameter> ret = new List<DbParameter> {new DbParameter
                 {
                     Family = EF.Family.Sqlite,
