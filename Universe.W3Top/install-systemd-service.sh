@@ -115,7 +115,7 @@ sudo chmod +x /etc/init.d/w3top
 if [ -n "$hasUpdateRc" ]; then
   # debian derivaties
   echo "Configuring /etc/init.d/w3top init-script using update-rc.d tool"
-  /etc/init.d/w3top stop >/dev/null 2>&1 || true
+  sudo /etc/init.d/w3top stop >/dev/null 2>&1 || true
   sudo update-rc.d -f w3top remove || true
   sudo update-rc.d w3top defaults
   sudo /etc/init.d/w3top start
@@ -123,7 +123,7 @@ if [ -n "$hasUpdateRc" ]; then
 elif [ -n "$hasChkConfig" ]; then
   # suse and redhat derivates
   echo "Configuring /etc/init.d/h3control init-script using chkconfig tool"
-  /etc/init.d/w3top stop >/dev/null 2>&1 || true
+  sudo /etc/init.d/w3top stop >/dev/null 2>&1 || true
   sudo chkconfig --level 2345 w3top off || true
   sudo chkconfig --level 2345 w3top on
   sudo /etc/init.d/w3top start
