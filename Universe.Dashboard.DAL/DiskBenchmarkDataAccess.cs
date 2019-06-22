@@ -25,7 +25,7 @@ namespace Universe.Dashboard.DAL
         {
             var query =
                 from b in _DbContext.DiskBenchmark
-                where b.Token == benchmarkToken.ToString()
+                where b.Token == benchmarkToken
                 select new {b.Report, b.ErrorInfo};
 
             var ret = query.FirstOrDefault();

@@ -1,6 +1,5 @@
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Universe.Dashboard.DAL;
 
 namespace Tests
@@ -16,7 +15,7 @@ namespace Tests
             if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
             
             var opts = new DbContextOptionsBuilder()
-                .ApplyDashboardDbOptions(testFile)
+                .ApplySqliteOptions(testFile)
                 .Options;
 
             DashboardContext ret = new DashboardContext(opts);

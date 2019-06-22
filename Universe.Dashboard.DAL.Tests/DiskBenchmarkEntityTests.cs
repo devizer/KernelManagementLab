@@ -22,7 +22,12 @@ namespace Tests
         public void TestEmpty()
         {
             DashboardContext context = CreateDbContext();
-            context.DiskBenchmark.Add(new DiskBenchmarkEntity() { CreatedAt = DateTime.UtcNow, MountPath = "/test-empty"});
+            context.DiskBenchmark.Add(new DiskBenchmarkEntity()
+            {
+                CreatedAt = DateTime.UtcNow, 
+                MountPath = "/test-empty",
+                Token = Guid.NewGuid()
+            });
             context.SaveChanges();
         }
 
@@ -31,7 +36,13 @@ namespace Tests
         {
             DashboardContext context = CreateDbContext();
             DiskBenchmark b = new DiskBenchmark("/test-args");
-            var entity = new DiskBenchmarkEntity() { CreatedAt = DateTime.UtcNow, MountPath = b.Parameters.WorkFolder};
+            var entity = new DiskBenchmarkEntity()
+            {
+                CreatedAt = DateTime.UtcNow, 
+                MountPath = b.Parameters.WorkFolder,
+                Token = Guid.NewGuid(),
+                    
+            };
             entity.Args = b.Parameters;
             context.DiskBenchmark.Add(entity);
             context.SaveChanges();
@@ -42,7 +53,12 @@ namespace Tests
         {
             DashboardContext context = CreateDbContext();
             DiskBenchmark b = new DiskBenchmark("/test-empty-report");
-            var entity = new DiskBenchmarkEntity() { CreatedAt = DateTime.UtcNow, MountPath = b.Parameters.WorkFolder};
+            var entity = new DiskBenchmarkEntity()
+            {
+                CreatedAt = DateTime.UtcNow, 
+                MountPath = b.Parameters.WorkFolder,
+                Token = Guid.NewGuid(),
+            };
             entity.Args = b.Parameters;
             entity.Report = b.Progress;
             context.DiskBenchmark.Add(entity);
@@ -55,7 +71,13 @@ namespace Tests
             DashboardContext context = CreateDbContext();
             DiskBenchmark b = new DiskBenchmark(".", 128*1024,DataGeneratorFlavour.Random, 4096, 1);
             b.Perform();
-            var entity = new DiskBenchmarkEntity() { CreatedAt = DateTime.UtcNow, MountPath = b.Parameters.WorkFolder};
+            var entity = new DiskBenchmarkEntity()
+            {
+                CreatedAt = DateTime.UtcNow, 
+                MountPath = b.Parameters.WorkFolder,
+                Token = Guid.NewGuid()
+            };
+            
             entity.Args = b.Parameters;
             entity.Report = b.Progress;
             context.DiskBenchmark.Add(entity);

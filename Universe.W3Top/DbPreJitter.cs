@@ -30,7 +30,7 @@ namespace ReactGraphLab
                 var entity = new DiskBenchmarkEntity()
                 {
                     Args = benchmark.Parameters,
-                    Token = token.ToString(),
+                    Token = token,
                     Report = benchmark.Progress, // Progress is complete
                     CreatedAt = DateTime.UtcNow,
                     MountPath = benchmark.Parameters.WorkFolder,

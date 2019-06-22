@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KernelManagementJam.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.Dashboard.DAL.Tests", "Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj", "{10F344E5-5F88-47A4-9A1B-40AD1D5EF341}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.Dashboard.DAL.MySQL", "Universe.Dashboard.DAL.MySQL\Universe.Dashboard.DAL.MySQL.csproj", "{7644E953-808E-4862-9643-B2048FB5553B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,14 @@ Global
 		{10F344E5-5F88-47A4-9A1B-40AD1D5EF341}.Release|Any CPU.Build.0 = Release|Any CPU
 		{10F344E5-5F88-47A4-9A1B-40AD1D5EF341}.Release|x86.ActiveCfg = Release|Any CPU
 		{10F344E5-5F88-47A4-9A1B-40AD1D5EF341}.Release|x86.Build.0 = Release|Any CPU
+		{7644E953-808E-4862-9643-B2048FB5553B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7644E953-808E-4862-9643-B2048FB5553B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7644E953-808E-4862-9643-B2048FB5553B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7644E953-808E-4862-9643-B2048FB5553B}.Debug|x86.Build.0 = Debug|Any CPU
+		{7644E953-808E-4862-9643-B2048FB5553B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7644E953-808E-4862-9643-B2048FB5553B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7644E953-808E-4862-9643-B2048FB5553B}.Release|x86.ActiveCfg = Release|Any CPU
+		{7644E953-808E-4862-9643-B2048FB5553B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -123,7 +123,7 @@ namespace Universe.Dashboard.Agent
                             var entity = new DiskBenchmarkEntity()
                             {
                                 Args = benchmark.Parameters,
-                                Token = nextJob.Token.ToString(),
+                                Token = nextJob.Token,
                                 Report = benchmark.Progress, // Progress is complete
                                 CreatedAt = DateTime.UtcNow,
                                 MountPath = benchmark.Parameters.WorkFolder,

@@ -9,8 +9,8 @@ using Universe.Dashboard.DAL;
 namespace Universe.Dashboard.DAL.Migrations
 {
     [DbContext(typeof(DashboardContext))]
-    [Migration("20190607223827_Add_DiskBenchmark_ErrorInfo")]
-    partial class Add_DiskBenchmark_ErrorInfo
+    [Migration("20190621204217_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,8 @@ namespace Universe.Dashboard.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Version");
+                    b.Property<string>("Version")
+                        .HasColumnType("NVARCHAR(32767)");
 
                     b.HasKey("Id");
 
@@ -35,19 +36,26 @@ namespace Universe.Dashboard.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Args");
+                    b.Property<string>("Args")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("ErrorInfo");
 
-                    b.Property<string>("MountPath");
+                    b.Property<string>("MountPath")
+                        .HasColumnType("NVARCHAR(32767)");
 
-                    b.Property<string>("Report");
+                    b.Property<string>("Report")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Token");
+                    b.Property<Guid>("Token")
+                        .HasColumnType("BINARY(16)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Token")
+                        .IsUnique();
 
                     b.ToTable("DiskBenchmark");
                 });
@@ -57,9 +65,11 @@ namespace Universe.Dashboard.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("JsonBlob");
+                    b.Property<string>("JsonBlob")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Key");
+                    b.Property<string>("Key")
+                        .HasColumnType("NVARCHAR(32767)");
 
                     b.HasKey("Id");
 

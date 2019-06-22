@@ -13,7 +13,7 @@ namespace Universe.Dashboard.DAL
         
         public DbSet<DiskBenchmarkEntity> DiskBenchmark { get; set; }
 
-        public DashboardContext() : base(DashboardContextOptions4Sqlite.DesignTimeOptions)
+        public DashboardContext() : base(DashboardContextOptions4MySQL.DesignTimeOptions)
         {
             // Console.WriteLine("Warning! DashboardContext() (default constructor is for design-time only)");
         }
@@ -22,42 +22,48 @@ namespace Universe.Dashboard.DAL
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURING");
-            base.OnConfiguring(optionsBuilder);
-            Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURED");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            var types = EF.Family.Sqlite.GetTypes();
+            bool isMySQL = true;
 
             // Disk Benchmark Entity
             {
                 var e = modelBuilder.Entity<DiskBenchmarkEntity>();
                 e.Property(x => x.Args).HasConversion(JsonDbConverter.Create<DiskBenchmarkOptions>());
                 e.Property(x => x.Report).HasConversion(JsonDbConverter.Create<ProgressInfo>());
-                e.HasIndex(p => new {p.Token}).IsUnique();
-                e.Property(x => x.Token).HasColumnType(types.Guid);
-                e.Property(x => x.MountPath).HasColumnType(types.String);
-                e.Property(x => x.Args).HasColumnType(types.Json);
-                e.Property(x => x.Report).HasColumnType(types.Json);
+                // e.HasIndex(p => new {p.Token}).IsUnique();
+                
+                if (isMySQL)
+                {
+                    e.Property(x => x.Token).HasColumnType("VARCHAR(36)");
+                    e.Property(x => x.MountPath).HasColumnType("VARCHAR(20000)");
+                    e.Property(x => x.Args).HasColumnType("LONGTEXT");
+                    e.Property(x => x.Report).HasColumnType("LONGTEXT");
+                }
             }
 
             // History Copy Entity
             {
                 var e = modelBuilder.Entity<HistoryCopy>();
-                e.Property(x => x.Key).HasColumnType(types.String);
-                e.Property(x => x.JsonBlob).HasColumnType(types.Json);
+                
+                if (isMySQL)
+                {
+                    e.Property(x => x.Key).HasColumnType("VARCHAR(20000)");
+                    e.Property(x => x.JsonBlob).HasColumnType("LONGTEXT");
+                }
             }
 
             // Db Info Entity
             {
                 var e = modelBuilder.Entity<DbInfo>();
-                e.Property(x => x.Version).HasColumnType(types.String);
+                
+                if (isMySQL)
+                {
+                    e.Property(x => x.Version).HasColumnType("VARCHAR(20000)");
+                }
             }
+
         }
     }
 }

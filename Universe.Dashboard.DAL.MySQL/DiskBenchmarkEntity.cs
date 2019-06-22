@@ -9,7 +9,7 @@ namespace Universe.Dashboard.DAL
     public class DiskBenchmarkEntity
     {
         public int Id { get; set; }
-        public Guid Token { get; set; }
+        public string Token { get; set; }
         public DateTime CreatedAt { get; set; }
         public string MountPath { get; set; }
         public DiskBenchmarkOptions Args { get; set; }

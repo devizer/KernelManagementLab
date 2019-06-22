@@ -2,14 +2,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Universe.Dashboard.DAL
 {
-    public static class DashboardContextOptions
+    public static class DashboardContextOptions4Sqlite
     {
         public static DbContextOptions DesignTimeOptions =>
             new DbContextOptionsBuilder()
-                .ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbFullPath)
+                .ApplySqliteOptions(DashboardContextDefaultOptions.DbFullPath)
                 .Options;
 
-        public static DbContextOptionsBuilder ApplyDashboardDbOptions(this DbContextOptionsBuilder optionsBuilder, string fullFileName)
+        public static DbContextOptionsBuilder ApplySqliteOptions(this DbContextOptionsBuilder optionsBuilder, string fullFileName)
         {
             optionsBuilder.UseSqlite($"DataSource={fullFileName}", options =>
             {

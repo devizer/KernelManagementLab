@@ -35,7 +35,7 @@ namespace ReactGraphLab
 
             services.AddDbContext<DashboardContext>(options =>
             {
-                options.ApplyDashboardDbOptions(DashboardContextDefaultOptions.DbFullPath);
+                options.ApplySqliteOptions(DashboardContextDefaultOptions.DbFullPath);
             });
 
             services.AddSingleton<DiskBenchmarkQueue>(new DiskBenchmarkQueue(() => new DashboardContext()));
