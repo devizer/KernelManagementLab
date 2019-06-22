@@ -7,9 +7,7 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            Console.WriteLine($"PROVIDER: {migrationBuilder.ActiveProvider}");
-
-            var xx = migrationBuilder.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "DbInfo",
                 columns: table => new
                 {

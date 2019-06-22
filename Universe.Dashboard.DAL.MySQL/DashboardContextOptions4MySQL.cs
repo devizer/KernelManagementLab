@@ -5,6 +5,8 @@ namespace Universe.Dashboard.DAL
 {
     public static class DashboardContextOptions4MySQL
     {
+        public static string MigrationHistoryTable => "UpgradeHistory";
+
         public static DbContextOptions DesignTimeOptions =>
             new DbContextOptionsBuilder()
                 .ApplyDashboardDbOptions(ConnectionString)
@@ -14,7 +16,7 @@ namespace Universe.Dashboard.DAL
         {
             optionsBuilder.UseMySQL(connectionString, options =>
             {
-                options.MigrationsHistoryTable("UpgradeHistory");
+                options.MigrationsHistoryTable(MigrationHistoryTable);
             });
 
             return optionsBuilder;

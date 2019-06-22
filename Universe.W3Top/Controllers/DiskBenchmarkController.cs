@@ -91,7 +91,7 @@ namespace ReactGraphLab.Controllers
 
             else
             {
-                var benchmarkResult = DbAccess.GetDiskBenchmarkResult(benchmarkToken);
+                DiskBenchmarkDataAccess.DiskBenchmarkResult benchmarkResult = DbAccess.GetDiskBenchmarkResult(benchmarkToken);
                 return new BenchmarkResponse()
                 {
                     Token = benchmarkToken,

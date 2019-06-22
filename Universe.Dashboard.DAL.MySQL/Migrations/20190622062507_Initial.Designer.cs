@@ -9,7 +9,7 @@ using Universe.Dashboard.DAL;
 namespace Universe.Dashboard.DAL.MySQL.Migrations
 {
     [DbContext(typeof(DashboardContext))]
-    [Migration("20190621202052_Initial")]
+    [Migration("20190622062507_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

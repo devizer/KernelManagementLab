@@ -1,4 +1,5 @@
 using System;
+using Dapper;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
@@ -66,7 +67,8 @@ namespace Universe.Dashboard.DAL
             public class MySQLTypes : ICrossProviderTypes
             {
                 public string Bool => "TINYINT";
-                public string String => "VARCHAR(21844)";
+                // public string String => "VARCHAR(21844)";
+                public string String => "VARCHAR(16383)";
                 public string Guid => "BINARY(16)";
                 public string Json => "LONGTEXT";
             }

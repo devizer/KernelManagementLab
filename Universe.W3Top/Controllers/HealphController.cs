@@ -30,7 +30,7 @@ namespace ReactGraphLab.Controllers
             Stopwatch sw = Stopwatch.StartNew();
             var dummy = _Db.DbInfo.Select(x => x.Id).FirstOrDefault(x => false);
             var msec = sw.ElapsedTicks / (double) Stopwatch.Frequency;
-            var location = DashboardContextDefaultOptions.DbFullPath;
+            var location = SqliteDatabaseOptions.DbFullPath;
             var size = new FileInfo(location).Length;
             var sizeInfo = Formatter.FormatBytes(size);
             return new DbHealpthStatus()

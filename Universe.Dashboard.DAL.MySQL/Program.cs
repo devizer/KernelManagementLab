@@ -1,5 +1,6 @@
 ﻿using System;
 using Dapper;
+using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 
 namespace Universe.Dashboard.DAL.MySQL
@@ -12,7 +13,9 @@ namespace Universe.Dashboard.DAL.MySQL
             Console.WriteLine($"MYSQL VER: {ver}");
             // return;
             DashboardContext db = new DashboardContext();
-            db.Database.EnsureCreated();
+            EFMigrations.Migrate_MySQL(db, DashboardContextOptions4MySQL.MigrationHistoryTable);
+            // db.Database.EnsureCreated();
+            // db.Database.Migrate();
         }
         
         private static string GetMySQLVer(string cs)

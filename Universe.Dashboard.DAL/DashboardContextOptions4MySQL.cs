@@ -5,6 +5,8 @@ namespace Universe.Dashboard.DAL
 {
     public static class DashboardContextOptions4MySQL
     {
+        public static readonly string CONNECTION_ENV_NAME = "MYSQL_DATABASE";
+
         public static DbContextOptions DesignTimeOptions =>
             new DbContextOptionsBuilder()
                 .ApplyMySqlOptions(ConnectionString)
@@ -14,7 +16,7 @@ namespace Universe.Dashboard.DAL
         {
             optionsBuilder.UseMySQL(connectionString, options =>
             {
-                options.MigrationsHistoryTable("UpgradeHistory");
+                options.MigrationsHistoryTable(DashboardContextOptionsFactory.MigrationsTableName);
             });
 
             return optionsBuilder;
@@ -24,10 +26,10 @@ namespace Universe.Dashboard.DAL
         {
             get
             {
-                var defaultConnectionString = "Server=localhost;Database=w3top;Port=3306;Uid=admin;Pwd=admin;Connect Timeout=5;Pooling=false;";
+                // var defaultConnectionString = "Server=localhost;Database=w3top;Port=3306;Uid=admin;Pwd=admin;Connect Timeout=5;Pooling=false;";
                 // return defaultConnectionString;
-                var ret = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
-                if (string.IsNullOrEmpty(ret)) ret = defaultConnectionString;
+                var ret = Environment.GetEnvironmentVariable(CONNECTION_ENV_NAME);
+                // if (string.IsNullOrEmpty(ret)) ret = defaultConnectionString;
                 return ret;
             }
         }

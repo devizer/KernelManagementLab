@@ -51,7 +51,7 @@ namespace Universe.Dashboard.Agent
                     return true;
                 }
 
-                found.Benchmark.RequestCancel();
+                found.Benchmark?.RequestCancel();
                 return true;
             }
         }

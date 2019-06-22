@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using KernelManagementJam;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
+using EF = Universe.Dashboard.DAL.EF;
 
 namespace ReactGraphLab
 {
@@ -28,14 +27,37 @@ namespace ReactGraphLab
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            using (StopwatchLog.ToConsole("Create/Upgrade DB"))
+            using (StopwatchLog.ToConsole($"Create/Upgrade DB Structure /{DashboardContextOptionsFactory.Family}/"))
             {
-                new DashboardContext().Database.Migrate();
+                var dashboardContext = new DashboardContext();
+                switch (DashboardContextOptionsFactory.Family)
+                {
+                    case EF.Family.MySql:
+                        using (StopwatchLog.ToConsole($"Check RDBMS health"))
+                        {
+                            var exception = EFHealth.WaitFor(dashboardContext, 30000);
+                            if (exception != null)
+                                Console.WriteLine($"RDBMS is not ready. {exception.GetExceptionDigest()}");
+                        }
+                        
+                        EFMigrations.Migrate_MySQL(dashboardContext, DashboardContextOptionsFactory.MigrationsTableName);
+                        break;
+                    
+                    case EF.Family.Sqlite:
+                        dashboardContext.Database.Migrate();
+                        break;
+                    
+                    default:
+                        throw new ArgumentException($"Unsupported DB provider family {DashboardContextOptionsFactory.Family}");
+                }
             }
 
             services.AddDbContext<DashboardContext>(options =>
             {
-                options.ApplySqliteOptions(DashboardContextDefaultOptions.DbFullPath);
+                if (DashboardContextOptionsFactory.Family == EF.Family.Sqlite)
+                    options.ApplySqliteOptions(SqliteDatabaseOptions.DbFullPath);
+                else
+                    options.ApplyMySqlOptions(DashboardContextOptions4MySQL.ConnectionString);
             });
 
             services.AddSingleton<DiskBenchmarkQueue>(new DiskBenchmarkQueue(() => new DashboardContext()));

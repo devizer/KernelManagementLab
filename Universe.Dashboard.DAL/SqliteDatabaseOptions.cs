@@ -5,7 +5,7 @@ using SQLitePCL;
 
 namespace Universe.Dashboard.DAL
 {
-    public static class DashboardContextDefaultOptions
+    public static class SqliteDatabaseOptions
     {
         public static string DbFullPath => _DbPath.Value;
 

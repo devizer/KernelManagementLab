@@ -9,7 +9,7 @@ namespace Tests
 {
     public class DiskBenchmarkEntityTests
     {
-        static DashboardContext CreateDbContext() => DbEnv.CreateDbContext();
+        static DashboardContext CreateDbContext() => DbEnv.CreateSqliteDbContext();
         
         [SetUp]
         public void Setup()
@@ -66,9 +66,10 @@ namespace Tests
         }
         
         [Test]
-        public void Test_REAL()
+        [TestCaseSource(typeof(DbEnv), nameof(DbEnv.TestParameters))]
+        public void Test_REAL(DbParameter dbArg)
         {
-            DashboardContext context = CreateDbContext();
+            DashboardContext context = dbArg.GetDashboard();
             DiskBenchmark b = new DiskBenchmark(".", 128*1024,DataGeneratorFlavour.Random, 4096, 1);
             b.Perform();
             var entity = new DiskBenchmarkEntity()
@@ -82,7 +83,6 @@ namespace Tests
             entity.Report = b.Progress;
             context.DiskBenchmark.Add(entity);
             context.SaveChanges();
-            
         }
 
     }

@@ -13,7 +13,7 @@ namespace Universe.Dashboard.DAL
         
         public DbSet<DiskBenchmarkEntity> DiskBenchmark { get; set; }
 
-        public DashboardContext() : base(DashboardContextOptions4Sqlite.DesignTimeOptions)
+        public DashboardContext() : base(DashboardContextOptionsFactory.Create())
         {
             // Console.WriteLine("Warning! DashboardContext() (default constructor is for design-time only)");
         }
@@ -24,15 +24,15 @@ namespace Universe.Dashboard.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURING");
+            // Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURING");
             base.OnConfiguring(optionsBuilder);
-            Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURED");
+            // Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURED");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            var types = EF.Family.Sqlite.GetTypes();
+            var types = DashboardContextOptionsFactory.Family.GetTypes();
 
             // Disk Benchmark Entity
             {
@@ -56,7 +56,7 @@ namespace Universe.Dashboard.DAL
             // Db Info Entity
             {
                 var e = modelBuilder.Entity<DbInfo>();
-                e.Property(x => x.Version).HasColumnType(types.String);
+                // e.Property(x => x.Version).HasColumnType(types.String);
             }
         }
     }
