@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -25,8 +26,22 @@ namespace Universe.Dashboard.DAL
         {
         }
 
+        private static bool IsDebug
+        {
+            get
+            {
+#if DEBUG
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        private static readonly LogLevel[] ReleaseLevels = new[] {LogLevel.Error, LogLevel.Warning, LogLevel.Critical};
+        
         public static readonly ILoggerFactory loggerFactory = new LoggerFactory(new[] {
-            new ConsoleLoggerProvider((_, level) => true, true)
+            new ConsoleLoggerProvider((_, level) => IsDebug || ReleaseLevels.Contains(level), true)
         });
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
