@@ -7,6 +7,7 @@ pushd `dirname $0` > /dev/null; ScriptPath=`pwd`; popd > /dev/null
 if [[ ! -f "$ScriptPath/Universe.W3Top" ]]; then echo ERROR: publish the project first; exit 1; fi
 HTTP_PORT="${HTTP_PORT:-5050}"
 RESPONSE_COMPRESSION="${RESPONSE_COMPRESSION:-True}"
+MYSQL_DATABASE_ESCAPED=$(systemd-escape "${MYSQL_DATABASE:-}") || MYSQL_DATABASE_ESCAPED="${MYSQL_DATABASE:-}" 
 
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 ver=$("$ScriptPath/Universe.W3Top" --version)
@@ -47,7 +48,7 @@ Environment=HTTP_PORT='$HTTP_PORT'
 Environment=INSTALL_DIR='$ScriptPath'
 Environment=RESPONSE_COMPRESSION='$RESPONSE_COMPRESSION'
 Environment=FORCE_HTTPS_REDIRECT=False
-Environment=MYSQL_DATABASE='${MYSQL_DATABASE:-}'
+Environment=MYSQL_DATABASE='${MYSQL_DATABASE_ESCAPED:-}'
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 Environment=DUMPS_ARE_ENABLED=False
