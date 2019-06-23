@@ -88,7 +88,11 @@ namespace Universe.Dashboard.DAL
                 public string Guid => "BINARY(16)";
                 public string Json => "LONGTEXT";
 
-                public string CurrentDateTime => "CURRENT_TIMESTAMP()";
+                
+                // Works for 5.6 onward
+                // public string CurrentDateTime => "CURRENT_TIMESTAMP()";
+                // Does it work for 5.1?
+                public string CurrentDateTime => "CURRENT_TIMESTAMP";
             }
 
             public class SqlServerTypes : ICrossProviderTypes

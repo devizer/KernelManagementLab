@@ -133,7 +133,7 @@ else
   echo "Unable to configure w3top startup on system boot. The system should support one of these command:
   update-rc.d
   or chkconfig
-  or systemclt (preferred)
+  or systemctl (preferred)
   
 To start|stop w3top service manually:
 /etc/init.d/w3top start|stop"
