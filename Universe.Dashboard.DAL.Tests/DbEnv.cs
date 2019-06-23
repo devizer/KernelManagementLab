@@ -11,34 +11,48 @@ namespace Tests
 {
     public class DbEnv
     {
+        public const string TestMySqlConnection = "Server=localhost;Database=w3top;Port=3306;Uid=w3top;Pwd=w3top;Connect Timeout=5;Pooling=false;";
+        public static bool IsTravis => Environment.GetEnvironmentVariable("TRAVIS") == "true";
+
         public static List<DbParameter> TestParameters
         {
             get
             {
-                if (Environment.GetEnvironmentVariable("TRAVIS") != "true")
-                    Environment.SetEnvironmentVariable("MYSQL_DATABASE","Server=localhost;Database=w3top;Port=3306;Uid=w3top;Pwd=w3top;Connect Timeout=5;Pooling=false;");
-                
-                List<DbParameter> ret = new List<DbParameter> {new DbParameter
+                List<DbParameter> ret = new List<DbParameter>
                 {
-                    Family = EF.Family.Sqlite,
-                    GetDashboard = () => CreateSqliteDbContext()
-                }};
+                    new DbParameter
+                    {
+                        Family = EF.Family.Sqlite,
+                        GetDashboardContext = () =>
+                        {
+                            Environment.SetEnvironmentVariable("MYSQL_DATABASE", null);
+                            return CreateSqliteDbContext();
+                        }
+                    }
+                };
 
                 // ret.Clear();
-                var mysql = CreateMySQLDbContext();
-                if (mysql != null)
+                Environment.SetEnvironmentVariable("MYSQL_DATABASE", TestMySqlConnection);
+                if (!IsTravis && CreateMySQLDbContext() != null)
                 {
-                    EFMigrations.Migrate_MySQL(mysql, DashboardContextOptionsFactory.MigrationsTableName);
+                    EFMigrations.Migrate_MySQL(CreateMySQLDbContext(), DashboardContextOptionsFactory.MigrationsTableName);
+
                     ret.Add(new DbParameter
                     {
                         Family = EF.Family.MySql,
-                        GetDashboard = () => CreateMySQLDbContext()
+                        GetDashboardContext = () =>
+                        {
+                            Environment.SetEnvironmentVariable("MYSQL_DATABASE", TestMySqlConnection);
+                            return CreateMySQLDbContext();
+                        }
                     });
                 }
 
                 return ret;
             }
         }
+
+
         public static DashboardContext CreateSqliteDbContext()
         {
             var runtimeFile = SqliteDatabaseOptions.DbFullPath;
@@ -73,7 +87,7 @@ namespace Tests
     public class DbParameter
     {
         public EF.Family Family;
-        public Func<DashboardContext> GetDashboard;
+        public Func<DashboardContext> GetDashboardContext;
         public override string ToString()
         {
             return $"DB {Family.ToString()}";

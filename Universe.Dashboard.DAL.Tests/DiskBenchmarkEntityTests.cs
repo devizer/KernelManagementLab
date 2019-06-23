@@ -68,14 +68,14 @@ namespace Tests
         
         [Test]
         [TestCaseSource(typeof(DbEnv), nameof(DbEnv.TestParameters))]
-        public void Test_REAL(DbParameter dbArg)
+        public void Test_REAL(DbParameter argDB)
         {
-            if (dbArg.Family == EF.Family.Sqlite)
+            if (argDB.Family == EF.Family.Sqlite)
             {
                 Environment.SetEnvironmentVariable("MYSQL_DATABASE", "");
             }
             
-            DashboardContext context = dbArg.GetDashboard();
+            DashboardContext context = argDB.GetDashboardContext();
             DiskBenchmark b = new DiskBenchmark(".", 128*1024,DataGeneratorFlavour.Random, 4096, 1);
             b.Perform();
             var entity = new DiskBenchmarkEntity()
@@ -87,6 +87,7 @@ namespace Tests
             
             entity.Args = b.Parameters;
             entity.Report = b.Progress;
+            if (context == null) throw new InvalidOperationException("argDB.GetDashboardContext() returns null");
             context.DiskBenchmark.Add(entity);
             context.SaveChanges();
         }

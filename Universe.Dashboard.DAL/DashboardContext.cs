@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using MySql.Data.EntityFrameworkCore.Extensions;
 using Universe.Benchmark.DiskBench;
 using Universe.DiskBench;
 
@@ -22,17 +25,24 @@ namespace Universe.Dashboard.DAL
         {
         }
 
+        public static readonly ILoggerFactory loggerFactory = new LoggerFactory(new[] {
+            new ConsoleLoggerProvider((_, level) => true, true)
+        });
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURING");
             base.OnConfiguring(optionsBuilder);
             // Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURED");
+
+            optionsBuilder.UseLoggerFactory(loggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            var types = DashboardContextOptionsFactory.Family.GetTypes();
+
+            var types = Database.GetTypes();
 
             // Disk Benchmark Entity
             {
@@ -41,6 +51,7 @@ namespace Universe.Dashboard.DAL
                 e.Property(x => x.Report).HasConversion(JsonDbConverter.Create<ProgressInfo>());
                 e.HasIndex(p => new {p.Token}).IsUnique();
                 e.Property(x => x.Token).HasColumnType(types.Guid);
+                e.Property(x => x.CreatedAt).HasDefaultValueSql(types.CurrentDateTime);
                 e.Property(x => x.MountPath).HasColumnType(types.String);
                 e.Property(x => x.Args).HasColumnType(types.Json);
                 e.Property(x => x.Report).HasColumnType(types.Json);
@@ -56,7 +67,7 @@ namespace Universe.Dashboard.DAL
             // Db Info Entity
             {
                 var e = modelBuilder.Entity<DbInfo>();
-                // e.Property(x => x.Version).HasColumnType(types.String);
+                e.Property(x => x.Version).HasColumnType(types.String);
             }
         }
     }
