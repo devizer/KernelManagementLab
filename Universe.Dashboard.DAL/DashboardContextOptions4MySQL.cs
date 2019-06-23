@@ -1,4 +1,5 @@
 using System;
+using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 
@@ -27,13 +28,16 @@ namespace Universe.Dashboard.DAL
         {
             try
             {
-                MySqlConnection con = new MySqlConnection(ConnectionString);
-                
+                MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(ConnectionString);
+                b.ConnectionTimeout = 1;
+                MySqlConnection con = new MySqlConnection(b.ConnectionString);
+                using(con) con.Open();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Invalid MySQL Connection String [{ConnectionString}]");
-                throw new ArgumentException($"Invalid MySQL Connection String [{ConnectionString}]", ex);
+                var msg = $"Invalid MySQL Connection String [{ConnectionString}]. {ex.GetExceptionDigest()}";
+                Console.WriteLine(msg);
+                throw new ArgumentException(msg, ex);
             }
         }
 
