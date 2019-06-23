@@ -28,9 +28,11 @@ namespace Universe.Dashboard.DAL
             try
             {
                 MySqlConnection con = new MySqlConnection(ConnectionString);
+                
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Invalid MySQL Connection String [{ConnectionString}]");
                 throw new ArgumentException($"Invalid MySQL Connection String [{ConnectionString}]", ex);
             }
         }
