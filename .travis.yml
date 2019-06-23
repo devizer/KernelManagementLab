@@ -44,7 +44,9 @@ script:
     sudo apt-get install ruby-dev
 
     sudo apt-get -y install mysql-client
+    export MYSQL_TEST_DB=w3top
     url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
+  
 
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
