@@ -41,7 +41,7 @@ namespace Universe.Dashboard.DAL
         private static readonly LogLevel[] ReleaseLevels = new[] {LogLevel.Error, LogLevel.Warning, LogLevel.Critical};
         
         public static readonly ILoggerFactory loggerFactory = new LoggerFactory(new[] {
-            new ConsoleLoggerProvider((_, level) => IsDebug || ReleaseLevels.Contains(level), true)
+            new ConsoleLoggerProvider((_, level) => IsDebug || ReleaseLevels.Contains(level) || DashboardContextOptionsFactory.Family != EF.Family.Sqlite, true)
         });
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
