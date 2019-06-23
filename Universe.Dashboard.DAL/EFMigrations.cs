@@ -48,12 +48,13 @@ CREATE TABLE {0} (
                 try
                 {
                     db.Database.GetDbConnection().Execute("Select null;");
-                    Thread.Sleep(11);
                     return null;
                 }
                 catch (Exception ex)
                 {
                     ret = ex;
+                    if (sw.ElapsedMilliseconds > timeout) return ret;
+                    Thread.Sleep(200);
                 }
 
             } while (sw.ElapsedMilliseconds < timeout);
