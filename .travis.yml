@@ -43,6 +43,8 @@ script:
     ruby --version || true; gem --version || true
     sudo apt-get install ruby-dev
 
+    apt-cache search mysql-server
+    apt-cache policy mysql-server
     sudo apt-get -y install mysql-server
     mysqladmin -u root password secret
     user=root; password=secret
@@ -50,7 +52,7 @@ script:
     mysql -u $user -p"$password" -e "CREATE DATABASE w3top CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
     mysql -u $user -p"$password" -e "DROP USER 'w3top'@'%';" 2>/dev/null  || true
     mysql -u $user -p"$password" -e "CREATE USER 'w3top'@'%' IDENTIFIED BY 'w3top'; GRANT ALL PRIVILEGES ON w3top.* TO 'w3top'@'%' WITH GRANT OPTION;"
-    mysql -u w3top -p'w3top' -e "SHOW VARIABLES;" w3top
+    mysql -u w3top -p'w3top' -e "SHOW VARIABLES LIKE \"%version%\";" w3top
 
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
