@@ -78,6 +78,7 @@ namespace Universe.Dashboard.DAL
                 string Guid { get; } 
                 string Json { get; } 
                 string CurrentDateTime { get; }
+                string DateTime { get; }
             }
             
             public class MySQLTypes : ICrossProviderTypes
@@ -87,8 +88,9 @@ namespace Universe.Dashboard.DAL
                 public string String => "VARCHAR(16383)";
                 public string Guid => "BINARY(16)";
                 public string Json => "LONGTEXT";
+                public string DateTime => "TIMESTAMP"; 
 
-                
+
                 // Works for 5.6 onward
                 // public string CurrentDateTime => "CURRENT_TIMESTAMP()";
                 // Does it work for 5.1?
@@ -102,6 +104,7 @@ namespace Universe.Dashboard.DAL
                 public string Guid => "UNIQUEIDENTIFIER";
                 public string Json => "NVARCHAR(MAX)";
                 public string CurrentDateTime => "GetUtcDate()";
+                public string DateTime => "DATETIME"; 
             }
 
             public class SqliteTypes : ICrossProviderTypes
@@ -111,6 +114,8 @@ namespace Universe.Dashboard.DAL
                 public string Guid => "BINARY(16)";
                 public string Json => "TEXT";
                 public string CurrentDateTime => "CURRENT_TIMESTAMP";
+                public string DateTime => "DATETIME";
+                
             }
 
         }

@@ -27,7 +27,7 @@ namespace Universe.Dashboard.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false).IsAutoIncrement(),
                     Token = table.Column<Guid>(type: types.Guid, nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: types.CurrentDateTime),
+                    CreatedAt = table.Column<DateTime>(nullable: false, type: types.DateTime, defaultValueSql: types.CurrentDateTime),
                     MountPath = table.Column<string>(type: types.String, nullable: true),
                     Args = table.Column<string>(type: types.Json, nullable: true),
                     Report = table.Column<string>(type: types.Json, nullable: true),

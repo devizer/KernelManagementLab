@@ -66,7 +66,7 @@ namespace Universe.Dashboard.DAL
                 e.Property(x => x.Report).HasConversion(JsonDbConverter.Create<ProgressInfo>());
                 e.HasIndex(p => new {p.Token}).IsUnique();
                 e.Property(x => x.Token).HasColumnType(types.Guid);
-                e.Property(x => x.CreatedAt).HasDefaultValueSql(types.CurrentDateTime);
+                e.Property(x => x.CreatedAt).HasColumnType(types.DateTime).HasDefaultValueSql(types.CurrentDateTime);
                 e.Property(x => x.MountPath).HasColumnType(types.String);
                 e.Property(x => x.Args).HasColumnType(types.Json);
                 e.Property(x => x.Report).HasColumnType(types.Json);
