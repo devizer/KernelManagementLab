@@ -1,5 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 
 namespace Universe.Dashboard.DAL
 {
@@ -20,6 +21,18 @@ namespace Universe.Dashboard.DAL
             });
 
             return optionsBuilder;
+        }
+
+        public static void ValidateConnectionString()
+        {
+            try
+            {
+                MySqlConnection con = new MySqlConnection(ConnectionString);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Invalid MySQL Connection String", ex);
+            }
         }
 
         public static string ConnectionString
