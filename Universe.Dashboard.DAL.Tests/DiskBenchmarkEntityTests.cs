@@ -1,4 +1,7 @@
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using KernelManagementJam.Benchmarks;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
@@ -9,31 +12,27 @@ using EF = Universe.Dashboard.DAL.EF;
 
 namespace Tests
 {
-    public class DiskBenchmarkEntityTests
+    public class DiskBenchmarkEntityTests : NUnitTestsBase
     {
         static DashboardContext CreateSqlLiteDbContext() => DbEnv.CreateSqliteDbContext();
+
+        static DiskBenchmarkEntityTests()
+        {
+            Console.WriteLine("static DiskBenchmarkEntityTests.ctor");
+            OUT = Console.Out;
+        }
         
         [OneTimeSetUp]
-        public void Setup()
+        public void OneTimeSetUp()
         {
-            DashboardContext context = CreateSqlLiteDbContext();
+            DashboardContext context = DiskBenchmarkEntityTests.CreateSqlLiteDbContext();
             context.Database.Migrate();
         }
 
         [OneTimeTearDown]
-        public void TearDown()
+        public void OneTimeTearDown()
         {
-            Console.WriteLine("TEAR DOWN");
-            if (MySqlTestEnv.NeedMySqlTests)
-            {
-                MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(MySqlTestEnv.AdminConnectionString);
-                Console.WriteLine($"Deleting DB {MySqlTestEnv.DbName} on server {b.Server} port {b.Port}");
-                using (var conToDelete = new MySqlConnection(MySqlTestEnv.AdminConnectionString))
-                {
-                    MySqlServerManager man2 = new MySqlServerManager(conToDelete);
-                    man2.DropDatabase(MySqlTestEnv.DbName);
-                }
-            }
+            Console.WriteLine("DiskBenchmarkEntityTests::OneTimeTearDown - nothing todo");
         }
 
         [Test]
@@ -86,8 +85,15 @@ namespace Tests
         [Test]
         public void MySQL_Environment_Info()
         {
-            Console.WriteLine($@"MySqlTestEnv.NeedMySqlTests: {MySqlTestEnv.NeedMySqlTests} 
-Admin's connection: [{MySqlTestEnv.AdminConnectionString}]");
+            var msg = $@"MySqlTestEnv.NeedMySqlTests: {MySqlTestEnv.NeedMySqlTests} 
+Admin's connection: [{MySqlTestEnv.AdminConnectionString}]";
+            
+            Console.WriteLine(msg);
+            // OUT.WriteLine(msg);
+            // TestContext.WriteLine(msg);
+            // TestContext.Out.WriteLine(msg);
+            // TestContext.Error.WriteLine(msg);
+            // TestContext.Progress.WriteLine(msg);
         }
         
         [Test]

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.Common.Exceptions;
 using MySql.Data.MySqlClient;
@@ -28,16 +29,23 @@ namespace Tests
                 MySqlServerManager man = new MySqlServerManager(con);
                 man.CreateDatabase(dbName);
                 b.Database = dbName;
-                LambdaGC.OnShutdown += () =>
+                AppDomain.CurrentDomain.DomainUnload += delegate
                 {
-                    // Console.WriteLine($"Deleting DB {dbName} on server {b.Server} port {b.Port}");
+                    Console.WriteLine("AppDomain.CurrentDomain.DomainUnload");
+                };
+                AppDomain.CurrentDomain.ProcessExit += delegate
+                {
+                    string file = Path.Combine(Environment.GetEnvironmentVariable("HOME"), "ProcessExit.log");
+                    File.AppendAllText(file, DateTime.Now.ToString() + Environment.NewLine);
+                    
+                    Console.WriteLine("AppDomain.CurrentDomain.ProcessExit");
+                    Console.WriteLine($"Deleting DB {dbName} on server {b.Server} port {b.Port}");
                     using (var conToDelete = new MySqlConnection(adminConnectionString))
                     {
                         MySqlServerManager man2 = new MySqlServerManager(conToDelete);
-                        // man2.DropDatabase(dbName);
+                        man2.DropDatabase(dbName);
                     }
                 };
-                    
                 return b.ConnectionString;
             }
         });

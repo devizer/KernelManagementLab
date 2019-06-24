@@ -19,7 +19,7 @@ namespace Universe.Dashboard.DAL
             if (!Directory.Exists(directoryName))
                 Directory.CreateDirectory(directoryName);
 
-            Console.WriteLine($"Universe.Dashboard.DAL DB: {ret}");
+            Console.WriteLine($"Universe.Dashboard.DAL SqLite DB: {ret}");
             DashboardContextGarbageCollector.CleanUpPrevVersions(ret);
             return ret;
         }
