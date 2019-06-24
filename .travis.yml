@@ -37,9 +37,13 @@ script:
     brew install pv jq
     ruby --version || true; gem --version || true
     brew install ruby
-    time brew install docker docker-compose || true
+    time brew install docker-machine docker docker-compose || true
     time brew install mysql-client || true
     echo "Checking docker ..."; sudo docker --version || docker --version || true
+
+    docker-machine create --driver virtualbox default
+    eval "$(docker-machine env default)"
+    echo "CHECKING DOCKER MACHINE"; docker ps || true;
 
   else
     sudo apt-get install jq pv -y
