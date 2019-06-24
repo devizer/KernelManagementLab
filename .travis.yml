@@ -38,10 +38,10 @@ script:
     brew install pv jq
     ruby --version || true; gem --version || true
     brew install ruby
+    echo "Checking docker ..."; sudo docker --version || true 
   else
     sudo apt-get install jq pv -y
     ruby --version || true; gem --version || true
-    sudo apt-get install ruby-dev
 
     sudo apt-get -y install mysql-client haveged
     export MYSQL_TEST_DB=W3Top
