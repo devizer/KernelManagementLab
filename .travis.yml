@@ -43,6 +43,9 @@ script:
 
     docker-machine create --driver virtualbox default
     eval "$(docker-machine env default)"
+    echo "Output of [docker-machine env default] is ..."; docker-machine env default || true
+    docker-machine start || true
+    sudo docker-machine start || true
     echo "CHECKING DOCKER MACHINE"; docker ps || true;
 
   else
