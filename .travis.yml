@@ -37,7 +37,9 @@ script:
     brew install pv jq
     ruby --version || true; gem --version || true
     brew install ruby
-    echo "Checking docker ..."; sudo docker --version || true 
+    time brew install docker docker-compose || true
+    time brew install docker mysql-client || true
+    echo "Checking docker ..."; sudo docker --version || docker --version || true
   else
     sudo apt-get install jq pv -y
     ruby --version || true; gem --version || true
