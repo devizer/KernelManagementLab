@@ -38,26 +38,25 @@ script:
     ruby --version || true; gem --version || true
     brew install ruby
     time brew install docker docker-compose || true
-    time brew install docker mysql-client || true
+    time brew install mysql-client || true
     echo "Checking docker ..."; sudo docker --version || docker --version || true
-
-    export MYSQL_TEST_DB=W3Top
-    export MYSQL_ROOT_PASSWORD=pass
-    url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
 
   else
     sudo apt-get install jq pv -y
     ruby --version || true; gem --version || true
 
     sudo apt-get -y install mysql-client haveged
-    export MYSQL_TEST_DB=W3Top
-    export MYSQL_ROOT_PASSWORD=pass
-    url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
 
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
 
-- time gem search dpl | grep  -E '^dpl' | sort || true;
+- |
+  # Install 5 MySQL Servers
+  export MYSQL_TEST_DB=W3Top
+  export MYSQL_ROOT_PASSWORD=pass
+  url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
+
+  # - time gem search dpl | grep  -E '^dpl' | sort || true;
 
 - |
   # Install Build Tools
