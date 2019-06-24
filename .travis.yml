@@ -34,35 +34,21 @@ script:
   # install pv
   echo "A. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    brew install -v docker-machine docker docker-compose pv jq mysql-client 
-    # ruby --version || true; gem --version || true
-    # brew install ruby
-    # time brew install docker-machine docker docker-compose || true
-    # time brew install mysql-client || true
-    echo "Checking docker ..."; sudo docker --version || docker --version || true
-
-    brew update;
-    brew tap caskroom/cask;
-    brew cask install virtualbox;
-    docker-machine create --driver virtualbox default || true;
-    docker-machine start || true
-    eval "$(docker-machine env default)" || true;
-    docker run hello-world || true
-
+    brew install jq mysql-client 
   else
     sudo apt-get install jq pv -y
     ruby --version || true; gem --version || true
 
-    sudo apt-get -y install mysql-client haveged
+    sudo apt-get -y install mysql-client
+    mysql --version
+
+    # Install 5 MySQL Servers
+    export MYSQL_TEST_DB=W3Top
+    export MYSQL_ROOT_PASSWORD=pass
+    url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
 
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
-
-- |
-  # Install 5 MySQL Servers
-  export MYSQL_TEST_DB=W3Top
-  export MYSQL_ROOT_PASSWORD=pass
-  url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
 
   # - time gem search dpl | grep  -E '^dpl' | sort || true;
 
@@ -74,10 +60,9 @@ script:
 
 - pushd build; ./inject-git-info.ps1; popd; cat bintray.json || true
 - dotnet restore /v:m
-- time dotnet test
 - |
-  echo "THE FIRST MYSQL TESTs ON TRAVIS"
-  time dotnet test
+  echo "MYSQL TESTs ON TRAVIS"
+  time dotnet test # Test only sqlite provider on linux and osx
   if false || [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
     for port in {3307..3311}; do
       export MYSQL_TEST_CONNECTION="Server=localhost;Database=mysql;Port=$port;Uid=root;Pwd=pass;Connect Timeout=5;Pooling=false;"
