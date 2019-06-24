@@ -99,8 +99,7 @@ MySQL Admin's connection: [{MySqlTestEnv.AdminConnectionString}]";
             {
                 Console.WriteLine($@"Arg.Family: {argDB.Family}
 Arg.Provider [{db.Database.ProviderName}]
-Arg.DB.ConnectionString [{db.Database.GetDbConnection().ConnectionString}]
-");
+Arg.DB.ConnectionString [{db.Database.GetDbConnection().ConnectionString}]");
             }
         }
 
