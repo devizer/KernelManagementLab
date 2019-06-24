@@ -2,10 +2,13 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using Dapper;
+using KernelManagementJam;
 using KernelManagementJam.Benchmarks;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
+using SQLitePCL;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 using EF = Universe.Dashboard.DAL.EF;
@@ -97,9 +100,23 @@ MySQL Admin's connection: [{MySqlTestEnv.AdminConnectionString}]";
         {
             using (var db = argDB.GetDashboardContext())
             {
+                var connection = db.Database.GetDbConnection();
                 Console.WriteLine($@"Arg.Family: {argDB.Family}
 Arg.Provider [{db.Database.ProviderName}]
-Arg.DB.ConnectionString [{db.Database.GetDbConnection().ConnectionString}]");
+Arg.DB.ConnectionString [{connection.ConnectionString}]");
+
+                var version = "<unknwon>";
+                try
+                {
+                    var sql = argDB.Family == EF.Family.Sqlite ? "sqlite_version()" : "version()";
+                    version = connection.ExecuteScalar<string>($"Select {sql};");
+                }
+                catch (Exception ex)
+                {
+                    version = ex.GetExceptionDigest();
+                }
+
+                Console.WriteLine($@"Arg.DB.SelectVersion(): [{version}]");
             }
         }
 
