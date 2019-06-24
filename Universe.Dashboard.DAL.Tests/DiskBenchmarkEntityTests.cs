@@ -1,6 +1,7 @@
 using System;
 using KernelManagementJam.Benchmarks;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using NUnit.Framework;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
@@ -10,19 +11,35 @@ namespace Tests
 {
     public class DiskBenchmarkEntityTests
     {
-        static DashboardContext CreateDbContext() => DbEnv.CreateSqliteDbContext();
+        static DashboardContext CreateSqlLiteDbContext() => DbEnv.CreateSqliteDbContext();
         
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
-            DashboardContext context = CreateDbContext();
+            DashboardContext context = CreateSqlLiteDbContext();
             context.Database.Migrate();
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            Console.WriteLine("TEAR DOWN");
+            if (MySqlTestEnv.NeedMySqlTests)
+            {
+                MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(MySqlTestEnv.AdminConnectionString);
+                Console.WriteLine($"Deleting DB {MySqlTestEnv.DbName} on server {b.Server} port {b.Port}");
+                using (var conToDelete = new MySqlConnection(MySqlTestEnv.AdminConnectionString))
+                {
+                    MySqlServerManager man2 = new MySqlServerManager(conToDelete);
+                    man2.DropDatabase(MySqlTestEnv.DbName);
+                }
+            }
         }
 
         [Test]
         public void TestEmpty()
         {
-            DashboardContext context = CreateDbContext();
+            DashboardContext context = CreateSqlLiteDbContext();
             context.DiskBenchmark.Add(new DiskBenchmarkEntity()
             {
                 CreatedAt = DateTime.UtcNow, 
@@ -35,7 +52,7 @@ namespace Tests
         [Test]
         public void TestArguments()
         {
-            DashboardContext context = CreateDbContext();
+            DashboardContext context = CreateSqlLiteDbContext();
             DiskBenchmark b = new DiskBenchmark("/test-args");
             var entity = new DiskBenchmarkEntity()
             {
@@ -52,7 +69,7 @@ namespace Tests
         [Test]
         public void TestEmptyReport()
         {
-            DashboardContext context = CreateDbContext();
+            DashboardContext context = CreateSqlLiteDbContext();
             DiskBenchmark b = new DiskBenchmark("/test-empty-report");
             var entity = new DiskBenchmarkEntity()
             {
@@ -65,17 +82,21 @@ namespace Tests
             context.DiskBenchmark.Add(entity);
             context.SaveChanges();
         }
+
+        [Test]
+        public void MySQL_Environment_Info()
+        {
+            Console.WriteLine($@"MySqlTestEnv.NeedMySqlTests: {MySqlTestEnv.NeedMySqlTests} 
+Admin's connection: [{MySqlTestEnv.AdminConnectionString}]");
+        }
         
         [Test]
         [TestCaseSource(typeof(DbEnv), nameof(DbEnv.TestParameters))]
         public void Test_REAL(DbParameter argDB)
         {
-            if (argDB.Family == EF.Family.Sqlite)
-            {
-                Environment.SetEnvironmentVariable("MYSQL_DATABASE", "");
-            }
-            
             DashboardContext context = argDB.GetDashboardContext();
+            Console.WriteLine($"Provider: [{context.Database.ProviderName}]");
+            Console.WriteLine($"Connection String: [{context.Database.GetDbConnection().ConnectionString}]");
             DiskBenchmark b = new DiskBenchmark(".", 128*1024,DataGeneratorFlavour.Random, 4096, 1);
             b.Perform();
             var entity = new DiskBenchmarkEntity()
@@ -90,6 +111,11 @@ namespace Tests
             if (context == null) throw new InvalidOperationException("argDB.GetDashboardContext() returns null");
             context.DiskBenchmark.Add(entity);
             context.SaveChanges();
+            
+            
+            DiskBenchmarkDataAccess dbda = new DiskBenchmarkDataAccess(context);
+            var copyByToken = dbda.GetDiskBenchmarkResult(entity.Token);
+            Assert.AreEqual(copyByToken.Report.Steps.Count, entity.Report.Steps.Count);
         }
 
     }

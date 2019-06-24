@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
-using NUnit.Framework;
 using Universe.Dashboard.DAL;
 using EF = Universe.Dashboard.DAL.EF;
 
@@ -11,8 +9,8 @@ namespace Tests
 {
     public class DbEnv
     {
-        public const string TestMySqlConnection = "Server=localhost;Database=w3top;Port=3306;Uid=w3top;Pwd=w3top;Connect Timeout=5;Pooling=false;";
         public static bool IsTravis => Environment.GetEnvironmentVariable("TRAVIS") == "true";
+
 
         public static List<DbParameter> TestParameters
         {
@@ -32,18 +30,17 @@ namespace Tests
                 };
 
                 // ret.Clear();
-                Environment.SetEnvironmentVariable("MYSQL_DATABASE", TestMySqlConnection);
-                if (!IsTravis && CreateMySQLDbContext() != null)
+                if (!IsTravis && MySqlTestEnv.NeedMySqlTests)
                 {
-                    EFMigrations.Migrate_MySQL(CreateMySQLDbContext(), DashboardContextOptionsFactory.MigrationsTableName);
+                    EFMigrations.Migrate_MySQL(MySqlTestEnv.CreateMySQLDbContext(), DashboardContextOptionsFactory.MigrationsTableName);
 
                     ret.Add(new DbParameter
                     {
                         Family = EF.Family.MySql,
                         GetDashboardContext = () =>
                         {
-                            Environment.SetEnvironmentVariable("MYSQL_DATABASE", TestMySqlConnection);
-                            return CreateMySQLDbContext();
+                            Environment.SetEnvironmentVariable("MYSQL_DATABASE", MySqlTestEnv.TestMySqlConnection);
+                            return MySqlTestEnv.CreateMySQLDbContext();
                         }
                     });
                 }
@@ -69,19 +66,6 @@ namespace Tests
             return ret;
         }
 
-        public static DashboardContext CreateMySQLDbContext()
-        {
-            var cs = DashboardContextOptions4MySQL.ConnectionString;
-            if (string.IsNullOrEmpty(cs)) return null;
-            MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(cs);
-            b.Database = b.Database + "_tests";
-            
-            var options = new DbContextOptionsBuilder()
-                .ApplyMySqlOptions(b.ConnectionString)
-                .Options;
-            
-            return new DashboardContext(options);
-        }
     }
 
     public class DbParameter
