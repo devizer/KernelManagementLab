@@ -74,7 +74,7 @@ namespace Tests
         public Func<DashboardContext> GetDashboardContext;
         public override string ToString()
         {
-            return $"DB {Family.ToString()}";
+            return $"{Family.ToString()}-DB";
         }
     }
 }
