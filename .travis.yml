@@ -41,13 +41,13 @@ script:
     # time brew install mysql-client || true
     echo "Checking docker ..."; sudo docker --version || docker --version || true
 
-    sudo ln -s /usr/local/bin/VBoxManage /usr/local/bin/vboxmanage || true
-    docker-machine create --driver virtualbox default || true
-    eval "$(docker-machine env default)" || true
-    echo "Output of [docker-machine env default] is ..."; docker-machine env default || true
+    brew update;
+    brew tap caskroom/cask;
+    brew cask install virtualbox;
+    docker-machine create --driver virtualbox default || true;
     docker-machine start || true
-    sudo docker-machine start || true
-    echo "CHECKING DOCKER MACHINE"; docker ps || true;
+    eval "$(docker-machine env default)" || true;
+    docker run hello-world || true
 
   else
     sudo apt-get install jq pv -y
