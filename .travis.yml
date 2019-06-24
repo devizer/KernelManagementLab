@@ -24,7 +24,8 @@ script:
 # - npm install yarn -g || true; echo "yarn is $(yarn --version)" || true
 - echo TRAVIS_OS_NAME is "$TRAVIS_OS_NAME"
 - rm "$(command -v node)" 2>/dev/null || true
-- TIMEFORMAT="REAL TIME: %1lR"
+- |
+   export TIMEFORMAT='REAL TIME: %1lR'
 
 - export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1; export DOTNET_CLI_TELEMETRY_OPTOUT=1;
   export CI=false
