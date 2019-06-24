@@ -34,15 +34,15 @@ script:
   # install pv
   echo "A. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    brew install docker-machine docker docker-compose pv jq mysql-client 
+    brew install -v docker-machine docker docker-compose pv jq mysql-client 
     # ruby --version || true; gem --version || true
     # brew install ruby
     # time brew install docker-machine docker docker-compose || true
     # time brew install mysql-client || true
     echo "Checking docker ..."; sudo docker --version || docker --version || true
 
-    docker-machine create --driver virtualbox default
-    eval "$(docker-machine env default)"
+    docker-machine create --driver virtualbox default || true
+    eval "$(docker-machine env default)" || true
     echo "Output of [docker-machine env default] is ..."; docker-machine env default || true
     docker-machine start || true
     sudo docker-machine start || true
