@@ -125,11 +125,13 @@ Arg.DB.ConnectionString [{db.Database.GetDbConnection().ConnectionString}]
             if (context == null) throw new InvalidOperationException("argDB.GetDashboardContext() returns null");
             context.DiskBenchmark.Add(entity);
             context.SaveChanges();
+            Console.WriteLine("SAVE to DB is complete");
             
             
             DiskBenchmarkDataAccess dbda = new DiskBenchmarkDataAccess(context);
             var copyByToken = dbda.GetDiskBenchmarkResult(entity.Token);
             Assert.AreEqual(copyByToken.Report.Steps.Count, entity.Report.Steps.Count);
+            Console.WriteLine("DiskBenchmarkDataAccess.GetDiskBenchmarkResult by token is complete");
         }
 
     }
