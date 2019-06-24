@@ -30,7 +30,7 @@ namespace Tests
                 };
 
                 // ret.Clear();
-                if (!IsTravis && MySqlTestEnv.NeedMySqlTests)
+                if (/*!IsTravis &&*/ MySqlTestEnv.NeedMySqlTests)
                 {
                     EFMigrations.Migrate_MySQL(MySqlTestEnv.CreateMySQLDbContext(), DashboardContextOptionsFactory.MigrationsTableName);
 

@@ -62,6 +62,14 @@ script:
 - pushd build; ./inject-git-info.ps1; popd; cat bintray.json || true
 - dotnet restore /v:m
 - time dotnet test
+- |
+  echo "THE FIRST MYSQL TESTs ON TRAVIS"
+  time dotnet test
+  export MYSQL_TEST_CONNECTION="Server=localhost;Database=mysql;Port=3308;Uid=root;Pwd=pass;Connect Timeout=5;Pooling=false;"
+  pushd Universe.Dashboard.DAL.Tests
+  time dotnet test
+  popd
+  
 - pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
 
 - |
