@@ -86,16 +86,24 @@ namespace Tests
         public void MySQL_Environment_Info()
         {
             var msg = $@"MySqlTestEnv.NeedMySqlTests: {MySqlTestEnv.NeedMySqlTests} 
-Admin's connection: [{MySqlTestEnv.AdminConnectionString}]";
+MySQL Admin's connection: [{MySqlTestEnv.AdminConnectionString}]";
             
             Console.WriteLine(msg);
-            // OUT.WriteLine(msg);
-            // TestContext.WriteLine(msg);
-            // TestContext.Out.WriteLine(msg);
-            // TestContext.Error.WriteLine(msg);
-            // TestContext.Progress.WriteLine(msg);
         }
-        
+
+        [Test]
+        [TestCaseSource(typeof(DbEnv), nameof(DbEnv.TestParameters))]
+        public void Test_DB_Args(DbParameter argDB)
+        {
+            using (var db = argDB.GetDashboardContext())
+            {
+                Console.WriteLine($@"Arg.Family: {argDB.Family}
+Arg.Provider [{db.Database.ProviderName}]
+Arg.DB.ConnectionString [{db.Database.GetDbConnection().ConnectionString}]
+");
+            }
+        }
+
         [Test]
         [TestCaseSource(typeof(DbEnv), nameof(DbEnv.TestParameters))]
         public void Test_REAL(DbParameter argDB)
