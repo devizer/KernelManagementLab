@@ -40,6 +40,11 @@ script:
     time brew install docker docker-compose || true
     time brew install docker mysql-client || true
     echo "Checking docker ..."; sudo docker --version || docker --version || true
+
+    export MYSQL_TEST_DB=W3Top
+    export MYSQL_ROOT_PASSWORD=pass
+    url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
+
   else
     sudo apt-get install jq pv -y
     ruby --version || true; gem --version || true
@@ -66,12 +71,14 @@ script:
 - |
   echo "THE FIRST MYSQL TESTs ON TRAVIS"
   time dotnet test
-  for port in {3307..3311}; do
-    export MYSQL_TEST_CONNECTION="Server=localhost;Database=mysql;Port=$port;Uid=root;Pwd=pass;Connect Timeout=5;Pooling=false;"
-    pushd Universe.Dashboard.DAL.Tests
-    time dotnet test -c Release
-    popd
-  done
+  if true || [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
+    for port in {3307..3311}; do
+      export MYSQL_TEST_CONNECTION="Server=localhost;Database=mysql;Port=$port;Uid=root;Pwd=pass;Connect Timeout=5;Pooling=false;"
+      pushd Universe.Dashboard.DAL.Tests
+      time dotnet test -c Release
+      popd
+    done
+  fi
   
 - pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
 
