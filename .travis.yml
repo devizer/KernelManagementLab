@@ -19,9 +19,9 @@ script:
 - export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 - git branch
 - git rev-parse --abbrev-ref HEAD
-- (time nvm install node; echo "node is $(node --version)"; echo "npm is $(npm --version)";) 
+# - (time nvm install node; echo "node is $(node --version)"; echo "npm is $(npm --version)";) 
 # - nvm use default system; echo "node is $(node --version)"
-- npm install yarn -g || true;
+# - npm install yarn -g || true;
   echo "yarn is $(yarn --version)" || true
 - echo TRAVIS_OS_NAME is "$TRAVIS_OS_NAME"
 - rm "$(command -v node)" 2>/dev/null || true
