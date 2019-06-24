@@ -74,7 +74,7 @@ script:
 - |
   echo "THE FIRST MYSQL TESTs ON TRAVIS"
   time dotnet test
-  if true || [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
+  if false || [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
     for port in {3307..3311}; do
       export MYSQL_TEST_CONNECTION="Server=localhost;Database=mysql;Port=$port;Uid=root;Pwd=pass;Connect Timeout=5;Pooling=false;"
       pushd Universe.Dashboard.DAL.Tests
