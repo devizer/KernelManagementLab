@@ -62,7 +62,7 @@ script:
   # Install 5 MySQL Servers
   export MYSQL_TEST_DB=W3Top
   export MYSQL_ROOT_PASSWORD=pass
-  url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash || true
+  url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
 
   # - time gem search dpl | grep  -E '^dpl' | sort || true;
 
