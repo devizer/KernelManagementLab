@@ -97,7 +97,7 @@ script:
   cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz public-bintray/$ver/;
   cp build/AppGitInfo.json public-bintray/$ver/version.json
 - cat bintray.json || true
-- pwd; ls -la public-bintray/$ver
+- pwd; df -h; ls -la public-bintray/$ver
 
 deploy:
 
