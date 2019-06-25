@@ -40,7 +40,7 @@
       "includePattern": "public-bintray/(.*)$",
       "uploadPattern": "$1",
       "matrixParams": {
-        "override": 1,
+        "override": 0,
         "publish": 1,
         "explode": 0
       }
