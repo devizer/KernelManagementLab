@@ -2,33 +2,33 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Universe.Dashboard.DAL;
 
-namespace Universe.Dashboard.DAL.MySQL.Migrations
+namespace Universe.Dashboard.DAL.PgSQL.Migrations
 {
     [DbContext(typeof(DashboardContext))]
-    [Migration("20190622062507_Initial")]
-    partial class Initial
+    partial class DashboardContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Universe.Dashboard.DAL.DbInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Version")
-                        .HasColumnType("VARCHAR(20000)");
+                    b.Property<string>("Version");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DbInfo");
+                    b.ToTable("W3Top_DbInfo");
                 });
 
             modelBuilder.Entity("Universe.Dashboard.DAL.DiskBenchmarkEntity", b =>
@@ -36,25 +36,21 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Args")
-                        .HasColumnType("LONGTEXT");
+                    b.Property<string>("Args");
 
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("ErrorInfo");
 
-                    b.Property<string>("MountPath")
-                        .HasColumnType("VARCHAR(20000)");
+                    b.Property<string>("MountPath");
 
-                    b.Property<string>("Report")
-                        .HasColumnType("LONGTEXT");
+                    b.Property<string>("Report");
 
-                    b.Property<string>("Token")
-                        .HasColumnType("VARCHAR(36)");
+                    b.Property<Guid>("Token");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiskBenchmark");
+                    b.ToTable("W3Top_DiskBenchmark");
                 });
 
             modelBuilder.Entity("Universe.Dashboard.DAL.HistoryCopy", b =>
@@ -62,15 +58,13 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("JsonBlob")
-                        .HasColumnType("LONGTEXT");
+                    b.Property<string>("JsonBlob");
 
-                    b.Property<string>("Key")
-                        .HasColumnType("VARCHAR(20000)");
+                    b.Property<string>("Key");
 
                     b.HasKey("Id");
 
-                    b.ToTable("HistoryCopy");
+                    b.ToTable("W3Top_HistoryCopy");
                 });
 #pragma warning restore 612, 618
         }
