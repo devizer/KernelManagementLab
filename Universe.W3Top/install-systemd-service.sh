@@ -103,6 +103,10 @@ case "$1" in
     echo "Stopping w3top"
     pkill Universe.W3Top 1>/dev/null 2>&1 || true
     ;;
+  version)
+    # mainly used for tests on travis-ci
+    "'${ScriptPath}'/Universe.W3Top" --version || exit 2;
+    ;;
   *)
     echo "Usage: /etc/init.d/w3top {start|stop}"
     exit 1
