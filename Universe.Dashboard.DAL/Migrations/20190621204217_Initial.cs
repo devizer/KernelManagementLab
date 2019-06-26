@@ -9,6 +9,7 @@ namespace Universe.Dashboard.DAL.Migrations
         {
             var types = migrationBuilder.GetTypes();
             
+            
             migrationBuilder.CreateTable(
                 name: "W3Top_DbInfo",
                 columns: table => new
@@ -37,6 +38,7 @@ namespace Universe.Dashboard.DAL.Migrations
                 {
                     table.PrimaryKey("PK_W3Top_DiskBenchmark", x => x.Id);
                 });
+                
 
             migrationBuilder.CreateTable(
                 name: "W3Top_HistoryCopy",
