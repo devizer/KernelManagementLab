@@ -26,7 +26,7 @@ namespace Tests
         [TearDown]
         public void BaseTearDown()
         {
-            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} done in {StartAt.Elapsed}{Environment.NewLine}");
+            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {StartAt.Elapsed}{Environment.NewLine}");
         }
 
         [OneTimeSetUp]

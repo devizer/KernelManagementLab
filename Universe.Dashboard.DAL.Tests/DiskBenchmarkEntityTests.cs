@@ -20,12 +20,6 @@ namespace Tests
     {
         static DashboardContext CreateSqlLiteDbContext() => DbTestEnv.CreateSqliteDbContext();
 
-        static DiskBenchmarkEntityTests()
-        {
-            Console.WriteLine("static DiskBenchmarkEntityTests.ctor");
-            OUT = Console.Out;
-        }
-        
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
@@ -38,6 +32,7 @@ namespace Tests
         {
             Console.WriteLine("DiskBenchmarkEntityTests::OneTimeTearDown - nothing todo");
         }
+
 
         [Test]
         public void TestEmpty()
