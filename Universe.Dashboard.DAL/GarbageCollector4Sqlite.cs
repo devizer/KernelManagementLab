@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Universe.Dashboard.DAL
 {
-    class DashboardContextGarbageCollector
+    class GarbageCollector4Sqlite
     {
         public static void CleanUpPrevVersions(string fullNameOfCurrentVersion)
         {

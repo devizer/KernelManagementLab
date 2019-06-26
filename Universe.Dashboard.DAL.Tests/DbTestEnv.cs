@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using Universe.Dashboard.DAL;
-using EF = Universe.Dashboard.DAL.EF;
+using Tests;
 
-namespace Tests
+namespace Universe.Dashboard.DAL.Tests
 {
-    public class DbEnv
+    public class DbTestEnv
     {
         public static bool IsTravis => Environment.GetEnvironmentVariable("TRAVIS") == "true";
 
@@ -65,7 +64,6 @@ namespace Tests
             DashboardContext ret = new DashboardContext(opts);
             return ret;
         }
-
     }
 
     public class DbParameter

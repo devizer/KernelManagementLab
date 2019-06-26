@@ -20,7 +20,7 @@ namespace Universe.Dashboard.DAL
                 Directory.CreateDirectory(directoryName);
 
             Console.WriteLine($"Universe.Dashboard.DAL SqLite DB: {ret}");
-            DashboardContextGarbageCollector.CleanUpPrevVersions(ret);
+            GarbageCollector4Sqlite.CleanUpPrevVersions(ret);
             return ret;
         }
 

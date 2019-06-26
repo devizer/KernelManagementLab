@@ -32,14 +32,27 @@ namespace ReactGraphLab
                 var dashboardContext = new DashboardContext();
                 switch (DashboardContextOptionsFactory.Family)
                 {
-                    case EF.Family.MySql:
+                    case EF.Family.PgSql:
                         // Console.WriteLine($"MySQL CONNECTION STRING: [{DashboardContextOptions4MySQL.ConnectionString}]");
-                        DashboardContextOptions4MySQL.ValidateConnectionString();
-                        using (StopwatchLog.ToConsole($"Check RDBMS health"))
+                        DashboardContextOptions4PgSQL.ValidateConnectionString();    
+                        using (StopwatchLog.ToConsole($"Check postgres health"))
                         {
                             var exception = EFHealth.WaitFor(dashboardContext, 30000);
                             if (exception != null)
-                                Console.WriteLine($"RDBMS is not ready. {exception.GetExceptionDigest()}");
+                                Console.WriteLine($"postgres is not ready. {exception.GetExceptionDigest()}");
+                        }
+                        
+                        EFMigrations.Migrate_PgSQL(dashboardContext, DashboardContextOptionsFactory.MigrationsTableName);
+                        break;
+
+                    case EF.Family.MySql:
+                        // Console.WriteLine($"MySQL CONNECTION STRING: [{DashboardContextOptions4MySQL.ConnectionString}]");
+                        DashboardContextOptions4MySQL.ValidateConnectionString();
+                        using (StopwatchLog.ToConsole($"Check MySQL Server health"))
+                        {
+                            var exception = EFHealth.WaitFor(dashboardContext, 30000);
+                            if (exception != null)
+                                Console.WriteLine($"MySQL Server is not ready. {exception.GetExceptionDigest()}");
                         }
                         
                         EFMigrations.Migrate_MySQL(dashboardContext, DashboardContextOptionsFactory.MigrationsTableName);
@@ -56,10 +69,7 @@ namespace ReactGraphLab
 
             services.AddDbContext<DashboardContext>(options =>
             {
-                if (DashboardContextOptionsFactory.Family == EF.Family.Sqlite)
-                    options.ApplySqliteOptions(SqliteDatabaseOptions.DbFullPath);
-                else
-                    options.ApplyMySqlOptions(DashboardContextOptions4MySQL.ConnectionString);
+                DashboardContextOptionsFactory.ApplyOptions(options);
             });
 
             services.AddSingleton<DiskBenchmarkQueue>(new DiskBenchmarkQueue(() => new DashboardContext()));

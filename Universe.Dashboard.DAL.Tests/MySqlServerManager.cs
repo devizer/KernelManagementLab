@@ -1,6 +1,5 @@
 using System.Data;
 using Dapper;
-using SQLitePCL;
 
 namespace Tests
 {

@@ -10,7 +10,7 @@ namespace Universe.Dashboard.DAL.Migrations
             var types = migrationBuilder.GetTypes();
             
             migrationBuilder.CreateTable(
-                name: "DbInfo",
+                name: "W3Top_DbInfo",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false).IsAutoIncrement(),
@@ -18,11 +18,11 @@ namespace Universe.Dashboard.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DbInfo", x => x.Id);
+                    table.PrimaryKey("PK_W3Top_DbInfo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DiskBenchmark",
+                name: "W3Top_DiskBenchmark",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false).IsAutoIncrement(),
@@ -35,11 +35,11 @@ namespace Universe.Dashboard.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DiskBenchmark", x => x.Id);
+                    table.PrimaryKey("PK_W3Top_DiskBenchmark", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HistoryCopy",
+                name: "W3Top_HistoryCopy",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false).IsAutoIncrement(),
@@ -48,12 +48,12 @@ namespace Universe.Dashboard.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HistoryCopy", x => x.Id);
+                    table.PrimaryKey("PK_W3Top_HistoryCopy", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DiskBenchmark_Token",
-                table: "DiskBenchmark",
+                name: "IX_W3Top_DiskBenchmark_Token",
+                table: "W3Top_DiskBenchmark",
                 column: "Token",
                 unique: true);
         }
@@ -61,13 +61,13 @@ namespace Universe.Dashboard.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DbInfo");
+                name: "W3Top_DbInfo");
 
             migrationBuilder.DropTable(
-                name: "DiskBenchmark");
+                name: "W3Top_DiskBenchmark");
 
             migrationBuilder.DropTable(
-                name: "HistoryCopy");
+                name: "W3Top_HistoryCopy");
         }
     }
 }

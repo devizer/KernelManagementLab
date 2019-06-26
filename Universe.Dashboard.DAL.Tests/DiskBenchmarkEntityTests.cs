@@ -11,13 +11,14 @@ using NUnit.Framework;
 using SQLitePCL;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
+using Universe.Dashboard.DAL.Tests;
 using EF = Universe.Dashboard.DAL.EF;
 
 namespace Tests
 {
     public class DiskBenchmarkEntityTests : NUnitTestsBase
     {
-        static DashboardContext CreateSqlLiteDbContext() => DbEnv.CreateSqliteDbContext();
+        static DashboardContext CreateSqlLiteDbContext() => DbTestEnv.CreateSqliteDbContext();
 
         static DiskBenchmarkEntityTests()
         {
@@ -95,7 +96,7 @@ MySQL Admin's connection: [{MySqlTestEnv.AdminConnectionString}]";
         }
 
         [Test]
-        [TestCaseSource(typeof(DbEnv), nameof(DbEnv.TestParameters))]
+        [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
         public void Test_DB_Args(DbParameter argDB)
         {
             using (var db = argDB.GetDashboardContext())
@@ -121,7 +122,7 @@ Arg.DB.ConnectionString [{connection.ConnectionString}]");
         }
 
         [Test]
-        [TestCaseSource(typeof(DbEnv), nameof(DbEnv.TestParameters))]
+        [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
         public void Test_REAL(DbParameter argDB)
         {
             DashboardContext context = argDB.GetDashboardContext();
