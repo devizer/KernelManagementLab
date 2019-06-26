@@ -116,4 +116,5 @@ deploy:
     secure: ktXky+XuUVh3M+ZPi9W+I8n6HOfPA84MVXja/3u2vSzDExJQrTMkqW86GbgVIs//JSDgh6slFuQCj14c5MgQqc4nIfuv/UwqbEPHmRsd1bPIrfj+Lh6hNB/TIYibuYe7Fi1ULJhCkQlTGtl4pR93EFSK2jb1sK6SJX8HLAPr5lBiIsUfJddEZ7MxAvppXaekn/huKZqRs4hP2GVzYWjA83N8muqgQmm8/2TAxVNtTnRkEO2cFVYAyphEAJt5nEagaabIdUfQNZWlpCCxCREeSbsLXlYjn4chhDEzBnP4NEfhBujAtQDOiMvPG42ynyFIWwY0MqfmhqHyQiqMFX/jMmINIvLfINlsypJf9UTlAR80XXJNEC90KwJ+WI12j+iwLLd2ZoI7fCrBssREenJdOapav9uqfyWJlbaKwvEjvBk/+aDvabOkfEQMb/NIx5zhgiWpvuT7gDw+NarKu2yJzqWW9EsVYLlGrA57YybWVdZbrISmRuKSy3gLTn3ZYbZzX56kafGmzaWIhjLtv9jRJeZiH1zj8OWyDZpIoRMfWQDgxNQZPhDEk0vyRhp6Ty5EGmH7dKbsCkDFDqDSKWaFpfhyHhP3LeiOCI0/WS319ZKIoqePOAPEWhhTKftHeyYPW2ndUidady9UNXhmlNomihFMaW9DTlH4PCysKkrlrjY=
   # passphrase: "Optional. In case a passphrase is configured on Bintray and GPG signing is used"
   skip_cleanup: true # to upload artifacts created during the build
-  condition: $NEED_DEPLOY = sure
+  on:
+    condition: $NEED_DEPLOY = sure
