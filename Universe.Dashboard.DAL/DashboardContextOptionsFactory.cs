@@ -15,7 +15,7 @@ namespace Universe.Dashboard.DAL
         public static DbContextOptionsBuilder ApplyOptions(this DbContextOptionsBuilder optionsBuilder)
         {
             var f = Family;
-            Console.WriteLine($"FFFAAAMMMIIILLLYYY: {f}");
+            Console.WriteLine($"F*A*M*I*L*Y: {f}");
             if (f == EF.Family.MySql) 
                 optionsBuilder.ApplyMySqlOptions(DashboardContextOptions4MySQL.ConnectionString);
             
