@@ -43,20 +43,25 @@ script:
 
     sudo apt-get -y install mysql-client
     mysql --version
-
-    # Install 5 MySQL Servers
-    export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
-    url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
-
-    # Install 7 Postgres Servers
-    export POSTGRESQL_DB=W3Top POSTGRESQL_PASS=pass POSTGRESQL_USER=postgres WAIT_TIMEOUT=13
-    url=https://raw.githubusercontent.com/devizer/glist/master/install-7-postres-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
-
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
 
   # - time gem search dpl | grep  -E '^dpl' | sort || true;
 
+- |
+  # Install 5 MySQL Servers
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
+    url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
+  fi;
+
+- |
+  # Install 7 Postgres Servers
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    export POSTGRESQL_DB=W3Top POSTGRESQL_PASS=pass POSTGRESQL_USER=postgres WAIT_TIMEOUT=13
+    url=https://raw.githubusercontent.com/devizer/glist/master/install-7-postres-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
+  fi;
+  
 - |
   # Install Build Tools
   url=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh;
