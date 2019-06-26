@@ -38,14 +38,12 @@ script:
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew install jq mysql-client 
   else
-    sudo apt-get install jq pv -y
+    sudo apt-get install jq pv mysql-client -y
     ruby --version || true; gem --version || true
 
-    sudo apt-get -y install mysql-client
     mysql --version
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
-
   # - time gem search dpl | grep  -E '^dpl' | sort || true;
 
 - |
