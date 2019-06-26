@@ -3,19 +3,20 @@ git:
   depth: false
 matrix:
   include:
-#  - name: Ubuntu 14.04
-#    os: linux
-#    dist: trusty
+  - name: Ubuntu 14.04
+    os: linux
+    dist: trusty
   - name: Ubuntu 16.04
     os: linux
     dist: xenial
-#  - name: OS X 10.12
-#    os: osx
-#    osx_image: xcode8.3
-#  - name: OS X 10.14
-#    os: osx
-#    osx_image: xcode10.2
+  - name: OS X 10.12
+    os: osx
+    osx_image: xcode8.3
+  - name: OS X 10.14
+    os: osx
+    osx_image: xcode10.2
 script:
+- if [[ "$(lsb_release -c -s)" == xenial ]]; then export NEED_DEPLOY=sure; fi; echo "NEED_DEPLOY = $NEED_DEPLOY"
 - export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 - git branch
 - git rev-parse --abbrev-ref HEAD
@@ -24,6 +25,7 @@ script:
 # - npm install yarn -g || true; echo "yarn is $(yarn --version)" || true
 - echo TRAVIS_OS_NAME is "$TRAVIS_OS_NAME"
 - rm "$(command -v node)" 2>/dev/null || true
+
 - |
    export TIMEFORMAT='REAL TIME: %1lR'
 
@@ -114,3 +116,4 @@ deploy:
     secure: ktXky+XuUVh3M+ZPi9W+I8n6HOfPA84MVXja/3u2vSzDExJQrTMkqW86GbgVIs//JSDgh6slFuQCj14c5MgQqc4nIfuv/UwqbEPHmRsd1bPIrfj+Lh6hNB/TIYibuYe7Fi1ULJhCkQlTGtl4pR93EFSK2jb1sK6SJX8HLAPr5lBiIsUfJddEZ7MxAvppXaekn/huKZqRs4hP2GVzYWjA83N8muqgQmm8/2TAxVNtTnRkEO2cFVYAyphEAJt5nEagaabIdUfQNZWlpCCxCREeSbsLXlYjn4chhDEzBnP4NEfhBujAtQDOiMvPG42ynyFIWwY0MqfmhqHyQiqMFX/jMmINIvLfINlsypJf9UTlAR80XXJNEC90KwJ+WI12j+iwLLd2ZoI7fCrBssREenJdOapav9uqfyWJlbaKwvEjvBk/+aDvabOkfEQMb/NIx5zhgiWpvuT7gDw+NarKu2yJzqWW9EsVYLlGrA57YybWVdZbrISmRuKSy3gLTn3ZYbZzX56kafGmzaWIhjLtv9jRJeZiH1zj8OWyDZpIoRMfWQDgxNQZPhDEk0vyRhp6Ty5EGmH7dKbsCkDFDqDSKWaFpfhyHhP3LeiOCI0/WS319ZKIoqePOAPEWhhTKftHeyYPW2ndUidady9UNXhmlNomihFMaW9DTlH4PCysKkrlrjY=
   # passphrase: "Optional. In case a passphrase is configured on Bintray and GPG signing is used"
   skip_cleanup: true # to upload artifacts created during the build
+  condition: $NEED_DEPLOY = sure
