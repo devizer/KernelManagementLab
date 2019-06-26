@@ -100,7 +100,7 @@ script:
   verFile=./build/AppGitInfo.json; ver=$(cat $verFile | jq -r ".Version");
   echo "VER is  $ver";
   mkdir -p public-bintray/$ver;
-  cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz public-bintray/$ver/;
+  cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz* public-bintray/$ver/;
   cp build/AppGitInfo.json public-bintray/$ver/version.json
 - cat bintray.json || true
 - pwd; df -h; ls -la public-bintray/$ver
