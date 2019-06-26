@@ -33,7 +33,6 @@ namespace Tests
             Console.WriteLine("DiskBenchmarkEntityTests::OneTimeTearDown - nothing todo");
         }
 
-
         [Test]
         public void TestEmpty()
         {
