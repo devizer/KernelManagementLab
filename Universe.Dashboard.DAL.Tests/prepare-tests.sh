@@ -3,7 +3,7 @@
 export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
 url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests-V2.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
 
-export POSTGRESQL_DB=W3Top POSTGRESQL_PASS=pass POSTGRESQL_USER=postgres WAIT_TIMEOUT=13
+export POSTGRESQL_DB=W3Top POSTGRESQL_PASS=pass POSTGRESQL_USER=postgres WAIT_TIMEOUT=30
 url=https://raw.githubusercontent.com/devizer/glist/master/install-7-postres-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
 
 file=prepare-tests.generated.sh
