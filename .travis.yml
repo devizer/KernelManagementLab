@@ -118,4 +118,4 @@ deploy:
   # passphrase: "Optional. In case a passphrase is configured on Bintray and GPG signing is used"
   skip_cleanup: true # to upload artifacts created during the build
   on:
-    condition: ($NEED_DEPLOY = sure) AND ($TRAVIS_TEST_RESULT = 0)
+    condition: ($NEED_DEPLOY = sure) && ($TRAVIS_TEST_RESULT = 0)
