@@ -52,7 +52,7 @@ script:
   # Install 5 MySQL Servers
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
-    url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
+    url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests-V2.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
   fi;
 
 - |
