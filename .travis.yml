@@ -16,6 +16,7 @@ matrix:
     os: osx
     osx_image: xcode10.2
 script:
+- stat force-the-fail
 - if [[ "$(lsb_release -c -s)" == xenial ]]; then export NEED_DEPLOY=sure; fi; echo "NEED_DEPLOY = [$NEED_DEPLOY]"
 - export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 - git branch
@@ -117,4 +118,4 @@ deploy:
   # passphrase: "Optional. In case a passphrase is configured on Bintray and GPG signing is used"
   skip_cleanup: true # to upload artifacts created during the build
   on:
-    condition: $NEED_DEPLOY = sure
+    condition: $NEED_DEPLOY = sure AND $TRAVIS_TEST_RESULT = 0

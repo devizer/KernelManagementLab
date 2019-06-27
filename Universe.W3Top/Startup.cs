@@ -5,16 +5,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
-using EF = Universe.Dashboard.DAL.EF;
 
 namespace ReactGraphLab
 {
-    public class Startup
+    public partial class Startup
     {
 
         public Startup(IConfiguration configuration)
@@ -27,45 +25,7 @@ namespace ReactGraphLab
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            using (StopwatchLog.ToConsole($"Create/Upgrade DB Structure /{DashboardContextOptionsFactory.Family}/"))
-            {
-                var dashboardContext = new DashboardContext();
-                switch (DashboardContextOptionsFactory.Family)
-                {
-                    case EF.Family.PgSql:
-                        // Console.WriteLine($"MySQL CONNECTION STRING: [{DashboardContextOptions4MySQL.ConnectionString}]");
-                        DashboardContextOptions4PgSQL.ValidateConnectionString();    
-                        using (StopwatchLog.ToConsole($"Check postgres health"))
-                        {
-                            var exception = EFHealth.WaitFor(dashboardContext, 30000);
-                            if (exception != null)
-                                Console.WriteLine($"postgres is not ready. {exception.GetExceptionDigest()}");
-                        }
-                        
-                        EFMigrations.Migrate_PgSQL(dashboardContext, DashboardContextOptionsFactory.MigrationsTableName);
-                        break;
-
-                    case EF.Family.MySql:
-                        // Console.WriteLine($"MySQL CONNECTION STRING: [{DashboardContextOptions4MySQL.ConnectionString}]");
-                        DashboardContextOptions4MySQL.ValidateConnectionString();
-                        using (StopwatchLog.ToConsole($"Check MySQL Server health"))
-                        {
-                            var exception = EFHealth.WaitFor(dashboardContext, 30000);
-                            if (exception != null)
-                                Console.WriteLine($"MySQL Server is not ready. {exception.GetExceptionDigest()}");
-                        }
-                        
-                        EFMigrations.Migrate_MySQL(dashboardContext, DashboardContextOptionsFactory.MigrationsTableName);
-                        break;
-                    
-                    case EF.Family.Sqlite:
-                        dashboardContext.Database.Migrate();
-                        break;
-                    
-                    default:
-                        throw new ArgumentException($"Unsupported DB provider family {DashboardContextOptionsFactory.Family}");
-                }
-            }
+            CreateOrUpgradeDb();
 
             services.AddDbContext<DashboardContext>(options =>
             {
@@ -127,6 +87,7 @@ namespace ReactGraphLab
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
