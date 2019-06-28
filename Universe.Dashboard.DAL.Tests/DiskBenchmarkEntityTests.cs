@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading;
 using Dapper;
 using KernelManagementJam;
-using KernelManagementJam.Benchmarks;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
@@ -23,7 +22,7 @@ namespace Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            DashboardContext context = DiskBenchmarkEntityTests.CreateSqlLiteDbContext();
+            DashboardContext context = CreateSqlLiteDbContext();
             context.Database.Migrate();
         }
 
@@ -88,64 +87,5 @@ MySQL Admin's connection: [{MySqlTestEnv_Legacy.AdminConnectionString}]";
             
             Console.WriteLine(msg);
         }
-        
-
-        [Test]
-        [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
-        public void Test_DB_Args(DbTestParameter argDB)
-        {
-            using (var db = argDB.GetDashboardContext())
-            {
-                var connection = db.Database.GetDbConnection();
-                Console.WriteLine($@"Arg.Family: {argDB.Family}
-Arg.Provider [{db.Database.ProviderName}]
-Arg.DB.ConnectionString [{connection.ConnectionString}]");
-
-                var version = "<unknwon>";
-                try
-                {
-                    // var sql = argDB.Family == EF.Family.Sqlite ? "sqlite_version()" : "version()";
-                    // version = connection.ExecuteScalar<string>($"Select {sql};");
-                    version = db.Database.GetTypes().GetShortVersion(connection);
-                }
-                catch (Exception ex)
-                {
-                    version = ex.GetExceptionDigest();
-                }
-
-                Console.WriteLine($@"Arg.DB.SelectVersion(): [{version}]");
-            }
-        }
-
-        [Test]
-        [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
-        public void Test_REAL(DbTestParameter argDB)
-        {
-            DashboardContext context = argDB.GetDashboardContext();
-            Console.WriteLine($"Provider: [{context.Database.ProviderName}]");
-            Console.WriteLine($"Connection String: [{context.Database.GetDbConnection().ConnectionString}]");
-            DiskBenchmark b = new DiskBenchmark(".", 128*1024,DataGeneratorFlavour.Random, 4096, 1);
-            b.Perform();
-            var entity = new DiskBenchmarkEntity()
-            {
-                CreatedAt = DateTime.UtcNow, 
-                MountPath = b.Parameters.WorkFolder,
-                Token = Guid.NewGuid()
-            };
-            
-            entity.Args = b.Parameters;
-            entity.Report = b.Progress;
-            if (context == null) throw new InvalidOperationException("argDB.GetDashboardContext() returns null");
-            context.DiskBenchmark.Add(entity);
-            context.SaveChanges();
-            Console.WriteLine("SAVE to DB is complete");
-            
-            
-            DiskBenchmarkDataAccess dbda = new DiskBenchmarkDataAccess(context);
-            var copyByToken = dbda.GetDiskBenchmarkResult(entity.Token);
-            Assert.AreEqual(copyByToken.Report.Steps.Count, entity.Report.Steps.Count);
-            Console.WriteLine("DiskBenchmarkDataAccess.GetDiskBenchmarkResult by token is complete");
-        }
-
     }
 }

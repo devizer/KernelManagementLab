@@ -23,14 +23,17 @@ namespace Universe.Dashboard.DAL.Tests
 
         static List<DbTestParameter> GetTestParameters()
         {
-            List<DbTestParameter> ret = new List<DbTestParameter> {CreateSqlLiteDbParameter()};
-            var dbName = $"W3Top_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
+            List<DbTestParameter> ret = new List<DbTestParameter> {CreateSqlLiteDbTestParameter()};
+            var dbNameFormat = $"W3Top_{{0}}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
+            int counter = 0;
             var providers = new IProvider4Tests[] { new MySqlProvider4Tests(), new PgSqlProvider4Tests()};
             foreach (var provider in providers)
             {
                 var serverConnectionStrings = provider.GetServerConnectionStrings();
                 foreach (var serverConnectionString in serverConnectionStrings)
                 {
+                    counter++;
+                    var dbName = string.Format(dbNameFormat, (char) (64 + counter));
                     var artifact = $"DB `{dbName}` on {provider.GetServerName(serverConnectionString)}";
 
                     var dbConnectionString = provider.CreateDatabase(serverConnectionString, dbName);
@@ -46,12 +49,11 @@ namespace Universe.Dashboard.DAL.Tests
                         return new DashboardContext(optionsBuilder.Options);
                     };
 
-                    GlobalCleanUp.Enqueue($"Cleanup {artifact}", () => { provider.DropDatabase(serverConnectionString, dbName); });
+                    GlobalCleanUp.Enqueue($"Delete {artifact}", () => { provider.DropDatabase(serverConnectionString, dbName); });
 
                     var db = newDbContext(dbConnectionString);
-                    // EFMigrations.Migrate_PgSQL(db, DashboardContextOptionsFactory.MigrationsTableName);
                     provider.Migrate(db);
-                    var shortVer = db.Database.GetTypes().GetShortVersion(db.Database.GetDbConnection());
+                    var shortVer = db.Database.GetShortVersion();
                     ret.Add(new DbTestParameter()
                     {
                         Family = db.Database.GetFamily(),
@@ -64,12 +66,12 @@ namespace Universe.Dashboard.DAL.Tests
             return ret;
         }
 
-        private static DbTestParameter CreateSqlLiteDbParameter()
+        private static DbTestParameter CreateSqlLiteDbTestParameter()
         {
             var family = EF.Family.Sqlite;
             using (var db = CreateSqliteDbContext())
             {
-                var shortVer = db.Database.GetTypes().GetShortVersion(db.Database.GetDbConnection());
+                var shortVer = db.Database.GetShortVersion();
                 return new DbTestParameter
                 {
                     Family = family,

@@ -6,8 +6,10 @@ namespace KernelManagementJam.Benchmarks
 {
     public class LinuxKernelCacheFlusher
     {
+        private static bool SkipFlushing => Environment.GetEnvironmentVariable("SKIP_FLUSHING") == "true";
         public static void Sync()
         {
+            if (SkipFlushing) return;
             SyncWriteBuffer();
             FlushReadBuffers();
         }

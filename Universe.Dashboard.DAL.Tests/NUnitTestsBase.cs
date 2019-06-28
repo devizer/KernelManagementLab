@@ -18,6 +18,7 @@ namespace Tests
         [SetUp]
         public void BaseSetUp()
         {
+            Environment.SetEnvironmentVariable("SKIP_FLUSHING", null);
             StartAt = Stopwatch.StartNew();
             Interlocked.Increment(ref TestCounter);
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} starting...");
@@ -39,5 +40,18 @@ namespace Tests
         public void BaseOneTimeTearDown()
         {
         }
+        
+        protected static bool IsDebug
+        {
+            get
+            {
+#if DEBUG
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
     }
 }

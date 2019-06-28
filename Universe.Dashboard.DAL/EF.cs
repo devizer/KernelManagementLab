@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Security.Policy;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -33,15 +34,6 @@ namespace Universe.Dashboard.DAL
         // MySql.Data.EntityFrameworkCore
         // Npgsql.EntityFrameworkCore.PostgreSQL
 
-        public static Implementation.ICrossProviderTypes GetTypes(this Family family)
-        {
-            if (family == Family.Sqlite) return Sqlite;
-            if (family == Family.SqlServer) return SqlServer;
-            if (family == Family.MySql) return MySQL;
-            if (family == Family.PgSql) return PgSQL;
-            throw new ArgumentException($"Unknown provider family {family}", nameof(family));
-        }
-        
         public static Family GetFamily(string providerType)
         {
             if (providerType == null) throw new ArgumentNullException(nameof(providerType));
@@ -52,28 +44,20 @@ namespace Universe.Dashboard.DAL
             if (providerType.EndsWith(".PostgreSQL", ignore)) return Family.PgSql;
             throw new ArgumentException($"Unknown provider {providerType}", nameof(providerType));
         }
-
-        public static Implementation.ICrossProviderTypes GetTypes(string providerType)
+ 
+        public static Implementation.ICrossProviderTypes GetTypes(this Family family)
         {
-            if (providerType == null) throw new ArgumentNullException(nameof(providerType));
-            var ignore = StringComparison.InvariantCultureIgnoreCase;
-            if (providerType.EndsWith(".Sqlite", ignore)) return Sqlite;
-            if (providerType.EndsWith(".SqlServer", ignore)) return SqlServer;
-            if (providerType.StartsWith("MySql.", ignore)) return MySQL;
-            if (providerType.EndsWith(".PostgreSQL", ignore)) return PgSQL;
-            throw new ArgumentException($"Unknown provider {providerType}", nameof(providerType));
+            if (family == Family.Sqlite) return Sqlite;
+            if (family == Family.SqlServer) return SqlServer;
+            if (family == Family.MySql) return MySQL;
+            if (family == Family.PgSql) return PgSQL;
+            throw new ArgumentException($"Unknown provider family {family}", nameof(family));
         }
 
-        public static Implementation.ICrossProviderTypes GetTypes(this MigrationBuilder migrationBuilder)
+        public static Family GetFamily(this MigrationBuilder migrationBuilder)
         {
             if (migrationBuilder == null) throw new ArgumentNullException(nameof(migrationBuilder));
-            return GetTypes(migrationBuilder.ActiveProvider);
-        }
-
-        public static Implementation.ICrossProviderTypes GetTypes(this DatabaseFacade database)
-        {
-            if (database == null) throw new ArgumentNullException(nameof(database));
-            return GetTypes(database.ProviderName);
+            return GetFamily(migrationBuilder.ActiveProvider);
         }
 
         public static Family GetFamily(this DatabaseFacade database)
@@ -91,6 +75,14 @@ namespace Universe.Dashboard.DAL
             operation.Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
                 
             return operation;
+        }
+
+        public static string GetShortVersion(this DatabaseFacade databaseFacade)
+        {
+            using (var con = databaseFacade.GetDbConnection())
+            {
+                return databaseFacade.GetFamily().GetTypes().GetShortVersion(con);
+            }
         }
 
 
@@ -186,8 +178,6 @@ namespace Universe.Dashboard.DAL
                 {
                     return connection.ExecuteScalar<string>("Select sqlite_version();");
                 }
-                
-                
                 
             }
 

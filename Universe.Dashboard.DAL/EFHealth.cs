@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Universe.Dashboard.DAL
 {
-    public class EFHealth
+    public static class EFHealth
     {
-        public static Exception WaitFor(DbContext db, int timeout)
+        public static Exception WaitFor(this DbContext db, int timeout)
         {
             Stopwatch sw = Stopwatch.StartNew();
             Exception ret = null;

@@ -57,7 +57,7 @@ namespace Universe.Dashboard.DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            var types = Database.GetTypes();
+            var types = Database.GetFamily().GetTypes();
 
             // Disk Benchmark Entity
             {

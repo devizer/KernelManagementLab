@@ -7,7 +7,7 @@ namespace Universe.Dashboard.DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var types = migrationBuilder.GetTypes();
+            var types = migrationBuilder.GetFamily().GetTypes();
             
             
             migrationBuilder.CreateTable(
