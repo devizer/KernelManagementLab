@@ -5,7 +5,9 @@ using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using Tests;
 using Universe.Dashboard.DAL.Tests.MultiProvider;
 
@@ -23,31 +25,37 @@ namespace Universe.Dashboard.DAL.Tests
         {
             List<DbTestParameter> ret = new List<DbTestParameter> {CreateSqlLiteDbParameter()};
             var dbName = $"W3Top_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
-
+            var providers = new IProvider4Tests[] { new MySqlProvider4Tests(), new PgSqlProvider4Tests()};
+            foreach (var provider in providers)
             {
-                MySqlProvider4Tests provider = new MySqlProvider4Tests();
                 var serverConnectionStrings = provider.GetServerConnectionStrings();
                 foreach (var serverConnectionString in serverConnectionStrings)
                 {
-                    MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(serverConnectionString);
-                    var artifact = $"MySQL `{dbName}` on server {b.Server}:{b.Port}";
+                    var artifact = $"DB `{dbName}` on {provider.GetServerName(serverConnectionString)}";
+
+                    var dbConnectionString = provider.CreateDatabase(serverConnectionString, dbName);
 
                     Func<string, DashboardContext> newDbContext = delegate(string cs)
                     {
-                        var options = new DbContextOptionsBuilder().ApplyMySqlOptions(cs).Options;
-                        return new DashboardContext(options);
+                        Environment.SetEnvironmentVariable("MYSQL_DATABASE", null);
+                        Environment.SetEnvironmentVariable("PGSQL_DATABASE", null);
+                        Environment.SetEnvironmentVariable(provider.EnvVarName, dbConnectionString);
+                        
+                        var optionsBuilder = new DbContextOptionsBuilder();
+                        provider.ApplyDbContextOptions(optionsBuilder, cs);
+                        return new DashboardContext(optionsBuilder.Options);
                     };
 
-                    GlobalCleanUp.Enqueue($"Cleanup {artifact}",
-                        () => { provider.DropDatabase(serverConnectionString, dbName); });
+                    GlobalCleanUp.Enqueue($"Cleanup {artifact}", () => { provider.DropDatabase(serverConnectionString, dbName); });
 
-                    var dbConnectionString = provider.CreateDatabase(serverConnectionString, dbName);
-                    EFMigrations.Migrate_MySQL(newDbContext(dbConnectionString),
-                        DashboardContextOptionsFactory.MigrationsTableName);
-
+                    var db = newDbContext(dbConnectionString);
+                    // EFMigrations.Migrate_PgSQL(db, DashboardContextOptionsFactory.MigrationsTableName);
+                    provider.Migrate(db);
+                    var shortVer = db.Database.GetTypes().GetShortVersion(db.Database.GetDbConnection());
                     ret.Add(new DbTestParameter()
                     {
-                        Family = EF.Family.MySql,
+                        Family = db.Database.GetFamily(),
+                        ShortVersion = shortVer,
                         GetDashboardContext = () => newDbContext(dbConnectionString)
                     });
                 }
@@ -58,17 +66,24 @@ namespace Universe.Dashboard.DAL.Tests
 
         private static DbTestParameter CreateSqlLiteDbParameter()
         {
-            return new DbTestParameter
+            var family = EF.Family.Sqlite;
+            using (var db = CreateSqliteDbContext())
             {
-                Family = EF.Family.Sqlite,
-                GetDashboardContext = () =>
+                var shortVer = db.Database.GetTypes().GetShortVersion(db.Database.GetDbConnection());
+                return new DbTestParameter
                 {
-                    Environment.SetEnvironmentVariable("MYSQL_DATABASE", null);
-                    return CreateSqliteDbContext();
-                }
-            };
-        }
+                    Family = family,
+                    ShortVersion = shortVer,
+                    GetDashboardContext = () =>
+                    {
+                        Environment.SetEnvironmentVariable(DashboardContextOptions4MySQL.CONNECTION_ENV_NAME, null);
+                        Environment.SetEnvironmentVariable(DashboardContextOptions4PgSQL.CONNECTION_ENV_NAME, null);
+                        return CreateSqliteDbContext();
+                    }
+                };
+            }
 
+        }
 
         public static DashboardContext CreateSqliteDbContext()
         {
@@ -84,16 +99,6 @@ namespace Universe.Dashboard.DAL.Tests
 
             DashboardContext ret = new DashboardContext(opts);
             return ret;
-        }
-    }
-
-    public class DbTestParameter
-    {
-        public EF.Family Family;
-        public Func<DashboardContext> GetDashboardContext;
-        public override string ToString()
-        {
-            return $"{Family.ToString()}-DB";
         }
     }
 }

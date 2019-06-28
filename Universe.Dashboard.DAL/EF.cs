@@ -104,7 +104,7 @@ namespace Universe.Dashboard.DAL
                 string Json { get; } 
                 string CurrentDateTime { get; }
                 string DateTime { get; }
-                string GetVersionString(IDbConnection connection);
+                string GetShortVersion(IDbConnection connection);
             }
             
             public class PgSQLTypes : ICrossProviderTypes
@@ -116,9 +116,10 @@ namespace Universe.Dashboard.DAL
                 public string Json => "TEXT";
                 public string DateTime => "TIMESTAMP"; 
                 public string CurrentDateTime => "(now() at time zone 'utc')";
-                public string GetVersionString(IDbConnection connection)
+                public string GetShortVersion(IDbConnection connection)
                 {
-                    return connection.ExecuteScalar<string>("Select version();");
+                    // return connection.ExecuteScalar<string>("Select version();");
+                    return connection.ExecuteScalar<string>("show server_version;");
                 }
 
             }
@@ -137,7 +138,7 @@ namespace Universe.Dashboard.DAL
                 // public string CurrentDateTime => "CURRENT_TIMESTAMP()";
                 // Does it work for 5.1?
                 public string CurrentDateTime => "CURRENT_TIMESTAMP";
-                public string GetVersionString(IDbConnection connection)
+                public string GetShortVersion(IDbConnection connection)
                 {
                     return connection.ExecuteScalar<string>("Select version();");
                 }
@@ -152,7 +153,17 @@ namespace Universe.Dashboard.DAL
                 public string Json => "NVARCHAR(MAX)";
                 public string CurrentDateTime => "GetUtcDate()";
                 public string DateTime => "DATETIME";
-                public string GetVersionString(IDbConnection connection)
+                public string GetShortVersion(IDbConnection connection)
+                {
+                    int ver32Bit = connection.ExecuteScalar<int>("Select @@MICROSOFTVERSION");
+                    int v1 = ver32Bit >> 24;
+                    int v2 = ver32Bit >> 16 & 0xFF;
+                    int v3 = ver32Bit & 0xFFFF;
+                    var ver = new Version(v1, v2, v3);
+                    return ver.ToString();
+                }
+                
+                public string GetLongVersion(IDbConnection connection)
                 {
                     var ret = connection.ExecuteScalar<string>("Select @@version;").Replace("\r", " ").Replace("\n", " ");
                     while (ret.IndexOf("  ", StringComparison.Ordinal) >= 0)
@@ -171,10 +182,12 @@ namespace Universe.Dashboard.DAL
                 public string Json => "TEXT";
                 public string CurrentDateTime => "CURRENT_TIMESTAMP";
                 public string DateTime => "DATETIME";
-                public string GetVersionString(IDbConnection connection)
+                public string GetShortVersion(IDbConnection connection)
                 {
                     return connection.ExecuteScalar<string>("Select sqlite_version();");
                 }
+                
+                
                 
             }
 

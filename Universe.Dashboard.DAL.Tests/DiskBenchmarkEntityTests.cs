@@ -81,13 +81,14 @@ namespace Tests
         }
 
         [Test]
-        public void MySQL_Environment_Info()
+        public void MySQL_Environment_Info_Legacy()
         {
             var msg = $@"MySqlTestEnv.NeedMySqlTests: {MySqlTestEnv_Legacy.NeedMySqlTests} 
 MySQL Admin's connection: [{MySqlTestEnv_Legacy.AdminConnectionString}]";
             
             Console.WriteLine(msg);
         }
+        
 
         [Test]
         [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
@@ -105,7 +106,7 @@ Arg.DB.ConnectionString [{connection.ConnectionString}]");
                 {
                     // var sql = argDB.Family == EF.Family.Sqlite ? "sqlite_version()" : "version()";
                     // version = connection.ExecuteScalar<string>($"Select {sql};");
-                    version = db.Database.GetTypes().GetVersionString(connection);
+                    version = db.Database.GetTypes().GetShortVersion(connection);
                 }
                 catch (Exception ex)
                 {

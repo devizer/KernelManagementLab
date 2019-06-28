@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using KernelManagementJam;
 
 namespace Universe.Dashboard.DAL.Tests.MultiProvider
 {
@@ -18,5 +19,20 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
 
             return query.Select(x => x.cs).ToList();
         }
+
+        public static void RiskyAction(string title, Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                var msg = $"Failed op: {title}. {e.GetExceptionDigest()}";
+                Console.WriteLine(msg);
+                throw new Exception(msg, e);
+            }
+        }
+        
     }
 }
