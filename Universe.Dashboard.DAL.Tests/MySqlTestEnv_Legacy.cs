@@ -7,7 +7,7 @@ using Universe.Dashboard.DAL;
 
 namespace Tests
 {
-    class MySqlTestEnv
+    class MySqlTestEnv_Legacy
     {
         // privileged connection string TO SERVER
         public static readonly string MYSQL_TEST_SERVER_ENV_NAME = "MYSQL_TEST_CONNECTION";

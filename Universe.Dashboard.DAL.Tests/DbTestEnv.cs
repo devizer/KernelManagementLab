@@ -1,51 +1,72 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Metadata.Ecma335;
+using System.Threading;
+using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using Tests;
+using Universe.Dashboard.DAL.Tests.MultiProvider;
 
 namespace Universe.Dashboard.DAL.Tests
 {
     public class DbTestEnv
     {
         public static bool IsTravis => Environment.GetEnvironmentVariable("TRAVIS") == "true";
+        
+        static Lazy<List<DbTestParameter>> _TestParameters = new Lazy<List<DbTestParameter>>(GetTestParameters, LazyThreadSafetyMode.ExecutionAndPublication);
 
+        public static List<DbTestParameter> TestParameters => _TestParameters.Value;
 
-        public static List<DbParameter> TestParameters
+        static List<DbTestParameter> GetTestParameters()
         {
-            get
+            List<DbTestParameter> ret = new List<DbTestParameter> {CreateSqlLiteDbParameter()};
+            var dbName = $"W3Top_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
+
             {
-                List<DbParameter> ret = new List<DbParameter>
+                MySqlProvider4Tests provider = new MySqlProvider4Tests();
+                var serverConnectionStrings = provider.GetServerConnectionStrings();
+                foreach (var serverConnectionString in serverConnectionStrings)
                 {
-                    new DbParameter
+                    MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(serverConnectionString);
+                    var artifact = $"MySQL `{dbName}` on server {b.Server}:{b.Port}";
+
+                    Func<string, DashboardContext> newDbContext = delegate(string cs)
                     {
-                        Family = EF.Family.Sqlite,
-                        GetDashboardContext = () =>
-                        {
-                            Environment.SetEnvironmentVariable("MYSQL_DATABASE", null);
-                            return CreateSqliteDbContext();
-                        }
-                    }
-                };
+                        var options = new DbContextOptionsBuilder().ApplyMySqlOptions(cs).Options;
+                        return new DashboardContext(options);
+                    };
 
-                // ret.Clear();
-                if (/*!IsTravis &&*/ MySqlTestEnv.NeedMySqlTests)
-                {
-                    EFMigrations.Migrate_MySQL(MySqlTestEnv.CreateMySQLDbContext(), DashboardContextOptionsFactory.MigrationsTableName);
+                    GlobalCleanUp.Enqueue($"Cleanup {artifact}",
+                        () => { provider.DropDatabase(serverConnectionString, dbName); });
 
-                    ret.Add(new DbParameter
+                    var dbConnectionString = provider.CreateDatabase(serverConnectionString, dbName);
+                    EFMigrations.Migrate_MySQL(newDbContext(dbConnectionString),
+                        DashboardContextOptionsFactory.MigrationsTableName);
+
+                    ret.Add(new DbTestParameter()
                     {
                         Family = EF.Family.MySql,
-                        GetDashboardContext = () =>
-                        {
-                            Environment.SetEnvironmentVariable("MYSQL_DATABASE", MySqlTestEnv.TestMySqlConnection);
-                            return MySqlTestEnv.CreateMySQLDbContext();
-                        }
+                        GetDashboardContext = () => newDbContext(dbConnectionString)
                     });
                 }
-
-                return ret;
             }
+
+            return ret;
+        }
+
+        private static DbTestParameter CreateSqlLiteDbParameter()
+        {
+            return new DbTestParameter
+            {
+                Family = EF.Family.Sqlite,
+                GetDashboardContext = () =>
+                {
+                    Environment.SetEnvironmentVariable("MYSQL_DATABASE", null);
+                    return CreateSqliteDbContext();
+                }
+            };
         }
 
 
@@ -66,7 +87,7 @@ namespace Universe.Dashboard.DAL.Tests
         }
     }
 
-    public class DbParameter
+    public class DbTestParameter
     {
         public EF.Family Family;
         public Func<DashboardContext> GetDashboardContext;

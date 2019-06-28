@@ -83,15 +83,15 @@ namespace Tests
         [Test]
         public void MySQL_Environment_Info()
         {
-            var msg = $@"MySqlTestEnv.NeedMySqlTests: {MySqlTestEnv.NeedMySqlTests} 
-MySQL Admin's connection: [{MySqlTestEnv.AdminConnectionString}]";
+            var msg = $@"MySqlTestEnv.NeedMySqlTests: {MySqlTestEnv_Legacy.NeedMySqlTests} 
+MySQL Admin's connection: [{MySqlTestEnv_Legacy.AdminConnectionString}]";
             
             Console.WriteLine(msg);
         }
 
         [Test]
         [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
-        public void Test_DB_Args(DbParameter argDB)
+        public void Test_DB_Args(DbTestParameter argDB)
         {
             using (var db = argDB.GetDashboardContext())
             {
@@ -103,8 +103,9 @@ Arg.DB.ConnectionString [{connection.ConnectionString}]");
                 var version = "<unknwon>";
                 try
                 {
-                    var sql = argDB.Family == EF.Family.Sqlite ? "sqlite_version()" : "version()";
-                    version = connection.ExecuteScalar<string>($"Select {sql};");
+                    // var sql = argDB.Family == EF.Family.Sqlite ? "sqlite_version()" : "version()";
+                    // version = connection.ExecuteScalar<string>($"Select {sql};");
+                    version = db.Database.GetTypes().GetVersionString(connection);
                 }
                 catch (Exception ex)
                 {
@@ -117,7 +118,7 @@ Arg.DB.ConnectionString [{connection.ConnectionString}]");
 
         [Test]
         [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
-        public void Test_REAL(DbParameter argDB)
+        public void Test_REAL(DbTestParameter argDB)
         {
             DashboardContext context = argDB.GetDashboardContext();
             Console.WriteLine($"Provider: [{context.Database.ProviderName}]");

@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -41,6 +42,17 @@ namespace Universe.Dashboard.DAL
             throw new ArgumentException($"Unknown provider family {family}", nameof(family));
         }
         
+        public static Family GetFamily(string providerType)
+        {
+            if (providerType == null) throw new ArgumentNullException(nameof(providerType));
+            var ignore = StringComparison.InvariantCultureIgnoreCase;
+            if (providerType.EndsWith(".Sqlite", ignore)) return Family.Sqlite;
+            if (providerType.EndsWith(".SqlServer", ignore)) return Family.SqlServer;
+            if (providerType.StartsWith("MySql.", ignore)) return Family.MySql;
+            if (providerType.EndsWith(".PostgreSQL", ignore)) return Family.PgSql;
+            throw new ArgumentException($"Unknown provider {providerType}", nameof(providerType));
+        }
+
         public static Implementation.ICrossProviderTypes GetTypes(string providerType)
         {
             if (providerType == null) throw new ArgumentNullException(nameof(providerType));
@@ -62,6 +74,12 @@ namespace Universe.Dashboard.DAL
         {
             if (database == null) throw new ArgumentNullException(nameof(database));
             return GetTypes(database.ProviderName);
+        }
+
+        public static Family GetFamily(this DatabaseFacade database)
+        {
+            if (database == null) throw new ArgumentNullException(nameof(database));
+            return GetFamily(database.ProviderName);
         }
 
         public static OperationBuilder<AddColumnOperation> IsAutoIncrement(this OperationBuilder<AddColumnOperation> operation)
@@ -86,6 +104,7 @@ namespace Universe.Dashboard.DAL
                 string Json { get; } 
                 string CurrentDateTime { get; }
                 string DateTime { get; }
+                string GetVersionString(IDbConnection connection);
             }
             
             public class PgSQLTypes : ICrossProviderTypes
@@ -96,12 +115,12 @@ namespace Universe.Dashboard.DAL
                 public string Guid => "uuid";
                 public string Json => "TEXT";
                 public string DateTime => "TIMESTAMP"; 
-
-
-                // Works for 5.6 onward
-                // public string CurrentDateTime => "CURRENT_TIMESTAMP()";
-                // Does it work for 5.1?
                 public string CurrentDateTime => "(now() at time zone 'utc')";
+                public string GetVersionString(IDbConnection connection)
+                {
+                    return connection.ExecuteScalar<string>("Select version();");
+                }
+
             }
 
             public class MySQLTypes : ICrossProviderTypes
@@ -118,6 +137,11 @@ namespace Universe.Dashboard.DAL
                 // public string CurrentDateTime => "CURRENT_TIMESTAMP()";
                 // Does it work for 5.1?
                 public string CurrentDateTime => "CURRENT_TIMESTAMP";
+                public string GetVersionString(IDbConnection connection)
+                {
+                    return connection.ExecuteScalar<string>("Select version();");
+                }
+
             }
 
             public class SqlServerTypes : ICrossProviderTypes
@@ -127,7 +151,16 @@ namespace Universe.Dashboard.DAL
                 public string Guid => "UNIQUEIDENTIFIER";
                 public string Json => "NVARCHAR(MAX)";
                 public string CurrentDateTime => "GetUtcDate()";
-                public string DateTime => "DATETIME"; 
+                public string DateTime => "DATETIME";
+                public string GetVersionString(IDbConnection connection)
+                {
+                    var ret = connection.ExecuteScalar<string>("Select @@version;").Replace("\r", " ").Replace("\n", " ");
+                    while (ret.IndexOf("  ", StringComparison.Ordinal) >= 0)
+                        ret = ret.Replace("  ", " ");
+
+                    return ret;
+                }
+
             }
 
             public class SqliteTypes : ICrossProviderTypes
@@ -138,6 +171,10 @@ namespace Universe.Dashboard.DAL
                 public string Json => "TEXT";
                 public string CurrentDateTime => "CURRENT_TIMESTAMP";
                 public string DateTime => "DATETIME";
+                public string GetVersionString(IDbConnection connection)
+                {
+                    return connection.ExecuteScalar<string>("Select sqlite_version();");
+                }
                 
             }
 

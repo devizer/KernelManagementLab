@@ -1,6 +1,7 @@
 using System;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 
 namespace Universe.Dashboard.DAL
 {
@@ -34,6 +35,10 @@ CREATE TABLE ""{0}"" (
         
         public static void Migrate_MySQL(DbContext context, string migrationsHistoryTable = "__EFMigrationsHistory")
         {
+            var family = context.Database.GetFamily();
+            MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(context.Database.GetDbConnection().ConnectionString);
+            Console.WriteLine($"Applying [{family}] migrations if required. Server: {b.Server}. Port: {b.Port}");
+            
             // context.Database.EnsureCreated();
             var sqlSelect = string.Format(SqlSelectHistoryTable_MySQL, migrationsHistoryTable);
             var existingHistoryTable = context.Database.GetDbConnection().ExecuteScalar<string>(sqlSelect);
