@@ -13,7 +13,7 @@ echo '
 # postgres' >> $file
 for p in {54321..54328}; do
   name="PGSQL_TEST_SERVER_$p"
-  line="$name=\"Host=localhost;Port=$p;Database=postgres;Username=postgres;Password=pass;Timeout=15;\""
+  line="$name=\"Host=localhost;Port=$p;Database=postgres;Username=postgres;Password=pass;Timeout=15;Pooling=false;\""
   echo "$line" >> $file
   echo "export $name" >> $file
 done

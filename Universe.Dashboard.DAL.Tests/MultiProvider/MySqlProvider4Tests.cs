@@ -33,8 +33,6 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
 
         public void DropDatabase(string serverConnectionString, string dbName)
         {
-            // MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(serverConnectionString);
-            // Console.WriteLine($"Deleting MySQL database `{dbName}` on server {b.Server}:{b.Port}");
             using (MySqlConnection con = new MySqlConnection(serverConnectionString))
             {
                 con.Execute($"Drop Database `{dbName}`;");

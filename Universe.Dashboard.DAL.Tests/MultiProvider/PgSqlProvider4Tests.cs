@@ -29,8 +29,6 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
 
         public void DropDatabase(string serverConnectionString, string dbName)
         {
-            MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(serverConnectionString);
-            Console.WriteLine($@"Deleting PgSQL database ""{dbName}"" on server {b.Server}:{b.Port}");
             using (var con = new NpgsqlConnection(serverConnectionString))
             {
                 con.Execute($@"Drop Database ""{dbName}"";");
