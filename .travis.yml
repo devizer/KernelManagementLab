@@ -70,21 +70,16 @@ script:
 
 - pushd build; ./inject-git-info.ps1; popd; cat bintray.json || true
 - dotnet restore /v:m
+
 - |
-  echo "MYSQL TESTs ON TRAVIS"
+  echo "Sqlite tests only"
   time dotnet test --no-restore -c Release -v q # Test only sqlite provider on linux and osx
-  if false || [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
-    for port in {3307..3311}; do
-      export MYSQL_TEST_CONNECTION="Server=localhost;Database=mysql;Port=$port;Uid=root;Pwd=pass;Connect Timeout=5;Pooling=false;"
-      pushd Universe.Dashboard.DAL.Tests
-      # time dotnet test -c Release --no-build -v m
-      popd
-    done
-  fi
-  
+
 - | 
   # MULTIPLY DBs tests
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     pushd Universe.Dashboard.DAL.Tests && bash -e local-tests.sh && popd
+  fi
   
 - pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
 
