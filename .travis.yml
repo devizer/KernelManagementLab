@@ -73,7 +73,7 @@ script:
 
 - |
   echo "Sqlite tests only"
-  time dotnet test --no-restore -c Release -v q # Test only sqlite provider on linux and osx
+  time dotnet test --no-restore -c Release # Test only sqlite provider on linux and osx
 
 - | 
   # MULTIPLY DBs tests
