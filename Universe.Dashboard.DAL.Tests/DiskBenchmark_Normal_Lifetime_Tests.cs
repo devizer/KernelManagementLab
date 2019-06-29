@@ -40,7 +40,6 @@ namespace Tests
             context.SaveChanges();
             Console.WriteLine("SAVE to DB is complete");
             
-            
             DiskBenchmarkDataAccess dbda = new DiskBenchmarkDataAccess(context);
             var copyByToken = dbda.GetDiskBenchmarkResult(entity.Token);
             var actual = copyByToken.Report; var expected = entity.Report;

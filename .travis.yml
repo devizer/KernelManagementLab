@@ -84,9 +84,7 @@ script:
   
 - | 
   # MULTIPLY DBs tests
-    pushd Universe.Dashboard.DAL.Tests
-    bash local-tests.sh
-    popd
+    pushd Universe.Dashboard.DAL.Tests && bash -e local-tests.sh && popd
   
 - pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
 
