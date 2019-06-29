@@ -24,6 +24,7 @@ namespace Universe.Dashboard.DAL.Tests
         static List<DbTestParameter> GetTestParameters()
         {
             List<DbTestParameter> ret = new List<DbTestParameter> {CreateSqlLiteDbTestParameter()};
+            
             var dbNameFormat = $"W3Top_{{0}}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
             int counter = 0;
             var providers = new IProvider4Tests[] { new MySqlProvider4Tests(), new PgSqlProvider4Tests()};
@@ -71,6 +72,7 @@ namespace Universe.Dashboard.DAL.Tests
             var family = EF.Family.Sqlite;
             using (var db = CreateSqliteDbContext())
             {
+                db.Database.Migrate();
                 var shortVer = db.Database.GetShortVersion();
                 return new DbTestParameter
                 {

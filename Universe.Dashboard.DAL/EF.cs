@@ -77,6 +77,7 @@ namespace Universe.Dashboard.DAL
             return operation;
         }
 
+        // IT WORKS A*F*T*E*R migrations applied only ((
         public static string GetShortVersion(this DatabaseFacade databaseFacade)
         {
             using (var con = databaseFacade.GetDbConnection())
