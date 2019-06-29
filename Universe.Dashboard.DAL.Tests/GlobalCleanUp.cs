@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using KernelManagementJam;
 using NUnit.Framework;
 using Universe.Dashboard.DAL.Tests;
@@ -20,11 +22,14 @@ public class GlobalCleanUp
     public void RunAfterAnyTests()
     {
         foreach (var a in OnShutdown) a();
+        // Parallel.ForEach(OnShutdown, x => x());
     }
     
     private static bool Subscrined = false; 
     private static List<Action> OnShutdown = new List<Action>();
     private static readonly object Sync = new object();
+    private static int Counter = 0;
+
     public static void Enqueue(string title, Action action)
     {
         lock (Sync)
@@ -42,15 +47,18 @@ public class GlobalCleanUp
         // Console.WriteLine($"Enqueuing {title}");
         OnShutdown.Add(() =>
         {
+            int counter;
             Stopwatch sw = Stopwatch.StartNew();
             try
             {
                 action();
-                Console.WriteLine($"[Cleanup] ok: {title} in {sw.ElapsedMilliseconds:n0} msec");
+                counter = Interlocked.Increment(ref Counter);
+                Console.WriteLine($"[Cleanup] #{counter} OK: {title} in {sw.ElapsedMilliseconds:n0} msec");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[Cleanup] FAIL: {title} in {sw.ElapsedMilliseconds:n0} msec. {ex.GetExceptionDigest()}");
+                counter = Interlocked.Increment(ref Counter);
+                Console.WriteLine($"[Cleanup] #{counter} FAIL: {title} in {sw.ElapsedMilliseconds:n0} msec. {ex.GetExceptionDigest()}");
             }
         });
     }

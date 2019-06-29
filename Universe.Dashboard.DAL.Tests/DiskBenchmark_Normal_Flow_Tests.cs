@@ -10,7 +10,7 @@ using Universe.Dashboard.DAL.Tests;
 
 namespace Tests
 {
-    public class DiskBenchmark_Normal_Lifetime_Tests : NUnitTestsBase
+    public class DiskBenchmark_Normal_Flow_Tests : NUnitTestsBase
     {
         
 
