@@ -1,5 +1,7 @@
 using System;
+using System.Security.Cryptography;
 using KernelManagementJam.Benchmarks;
+using KernelManagementJam.DebugUtils;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Universe.Benchmark.DiskBench;
@@ -17,7 +19,7 @@ namespace Tests
         public void Perform_Save_Fetch(DbTestParameter argDB)
         {
             ShowDbTestArgument(argDB);
-            if (IsDebug) Environment.SetEnvironmentVariable("SKIP_FLUSHING", "true");
+            Environment.SetEnvironmentVariable("SKIP_FLUSHING", "true");
             
             DashboardContext context = argDB.GetDashboardContext();
             Console.WriteLine($"Provider: [{context.Database.ProviderName}]");
@@ -41,7 +43,10 @@ namespace Tests
             
             DiskBenchmarkDataAccess dbda = new DiskBenchmarkDataAccess(context);
             var copyByToken = dbda.GetDiskBenchmarkResult(entity.Token);
-            Assert.AreEqual(copyByToken.Report.Steps.Count, entity.Report.Steps.Count);
+            var actual = copyByToken.Report; var expected = entity.Report;
+            var jsonActual = actual.AsJson();
+            var jsonExpected = expected.AsJson();
+            Assert.AreEqual(expected.AsJson(), actual.AsJson());
             Console.WriteLine("DiskBenchmarkDataAccess.GetDiskBenchmarkResult by token is complete");
         }
         

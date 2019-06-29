@@ -69,7 +69,10 @@ namespace Universe.DiskBench
         {
             get
             {
-                var seconds = StartAt?.Elapsed.TotalSeconds ?? Seconds; 
+                // More details, doesnt work for AsJson comparer for tests
+                // var seconds = StartAt?.Elapsed.TotalSeconds ?? Seconds; 
+                // Less details, works for AsJson comparer for tests
+                var seconds =  Seconds;
                 return !seconds.HasValue
                     ? null
                     : new DateTime(0).Add(TimeSpan.FromSeconds(seconds.Value)).ToString("HH:mm:ss");
