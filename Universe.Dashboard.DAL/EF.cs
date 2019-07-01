@@ -120,8 +120,8 @@ namespace Universe.Dashboard.DAL
             public class MySQLTypes : ICrossProviderTypes
             {
                 public string Bool => "TINYINT";
-                // public string String => "VARCHAR(21844)";
-                public string String => "VARCHAR(21800)";
+                // public string String => "VARCHAR(21800)"; // utf8
+                public string String => "VARCHAR(16000)"; // utf8mb4
                 public string Guid => "BINARY(16)";
                 public string Json => "LONGTEXT";
                 public string DateTime => "TIMESTAMP"; 
