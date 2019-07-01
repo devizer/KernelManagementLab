@@ -91,10 +91,10 @@ namespace Universe.Dashboard.DAL
         {
             public interface ICrossProviderTypes
             {
-                string Bool { get; } 
                 string String { get; } 
-                string Guid { get; } 
                 string Json { get; } 
+                string Bool { get; } 
+                string Guid { get; } 
                 string CurrentDateTime { get; }
                 string DateTime { get; }
                 string GetShortVersion(IDbConnection connection);
@@ -121,7 +121,7 @@ namespace Universe.Dashboard.DAL
             {
                 public string Bool => "TINYINT";
                 // public string String => "VARCHAR(21844)";
-                public string String => "VARCHAR(16383)";
+                public string String => "VARCHAR(21800)";
                 public string Guid => "BINARY(16)";
                 public string Json => "LONGTEXT";
                 public string DateTime => "TIMESTAMP"; 
@@ -179,11 +179,7 @@ namespace Universe.Dashboard.DAL
                 {
                     return connection.ExecuteScalar<string>("Select sqlite_version();");
                 }
-                
             }
-
         }
-        
-        
     }
 }

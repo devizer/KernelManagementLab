@@ -53,7 +53,7 @@ namespace Universe.Dashboard.DAL.Tests
                     GlobalCleanUp.Enqueue($"Delete {artifact}", () => { provider.DropDatabase(serverConnectionString, dbName); });
 
                     var db = newDbContext(dbConnectionString);
-                    provider.Migrate(db);
+                    GracefulFail($"Apply migrations for {artifact}", () => provider.Migrate(db));
                     var shortVer = db.Database.GetShortVersion();
                     ret.Add(new DbTestParameter()
                     {
@@ -65,6 +65,18 @@ namespace Universe.Dashboard.DAL.Tests
             }
 
             return ret;
+        }
+
+        static void GracefulFail(string caption, Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Fail: {caption}. {ex.GetExceptionDigest()}", ex);
+            }
         }
 
         private static DbTestParameter CreateSqlLiteDbTestParameter()
