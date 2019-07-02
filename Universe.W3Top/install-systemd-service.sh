@@ -139,9 +139,13 @@ elif [ -n "$hasChkConfig" ]; then
   sudo /etc/init.d/w3top stop >/dev/null 2>&1 || true
   sudo chkconfig --level 2345 w3top off || true
   sudo chkconfig --level 2345 w3top on
+  sleep 1
   sudo /etc/init.d/w3top start
-  sleep 4
+  sleep 3
 else
+  sudo /etc/init.d/w3top stop >/dev/null 2>&1 || true
+  sleep 1
+  sudo /etc/init.d/w3top start
   echo "Unable to configure w3top startup on system boot. The system should support one of these command:
   update-rc.d
   or chkconfig
@@ -149,6 +153,7 @@ else
   
 To start|stop w3top service manually:
 /etc/init.d/w3top start|stop"
+  sleep 3
 fi
 }
 
