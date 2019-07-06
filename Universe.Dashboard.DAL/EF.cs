@@ -42,7 +42,7 @@ namespace Universe.Dashboard.DAL
             if (providerType.EndsWith(".SqlServer", ignore)) return Family.SqlServer;
             if (providerType.StartsWith("MySql.", ignore)) return Family.MySql;
             if (providerType.EndsWith(".PostgreSQL", ignore)) return Family.PgSql;
-            throw new ArgumentException($"Unknown provider {providerType}", nameof(providerType));
+            throw new ArgumentException($"Unknown provider type {providerType}", nameof(providerType));
         }
  
         public static Implementation.ICrossProviderTypes GetTypes(this Family family)
