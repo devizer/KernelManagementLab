@@ -9,7 +9,7 @@ namespace ReactGraphLab
     {
         private static void CreateOrUpgradeDb()
         {
-            using (StopwatchLog.ToConsole($"Create/Upgrade DB Structure /{DashboardContextOptionsFactory.Family}/"))
+            using (StopwatchLog.ToConsole($"Create/Upgrade DB Structure [{DashboardContextOptionsFactory.Family}]"))
             using (var dashboardContext = new DashboardContext())
             {
                 switch (DashboardContextOptionsFactory.Family)
