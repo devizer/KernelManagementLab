@@ -53,13 +53,13 @@ Environment=ASPNETCORE_URLS=http://0.0.0.0:'$HTTP_PORT'
 Environment=HTTP_PORT='$HTTP_PORT'
 Environment=INSTALL_DIR='$ScriptPath'
 Environment=RESPONSE_COMPRESSION='$RESPONSE_COMPRESSION'
+Environment=BLOCK_DEVICE_VISIBILITY_THRESHOLD=2048
 Environment=FORCE_HTTPS_REDIRECT=False
 Environment=MYSQL_DATABASE='${MYSQL_DATABASE_ESCAPED:-}'
 Environment=PGSQL_DATABASE='${PGSQL_DATABASE_ESCAPED:-}'
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 Environment=DUMPS_ARE_ENABLED=False
-Environment=BLOCK_DEVICE_VISIBILITY_THRESHOLD=2048
 Environment=DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
 [Install]
@@ -91,6 +91,7 @@ export ASPNETCORE_URLS=http://0.0.0.0:'$HTTP_PORT'
 export HTTP_PORT='$HTTP_PORT'
 export INSTALL_DIR='"'"$ScriptPath"'"'
 export RESPONSE_COMPRESSION='$RESPONSE_COMPRESSION'
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 export FORCE_HTTPS_REDIRECT=False
 export MYSQL_DATABASE='"'"${MYSQL_DATABASE:-}"'"'
 export PGSQL_DATABASE='"'"${PGSQL_DATABASE:-}"'"'
@@ -98,7 +99,6 @@ export ASPNETCORE_ENVIRONMENT=Production
 export DOTNET_PRINT_TELEMETRY_MESSAGE=false
 export DUMPS_ARE_ENABLED=False
 export BLOCK_DEVICE_VISIBILITY_THRESHOLD=2048
-export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
 case "$1" in
   start)
@@ -135,7 +135,7 @@ if [ -n "$hasUpdateRc" ]; then
   sleep 1
 elif [ -n "$hasChkConfig" ]; then
   # suse and redhat derivates
-  echo "Configuring /etc/init.d/h3control init-script using chkconfig tool"
+  echo "Configuring /etc/init.d/w3top init-script using chkconfig tool"
   sudo /etc/init.d/w3top stop >/dev/null 2>&1 || true
   sudo chkconfig --level 2345 w3top off || true
   sudo chkconfig --level 2345 w3top on
