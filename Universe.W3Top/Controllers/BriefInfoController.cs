@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using Universe;
 using Universe.Dashboard.Agent;
 
-namespace ReactGraphLab.Controllers
+namespace Universe.W3Top.Controllers
 {
     [Route("api/[controller]")]
     public class BriefInfoController

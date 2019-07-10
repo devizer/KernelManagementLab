@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Universe.Dashboard.Agent;
 
-namespace ReactGraphLab
+namespace Universe.W3Top
 {
     public class KillerMiddleware
     {

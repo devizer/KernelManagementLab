@@ -3,7 +3,7 @@ using KernelManagementJam;
 using Universe.Dashboard.DAL;
 using RelationalDatabaseFacadeExtensions = Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions;
 
-namespace ReactGraphLab
+namespace Universe.W3Top
 {
     partial class Startup
     {

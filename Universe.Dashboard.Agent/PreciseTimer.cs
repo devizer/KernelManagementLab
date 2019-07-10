@@ -8,7 +8,6 @@ using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using ReactGraphLab;
 
 namespace Universe.Dashboard.Agent
 {

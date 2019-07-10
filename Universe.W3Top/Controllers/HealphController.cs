@@ -5,7 +5,7 @@ using KernelManagementJam;
 using Microsoft.AspNetCore.Mvc;
 using Universe.Dashboard.DAL;
 
-namespace ReactGraphLab.Controllers
+namespace Universe.W3Top.Controllers
 {
     
     [Route("api/[controller]")]

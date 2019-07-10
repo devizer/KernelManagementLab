@@ -16,12 +16,12 @@ export function findLimit(num)
     
     if (thresholds === null)
         thresholds = buildLimits();
-
+    
     num = num * 1.03;
     for(let i=0; i < thresholds.length; i++) {
         if (num > thresholds[i]) continue;
         return thresholds[i];
     }
-
+    
     return num;
 }

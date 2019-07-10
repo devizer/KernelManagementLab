@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
 
-namespace ReactGraphLab
+namespace Universe.W3Top
 {
     public partial class Startup
     {

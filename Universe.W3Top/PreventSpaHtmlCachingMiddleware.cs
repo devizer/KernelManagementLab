@@ -3,11 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Internal;
 
-namespace ReactGraphLab
+namespace Universe.W3Top
 {
     public class PreventSpaHtmlCachingMiddleware
     {

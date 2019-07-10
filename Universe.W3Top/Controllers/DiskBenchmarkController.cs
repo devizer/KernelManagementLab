@@ -10,7 +10,7 @@ using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
 using Universe.DiskBench;
 
-namespace ReactGraphLab.Controllers
+namespace Universe.W3Top.Controllers
 {
     [Route("api/benchmark/disk")]
     [ApiController]

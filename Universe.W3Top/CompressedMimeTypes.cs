@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace ReactGraphLab
+namespace Universe.W3Top
 {
     class CompressedMimeTypes
     {

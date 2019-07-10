@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ReactGraphLab
+namespace Universe.W3Top
 {
     public class KillerActionFilter : IActionFilter
     {

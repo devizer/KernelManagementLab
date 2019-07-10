@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.SignalR;
 
-namespace ReactGraphLab
+namespace Universe.Dashboard.Agent
 {
     public class DataSourceHub : Hub, IDisposable
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using KernelManagementJam;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ReactGraphLab.Controllers
+namespace Universe.W3Top.Controllers
 {
     [Route("api/[controller]")]
     public class Test1Controller : ControllerBase

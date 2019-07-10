@@ -1,22 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Universe;
 using Universe.Dashboard.Agent;
 
-namespace ReactGraphLab
+namespace Universe.W3Top
 {
     public class Program
     {
@@ -107,6 +100,6 @@ namespace ReactGraphLab
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Universe.W3Top.Startup>();
     }
 }
