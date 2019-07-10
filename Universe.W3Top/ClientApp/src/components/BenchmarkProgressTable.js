@@ -29,8 +29,8 @@ const BenchmarkProgressTable = function(props) {
         <React.Fragment>
             <center>
                 <table className="benchmark-progress" border="0" cellPadding={0} cellSpacing={0}><tbody>
-                {pro.steps.map(step => (
-                    <React.Fragment key={step.name}>
+                {pro.steps.map((step, stepIndex) => (
+                    <React.Fragment key={`${stepIndex}:${step.name}`}>
                         <tr>
                             <td className="step-status">
                                 <BenchmarkStepStatusIcon status={step.state}/>

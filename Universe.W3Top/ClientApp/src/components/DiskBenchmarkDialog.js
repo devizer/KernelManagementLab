@@ -38,7 +38,9 @@ import * as Helper from "../Helper";
 var Color = require("color");
 
 const PROGRESS_TICK_INTERVAL = 499;
-const EMPTY_PROGRESS = {isCompleted: false, steps: []};
+const EMPTY_PROGRESS_STEP = {state:"Pending", canHaveMetrics:true, name:"\xA0".repeat(35)};
+const EMPTY_PROGRESS_STEP2 = {state:"Pending", canHaveMetrics:false, name:"\xA0".repeat(45)};
+const EMPTY_PROGRESS = {isCompleted: false, steps: [EMPTY_PROGRESS_STEP,EMPTY_PROGRESS_STEP2,EMPTY_PROGRESS_STEP,EMPTY_PROGRESS_STEP2,EMPTY_PROGRESS_STEP]};
 
 const mainColorReadWrite="#3182bd";
 const mainColorReadOnly= "#de2d26";
