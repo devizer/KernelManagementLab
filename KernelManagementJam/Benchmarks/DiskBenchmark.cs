@@ -83,7 +83,7 @@ namespace Universe.Benchmark.DiskBench
                 _checkODirect = new ProgressStep("Check capabilities");
             }
                 
-            _allocate = new ProgressStep("Allocate");
+            _allocate = new ProgressStep($"Allocate {Formatter.FormatBytes(Parameters.WorkingSetSize)}");
             _seqRead = new ProgressStep("Sequential read"){ CanHaveMetrics = true};
             _seqWrite = new ProgressStep("Sequential write"){CanHaveMetrics = true};
             _rndRead1T = new ProgressStep("Random Read, 1 thread"){CanHaveMetrics = true};

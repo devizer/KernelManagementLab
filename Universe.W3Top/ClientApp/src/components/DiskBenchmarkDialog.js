@@ -106,7 +106,7 @@ const optionStyles = {
     textField: {
         marginLeft: 0,
         marginRight: 24,
-        width: 160,
+        width: 201,
     },
     dense: {
         marginTop: 19,
@@ -451,6 +451,20 @@ function DiskBenchmarkDialog(props) {
         }
     });
 
+    let renderDiskSize = () => selectedDisk.freeSpace ? `${Helper.Common.formatBytes(selectedDisk.freeSpace)} of ${Helper.Common.formatBytes(selectedDisk.totalSize)} free` : `${Helper.Common.formatBytes(selectedDisk.totalSize)}`;
+    // if (activeStep >= 2) renderDiskSize = null; 
+    const renderDialogHeader = () =>
+        selectedDisk == null ? <React.Fragment>Benchmark a local or network disk</React.Fragment> : (
+            <span>
+                Benchmark <b style={{whiteSpace: 'nowrap'}}>{selectedDisk.mountEntry.mountPath}</b>{' '}
+                ({selectedDisk.mountEntry.fileSystem})
+                <span className={classNames(activeStep >= 2 && "hidden")}>
+                    {', '}
+                    <span className={classNames("nowrap")}>{renderDiskSize()}</span>
+                </span>
+            </span>
+        );
+
 
 
     return (
@@ -474,15 +488,7 @@ function DiskBenchmarkDialog(props) {
             
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>
                 <DialogTitle id="form-dialog-title" style={{textAlign:"center"}}>
-                    {selectedDisk == null ? <React.Fragment>Benchmark a local or network disk</React.Fragment> : (
-                        <span>
-                            Benchmark <b>{selectedDisk.mountEntry.mountPath}</b>{' '} 
-                            ({selectedDisk.mountEntry.fileSystem}),{' '}
-                            <span style={{whiteSpace: 'nowrap'}}>
-                                {selectedDisk.freeSpace ? `${Helper.Common.formatBytes(selectedDisk.freeSpace)} of ${Helper.Common.formatBytes(selectedDisk.totalSize)} free` : Helper.Common.formatBytes(selectedDisk.totalSize)}
-                            </span> 
-                        </span>
-                    )}
+                    {renderDialogHeader()}
                 </DialogTitle>
                 <DialogContent style={{textAlign: "center"}} >
                     {/*<Button variant="contained" ref={errorElement}>WTH</Button>*/}
