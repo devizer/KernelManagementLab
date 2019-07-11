@@ -473,7 +473,17 @@ function DiskBenchmarkDialog(props) {
             </Popper>
             
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>
-                <DialogTitle id="form-dialog-title" style={{textAlign:"center"}}>Benchmark a local or network disk</DialogTitle>
+                <DialogTitle id="form-dialog-title" style={{textAlign:"center"}}>
+                    {selectedDisk == null ? <React.Fragment>Benchmark a local or network disk</React.Fragment> : (
+                        <span>
+                            Benchmark <b>{selectedDisk.mountEntry.mountPath}</b>{' '} 
+                            ({selectedDisk.mountEntry.fileSystem}),{' '}
+                            <span style={{whiteSpace: 'nowrap'}}>
+                                {selectedDisk.freeSpace ? `${Helper.Common.formatBytes(selectedDisk.freeSpace)} of ${Helper.Common.formatBytes(selectedDisk.totalSize)} free` : Helper.Common.formatBytes(selectedDisk.totalSize)}
+                            </span> 
+                        </span>
+                    )}
+                </DialogTitle>
                 <DialogContent style={{textAlign: "center"}} >
                     {/*<Button variant="contained" ref={errorElement}>WTH</Button>*/}
                     <Stepper activeStep={activeStep} alternativeLabel style={styles.root}  id="wizard" ref={errorElement}>
