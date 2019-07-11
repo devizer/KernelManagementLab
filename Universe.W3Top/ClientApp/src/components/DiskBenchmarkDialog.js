@@ -451,12 +451,12 @@ function DiskBenchmarkDialog(props) {
         }
     });
 
-    let renderDiskSize = () => selectedDisk.freeSpace ? `${Helper.Common.formatBytes(selectedDisk.freeSpace)} of ${Helper.Common.formatBytes(selectedDisk.totalSize)} free` : `${Helper.Common.formatBytes(selectedDisk.totalSize)}`;
-    // if (activeStep >= 2) renderDiskSize = null; 
+    let formatBytes = Helper.Common.formatBytes; 
+    let renderDiskSize = () => selectedDisk.freeSpace ? `${formatBytes(selectedDisk.freeSpace)} of ${formatBytes(selectedDisk.totalSize)} free` : `${formatBytes(selectedDisk.totalSize)}`;
     const renderDialogHeader = () =>
         selectedDisk == null ? <React.Fragment>Benchmark a local or network disk</React.Fragment> : (
             <span>
-                Benchmark <b style={{whiteSpace: 'nowrap'}}>{selectedDisk.mountEntry.mountPath}</b>{' '}
+                Benchmark <b className="nowrap">{selectedDisk.mountEntry.mountPath}</b>{' '}
                 ({selectedDisk.mountEntry.fileSystem})
                 <span className={classNames(activeStep >= 2 && "hidden")}>
                     {', '}
