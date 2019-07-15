@@ -1,7 +1,7 @@
 ##### 1.17
 - Added support with logic tests and installer tests for MySQL (5.1 and above) and Postgresql (8.4 and above) for metrics and benchmarks history.
 - Improved usability for disk benchmark
-<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/DiskBenchmark-V1.gif" width="909px" height="637px" Alt="disk benchmark screencast" Title="disk benchmark screencast"></img>
+<img src="https://github.com/devizer/KernelManagementLab/raw/master/images/DiskBenchmark-V1.gif" width="803px" height="562px" Alt="disk benchmark screencast" Title="disk benchmark screencast"></img>
  
 ##### 1.16
 - Added disk benchmark for readonly volumes such as squashfs and dvd disks
