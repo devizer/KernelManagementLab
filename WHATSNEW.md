@@ -7,7 +7,7 @@
 - Added disk benchmark for readonly volumes such as squashfs and dvd disks
 
 ##### 1.15
-- The first disk benchmark is here:
+- The first disk benchmark report is here:
 <img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Disk-Benchmark-V1.15.png" width="718px" Alt="The first disk's benchmark" Title="The first disk's benchmark"></img>
 
 ##### 1.14
