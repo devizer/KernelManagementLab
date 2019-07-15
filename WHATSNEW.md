@@ -1,5 +1,5 @@
 ##### 1.17
-- Added support with logic tests and installer tests for MySQL (5.1 and above) and Postgresql (8.4 and above) for metrics and benchmarks history.
+- Added support as well as tests of logic and installer for MySQL (5.1 to 8.0) and Postgresql (8.4 to 12 beta 2) as metrics and benchmarks history storage.
 - Improved usability for disk benchmark
 <img src="https://github.com/devizer/KernelManagementLab/raw/master/images/DiskBenchmark-V1.gif" width="803px" height="562px" Alt="disk benchmark screencast" Title="disk benchmark screencast"></img>
  
