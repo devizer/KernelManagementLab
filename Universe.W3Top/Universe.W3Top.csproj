@@ -30,14 +30,14 @@
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
         <Content Include="ClientApp\src\App.css" />
-        <Content Include="ClientApp\src\components\BenchmarkProgressTable.js" />
-        <Content Include="ClientApp\src\components\BenchmarkStepStatusIcon.js" />
         <Content Include="ClientApp\src\components\BlockStatChart.js" />
         <Content Include="ClientApp\src\components\BlockStatChartContainer_V2.js" />
         <Content Include="ClientApp\src\components\BlockStatChartHeader.js" />
         <Content Include="ClientApp\src\components\BlockStatSecondChart.js" />
-        <Content Include="ClientApp\src\components\DiskAvatarContent.js" />
-        <Content Include="ClientApp\src\components\DiskBenchmarkDialog.js" />
+        <Content Include="ClientApp\src\components\DiskBenchmark\BenchmarkProgressTable.js" />
+        <Content Include="ClientApp\src\components\DiskBenchmark\BenchmarkStepStatusIcon.js" />
+        <Content Include="ClientApp\src\components\DiskBenchmark\DiskAvatarContent.js" />
+        <Content Include="ClientApp\src\components\DiskBenchmark\DiskBenchmarkDialog.js" />
         <Content Include="ClientApp\src\components\LimitFinder.js" />
         <Content Include="ClientApp\src\components\MaterialNav.js" />
         <Content Include="ClientApp\src\components\MountsList.js" />

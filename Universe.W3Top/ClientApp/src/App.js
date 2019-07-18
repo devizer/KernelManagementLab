@@ -15,7 +15,7 @@ import { BlockChartContainer_V2 } from './components/BlockStatChartContainer_V2'
 import { MountsList } from './components/MountsList';
 import dataSourceListener from './stores/DataSourceListener';
 import "./components/MyC3.css"
-import DiskBenchmarkDialog from "./components/DiskBenchmarkDialog";
+import DiskBenchmarkDialog from "./components/DiskBenchmark/DiskBenchmarkDialog";
 import PopperLab from "./components/Popper-Lab"
 
 

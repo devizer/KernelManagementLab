@@ -1,4 +1,4 @@
-import * as Helper from "../Helper";
+import * as Helper from "../../Helper";
 import React from "react";
 import {BenchmarkStepStatusIcon} from "./BenchmarkStepStatusIcon";
 import {withStyles} from "@material-ui/core";

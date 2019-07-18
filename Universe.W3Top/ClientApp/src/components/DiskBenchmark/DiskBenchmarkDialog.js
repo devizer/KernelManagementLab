@@ -30,9 +30,9 @@ import DiskAvatarContent from "./DiskAvatarContent"
 import * as Enumerable from "linq-es2015";
 import classNames from "classnames";
 import * as queryString from 'query-string';
-import * as DataSourceActions from "../stores/DataSourceActions";
+import * as DataSourceActions from "../../stores/DataSourceActions";
 import { BenchmarkStepStatusIcon } from "./BenchmarkStepStatusIcon"
-import * as Helper from "../Helper";
+import * as Helper from "../../Helper";
 // import Paper from "./Popper-Lab";
 
 var Color = require("color");
@@ -58,8 +58,6 @@ const
     themeReadOnly = createMuiTheme({palette: { primary: { main: mainColorUnselectedReadOnly, } }, }),
     themeReadOnlySelected = createMuiTheme({ palette: { primary: { main: mainColorReadOnly, } }, });
     
-
-
 
 const styles = {
     root: {
@@ -138,8 +136,8 @@ const validateOptions = (options) => {
     });
 };
 
-let timer = null;
-let token = null;
+let timer = null; // for progress
+let token = null; // for progress
 
 function DiskBenchmarkDialog(props) {
     const [open, setOpen] = React.useState(true);
