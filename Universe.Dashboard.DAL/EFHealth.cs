@@ -8,6 +8,7 @@ namespace Universe.Dashboard.DAL
 {
     public static class EFHealth
     {
+        [Obsolete("For Illustration only")]
         public static Exception WaitFor(this DbContext db, int timeout)
         {
             Stopwatch sw = Stopwatch.StartNew();

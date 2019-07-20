@@ -14,24 +14,12 @@ WHERE table_schema = DATABASE() AND table_name = '{0}'
 LIMIT 1;
 ";
 
-        private const string SqlSelectHistoryTable_PgSQL = @"
-SELECT table_name 
-FROM information_schema.tables
-WHERE table_catalog = CURRENT_DATABASE() AND table_name = '{0}'
-LIMIT 1;
-";
-
         private const string SqlCreateHistoryTable_MySQL = @"
 CREATE TABLE {0} ( 
   MigrationId varchar(150) NOT NULL PRIMARY KEY, 
   ProductVersion varchar(32) NOT NULL 
 ) CHARSET=utf8;";
 
-        private const string SqlCreateHistoryTable_PgSQL = @"
-CREATE TABLE ""{0}"" ( 
-  ""MigrationId"" varchar(150) NOT NULL PRIMARY KEY, 
-  ""ProductVersion"" varchar(32) NOT NULL 
-)";
         
         public static void Migrate_MySQL(DbContext context, string migrationsHistoryTable = "__EFMigrationsHistory")
         {
@@ -50,6 +38,19 @@ CREATE TABLE ""{0}"" (
             
             context.Database.Migrate();
         }
+
+        private const string SqlSelectHistoryTable_PgSQL = @"
+SELECT table_name 
+FROM information_schema.tables
+WHERE table_catalog = CURRENT_DATABASE() AND table_name = '{0}'
+LIMIT 1;
+";
+
+        private const string SqlCreateHistoryTable_PgSQL = @"
+CREATE TABLE ""{0}"" ( 
+  ""MigrationId"" varchar(150) NOT NULL PRIMARY KEY, 
+  ""ProductVersion"" varchar(32) NOT NULL 
+)";
 
         public static void Migrate_PgSQL(DbContext context, string migrationsHistoryTable = "__EFMigrationsHistory")
         {

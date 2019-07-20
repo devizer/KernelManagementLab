@@ -97,6 +97,8 @@ namespace Universe.Dashboard.DAL
                 string Guid { get; } 
                 string CurrentDateTime { get; }
                 string DateTime { get; }
+                
+                [Obsolete]
                 string GetShortVersion(IDbConnection connection);
             }
             
