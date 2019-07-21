@@ -5,15 +5,17 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using MySql.Data.EntityFrameworkCore.Extensions;
 using Universe.Benchmark.DiskBench;
+using Universe.Dashboard.DAL.MultiProvider;
 using Universe.DiskBench;
+using EF = Universe.Dashboard.DAL.MultiProvider.EF;
 
 namespace Universe.Dashboard.DAL
 {
     public class DashboardContext : DbContext
     {
 
-        public DbSet<DbInfo> DbInfo { get; set; }
-        public DbSet<HistoryCopy> HistoryCopy { get; set; }
+        public DbSet<DbInfoEntity> DbInfo { get; set; }
+        public DbSet<HistoryCopyEntity> HistoryCopy { get; set; }
         
         public DbSet<DiskBenchmarkEntity> DiskBenchmark { get; set; }
 
@@ -74,14 +76,14 @@ namespace Universe.Dashboard.DAL
 
             // History Copy Entity
             {
-                var e = modelBuilder.Entity<HistoryCopy>();
+                var e = modelBuilder.Entity<HistoryCopyEntity>();
                 e.Property(x => x.Key).HasColumnType(types.String);
                 e.Property(x => x.JsonBlob).HasColumnType(types.Json);
             }
 
             // Db Info Entity
             {
-                var e = modelBuilder.Entity<DbInfo>();
+                var e = modelBuilder.Entity<DbInfoEntity>();
                 e.Property(x => x.Version).HasColumnType(types.String);
             }
         }

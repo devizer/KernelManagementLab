@@ -1,18 +1,15 @@
 using System;
 using System.Data;
-using System.Security.Policy;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
-using MySql.Data.EntityFrameworkCore.Extensions;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Universe.Dashboard.DAL
+namespace Universe.Dashboard.DAL.MultiProvider
 {
     public static class EF
     {
@@ -82,6 +79,14 @@ namespace Universe.Dashboard.DAL
         {
             using (var con = databaseFacade.GetDbConnection())
             {
+                return databaseFacade.GetFamily().GetProvider().GetShortVersion(con);
+            }
+        }
+
+        public static string GetShortVersion_Legacy(this DatabaseFacade databaseFacade)
+        {
+            using (var con = databaseFacade.GetDbConnection())
+            {
                 return databaseFacade.GetFamily().GetTypes().GetShortVersion(con);
             }
         }
@@ -144,8 +149,8 @@ namespace Universe.Dashboard.DAL
             {
                 public string Bool => "BIT";
                 public string String => "NVARCHAR(4000)";
-                public string Guid => "UNIQUEIDENTIFIER";
                 public string Json => "NVARCHAR(MAX)";
+                public string Guid => "UNIQUEIDENTIFIER";
                 public string CurrentDateTime => "GetUtcDate()";
                 public string DateTime => "DATETIME";
                 public string GetShortVersion(IDbConnection connection)

@@ -9,7 +9,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using MySql.Data.MySqlClient;
 using Npgsql;
 using Tests;
+using Universe.Dashboard.DAL.MultiProvider;
 using Universe.Dashboard.DAL.Tests.MultiProvider;
+using EF = Universe.Dashboard.DAL.MultiProvider.EF;
 
 namespace Universe.Dashboard.DAL.Tests
 {
@@ -28,32 +30,33 @@ namespace Universe.Dashboard.DAL.Tests
             var dbNameFormat = $"W3Top_{{0}}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
             int counter = 0;
             var providers = new IProvider4Tests[] { new MySqlProvider4Tests(), new PgSqlProvider4Tests()};
-            foreach (var provider in providers)
+            foreach (var provider4Tests in providers)
             {
-                var serverConnectionStrings = provider.GetServerConnectionStrings();
+                var serverConnectionStrings = provider4Tests.GetServerConnectionStrings();
                 foreach (var serverConnectionString in serverConnectionStrings)
                 {
                     counter++;
                     var dbName = string.Format(dbNameFormat, (char) (64 + counter));
-                    var artifact = $"DB `{dbName}` on {provider.GetServerName(serverConnectionString)}";
+                    var artifact = $"DB `{dbName}` on {provider4Tests.GetServerName(serverConnectionString)}";
 
-                    var dbConnectionString = provider.CreateDatabase(serverConnectionString, dbName);
+                    var dbConnectionString = provider4Tests.CreateDatabase(serverConnectionString, dbName);
 
                     Func<string, DashboardContext> newDbContext = delegate(string cs)
                     {
                         Environment.SetEnvironmentVariable("MYSQL_DATABASE", null);
                         Environment.SetEnvironmentVariable("PGSQL_DATABASE", null);
-                        Environment.SetEnvironmentVariable(provider.EnvVarName, dbConnectionString);
+                        Environment.SetEnvironmentVariable(provider4Tests.EnvVarName, dbConnectionString);
                         
                         var optionsBuilder = new DbContextOptionsBuilder();
-                        provider.ApplyDbContextOptions(optionsBuilder, cs);
+                        provider4Tests.Provider4Runtime.ApplyDbContextOptions(optionsBuilder, cs);
                         return new DashboardContext(optionsBuilder.Options);
                     };
 
-                    GlobalCleanUp.Enqueue($"Delete {artifact}", () => { provider.DropDatabase(serverConnectionString, dbName); });
+                    GlobalCleanUp.Enqueue($"Delete {artifact}", () => { provider4Tests.DropDatabase(serverConnectionString, dbName); });
 
                     var db = newDbContext(dbConnectionString);
-                    GracefulFail($"Apply migrations for {artifact}", () => provider.Migrate(db));
+                    GracefulFail($"Apply migrations for {artifact}", () => Migrate(provider4Tests, db));
+                    
                     var shortVer = db.Database.GetShortVersion();
                     ret.Add(new DbTestParameter()
                     {
@@ -66,6 +69,20 @@ namespace Universe.Dashboard.DAL.Tests
 
             return ret;
         }
+        
+        static void Migrate(IProvider4Tests provider, DbContext db)
+        {
+            // using is OK for mysql, but ObjectDisposedEException for postgres
+            var con = db.Database.GetDbConnection();
+            {
+                provider.Provider4Runtime.CreateMigrationHistoryTableIfAbsent(
+                    con,
+                    DashboardContextOptionsFactory.MigrationsTableName);
+            }
+            
+            db.Database.Migrate();
+        }
+
 
         static void GracefulFail(string caption, Action action)
         {
@@ -92,13 +109,12 @@ namespace Universe.Dashboard.DAL.Tests
                     ShortVersion = shortVer,
                     GetDashboardContext = () =>
                     {
-                        Environment.SetEnvironmentVariable(DashboardContextOptions4MySQL.CONNECTION_ENV_NAME, null);
-                        Environment.SetEnvironmentVariable(DashboardContextOptions4PgSQL.CONNECTION_ENV_NAME, null);
+                        Environment.SetEnvironmentVariable(DashboardContextOptionsFactory.EnvNames.MySqlDb, null);
+                        Environment.SetEnvironmentVariable(DashboardContextOptionsFactory.EnvNames.PgSqlDb, null);
                         return CreateSqliteDbContext();
                     }
                 };
             }
-
         }
 
         public static DashboardContext CreateSqliteDbContext()
@@ -109,11 +125,9 @@ namespace Universe.Dashboard.DAL.Tests
             var dir = Path.GetDirectoryName(testFile);
             if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
             
-            var opts = new DbContextOptionsBuilder()
-                .ApplySqliteOptions(testFile)
-                .Options;
-
-            DashboardContext ret = new DashboardContext(opts);
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder();
+            Providers4Runtime.Sqlite.ApplyDbContextOptions(dbContextOptionsBuilder, $"DataSource={testFile}");
+            DashboardContext ret = new DashboardContext(dbContextOptionsBuilder.Options);
             return ret;
         }
     }

@@ -19,7 +19,7 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
 
             return query.Select(x => x.cs).ToList();
         }
-
+        
         public static void RiskyAction(string title, Action action)
         {
             try

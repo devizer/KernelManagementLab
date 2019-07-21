@@ -2,7 +2,6 @@ using System.Data;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
-using Npgsql;
 
 namespace Universe.Dashboard.DAL.MultiProvider
 {
@@ -55,7 +54,6 @@ CREATE TABLE {0} (
                 var sqlCreate = string.Format(SqlCreateHistoryTable_MySQL, migrationsHistoryTable);
                 connection.Execute(sqlCreate);
             }
-            
         }
     }
 }

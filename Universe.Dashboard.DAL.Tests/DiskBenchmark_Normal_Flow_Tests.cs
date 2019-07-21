@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
+using Universe.Dashboard.DAL.MultiProvider;
 using Universe.Dashboard.DAL.Tests;
 
 namespace Tests

@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using Npgsql;
+using Universe.Dashboard.DAL.MultiProvider;
 
 namespace Universe.Dashboard.DAL.Tests.MultiProvider
 {
     public class MySqlProvider4Tests : IProvider4Tests
     {
+        private const string SERVERS_PATTERN = "MYSQL_TEST_SERVER";
+        public string EnvVarName => DashboardContextOptionsFactory.EnvNames.MySqlDb;
+        public IProvider4Runtime Provider4Runtime => Providers4Runtime.MySql;
+
         public List<string> GetServerConnectionStrings()
         {
-            return MultiProviderExtensions.GetServerConnectionStrings("MYSQL_TEST_SERVER");
+            return MultiProviderExtensions.GetServerConnectionStrings(SERVERS_PATTERN);
         }
 
         public string CreateDatabase(string serverConnectionString, string dbName)
@@ -38,16 +44,6 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
                 con.Execute($"Drop Database `{dbName}`;");
             }
         }
-        
-        public void ApplyDbContextOptions(DbContextOptionsBuilder optionsBuilder, string connectionString)
-        {
-            optionsBuilder.ApplyMySqlOptions(connectionString);
-        }
-
-        public void Migrate(DbContext db)
-        {
-            EFMigrations.Migrate_MySQL(db, DashboardContextOptionsFactory.MigrationsTableName);
-        }
 
         public string GetServerName(string connectionString)
         {
@@ -55,6 +51,5 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
             return $"MySQL server {b.Server}:{b.Port}";
         }
 
-        public string EnvVarName => DashboardContextOptions4MySQL.CONNECTION_ENV_NAME;
     }
 }

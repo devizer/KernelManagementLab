@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Universe.Dashboard.DAL.MultiProvider;
 
 namespace Universe.Dashboard.DAL.Migrations
 {

@@ -1,12 +1,13 @@
 using System;
+using Universe.Dashboard.DAL.MultiProvider;
 
 namespace Universe.Dashboard.DAL.Tests
 {
     public class DbTestParameter
     {
         public EF.Family Family;
-        public Func<DashboardContext> GetDashboardContext;
         public string ShortVersion;
+        public Func<DashboardContext> GetDashboardContext;
         
         public override string ToString()
         {

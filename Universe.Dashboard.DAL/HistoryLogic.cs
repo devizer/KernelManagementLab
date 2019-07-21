@@ -40,7 +40,7 @@ namespace Universe.Dashboard.DAL
                 var json = JsonDbConverter.AsJson(value);
                 if (entity == null)
                 {
-                    entity = new HistoryCopy() {Key = key, JsonBlob = json};
+                    entity = new HistoryCopyEntity() {Key = key, JsonBlob = json};
                     _DbContext.HistoryCopy.Add(entity);
                 }
                 else

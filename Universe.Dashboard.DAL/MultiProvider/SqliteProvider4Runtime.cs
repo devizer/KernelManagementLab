@@ -34,7 +34,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
 
         public void CreateMigrationHistoryTableIfAbsent(IDbConnection connection, string migrationsHistoryTable)
         {
-            // nothing to do - existing DB is never used
+            // nothing to do - existing DB is never used for sqlite db
         }
 
     }

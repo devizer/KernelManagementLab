@@ -23,7 +23,6 @@ namespace Universe.Dashboard.Agent
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            PreJit();
             _timer = new Timer(new TimerCallback(Tick), null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
             return Task.CompletedTask;
         }
@@ -44,18 +43,6 @@ namespace Universe.Dashboard.Agent
         public void Dispose()
         {
             _timer?.Dispose();
-        }
-
-        void PreJit()
-        {
-            // It is better to pre-jit synchronously at Startup.ConfigureServices
-            return;
-            using (var scope = Services.CreateScope())
-            {
-                var db = scope.ServiceProvider.GetRequiredService<DashboardContext>();
-                HistoryLogic logic = new HistoryLogic(db);
-                logic.Save("StartAt", new{At = DateTime.UtcNow});
-            }
         }
 
         void FlushHistory()

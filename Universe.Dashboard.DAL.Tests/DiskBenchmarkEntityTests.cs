@@ -11,7 +11,7 @@ using SQLitePCL;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 using Universe.Dashboard.DAL.Tests;
-using EF = Universe.Dashboard.DAL.EF;
+using EF = Universe.Dashboard.DAL.MultiProvider.EF;
 
 namespace Tests
 {
@@ -79,13 +79,5 @@ namespace Tests
             context.SaveChanges();
         }
 
-        [Test]
-        public void MySQL_Environment_Info_Legacy()
-        {
-            var msg = $@"MySqlTestEnv.NeedMySqlTests: {MySqlTestEnv_Legacy.NeedMySqlTests} 
-MySQL Admin's connection: [{MySqlTestEnv_Legacy.AdminConnectionString}]";
-            
-            Console.WriteLine(msg);
-        }
     }
 }

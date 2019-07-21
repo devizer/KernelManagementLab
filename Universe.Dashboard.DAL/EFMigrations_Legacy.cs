@@ -2,10 +2,12 @@ using System;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using Universe.Dashboard.DAL.MultiProvider;
 
 namespace Universe.Dashboard.DAL
 {
-    public class EFMigrations
+    [Obsolete("Use IProvider4Runtime")]
+    public class EFMigrations_Legacy
     {
         private const string SqlSelectHistoryTable_MySQL = @"
 SELECT table_name 

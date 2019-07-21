@@ -2,7 +2,6 @@ using System;
 using System.Data;
 using System.Diagnostics;
 using System.Threading;
-using Dapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Universe.Dashboard.DAL.MultiProvider
@@ -19,7 +18,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
         void CreateMigrationHistoryTableIfAbsent(IDbConnection connection, string migrationsHistoryTable);
     }
 
-    public static class Provider4Runtime
+    public static class Providers4Runtime
     {
         public static readonly MySqlProvider4Runtime MySql = new MySqlProvider4Runtime();
         public static readonly PgSqlProvider4Runtime PgSql = new PgSqlProvider4Runtime();
@@ -57,6 +56,4 @@ namespace Universe.Dashboard.DAL.MultiProvider
             return ret;
         }
     }
-
-
 }

@@ -4,14 +4,19 @@ using Dapper;
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using Npgsql;
+using Universe.Dashboard.DAL.MultiProvider;
 
 namespace Universe.Dashboard.DAL.Tests.MultiProvider
 {
     public class PgSqlProvider4Tests : IProvider4Tests
     {
+        private const string SERVERS_PATTERN = "PGSQL_TEST_SERVER";
+        public string EnvVarName => DashboardContextOptionsFactory.EnvNames.PgSqlDb;
+        public IProvider4Runtime Provider4Runtime => Providers4Runtime.PgSql;
+
         public List<string> GetServerConnectionStrings()
         {
-            return MultiProviderExtensions.GetServerConnectionStrings("PGSQL_TEST_SERVER");
+            return MultiProviderExtensions.GetServerConnectionStrings(SERVERS_PATTERN);
         }
 
         public string CreateDatabase(string serverConnectionString, string dbName)
@@ -35,22 +40,11 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
             }
         }
 
-        public void ApplyDbContextOptions(DbContextOptionsBuilder optionsBuilder, string connectionString)
-        {
-            optionsBuilder.ApplyPgSqlOptions(connectionString);
-        }
-
-        public void Migrate(DbContext db)
-        {
-            EFMigrations.Migrate_PgSQL(db, DashboardContextOptionsFactory.MigrationsTableName);
-        }
-
         public string GetServerName(string connectionString)
         {
             NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
             return $"PgSQL server {b.Host}:{b.Port}";
         }
         
-        public string EnvVarName => DashboardContextOptions4PgSQL.CONNECTION_ENV_NAME;
     }
 }

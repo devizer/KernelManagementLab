@@ -1,3 +1,5 @@
+using Universe.Dashboard.DAL.MultiProvider;
+
 namespace Universe.Dashboard.DAL
 {
     public class DashboardContextRuntimeParameters

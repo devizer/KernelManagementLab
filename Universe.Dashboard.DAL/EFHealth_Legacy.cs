@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Universe.Dashboard.DAL
 {
-    public static class EFHealth
+    public static class EFHealth_Legacy
     {
-        [Obsolete("For Illustration only")]
+        [Obsolete("For Illustration only", true)]
         public static Exception WaitFor(this DbContext db, int timeout)
         {
             Stopwatch sw = Stopwatch.StartNew();
