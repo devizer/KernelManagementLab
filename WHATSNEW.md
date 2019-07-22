@@ -1,3 +1,6 @@
+##### 1.18
+- Added Disk Benchmark History 
+
 ##### 1.17
 - Added support as well as tests of logic and installer for MySQL (5.1 to 8.0) and Postgresql (8.4 to 12 beta 2) as metrics and benchmarks history storage.
 - Improved usability for disk benchmark
