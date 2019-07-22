@@ -149,6 +149,7 @@ function DiskBenchmarkDialog(props) {
     const [progress, setProgress] = React.useState(null);
     const [errorAnchor, setErrorAnchor] = React.useState(null);
     const [error, setError] = React.useState(null);
+    const [historyTrigger, setHistoryTrigger] = React.useState(null);
     const errorElement = React.useRef(); // where is popper bound to?
 
     let needHideOpenButton = false;
@@ -357,6 +358,7 @@ function DiskBenchmarkDialog(props) {
                             clearInterval(timer); timer = 0;
                             token = null;
                             setActiveStep(3);
+                            setHistoryTrigger(new Date());
                         }
                     }
                     else {
@@ -472,7 +474,7 @@ function DiskBenchmarkDialog(props) {
                 Start disk benchmark
             </Button>
             
-            <DiskBenchmarkHistory/>
+            <DiskBenchmarkHistory trigger={historyTrigger}/>
 
             <Popper id={errorId} open={errorOpened} anchorEl={errorAnchor} placement="bottom">
                 <React.Fragment>

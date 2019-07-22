@@ -37,9 +37,10 @@ import * as Helper from "../../Helper";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-const EMPTY_HISTORY = [];
 export class DiskBenchmarkHistory extends React.Component {
 
+    prevTrigger = null;
+    
     constructor(props) {
         super(props);
 
@@ -53,7 +54,7 @@ export class DiskBenchmarkHistory extends React.Component {
     componentDidMount() {
         this.fetchDiskHistorySource();
     }
-
+    
     fetchDiskHistorySource() {
         try {
             let apiUrl = 'api/benchmark/disk/get-disk-benchmark-history';
@@ -80,9 +81,21 @@ export class DiskBenchmarkHistory extends React.Component {
         const emptyRow = {mountPath:"\xA0"};
         return [emptyRow,emptyRow,emptyRow,emptyRow,emptyRow,emptyRow,];
     }
+    
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (this.prevTrigger != nextProps.trigger)
+        {
+            this.prevTrigger = nextProps.trigger;
+            this.fetchDiskHistorySource();
+        }
+
+        return true;
+    }
 
     render() {
+        
         let pageSize = this.state.history.length === 0 ? 6 : Math.max(this.state.history.length, 1);
+        pageSize = Math.max(this.state.history.length, 6);
         let formatSpeed = field => row => {
             let ret = Helper.Common.formatBytes(row[field],1); 
             return ret === null ? "" : `${ret}/s`
@@ -102,6 +115,8 @@ export class DiskBenchmarkHistory extends React.Component {
                     defaultPageSize={pageSize}
                     pageSizeOptions={[pageSize]}
                     pageSize={pageSize}
+                    noDataText="no history"
+                    getNoDataProps={() => {return {style:{color:"gray", marginTop:30}}}}
 
                     columns={
                         [
