@@ -37,6 +37,9 @@ import * as Helper from "../../Helper";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
+// TODO: add threads count for random access
+// TODO: Icon for O_DIRECT
+
 export class DiskBenchmarkHistory extends React.Component {
 
     prevTrigger = null;
