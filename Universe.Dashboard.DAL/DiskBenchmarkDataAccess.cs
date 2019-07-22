@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Universe.DiskBench;
 
@@ -35,6 +36,16 @@ namespace Universe.Dashboard.DAL
                     Report = ret.Report,
                     ErrorInfo = ret.ErrorInfo
                 };
+        }
+
+        public List<DiskBenchmarkEntity> GetHistory()
+        {
+            var query =
+                from b in _DbContext.DiskBenchmark
+                orderby b.CreatedAt descending
+                select b;
+
+            return query.ToList();
         }
     }
     

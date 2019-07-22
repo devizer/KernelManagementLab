@@ -38,6 +38,7 @@
         <Content Include="ClientApp\src\components\DiskBenchmark\BenchmarkStepStatusIcon.js" />
         <Content Include="ClientApp\src\components\DiskBenchmark\DiskAvatarContent.js" />
         <Content Include="ClientApp\src\components\DiskBenchmark\DiskBenchmarkDialog.js" />
+        <Content Include="ClientApp\src\components\DiskBenchmark\DiskBenchmarkHistory.js" />
         <Content Include="ClientApp\src\components\LimitFinder.js" />
         <Content Include="ClientApp\src\components\MaterialNav.js" />
         <Content Include="ClientApp\src\components\MountsList.js" />

@@ -73,7 +73,7 @@ namespace Universe.Benchmark.DiskBench
         {
             if (Parameters.DisableODirect)
             {
-                _checkODirect = new ProgressStep("Direct Access is disabled");
+                _checkODirect = new ProgressStep("Direct Access is disabled") { Value = null};
                 _isODirectSupported = false;
                 _checkODirect.Start();
                 _checkODirect.Complete();
@@ -82,14 +82,16 @@ namespace Universe.Benchmark.DiskBench
             {
                 _checkODirect = new ProgressStep("Check capabilities");
             }
+
+            _checkODirect.Column = ProgressStepHistoryColumn.CheckODirect;
                 
-            _allocate = new ProgressStep($"Allocate {Formatter.FormatBytes(Parameters.WorkingSetSize)}");
-            _seqRead = new ProgressStep("Sequential read"){ CanHaveMetrics = true};
-            _seqWrite = new ProgressStep("Sequential write"){CanHaveMetrics = true};
-            _rndRead1T = new ProgressStep("Random Read, 1 thread"){CanHaveMetrics = true};
-            _rndWrite1T = new ProgressStep("Random Write, 1 thread"){CanHaveMetrics = true};
-            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true};
-            _rndWriteN = new ProgressStep($"Random Write, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true};
+            _allocate = new ProgressStep($"Allocate {Formatter.FormatBytes(Parameters.WorkingSetSize)}") {Column = ProgressStepHistoryColumn.Allocate};
+            _seqRead = new ProgressStep("Sequential read"){ CanHaveMetrics = true, Column = ProgressStepHistoryColumn.SeqRead};
+            _seqWrite = new ProgressStep("Sequential write"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.SeqWrite};
+            _rndRead1T = new ProgressStep("Random Read, 1 thread"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandRead1T};
+            _rndWrite1T = new ProgressStep("Random Write, 1 thread"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandWrite1T};
+            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandReadNT};
+            _rndWriteN = new ProgressStep($"Random Write, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandWriteNT};
             _cleanUp = new ProgressStep("Clean up");
             
             this.Progress = new ProgressInfo()
@@ -235,6 +237,8 @@ namespace Universe.Benchmark.DiskBench
             catch
             {
             }
+
+            _checkODirect.Value = _isODirectSupported; 
 
             _checkODirect.Name = _isODirectSupported ? "Direct Access is detected" : "Direct Access is absent";
             _checkODirect.Complete();

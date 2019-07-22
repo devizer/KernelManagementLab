@@ -33,6 +33,7 @@ import * as queryString from 'query-string';
 import * as DataSourceActions from "../../stores/DataSourceActions";
 import { BenchmarkStepStatusIcon } from "./BenchmarkStepStatusIcon"
 import * as Helper from "../../Helper";
+import {DiskBenchmarkHistory} from "./DiskBenchmarkHistory";
 // import Paper from "./Popper-Lab";
 
 var Color = require("color");
@@ -467,9 +468,11 @@ function DiskBenchmarkDialog(props) {
 
     return (
         <div>
-            <Button variant="contained" color="secondary" onClick={handleClickOpen} className={classNames(open && "hidden")}>
+            <Button variant="contained" color="secondary" onClick={handleClickOpen} className={classNames(open && "hidden")} style={{marginBottom:20}}>
                 Start disk benchmark
             </Button>
+            
+            <DiskBenchmarkHistory/>
 
             <Popper id={errorId} open={errorOpened} anchorEl={errorAnchor} placement="bottom">
                 <React.Fragment>

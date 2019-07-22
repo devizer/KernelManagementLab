@@ -12,6 +12,8 @@ namespace Universe.DiskBench
         
         [JsonConverter(typeof(StringEnumConverter))]
         public ProgressStepState State { get; set; }
+        public ProgressStepHistoryColumn Column { get; set; }
+        public object Value { get; set; }
         
         public bool CanHaveMetrics { get; set; }
         
@@ -107,5 +109,18 @@ namespace Universe.DiskBench
                 CanHaveMetrics = CanHaveMetrics,
             };
         }
+    }
+
+    public enum ProgressStepHistoryColumn
+    {
+        Ignore,
+        CheckODirect,
+        Allocate,
+        SeqWrite,
+        SeqRead,
+        RandRead1T,
+        RandWrite1T,
+        RandReadNT,
+        RandWriteNT,
     }
 }

@@ -23,7 +23,7 @@ namespace Universe.Benchmark.DiskBench
         private const int UnconditionalThreshold = 16384;
         private FileInfo[] WorkingSet = null;
         
-        [Obsolete("TODO", true)] private string[] NormalizedMountPaths;
+        // [Obsolete("TODO", true)] private string[] NormalizedMountPaths;
         
         public ProgressInfo Progress { get; private set; }
         
@@ -46,7 +46,7 @@ namespace Universe.Benchmark.DiskBench
         {
             if (Parameters.DisableODirect)
             {
-                _checkODirect = new ProgressStep("Direct Access is disabled");
+                _checkODirect = new ProgressStep("Direct Access is disabled") { Value = null };
                 _isODirectSupported = false;
                 _checkODirect.Start();
                 _checkODirect.Complete();
@@ -55,11 +55,12 @@ namespace Universe.Benchmark.DiskBench
             {
                 _checkODirect = new ProgressStep("Check capabilities");
             }
+            _checkODirect.Column = ProgressStepHistoryColumn.CheckODirect;
                 
             _analyze = new ProgressStep("Analyze metadata");
-            _seqRead = new ProgressStep($"Sequential read {Formatter.FormatBytes(Parameters.WorkingSetSize)}") {CanHaveMetrics = true};
-            _rndRead1T = new ProgressStep("Random Read, 1 thread"){CanHaveMetrics = true};
-            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true};
+            _seqRead = new ProgressStep($"Sequential read {Formatter.FormatBytes(Parameters.WorkingSetSize)}") {CanHaveMetrics = true, Column = ProgressStepHistoryColumn.SeqRead};
+            _rndRead1T = new ProgressStep("Random Read, 1 thread"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandRead1T};
+            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandReadNT};
             
             this.Progress = new ProgressInfo()
             {
@@ -245,6 +246,8 @@ namespace Universe.Benchmark.DiskBench
             catch
             {
             }
+
+            _checkODirect.Value = _isODirectSupported;
 
             _checkODirect.Name = _isODirectSupported ? "Direct Access is detected" : "Direct Access is absent";
             _checkODirect.Complete();

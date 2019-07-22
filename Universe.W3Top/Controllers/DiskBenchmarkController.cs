@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using KernelManagementJam;
@@ -32,7 +33,7 @@ namespace Universe.W3Top.Controllers
         }
 
         [HttpPost, Route("start-disk-benchmark")]
-        public BenchmarkResponse StartBenchmark(StartBenchmarkArgs options)
+        public BenchmarkProgressResponse StartBenchmark(StartBenchmarkArgs options)
         {
             // return new BenchmarkResponse() {Token = Guid.NewGuid()};
             Console.WriteLine($"StartBenchmark options: {options.AsJson()}");
@@ -56,7 +57,7 @@ namespace Universe.W3Top.Controllers
             
             Guid token = Guid.NewGuid();
             Queue.Enqueue(token, diskBenchmark);
-            return new BenchmarkResponse()
+            return new BenchmarkProgressResponse()
             {
                 Token = token,
                 Progress = diskBenchmark.Progress.Clone(),
@@ -64,7 +65,7 @@ namespace Universe.W3Top.Controllers
         }
 
         [HttpPost, Route("get-disk-benchmark-progress-{benchmarkToken}")]
-        public BenchmarkResponse GetProgress(Guid benchmarkToken)
+        public BenchmarkProgressResponse GetProgress(Guid benchmarkToken)
         {
             var enlistedBenchmark = Queue.Find(benchmarkToken);
             if (enlistedBenchmark.Index >= 0)
@@ -82,7 +83,7 @@ namespace Universe.W3Top.Controllers
                     progress.Steps.Insert(0, waitingStep);
                 }
 
-                return new BenchmarkResponse()
+                return new BenchmarkProgressResponse()
                 {
                     Token = benchmarkToken,
                     Progress = progress,
@@ -92,7 +93,7 @@ namespace Universe.W3Top.Controllers
             else
             {
                 DiskBenchmarkDataAccess.DiskBenchmarkResult benchmarkResult = DbAccess.GetDiskBenchmarkResult(benchmarkToken);
-                return new BenchmarkResponse()
+                return new BenchmarkProgressResponse()
                 {
                     Token = benchmarkToken,
                     Progress = benchmarkResult?.Report,
@@ -107,6 +108,30 @@ namespace Universe.W3Top.Controllers
             Queue.Cancel(benchmarkToken);
         }
 
+        [HttpPost, Route("get-disk-benchmark-history")]
+        public IList GetDiskBenchmarkHistory()
+        {
+            List<DiskBenchmarkEntity> entities = this.DbAccess.GetHistory();
+            double? GetSpeed(DiskBenchmarkEntity entity, ProgressStepHistoryColumn column) => entity.Report.Steps.FirstOrDefault(step => step.Column == column)?.AvgBytesPerSecond;
+
+            return entities.Select(benchmark => new
+            {
+                MountPath = benchmark.Args.WorkFolder,
+                WorkingSetSize = benchmark.Args.WorkingSetSize,
+                O_Direct = Convert.ToString(benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.CheckODirect)?.Value),
+                Allocate = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.Allocate)?.AvgBytesPerSecond,
+                SeqRead = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.SeqRead)?.AvgBytesPerSecond,
+                SeqWrite = GetSpeed(benchmark, ProgressStepHistoryColumn.SeqWrite),
+                RandomAccessBlockSize = benchmark.Args.RandomAccessBlockSize,
+                ThreadsNumber = benchmark.Args.ThreadsNumber,
+                RandRead1T = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.RandRead1T)?.AvgBytesPerSecond,
+                RandWrite1T = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.RandWrite1T)?.AvgBytesPerSecond,
+                RandReadNT = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.RandReadNT)?.AvgBytesPerSecond,
+                RandWriteNT = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.RandWriteNT)?.AvgBytesPerSecond,
+            }).ToList();
+
+        }
+
 
         public class StartBenchmarkArgs
         {
@@ -118,7 +143,7 @@ namespace Universe.W3Top.Controllers
             public int Threads { get; set; }
         }
 
-        public class BenchmarkResponse
+        public class BenchmarkProgressResponse
         {
             public Guid Token;
             public ProgressInfo Progress;
