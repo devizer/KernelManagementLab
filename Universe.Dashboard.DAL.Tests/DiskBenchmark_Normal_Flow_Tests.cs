@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using KernelManagementJam.Benchmarks;
 using KernelManagementJam.DebugUtils;
@@ -17,7 +19,7 @@ namespace Tests
 
         [Test]
         [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
-        public void Perform_Save_Fetch(DbTestParameter argDB)
+        public void Perform_Save_Fetch_GetHistory(DbTestParameter argDB)
         {
             ShowDbTestArgument(argDB);
             Environment.SetEnvironmentVariable("SKIP_FLUSHING", "true");
@@ -48,6 +50,19 @@ namespace Tests
             var jsonExpected = expected.AsJson();
             Assert.AreEqual(expected.AsJson(), actual.AsJson());
             Console.WriteLine("DiskBenchmarkDataAccess.GetDiskBenchmarkResult by token is complete");
+
+            List<DiskBenchmarkEntity> history = dbda.GetHistory();
+            CollectionAssert.IsNotEmpty(history, "History should contain benchmark result");
+            var copyFromHistory = history.FirstOrDefault(x => x.Token == entity.Token);
+            Assert.IsNotNull(copyFromHistory, "copyFromHistory is not null");
+            Assert.AreEqual(".", copyFromHistory.MountPath);
+            var historyRow = copyFromHistory.ToHistoryItem();
+            Assert.IsTrue(historyRow.SeqRead.HasValue && historyRow.SeqRead.Value > 0, "SeqRead > 0");
+            Assert.IsTrue(historyRow.RandRead1T.HasValue && historyRow.RandRead1T.Value > 0, "RandRead1T > 0");
+            Assert.IsTrue(historyRow.RandReadNT.HasValue && historyRow.RandReadNT.Value > 0, "RandReadNT > 0");
+            Console.WriteLine("DiskBenchmarkDataAccess.GetHistory -> ToHistoryItem() works properly");
+
+
         }
         
         void ShowDbTestArgument(DbTestParameter arg)

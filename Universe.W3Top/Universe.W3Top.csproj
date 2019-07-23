@@ -24,6 +24,7 @@
     
     <ItemGroup>
       <Compile Include="..\build\*.cs" />
+      <Compile Remove="ClientApp\build\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -58,6 +59,8 @@
         <Content Include="ClientApp\src\stores\DataModel.ts.txt" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+        <None Remove="ClientApp\build\**" />
+        <Content Remove="ClientApp\build\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -71,6 +74,11 @@
       <ProjectReference Include="..\KernelManagementJam\KernelManagementJam.csproj" />
       <ProjectReference Include="..\Universe.Dashboard.Agent\Universe.Dashboard.Agent.csproj" />
       <ProjectReference Include="..\Universe.Dashboard.DAL\Universe.Dashboard.DAL.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <EmbeddedResource Remove="ClientApp\build\**" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

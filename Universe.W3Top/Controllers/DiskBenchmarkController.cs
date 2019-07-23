@@ -109,28 +109,14 @@ namespace Universe.W3Top.Controllers
         }
 
         [HttpPost, Route("get-disk-benchmark-history")]
-        public IList GetDiskBenchmarkHistory()
+        public List<DiskBenchmarkHistoryRow> GetDiskBenchmarkHistory()
         {
             List<DiskBenchmarkEntity> entities = this.DbAccess.GetHistory();
-            double? GetSpeed(DiskBenchmarkEntity entity, ProgressStepHistoryColumn column) => entity.Report.Steps.FirstOrDefault(step => step.Column == column)?.AvgBytesPerSecond;
-
-            return entities.Select(benchmark => new
-            {
-                MountPath = benchmark.Args.WorkFolder,
-                WorkingSetSize = benchmark.Args.WorkingSetSize,
-                O_Direct = Convert.ToString(benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.CheckODirect)?.Value),
-                Allocate = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.Allocate)?.AvgBytesPerSecond,
-                SeqRead = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.SeqRead)?.AvgBytesPerSecond,
-                SeqWrite = GetSpeed(benchmark, ProgressStepHistoryColumn.SeqWrite),
-                RandomAccessBlockSize = benchmark.Args.RandomAccessBlockSize,
-                ThreadsNumber = benchmark.Args.ThreadsNumber,
-                RandRead1T = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.RandRead1T)?.AvgBytesPerSecond,
-                RandWrite1T = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.RandWrite1T)?.AvgBytesPerSecond,
-                RandReadNT = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.RandReadNT)?.AvgBytesPerSecond,
-                RandWriteNT = benchmark.Report.Steps.FirstOrDefault(step => step.Column == ProgressStepHistoryColumn.RandWriteNT)?.AvgBytesPerSecond,
-            }).ToList();
+            return entities.Select(x => x.ToHistoryItem()).ToList();
 
         }
+
+
 
 
         public class StartBenchmarkArgs

@@ -51,7 +51,7 @@ namespace Universe.DiskBench
         public void Progress(double perCents, long bytes)
         {
             PerCents = perCents;
-            Seconds = StartAt.ElapsedMilliseconds / 1000d;
+            Seconds = Math.Max((double) StartAt.ElapsedTicks / Stopwatch.Frequency, 0.001f);
             Bytes = bytes;
         }
 
