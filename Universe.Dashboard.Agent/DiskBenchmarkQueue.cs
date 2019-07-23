@@ -17,6 +17,13 @@ namespace Universe.Dashboard.Agent
             public IDiskBenchmark Benchmark;
         }
 
+        public class EnlistedDiskBenchmark
+        {
+            // 0: InProgress, >0: Pending, <0: not found 
+            public int Index;
+            public Guid Token;
+            public IDiskBenchmark Benchmark;
+        }
         private readonly Func<DashboardContext> GetDbContext;
         private List<DiskBenchmarkWithToken> Queue = new List<DiskBenchmarkWithToken>();
         private readonly object SyncQueue = new Object(); 
@@ -78,13 +85,6 @@ namespace Universe.Dashboard.Agent
             }
         }
 
-        public class EnlistedDiskBenchmark
-        {
-            // 0: InProgress, >0: Pending, <0: not found 
-            public int Index;
-            public Guid Token;
-            public IDiskBenchmark Benchmark;
-        }
 
         public int Count
         {

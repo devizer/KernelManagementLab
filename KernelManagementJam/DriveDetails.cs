@@ -100,7 +100,6 @@ namespace KernelManagementJam
     {
         private static readonly string[] ToSkip = new[] {"run", "sys", "dev"};
         private static readonly string[] DevicesToSkip = new[] {"shm", "overlay"};
-        
 
         public static IEnumerable<DriveDetails> FilterForHuman(this IEnumerable<DriveDetails> list)
         {

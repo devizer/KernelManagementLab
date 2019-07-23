@@ -5,12 +5,12 @@ namespace Universe.Dashboard.Agent
 {
     public static class DictionaryExtensions
     {
-        public static V GetOrAdd<K, V>(this IDictionary<K, V> dictionary, K key, Func<K,V> getDefault)
+        public static V GetOrAdd<K, V>(this IDictionary<K, V> dictionary, K key, Func<K,V> getNewValue)
         {
             if (dictionary.TryGetValue(key, out var ret))
                 return ret;
 
-            ret = getDefault(key);
+            ret = getNewValue(key);
             dictionary.Add(key, ret);
             return ret;
         }
