@@ -52,6 +52,7 @@ namespace Universe.Dashboard.DAL
     public class DiskBenchmarkHistoryRow
     {
         public Guid Token { get; set; } // It is used for tests only
+        public DateTime CreatedAt { get; set; }
         public string MountPath { get; set; }
         public long WorkingSetSize { get; set; }
         public string O_Direct { get; set; } // "" (disabled) | "True" (present) | "False" (absent)
@@ -76,6 +77,7 @@ namespace Universe.Dashboard.DAL
             return new DiskBenchmarkHistoryRow()
             {
                 Token = benchmark.Token,
+                CreatedAt = benchmark.CreatedAt,
                 MountPath = benchmark.Args.WorkFolder,
                 WorkingSetSize = benchmark.Args.WorkingSetSize,
                 O_Direct = Convert.ToString(GetStep(ProgressStepHistoryColumn.CheckODirect)?.Value),

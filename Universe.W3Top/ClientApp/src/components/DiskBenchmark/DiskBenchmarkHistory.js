@@ -1,4 +1,6 @@
 import React from 'react';
+import MomentFormat from 'moment';
+
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -37,7 +39,7 @@ import * as Helper from "../../Helper";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-// TODO: add threads count for random access
+// Done: add threads count for random access
 // TODO: Icon for O_DIRECT
 
 export class DiskBenchmarkHistory extends React.Component {
@@ -58,6 +60,13 @@ export class DiskBenchmarkHistory extends React.Component {
         this.fetchDiskHistorySource();
     }
     
+    historyProjection(history) {
+        history.map(bechmark => {
+            let mo = MomentFormat(bechmark.createdAt);
+            bechmark.createdDate = mo.format("MMM DD, YYYY");
+        })
+    }
+    
     fetchDiskHistorySource() {
         try {
             let apiUrl = 'api/benchmark/disk/get-disk-benchmark-history';
@@ -68,6 +77,7 @@ export class DiskBenchmarkHistory extends React.Component {
                     return response.ok ? response.json() : {error: response.status, details: response}
                 })
                 .then(history => {
+                    this.historyProjection(history);
                     this.setState({history:history});
                     Helper.toConsole("HISTORY for disk benchmark", history);
                 })
@@ -120,23 +130,57 @@ export class DiskBenchmarkHistory extends React.Component {
                     pageSize={pageSize}
                     noDataText="no history"
                     getNoDataProps={() => {return {style:{color:"gray", marginTop:30}}}}
+                    // pivotBy={["createdDate"]}
+                    // defaultExpanded={{2:true}}
+                    // pivotDefaults={}
+                    // defaultExpanded={{0:true,}}
+                    
+                    /*
+/ Special
+  pivot: false,
+  // Turns this column into a special column for specifying pivot position in your column definitions.
+  // The `pivotDefaults` options will be applied on top of this column's options.
+  // It will also let you specify rendering of the header (and header group if this special column is placed in the `columns` option of another column)
+  expander: false,
+  // Turns this column into a special column for specifying expander position and options in your column definitions.
+  // The `expanderDefaults` options will be applied on top of this column's options.
+  // It will also let you specify rendering of the header (and header group if this special column is placed in the `columns` option of another column) and
+  // the rendering of the expander itself via the `Expander` property
+                     
+                     */
 
                     columns={
                         [
+/*
                             {
+                                Header: "Groups",
+                                columns: [
+                                    {
+                                        Header: "Created At",
+                                        accessor: "createdDate",
+                                        width: 180,
+                                    }
+                                ],
+                                show: false,
+                            },
+*/
+                            {
+                                
                                 Header: "Disk Benchmark History",
                                 columns: [
                                     {
                                         Header: "Mount Path",
                                         accessor: "mountPath",
                                         minWidth: 135,
-                                        style: {fontWeight: "bold"}
+                                        style: {fontWeight: "bold"},
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: "Working Set",
                                         id: "workingSetSize",
                                         Cell: sizeCell,
-                                        accessor: "workingSetSize"
+                                        accessor: "workingSetSize",
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: "O_DIRECT",
@@ -144,6 +188,7 @@ export class DiskBenchmarkHistory extends React.Component {
                                         accessor: x => x.o_Direct !== undefined ? x.o_Direct.toLowerCase() : "",
                                         minWidth: 65,
                                         style: centerAlign,
+                                        aggregate: () => null,
                                     },
                                 ]
                             },
@@ -156,6 +201,7 @@ export class DiskBenchmarkHistory extends React.Component {
                                         Cell: speedCell,
                                         accessor: "allocate",
                                         style: rightAlign,
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: "Read",
@@ -163,6 +209,7 @@ export class DiskBenchmarkHistory extends React.Component {
                                         Cell: speedCell,
                                         accessor: "seqRead",
                                         style: rightAlign,
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: "Write",
@@ -170,6 +217,7 @@ export class DiskBenchmarkHistory extends React.Component {
                                         Cell: speedCell,
                                         accessor: "seqWrite",
                                         style: rightAlign,
+                                        aggregate: () => null,
                                     },
                                 ]
                             },
@@ -182,12 +230,14 @@ export class DiskBenchmarkHistory extends React.Component {
                                         Cell: (row) => <span>{Helper.Common.formatBytes(row.value,0)}</span>,
                                         minWidth: 65,
                                         style: rightAlign,
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: "Read",
                                         Cell: speedCell,
                                         accessor: "randRead1T",
                                         style: rightAlign,
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: "Write",
@@ -195,6 +245,7 @@ export class DiskBenchmarkHistory extends React.Component {
                                         Cell: speedCell,
                                         accessor: "randWrite1T",
                                         style: rightAlign,
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: "Threads",
@@ -203,6 +254,7 @@ export class DiskBenchmarkHistory extends React.Component {
                                         accessor: "threadsNumber",
                                         style: centerAlign,
                                         minWidth: 48, width: 48,
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: () => <span>Read <sup>n</sup></span>,
@@ -210,6 +262,7 @@ export class DiskBenchmarkHistory extends React.Component {
                                         Cell: speedCell,
                                         accessor: "randReadNT",
                                         style: rightAlign,
+                                        aggregate: () => null,
                                     },
                                     {
                                         Header: () => <span>Write <sup>n</sup></span>,
@@ -217,6 +270,7 @@ export class DiskBenchmarkHistory extends React.Component {
                                         Cell: speedCell,
                                         accessor: "randWriteNT",
                                         style: rightAlign,
+                                        aggregate: () => null,
                                     },
                                 ]
                             }
