@@ -55,7 +55,7 @@ namespace Universe.Dashboard.DAL.Tests
                     GlobalCleanUp.Enqueue($"Delete {artifact}", () => { provider4Tests.DropDatabase(serverConnectionString, dbName); });
 
                     var db = newDbContext(dbConnectionString);
-                    GracefulFail($"Apply migrations for {artifact}", () => Migrate(provider4Tests, db));
+                    GracefulFail($"Apply migrations for {artifact}", () => provider4Tests.Provider4Runtime.Migrate(db, dbConnectionString));
                     
                     var shortVer = db.Database.GetShortVersion();
                     ret.Add(new DbTestParameter()
@@ -69,20 +69,6 @@ namespace Universe.Dashboard.DAL.Tests
 
             return ret;
         }
-        
-        static void Migrate(IProvider4Tests provider, DbContext db)
-        {
-            // using is OK for mysql, but ObjectDisposedEException for postgres
-            var con = db.Database.GetDbConnection();
-            {
-                provider.Provider4Runtime.CreateMigrationHistoryTableIfAbsent(
-                    con,
-                    DashboardContextOptionsFactory.MigrationsTableName);
-            }
-            
-            db.Database.Migrate();
-        }
-
 
         static void GracefulFail(string caption, Action action)
         {

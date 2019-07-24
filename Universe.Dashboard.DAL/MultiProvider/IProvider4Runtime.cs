@@ -2,7 +2,10 @@ using System;
 using System.Data;
 using System.Diagnostics;
 using System.Threading;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Universe.Dashboard.DAL.MultiProvider
 {
@@ -13,10 +16,11 @@ namespace Universe.Dashboard.DAL.MultiProvider
         IDbConnection CreateConnection(string connectionString);
         void ApplyDbContextOptions(DbContextOptionsBuilder builder, string connectionString);
         string GetShortVersion(IDbConnection connection);
-
-        // Sqlite does nothing
+        
+        // for compatiblity, but sqlite provider do nothing
         void CreateMigrationHistoryTableIfAbsent(IDbConnection connection, string migrationsHistoryTable);
     }
+    
 
     public static class Providers4Runtime
     {
@@ -32,23 +36,50 @@ namespace Universe.Dashboard.DAL.MultiProvider
             if (family == EF.Family.PgSql) return PgSql;
             throw new ArgumentException($"Unknown provider family {family}", nameof(family));
         }
-        
-        public static Exception WaitFor(this IProvider4Runtime provider, IDbConnection db, int timeout)
+
+        public static void Migrate(this IProvider4Runtime provider, DbContext dashboardContext, string connectionString)
+        {
+            var historyRepository = dashboardContext.Database.GetService<IHistoryRepository>();
+
+            // string createScript = historyRepository.GetCreateIfNotExistsScript(); // doesnt work for mysql 5.1 - 5.5
+            // hack
+            string createScript = historyRepository.GetCreateScript();
+            Console.WriteLine($"historyRepository.GetCreateScript() is {Environment.NewLine}{createScript}");
+            using (var con = provider.CreateConnection(connectionString))
+            {
+                try
+                {
+                    con.Execute(createScript);
+                }
+                catch
+                {
+                    // hack, because historyRepository.Exists() sometimes returns false
+                    // in case of fail the call to Database.Migrate() will throw the same.
+                }
+            }
+
+            dashboardContext.Database.Migrate();
+        }
+
+        public static Exception WaitFor(this IProvider4Runtime provider, string connectionString, int timeout)
         {
             Stopwatch sw = Stopwatch.StartNew();
             Exception ret = null;
             do
             {
-                try
+                using (var con = provider.CreateConnection(connectionString))
                 {
-                    provider.GetShortVersion(db);
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    ret = ex;
-                    if (sw.ElapsedMilliseconds > timeout) return ret;
-                    Thread.Sleep(200);
+                    try
+                    {
+                        provider.GetShortVersion(con);
+                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        ret = ex;
+                        if (sw.ElapsedMilliseconds > timeout) return ret;
+                        Thread.Sleep(200);
+                    }
                 }
 
             } while (sw.ElapsedMilliseconds < timeout);

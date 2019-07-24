@@ -2,12 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using KernelManagementJam;
 using NUnit.Framework;
-using Universe.Dashboard.DAL.Tests;
-
-
 
 [SetUpFixture]
 public class GlobalCleanUp
@@ -34,33 +30,24 @@ public class GlobalCleanUp
     {
         lock (Sync)
         {
-            if (!Subscrined)
+            OnShutdown.Add(() =>
             {
-                AppDomain.CurrentDomain.ProcessExit += delegate
+                int counter;
+                Stopwatch sw = Stopwatch.StartNew();
+                try
                 {
-                    // foreach (var a in OnShutdown) a();
-                };
-                Subscrined = true;
-            }
+                    action();
+                    counter = Interlocked.Increment(ref Counter);
+                    Console.WriteLine($"[Cleanup] #{counter} OK: {title} in {sw.ElapsedMilliseconds:n0} msec");
+                }
+                catch (Exception ex)
+                {
+                    counter = Interlocked.Increment(ref Counter);
+                    Console.WriteLine(
+                        $"[Cleanup] #{counter} FAIL: {title} in {sw.ElapsedMilliseconds:n0} msec. {ex.GetExceptionDigest()}");
+                }
+            });
         }
-
-        // Console.WriteLine($"Enqueuing {title}");
-        OnShutdown.Add(() =>
-        {
-            int counter;
-            Stopwatch sw = Stopwatch.StartNew();
-            try
-            {
-                action();
-                counter = Interlocked.Increment(ref Counter);
-                Console.WriteLine($"[Cleanup] #{counter} OK: {title} in {sw.ElapsedMilliseconds:n0} msec");
-            }
-            catch (Exception ex)
-            {
-                counter = Interlocked.Increment(ref Counter);
-                Console.WriteLine($"[Cleanup] #{counter} FAIL: {title} in {sw.ElapsedMilliseconds:n0} msec. {ex.GetExceptionDigest()}");
-            }
-        });
     }
 }
 
