@@ -33,6 +33,9 @@ namespace Universe.W3Top
                             Console.WriteLine(
                                 $"{runtimeParameters.Family} server is not ready. {exception.GetExceptionDigest()}");
                     }
+                    
+                    provider.Migrate(dashboardContext, runtimeParameters.ConnectionString);
+/*
 
                     var historyRepository = dashboardContext.Database.GetService<IHistoryRepository>();
                     bool historyExists = historyRepository.Exists();
@@ -48,6 +51,7 @@ namespace Universe.W3Top
                             conSetup.Execute(createScript);
                         }
                     }
+*/
                 }
                 
                 var shortVersion = dashboardContext.Database.GetShortVersion();
