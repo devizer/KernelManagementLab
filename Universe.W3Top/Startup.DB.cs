@@ -54,10 +54,13 @@ namespace Universe.W3Top
 */
                 }
                 
+                
+            }
+
+            using (var dashboardContext = new DashboardContext())
+            {
                 var shortVersion = dashboardContext.Database.GetShortVersion();
                 Console.WriteLine($"DB Server is ready. Its version is: {shortVersion}");
-                
-                RelationalDatabaseFacadeExtensions.Migrate(dashboardContext.Database);
             }
         }
         
