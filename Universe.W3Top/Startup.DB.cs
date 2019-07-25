@@ -11,15 +11,12 @@ namespace Universe.W3Top
         private static void CreateOrUpgradeDb()
         {
             var runtimeParameters = DashboardContextOptionsFactory.RuntimeParameters;
+            IProvider4Runtime provider = DashboardContextOptionsFactory.Family.GetProvider();
+            provider.ValidateConnectionString(runtimeParameters.ConnectionString);
+            
             using (StopwatchLog.ToConsole($"Create/Upgrade {runtimeParameters.Family} DB Structure"))
             using (var dashboardContext = new DashboardContext())
             {
-
-                
-
-                IProvider4Runtime provider = DashboardContextOptionsFactory.Family.GetProvider();
-                provider.ValidateConnectionString(runtimeParameters.ConnectionString);
-
                 // sqlite is always ready and another existing db-file is never used
                 if (runtimeParameters.Family != EF.Family.Sqlite)
                 {
@@ -46,6 +43,5 @@ namespace Universe.W3Top
                 Console.WriteLine($"DB Server is ready. Its version is: {shortVersion}");
             }
         }
-        
     }
 }
