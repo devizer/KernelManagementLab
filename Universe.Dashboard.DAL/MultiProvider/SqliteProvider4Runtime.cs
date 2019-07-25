@@ -14,6 +14,16 @@ namespace Universe.Dashboard.DAL.MultiProvider
             SqliteConnectionStringBuilder b = new SqliteConnectionStringBuilder(connectionString);
         }
 
+        public string SetPooling(string connectionString, bool pooling)
+        {
+            return connectionString;
+        }
+
+        public string SetConnectionTimeout(string connectionString, int connectionTimeout)
+        {
+            return connectionString;
+        }
+
         public IDbConnection CreateConnection(string connectionString)
         {
             return new SqliteConnection(connectionString);
@@ -27,9 +37,9 @@ namespace Universe.Dashboard.DAL.MultiProvider
             });
         }
 
-        public string GetShortVersion(IDbConnection connection)
+        public string GetShortVersion(IDbConnection connection, int? commandTimeout = 20)
         {
-            return connection.ExecuteScalar<string>("Select sqlite_version();");
+            return connection.ExecuteScalar<string>("Select sqlite_version();", commandTimeout: commandTimeout);
         }
 
         public void CreateMigrationHistoryTableIfAbsent(IDbConnection connection, string migrationsHistoryTable)

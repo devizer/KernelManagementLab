@@ -15,6 +15,20 @@ namespace Universe.Dashboard.DAL.MultiProvider
             NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
         }
 
+        public string SetPooling(string connectionString, bool pooling)
+        {
+            NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
+            b.Pooling = pooling;
+            return b.ConnectionString;
+        }
+
+        public string SetConnectionTimeout(string connectionString, int connectionTimeout)
+        {
+            NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
+            b.Timeout = connectionTimeout;
+            return b.ConnectionString;
+        }
+
         public IDbConnection CreateConnection(string connectionString)
         {
             return new NpgsqlConnection(connectionString);
@@ -28,9 +42,9 @@ namespace Universe.Dashboard.DAL.MultiProvider
             });
         }
 
-        public string GetShortVersion(IDbConnection connection)
+        public string GetShortVersion(IDbConnection connection, int? commandTimeout = 20)
         {
-            return connection.ExecuteScalar<string>("show server_version;");
+            return connection.ExecuteScalar<string>("show server_version;", commandTimeout: commandTimeout);
         }
 
         private const string SqlSelectHistoryTable_PgSQL = @"

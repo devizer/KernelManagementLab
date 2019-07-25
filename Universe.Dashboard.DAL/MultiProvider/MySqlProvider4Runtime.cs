@@ -14,6 +14,20 @@ namespace Universe.Dashboard.DAL.MultiProvider
             MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(connectionString);
         }
 
+        public string SetPooling(string connectionString, bool pooling)
+        {
+            MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(connectionString);
+            b.Pooling = pooling;
+            return b.ConnectionString;
+        }
+
+        public string SetConnectionTimeout(string connectionString, int connectionTimeout)
+        {
+            MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(connectionString);
+            b.ConnectionTimeout = (uint) connectionTimeout;
+            return b.ConnectionString;
+        }
+
         public IDbConnection CreateConnection(string connectionString)
         {
             return new MySqlConnection(connectionString);
@@ -27,9 +41,9 @@ namespace Universe.Dashboard.DAL.MultiProvider
             });
         }
 
-        public string GetShortVersion(IDbConnection connection)
+        public string GetShortVersion(IDbConnection connection, int? commandTimeout = 20)
         {
-            return connection.ExecuteScalar<string>("Select version();");
+            return connection.ExecuteScalar<string>("Select version();", commandTimeout: commandTimeout);
         }
 
         private const string SqlSelectHistoryTable_MySQL = @"

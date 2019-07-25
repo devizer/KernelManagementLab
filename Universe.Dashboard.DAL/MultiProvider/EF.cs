@@ -79,7 +79,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
         {
             using (var con = databaseFacade.GetDbConnection())
             {
-                return databaseFacade.GetFamily().GetProvider().GetShortVersion(con);
+                return databaseFacade.GetFamily().GetProvider().GetShortVersion(con, 20);
             }
         }
 

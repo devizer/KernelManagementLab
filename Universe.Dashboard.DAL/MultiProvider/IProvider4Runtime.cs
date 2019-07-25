@@ -15,7 +15,10 @@ namespace Universe.Dashboard.DAL.MultiProvider
         void ValidateConnectionString(string connectionString);
         IDbConnection CreateConnection(string connectionString);
         void ApplyDbContextOptions(DbContextOptionsBuilder builder, string connectionString);
-        string GetShortVersion(IDbConnection connection);
+        string GetShortVersion(IDbConnection connection, int? commandTimeout = 20);
+
+        string SetPooling(string connectionString, bool pooling);
+        string SetConnectionTimeout(string connectionString, int connectionTimeout);
         
         // for compatiblity, but sqlite provider do nothing
         void CreateMigrationHistoryTableIfAbsent(IDbConnection connection, string migrationsHistoryTable);
@@ -64,14 +67,15 @@ namespace Universe.Dashboard.DAL.MultiProvider
         public static Exception WaitFor(this IProvider4Runtime provider, string connectionString, int timeout)
         {
             Stopwatch sw = Stopwatch.StartNew();
+            var tunedConnectionString = provider.SetConnectionTimeout(provider.SetPooling(connectionString, false), 5);
             Exception ret = null;
             do
             {
-                using (var con = provider.CreateConnection(connectionString))
+                using (var con = provider.CreateConnection(tunedConnectionString))
                 {
                     try
                     {
-                        provider.GetShortVersion(con);
+                        provider.GetShortVersion(con, 5);
                         return null;
                     }
                     catch (Exception ex)
