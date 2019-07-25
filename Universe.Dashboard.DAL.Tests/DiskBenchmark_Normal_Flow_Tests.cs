@@ -57,9 +57,9 @@ namespace Tests
             Assert.IsNotNull(copyFromHistory, "copyFromHistory is not null");
             Assert.AreEqual(".", copyFromHistory.MountPath);
             var historyRow = copyFromHistory.ToHistoryItem();
-            Assert.IsTrue(historyRow.SeqRead.HasValue && historyRow.SeqRead.Value > 0, "SeqRead > 0");
-            Assert.IsTrue(historyRow.RandRead1T.HasValue && historyRow.RandRead1T.Value > 0, "RandRead1T > 0");
-            Assert.IsTrue(historyRow.RandReadNT.HasValue && historyRow.RandReadNT.Value > 0, "RandReadNT > 0");
+            Assert.IsTrue(historyRow.SeqRead.GetValueOrDefault() > 0, "SeqRead > 0");
+            Assert.IsTrue(historyRow.RandRead1T.GetValueOrDefault() > 0, "RandRead1T > 0");
+            Assert.IsTrue(historyRow.RandReadNT.GetValueOrDefault() > 0, "RandReadNT > 0");
             Console.WriteLine("DiskBenchmarkDataAccess.GetHistory -> ToHistoryItem() works properly");
 
 
