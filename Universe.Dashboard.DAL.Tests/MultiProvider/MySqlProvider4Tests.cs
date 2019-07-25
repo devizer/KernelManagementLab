@@ -45,11 +45,5 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
             }
         }
 
-        public string GetServerName(string connectionString)
-        {
-            var b = new MySqlConnectionStringBuilder(connectionString);
-            return $"MySQL server {b.Server}:{b.Port}";
-        }
-
     }
 }

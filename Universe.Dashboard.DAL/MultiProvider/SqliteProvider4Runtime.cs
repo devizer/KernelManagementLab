@@ -37,6 +37,12 @@ namespace Universe.Dashboard.DAL.MultiProvider
             });
         }
 
+        public string GetServerName(string connectionString)
+        {
+            SqliteConnectionStringBuilder b = new SqliteConnectionStringBuilder(connectionString);
+            return $"Sqlite DB {b.DataSource}";
+        }
+
         public string GetShortVersion(IDbConnection connection, int? commandTimeout = 20)
         {
             return connection.ExecuteScalar<string>("Select sqlite_version();", commandTimeout: commandTimeout);

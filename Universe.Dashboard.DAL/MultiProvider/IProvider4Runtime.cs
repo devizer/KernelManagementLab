@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,9 @@ namespace Universe.Dashboard.DAL.MultiProvider
 
         string SetPooling(string connectionString, bool pooling);
         string SetConnectionTimeout(string connectionString, int connectionTimeout);
+
+        string GetServerName(string connectionString);
+
         
         // for compatiblity, but sqlite provider do nothing
         void CreateMigrationHistoryTableIfAbsent(IDbConnection connection, string migrationsHistoryTable);
@@ -69,6 +73,10 @@ namespace Universe.Dashboard.DAL.MultiProvider
             Stopwatch sw = Stopwatch.StartNew();
             var tunedConnectionString = provider.SetConnectionTimeout(provider.SetPooling(connectionString, false), 5);
             Exception ret = null;
+            // string artifact = $"{provider.Family} server {provider.get}"
+            StringBuilder debugProgress = new StringBuilder($"Check health of {provider.GetServerName(tunedConnectionString)}: ");
+            string GetMSec() => ((double) sw.ElapsedTicks / Stopwatch.Frequency).ToString("n2");
+                
             do
             {
                 using (var con = provider.CreateConnection(tunedConnectionString))
@@ -76,12 +84,15 @@ namespace Universe.Dashboard.DAL.MultiProvider
                     try
                     {
                         provider.GetShortVersion(con, 5);
+                        Console.WriteLine($"{debugProgress} OK in {GetMSec()}");
                         return null;
                     }
                     catch (Exception ex)
                     {
                         ret = ex;
                         if (sw.ElapsedMilliseconds > timeout) return ret;
+                        debugProgress.Append($" {GetMSec() :(,}");
+                        Console.WriteLine($"{debugProgress}");
                         Thread.Sleep(200);
                     }
                 }

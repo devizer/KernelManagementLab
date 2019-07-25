@@ -12,8 +12,5 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
         string CreateDatabase(string serverConnectionString, string dbName);
         void DropDatabase(string serverConnectionString, string dbName);
 
-        // TODO: Move to IProvider4Runtime
-        string GetServerName(string connectionString);
-        
     }    
 }

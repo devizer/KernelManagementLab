@@ -11,7 +11,7 @@
       <env name="ASPNETCORE_URLS" value="http://localhost:5010;https://0.0.0.0:5011" />
       <env name="PID_FILE_FULL_PATH" value="$USER_HOME$/.local/w3top.pid" />
       <env name="RESPONSE_COMPRESSION" value="True" />
-      <env name="PGSQL_DATABASE__" value="Host=localhost;Database=w3top;Username=w3top;Password=pass" />
+      <env name="PGSQL_DATABASE" value="Host=localhost;Database=w3top;Username=w3top;Password=pass" />
     </envs>
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />

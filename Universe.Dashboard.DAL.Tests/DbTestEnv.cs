@@ -37,7 +37,7 @@ namespace Universe.Dashboard.DAL.Tests
                 {
                     counter++;
                     var dbName = string.Format(dbNameFormat, (char) (64 + counter));
-                    var artifact = $"DB `{dbName}` on {provider4Tests.GetServerName(serverConnectionString)}";
+                    var artifact = $"DB `{dbName}` on {provider4Tests.Provider4Runtime.GetServerName(serverConnectionString)}";
 
                     var dbConnectionString = provider4Tests.CreateDatabase(serverConnectionString, dbName);
 

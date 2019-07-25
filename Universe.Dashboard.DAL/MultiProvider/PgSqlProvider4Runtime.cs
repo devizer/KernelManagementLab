@@ -41,6 +41,14 @@ namespace Universe.Dashboard.DAL.MultiProvider
                 options.MigrationsHistoryTable(DashboardContextOptionsFactory.MigrationsTableName);
             });
         }
+        
+        public string GetServerName(string connectionString)
+        {
+            NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
+            return $"PostgresSQL server {b.Host}:{b.Port}";
+        }
+
+
 
         public string GetShortVersion(IDbConnection connection, int? commandTimeout = 20)
         {

@@ -40,11 +40,5 @@ namespace Universe.Dashboard.DAL.Tests.MultiProvider
             }
         }
 
-        public string GetServerName(string connectionString)
-        {
-            NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
-            return $"PgSQL server {b.Host}:{b.Port}";
-        }
-        
     }
 }

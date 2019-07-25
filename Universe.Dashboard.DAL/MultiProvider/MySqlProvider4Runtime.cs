@@ -41,10 +41,18 @@ namespace Universe.Dashboard.DAL.MultiProvider
             });
         }
 
+        public string GetServerName(string connectionString)
+        {
+            var b = new MySqlConnectionStringBuilder(connectionString);
+            return $"MySQL server {b.Server}:{b.Port}";
+        }
+
         public string GetShortVersion(IDbConnection connection, int? commandTimeout = 20)
         {
             return connection.ExecuteScalar<string>("Select version();", commandTimeout: commandTimeout);
         }
+        
+
 
         private const string SqlSelectHistoryTable_MySQL = @"
 SELECT table_name 
