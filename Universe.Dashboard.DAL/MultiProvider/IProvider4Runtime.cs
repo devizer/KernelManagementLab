@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using Dapper;
+using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -74,7 +75,8 @@ namespace Universe.Dashboard.DAL.MultiProvider
             var tunedConnectionString = provider.SetConnectionTimeout(provider.SetPooling(connectionString, false), 5);
             Exception ret = null;
             // string artifact = $"{provider.Family} server {provider.get}"
-            StringBuilder debugProgress = new StringBuilder($"Check health of {provider.GetServerName(tunedConnectionString)}: ");
+            var debugMsgHeader = $"Check health of {provider.GetServerName(tunedConnectionString)}: ";
+            StringBuilder debugProgress = new StringBuilder(debugMsgHeader);
             string GetMSec() => ((double) sw.ElapsedTicks / Stopwatch.Frequency).ToString("n2");
                 
             do
@@ -98,6 +100,9 @@ namespace Universe.Dashboard.DAL.MultiProvider
                 }
 
             } while (sw.ElapsedMilliseconds < timeout);
+
+            if (ret != null)
+                Console.WriteLine($"{debugMsgHeader} {ret.GetExceptionDigest()}{Environment.NewLine}{ret}");
 
             return ret;
         }
