@@ -42,13 +42,11 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
             <div>
                 {parts.map((part, index) =>
                         part.highlight ? (
-                            <span key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </span>
+                            <span key={String(index)} style={{ fontWeight: 500 }}>{part.text}</span>
                         ) : (
-                            <strong key={String(index)} style={{ fontWeight: 300 }}>
-                                {part.text}
-                            </strong>
+                            <span key={String(index)}>{part.text}</span>
+                                
+                            
                         ),
                 )}
             </div>
@@ -64,8 +62,16 @@ function getSuggestions(value) {
     return inputLength === 0
         ? []
         : suggestions.filter(suggestion => {
-            const keep =
-                count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+            // const keep = count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+            const keep = count < 5 && 
+                (
+                    inputValue.length >= 2 
+                        ? suggestion.label.toLowerCase().indexOf(inputValue) >= 0  
+                        : suggestion.label.slice(0, inputLength).toLowerCase() === inputValue
+                );
+            
+            const contains = suggestion.label.indexOf()
+                
 
             if (keep) {
                 count += 1;
@@ -166,7 +172,9 @@ class IntegrationAutosuggest extends React.Component {
                         </Paper>
                     )}
                 />
+                
                 <div className={classes.divider} />
+                
                 <Autosuggest
                     {...autosuggestProps}
                     inputProps={{
