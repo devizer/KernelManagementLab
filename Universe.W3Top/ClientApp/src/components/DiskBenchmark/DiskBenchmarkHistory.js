@@ -43,7 +43,7 @@ import "react-table/react-table.css";
 // Done: Icon for O_DIRECT
 
 const renderODirectIcon = o_Direct => {
-    if (o_Direct === "True") return <FontAwesomeIcon style={{color:"#333"}} icon={faCheckDouble} />;
+    if (o_Direct === "True") return <FontAwesomeIcon style={{color:"#555"}} icon={faCheckDouble} />;
     if (o_Direct === "False") return <span style={{color:"grey"}}>&mdash;</span>;
     return <span/>;
 };
