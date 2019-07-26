@@ -84,7 +84,7 @@ script:
 - pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
 
 - |
-   time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m
+   time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m
   
 - |
    # publish self-contained
@@ -94,7 +94,7 @@ script:
    popd
   
 - export SKIP_GIT_PUSH=true; sudo mkdir -p /transient-builds; sudo chown $(whoami) /transient-builds;
-- bash publish-public.sh
+- bash -e publish-public.sh
 - echo Current dir is $(pwd)
 - ls -la /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin || true
 - |
