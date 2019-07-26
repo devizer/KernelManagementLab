@@ -45,10 +45,13 @@ echo $ver > $clone/public/version.txt
 say "yarn install [$ver]"
 cd ClientApp; time (yarn install); cd ..
 
+say "yarn build [$ver]"
+cd ClientApp; time (yarn build); cd ..
+
 for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 
   say "Building $r [$ver]"
-  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
+  time SKIP_CLIENT_APP=true dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
   pushd bin/$r
   chmod 644 *.dll
   chmod 755 Universe.W3Top
