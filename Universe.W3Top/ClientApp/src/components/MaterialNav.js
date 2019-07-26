@@ -31,7 +31,7 @@ import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
 
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const styles = theme => ({
     root: {
@@ -258,11 +258,11 @@ class PersistentDrawerLeft extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        {MainMenuLink("Live Mounts", "/mounts")}
                         {MainMenuLink("Network Live Chart", "/net-v2")}
-                        {MainMenuLink("Disks Live Chart", "/disks")}
                         <Divider />
-                        {MainMenuLink("Disk Benchmark (in progress)", "/disk-benchmark")}
+                        {MainMenuLink("Live Mounts", "/mounts")}
+                        {MainMenuLink("Disks Live Chart", "/disks")}
+                        {MainMenuLink("Disk Benchmark", "/disk-benchmark")}
                         <Divider />
                         <ListSubheader disableSticky={true} style={{paddingTop:32, paddingBottom:16, textAlign: "center", lineHeight: "1rem"}}>SAND-BOX<br/>please ignore</ListSubheader>
                         {MainMenuLink("Missed network", "/net-v1")}
