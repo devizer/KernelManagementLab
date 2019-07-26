@@ -96,8 +96,8 @@ namespace Universe.Benchmark.DiskBench
 
                 ProgressStep failedStep = new ProgressStep($"Benchmark failed. {ex.GetExceptionDigest()}") {State = ProgressStepState.Error};
                 Progress.Steps.Add(failedStep);
-                
-
+                Console.WriteLine($"Readonly Benchmark for [{Parameters.WorkFolder}] failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
+                throw;
             }
             finally
             {
