@@ -10,6 +10,8 @@ import { Poc1Chart } from './components/Poc1Chart';
 import { Poc2Chart } from './components/Poc2Chart';
 import MNav from "./components/MaterialNav"
 import { NetChartContainer } from './components/NetChartContainer';
+import NetBenchmarkV1 from './components/NetBenchmark/NetBenchmarkV1';
+
 import { NetChartContainer_V2 } from './components/NetChartContainer_V2';
 import { BlockChartContainer_V2 } from './components/BlockStatChartContainer_V2';
 import { MountsList } from './components/MountsList';
@@ -70,6 +72,7 @@ export default class App extends Component {
                         <Route exact path='/net-v2' component={NetChartContainer_V2} />
                         <Route exact path='/mounts' component={MountsList} />
                         <Route exact path='/disk-benchmark' component={DiskBenchmarkDialog} />
+                        <Route exact path='/net-benchmark-pre1' component={NetBenchmarkV1} />
                         <Route exact path='/popper-lab' component={PopperLab} />
                         <Route path="*" component={App._404} />
                     </Switch>

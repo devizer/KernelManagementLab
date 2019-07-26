@@ -44,6 +44,7 @@
         <Content Include="ClientApp\src\components\MaterialNav.js" />
         <Content Include="ClientApp\src\components\MountsList.js" />
         <Content Include="ClientApp\src\components\MyTable.css" />
+        <Content Include="ClientApp\src\components\NetBenchmark\NetBenchmarkV1.js" />
         <Content Include="ClientApp\src\components\NetChartContainer_V2.js" />
         <Content Include="ClientApp\src\components\NetChartProps.js" />
         <Content Include="ClientApp\src\components\NetDevChart.js" />
