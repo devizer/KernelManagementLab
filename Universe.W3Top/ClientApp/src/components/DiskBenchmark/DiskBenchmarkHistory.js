@@ -48,7 +48,6 @@ const renderODirectIcon = o_Direct => {
     return <span/>;
 };
 
-
 export class DiskBenchmarkHistory extends React.Component {
 
     prevTrigger = null;

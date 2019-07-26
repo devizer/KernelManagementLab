@@ -22,13 +22,22 @@ import MailIcon from '@material-ui/icons/Mail';
 import Icon from '@material-ui/core/Icon';
 import StarIcon from '@material-ui/icons/Star';
 import FlareIcon from '@material-ui/icons/Flare';
+import ScoreIcon from '@material-ui/icons/Score';
+import InsertChartOutlinedIcon from '@material-ui/icons/InsertChartOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+import { faServer } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+
 import AppGitInfo from "../AppGitInfo"
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
+
+
 
 
 const drawerWidth = 250;
@@ -190,10 +199,10 @@ class PersistentDrawerLeft extends React.Component {
             </tr>
         )};
 
-        const MainMenuLink = (text,routeTo) => {
+        const MainMenuLink = (icon, text,routeTo) => {
             return (
                 <ListItem button component={NavLink} tag={Link} to={routeTo} key={`${text}@MainMenu`} onClick={() => this.handleDrawerClose()}>
-                    <ListItemIcon><FlareIcon/></ListItemIcon>
+                    <ListItemIcon>{icon}</ListItemIcon>
                     <ListItemText primary={text} />
                 </ListItem>
             );
@@ -258,17 +267,17 @@ class PersistentDrawerLeft extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        {MainMenuLink("Network Live Chart", "/net-v2")}
+                        {MainMenuLink(<InsertChartOutlinedIcon/>,"Network Live Chart", "/net-v2")}
                         <Divider />
-                        {MainMenuLink("Live Mounts", "/mounts")}
-                        {MainMenuLink("Disks Live Chart", "/disks")}
-                        {MainMenuLink("Disk Benchmark", "/disk-benchmark")}
+                        {MainMenuLink(<FontAwesomeIcon icon={faServer} style={{marginLeft:4, marginRight:5}}/>,"Live Mounts", "/mounts")}
+                        {MainMenuLink(<InsertChartOutlinedIcon/>,"Disks Live Chart", "/disks")}
+                        {MainMenuLink(<ScoreIcon/>,"Disk Benchmark", "/disk-benchmark")}
                         <Divider />
                         <ListSubheader disableSticky={true} style={{paddingTop:32, paddingBottom:16, textAlign: "center", lineHeight: "1rem"}}>SAND-BOX<br/>please ignore</ListSubheader>
-                        {MainMenuLink("Missed network", "/net-v1")}
+                        {MainMenuLink(<FlareIcon/>,"Missed network", "/net-v1")}
                         <Divider />
-                        {MainMenuLink("Single Y-axis chart", "/1-axis")}
-                        {MainMenuLink("Double Y-axis one", "/2-axis")}
+                        {MainMenuLink(<FlareIcon/>,"Single Y-axis chart", "/1-axis")}
+                        {MainMenuLink(<FlareIcon/>,"Double Y-axis one", "/2-axis")}
                     </List>
                     <Divider />
                 </Drawer>
