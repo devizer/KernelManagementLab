@@ -479,7 +479,7 @@ function DiskBenchmarkDialog(props) {
             <Popper id={errorId} open={errorOpened} anchorEl={errorAnchor} placement="bottom">
                 <React.Fragment>
                     {Enumerable.Range(1,10).ToArray().map(i => (
-                        <React.Fragment>
+                        <React.Fragment key={i}>
                         <br/>
                         <Paper >
                                 <Typography style={{padding:16,color: "darkred"}}>{i}: The content of the Popper.</Typography>

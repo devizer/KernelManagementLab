@@ -21,7 +21,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 import DoneIcon from '@material-ui/icons/Done';
-import { faServer } from '@fortawesome/free-solid-svg-icons'
+import {faCheck, faCheckDouble} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -40,7 +40,14 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 
 // Done: add threads count for random access
-// TODO: Icon for O_DIRECT
+// Done: Icon for O_DIRECT
+
+const renderODirectIcon = o_Direct => {
+    if (o_Direct === "True") return <FontAwesomeIcon style={{color:"#333"}} icon={fa} />;
+    if (o_Direct === "False") return <span style={{color:"grey"}}>&mdash;</span>;
+    return <span/>;
+};
+
 
 export class DiskBenchmarkHistory extends React.Component {
 
@@ -185,7 +192,9 @@ export class DiskBenchmarkHistory extends React.Component {
                                     {
                                         Header: "O_DIRECT",
                                         id: "O_DIRECT",
-                                        accessor: x => x.o_Direct !== undefined ? x.o_Direct.toLowerCase() : "",
+                                        Cell: row => renderODirectIcon(row.value),
+                                        // accessor: x => x.o_Direct !== undefined ? x.o_Direct.toLowerCase() : "",
+                                        accessor: x => x.o_Direct,
                                         minWidth: 65,
                                         style: centerAlign,
                                         aggregate: () => null,
