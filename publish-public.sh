@@ -60,9 +60,8 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   say "Compressing $r [$ver] as GZIP"
   echo $ver > VERSION
   time sudo bash -c "tar cf - . | pv | gzip -9 > ../w3top-$r.tar.gz"
-  sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.footprint
+  sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.hash256
   sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.hash
-  sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.42
   cp ../w3top-$r.tar.gz* $clone/public/
   # say "Compressing $r [$ver] as XZ"
   # time sudo bash -c "tar cf - w3top | pv | xz -1 -z > ../w3top-$r.tar.xz"
