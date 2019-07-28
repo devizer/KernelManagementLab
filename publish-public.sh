@@ -14,7 +14,6 @@ function header() {
 counter=0;
 function say() { counter=$((counter+1)); header "STEP $counter" "$1"; }
 
-
 work=$HOME/transient-builds
 if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
 if [[ -d "/ssd" ]]; then work=/ssd/transient-builds; fi
