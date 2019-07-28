@@ -12,6 +12,7 @@ PGSQL_DATABASE_ESCAPED="${PGSQL_DATABASE:-}"
 if [[ "$(command -v systemd-escape)" != "" ]]; then
   MYSQL_DATABASE_ESCAPED=$(systemd-escape "${MYSQL_DATABASE:-}") || MYSQL_DATABASE_ESCAPED="${MYSQL_DATABASE:-}"
   PGSQL_DATABASE_ESCAPED=$(systemd-escape "${PGSQL_DATABASE:-}") || MYSQL_DATABASE_ESCAPED="${PGSQL_DATABASE:-}"
+  ExecStopPost=$(systemd-escape "${ExecStopPost:-}")
 fi
    
 
@@ -46,6 +47,7 @@ ExecStart='$ScriptPath'/Universe.W3Top
 Restart=on-failure
 RestartSec=10
 KillSignal=SIGINT
+ExecStopPost='${ExecStopPost:-}'
 SyslogIdentifier=w3top
 User=root
 Environment=PID_FILE_FULL_PATH=/var/run/w3top.pid
