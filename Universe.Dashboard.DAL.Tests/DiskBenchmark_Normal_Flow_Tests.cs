@@ -10,6 +10,7 @@ using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 using Universe.Dashboard.DAL.MultiProvider;
 using Universe.Dashboard.DAL.Tests;
+using Universe.DiskBench;
 
 namespace Tests
 {
@@ -45,6 +46,14 @@ namespace Tests
             
             DiskBenchmarkDataAccess dbda = new DiskBenchmarkDataAccess(context);
             var copyByToken = dbda.GetDiskBenchmarkResult(entity.Token);
+            // round double seconds
+            {
+                void DoRound(ProgressInfo progress) => progress.Steps.Where(step => step.Seconds.HasValue).ToList()
+                    .ForEach(step => step.Seconds = Math.Round(step.Seconds.GetValueOrDefault(), 4));
+
+                DoRound(copyByToken.Report);
+                DoRound(entity.Report);
+            }
             var actual = copyByToken.Report; var expected = entity.Report;
             var jsonActual = actual.AsJson();
             var jsonExpected = expected.AsJson();
