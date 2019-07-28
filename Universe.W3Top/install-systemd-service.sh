@@ -12,7 +12,6 @@ PGSQL_DATABASE_ESCAPED="${PGSQL_DATABASE:-}"
 if [[ "$(command -v systemd-escape)" != "" ]]; then
   MYSQL_DATABASE_ESCAPED=$(systemd-escape "${MYSQL_DATABASE:-}") || MYSQL_DATABASE_ESCAPED="${MYSQL_DATABASE:-}"
   PGSQL_DATABASE_ESCAPED=$(systemd-escape "${PGSQL_DATABASE:-}") || MYSQL_DATABASE_ESCAPED="${PGSQL_DATABASE:-}"
-  ExecStopPost=$(systemd-escape "${ExecStopPost:-}")
 fi
    
 
