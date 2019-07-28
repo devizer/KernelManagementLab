@@ -134,7 +134,7 @@ export class DiskBenchmarkHistory extends React.Component {
                     defaultPageSize={pageSize}
                     pageSizeOptions={[pageSize]}
                     pageSize={pageSize}
-                    noDataText="no history"
+                    noDataText="history is empty"
                     getNoDataProps={() => {return {style:{color:"gray", marginTop:30}}}}
                     // pivotBy={["createdDate"]}
                     // defaultExpanded={{2:true}}
