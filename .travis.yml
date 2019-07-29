@@ -16,7 +16,7 @@ matrix:
     os: osx
     osx_image: xcode10.2
 script:
-- url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash || true
+- url=https://raw.githubusercontent.com/devizer/glist/master/install-docker-on-debian.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
 - if [[ "$(lsb_release -c -s)" == xenial ]]; then export NEED_DEPLOY=sure; fi; echo "NEED_DEPLOY = [$NEED_DEPLOY]"
 - export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 - git branch
