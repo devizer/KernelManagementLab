@@ -20,7 +20,7 @@ namespace Tests
 
         [Test]
         [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
-        public void Perform_Save_Fetch_GetHistory(DbTestParameter argDB)
+        public void Perform_Save_FetchReport_GetHistory(DbTestParameter argDB)
         {
             ShowDbTestArgument(argDB);
             Environment.SetEnvironmentVariable("SKIP_FLUSHING", "true");

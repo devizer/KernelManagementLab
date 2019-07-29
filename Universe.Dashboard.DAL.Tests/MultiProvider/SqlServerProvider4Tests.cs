@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Dapper;
-using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
-using MySql.Data.MySqlClient;
 using Universe.Dashboard.DAL.MultiProvider;
 
 namespace Universe.Dashboard.DAL.Tests.MultiProvider

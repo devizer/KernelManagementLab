@@ -30,6 +30,23 @@ namespace Universe.Dashboard.DAL.MultiProvider
 
         public string GetShortVersion(IDbConnection connection, int? commandTimeout)
         {
+            dynamic row = connection.QueryFirst("Select @@MICROSOFTVERSION Ver32Bit, SERVERPROPERTY('ProductLevel') Level, SERVERPROPERTY('ProductUpdateLevel') UpdateLevel");
+
+            int ver32Bit = row.Ver32Bit;
+            string level = row.Level;
+            string updateLevel = row.UpdateLevel;
+            int v1 = ver32Bit >> 24;
+            int v2 = ver32Bit >> 16 & 0xFF;
+            int v3 = ver32Bit & 0xFFFF;
+            var ver = new Version(v1, v2, v3);
+            var ret = ver.ToString();
+            if (!string.IsNullOrEmpty(level) && level != "RTM") ret += $"-{level}";
+            if (!string.IsNullOrEmpty(updateLevel)) ret += $"-{updateLevel}";
+            return ret;
+        }
+
+        public string GetShortVersion_Legacy(IDbConnection connection, int? commandTimeout)
+        {
             int ver32Bit = connection.ExecuteScalar<int>("Select @@MICROSOFTVERSION", commandTimeout: commandTimeout);
             int v1 = ver32Bit >> 24;
             int v2 = ver32Bit >> 16 & 0xFF;
