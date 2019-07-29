@@ -24,7 +24,8 @@ export MSSQL_TEST_SERVER_2017
 ' >> $file
 
 # what the hell
-if [[ "$TRAVIS" == true ]] && [[ "$(lsb_release -cs)" != xenail ]]; then
+if [[ "$TRAVIS" == true ]] && [[ "$(lsb_release -cs)" != "xenial" ]]; then
+echo "=== HERE IS TRAVIS ON NON-xenial ==="
 echo '
 MSSQL_TEST_SERVER_2019="Server=localhost,1435;User=sa;Password=\`1qazxsw2;Pooling=false"
 export MSSQL_TEST_SERVER_2019
