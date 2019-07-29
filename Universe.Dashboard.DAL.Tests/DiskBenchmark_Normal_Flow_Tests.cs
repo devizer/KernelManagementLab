@@ -55,8 +55,6 @@ namespace Tests
                 DoRound(entity.Report);
             }
             var actual = copyByToken.Report; var expected = entity.Report;
-            var jsonActual = actual.AsJson();
-            var jsonExpected = expected.AsJson();
             Assert.AreEqual(expected.AsJson(), actual.AsJson());
             Console.WriteLine("DiskBenchmarkDataAccess.GetDiskBenchmarkResult by token is complete");
 
