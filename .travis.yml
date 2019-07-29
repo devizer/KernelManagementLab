@@ -67,6 +67,7 @@ script:
     pushd Universe.Dashboard.DAL.Tests && bash -e local-tests.sh && popd
   fi
   
+- docker logs sql-2019-for-tests | head -9999 || true
 - pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
 
 - |
