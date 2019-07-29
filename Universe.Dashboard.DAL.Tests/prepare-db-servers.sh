@@ -4,7 +4,8 @@ docker run -d --name sql-2017-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qaz
  || sudo docker start sql-2017-for-tests
 
 # what the hell
-privileged=""; if [[ "TRAVIS" == "true" ]]; then privileged="--privileged"; fi 
+privileged=""; if [[ "TRAVIS" == "true" ]]; then privileged="--privileged"; fi
+echo "Privileged: [$privileged]"  
 docker run -d $privileged --name sql-2019-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1435:1433 mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu \
  || sudo docker start sql-2019-for-tests
 
