@@ -13,6 +13,7 @@ namespace Universe.Dashboard.DAL
         {
             public static readonly string PgSqlDb = "PGSQL_DATABASE";
             public static readonly string MySqlDb = "MYSQL_DATABASE";
+            public static readonly string MSSqlDb = "MSSQL_DATABASE";
         }
 
         public static DbContextOptions Create()

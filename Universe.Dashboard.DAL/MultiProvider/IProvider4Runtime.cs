@@ -32,14 +32,15 @@ namespace Universe.Dashboard.DAL.MultiProvider
 
     public static class Providers4Runtime
     {
-        public static readonly MySqlProvider4Runtime MySql = new MySqlProvider4Runtime();
         public static readonly PgSqlProvider4Runtime PgSql = new PgSqlProvider4Runtime();
         public static readonly SqliteProvider4Runtime Sqlite = new SqliteProvider4Runtime();
+        public static readonly MySqlProvider4Runtime MySql = new MySqlProvider4Runtime();
+        public static readonly MSSqlProvider4Runtime SqlServer = new MSSqlProvider4Runtime();
 
         public static IProvider4Runtime GetProvider(this EF.Family family)
         {
             if (family == EF.Family.Sqlite) return Sqlite;
-            // if (family == EF.Family.SqlServer) return SqlServer;
+            if (family == EF.Family.SqlServer) return SqlServer;
             if (family == EF.Family.MySql) return MySql;
             if (family == EF.Family.PgSql) return PgSql;
             throw new ArgumentException($"Unknown provider family {family}", nameof(family));
@@ -61,7 +62,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
                 }
                 catch
                 {
-                    // hack, because historyRepository.Exists() sometimes returns false
+                    // hack, because historyRepository.Exists() sometimes returns false (old versions of MySQL)
                     // in case of fail the call to Database.Migrate() will throw the same.
                 }
             }

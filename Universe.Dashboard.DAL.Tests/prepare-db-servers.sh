@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+docker run -d --name sql-2017-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1434:1433 microsoft/mssql-server-linux:2017-latest \
+ || sudo docker start sql-2017-for-tests
+
+docker run -d --name sql-2019-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1435:1433 mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu \
+ || sudo docker start sql-2019-for-tests
+
 export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
 url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests-V2.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
 
@@ -8,6 +14,14 @@ url=https://raw.githubusercontent.com/devizer/glist/master/install-7-postres-for
 
 file=prepare-db-servers.generated.sh
 printf "" > $file
+
+echo '
+MSSQL_TEST_SERVER_2017="Server=localhost:1434;User=sa;Password=`1qazxsw2"
+export MSSQL_TEST_SERVER_2017
+
+MSSQL_TEST_SERVER_2019="Server=localhost:1435;User=sa;Password=`1qazxsw2"
+export MSSQL_TEST_SERVER_2019
+' >> $file
 
 echo '
 # postgres' >> $file

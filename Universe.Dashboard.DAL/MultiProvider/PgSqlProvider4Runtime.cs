@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Npgsql;
 
 namespace Universe.Dashboard.DAL.MultiProvider

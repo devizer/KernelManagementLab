@@ -29,7 +29,7 @@ namespace Universe.Dashboard.DAL.Tests
             
             var dbNameFormat = $"W3Top_{{0}}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
             int counter = 0;
-            var providers = new IProvider4Tests[] { new MySqlProvider4Tests(), new PgSqlProvider4Tests()};
+            var providers = new IProvider4Tests[] { new MySqlProvider4Tests(), new PgSqlProvider4Tests(), new SqlServerProvider4Tests(), };
             foreach (var provider4Tests in providers)
             {
                 var serverConnectionStrings = provider4Tests.GetServerConnectionStrings();
