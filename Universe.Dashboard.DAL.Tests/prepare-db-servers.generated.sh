@@ -1,4 +1,11 @@
 
+MSSQL_TEST_SERVER_2017="Server=localhost,1434;User=sa;Password=\`1qazxsw2;Pooling=false"
+export MSSQL_TEST_SERVER_2017
+
+MSSQL_TEST_SERVER_2019="Server=localhost,1435;User=sa;Password=\`1qazxsw2;Pooling=false"
+export MSSQL_TEST_SERVER_2019
+
+
 # postgres
 PGSQL_TEST_SERVER_54321="Host=localhost;Port=54321;Database=postgres;Username=postgres;Password=pass;Timeout=15;Pooling=false;"
 export PGSQL_TEST_SERVER_54321

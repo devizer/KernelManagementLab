@@ -16,10 +16,10 @@ file=prepare-db-servers.generated.sh
 printf "" > $file
 
 echo '
-MSSQL_TEST_SERVER_2017="Server=localhost:1434;User=sa;Password=`1qazxsw2"
+MSSQL_TEST_SERVER_2017="Server=localhost,1434;User=sa;Password=\`1qazxsw2;Pooling=false"
 export MSSQL_TEST_SERVER_2017
 
-MSSQL_TEST_SERVER_2019="Server=localhost:1435;User=sa;Password=`1qazxsw2"
+MSSQL_TEST_SERVER_2019="Server=localhost,1435;User=sa;Password=\`1qazxsw2;Pooling=false"
 export MSSQL_TEST_SERVER_2019
 ' >> $file
 
