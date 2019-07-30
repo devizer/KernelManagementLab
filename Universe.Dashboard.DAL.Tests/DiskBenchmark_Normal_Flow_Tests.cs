@@ -69,7 +69,6 @@ namespace Tests
             Assert.IsTrue(historyRow.RandReadNT.GetValueOrDefault() > 0, "RandReadNT > 0");
             Console.WriteLine("DiskBenchmarkDataAccess.GetHistory -> ToHistoryItem() works properly");
 
-
         }
         
         void ShowDbTestArgument(DbTestParameter arg)

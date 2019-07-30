@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using KernelManagementJam;
+using Polly;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 
@@ -133,8 +134,13 @@ namespace Universe.Dashboard.Agent
                             using (var db = GetDbContext())
                             {
                                 db.DiskBenchmark.Add(entity);
+                                
                                 // TODO: Process Crashes here
-                                db.SaveChanges();
+                                DbResilience.ExecuteWriting(
+                                    "Save DiskBenchmark History", 
+                                    () => db.SaveChanges(),
+                                    totalMilliseconds: 3000,
+                                    retryCount: 9999999);
                             }
                         }
                     }

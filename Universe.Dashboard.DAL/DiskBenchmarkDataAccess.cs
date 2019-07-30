@@ -23,6 +23,7 @@ namespace Universe.Dashboard.DAL
 
         public DiskBenchmarkResult GetDiskBenchmarkResult(Guid benchmarkToken)
         {
+            // TODO: Wrap to Polly
             var query =
                 from b in _DbContext.DiskBenchmark
                 where b.Token == benchmarkToken

@@ -24,6 +24,7 @@ namespace Universe.Dashboard.DAL
             return true;
         }
         
+        // Metrics are usually saved in single threaded mode 
         public void Save<T>(string key, T value) where T: class
         {
             
@@ -48,8 +49,12 @@ namespace Universe.Dashboard.DAL
                     entity.JsonBlob = json;
                 }
             }
-
-            _DbContext.SaveChanges();
+            
+            DbResilience.ExecuteWriting(
+                $"Save {key} to History", 
+                () => _DbContext.SaveChanges(),
+                totalMilliseconds: 1000,
+                retryCount: 9999999);
         }
         
 
