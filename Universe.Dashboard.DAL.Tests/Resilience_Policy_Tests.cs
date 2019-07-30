@@ -8,10 +8,27 @@ namespace Tests
     public class Resilience_Policy_Tests : NUnitTestsBase
     {
         [Test]
-        public void Write_v1()
+        public void Read_Fail()
         {
-            Policy p = DbResilience.WritingPolicy;
-            p.Execute(context => throw new Exception("No Way"), new Context("Save DiskBenchmark History"));
+            decimal Do()
+            {
+                throw new Exception("Fail again");
+                return 42;
+            }
+            
+            decimal result = DbResilience.Query("Always fail", Do, 111, 222);
+        }
+
+        [Test]
+        public void Read_Success()
+        {
+            long Do()
+            {
+                return 42;
+            }
+            
+            long result = DbResilience.Query("Always 42", Do, 111, 222);
+            Assert.AreEqual(42, result);
         }
 
         [Test]

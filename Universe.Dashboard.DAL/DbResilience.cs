@@ -29,22 +29,33 @@ namespace Universe.Dashboard.DAL
             waitAndRetry.Execute(context => action(), new Context(operation));
         }
         
-        public static Policy WritingPolicy
+        public static TResult Query<TResult>(string operation, Func<TResult> action, 
+            int totalMilliseconds = 3000,
+            int retryCount = 42000,
+            Func<int, TimeSpan> sleepDurationProvider = null
+        )
         {
-            get
+            if (sleepDurationProvider == null) sleepDurationProvider = (retry) => TimeSpan.FromMilliseconds(1);
+            operation = operation ?? "No Name";
+            Stopwatch sw = null;
+            void OnRetry(Exception exception, TimeSpan timeSpan, int retry, Context context)
             {
-                Stopwatch sw = null;
-                void OnRetry(Exception exception, TimeSpan timeSpan, int retry, Context context)
-                {
-                    sw = sw ?? Stopwatch.StartNew();
-                    Console.WriteLine($"Info {sw.ElapsedMilliseconds}. Retry N{retry} at {context.OperationKey}, due to: {exception.GetExceptionDigest()}.");
-                    if (sw.ElapsedMilliseconds > 3000)
-                        throw new TimeoutException($"Write to DB Fail. Retry N{retry} of [{context.OperationKey}] at {sw.ElapsedMilliseconds} milliseconds, due to: {exception.GetExceptionDigest()}.", exception);
-                }
-
-                Policy waitAndRetry = Policy.Handle<Exception>().WaitAndRetry(2000, retry => TimeSpan.FromMilliseconds(1), OnRetry);
-                return waitAndRetry;
+                sw = sw ?? Stopwatch.StartNew();
+                Console.WriteLine($"Info {sw.ElapsedMilliseconds}. Retry N{retry} at {context.OperationKey}, due to: {exception.GetExceptionDigest()}.");
+                if (sw.ElapsedMilliseconds > totalMilliseconds)
+                    throw new TimeoutException($"Write to DB Fail. Retry N{retry} of [{context.OperationKey}] at {sw.ElapsedMilliseconds} milliseconds, due to: {exception.GetExceptionDigest()}.", exception);
             }
+
+            Policy waitAndRetry = Policy.Handle<Exception>().WaitAndRetry(retryCount, sleepDurationProvider, OnRetry);
+            var result = waitAndRetry.ExecuteAndCapture(context => action(), new Context(operation));
+            if (result.Outcome != OutcomeType.Successful)
+                // TODO: Original StackTrace 
+                throw result.FinalException;
+
+            TResult copy = result.Result;
+            return copy;
         }
+
+        
     }
 }

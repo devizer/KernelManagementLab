@@ -23,31 +23,50 @@ namespace Universe.Dashboard.DAL
 
         public DiskBenchmarkResult GetDiskBenchmarkResult(Guid benchmarkToken)
         {
-            // TODO: Wrap to Polly
+            var ret = DbResilience.Query(
+                $"Query DiskBenchmark result for {benchmarkToken}",
+                () => GetDiskBenchmarkResult_Impl(benchmarkToken),
+                totalMilliseconds: 420,
+                4
+            );
+
+            return ret;
+        }
+
+        private DiskBenchmarkResult GetDiskBenchmarkResult_Impl(Guid benchmarkToken)
+        {
             var query =
                 from b in _DbContext.DiskBenchmark
                 where b.Token == benchmarkToken
                 select new {b.Report, b.ErrorInfo};
 
-            var ret = query.FirstOrDefault();
-            return ret == null
+            var result = query.FirstOrDefault();
+            return result == null
                 ? null
                 : new DiskBenchmarkResult()
                 {
-                    Report = ret.Report,
-                    ErrorInfo = ret.ErrorInfo
+                    Report = result.Report,
+                    ErrorInfo = result.ErrorInfo
                 };
         }
 
         public List<DiskBenchmarkEntity> GetHistory()
         {
-            var query =
-                from b in _DbContext.DiskBenchmark
-                where b.ErrorInfo == null
-                orderby b.CreatedAt descending
-                select b;
+            return DbResilience.Query(
+                $"Query DiskBenchmark full history",
+                () =>
+                {
+                    var query =
+                        from b in _DbContext.DiskBenchmark
+                        where b.ErrorInfo == null
+                        orderby b.CreatedAt descending
+                        select b;
 
-            return query.ToList();
+                    return query.ToList();
+                },
+                totalMilliseconds: 250,
+                4
+            );
         }
     }
     
