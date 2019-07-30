@@ -13,10 +13,18 @@ namespace Tests
             decimal Do()
             {
                 throw new Exception("Fail again");
-                return 42;
             }
-            
-            decimal result = DbResilience.Query("Always fail", Do, 111, 222);
+
+            var operationName = "Always fail";
+            try
+            {
+                decimal result = DbResilience.Query(operationName, Do, 111, 222);
+                Assert.Fail("TimeoutException expected");
+            }
+            catch (TimeoutException ex)
+            {
+                Assert.True(ex.Message.IndexOf(operationName) >= 0, "Exception message contains operation description");
+            }
         }
 
         [Test]
@@ -34,11 +42,21 @@ namespace Tests
         [Test]
         public void Write_v2()
         {
-            DbResilience.ExecuteWriting(
-                "My Save OP", 
-                () => throw new Exception("No Way"),
-                totalMilliseconds: 1000,
-                retryCount: 9999999);
+            var operationName = "My Save OP";
+            try
+            {
+                DbResilience.ExecuteWriting(
+                    operationName,
+                    () => throw new Exception("No Way"),
+                    totalMilliseconds: 1000,
+                    retryCount: 9999999);
+                
+                Assert.Fail("TimeoutException expected");
+            }
+            catch (TimeoutException ex)
+            {
+                Assert.True(ex.Message.IndexOf(operationName) >= 0, "Exception message contains operation description");
+            }
         }
     }
 }

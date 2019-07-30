@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using KernelManagementJam.Benchmarks;
 using NUnit.Framework;
+using Universe;
 using Universe.Benchmark.DiskBench;
 
 namespace KernelManagementJam.Tests
@@ -38,6 +39,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void _2_O_Direct_Half()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            {
+                Console.WriteLine("LinuxDirectReadonlyFileStreamV2 needs Linux or MacOS");
+                return;
+            }
+            
             Environment.CurrentDirectory = CurrentDirectory;
             var size = FileSize;
             var block = BlockSize;
@@ -81,6 +88,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void _3_O_Direct()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            {
+                Console.WriteLine("LinuxDirectReadonlyFileStreamV2 needs Linux or MacOS");
+                return;
+            }
+
             Environment.CurrentDirectory = CurrentDirectory;
             var oDirectFile = "O_Direct.file";
             byte[] original = new byte[FileSize];

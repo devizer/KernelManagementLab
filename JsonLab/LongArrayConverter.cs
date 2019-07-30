@@ -142,108 +142,147 @@ namespace JsonLab
             }
             else
             {
-                byte p0 = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 0, p6 = 0, p7 = 0, p8 = 0, p9 = 0, p10 = 0, p11 = 0, p12 = 0, p13 = 0, p14 = 0, p15 = 0, p16 = 0, p17 = 0, p18 = 0, p19 = 0;
+                
+                byte p0 = (byte) (arg % 10);
+                arg = arg / 10;
+                
                 if (arg != 0)
                 {
-                    p0 = (byte)(arg % 10); arg = arg / 10;
+                    byte p1 = (byte) (arg % 10);
+                    arg = arg / 10;
+                    
                     if (arg != 0)
                     {
-                        p1 = (byte)(arg % 10); arg = arg / 10;
+                        byte p2 = (byte) (arg % 10);
+                        arg = arg / 10;
+                        
                         if (arg != 0)
                         {
-                            p2 = (byte)(arg % 10); arg = arg / 10;
+                            byte p3 = (byte) (arg % 10);
+                            arg = arg / 10;
+                            
                             if (arg != 0)
                             {
-                                p3 = (byte)(arg % 10); arg = arg / 10;
+                                byte p4 = (byte) (arg % 10);
+                                arg = arg / 10;
+                                
                                 if (arg != 0)
                                 {
-                                    p4 = (byte)(arg % 10); arg = arg / 10;
+                                    byte p5 = (byte) (arg % 10);
+                                    arg = arg / 10;
+                                    
                                     if (arg != 0)
                                     {
-                                        p5 = (byte)(arg % 10); arg = arg / 10;
+                                        byte p6 = (byte) (arg % 10);
+                                        arg = arg / 10;
+                                        
                                         if (arg != 0)
                                         {
-                                            p6 = (byte)(arg % 10); arg = arg / 10;
+                                            byte p7 = (byte) (arg % 10);
+                                            arg = arg / 10;
+                                            
                                             if (arg != 0)
                                             {
-                                                p7 = (byte)(arg % 10); arg = arg / 10;
+                                                byte p8 = (byte) (arg % 10);
+                                                arg = arg / 10;
+                                                
                                                 if (arg != 0)
                                                 {
-                                                    p8 = (byte)(arg % 10); arg = arg / 10;
+                                                    byte p9 = (byte) (arg % 10);
+                                                    arg = arg / 10;
+                                                    
                                                     if (arg != 0)
                                                     {
-                                                        p9 = (byte)(arg % 10); arg = arg / 10;
+                                                        byte p10 = (byte) (arg % 10);
+                                                        arg = arg / 10;
+                                                        
                                                         if (arg != 0)
                                                         {
-                                                            p10 = (byte)(arg % 10); arg = arg / 10;
+                                                            byte p11 = (byte) (arg % 10);
+                                                            arg = arg / 10;
+                                                            
                                                             if (arg != 0)
                                                             {
-                                                                p11 = (byte)(arg % 10); arg = arg / 10;
+                                                                byte p12 = (byte) (arg % 10);
+                                                                arg = arg / 10;
+                                                                
                                                                 if (arg != 0)
                                                                 {
-                                                                    p12 = (byte)(arg % 10); arg = arg / 10;
+                                                                    byte p13 = (byte) (arg % 10);
+                                                                    arg = arg / 10;
+                                                                    
                                                                     if (arg != 0)
                                                                     {
-                                                                        p13 = (byte)(arg % 10); arg = arg / 10;
+                                                                        byte p14 = (byte) (arg % 10);
+                                                                        arg = arg / 10;
+                                                                        
                                                                         if (arg != 0)
                                                                         {
-                                                                            p14 = (byte)(arg % 10); arg = arg / 10;
+                                                                            byte p15 = (byte) (arg % 10);
+                                                                            arg = arg / 10;
+                                                                            
                                                                             if (arg != 0)
                                                                             {
-                                                                                p15 = (byte)(arg % 10); arg = arg / 10;
+                                                                                byte p16 = (byte) (arg % 10);
+                                                                                arg = arg / 10;
+                                                                                
                                                                                 if (arg != 0)
                                                                                 {
-                                                                                    p16 = (byte)(arg % 10); arg = arg / 10;
+                                                                                    byte p17 = (byte) (arg % 10);
+                                                                                    arg = arg / 10;
+                                                                                    
                                                                                     if (arg != 0)
                                                                                     {
-                                                                                        p17 = (byte)(arg % 10); arg = arg / 10;
+                                                                                        byte p18 = (byte) (arg % 10);
+                                                                                        arg = arg / 10;
+                                                                                        
                                                                                         if (arg != 0)
                                                                                         {
-                                                                                            p18 = (byte)(arg % 10); arg = arg / 10;
-                                                                                            if (arg != 0)
-                                                                                            {
-                                                                                                p19 = (byte)(arg % 10); 
-                                                                                            }
+                                                                                            byte p19 = (byte) (arg % 10);
+                                                                                            builder.Append((char) (48 + p19));
                                                                                         }
+                                                                                        builder.Append((char) (48 + p18));
                                                                                     }
+                                                                                    builder.Append((char) (48 + p17));
                                                                                 }
+                                                                                builder.Append((char) (48 + p16));
                                                                             }
+                                                                            builder.Append((char) (48 + p15));
                                                                         }
+                                                                        builder.Append((char) (48 + p14));
                                                                     }
-                                                                }
+                                                                    builder.Append((char) (48 + p13));
+                                                                }                                
+                                                                builder.Append((char) (48 + p12));
                                                             }
+                                                            builder.Append((char) (48 + p11));
                                                         }
+                                                        builder.Append((char) (48 + p10));
                                                     }
+                                                    builder.Append((char) (48 + p9));
                                                 }
+                                                builder.Append((char) (48 + p8));
                                             }
+                                            builder.Append((char) (48 + p7));
                                         }
+                                        builder.Append((char) (48 + p6));
                                     }
+                                    builder.Append((char) (48 + p5));
                                 }
+                                builder.Append((char) (48 + p4));
                             }
+                            builder.Append((char) (48 + p3));
                         }
+                        builder.Append((char) (48 + p2));
                     }
+                    builder.Append((char) (48 + p1));
                 }
-                bool hasMeaning = false;
-                if (!hasMeaning && p19 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p19));
-                if (!hasMeaning && p18 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p18));
-                if (!hasMeaning && p17 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p17));
-                if (!hasMeaning && p16 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p16));
-                if (!hasMeaning && p15 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p15));
-                if (!hasMeaning && p14 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p14));
-                if (!hasMeaning && p13 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p13));
-                if (!hasMeaning && p12 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p12));
-                if (!hasMeaning && p11 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p11));
-                if (!hasMeaning && p10 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p10));
-                if (!hasMeaning && p9 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p9));
-                if (!hasMeaning && p8 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p8));
-                if (!hasMeaning && p7 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p7));
-                if (!hasMeaning && p6 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p6));
-                if (!hasMeaning && p5 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p5));
-                if (!hasMeaning && p4 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p4));
-                if (!hasMeaning && p3 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p3));
-                if (!hasMeaning && p2 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p2));
-                if (!hasMeaning && p1 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p1));
-                if (!hasMeaning && p0 != 0) hasMeaning = true; if (hasMeaning) builder.Append((char)(48 + p0));
+                else
+                {
+                }
+
+                builder.Append((char) (48 + p0));
+
             }
         }
     }

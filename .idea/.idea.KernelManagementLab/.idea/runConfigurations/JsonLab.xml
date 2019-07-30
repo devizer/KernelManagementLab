@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="JsonLab" type="DotNetProject" factoryName=".NET Project" editBeforeRun="true">
-    <option name="EXE_PATH" value="$PROJECT_DIR$/JsonLab/bin/Debug/netcoreapp2.2/JsonLab.dll" />
+    <option name="EXE_PATH" value="$PROJECT_DIR$/JsonLab/bin/Release/netcoreapp2.2/JsonLab.dll" />
     <option name="PROGRAM_PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/JsonLab" />
     <option name="PASS_PARENT_ENVS" value="1" />
