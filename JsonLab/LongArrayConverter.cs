@@ -22,6 +22,7 @@ namespace JsonLab
             }
             else
             {
+                bool heapless = Heapless;
                 StringBuilder b;
                 if (value is long[] arr)
                 {
@@ -31,7 +32,7 @@ namespace JsonLab
                     for (int i = 0; i < l; i++)
                     {
                         if (pos++ != 0) b.Append(',');
-                        HeaplessAppend(b, arr[i], Heapless);
+                        HeaplessAppend(b, arr[i], heapless);
                     }
                 }
                 else if (value is List<long> list)
@@ -41,7 +42,7 @@ namespace JsonLab
                     for(int pos=0; pos < l; pos++)
                     {
                         if (pos != 0) b.Append(',');
-                        HeaplessAppend(b, list[pos], Heapless);
+                        HeaplessAppend(b, list[pos], heapless);
                     }
                 }
                 else if (value is ICollection<long> collection)
@@ -52,7 +53,7 @@ namespace JsonLab
                     foreach (long item in collection)
                     {
                         if (pos++ != 0) b.Append(',');
-                        HeaplessAppend(b, item, Heapless);
+                        HeaplessAppend(b, item, heapless);
                     }
                 }
                 else
