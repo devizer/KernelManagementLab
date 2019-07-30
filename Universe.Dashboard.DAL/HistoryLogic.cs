@@ -56,7 +56,6 @@ namespace Universe.Dashboard.DAL
                 totalMilliseconds: 1000,
                 retryCount: 9999999);
         }
-        
 
     }
 }

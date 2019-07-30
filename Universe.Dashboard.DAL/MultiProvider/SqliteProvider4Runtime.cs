@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using Dapper;
 using Microsoft.Data.Sqlite;
@@ -12,6 +13,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
         public void ValidateConnectionString(string connectionString)
         {
             SqliteConnectionStringBuilder b = new SqliteConnectionStringBuilder(connectionString);
+            var isOk = true;
         }
 
         public string SetPooling(string connectionString, bool pooling)
@@ -31,9 +33,14 @@ namespace Universe.Dashboard.DAL.MultiProvider
 
         public void ApplyDbContextOptions(DbContextOptionsBuilder builder, string connectionString)
         {
-            builder.UseSqlite(connectionString, options =>
+            // Console.WriteLine("DbContextOptionsBuilder.UseSqlite");
+            SqliteConnection con = new SqliteConnection(connectionString);
+            con.Open();
+            con.Execute("PRAGMA busy_timeout = 3000;");
+            builder.UseSqlite(con, options =>
             {
                 options.MigrationsHistoryTable(DashboardContextOptionsFactory.MigrationsTableName);
+                // options.SuppressForeignKeyEnforcement()
             });
         }
 
