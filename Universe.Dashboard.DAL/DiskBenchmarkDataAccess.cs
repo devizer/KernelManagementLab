@@ -27,7 +27,7 @@ namespace Universe.Dashboard.DAL
                 $"Query DiskBenchmark result for {benchmarkToken}",
                 () => GetDiskBenchmarkResult_Impl(benchmarkToken),
                 totalMilliseconds: 420,
-                4
+                retryCount: 4
             );
 
             return ret;
@@ -65,7 +65,7 @@ namespace Universe.Dashboard.DAL
                     return query.ToList();
                 },
                 totalMilliseconds: 250,
-                4
+                retryCount: 4
             );
         }
     }
@@ -92,6 +92,7 @@ namespace Universe.Dashboard.DAL
     {
         public static DiskBenchmarkHistoryRow ToHistoryItem(this DiskBenchmarkEntity benchmark)
         {
+            // TODO: Build history row on SaveChanges and store as additional column
             ProgressStep GetStep(ProgressStepHistoryColumn column) => benchmark.Report.Steps.FirstOrDefault(step => step.Column == column);
             double? GetSpeed(ProgressStepHistoryColumn column) => GetStep(column)?.AvgBytesPerSecond;
             
@@ -113,10 +114,7 @@ namespace Universe.Dashboard.DAL
                 RandWriteNT = GetSpeed(ProgressStepHistoryColumn.RandWriteNT),
             };
         }
-
     }
-
-
 
 }
 

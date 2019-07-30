@@ -8,7 +8,7 @@ namespace Tests
     public class Resilience_Policy_Tests : NUnitTestsBase
     {
         [Test]
-        public void Read_Fail()
+        public void Reading_Fails()
         {
             decimal Do()
             {
@@ -28,7 +28,7 @@ namespace Tests
         }
 
         [Test]
-        public void Read_Success()
+        public void Successful_Read()
         {
             long Do()
             {
@@ -40,7 +40,7 @@ namespace Tests
         }
 
         [Test]
-        public void Write_v2()
+        public void Writing_Fails()
         {
             var operationName = "My Save OP";
             try
