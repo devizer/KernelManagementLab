@@ -22,9 +22,10 @@ namespace MyBenchmarks
             List,
             ROList,
             ROArray,
+            Enumerable,
         }
         
-        private dynamic RootData;
+        private object[] Data;
 
         // [Params(20)]
         public int ArraysCount = 20;
@@ -32,7 +33,7 @@ namespace MyBenchmarks
         // [Params(true, false)]
         public bool Minify = true;
 
-        [Params(CollectionFlavour.Array, CollectionFlavour.List, CollectionFlavour.ROArray, CollectionFlavour.ROList)]
+        [Params(CollectionFlavour.Array, CollectionFlavour.List, CollectionFlavour.ROArray, CollectionFlavour.ROList, CollectionFlavour.Enumerable)]
         public CollectionFlavour Kind;
 
         private long[] TheLongs = new[] { 0, 1L, 12L, 123L, 1234L, 12345678987654321L, -1L, -12L, -123L, -1234L, -12345678987654321L };
@@ -48,10 +49,11 @@ namespace MyBenchmarks
                 else if (Kind == CollectionFlavour.Array) list.Add(item.ToArray());
                 else if (Kind == CollectionFlavour.ROList) list.Add(item.ToList().ToImmutableList());
                 else if (Kind == CollectionFlavour.ROArray) list.Add(item.ToList().ToImmutableArray());
+                else if (Kind == CollectionFlavour.Enumerable) list.Add(AsEnumerable(item.ToArray()));
                 else throw new InvalidOperationException($"Unknown flavour: {Kind}");
             }
 
-            RootData = list.ToArray();
+            Data = list.ToArray();
         }
 
         [Benchmark]
@@ -60,18 +62,11 @@ namespace MyBenchmarks
             return Serialize(optionalConverter: LongArrayConverter.Instance);
         }
 
-        [Benchmark]
-        public StringBuilder Improved()
-        {
-            return Serialize(optionalConverter: LongArrayConverter.SlowerInstance);
-        }
-
         [Benchmark(Baseline = true)]
         public StringBuilder Default()
         {
             return Serialize();
         }
-
 
 
         private StringBuilder Serialize(JsonConverter optionalConverter = null)
@@ -99,10 +94,18 @@ namespace MyBenchmarks
 
             StringBuilder json = new StringBuilder();
             StringWriter jwr = new StringWriter(json);
-            ser.Serialize(jwr, RootData);
+            ser.Serialize(jwr, Data);
             jwr.Flush();
 
             return json;
+        }
+
+        static IEnumerable<long> AsEnumerable(IEnumerable<long> arg)
+        {
+            foreach (var l in arg)
+            {
+                yield return l;
+            }
         }
 
     }

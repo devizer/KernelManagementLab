@@ -9,10 +9,8 @@ namespace JsonLab
     public class LongArrayConverter : JsonConverter
     {
         private readonly Type ArrayType = typeof(long[]);
-        private bool Heapless = true;
 
-        public static readonly LongArrayConverter SlowerInstance = new LongArrayConverter() {Heapless = false};
-        public static readonly LongArrayConverter Instance = new LongArrayConverter() {Heapless = true};
+        public static readonly LongArrayConverter Instance = new LongArrayConverter();
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -22,7 +20,6 @@ namespace JsonLab
             }
             else
             {
-                bool heapless = Heapless;
                 StringBuilder stringBuilder;
                 if (value is long[] arr)
                 {
@@ -32,7 +29,7 @@ namespace JsonLab
                     for (int i = 0; i < len; i++)
                     {
                         if (pos++ != 0) stringBuilder.Append(',');
-                        HeaplessAppend(stringBuilder, arr[i], heapless);
+                        HeaplessAppend(stringBuilder, arr[i]);
                     }
                 }
                 else if (value is List<long> list)
@@ -42,7 +39,7 @@ namespace JsonLab
                     for(int pos=0; pos < len; pos++)
                     {
                         if (pos != 0) stringBuilder.Append(',');
-                        HeaplessAppend(stringBuilder, list[pos], heapless);
+                        HeaplessAppend(stringBuilder, list[pos]);
                     }
                 }
                 else if (value is ICollection<long> collection)
@@ -53,7 +50,7 @@ namespace JsonLab
                     foreach (long item in collection)
                     {
                         if (pos++ != 0) stringBuilder.Append(',');
-                        HeaplessAppend(stringBuilder, item, heapless);
+                        HeaplessAppend(stringBuilder, item);
                     }
                 }
                 else if (value is IEnumerable<long> enumerable)
@@ -63,7 +60,7 @@ namespace JsonLab
                     foreach (long item in enumerable)
                     {
                         if (pos++ != 0) stringBuilder.Append(',');
-                        HeaplessAppend(stringBuilder, item, heapless);
+                        HeaplessAppend(stringBuilder, item);
                     }
                 }
                 else
@@ -94,15 +91,8 @@ namespace JsonLab
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void HeaplessAppend(StringBuilder builder, long arg, bool heapless)
+        static void HeaplessAppend(StringBuilder builder, long arg)
         {
-            // Span<byte> buffer = stackalloc byte[20];
-            if (!heapless)
-            {
-                builder.Append(Convert.ToString(arg));
-                return;
-            }
-
             if (arg == 9223372036854775807L)
             {
                 builder.Append("9223372036854775807");
