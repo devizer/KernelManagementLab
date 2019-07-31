@@ -23,47 +23,47 @@ namespace JsonLab
             else
             {
                 bool heapless = Heapless;
-                StringBuilder b;
+                StringBuilder stringBuilder;
                 if (value is long[] arr)
                 {
-                    int l = arr.Length;
-                    b = new StringBuilder(l + l);
+                    int len = arr.Length;
+                    stringBuilder = new StringBuilder(len << 1);
                     int pos = 0;
-                    for (int i = 0; i < l; i++)
+                    for (int i = 0; i < len; i++)
                     {
-                        if (pos++ != 0) b.Append(',');
-                        HeaplessAppend(b, arr[i], heapless);
+                        if (pos++ != 0) stringBuilder.Append(',');
+                        HeaplessAppend(stringBuilder, arr[i], heapless);
                     }
                 }
                 else if (value is List<long> list)
                 {
-                    int l = list.Count;
-                    b = new StringBuilder(l + l);
-                    for(int pos=0; pos < l; pos++)
+                    int len = list.Count;
+                    stringBuilder = new StringBuilder(len << 1);
+                    for(int pos=0; pos < len; pos++)
                     {
-                        if (pos != 0) b.Append(',');
-                        HeaplessAppend(b, list[pos], heapless);
+                        if (pos != 0) stringBuilder.Append(',');
+                        HeaplessAppend(stringBuilder, list[pos], heapless);
                     }
                 }
                 else if (value is ICollection<long> collection)
                 {
-                    int l = collection.Count;
-                    b = new StringBuilder(l + l);
+                    int len = collection.Count;
+                    stringBuilder = new StringBuilder(len << 1);
                     int pos = 0;
                     foreach (long item in collection)
                     {
-                        if (pos++ != 0) b.Append(',');
-                        HeaplessAppend(b, item, heapless);
+                        if (pos++ != 0) stringBuilder.Append(',');
+                        HeaplessAppend(stringBuilder, item, heapless);
                     }
                 }
                 else if (value is IEnumerable<long> enumerable)
                 {
-                    b = new StringBuilder();
+                    stringBuilder = new StringBuilder();
                     int pos = 0;
                     foreach (long item in enumerable)
                     {
-                        if (pos++ != 0) b.Append(',');
-                        HeaplessAppend(b, item, heapless);
+                        if (pos++ != 0) stringBuilder.Append(',');
+                        HeaplessAppend(stringBuilder, item, heapless);
                     }
                 }
                 else
@@ -72,7 +72,7 @@ namespace JsonLab
                 }
 
                 writer.WriteStartArray();
-                writer.WriteRaw(b.ToString());
+                writer.WriteRaw(stringBuilder.ToString());
                 writer.WriteEndArray();
             }
         }
@@ -138,16 +138,16 @@ namespace JsonLab
             }
             else if (arg < 10000)
             {
-                var p3 = arg % 10;
-                var p2a = arg / 10;
-                var p2 = p2a % 10;
-                var p1a = p2a / 10;
+                var p0 = arg % 10;
+                var p1a = arg / 10;
                 var p1 = p1a % 10;
-                var p0 = p1a / 10;
-                builder.Append((char)(48 + p0));
-                builder.Append((char)(48 + p1));
-                builder.Append((char)(48 + p2));
+                var p2a = p1a / 10;
+                var p2 = p2a % 10;
+                var p3 = p2a / 10;
                 builder.Append((char)(48 + p3));
+                builder.Append((char)(48 + p2));
+                builder.Append((char)(48 + p1));
+                builder.Append((char)(48 + p0));
             }
             else
             {
