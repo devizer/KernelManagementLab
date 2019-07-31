@@ -18,19 +18,19 @@ namespace MyBenchmarks
     {
         public enum CollectionFlavour
         {
-            List,
             Array,
+            List,
             ROList,
             ROArray,
         }
         
         private dynamic RootData;
 
-        [Params(20)]
-        public int ArraysCount;
+        // [Params(20)]
+        public int ArraysCount = 20;
         
-        [Params(true, false)]
-        public bool Minify;
+        // [Params(true, false)]
+        public bool Minify = true;
 
         [Params(CollectionFlavour.Array, CollectionFlavour.List, CollectionFlavour.ROArray, CollectionFlavour.ROList)]
         public CollectionFlavour Kind;
@@ -55,13 +55,13 @@ namespace MyBenchmarks
         }
 
         [Benchmark]
-        public StringBuilder OptimizedHeapless()
+        public StringBuilder Optimized()
         {
             return Serialize(optionalConverter: LongArrayConverter.Instance);
         }
 
         [Benchmark]
-        public StringBuilder Optimized()
+        public StringBuilder Improved()
         {
             return Serialize(optionalConverter: LongArrayConverter.SlowerInstance);
         }
@@ -84,6 +84,7 @@ namespace MyBenchmarks
             if (optionalConverter != null)
                 ser.Converters.Add(optionalConverter);
 
+/*
             DefaultContractResolver contractResolver = new DefaultContractResolver
             {
                 NamingStrategy = new CamelCaseNamingStrategy
@@ -94,6 +95,7 @@ namespace MyBenchmarks
             };
 
             ser.ContractResolver = contractResolver;
+*/
 
             StringBuilder json = new StringBuilder();
             StringWriter jwr = new StringWriter(json);
