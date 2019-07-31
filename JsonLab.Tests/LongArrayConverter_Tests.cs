@@ -36,25 +36,25 @@ namespace Tests
                     cases.Add(next - 1);
                     cases.Add(next);
                 }
-                cur = cur * 1.042m;
+                cur *= 1.042m;
             }
             
             Console.WriteLine($"Cases: {cases.Count} numbers [{string.Join(",", cases)}]");
 
             for (int len = 0; len <= 2; len++)
             {
-                foreach (long @case in cases)
+                foreach (long testCase in cases)
                 {
                     long[] data = new long[len];
-                    for (int i = 0; i < len; i++) data[i] = @case;
+                    for (int i = 0; i < len; i++) data[i] = testCase;
                     var src = data;
 
                     var original = Serialize(src, null);
                     var new1 = Serialize(src, LongArrayConverter.SlowerInstance);
                     var new2Heapless = Serialize(src, LongArrayConverter.Instance);
 
-                    Assert.AreEqual(original, new1, $"LongArrayConverter.SlowerInstance case is {@case} * {len} times");
-                    Assert.AreEqual(original, new2Heapless, $"LongArrayConverter.Instance case is {@case} * {len} times");
+                    Assert.AreEqual(original, new1, $"LongArrayConverter.SlowerInstance case is {testCase} * {len} times");
+                    Assert.AreEqual(original, new2Heapless, $"LongArrayConverter.Instance case is {testCase} * {len} times");
                 }
             }
         }
@@ -70,16 +70,6 @@ namespace Tests
             if (optionalConverter != null)
                 ser.Converters.Add(optionalConverter);
 
-            DefaultContractResolver contractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new CamelCaseNamingStrategy
-                {
-                    OverrideSpecifiedNames = false,
-                    ProcessDictionaryKeys = true,
-                }
-            };
-
-            ser.ContractResolver = contractResolver;
 
             StringBuilder json = new StringBuilder();
             StringWriter jwr = new StringWriter(json);
