@@ -50,11 +50,11 @@ namespace Tests
                     var src = data;
 
                     var original = Serialize(src, null);
-                    var new1 = Serialize(src, LongArrayConverter.Instance);
-                    var new2Heapless = Serialize(src, LongArrayConverter.HeaplessInstance);
+                    var new1 = Serialize(src, LongArrayConverter.SlowerInstance);
+                    var new2Heapless = Serialize(src, LongArrayConverter.Instance);
 
-                    Assert.AreEqual(original, new1, $"LongArrayConverter.Instance case is {@case} * {len} times");
-                    Assert.AreEqual(original, new2Heapless, $"LongArrayConverter.HeaplessInstance case is {@case} * {len} times");
+                    Assert.AreEqual(original, new1, $"LongArrayConverter.SlowerInstance case is {@case} * {len} times");
+                    Assert.AreEqual(original, new2Heapless, $"LongArrayConverter.Instance case is {@case} * {len} times");
                 }
             }
         }

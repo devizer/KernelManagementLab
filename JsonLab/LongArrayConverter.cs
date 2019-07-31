@@ -11,8 +11,8 @@ namespace JsonLab
         private readonly Type ArrayType = typeof(long[]);
         private bool Heapless = true;
 
-        public static readonly LongArrayConverter Instance = new LongArrayConverter() {Heapless = false};
-        public static readonly LongArrayConverter HeaplessInstance = new LongArrayConverter() {Heapless = true};
+        public static readonly LongArrayConverter SlowerInstance = new LongArrayConverter() {Heapless = false};
+        public static readonly LongArrayConverter Instance = new LongArrayConverter() {Heapless = true};
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {

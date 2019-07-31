@@ -57,13 +57,13 @@ namespace MyBenchmarks
         [Benchmark]
         public StringBuilder OptimizedHeapless()
         {
-            return Serialize(optionalConverter: LongArrayConverter.HeaplessInstance);
+            return Serialize(optionalConverter: LongArrayConverter.Instance);
         }
 
         [Benchmark]
         public StringBuilder Optimized()
         {
-            return Serialize(optionalConverter: LongArrayConverter.Instance);
+            return Serialize(optionalConverter: LongArrayConverter.SlowerInstance);
         }
 
         [Benchmark(Baseline = true)]
