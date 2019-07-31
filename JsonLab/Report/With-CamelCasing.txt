@@ -1,0 +1,116 @@
+BenchmarkDotNet=v0.11.5, OS=Windows 10.0.14393.3115 (1607/AnniversaryUpdate/Redstone1)
+Intel Core i5-3470 CPU 3.20GHz (Ivy Bridge), 1 CPU, 4 logical and 4 physical cores
+Frequency=3117920 Hz, Resolution=320.7266 ns, Timer=TSC
+.NET Core SDK=3.0.100-preview6-012264
+  [Host] : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+  Clr    : .NET Framework 4.7.1 (CLR 4.0.30319.42000), 64bit RyuJIT-v4.7.3416.0
+  Core   : .NET Core 2.2.6 (CoreCLR 4.6.27817.03, CoreFX 4.6.27818.02), 64bit RyuJIT
+
+
+|            Method |  Job | Runtime | ArraysCount | Minify |    Kind |       Mean |     Error |    StdDev | Ratio | Rank |   Gen 0 |   Gen 1 | Gen 2 | Allocated |
+|------------------ |----- |-------- |------------ |------- |-------- |-----------:|----------:|----------:|------:|-----:|--------:|--------:|------:|----------:|
+| OptimizedHeapless |  Clr |     Clr |          20 |  False |    List |   582.9 us | 3.4820 us | 3.0867 us |  0.60 |    1 | 30.2734 |       - |     - |  95.97 KB |
+|         Optimized |  Clr |     Clr |          20 |  False |    List |   689.5 us | 1.9688 us | 1.8416 us |  0.71 |    2 | 45.8984 |       - |     - | 143.37 KB |
+|           Default |  Clr |     Clr |          20 |  False |    List |   969.9 us | 1.9059 us | 1.7828 us |  1.00 |    3 | 59.5703 |       - |     - | 183.57 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |  False |    List |   444.8 us | 1.0411 us | 0.9739 us |  0.57 |    1 | 20.9961 |       - |     - |  65.14 KB |
+|         Optimized | Core |    Core |          20 |  False |    List |   507.6 us | 0.7350 us | 0.6516 us |  0.65 |    2 | 36.1328 |       - |     - | 112.73 KB |
+|           Default | Core |    Core |          20 |  False |    List |   780.5 us | 1.7976 us | 1.5935 us |  1.00 |    3 | 31.2500 |  9.7656 |     - |  98.43 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |  False |   Array |   489.0 us | 0.9880 us | 0.9241 us |  0.50 |    1 | 28.3203 |       - |     - |   88.5 KB |
+|         Optimized |  Clr |     Clr |          20 |  False |   Array |   591.2 us | 1.2279 us | 1.0885 us |  0.61 |    2 | 43.9453 |       - |     - | 136.35 KB |
+|           Default |  Clr |     Clr |          20 |  False |   Array |   976.3 us | 2.3569 us | 2.2047 us |  1.00 |    3 | 56.6406 |       - |     - | 177.01 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |  False |   Array |   286.0 us | 0.4126 us | 0.3658 us |  0.40 |    1 | 20.0195 |       - |     - |  61.59 KB |
+|         Optimized | Core |    Core |          20 |  False |   Array |   344.5 us | 0.9504 us | 0.8890 us |  0.48 |    2 | 35.1563 |       - |     - | 108.73 KB |
+|           Default | Core |    Core |          20 |  False |   Array |   720.1 us | 1.4811 us | 1.3129 us |  1.00 |    3 | 30.2734 |       - |     - |  94.88 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |  False |  ROList |   619.6 us | 1.0646 us | 0.9958 us |  0.62 |    1 | 31.2500 |  0.9766 |     - |  98.98 KB |
+|         Optimized |  Clr |     Clr |          20 |  False |  ROList |   735.7 us | 1.8067 us | 1.6900 us |  0.73 |    2 | 47.8516 |       - |     - | 147.05 KB |
+|           Default |  Clr |     Clr |          20 |  False |  ROList | 1,004.3 us | 2.1932 us | 1.9442 us |  1.00 |    3 | 60.5469 |  1.9531 |     - | 186.72 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |  False |  ROList |   775.1 us | 1.3966 us | 1.0904 us |  0.69 |    1 | 24.4141 |  7.8125 |     - |  76.17 KB |
+|         Optimized | Core |    Core |          20 |  False |  ROList |   840.1 us | 1.6095 us | 1.3440 us |  0.75 |    2 | 40.0391 |       - |     - | 123.68 KB |
+|           Default | Core |    Core |          20 |  False |  ROList | 1,121.8 us | 3.8109 us | 3.5647 us |  1.00 |    3 | 35.1563 |  9.7656 |     - | 108.64 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |  False | ROArray |   566.9 us | 0.8667 us | 0.7238 us |  0.60 |    1 | 33.2031 |  0.9766 |     - | 102.64 KB |
+|         Optimized |  Clr |     Clr |          20 |  False | ROArray |   669.5 us | 1.7458 us | 1.6330 us |  0.71 |    2 | 48.8281 |       - |     - | 150.46 KB |
+|           Default |  Clr |     Clr |          20 |  False | ROArray |   949.0 us | 2.7719 us | 2.5928 us |  1.00 |    3 | 62.5000 | 20.5078 |     - | 192.57 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |  False | ROArray |   692.2 us | 2.3755 us | 2.2221 us |  0.68 |    1 | 25.3906 |  7.8125 |     - |   79.9 KB |
+|         Optimized | Core |    Core |          20 |  False | ROArray |   759.9 us | 2.1478 us | 2.0091 us |  0.74 |    2 | 41.0156 |       - |     - |  128.3 KB |
+|           Default | Core |    Core |          20 |  False | ROArray | 1,020.6 us | 2.3720 us | 2.1027 us |  1.00 |    3 | 35.1563 |  5.8594 |     - | 113.05 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |   True |    List |   578.9 us | 0.5277 us | 0.4678 us |  0.65 |    1 | 30.2734 |       - |     - |  93.88 KB |
+|         Optimized |  Clr |     Clr |          20 |   True |    List |   687.4 us | 1.1442 us | 1.0703 us |  0.77 |    2 | 45.8984 |       - |     - | 142.57 KB |
+|           Default |  Clr |     Clr |          20 |   True |    List |   892.9 us | 2.4536 us | 2.2951 us |  1.00 |    3 | 38.0859 |       - |     - | 119.98 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |   True |    List |   441.3 us | 1.6249 us | 1.5199 us |  0.60 |    1 | 20.9961 |       - |     - |  64.66 KB |
+|         Optimized | Core |    Core |          20 |   True |    List |   505.6 us | 2.5288 us | 2.3654 us |  0.69 |    2 | 36.1328 |       - |     - | 112.31 KB |
+|           Default | Core |    Core |          20 |   True |    List |   729.5 us | 2.1619 us | 2.0223 us |  1.00 |    3 | 26.3672 |  3.9063 |     - |  82.26 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |   True |   Array |   488.4 us | 1.1425 us | 1.0687 us |  0.54 |    1 | 28.3203 |       - |     - |  87.88 KB |
+|         Optimized |  Clr |     Clr |          20 |   True |   Array |   594.2 us | 1.5237 us | 1.3507 us |  0.66 |    2 | 43.9453 |       - |     - | 135.14 KB |
+|           Default |  Clr |     Clr |          20 |   True |   Array |   900.9 us | 1.3786 us | 1.2895 us |  1.00 |    3 | 36.1328 |       - |     - | 112.21 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |   True |   Array |   284.9 us | 0.5549 us | 0.5190 us |  0.43 |    1 | 19.5313 |       - |     - |  60.49 KB |
+|         Optimized | Core |    Core |          20 |   True |   Array |   343.3 us | 0.7652 us | 0.6783 us |  0.52 |    2 | 35.1563 |       - |     - |    109 KB |
+|           Default | Core |    Core |          20 |   True |   Array |   659.3 us | 1.8876 us | 1.7657 us |  1.00 |    3 | 24.4141 |       - |     - |  77.82 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |   True |  ROList |   618.1 us | 0.9742 us | 0.9113 us |  0.67 |    1 | 31.2500 |  0.9766 |     - |  98.87 KB |
+|         Optimized |  Clr |     Clr |          20 |   True |  ROList |   732.0 us | 1.0844 us | 1.0143 us |  0.79 |    2 | 46.8750 |       - |     - | 146.42 KB |
+|           Default |  Clr |     Clr |          20 |   True |  ROList |   921.6 us | 1.2615 us | 1.1182 us |  1.00 |    3 | 39.0625 |  0.9766 |     - | 122.95 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |   True |  ROList |   774.4 us | 2.2619 us | 2.1157 us |  0.73 |    1 | 24.4141 |  7.8125 |     - |  75.79 KB |
+|         Optimized | Core |    Core |          20 |   True |  ROList |   837.7 us | 2.7496 us | 2.5720 us |  0.79 |    2 | 40.0391 |       - |     - | 123.33 KB |
+|           Default | Core |    Core |          20 |   True |  ROList | 1,065.9 us | 3.5372 us | 3.3087 us |  1.00 |    3 | 29.2969 |  9.7656 |     - |   92.5 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless |  Clr |     Clr |          20 |   True | ROArray |   561.8 us | 0.7677 us | 0.6805 us |  0.66 |    1 | 32.2266 |  0.9766 |     - | 101.49 KB |
+|         Optimized |  Clr |     Clr |          20 |   True | ROArray |   673.6 us | 1.1372 us | 1.0637 us |  0.79 |    2 | 47.8516 |       - |     - | 148.87 KB |
+|           Default |  Clr |     Clr |          20 |   True | ROArray |   852.1 us | 1.2506 us | 1.1698 us |  1.00 |    3 | 40.0391 |  5.8594 |     - | 125.49 KB |
+|                   |      |         |             |        |         |            |           |           |       |      |         |         |       |           |
+| OptimizedHeapless | Core |    Core |          20 |   True | ROArray |   696.0 us | 2.8362 us | 2.6529 us |  0.72 |    1 | 25.3906 |  7.8125 |     - |  79.67 KB |
+|         Optimized | Core |    Core |          20 |   True | ROArray |   751.6 us | 1.0719 us | 1.0027 us |  0.78 |    2 | 41.0156 |       - |     - | 127.79 KB |
+|           Default | Core |    Core |          20 |   True | ROArray |   967.2 us | 1.4357 us | 1.1989 us |  1.00 |    3 | 31.2500 |  8.7891 |     - |  96.02 KB |
+
+// * Hints *
+Outliers
+  StandardVsCustomSerializer.OptimizedHeapless: Clr  -> 1 outlier  was  removed (592.03 us)
+  StandardVsCustomSerializer.Optimized: Core         -> 1 outlier  was  removed (515.08 us)
+  StandardVsCustomSerializer.Default: Core           -> 1 outlier  was  removed (789.50 us)
+  StandardVsCustomSerializer.Optimized: Clr          -> 1 outlier  was  removed (594.15 us)
+  StandardVsCustomSerializer.OptimizedHeapless: Core -> 1 outlier  was  removed, 2 outliers were detected (285.10 us, 288.12 us)
+  StandardVsCustomSerializer.Default: Core           -> 1 outlier  was  removed (733.16 us)
+  StandardVsCustomSerializer.Default: Clr            -> 1 outlier  was  removed (1.01 ms)
+  StandardVsCustomSerializer.OptimizedHeapless: Core -> 3 outliers were removed, 4 outliers were detected (772.56 us, 778.41 us..788.66 us)
+  StandardVsCustomSerializer.Optimized: Core         -> 2 outliers were removed (847.12 us, 851.24 us)
+  StandardVsCustomSerializer.OptimizedHeapless: Clr  -> 2 outliers were removed (570.12 us, 572.93 us)
+  StandardVsCustomSerializer.Default: Core           -> 1 outlier  was  removed (1.03 ms)
+  StandardVsCustomSerializer.OptimizedHeapless: Clr  -> 1 outlier  was  removed (581.17 us)
+  StandardVsCustomSerializer.Optimized: Clr          -> 1 outlier  was  removed (599.73 us)
+  StandardVsCustomSerializer.Optimized: Core         -> 1 outlier  was  removed (345.62 us)
+  StandardVsCustomSerializer.Default: Clr            -> 1 outlier  was  removed (924.61 us)
+  StandardVsCustomSerializer.OptimizedHeapless: Clr  -> 1 outlier  was  removed (565.06 us)
+  StandardVsCustomSerializer.Default: Core           -> 2 outliers were removed (971.51 us, 972.31 us)
+
+// * Legends *
+  ArraysCount : Value of the 'ArraysCount' parameter
+  Minify      : Value of the 'Minify' parameter
+  Kind        : Value of the 'Kind' parameter
+  Mean        : Arithmetic mean of all measurements
+  Error       : Half of 99.9% confidence interval
+  StdDev      : Standard deviation of all measurements
+  Ratio       : Mean of the ratio distribution ([Current]/[Baseline])
+  Rank        : Relative position of current benchmark mean among all benchmarks (Arabic style)
+  Gen 0       : GC Generation 0 collects per 1000 operations
+  Gen 1       : GC Generation 1 collects per 1000 operations
+  Gen 2       : GC Generation 2 collects per 1000 operations
+  Allocated   : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 us        : 1 Microsecond (0.000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+// ** Remained 0 benchmark(s) to run **
+Run time: 00:15:23 (923.88 sec), executed benchmarks: 48
