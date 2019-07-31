@@ -56,9 +56,19 @@ namespace JsonLab
                         HeaplessAppend(b, item, heapless);
                     }
                 }
+                else if (value is IEnumerable<long> enumerable)
+                {
+                    b = new StringBuilder();
+                    int pos = 0;
+                    foreach (long item in enumerable)
+                    {
+                        if (pos++ != 0) b.Append(',');
+                        HeaplessAppend(b, item, heapless);
+                    }
+                }
                 else
                 {
-                    throw new InvalidOperationException("Report It");
+                    throw new InvalidOperationException("LongArrayConverter.CanConvert does not work properly. Report it.");
                 }
 
                 writer.WriteStartArray();
@@ -79,8 +89,7 @@ namespace JsonLab
 
         public override bool CanConvert(Type objectType)
         {
-            // Console.WriteLine($"CAN CONVERT: {objectType}");
-            return objectType == ArrayType || typeof(ICollection<long>).IsAssignableFrom(objectType);
+            return objectType == ArrayType || typeof(IEnumerable<long>).IsAssignableFrom(objectType);
         }
 
 
@@ -277,12 +286,7 @@ namespace JsonLab
                     }
                     builder.Append((char) (48 + p1));
                 }
-                else
-                {
-                }
-
                 builder.Append((char) (48 + p0));
-
             }
         }
     }
