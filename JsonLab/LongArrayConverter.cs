@@ -25,11 +25,10 @@ namespace JsonLab
                 {
                     int len = arr.Length;
                     stringBuilder = new StringBuilder(len << 1);
-                    int pos = 0;
-                    for (int i = 0; i < len; i++)
+                    for (int pos = 0; pos < len; pos++)
                     {
-                        if (pos++ != 0) stringBuilder.Append(',');
-                        HeaplessAppend(stringBuilder, arr[i]);
+                        if (pos != 0) stringBuilder.Append(',');
+                        HeaplessAppend(stringBuilder, arr[pos]);
                     }
                 }
                 else if (value is List<long> list)
@@ -67,6 +66,7 @@ namespace JsonLab
                 {
                     throw new InvalidOperationException("LongArrayConverter.CanConvert does not work properly. Report it.");
                 }
+                
 
                 writer.WriteStartArray();
                 writer.WriteRaw(stringBuilder.ToString());
