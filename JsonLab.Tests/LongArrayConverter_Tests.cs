@@ -18,7 +18,22 @@ namespace Tests
         public void OneTimeSetup()
         {
         }
-        
+
+        [Test]
+        public void Test_Null()
+        {
+            var src = new TypedCollection();
+            var original = Serialize(src, null);
+            var optimized = Serialize(src, LongArrayConverter.Instance);
+            Console.WriteLine(original);
+            Assert.AreEqual(original, optimized);
+        }
+
+        class TypedCollection
+        {
+            public long[] Content = null;
+        }
+
         [Test]
         public void Tests()
         {
@@ -36,11 +51,9 @@ namespace Tests
                     cases.Add(next - 1);
                     cases.Add(next);
                 }
-                cur *= 1.042m;
+                cur *= 1.01m;
             }
             
-            Console.WriteLine($"Cases: {cases.Count} numbers [{string.Join(",", cases)}]");
-
             for (int len = 0; len <= 2; len++)
             {
                 foreach (long testCase in cases)

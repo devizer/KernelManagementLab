@@ -1,0 +1,30 @@
+
+	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+	{
+		if (value == null)
+		{
+			writer.WriteNull();
+		}
+		else
+		{
+			StringBuilder stringBuilder;
+			if (value is long[] arr)
+			{
+				int len = arr.Length;
+				stringBuilder = new StringBuilder(len << 1);
+				for (int pos = 0; pos < len; pos++)
+				{
+					if (pos != 0) stringBuilder.Append(',');
+					HeaplessAppend(stringBuilder, arr[pos]);
+				}
+			}
+			else
+			{
+				throw new InvalidOperationException();
+			}
+
+			writer.WriteStartArray();
+			writer.WriteRaw(stringBuilder.ToString());
+			writer.WriteEndArray();
+		}
+	}
