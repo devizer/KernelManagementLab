@@ -36,6 +36,10 @@ import * as Helper from "../../Helper";
 import {DiskBenchmarkHistory} from "./DiskBenchmarkHistory";
 // import Paper from "./Popper-Lab";
 
+import { ReactComponent as WizardIconSvg } from '../../icons/Wizard-Icon.svg';
+import { ReactComponent as HardDiskSvg } from '../../icons/hard-disk.svg';
+const WizardIcon = <WizardIconSvg style={{width: 32,height:32,fill:'white',strokeWidth:'10px',stroke:'white' }} />;
+
 var Color = require("color");
 
 const PROGRESS_TICK_INTERVAL = 499;
@@ -470,8 +474,9 @@ function DiskBenchmarkDialog(props) {
 
     return (
         <div>
+            
             <Button variant="contained" color="secondary" onClick={handleClickOpen} className={classNames(open && "hidden")} style={{marginBottom:20}}>
-                Start disk benchmark
+                <WizardIcon /> Start disk benchmark
             </Button>
             
             <DiskBenchmarkHistory trigger={historyTrigger}/>
