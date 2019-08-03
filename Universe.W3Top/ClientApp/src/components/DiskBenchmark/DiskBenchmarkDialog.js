@@ -37,7 +37,7 @@ import {DiskBenchmarkHistory} from "./DiskBenchmarkHistory";
 // import Paper from "./Popper-Lab";
 
 import { ReactComponent as WizardIconSvg } from '../../icons/Wizard-Icon.svg';
-const WizardIcon = (size,color) => (<WizardIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
+const WizardIcon = (size=34,color='#333') => (<WizardIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
 
 var Color = require("color");
 

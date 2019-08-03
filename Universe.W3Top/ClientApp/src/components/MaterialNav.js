@@ -40,7 +40,7 @@ import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
 
 import { ReactComponent as DisksIconSvg } from '../icons/Disks-Icon.svg';
-const DisksIcon = (size,color) => (<DisksIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
+const DisksIcon = (size=24,color='#333') => (<DisksIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
 
 
 
