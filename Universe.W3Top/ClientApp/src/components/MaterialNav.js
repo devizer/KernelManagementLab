@@ -30,6 +30,8 @@ import { Link } from 'react-router-dom';
 
 import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ReactComponent as HardDiskIcon } from '../icons/hard-disk.svg';
+
 
 
 
@@ -269,7 +271,10 @@ class PersistentDrawerLeft extends React.Component {
                     <List>
                         {MainMenuLink(<InsertChartOutlinedIcon/>,"Network Live Chart", "/net-v2")}
                         <Divider />
-                        {MainMenuLink(<FontAwesomeIcon icon={faServer} style={{marginLeft:4, marginRight:5}}/>,"Live Mounts", "/mounts")}
+                        {/*{MainMenuLink(<FontAwesomeIcon icon={faServer} style={{marginLeft:4, marginRight:5}}/>,"Live Mounts", "/mounts")}*/}
+                        {MainMenuLink(<HardDiskIcon style={{width:20,height:20,marginLeft:2,marginRight:2,opacity:0.6}}/>,"Live Mounts", "/mounts")}
+                        
+                        
                         {MainMenuLink(<InsertChartOutlinedIcon/>,"Disks Live Chart", "/disks")}
                         {MainMenuLink(<ScoreIcon/>,"Disk Benchmark", "/disk-benchmark")}
                         <Divider />

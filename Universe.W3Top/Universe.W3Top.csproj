@@ -56,6 +56,7 @@
         <Content Include="ClientApp\src\components\Popper-Lab.js" />
         <Content Include="ClientApp\src\components\SingleAxisChart.js" />
         <Content Include="ClientApp\src\Helper.js" />
+        <Content Include="ClientApp\src\icons\hard-disk.svg" />
         <Content Include="ClientApp\src\NextUniqueId.js" />
         <Content Include="ClientApp\src\stores\DataModel.ts.txt" />
         <None Remove="$(SpaRoot)**" />
