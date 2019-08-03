@@ -39,6 +39,8 @@ import AppGitInfo from "../AppGitInfo"
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
 
+import { ReactComponent as DisksIconSvg } from '../icons/Disks-Icon.svg';
+const DisksIcon = (size,color) => (<DisksIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
 
 
 
@@ -271,8 +273,9 @@ class PersistentDrawerLeft extends React.Component {
                     <List>
                         {MainMenuLink(<InsertChartOutlinedIcon/>,"Network Live Chart", "/net-v2")}
                         <Divider />
-                        {MainMenuLink(<FontAwesomeIcon icon={faServer} style={{marginLeft:4, marginRight:5}}/>,"Live Mounts", "/mounts")}
+                        {/*{MainMenuLink(<FontAwesomeIcon icon={faServer} style={{marginLeft:4, marginRight:5}}/>,"Live Mounts", "/mounts")}*/}
                         {/*{MainMenuLink(<HardDiskIcon style={{width:20,height:20,marginLeft:2,marginRight:2,opacity:0.6}}/>,"Live Mounts", "/mounts")}*/}
+                        {MainMenuLink(DisksIcon(24,'#333'),"Live Mounts", "/mounts")}
                         
                         
                         {MainMenuLink(<InsertChartOutlinedIcon/>,"Disks Live Chart", "/disks")}
