@@ -476,7 +476,7 @@ function DiskBenchmarkDialog(props) {
         <div>
             
             <Button variant="contained" color="secondary" onClick={handleClickOpen} className={classNames(open && "hidden")} style={{marginBottom:20}}>
-                <WizardIcon /> Start disk benchmark
+                <WizardIconSvg style={{width: 36,height:36,fill:'white',strokeWidth:'6px',stroke:'white' }} /> Start disk benchmark
             </Button>
             
             <DiskBenchmarkHistory trigger={historyTrigger}/>
