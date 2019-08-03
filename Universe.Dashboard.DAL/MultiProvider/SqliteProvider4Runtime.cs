@@ -32,15 +32,27 @@ namespace Universe.Dashboard.DAL.MultiProvider
 
         public void ApplyDbContextOptions(DbContextOptionsBuilder builder, string connectionString)
         {
-            // Console.WriteLine("DbContextOptionsBuilder.UseSqlite");
-            SqliteConnection con = new SqliteConnection(connectionString);
-            con.Open();
-            con.Execute("PRAGMA busy_timeout = 3000;");
-            builder.UseSqlite(con, options =>
+            const bool needBusyTimeout = false;
+            if (needBusyTimeout)
             {
-                options.MigrationsHistoryTable(DashboardContextOptionsFactory.MigrationsTableName);
-                // options.SuppressForeignKeyEnforcement()
-            });
+                // Console.WriteLine("DbContextOptionsBuilder.UseSqlite");
+                SqliteConnection con = new SqliteConnection(connectionString);
+                con.Open();
+                con.Execute("PRAGMA busy_timeout = 3000;");
+                builder.UseSqlite(con, options =>
+                {
+                    options.MigrationsHistoryTable(DashboardContextOptionsFactory.MigrationsTableName);
+                    // options.SuppressForeignKeyEnforcement()
+                });
+            }
+            else
+            {
+                builder.UseSqlite(connectionString, options =>
+                {
+                    options.MigrationsHistoryTable(DashboardContextOptionsFactory.MigrationsTableName);
+                    // options.SuppressForeignKeyEnforcement()
+                });
+            }
         }
 
         public string GetServerName(string connectionString)
