@@ -61,7 +61,7 @@ script:
   bash -s dotnet node pwsh
 
 - pushd build; ./inject-git-info.ps1; popd; cat bintray.json || true
-- dotnet restore /v:m
+- dotnet restore /v:m || dotnet restore /v:m || dotnet restore /v:m 
 
 - |
   echo "Sqlite tests only"
