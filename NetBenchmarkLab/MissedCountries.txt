@@ -1,0 +1,687 @@
+Id   |Name                     |!|Country                                   |Sponsor                                         |Host                                           |Distance  |Latency
+-----+-------------------------+-+------------------------------------------+------------------------------------------------+-----------------------------------------------+----------+-------
+19414|Kaliningrad              | |Russia                                    |WestBalt Telecom                                |speedtest.wbt.ru:8080                          |592637.4  |0
+23380|Kaliningrad              | |Russia                                    |JSC TransTeleCom                                |speedtest7.ttksever.ru:8080                    |592637.4  |0
+25890|Starodub                 | |Russia                                    |SKT Edver Ltd                                   |sp.edvernet.ru:8080                            |680749.5  |0
+19965|Velikiye Luki            | |Russia                                    |MART                                            |speedtest.mart.ru:8080                         |842822.1  |0
+19861|Belgorod                 | |Russia                                    |Zelenaya.Belgorod                               |speedtest.belgorod.zelenaya.net:8080           |898059.5  |0
+20668|Belgorod                 | |Russia                                    |LLC "BSTK"                                      |speedtest.31stk.ru:8080                        |898059.5  |0
+4623 |Orel                     | |Russia                                    |JSC "VimpelCom"                                 |speedtest1.orel.beeline.ru:8080                |903797.8  |0
+26389|Симферополь              | |Russia                                    |Giganet                                         |speedtest.giga.net.ru:8080                     |932618.2  |0
+18778|Simferopol               | |Russia                                    |SevTelecom                                      |sp1.sevtele.com:8080                           |933008.0  |0
+24963|Simferopol               | |Russia                                    |Tavrida Telecom                                 |sp.ttk.mx:8080                                 |933008.0  |0
+20019|Simferopol               | |Russia                                    |Realnet                                         |st.realcrimea.net:8080                         |933008.0  |0
+26237|Simferopol               | |Russia                                    |Win mobile                                      |speedtest.mobile-win.ru:8080                   |933008.0  |0
+21617|Yalta                    | |Russia                                    |Yaltanet                                        |speedtest.yaltanet.ru:8080                     |969640.8  |0
+4744 |Kaluga                   | |Russia                                    |Beeline                                         |kaluga1.speedtest.corbina.net:8080             |982760.4  |0
+19899|Theodosia                | |Russia                                    |OOO TKK FEONET                                  |speedtest.feonet.net:8080                      |1006915.5 |0
+23581|Luga                     | |Russia                                    |LugLink.Net                                     |speed.luglink.net:8080                         |1058325.9 |0
+19236|Golitsyno                | |Russia                                    |Голицыно Телеком                                |speedtest.gtnet.ru:8080                        |1081409.8 |0
+18906|Voronezh                 | |Russia                                    |JOxNET                                          |test.joxnet.ru:8080                            |1085083.9 |0
+22820|Voronezh                 | |Russia                                    |RETN                                            |speedtest-voz.retn.net:8080                    |1085083.9 |0
+25735|Voronezh                 | |Russia                                    |SETTC                                           |speedtest.uvttk.ru:8080                        |1085083.9 |0
+25680|Troitsk                  | |Russia                                    |MosLine Group LLC                               |speedtest-2.mosline.ru:8080                    |1091977.8 |0
+21725|Istra                    | |Russia                                    |Istranet                                        |speedtest.istranet.ru:8080                     |1093141.4 |0
+4494 |Kingisepp                | |Russia                                    |King-Online Ltd.                                |sp1.king-online.ru:8080                        |1099810.6 |0
+19969|Nahabino                 | |Russia                                    |Fortex                                          |fortex.ru:8080                                 |1104612.3 |0
+21854|Arkhangel'skoye          | |Russia                                    |Semantic                                        |speedtest.semantic.su:8080                     |1107529.0 |0
+23838|Krasnogorsk              | |Russia                                    |Com-site                                        |speedtest-new.comsite.ru:8080                  |1111671.0 |0
+21456|Zelenograd               | |Russia                                    |Dataplanet Ltd.                                 |speedtest-zel.dapl.ru:8080                     |1114632.9 |0
+19756|Moscow                   | |Russia                                    |ASVT                                            |speedtest.asvt.ru:8080                         |1123227.1 |0
+20105|Moscow                   | |Russia                                    |Westcall LTD                                    |speedtest.westcall.ru:8080                     |1123227.1 |0
+22050|Moscow                   | |Russia                                    |RETN                                            |speedtest-msk.retn.net:8080                    |1123227.1 |0
+21091|Moscow                   | |Russia                                    |Unilink                                         |speedtest.unilink.ru:8080                      |1123227.1 |0
+21110|Moscow                   | |Russia                                    |Telenet Solution Ltd                            |speedtest.polycomm.net:8080                    |1123227.1 |0
+23499|Moscow                   | |Russia                                    |EXTREME LTD                                     |speedtest.maryno.net:8080                      |1123227.1 |0
+23313|Moscow                   | |Russia                                    |AVANTEL MSK                                     |speed.msk.avantel.ru:8080                      |1123227.1 |0
+22263|Moscow                   | |Russia                                    |AAS Moscow                                      |speedtest-1.aas.ru:8080                        |1123227.1 |0
+22103|Moscow                   | |Russia                                    |i3D.net                                         |ru.eu.speedtest.i3d.net:8080                   |1123227.1 |0
+23141|Moscow                   | |Russia                                    |OOO VpsVille                                    |speedtest.vpsville.ru:8080                     |1123227.1 |0
+20933|Moscow                   | |Russia                                    |CJSC RASCOM                                     |msk.speedtest.rascom.ru:8080                   |1123227.1 |0
+24478|Moscow                   | |Russia                                    |Etherway                                        |zabbix.etherway.ru:8080                        |1123227.1 |0
+22121|Moscow                   | |Russia                                    |MosLine Group LLC                               |speedtest.mosline.ru:8080                      |1123227.1 |0
+25607|Moscow                   | |Russia                                    |ACADEMSERVICE LTD                               |speedtest.acase.ru:8080                        |1123227.1 |0
+25180|Moscow                   | |Russia                                    |MVM Technology LLC                              |speedtest.tushino.com:8080                     |1123227.1 |0
+25993|Moscow                   | |Russia                                    |Gold Telecom                                    |speedtest.starnet.ru:8080                      |1123227.1 |0
+22072|Moscow                   | |Russia                                    |Volga IX                                        |stmsk.volga-ix.ru:8080                         |1123227.1 |0
+18576|Moscow                   | |Russia                                    |MOSOBLCOM LLC                                   |speedtest.mosoblcom.ru:8080                    |1123227.1 |0
+23995|Moscow                   | |Russia                                    |Mosnet                                          |speedtest.mosnet.ru:8080                       |1123429.3 |0
+22970|Moscow                   | |Russia                                    |ASTEIS-TELECOM                                  |speedtest.asteis.net:8080                      |1123429.3 |0
+24249|Taganrog                 | |Russia                                    |PG19                                            |speedtest.pg19.ru:8080                         |1128955.7 |0
+5371 |Tomilino                 | |Russia                                    |OOO CDMS                                        |inet-speed.ip-home.net:8080                    |1135782.4 |0
+4952 |Mytishchi                | |Russia                                    |East Telecom Ltd                                |speedtest.east.ru:8080                         |1139676.6 |0
+4735 |Bronnicy                 | |Russia                                    |Proxima                                         |st2.proximanet.ru:8080                         |1142081.0 |0
+25986|Bronnicy                 | |Russia                                    |SKScom LLC                                      |speedtest2.my-skscom.ru:8080                   |1142081.0 |0
+4702 |Ramenskoye               | |Russia                                    |Proxima                                         |st1.proximanet.ru:8080                         |1146132.2 |0
+20938|Dmitrov                  | |Russia                                    |Link Ltd.                                       |speedtest.link-region.ru:8080                  |1155450.8 |0
+24534|Gostilitsy               | |Russia                                    |VN-TELECOM                                      |speedtest.vn-tel.ru:8080                       |1158626.6 |0
+24071|Monino                   | |Russia                                    |Infolink                                        |speedtest.infolink.ru:8080                     |1159519.5 |0
+25205|Voskresensk              | |Russia                                    |Efrnet                                          |speedtest.efrnet.net:8080                      |1160887.9 |0
+25851|Luhovicy                 | |Russia                                    |INKO-Telecom LLC                                |speedtest.inko-telecom.ru:8080                 |1162681.8 |0
+21493|Slavyansk-on-Kuban       | |Russia                                    |SKS-TELECOM                                     |stkes1.slavisp.ru:8080                         |1172848.9 |0
+22151|Novorossiysk             | |Russia                                    |Noviy Internet                                  |speedtest.natanet.ru:8080                      |1178706.2 |0
+4752 |Otradnoe                 | |Russia                                    |Lentel                                          |www.lentel.ru:8080                             |1184981.0 |0
+23614|Rostov on Don            | |Russia                                    |Digital Dialog                                  |speedtest.di-dk.ru:8080                        |1188350.8 |0
+25191|Rostov On Don            | |Russia                                    |Beeline                                         |rnd-speedtest.corbina.net:8080                 |1188350.8 |0
+17310|Saint Petersburg         | |Russia                                    |CityTelecom                                     |speedtest.spb.citytelecom.ru:8080              |1192050.8 |0
+18570|Saint Petersburg         | |Russia                                    |RETN                                            |speedtest-spb.retn.net:8080                    |1192050.8 |0
+21014|Saint Petersburg         | |Russia                                    |P.A.K.T. LLC                                    |speedtest.pakt.ru:8080                         |1192050.8 |0
+20780|Saint Petersburg         | |Russia                                    |UNIS                                            |speedtest.unisnet.ru:8080                      |1192050.8 |0
+23440|Saint Petersburg         | |Russia                                    |LLC Utelcom                                     |speedtest.utelcom.ru:8080                      |1192050.8 |0
+24045|Saint Petersburg         | |Russia                                    |ISP "You Online"                                |speedtest.yonl.ru:8080                         |1192050.8 |0
+24338|Saint Petersburg         | |Russia                                    |Severen-telecom                                 |speedtest.severen.ru:8080                      |1192050.8 |0
+24476|Saint Petersburg         | |Russia                                    |WestCall SPb                                    |speedtest.westcall.spb.ru:8080                 |1192050.8 |0
+24804|St. Leningradskaya       | |Russia                                    |LTD Intercom+                                   |speedtest.intercom-plus.ru:8080                |1192189.0 |0
+20674|Kamensk-Shakhtinsky      | |Russia                                    |LTD Darya                                       |darkam.gq:8080                                 |1192915.3 |0
+21266|Kamenolomni              | |Russia                                    |SFERA LLC                                       |speedtest.sfera-telecom.info:8080              |1208587.3 |0
+19118|Alexandrov               | |Russia                                    |Trytek                                          |speedtest.trytek.ru:8080                       |1217968.1 |0
+23490|Alexandrov               | |Russia                                    |GALS                                            |speedtest.galsnet.ru:8080                      |1218048.1 |0
+5623 |Krasnodar                | |Russia                                    |Beeline                                         |krr1.speedtest.corbina.net:8080                |1242449.8 |0
+16636|KRASNODAR                | |Russia                                    |yug-link                                        |speedtest.yug-link.ru:8080                     |1242449.8 |0
+18363|Krasnodar                | |Russia                                    |Yujny Telecom                                   |speedtest.ugtel.ru:8080                        |1242449.8 |0
+23142|Krasnodar                | |Russia                                    |Omicron                                         |stest.omicron.online:8080                      |1242449.8 |0
+24349|Krasnodar                | |Russia                                    |DOM.RU                                          |speedtest.krd.ertelecom.ru:8080                |1242449.8 |0
+18978|Tambov                   | |Russia                                    |MTS PJSC                                        |ns1.tambov.comstar-r.ru:8080                   |1248605.9 |0
+5458 |Tambov                   | |Russia                                    |OOO LANTA                                       |speedtest.lanta-net.ru:8080                    |1248605.9 |0
+22865|Babaevo                  | |Russia                                    |Telesystems LTD                                 |speedtest.ts35.net:8080                        |1306566.9 |0
+23635|Belorechensk             | |Russia                                    |Beltelecom                                      |speedtest.beltele.com:8080                     |1318900.6 |0
+4477 |Maykop                   | |Russia                                    |Rostelecom                                      |maykop.speedtest.rt.ru:8080                    |1342834.9 |0
+18234|Yaroslavl                | |Russia                                    |Yarnet                                          |speedtest.yarnet.ru:8080                       |1348439.8 |0
+25158|Stavropol                | |Russia                                    |Beeline                                         |stavropol-speedtest.corbina.net:8080           |1447182.1 |0
+4478 |Volgograd                | |Russia                                    |Rostelecom                                      |volgograd.speedtest.rt.ru:8080                 |1488508.3 |0
+4483 |Penza                    | |Russia                                    |Rostelecom                                      |penza.speedtest.rt.ru:8080                     |1494670.0 |0
+11112|Sukhumi                  | |Russia                                    |SYSTEMA, LTD                                    |speedtest1.cyxym.net:8080                      |1504420.4 |0
+22770|Sukhum                   | |Russia                                    |Aquafon-GSM                                     |speedtest.aquafon.com:8080                     |1504761.3 |0
+26165|Sukhum                   | |Russia                                    |A-Mobile                                        |speedtest.a-mobile.biz:8080                    |1504761.3 |0
+24936|Nizhniy Novgorod         | |Russia                                    |Мегабайт                                        |speedtest.mb-nn.ru:8080                        |1504939.3 |0
+22055|Nizhny Novgorod          | |Russia                                    |Link Telecom                                    |sp.lt-nn.net:8080                              |1510239.3 |0
+23861|Nizhny Novgorod          | |Russia                                    |OJSC Ufanet                                     |speedtest.nnov.ufanet.ru:8080                  |1510239.3 |0
+20505|Saransk                  | |Russia                                    |TTK                                             |speed.rmttk.ru:8080                            |1520663.8 |0
+5092 |Saratov                  | |Russia                                    |Beeline                                         |srt1.speedtest.corbina.net:8080                |1555746.0 |0
+25192|Pyatigorsk               | |Russia                                    |Beeline                                         |pyatigorsk-speedtest.corbina.net:8080          |1577663.6 |0
+22883|Kostroma                 | |Russia                                    |Svyaz Energo LLC                                |st1.sv-en.ru:8080                              |1595226.4 |0
+25641|Nalchik                  | |Russia                                    |UgTelSet                                        |speedtest.kbr.ugtelset.ru:8080                 |1645399.1 |0
+4481 |Cheboksary               | |Russia                                    |Rostelecom                                      |cheboksary.speedtest.rt.ru:8080                |1694748.7 |0
+25976|Nazran                   | |Russia                                    |Terralink                                       |st.terralink.su:8080                           |1743066.4 |0
+5583 |Yoshkar-ola              | |Russia                                    |Rostelecom                                      |yoshkar-ola.speedtest.rt.ru:8080               |1746471.2 |0
+22240|Kazan                    | |Russia                                    |RETN                                            |speedtest-kzn.retn.net:8080                    |1798022.6 |0
+4963 |Kazan                    | |Russia                                    |Beeline                                         |kazan1.speedtest.corbina.net:8080              |1799889.4 |0
+23643|Kazan                    | |Russia                                    |OJSC Ufanet                                     |speedtest.kzn.ufanet.ru:8080                   |1799889.4 |0
+4903 |Astrakhan                | |Russia                                    |Beeline                                         |astrakhan1.speedtest.corbina.net:8080          |1818898.8 |0
+22694|Astrakhan                | |Russia                                    |PJSC MTS                                        |sp1.astrakhan.comstar-r.ru:8080                |1818898.8 |0
+25086|Astrakhan                | |Russia                                    |Ast-Systems LTD                                 |connect.astsystems.ru:8080                     |1818898.8 |0
+23827|Astrakhan                | |Russia                                    |REAL                                            |s.real.su:8080                                 |1818898.8 |0
+18313|Samara                   | |Russia                                    |Metromax Group                                  |speedtest.metromax.ru:8080                     |1837339.6 |0
+19533|Armavir                  | |Russia                                    |CityTelekom                                     |speedtest.city-telekom.ru:8080                 |1899361.0 |0
+17041|Kirov                    | |Russia                                    |MegaFon                                         |kirov.speedtest-uf.megafon.ru:8080             |1913682.7 |0
+5299 |Makhachkala              | |Russia                                    |Fly-Tech LTD                                    |192.162.212.13:8080                            |1946640.9 |0
+4516 |Makhachkala              | |Russia                                    |Rostelecom                                      |mahachkala.speedtest.rt.ru:8080                |1946640.9 |0
+20055|Makhachkala              | |Russia                                    |Rline                                           |speedtest.r-line.ru:8080                       |1946640.9 |0
+25617|Makhachkala              | |Russia                                    |Sumtel                                          |speedtest-mhl.sumtel.ru:8080                   |1946640.9 |0
+26364|Makhachkala              | |Russia                                    |Ellco                                           |speedtest.ellco.ru:8080                        |1946640.9 |0
+23073|Makhachkala              | |Russia                                    |Pautina                                         |speedtest.pautina05.ru:8080                    |1947523.6 |0
+21488|Izberbash                | |Russia                                    |IzbNet                                          |sp2.izbnet.com:8080                            |1995518.5 |0
+25286|Naberezhnye Chelny       | |Russia                                    |MTS                                             |mail.n-chelny.ru:8080                          |2000309.3 |0
+25069|Apatity                  | |Russia                                    |Tigernet                                        |speedtest.tigernet.ru:8080                     |2040230.2 |0
+25077|Glazov                   | |Russia                                    |NewIT                                           |speedtest2.newit-lan.ru:8080                   |2067447.5 |0
+17014|Izhevsk                  | |Russia                                    |MTS                                             |rapido.izhnt.ru:8080                           |2068043.7 |0
+25186|Orenburg                 | |Russia                                    |OJSC Ufanet                                     |speedtest.o56.ru:8080                          |2178873.5 |0
+25120|Ufa                      | |Russia                                    |OJSC Ufanet                                     |speedtest.ufanet.ru:8080                       |2220270.1 |0
+18951|Perm                     | |Russia                                    |Internet Protocol Transit Telecom Ltd           |s1.iptt.ru:8080                                |2274791.7 |0
+26420|Magnitogorsk             | |Russia                                    |MMK-IS                                          |speedtest.mmk.ru:8080                          |2428318.8 |0
+17038|Nizhny Tagil             | |Russia                                    |MegaFon                                         |nizhniy-tagil.speedtest-uf.megafon.ru:8080     |2488173.3 |0
+25330|Yekaterinburg            | |Russia                                    |TTK Ural                                        |speedtest.uralttk.ru:8080                      |2515949.6 |0
+23694|Ekaterinburg             | |Russia                                    |ProfiStream.Com                                 |srv1.profistream.com:8080                      |2517337.3 |0
+24077|Yekaterinburg            | |Russia                                    |ADL-NET                                         |speedtest.adl-net.ru:8080                      |2517337.3 |0
+4431 |Snezhinsk                | |Russia                                    |Vega-Service, LLC                               |speedtest.vega-int.ru:8080                     |2523205.5 |0
+22804|Niznyaya Salda           | |Russia                                    |Apelsin                                         |speed.apelsin-it.com:8080                      |2533893.3 |0
+25251|Kosulino                 | |Russia                                    |KAT-Telecom                                     |speedtest.kat-telecom.ru:8080                  |2539174.3 |0
+20469|Chelyabinsk              | |Russia                                    |South Ural State University                     |spd.susu.ru:8080                               |2566824.1 |0
+23675|Rezh                     | |Russia                                    |MEDIALINE                                       |speedtest.rezh96.ru:8080                       |2569274.6 |0
+26005|Kurgan                   | |Russia                                    |LLC Kurgan-Telecom                              |st.kurgan-telecom.net:8080                     |2814479.0 |0
+24946|Tyumen                   | |Russia                                    |Beeline                                         |tyumen-speedtest.corbina.net:8080              |2816325.6 |0
+23300|Tyumen                   | |Russia                                    |Proxicom LLC                                    |speedtest.proxicom.ru:8080                     |2816325.6 |0
+17035|Tobolsk                  | |Russia                                    |MegaFon                                         |tobolsk.speedtest-uf.megafon.ru:8080           |2975970.1 |0
+20728|Labytnangi               | |Russia                                    |Yamaltelecom                                    |speedtest.lbt.ru:8080                          |3012756.6 |0
+26135|Nadym                    | |Russia                                    |NSS                                             |ist.home-nadym.ru:8080                         |3253067.3 |0
+23428|Surgut                   | |Russia                                    |Rostelecom                                      |surgut.speedtest.rt.ru:8080                    |3261255.8 |0
+24944|Surgut                   | |Russia                                    |Tele-Plus                                       |speedtest.tele-plus.ru:8080                    |3261255.8 |0
+24973|Omsk                     | |Russia                                    |RusHost                                         |speedtest.rushost.org:8080                     |3325655.0 |0
+17032|Noyabrsk                 | |Russia                                    |MegaFon                                         |noyabrsk.speedtest-uf.megafon.ru:8080          |3370826.6 |0
+20290|Nizhnevartovsk           | |Russia                                    |PRIDE LLC                                       |speedtest.pride-net.ru:8080                    |3430696.9 |0
+25317|Nizhnevartovsk           | |Russia                                    |Dantser LLC                                     |ookla.danpro.ru:8080                           |3430696.9 |0
+24444|Kamen-na-Obi             | |Russia                                    |FB-Telecom                                      |speedtest.myfbt.ru:8080                        |3857468.4 |0
+5045 |Novosibirsk              | |Russia                                    |Beeline                                         |speedcheck1.nsk.beeline.ru:8080                |3860881.4 |0
+3868 |Novosibirsk              | |Russia                                    |Mobile TeleSystems OJSC                         |speedtest1.sib.mts.ru:8080                     |3860881.4 |0
+24576|Rubcovsk                 | |Russia                                    |LTD Aviva Telecom                               |speedtest1.aviva-telecom.ru:8080               |3934201.5 |0
+26287|Norilsk                  | |Russia                                    |Iterika LLC                                     |speedtest.iterika.ru:8080                      |3948870.7 |0
+22123|Tomsk                    | |Russia                                    |ICA LTD                                         |st-world.tomica.ru:8080                        |3993658.8 |0
+21829|Barnaul                  | |Russia                                    |Milecom                                         |speedtest.barnaul.milecom.ru:8080              |4025712.0 |0
+21479|Barnaul                  | |Russia                                    |Rostelecom Altai                                |speedtest.ab.ru:8080                           |4025712.0 |0
+24638|Barnaul                  | |Russia                                    |LTD Aviva Telecom                               |speedtest2.aviva-telecom.ru:8080               |4025712.0 |0
+20145|Kemerovo                 | |Russia                                    |MegaTelecom                                     |speedtest.megatc.ru:8080                       |4097416.5 |0
+24947|Kemerovo                 | |Russia                                    |Beeline                                         |kemerovo-speedtest.corbina.net:8080            |4097416.5 |0
+21250|Tashtagol                | |Russia                                    |Internet Seti                                   |speedtest.intseti.ru:8080                      |4307375.2 |0
+24769|Achinsk                  | |Russia                                    |SiNT                                            |st.mysint.ru:8080                              |4326588.0 |0
+4729 |Krasnoyarsk              | |Russia                                    |Orion telecom, Ltd.                             |speedtest.krk.ru:8080                          |4474880.3 |0
+24945|Krasnoyarsk              | |Russia                                    |Beeline                                         |krasnoyarsk-speedtest.corbina.net:8080         |4474880.3 |0
+26166|Krasnoyarsk              | |Russia                                    |Game service                                    |speedtest.g-service.ru:8080                    |4474880.3 |0
+4479 |Abakan                   | |Russia                                    |Rostelecom                                      |abakan.speedtest.rt.ru:8080                    |4483601.1 |0
+19664|Abakan                   | |Russia                                    |Orion telecom, Ltd.                             |speedtest.abk.orionnet.ru:8080                 |4483601.1 |0
+23222|Zaozerny                 | |Russia                                    |KrasUmax                                        |speedtest.krasumax.ru:8080                     |4581462.0 |0
+23146|Ust-Kut                  | |Russia                                    |OOO"Svyaz"                                      |speedtest.60500.ru:8080                        |5159299.0 |0
+22962|Mirny                    | |Russia                                    |Svyaz Energo LLC                                |st2.sv-en.ru:8080                              |5262185.0 |0
+25844|Irskutsk                 | |Russia                                    |OOO IRCN                                        |speedtest.bars-telecom.ru:8080                 |5323929.8 |0
+18543|Irkutsk                  | |Russia                                    |Baikal Teleport                                 |speedtest.bteleport.ru:8080                    |5324792.9 |0
+19636|Irkutsk                  | |Russia                                    |Orion telecom, Ltd                              |speedtest.irk.orionnet.ru:8080                 |5324792.9 |0
+4734 |Irkutsk                  | |Russia                                    |Svyztranzit                                     |acc.stranzit.ru:8080                           |5324792.9 |0
+4482 |Ulan-Ude                 | |Russia                                    |Rostelecom                                      |ulan-ude.speedtest.rt.ru:8080                  |5541922.0 |0
+26131|Ulan-Ude                 | |Russia                                    |DOM.RU                                          |speedtest.ulu.ertelecom.ru:8080                |5542912.5 |0
+23636|Olekminsk                | |Russia                                    |LLC "Positive"                                  |myolekminsk.ru:8080                            |5680226.7 |0
+19026|Chita                    | |Russia                                    |Mig-service Chita                               |speedtest.migchita.ru:8080                     |5860501.7 |0
+4480 |Yakutsk                  | |Russia                                    |Rostelecom                                      |yakutsk.speedtest.rt.ru:8080                   |5967248.8 |0
+21607|Yakutsk                  | |Russia                                    |Bridge-Telecom, Ltd                             |speedtest.bridge-telecom.ru:8080               |5967248.8 |0
+23101|Neryungri                | |Russia                                    |TTK                                             |speedtest2.neryungri.ru:8080                   |6126772.7 |0
+4484 |Blagoveshchensk          | |Russia                                    |Rostelecom                                      |blagoveshchensk.speedtest.rt.ru:8080           |6731435.5 |0
+23159|Blagoveshchensk          | |Russia                                    |GoodNet                                         |iperf2.goodnet.su:8080                         |6739897.3 |0
+22199|Khabarovsk               | |Russia                                    |Pautina-LTD                                     |st.pautina-telecom.ru:8080                     |7262582.7 |0
+26129|Khabarovsk               | |Russia                                    |DOM.RU                                          |speedtest.khb.ertelecom.ru:8080                |7262582.7 |0
+20951|Vladivostok              | |Russia                                    |Zelenaya.net                                    |speedtest.vladivostok.zelenaya.net:8080        |7544121.4 |0
+25204|Vladivostok              | |Russia                                    |Rostelecom                                      |vvosp1.dv.rt.ru:8080                           |7545092.4 |0
+17765|Natal                    | |BR                                        |ED-LINK TELECOM                                 |speedtest.ed-linkrn.com.br:8080                |8396756.9 |0
+17581|São Gonçalo do Amarante  | |BR                                        |inetconect                                      |sp1.inetconect.com.br:8080                     |8405098.4 |0
+16665|João Pessoa              | |BR                                        |Tely                                            |speedtest.tely.com.br:8080                     |8496525.8 |0
+17532|Itapaje                  | |BR                                        |VibeNet Telecom                                 |www.vibenet.net.br:8080                        |8497875.9 |0
+17287|Recife                   | |BR                                        |Netlink Soluções                                |sp1.netlinksolucoes.com.br:8080                |8585245.7 |0
+17495|Mucambo                  | |BR                                        |INFORLINK MUCAMBO                               |speedtest.inforlinkmucambo.com.br:8080         |8585303.8 |0
+17149|Camaragibe               | |BR                                        |RJTECNOLOGIA                                    |ookla.rjtecnologia-pe.net.br:8080              |8587715.9 |0
+16638|Camaragibe               | |BR                                        |BBG Telecom                                     |speedtest.bbgtelecom.com.br:8080               |8587715.9 |0
+17172|Arcoverde                | |BR                                        |Gznet Provedor                                  |sp1.dktelecom.net.br:8080                      |8754634.2 |0
+17583|Buíque                   | |BR                                        |Conecta Telecom                                 |speedtest.ispconecta.com.br:8080               |8792946.6 |0
+16894|Salgueiro                | |BR                                        |FerreiraNet Telecom                             |speedtest.ferreiranettelecom.com.br:8080       |8855581.9 |0
+17606|Aracaju                  | |BR                                        |G8                                              |speedtest.aju.g8.net.br:8080                   |8986104.4 |0
+16954|Estância                 | |BR                                        |Acesso.net                                      |ookla.acesso.net:8080                          |9038288.0 |0
+16928|Juazeiro                 | |BR                                        |Kasatech                                        |speedtest.kasatech.net:8080                    |9065586.8 |0
+16648|Salvador                 | |BR                                        |Nex Telecom                                     |speedtest.nextelecom.net.br:8080               |9258584.2 |0
+16952|Araguaina                | |BR                                        |ProntoTelecom Internet                          |www.prontotelecom.com.br:8080                  |9380358.1 |0
+17246|Itabuna                  | |BR                                        |UWBR VOX Telecomunicações                       |speedvox-ita01.voxconexao.com.br:8080          |9473273.5 |0
+17611|Tucumã                   | |BR                                        |JC TELECOM SERVIÇOS DE TELECOMUNICAÇÕES LTDA    |ns2.grupojcc.com.br:8080                       |9544137.0 |0
+17196|Pedra Azul               | |BR                                        |Minas Online                                    |speedtest.minasonlinepedraazul.com.br:8080     |9708542.5 |0
+17514|Virgem da Lapa           | |BR                                        |Connect Fibra                                   |speedtest.connectfibratelecom.com.br:8080      |9838581.6 |0
+17442|Manaus                   | |BR                                        |Fiber Network                                   |velocimetro1.fibernetwork.com.br:8080          |9853711.4 |0
+17427|Minas Novas              | |BR                                        |Power Tech                                      |sp2.powertech.psi.br:8080                      |9900844.8 |0
+17420|Brasilia                 | |BR                                        |G8                                              |speedtest.bsa.g8.net.br:8080                   |10114012.3|0
+17781|Santa Bárbara do Leste   | |BR                                        |Nova Tecnologia                                 |ookla1.novatecnologia.com.br:8080              |10119246.0|0
+16599|Brazlândia               | |BR                                        |VP MULTIMIDIA                                   |speedtest.skill.net.br:8080                    |10124046.2|0
+17162|Pará de Minas            | |BR                                        |Efibra                                          |speed.efibra.com.br:8080                       |10262910.7|0
+17182|Patos de Minas           | |BR                                        |Uai Telecom                                     |velocidade.uaitelecom.com.br:8080              |10270788.7|0
+17605|Goiania                  | |BR                                        |G8                                              |speedtest.gna.g8.net.br:8080                   |10281608.4|0
+17753|Barbacena                | |BR                                        |NetRosas Telecom                                |speedtest.net-rosas.com.br:8080                |10332496.3|0
+17076|Tupaciguara              | |BR                                        |Rede G2                                         |speedtest.redeg2.com.br:8080                   |10413454.4|0
+17664|Rio de Janeiro           | |BR                                        |Torres Telecom                                  |speedtest.torrestelecom.net:8080               |10445608.1|0
+17508|Rio De Janeiro           | |BR                                        |YIPI Telecom                                    |speedtest.yipi.com.br:8080                     |10445608.1|0
+17276|Nova Iguaçu              | |BR                                        |SINTERCOM                                       |speedtest.sintnet.com.br:8080                  |10449755.6|0
+17278|Queimados                | |BR                                        |MWA INTERNET                                    |speedtest.mwainternet.com.br:8080              |10451304.8|0
+17005|Mineiros                 | |BR                                        |Mixtel                                          |sp1.mixtel.com.br:8080                         |10577343.0|0
+17174|Casa Branca              | |BR                                        |TELCOM PROVEDOR DE ACESSO                       |speedtest.telcominternet.com.br:8080           |10587847.9|0
+17683|Monte Azul Paulista      | |BR                                        |Infraconect                                     |speedtest.infraconect.com.br:8080              |10611707.2|0
+17673|Itaja                    | |BR                                        |CONNECT NET                                     |speed01.connectnetbrasil.com.br:8080           |10641627.3|0
+17727|Espigão do Oeste         | |BR                                        |CentraNET                                       |speedtest.centranet.com.br:8080                |10643494.7|0
+17439|Limeira                  | |BR                                        |NetPlay Telecom                                 |speedtest.corenetplay.com.br:8080              |10678101.7|0
+17624|Itupeva                  | |BR                                        |Vianet Telecomunicações                         |speedtest.vianet.srv.br:8080                   |10707955.2|0
+16896|São Paulo                | |BR                                        |Eduardo Carvalho                                |speedtest.dsnetfg.com.br:8080                  |10710999.8|0
+16865|Diadema                  | |BR                                        |PowerNet Telecom                                |speedtest.powernetfibra.com.br:8080            |10727266.8|0
+17379|Boituva                  | |BR                                        |BR Conecta                                      |speedtest.brconecta.com.br:8080                |10759811.1|0
+17790|Marilia                  | |BR                                        |Blueweb Internet                                |speedtest.blueweb.com.br:8080                  |10809698.4|0
+16866|MaríLia                  | |BR                                        |ABASE Telecom                                   |speedtest.abasetelecom.com.br:8080             |10809698.4|0
+16651|Tupã                     | |BR                                        |TVC TUPA LTDA                                   |speedtest.tvctupa.com.br:8080                  |10822420.6|0
+16848|Fartura                  | |BR                                        |TxFiber Telecom                                 |sp1-fartura.txfiber.com.br:8080                |10883693.3|0
+17506|Itapeva                  | |BR                                        |PR Telecom                                      |speedtest2.prtelecom.com.br:8080               |10895085.0|0
+17748|Japira                   | |BR                                        |LCA INFORMATICA                                 |speedtest.lcainfo.com.br:8080                  |10956789.3|0
+17147|Curiúva                  | |BR                                        |POLETTO TELECOM                                 |speedtest.polettotelecom.com.br:8080           |11000247.4|0
+17010|Curitiba                 | |BR                                        |ETH TELECOM                                     |speedtest.ethtelecom.com.br:8080               |11045266.4|0
+17487|Ponta Grossa             | |BR                                        |Universidade Estadual de Ponta Grossa           |speedtest.uepg.br:8080                         |11071573.9|0
+17124|Brusque                  | |BR                                        |Funcional Provedor                              |speedtest.funcionaltelecom.net.br:8080         |11168294.7|0
+17435|Cascavel                 | |BR                                        |Speedtest GTV                                   |speedtest.gtv.tv.br:8080                       |11272475.2|0
+16659|Pato Branco              | |BR                                        |Optinet Telecom                                 |speedtest.optinet.com.br:8080                  |11329351.5|0
+17231|Ararangua                | |BR                                        |Contato Internet                                |speedtest.contato.net:8080                     |11362065.6|0
+17937|Guaraciaba               | |BR                                        |Techinfo                                        |speedtest.techinfo.net.br:8080                 |11419878.9|0
+16840|Arroio do Sal            | |BR                                        |A.S.NET-INFORMATICA E INTERNET LTDA             |velocimetro.asnet.com.br:8080                  |11440540.5|0
+16863|Frederico Westphalen     | |BR                                        |TcheTurbo Provedor                              |speedtest.tcheturbo.com.br:8080                |11473441.9|0
+16796|Tramandai                | |BR                                        |splinktelecom                                   |speed.splinktelecom.com.br:8080                |11491270.3|0
+17747|Carazinho                | |BR                                        |Seanet Telecom                                  |speedtest.seanetcarazinho.com.br:8080          |11513065.7|0
+17678|Porto Alegre             | |BR                                        |RLNET                                           |speedtest1.rlnetpoa.com.br:8080                |11564593.0|0
+17544|Camaqua                  | |BR                                        |CAMAQUANET                                      |speed.digitelnet.com.br:8080                   |11669595.2|0
+17746|Pelotas                  | |BR                                        |RCTel                                           |speedtest.rctel.net.br:8080                    |11780874.9|0
+9060 |Norwich                  | |Great Britain                             |Voicehost Ltd                                   |speedtest.voicehost.co.uk:8080                 |1606942.4 |0
+6274 |Norwich                  | |Great Britain                             |InTouch Systems                                 |speedtest.intouchsystems.co.uk:8080            |1606942.4 |0
+9068 |Norwich                  | |Great Britain                             |FreeClix Ltd                                    |speedtest.freeclix.net:8080                    |1606942.4 |0
+1531 |Canterbury               | |Great Britain                             |Cloud Space UK                                  |speedtest.thinkdedicated.com:8080              |1623112.8 |0
+8164 |Braintree                | |Great Britain                             |CSD Network Services Ltd                        |speedtest.csd.co:8080                          |1657410.8 |0
+4740 |Maidstone                | |Great Britain                             |VooServers Ltd                                  |speedtest.vooservers.com:8080                  |1661909.0 |0
+1675 |Maidstone                | |Great Britain                             |Custodian DataCentre                            |speed.custdc.net:8080                          |1661909.0 |0
+4204 |Welwyn Garden City       | |Great Britain                             |Ai Networks Ltd                                 |speedtest1.as50056.net:8080                    |1682171.2 |0
+3829 |Eastbourne               | |Great Britain                             |CloudConnX                                      |speedtest-01.cloudconnx.net:8080               |1683897.4 |0
+7028 |Sevenoaks                | |Great Britain                             |Proxar IT Consulting                            |sp1.proxar.co.uk:8080                          |1685593.4 |0
+9536 |Enfield                  | |Great Britain                             |Clouvider Limited                               |speedtest.clouvider.co.uk:8080                 |1701737.1 |0
+4078 |London                   | |Great Britain                             |Vorboss Limited                                 |if0-0.speedtest.lon.vorboss.net:8080           |1704280.2 |0
+8066 |London                   | |Great Britain                             |Coreix Ltd                                      |speedtest.coreix.net:8080                      |1704280.2 |0
+6032 |London                   | |Great Britain                             |fdcservers.net                                  |lg.lon-c.fdcservers.net:8080                   |1704280.2 |0
+19019|London                   | |Great Britain                             |IT Communications Limited                       |speedtest.as203416.net:8080                    |1704280.2 |0
+7352 |London                   | |Great Britain                             |Redraw Internet                                 |speedtest.redrawinternet.com:8080              |1704280.2 |0
+6151 |London                   | |Great Britain                             |Burstfire Networks Ltd                          |sp1.burstfire.net:8080                         |1704280.2 |0
+7437 |London                   | |Great Britain                             |Vox Telecom                                     |speedtest-ldn.voxtelecom.co.za:8080            |1704280.2 |0
+8281 |London                   | |Great Britain                             |Freethought Internet                            |ookla.speedtest.freethought-internet.co.uk:8080|1704280.2 |0
+2789 |Acton                    | |Great Britain                             |Vodafone UK                                     |speedtest.vodafone.co.uk:8080                  |1715966.3 |0
+1426 |Kingston Upon Hull       | |Great Britain                             |Kcom                                            |fibretest.kc.kcom.com:8080                     |1723015.7 |0
+8386 |Kingston upon Hull       | |Great Britain                             |MS3 Networks                                    |speedtest1.ms-3.co.uk:8080                     |1723015.7 |0
+838  |Maidenhead               | |Great Britain                             |XILO                                            |st-net-1.speedtest.net.uk:8080                 |1746702.9 |0
+3839 |Maidenhead               | |Great Britain                             |Iomart                                          |speedtest-net1.rapidswitch.co.uk:8080          |1746702.9 |0
+8713 |Nottingham               | |Great Britain                             |CWCS Managed Hosting                            |speedtest.cwcs.co.uk:8080                      |1773082.1 |0
+4068 |York                     | |Great Britain                             |Bytemark Hosting                                |speedtest.bytemark.co.uk:8080                  |1773602.1 |0
+6513 |Sheffield                | |Great Britain                             |ASK4                                            |speedtest-public1.ask4.net:8080                |1782060.3 |0
+8691 |Sheffield                | |Great Britain                             |IDAQ Ltd                                        |speedtest1.idaq.com:8080                       |1782060.3 |0
+4657 |Sheffield                | |Great Britain                             |High Availability Hosting Ltd                   |speedtest.hahosting.com:8080                   |1782060.3 |0
+1153 |Coventry                 | |Great Britain                             |Warwicknet Ltd.                                 |uwsp-speedtest2.warwicknet.com:8080            |1796839.6 |0
+19197|Bradford                 | |Great Britain                             |Legend Telecom                                  |st.legendtelecom.co.uk:8080                    |1816752.9 |0
+4058 |Newcastle upon Tyne      | |Great Britain                             |Wildcard Networks                               |speedtest.wildcard.net.uk:8080                 |1820042.0 |0
+3504 |Manchester               | |Great Britain                             |TNP Ltd.                                        |speedtest.tnp.net.uk:8080                      |1846746.7 |0
+2262 |Manchester               | |Great Britain                             |Boundless Networks                              |manchester.speedtest.boundlessnetworks.uk:8080 |1846746.7 |0
+5443 |Gloucester               | |Great Britain                             |Fasthosts Internet                              |speedtest.fasthosts.net.uk:8080                |1849054.0 |0
+7265 |Telford                  | |Great Britain                             |Unitron Systems & Development Ltd               |speedtest.userve.net:8080                      |1859702.6 |0
+3227 |Bristol                  | |Great Britain                             |Hub Network Services Ltd                        |speedtest.hns.net:8080                         |1876040.3 |0
+9229 |Preston                  | |Great Britain                             |BT Lancashire Services                          |ookla.btlancashire.co.uk:8080                  |1878244.1 |0
+18670|Lancaster                | |Great Britain                             |B4RN Ltd.                                       |speedtest.b4rn.org.uk:8080                     |1886567.5 |0
+9171 |Aberdeen                 | |Great Britain                             |Converged Communication Solutions Limited       |speedtest1.converged.co.uk:8080                |1896411.5 |0
+7731 |Carlisle                 | |Great Britain                             |Solway Communications                           |speedtest.solwaycomms.com:8080                 |1902711.0 |0
+5938 |Cardiff                  | |Great Britain                             |Spectrum Internet                               |speedtest.spectruminternet.com:8080            |1917138.8 |0
+15474|Kikinda                  | |Serbia                                    |Victory Media d.o.o                             |speedtest.victorymedia.rs:8080                 |520119.1  |0
+3787 |Tornjos                  | |Serbia                                    |BAU NETWORKS                                    |speedtest1.baulink.net:8080                    |540408.7  |0
+3896 |Becej                    | |Serbia                                    |SAT-TRAKT                                       |speedtest.stcable.tv:8080                      |557128.7  |0
+2437 |Kladovo                  | |Serbia                                    |KLADOVONET ISP                                  |speedtest.kladovonet.com:8080                  |591245.9  |0
+3600 |Novi Sad                 | |Serbia                                    |E-CAPS.net                                      |speed1.e-caps.net:8080                         |598890.5  |0
+25034|Novi Sad                 | |Serbia                                    |mts                                             |speedtest3.mts.rs:8080                         |598890.5  |0
+14476|Belgrade                 | |Serbia                                    |Telenor d.o.o.                                  |speedtest.telenor.rs:8080                      |620062.4  |0
+1301 |Belgrade                 | |Serbia                                    |Serbia BroadBand                                |speedtest.sbb.rs:8080                          |620062.4  |0
+4792 |Belgrade                 | |Serbia                                    |Vip mobile doo                                  |speedtest.vipmobile.rs:8080                    |620062.4  |0
+8262 |Belgrade                 | |Serbia                                    |BeotelNet                                       |speedtest.beotel.net:8080                      |620062.4  |0
+7088 |Belgrade                 | |Serbia                                    |Radijus Vektor                                  |speedtest.vektor.net:8080                      |620062.4  |0
+20742|Beograd                  | |Serbia                                    |Oriontelekom                                    |speedtest2.oriontelekom.rs:8080                |620062.4  |0
+23473|Belgrade                 | |Serbia                                    |Orion Tim                                       |speedtest.orion.rs:8080                        |620062.4  |0
+14833|Arandjelovac             | |Serbia                                    |Optel Telekom                                   |speedtest.optel.rs:8080                        |669894.4  |0
+8162 |Cuprija                  | |Serbia                                    |InterCom Computers                              |194.106.166.120:8080                           |687963.1  |0
+5493 |Paracin                  | |Serbia                                    |ZR pnwifi Paracin                               |speedtest.pnw.rs:8080                          |693990.9  |0
+15153|Sokobanja                | |Serbia                                    |SokoWireless.NET!                               |serv.sokowireless.net:8080                     |709422.7  |0
+15123|Ljubovija                | |Serbia                                    |Most Net ISP                                    |speedtest.mostnet.rs:8080                      |721095.6  |0
+23025|Aleksinac                | |Serbia                                    |NetNet Telekom d.o.o                            |st4.netnet.rs:8080                             |723020.6  |0
+12043|Nis                      | |Serbia                                    |NetNet Telekom d.o.o.                           |st1.netnet.rs:8080                             |746009.7  |0
+20191|Nis                      | |Serbia                                    |mts                                             |speedtest2.mts.rs:8080                         |746009.7  |0
+1281 |Nis                      | |Serbia                                    |Exe Net d.o.o.                                  |92.60.224.24:8080                              |746009.7  |0
+13378|Nis                      | |Serbia                                    |NiNet Company                                   |st.ninet.rs:8080                               |746009.7  |0
+4928 |Nis                      | |Serbia                                    |University of Nis                               |speedtest.junis.ni.ac.rs:8080                  |746009.7  |0
+22960|Pecenjevce               | |Serbia                                    |NetNet Telekom d.o.o                            |st3.netnet.rs:8080                             |768493.3  |0
+17128|Leskovac                 | |Serbia                                    |Exe Net d.o.o.                                  |lespeedtest.exe-net.net:8080                   |778412.7  |0
+13613|Prishtina                | |Serbia                                    |Artmotion SH.P.K.                               |speedtest.artmotion.net:8080                   |828227.9  |0
+16610|Potsdam, NY              | |US                                        |Clarkson University                             |speedtest.clarkson.edu:8080                    |6928840.8 |0
+16910|New York, NY             | |US                                        |Ylinx, LLC                                      |speedtest.ylinx.com:8080                       |7180531.4 |0
+16888|New York, NY             | |US                                        |Natural Wireless                                |speedtest.naturalwireless.com:8080             |7180531.4 |0
+17545|Parsippany, NJ           | |US                                        |Planet Networks                                 |speedtest.planet.net:8080                      |7193017.6 |0
+17663|Ashburn, VA              | |US                                        |Hosted Backbone, LLC                            |speedtest1.ash3.va.hostedbackbone.net:8080     |7519863.5 |0
+17681|Random Lake, WI          | |US                                        |Bertram Communications                          |randomlake-speedtest.gobertram.com:8080        |7725229.2 |0
+16770|South Bend, IN           | |US                                        |Fourway.NET                                     |spdtst-southbend.fourway.net:8080              |7796254.8 |0
+16899|Lafayette, IN            | |US                                        |Wintek Corporation                              |speedtest.wintek.com:8080                      |7936964.7 |0
+16736|Readlyn, IA              | |US                                        |Readlyn Telephone Company                       |speedtest.readlyntelco.com:8080                |8015057.2 |0
+16730|Des Moines, IA           | |US                                        |NexGen Communications                           |speedtest.nexgencom.com:8080                   |8183261.6 |0
+17522|Leon, IA                 | |US                                        |GRM Networks                                    |speedtest2.grm.net:8080                        |8265762.1 |0
+16706|Oneonta, AL              | |US                                        |SardisTel Oneonta                               |oneonta.sardis.network:8080                    |8474384.0 |0
+17566|Springfield, MO          | |US                                        |Syndeo Solutions                                |speedtest.syndeosolutions.com:8080             |8560582.5 |0
+16908|Montgomery, AL           | |US                                        |WaveFly                                         |speedtest.mgm.wavefly.com:8080                 |8602333.1 |0
+17414|Cassville, MO            | |US                                        |goBEC Fiber Network                             |speedtest.gobec.net:8080                       |8637669.3 |0
+17026|Tampa, FL                | |US                                        |Tampa Bay Fiber                                 |speedtest.pbx-change.com:8080                  |8754559.3 |0
+17701|Walla Walla, WA          | |US                                        |Columbia Energy, LLC                            |speedtest.columbiainet.com:8080                |8757861.2 |0
+17795|Fort Myers, FL           | |US                                        |T3 Communications                               |speedtest.t3com.com:8080                       |8831002.5 |0
+17751|Oklahoma City, OK        | |US                                        |OneNet                                          |okc-speedtest.onenet.net:8080                  |8935414.3 |0
+16961|Bend, OR                 | |US                                        |BendTel Inc.                                    |speedtest.bendtel.com:8080                     |9054466.0 |0
+17380|Ephraim, UT              | |US                                        |Snow College                                    |speedtest.snow.edu:8080                        |9195465.8 |0
+17466|Las Vegas, NV            | |US                                        |HYPER NETWORKS 10G                              |speedtest.hypernetworks.com:8080               |9650806.5 |0
+17627|Laredo, TX               | |US                                        |LISD                                            |speedtest.laredoisd.org:8080                   |9777766.9 |0
+16960|Nogales, AZ              | |US                                        |Bluespan Wireless LLC                           |nogales.speedtest.bluespanwireless.com:8080    |9963278.4 |0
+17445|San Diego, CA            | |US                                        |ZTelco                                          |speedtest.ztelco.com:8080                      |10078084.9|0
+5870 |Bijeljina                | |Bosnia and Herzegovina                    |Telrad NET                                      |www.telrad.net:8080                            |672793.5  |0
+9818 |Gradacac                 | |Bosnia and Herzegovina                    |Gigaherc d.o.o                                  |89.111.246.108:8080                            |694194.0  |0
+6778 |Gradacac                 | |Bosnia and Herzegovina                    |DSLON - DSL Elektronika doo                     |speedtest.dslon.ws:8080                        |694194.0  |0
+14291|Gradacac                 | |Bosnia and Herzegovina                    |TELESKY                                         |speedtest.bihnet.net:8080                      |695049.0  |0
+25014|Derventa                 | |Bosnia and Herzegovina                    |Knet                                            |knetspeedtest.ddns.net:8080                    |710725.4  |0
+12413|Gracanica                | |Bosnia and Herzegovina                    |Dinnet d.o.o.                                   |sp1.dinnet.net:8080                            |715987.2  |0
+11604|Gracanica                | |Bosnia and Herzegovina                    |WiracNet                                        |a.wiracspeed.com:8080                          |715987.2  |0
+6764 |Tuzla                    | |Bosnia and Herzegovina                    |TXTV d.o.o Tuzla                                |ooakla.txtv.ba:8080                            |717505.8  |0
+3649 |Lukavac                  | |Bosnia and Herzegovina                    |AVAX Net doo                                    |st-01.avax.ba:8080                             |721113.7  |0
+3886 |Zivinice                 | |Bosnia and Herzegovina                    |Media Sky d.o.o.                                |speedtest1.mediasky.ba:8080                    |724750.2  |0
+24986|Doboj Jug                | |Bosnia and Herzegovina                    |KTV E-G-E                                       |speedtest.ktv-ege.ba:8080                      |730439.3  |0
+7834 |Prnjavor                 | |Bosnia and Herzegovina                    |Terc Trade Company                              |sp1.terctv.com:8080                            |732876.7  |0
+987  |Banja Luka               | |Bosnia and Herzegovina                    |m:tel                                           |speedtest.teol.net:8080                        |764833.4  |0
+2284 |Banja Luka               | |Bosnia and Herzegovina                    |BLIC.NET                                        |speedtest.blic.net:8080                        |764833.4  |0
+10937|Banja Luka               | |Bosnia and Herzegovina                    |Elta Kabel d.o.o.                               |stest1.elta-kabel.com:8080                     |764833.4  |0
+22343|Banja Luka               | |Bosnia and Herzegovina                    |Trion Tel                                       |speedtest.triontel.net:8080                    |764833.4  |0
+24689|Visoko                   | |Bosnia and Herzegovina                    |Formea d.o.o. Visoko                            |speedtest1.formea.ba:8080                      |788163.7  |0
+25747|Bugojno                  | |Bosnia and Herzegovina                    |NET-FLET d.o.o. Bugojno                         |s1.formea.ba:8080                              |814473.9  |0
+2014 |Sarajevo                 | |Bosnia and Herzegovina                    |TELEMACH BH                                     |speedtest.telemach.ba:8080                     |830880.2  |0
+1341 |Sarajevo                 | |Bosnia and Herzegovina                    |BH Telecom                                      |speedtest.bih.net.ba:8080                      |830880.2  |0
+5073 |Sarajevo                 | |Bosnia and Herzegovina                    |Logosoft d.o.o.                                 |speed1.lol.ba:8080                             |830880.2  |0
+13979|Mostar                   | |Bosnia and Herzegovina                    |HT Eronet                                       |speedtest.hteronet.ba:8080                     |865002.4  |0
+15113|Bayeux                   | |Brasil                                    |Knet Internet                                   |sp1.knetinternet.com.br:8080                   |8503112.5 |0
+14385|Granja                   | |Brasil                                    |GigaNet Internet Banda Larga                    |server01.giganet-ce.com.br:8080                |8523220.8 |0
+14411|Sobral                   | |Brasil                                    |TSUNAMI NET BANDA LARGA                         |tsunaminetce.com.br:8080                       |8542074.2 |0
+14937|Campina Grande           | |Brasil                                    |Ultranet                                        |velocimetro.ultranetpb.com.br:8080             |8571779.0 |0
+15897|Recife                   | |Brasil                                    |LINS.NET                                        |www.linsnetme.net.br:8080                      |8585245.7 |0
+15568|Arapiraca                | |Brasil                                    |Super Connect Telecom                           |speedtest1.provedorsuperconnect.com.br:8080    |8851166.8 |0
+15158|Pedreiras                | |Brasil                                    |LH NET TELECOMUNICAÇÕES                         |www.lhnetwifi.com.br:8080                      |8905326.5 |0
+12179|Senhor Do Bonfim         | |Brasil                                    |Infornet                                        |speedtest.infornet.in:8080                     |9139131.3 |0
+13074|Imperatriz               | |Brasil                                    |NETFY TELECOMUNICAÇÃO                           |speedtest.netfy.com.br:8080                    |9185810.5 |0
+11602|Colinas do Tocantins     | |Brasil                                    |CONNECTESITE                                    |www.connectesite.com.br:8080                   |9474626.4 |0
+13784|Redencao                 | |Brasil                                    |JC Telecom Serviços de Telecomunicações LTDA EPP|ns1.grupojcc.com.br:8080                       |9578003.5 |0
+13312|Sao Mateus               | |Brasil                                    |Real Life Telecom                               |ip.reallifenet.com.br:8080                     |9865861.0 |0
+15209|Desterro de Entre Rios   | |Brasil                                    |Netli Telecom                                   |speedtest.netli.com.br:8080                    |10316904.1|0
+13487|Duque de Caxias          | |Brasil                                    |AllConecta                                      |speedtest.allconecta.net.br:8080               |10442927.0|0
+15437|Pouso Alegre             | |Brasil                                    |AGNET BANDA LARGA                               |ookla.agnetbandalarga.com.br:8080              |10556106.8|0
+10621|Avanhandava              | |Brasil                                    |LT Soluções                                     |ava1.ltsolucoes.com:8080                       |10744449.8|0
+11917|Mandaguari               | |Brasil                                    |BWNet                                           |speedtest.bwnet.com.br:8080                    |11034746.7|0
+11389|Santa Isabel do Ivai     | |Brasil                                    |2R Telecom                                      |sp1.2rtelecom.com.br:8080                      |11104239.1|0
+8298 |Sao Joao Batista         | |Brasil                                    |WS Telecom                                      |speedtest.wstelecom.net:8080                   |11179894.1|0
+11097|Assis Chateaubriand      | |Brasil                                    |FusaoNet Comunicações                           |www.fusaonet.com.br:8080                       |11229444.2|0
+16304|Toledo                   | |Brasil                                    |FusaoNet Toledo                                 |slave.fusaonet.com.br:8080                     |11271417.4|0
+10888|Santo Antonio do Sudoeste| |Brasil                                    |FiberNet Telecom                                |speedtest3.fibernet.net.br:8080                |11385238.1|0
+18218|Bryansk                  | |RU                                        |RIA-link Ltd.                                   |91-215-188-162-st.ria-link.ru:8080             |811523.3  |0
+18137|Belgorod                 | |RU                                        |Easyhoster.ru (IT-Media LLC)                    |speedtest.easyhoster.ru:8080                   |898059.5  |0
+18128|Simferopol               | |RU                                        |FarLINE ISP                                     |spdtst1.farline.net:8080                       |933008.0  |0
+17097|Tula                     | |RU                                        |Sunlink                                         |st.sunlink.ru:8080                             |1047002.6 |0
+17091|Moscow                   | |RU                                        |Telecom Center                                  |speedtest.tcenter.ru:8080                      |1123227.1 |0
+17352|Ramenskoye               | |RU                                        |AVIEL                                           |speedtest.aviel.ru:8080                        |1146132.2 |0
+16769|Novorossiysk             | |RU                                        |ANNEX.PRO                                       |st.annex.pro:8080                              |1178706.2 |0
+16836|Sergiyev Posad           | |RU                                        |DIVO                                            |speedtest.divo.ru:8080                         |1184067.9 |0
+16949|Krasnodar                | |RU                                        |Sky Telecom                                     |sp1.telecomsky.ru:8080                         |1242449.8 |0
+17543|Gagra                    | |RU                                        |Gagra Telecom                                   |speedtest1.gagratel.ru:8080                    |1432292.5 |0
+17199|Volgograd                | |RU                                        |TTK                                             |speed-vgd.vtt.net:8080                         |1488508.3 |0
+17429|Nizhny Novgorod          | |RU                                        |Virgin Connect                                  |speedtest.nino.ru:8080                         |1510239.3 |0
+16945|Saransk                  | |RU                                        |MRSU                                            |speedtest.mrsu.ru:8080                         |1520663.8 |0
+16982|Saratov                  | |RU                                        |TTK                                             |speed.vtt.net:8080                             |1555746.0 |0
+17622|Kazan                    | |RU                                        |Telecom21                                       |speed.t21v.ru:8080                             |1799889.4 |0
+16727|Ekaterinburg             | |RU                                        |MTS PJSC                                        |speedtest.ural.mts.ru:8080                     |2515949.6 |0
+16765|Berezovskiy              | |RU                                        |KVANT Telecommunications                        |speedtest.kvant-ber.ru:8080                    |2529154.5 |0
+17819|Salekhard                | |RU                                        |JSC "CONNECT"                                   |cache.connect-online.ru:8080                   |3016415.2 |0
+18211|Tomsk                    | |RU                                        |O-Zone                                          |o-zonet.ru:8080                                |3993658.8 |0
+17526|Petropavlovsk-Kamchatsky | |RU                                        |SKTV                                            |speed.kamtv.ru:8080                            |7817615.6 |0
+17118|Bhatinda                 | |IN                                        |Five Internet Solutions Pvt Ltd                 |speedtest.5net.in:8080                         |4742674.7 |0
+17700|Yamunanagar              | |IN                                        |planetwifi                                      |speedtest.planetwifi.net:8080                  |4914252.0 |0
+17198|Gurugram                 | |IN                                        |Ultranet Infotech Solution Pvt Ltd              |speedtestgurugram.ultranet.co.in:8080          |5023255.0 |0
+17782|New Delhi                | |IN                                        |Zapbytes FiberNet                               |speedtest1.zapbytes.in:8080                    |5026228.1 |0
+17714|New Delhi                | |IN                                        |JDM Broadband                                   |sp1.jdmbroadband.com:8080                      |5026228.1 |0
+17013|New Delhi                | |IN                                        |Sai Networks                                    |exnetdel.speedtest.bhaukaalbaba.com:8080       |5026228.1 |0
+17779|Kota                     | |IN                                        |Kappa Internet Services Pvt. Ltd.               |speedtest.kappa.net.in:8080                    |5194841.6 |0
+16923|Vadodara                 | |IN                                        |Ucom Digital Pvt Ltd.                           |speedtest.ucomdigital.com:8080                 |5247190.2 |0
+17334|Kamrej                   | |IN                                        |R-Link Internet Services                        |sp1.rlink.co.in:8080                           |5317063.6 |0
+17469|Indore                   | |IN                                        |Rackbank Datacenters Pvt. Ltd.                  |speedtest.rackbank.com:8080                    |5395860.5 |0
+17764|Indore                   | |IN                                        |Hathway cable & datacom LTD                     |indorespd.hathway.com:8080                     |5395860.5 |0
+17275|Bhopal                   | |IN                                        |Winux                                           |speedtest.winux.co.in:8080                     |5460562.9 |0
+17467|Varanasi                 | |IN                                        |World Vision Networks Private Limited           |st1.wvnpl.com:8080                             |5690375.4 |0
+17073|Ranchi                   | |IN                                        |Protoact Digital Network Pvt Ltd                |sp1.protoactnetworks.com:8080                  |6013091.2 |0
+17520|Siliguri                 | |IN                                        |Siliguri Internet & Cable TV Pvt. Ltd.          |speedtest.sinetonline.net:8080                 |6031831.4 |0
+17816|Haldia                   | |IN                                        |HUSTEL TELECOM PVT. LTD.                        |sp1.hustel.net:8080                            |6312422.0 |0
+17600|Bangalore                | |IN                                        |Assistive Networks & Technologies Pvt Ltd       |speedtest.assistivenetwork.net:8080            |6340744.9 |0
+17289|Thrissur                 | |IN                                        |Kerala Vision ISP                               |speedtest.keralavisionisp.com:8080             |6466538.8 |0
+17248|Coimbatore               | |IN                                        |Bharti Airtel Ltd                               |leapchn.airtel.in:8080                         |6472945.4 |0
+16674|Chennai                  | |IN                                        |C32 BROADBAND PVT LTD                           |speedtest.c32broadband.com:8080                |6513861.0 |0
+17398|Lviv                     | |UA                                        |ISP Kopiyka                                     |speedtest.kopiyka.org:8080                     |2269.8    |0
+17594|Kiev                     | |UA                                        |Euroline-Telecom                                |speedtest.euroline-telecom.net:8080            |467968.2  |0
+17114|Pervomaysk               | |UA                                        |Megaprostir                                     |speedtest.megaprostir.net:8080                 |539613.9  |0
+17020|Nikopol                  | |UA                                        |Giptel                                          |speedtest.giptel.net:8080                      |801964.0  |0
+17498|Dnepropetrovsk           | |UA                                        |Civilization                                    |speedtest.civ.dp.ua:8080                       |811647.3  |0
+17485|Zaporizhzhya             | |UA                                        |Gigabit-Online                                  |speedtest.gigabit.zp.ua:8080                   |847126.8  |0
+17500|Sinelnikovo              | |UA                                        |HomeNet ISP                                     |speedtest.hn.biz.ua:8080                       |853746.8  |0
+17745|Slobozhanske             | |UA                                        |TK Dialog                                       |speedtest.komsomolske.net:8080                 |897890.1  |0
+17052|Дружковка                | |UA                                        |EuroNet LLC                                     |euronet.dn.ua:8080                             |989116.1  |0
+17707|Volnovaha                | |UA                                        |TRK  "Telemir"                                  |ciscoserver.skif.tv:8080                       |1017537.7 |0
+17478|Donetsk                  | |UA                                        |Ugletele.com                                    |speedtest.ugletele.com:8080                    |1026495.3 |0
+1089 |Nablus                   | |Palestine                                 |Paltel                                          |212.14.233.186:8080                            |2171101.5 |0
+24539|Nablus                   | |Palestine                                 |Mada                                            |speedtest5.mada.ps:8080                        |2171101.5 |0
+1699 |Ramallah                 | |Palestine                                 |Mada                                            |speedtest.mada.ps:8080                         |2201461.8 |0
+1294 |Ramallah                 | |Palestine                                 |Paltel                                          |82.213.28.12:8080                              |2201461.8 |0
+10030|Ramallah                 | |Palestine                                 |Together Communications LTD                     |speedtest1.together-pal.com:8080               |2201461.8 |0
+4610 |Ramallah                 | |Palestine                                 |CallU Telecommunication Ltd.                    |speedtest2.callu.ps:8080                       |2201461.8 |0
+1137 |Gaza                     | |Palestine                                 |Paltel                                          |213.244.72.22:8080                             |2216056.6 |0
+4846 |Gaza                     | |Palestine                                 |SpeedClick                                      |speedtest.speedclick.ps:8080                   |2216056.6 |0
+24538|Gaza                     | |Palestine                                 |Mada                                            |speedtest4.mada.ps:8080                        |2216056.6 |0
+25796|Gaza                     | |Palestine                                 |NetStream                                       |speedtest.ns.ps:8080                           |2216056.6 |0
+9888 |Tabriz                   | |Iran, Islamic Republic of                 |Maxnet                                          |speedtest-3.maxnet.ir:8080                     |2197535.8 |0
+10935|Rasht                    | |Iran, Islamic Republic of                 |Andishe Sabz Khazar                             |autoup.ir:8080                                 |2470748.3 |0
+10929|Kermanshah               | |Iran, Islamic Republic of                 |Taknet                                          |dl1.taknet.ir:8080                             |2550857.4 |0
+13583|Tehran                   | |Iran, Islamic Republic of                 |Fanap Telecom                                   |speedtest.fanaptelecom.ir:8080                 |2712081.4 |0
+16510|Tehran                   | |Iran, Islamic Republic of                 |Asiatech                                        |sptest2.asiatech.ir:8080                       |2712081.4 |0
+15416|Tehran                   | |Iran, Islamic Republic of                 |TCI                                             |tci-tehran.tct.ir:8080                         |2712081.4 |0
+11275|Shahroud                 | |Iran, Islamic Republic of                 |UZNET(Shabakeh Gostar Dorna)                    |speedtest.uznet.ir:8080                        |2897097.0 |0
+15820|Shiraz                   | |Iran, Islamic Republic of                 |Farahoosh Dena                                  |speedtest0.farahoosh.ir:8080                   |3282832.1 |0
+367  |Singapore                | |Republic of Singapore                     |NewMedia Express                                |www.speedtest.com.sg:8080                      |9173153.8 |0
+2054 |Singapore                | |Republic of Singapore                     |Viewqwest Pte Ltd                               |speedtest10.vqbn.com:8080                      |9173153.8 |0
+5168 |Singapore                | |Republic of Singapore                     |PT Indosat Tbk                                  |speedtest1.indosat.com:8080                    |9173153.8 |0
+5935 |Singapore                | |Republic of Singapore                     |MyRepublic                                      |speedtest.myrepublic.com.sg:8080               |9173153.8 |0
+9575 |Singapore                | |Republic of Singapore                     |OffsiteDataSync                                 |apac-sg-ookla1.offsitedatasync.com:8080        |9173153.8 |0
+7556 |Singapore                | |Republic of Singapore                     |PT FirstMedia                                   |sg-speedtest.fast.net.id:8080                  |9173153.8 |0
+7368 |Singapore                | |Republic of Singapore                     |PT Mora Telematika Indonesia                    |speedtest-sg.moratelindo.co.id:8080            |9173153.8 |0
+7311 |Singapore                | |Republic of Singapore                     |M1 Limited                                      |m1speedtest1.m1net.com.sg:8080                 |9173153.8 |0
+17772|Lleida                   | |ES                                        |e.Telecom                                       |st.etelecom.es:8080                            |2023364.1 |0
+17142|Paterna                  | |ES                                        |OPTLC Telecomunicaciones                        |mivelocidad.qpbatt.net:8080                    |2237390.6 |0
+16860|Xativa                   | |ES                                        |wirered.es                                      |speedtest.wirered.es:8080                      |2279212.4 |0
+17797|Benijófar                | |ES                                        |DVBLab Communication                            |st.dvblab.com:8080                             |2359887.4 |0
+17773|Madrid                   | |ES                                        |Digimobil                                       |speedtest.digimobil.es:8080                    |2397919.0 |0
+17774|La Roda de Andalucía     | |ES                                        |Telecoandaluzas                                 |speedtest.telecoandaluzas.com:8080             |2692105.8 |0
+17805|Puerto Real              | |ES                                        |Hospedados.com Gadix.com                        |st1.hospedados.net:8080                        |2835451.1 |0
+23771|Goma                     | |DR Congo                                  |TechPlus2                                       |speedtest2.techplusys.com:8080                 |5753104.7 |0
+7089 |Goma                     | |DR Congo                                  |VODACOM DRC                                     |ookla-goma.vodanet.cd:8080                     |5755963.1 |0
+6646 |Kinshasa                 | |DR Congo                                  |Vodacom DRC                                     |ookla-kin.vodanet.cd:8080                      |6086425.7 |0
+8528 |Kinshasa                 | |DR Congo                                  |AFRICELL CONGO RDC                              |speedtest.africell.cd:8080                     |6086425.7 |0
+4160 |Kinshasa                 | |DR Congo                                  |Airtel DRC                                      |speedtest.cd.airtel.com:8080                   |6086425.7 |0
+6744 |Lubumbashi               | |DR Congo                                  |VODACOM DRC                                     |ookla-lubum.vodanet.cd:8080                    |6853649.9 |0
+10313|Lubumbashi               | |DR Congo                                  |Africell DRC                                    |speedtestlub.africell.cd:8080                  |6853649.9 |0
+20671|Mandalay                 | |Republic of the Union of Myanmar          |Telenor Myanmar                                 |speedtest6.telenor.com.mm:8080                 |6896120.2 |0
+20882|Mandalay                 | |Republic of the Union of Myanmar          |Ooredoo Myanmar                                 |speedtest.ooredoo.com.mm:8080                  |6896120.2 |0
+23102|Yangon                   | |Republic of the Union of Myanmar          |AGB Communication                               |bandwidth-test.agbisp.net:8080                 |7317199.6 |0
+20670|Yangon                   | |Republic of the Union of Myanmar          |Telenor Myanmar                                 |speedtest3.telenor.com.mm:8080                 |7319405.3 |0
+20565|Yangon                   | |Republic of the Union of Myanmar          |Unilink Myanmar                                 |sp1.unilink.com.mm:8080                        |7319405.3 |0
+25690|Yangon                   | |Republic of the Union of Myanmar          |Fortune Broadband 2                             |spt02.fortunebb.net:8080                       |7319405.3 |0
+26385|Yangon                   | |Republic of the Union of Myanmar          |ANET                                            |speedtest.asianlead.net:8080                   |7319405.3 |0
+17531|Saenz Peña               | |AR                                        |AIRNET                                          |speedtest.airnet.com.ar:8080                   |11885810.4|0
+17539|Salta                    | |AR                                        |Telecom Argentina                               |st1slt.telecom.com.ar:8080                     |12057924.1|0
+17538|Tucuman                  | |AR                                        |Telecom Argentina                               |st1tmn.telecom.com.ar:8080                     |12209382.9|0
+17540|Santiago del Estero      | |AR                                        |Telecom Argentina                               |st1sde.telecom.com.ar:8080                     |12223216.7|0
+17283|San Clemente del Tuyú    | |AR                                        |ATCCO SRL                                       |speedtest.atcco.com.ar:8080                    |12430878.6|0
+17671|Bahía Blanca             | |AR                                        |BVC Online                                      |speedtest.bvconline.com.ar:8080                |12960395.7|0
+17824|Viedma                   | |AR                                        |Agilnet                                         |speedtest.agilnet.com.ar:8080                  |13166350.2|0
+13984|Chisinau                 | |Moldova                                   |trabia network                                  |sp1.kiv01.md.as43289.net:8080                  |479843.4  |0
+6433 |Chisinau                 | |Moldova                                   |StarNet                                         |st3.starnet.md:8080                            |479843.4  |0
+3750 |Chisinau                 | |Moldova                                   |Moldtelecom JSC                                 |212.0.192.74:8080                              |479843.4  |0
+3668 |Chisinau                 | |Moldova                                   |Moldcell                                        |speedtest.moldcell.md:8080                     |479843.4  |0
+4149 |Chisinau                 | |Moldova                                   |Orange Moldova SA                               |speedtest.orange.md:8080                       |479843.4  |0
+9281 |Chisinau                 | |Moldova                                   |IP HOST Data Center                             |sp1.iphost.md:8080                             |479843.4  |0
+17447|Fermo                    | |IT                                        |GetBy                                           |sp1.getby.it:8080                              |1083003.8 |0
+17277|Sora                     | |IT                                        |Connetta Srl                                    |st1.connetta.it:8080                           |1210511.7 |0
+17155|Campagna                 | |IT                                        |Farecom                                         |speedtest1.farecom.it:8080                     |1235511.6 |0
+17359|Pomigliano D'Arco        | |IT                                        |Vola                                            |st1.threeminds.it:8080                         |1245549.4 |0
+18054|Livorno                  | |IT                                        |Arcolink by Next.it S.r.l.                      |srv-st02.arcolink.it:8080                      |1256270.1 |0
+16948|Cicitavecchia            | |IT                                        |Civitanet                                       |speedtest.civitanet.it:8080                    |1277432.4 |0
+3402 |Khujand                  | |Tajikistan                                |Tcell                                           |u1.north.tcell.tj:8080                         |3676581.1 |0
+6699 |Khujand                  | |Tajikistan                                |Babilon-M                                       |speedtest.khujandi.com:8080                    |3676581.1 |0
+5243 |Dushanbe                 | |Tajikistan                                |Megafon Tajikistan                              |speedtest.megafon.tj:8080                      |3722413.3 |0
+3212 |Dushanbe                 | |Tajikistan                                |Babilon-M                                       |speedtest.babilon-m.tj:8080                    |3722413.3 |0
+24269|Dushanbe                 | |Tajikistan                                |Babilon-T ISP                                   |speedtest.cloud.babilon-t.com:8080             |3722413.3 |0
+7575 |Dushanbe                 | |Tajikistan                                |Eastera Co. Ltd.                                |speedtest.eastera.tj:8080                      |3722413.3 |0
+16416|Hanoi                    | |Viet Nam                                  |Vietnamobile                                    |hn1.speedtest.vietnamobile.com.vn:8080         |7669075.8 |0
+11430|Ha Noi                   | |Viet Nam                                  |VIETPN CO, LTD                                  |vhn.vietpn.com:8080                            |7669075.8 |0
+13374|Hanoi                    | |Viet Nam                                  |HTC-ITC                                         |speedtest.htc-itc.com.vn:8080                  |7669075.8 |0
+12635|Ho Chi Minh City         | |Viet Nam                                  |HTC-ITC                                         |speedtesthcm.htc-itc.com.vn:8080               |8577352.0 |0
+15324|Ho Chi Minh City         | |Viet Nam                                  |VietNamHost                                     |speedtest.vietnamhost.vn:8080                  |8577352.0 |0
+11342|Ho Chi Minh City         | |Viet Nam                                  |VIETPN CO, LTD                                  |vhcm.vietpn.com:8080                           |8577352.0 |0
+16878|Kraków                   | |PL                                        |petroinform.net                                 |speedtest.petroinform.net:8080                 |293851.7  |0
+17433|Zator                    | |PL                                        |Air-Net                                         |speedtest.air-net.com.pl:8080                  |329353.4  |0
+18199|Warszawa                 | |PL                                        |Vectra S.A                                      |speedtest-1.vectranet.pl:8080                  |339651.1  |0
+17569|Bielsko-Biała            | |PL                                        |Multi-NET Infrastruktura Sp. z o.o.             |speed.multi-net.eu:8080                        |356708.4  |0
+17338|Poznań                   | |PL                                        |Oxylion S.A                                     |speedtest-poz-01.oxylion.net.pl:8080           |564311.5  |0
+17223|Shijiazhuang             | |CN                                        |chinamobile, hebei                              |speedtest1.he.chinamobile.com:8080             |6920251.1 |0
+17184|Tianjin                  | |CN                                        |China Mobile,TianJin                            |speedtest1.tj.chinamobile.com:8080             |7005375.1 |0
+17584|Chongqing                | |CN                                        |Chongqing Mobile Company                        |speedtest2.cq.chinamobile.com:8080             |7040778.8 |0
+17145|Hefei                    | |CN                                        |China Telecom AnHui Branch                      |speedtest1.ah163.com:8080                      |7582976.4 |0
+17251|Guangzhou                | |CN                                        |ChinaTelecom-GZ                                 |gzspeedtest.com:8080                           |8018798.0 |0
+17590|Naypyidaw                | |MM                                        |MPT                                             |mpt02.mpt.net.mm:8080                          |7072183.8 |0
+18053|Naypyidaw                | |MM                                        |mm-link                                         |speedtest.mm-link.net:8080                     |7072183.8 |0
+16724|Yangon                   | |MM                                        |GTMH Telecom                                    |speedtest.gtmh-telecom.com:8080                |7319405.3 |0
+17589|Yangon                   | |MM                                        |MPT                                             |mpt01.mpt.net.mm:8080                          |7319405.3 |0
+17918|Yangon                   | |MM                                        |Ananda                                          |speedtest.ananda.com.mm:8080                   |7319405.3 |0
+7633 |Road Town                | |Virgin Islands                            |CCTBVI                                          |speedtest.cctwireless.com:8080                 |8364557.6 |0
+2888 |Saint Thomas             | |Virgin Islands                            |Viya                                            |stt-cha-speedtest.vipowernet.net:8080          |8393973.4 |0
+4470 |Saint Croix              | |Virgin Islands                            |Viya                                            |stx-fre-speedtest.vipowernet.net:8080          |8430671.1 |0
+2885 |Saint Croix              | |Virgin Islands                            |Broadband VI                                    |speedteststx.broadband.vi:8080                 |8430671.1 |0
+6762 |Saint Croix              | |Virgin Islands                            |VI Next Generation Network                      |speedtest.vingn.com:8080                       |8430671.1 |0
+17644|Aguascalientes           | |MX                                        |NUEVARED                                        |sp.nuevared.mx:8080                            |10460136.2|0
+17105|Tultitlan                | |MX                                        |Triara                                          |speedtest2-tultitlan.triara.com:8080           |10498725.7|0
+17108|Ciudad Nezahualcoyotl    | |MX                                        |Triara                                          |speedtest2-nezahualcoyotl.triara.com:8080      |10511478.1|0
+17106|Coyoacan                 | |MX                                        |Triara                                          |speedtest2-coyoacan.triara.com:8080            |10526170.4|0
+17107|Santa Fe                 | |MX                                        |Triara                                          |speedtest2-santafe.triara.com:8080             |10526244.5|0
+2910 |Prishtina                | |Kosovo                                    |IPKO Telecommunications                         |80.80.160.222:8080                             |828227.9  |0
+19187|Prishtina                | |Kosovo                                    |TelKos L.L.C                                    |speedtest.telkos.net:8080                      |828227.9  |0
+3392 |Prishtina                | |Kosovo                                    |PTK                                             |speedtest1.telekomi.net:8080                   |828227.9  |0
+2836 |Prishtina                | |Kosovo                                    |Kujtesa Net                                     |sr1.kujtesa.com:8080                           |828227.9  |0
+5373 |Podgorica                | |Montenegro                                |Crnogorski Telekom AD                           |speedtest.t-com.me:8080                        |901459.3  |0
+8819 |Podgorica                | |Montenegro                                |m:tel doo                                       |62.4.62.62:8080                                |901459.3  |0
+24464|Podgorica                | |Montenegro                                |Telemach d.o.o.                                 |speedtest.telemach.me:8080                     |901459.3  |0
+16250|Podgorica                | |Montenegro                                |Telenor Montenegro                              |ookla.telenor.me:8080                          |901459.3  |0
+16876|Talange                  | |FR                                        |Regie Talange                                   |testdebit.regie-talange.fr:8080                |1288566.2 |0
+17225|Reims                    | |FR                                        |Hexanet                                         |speedtest.hexanet.fr:8080                      |1440690.5 |0
+16913|Lille                    | |FR                                        |Eurafibre                                       |speedtest.eurafibre.fr:8080                    |1490386.0 |0
+16920|Val de Reuil             | |FR                                        |Wibox                                           |speedtest-ookla.wibox.fr:8080                  |1641658.2 |0
+18189|London                   | |GB                                        |Community Fibre Limited                         |sp01.ld8.lon.eng.communityfibre.co.uk:8080     |1704280.2 |0
+17689|Cranleigh                | |GB                                        |Memset Ltd                                      |speedtest01.memset.net:8080                    |1733430.8 |0
+17449|Leeds                    | |GB                                        |razorblue                                       |speedtest.razorblue.net.uk:8080                |1803115.8 |0
+17970|Bath                     | |GB                                        |Truespeed Communications                        |speedtest.truespeed.com:8080                   |1861324.9 |0
+17109|Perth                    | |AU                                        |Pentanet                                        |speedtest.pentanet.com.au:8080                 |12793921.8|0
+17702|Sunshine Coast           | |AU                                        |Telstra                                         |mcy1.speedtest.telstra.net:8080                |14915928.3|0
+18132|Mudgee                   | |AU                                        |Harbour ISP                                     |speedtest.harbourisp.net.au:8080               |15212959.9|0
+17784|Sydney                   | |AU                                        |Southern Phone Company Ltd                      |speedtest.southernphone.com.au:8080            |15418776.0|0
+17502|Dobrich                  | |BG                                        |Dobrich Telecom Provider                        |speedtest.dtp-bg.bg:8080                       |756138.0  |0
+17988|Sofia                    | |BG                                        |Nilsat Ltd                                      |speedtestsofya.nilsat.net:8080                 |801577.6  |0
+17787|Sofia                    | |BG                                        |SKYNET BG                                       |speed.skynet.bg:8080                           |801577.6  |0
+17137|Berlin                   | |DE                                        |Cronon AG                                       |warp.cronon.net:8080                           |799124.6  |0
+16870|Eutin                    | |DE                                        |Stadtwerke Eutin GmbH                           |speedtest.sweutin.de:8080                      |1033962.3 |0
+16729|Saarwellingen            | |DE                                        |Net-Build GmbH                                  |speedtest.netbuild.net:8080                    |1240753.6 |0
+10606|St Helier                | |Jersey                                    |Sure Telecom                                    |speedtest1.sure.com:8080                       |1880136.7 |0
+1525 |Saint Helier             | |Jersey                                    |Jersey Telecom Limited                          |speedtest.jtglobal.com:8080                    |1880254.1 |0
+6019 |Saint Helier             | |Jersey                                    |Newtel Limited                                  |speedtest.newtel.je:8080                       |1880254.1 |0
+462  |Tórshavn                 | |Faroe Islands                             |Faroese Telecom                                 |speedtest1.internet.fo:8080                    |2314602.6 |0
+22203|Tórshavn                 | |Faroe Islands                             |Hey                                             |speedtest.hey.fo:8080                          |2314602.6 |0
+25645|Tórshavn                 | |Faroe Islands                             |Føroya Tele                                     |speedtest.lte.fo:8080                          |2314602.6 |0
+13370|Ouagadougou              | |Burkina Faso                              |Virtual Technologies and Solutions              |speedtest.vts.bf:8080                          |4816052.7 |0
+22850|Ouagadougou              | |Burkina Faso                              |Orange Burkina                                  |speedtest.orange.bf:8080                       |4816052.7 |0
+14304|Dakola                   | |Burkina Faso                              |Virtual Technologies and Solutions SA           |speedtest3.vts.bf:8080                         |4900394.6 |0
+655  |Male                     | |Republic of Maldives                      |DHIRAAGU                                        |male.dhivehinet.net.mv:8080                    |6870984.5 |0
+2454 |Male                     | |Republic of Maldives                      |Ooredoo Maldives                                |202.153.87.151:8080                            |6870984.5 |0
+1428 |Male                     | |Republic of Maldives                      |Raajje Online                                   |speedtest.rol.net.mv:8080                      |6870984.5 |0
+17134|Phitsanulok              | |TH                                        |AIS                                             |speedtest-plk1.ais-idc.net:8080                |7613003.2 |0
+17690|Ayutthaya                | |TH                                        |AIS                                             |speedtest-aya1.ais-idc.net:8080                |7838770.9 |0
+17111|Nakhon Ratchasima        | |TH                                        |AIS                                             |speedtest-nma1.ais-idc.net:8080                |7897051.0 |0
+16810|Banda Aceh               | |ID                                        |Universitas Syiah Kuala                         |speedtest.unsyiah.ac.id:8080                   |8208339.2 |0
+17516|Jakarta                  | |ID                                        |PT Des Teknologi Informasi                      |speedtest.desnet.id:8080                       |10027553.0|0
+17534|Jakarta                  | |ID                                        |INETKU                                          |speedtest.inetku.net.id:8080                   |10027553.0|0
+847  |Port of Spain            | |Trinidad                                  |Flow Trinidad                                   |speedtest.flowtrinidad.com:8080                |8792751.0 |0
+4553 |Port of Spain            | |Trinidad                                  |Telecommunication Services of Trinidad & Tobago |gigenet.tstt.net.tt:8080                       |8792751.0 |0
+3404 |Chaguanas                | |Trinidad                                  |Digicel                                         |200.7.92.250:8080                              |8797215.1 |0
+5016 |Dili                     | |Timor-Leste                               |Telin Timor Leste                               |speedtest1.telkomcel.tl:8080                   |11569427.7|0
+11851|Dili                     | |Timor-Leste                               |Telemor                                         |speedtest.telemor.tl:8080                      |11569427.7|0
+14310|Dili                     | |Timor-Leste                               |Timor Telecom                                   |myspeed.timortelecom.tl:8080                   |11569543.5|0
+18166|Antofagasta              | |CL                                        |Entel                                           |speedtest3.entelchile.net:8080                 |12311103.3|0
+18113|Molina                   | |CL                                        |NovaVision                                      |novavision.cl:8080                             |13270382.8|0
+18213|Chillan                  | |CL                                        |CableVision                                     |speedtest2.ccvision.cl:8080                    |13436448.4|0
+17081|Puchov                   | |SK                                        |kiki internet                                   |ldvet.kiki.sk:8080                             |420005.7  |0
+17669|Bratislava               | |SK                                        |VNET a.s.                                       |speedtest.vnet.sk:8080                         |539178.9  |0
+17947|Belgrade                 | |RS                                        |mts                                             |speedtest.mts.rs:8080                          |620062.4  |0
+17129|Paracin                  | |RS                                        |Exe Net d.o.o.                                  |pnspeedtest.exe-net.net:8080                   |693990.9  |0
+17018|Říčany                   | |CZ                                        |JM-Net z.s.                                     |speed-ricany.jmnet.cz:8080                     |671504.4  |0
+17015|Jesenice                 | |CZ                                        |JM-Net z.s.                                     |speed-jesenice.jmnet.cz:8080                   |681679.1  |0
+18086|Thessaloniki             | |GR                                        |Synapsecom Telecoms SA                          |speedtest.skg.synapsecom.gr:8080               |1026810.4 |0
+17930|Athens                   | |GR                                        |Synapsecom Telecoms SA                          |speedtest.synapsecom.gr:8080                   |1320639.1 |0
+17788|Frauenfeld               | |CH                                        |Leucom Stafag AG                                |speedtest.leucom.ch:8080                       |1138024.3 |0
+17530|Freienbach               | |CH                                        |Etzelnet                                        |speedtest.etzelnet.ch:8080                     |1160967.6 |0
+3778 |Douglas                  | |Isle of Man                               |Manx Telecom                                    |speedtest.manx.net:8080                        |1996794.8 |0
+10746|Douglas                  | |Isle of Man                               |Sure Telecom                                    |speedtest5.sure.com:8080                       |1996970.6 |0
+17684|Tehran                   | |IR                                        |Sepanta                                         |ookla-speedtest.sepanta.net:8080               |2712081.4 |0
+17591|Tehran                   | |IR                                        |MegaNet.IR                                      |st4.ookla.meganetwork.ir:8080                  |2712081.4 |0
+16672|Semey                    | |KZ                                        |Altel JSC                                       |speedtest19.altel.kz:8080                      |3914034.4 |0
+16653|Almaty                   | |KZ                                        |CBD AO Kazakhtelecom                            |online.kz:8080                                 |4027413.2 |0
+17654|Accra                    | |GH                                        |Dolphin Telecom                                 |speedtest.dolphintelecom.net:8080              |5426913.6 |0
+17770|Accra                    | |GH                                        |ComSys Ghana Limited                            |sp1.comsysghana.net:8080                       |5426913.6 |0
+24214|São Tomé                 | |São Tomé and Príncipe                     |Unitel ST                                       |speedtest.unitel.st:8080                       |5750897.1 |0
+24512|Sao Tome                 | |São Tomé and Príncipe                     |CST                                             |speedtest.cstome.net:8080                      |5750897.1 |0
+18191|Polokwane                | |ZA                                        |CapriCom Networks                               |speedtest.capricom.co.za:8080                  |8223941.3 |0
+18073|Johannesburg             | |ZA                                        |Web Squad                                       |speedtest.jhb.websquad.co.za:8080              |8472657.6 |0
+16873|Da Nang                  | |VN                                        |Vietnamobile                                    |vnmdngspt1.vietnamobile.com.vn:8080            |8245800.0 |0
+16749|Ho Chi Minh              | |VN                                        |Vietnamobile                                    |vnmhcmspt1.vietnamobile.com.vn:8080            |8577352.0 |0
+13852|Caracas                  | |Venezuela, Bolivarian Republic of         |Netuno, C.A.                                    |speed-ookla.net-uno.net:8080                   |9191228.4 |0
+11618|Valencia                 | |Venezuela, Bolivarian Republic of         |Chircalnet WiFi                                 |speedtest.chircalnetwifi.com.ve:8080           |9296777.9 |0
+18416|Batangas City            | |Phillipines                               |IntegraNet                                      |speedtest.integranet.ph:8080                   |9344916.7 |0
+16806|Cagayan de Oro City      | |Phillipines                               |Smart Communications Inc.                       |cagayandeoro.smart.com.ph:8080                 |10046929.3|0
+19008|Koror                    | |Republic of Palau                         |PNCC                                            |speedtest.pnccpalau.com:8080                   |10821602.0|0
+19143|Koror                    | |Republic of Palau                         |Palau Telecoms                                  |speedtest.telco.pw:8080                        |10821602.0|0
+17123|Ciudad Del Este          | |PY                                        |NEO TELECOM                                     |speedtest.neo.com.py:8080                      |11395586.8|0
+17822|Filadelfia               | |PY                                        |FilaNET                                         |speedtest.fila.net.py:8080                     |11489410.7|0
+18210|Chisinau                 | |MD                                        |ARAX I.S.P.                                     |speedtest.arax.md:8080                         |479843.4  |0
+1528 |Tiraspol                 | |Republic of Moldova                       |JSC Interdnestrcom                              |speedtest.idknet.com:8080                      |531530.1  |0
+15619|Barcin                   | |Polska                                    |COMAX Ryszard Tecza                             |test.comax.net.pl:8080                         |539984.5  |0
+17971|Vrhnika                  | |SI                                        |SGH HostMachine                                 |st-new.sgh.si:8080                             |843485.9  |0
+12446|Skopje                   | |Macedonia, the former Yugoslav Republic of|Akton                                           |speedtest.akton.com.mk:8080                    |895462.0  |0
+18136|Bertrange                | |LU                                        |TANGO SA                                        |speedtest.tango.lu:8080                        |1290464.5 |0
+3242 |Zoetermeer               | |Netherland                                |ColoCenter bv                                   |speedtest.colocenter.nl:8080                   |1387267.4 |0
+11424|Nizhny Novgorod          | |Российская Федерация                      |TTK                                             |speed.ttknn.net:8080                           |1510239.3 |0
+5833 |Newport                  | |Wales                                     |Hub Network Services Ltd                        |quartz.hns.net:8080                            |1903517.7 |0
+10686|Saint Peter Port         | |Guernsey                                  |Sure Telecom                                    |speedtest3.sure.com:8080                       |1905591.8 |0
+17084|Zalka                    | |LB                                        |Mnets                                           |speed.mnets.net:8080                           |2010218.7 |0
+13296|Damascus                 | |Syrian Arab Republic                      |Takamol ISP                                     |speedtest.takamol.sy:8080                      |2077536.1 |0
+18025|Zawiya                   | |LY                                        |ABRAJ LIBYA (LTC)                               |speedtest4.ltc.net.ly:8080                     |2116825.3 |0
+17022|Tel Aviv                 | |IL                                        |Partner Communications                          |speedtest2.partner.co.il:8080                  |2169835.1 |0
+1144 |Derry                    | |Northern Ireland                          |Bluebox Broadband                               |78.155.251.131:8080                            |2182443.6 |0
+24391|Rehovot                  | |Isreal                                    |uPress Inc                                      |rep-speed-il.upress.io:8080                    |2188844.8 |0
+15901|Ramallah                 | |Palestinian Territory, Occupied           |Ooredoo Palestine                               |speedtest.wataniya.ps:8080                     |2201461.8 |0
+17413|Baku                     | |AZ                                        |Aile TV                                         |speedtest.aile.tv:8080                         |2270407.1 |0
+16744|Cairo                    | |EG                                        |we                                              |speedtest3.tedata.net:8080                     |2283398.6 |0
+16882|Sulaymaniyah             | |IQ                                        |AlsardFiber                                     |speedtest.alsardfiber.com:8080                 |2349939.5 |0
+5681 |Ekaterinburg             | |Ekaterinburg                              |MOTIV                                           |speedtest.motivtelecom.ru:8080                 |2515949.6 |0
+17455|Reykjavík                | |IS                                        |Hringdu                                         |speedtest.hringdu.is:8080                      |3111603.5 |0
+17373|Dammam                   | |SA                                        |Integrated Telecom Company - (ITC)              |ftthspeed-kho.itc.sa:8080                      |3447545.3 |0
+17363|Tashkent                 | |UZ                                        |ARS-INFORM                                      |speedtest.ars.uz:8080                          |3589271.4 |0
+24844|Juba                     | |South Sudan                               |MTN South Sudan                                 |speedtest1.mtn-ssd.com:8080                    |5056161.5 |0
+17209|Douala                   | |CM                                        |Orange Cameroun                                 |speedtest1.orange.cm:8080                      |5271948.6 |0
+17139|Lomé                     | |TG                                        |Canalbox Togo                                   |speedtest.lom.tg.canalbox.net:8080             |5312960.5 |0
+6660 |Bissau                   | |Guinea-Bissau                             |MTN Bissau                                      |154.73.60.90:8080                              |5560385.9 |0
+6133 |Abidjan                  | |Ivory Coast                               |YOOMEE COTE D'IVOIRE                            |okla.yoomee.ci:8080                            |5607147.9 |0
+24472|Saint-Pierre             | |Saint Pierre and Miquelon                 |SPM Telecom                                     |speedtest-sp-02.cheznoo.net:8080               |5653679.3 |0
+15265|Goma                     | |Congo, the Democratic Republic of the     |airtel drc                                      |speedtest2.cd.airtel.com:8080                  |5755963.1 |0
+15888|Arusha                   | |Tanzania, United Republic of              |Arusha Art Ltd                                  |speedtest.cybernet.co.tz:8080                  |6045328.1 |0
+17415|Kinshasa                 | |Democratic Republic of the Congo          |ORANGE RDC                                      |kin.speedtest.orange.cd:8080                   |6086425.7 |0
+16861|Dhaka                    | |BD                                        |Delta Infocom Ltd.                              |speedtest.deltainfocom.com:8080                |6347016.8 |0
+25314|Park City, UT            | |USA                                       |Utah Broadband                                  |speedtest.utahbroadband.com:8080               |6533381.2 |0
+6999 |Vientiane                | |Lao PDR                                   |ETL company limited                             |speedtest.etllao.com:8080                      |7686367.1 |0
+18074|Morden, MB               | |CA                                        |Morenet                                         |speedtest.morenet.ca:8080                      |7706402.8 |0
+17987|Antananarivo             | |MG                                        |TELMA                                           |speedtest.telma.mg:8080                        |7994676.0 |0
+6001 |Philipsburg              | |Sint Maarten                              |Telem Group                                     |sp1.smitcoms.net:8080                          |8287609.5 |0
+6613 |Basseterre               | |Saint Kitts and Nevis                     |The Cable                                       |minispeedtest.thecable.net:8080                |8325427.4 |0
+17056|Road Town                | |Virgin Islands, British                   |Flow BVI                                        |speedtestbvi.discoverflow.co:8080              |8364557.6 |0
+17838|Sakai                    | |JP                                        |tdlabs                                          |ookla.td.v2n.jp:8080                           |8474214.2 |0
+12639|Guaynabo                 | |Puerto Rcio                               |ATT MOBILITY PUERTO RICO                        |speedtest.attbusinesspr.com:8080               |8500125.3 |0
+17050|Maseru                   | |LS                                        |Econet Telecom Lesotho                          |speedtest2.etl.co.ls:8080                      |8815565.9 |0
+17131|Cyberjaya                | |MY                                        |Extreme Broadband                               |speedtest.extremebb.net:8080                   |8881729.7 |0
+7338 |Kralendijk               | |Bonaire                                   |Flamingo Television Bonaire B.V.                |sp1.flamingotv.net:8080                        |9149428.6 |0
+20275|Willemstad               | |Curaçao                                   |Blue Nap Americas                               |speedtest.bluenapamericas.com:8080             |9194652.8 |0
+16602|Oranjestad               | |AW                                        |Digicel Aruba                                   |speedtest.digicelaruba.net:8080                |9242506.8 |0
+16914|Panama City              | |PA                                        |OVNICOM                                         |speedtest.ovnicom.com:8080                     |10203939.3|0
+18204|San Jose                 | |CR                                        |Telecable S.A.                                  |speedtest.telecablecr.com:8080                 |10435399.2|0
+6793 |Susupe                   | |Northern Mariana                          |IT&E                                            |sp1.saipan.ite.net:8080                        |10828140.5|0
+14099|La Paz                   | |Bolivia, Plurinational State of           |AXS BOLIVIA S.A.                                |speedtest.axsbolivia.com:8080                  |11562311.7|0
+2288 |Pohnpei                  | |Federated States of Micronesia            |FSMTC                                           |www.speedtest.fm:8080                          |12333352.3|0
+17653|Honiara                  | |SB                                        |Satsol                                          |speedtest.satsol.tv:8080                       |13979634.3|0
+17158|Suva                     | |FJ                                        |Telecom Fiji Limited                            |speedtest.tfl.com.fj:8080                      |15831087.8|0
