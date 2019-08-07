@@ -1,526 +1,526 @@
 World
-  United States [22]: 1104
-  India [14]: 495
-  Japan [7]: 17
-  United Kingdom [7]: 89
-  Australia [5]: 92
-  Germany [4]: 97
-  France [3]: 54
-  Indonesia [2]: 121
-  South Korea [2]: 1
-  Russian Federation [2]: 648
-  Italy [2]: 201
-  China [2]: 59
-  Mexico [1]: 121
-  Brazil [1]: 2007
-  Vietnam [1]: 30
-  Canada [1]: 153
-  Spain [1]: 139
-  Turkey [1]: 93
-  Saudi Arabia [1]: 47
-  Thailand [1]: 58
-  New Zealand [1]: 52
-  Philippines [1]: 65
-  Taiwan [1]: 69
-  Netherlands [1]: 64
-  Sweden [1]: 10
-  Poland [1]: 219
-  Denmark [1]: 20
-  Finland [1]: 18
-  Pakistan [1]: 37
-  Malaysia [1]: 30
-  Norway [1]: 33
-  Belgium [1]: 10
-  United Arab Emirates [1]: 5
-  Argentina [1]: 106
-  Switzerland [0]: 40
-  South Africa [0]: 83
-  Hong Kong [0]: 13
-  Singapore [0]: 12
-  Austria [0]: 29
-  Ukraine [0]: 218
-  Israel [0]: 17
-  Romania [0]: 57
-  Czech Republic [0]: 77
-  Iraq [0]: 21
-  Ireland [0]: 15
-  Greece [0]: 16
-  Egypt [0]: 9
-  Chile [0]: 44
-  Other USA [0]: 0
-  Hungary [0]: 27
-  Portugal [0]: 10
-  Cambodia [0]: 24
-  Kazakhstan [0]: 57
-  Nepal [0]: 12
-  Colombia [0]: 21
-  Kuwait [0]: 12
-  Peru [0]: 16
-  Bulgaria [0]: 31
-  Bangladesh [0]: 24
-  Belarus [0]: 25
-  Slovakia [0]: 41
-  Puerto Rico [0]: 13
-  Qatar [0]: 3
-  Oman [0]: 6
-  Myanmar [0]: 20
-  Croatia [0]: 7
-  Yugoslavia [0]: 0
-  Morocco [0]: 10
-  Jordan [0]: 7
-  Iran [0]: 41
-  Reunion [0]: 0
-  Costa Rica [0]: 15
-  Algeria [0]: 5
-  Estonia [0]: 7
-  Lebanon [0]: 21
-  Lithuania [0]: 19
-  Ecuador [0]: 21
-  Nigeria [0]: 22
-  Kenya [0]: 9
-  Slovenia [0]: 8
-  Sri Lanka [0]: 7
-  Bahrain [0]: 4
-  Tunisia [0]: 7
-  Laos [0]: 4
-  Latvia [0]: 18
-  Azerbaijan [0]: 16
-  Georgia (country) [0]: 0
-  Dominican Republic [0]: 15
-  Venezuela [0]: 4
-  Other Europe [0]: 0
-  Albania [0]: 13
-  Guatemala [0]: 13
-  Cyprus [0]: 12
-  Bosnia/Herzegovina [0]: 23
-  Uruguay [0]: 3
-  Ghana [0]: 6
-  Luxembourg [0]: 9
-  Bolivia [0]: 7
-  Mauritius [0]: 10
-  Moldavia [0]: 7
-  El Salvador [0]: 8
-  Honduras [0]: 14
-  Armenia [0]: 12
-  Panama [0]: 8
-  Guam [0]: 5
-  Macau [0]: 4
-  Mongolia [0]: 5
-  Malta [0]: 3
-  Uzbekistan [0]: 5
-  New Caledonia [0]: 3
-  Trinidad And Tobago [0]: 0
-  Macedonia [0]: 10
-  Cote D'Ivoire [0]: 0
-  Kyrgyzstan [0]: 5
-  Jamaica [0]: 2
-  Ethiopia [0]: 1
-  Angola [0]: 7
-  Senegal [0]: 4
-  Brunei [0]: 2
-  Paraguay [0]: 21
-  Syria [0]: 0
-  Martinique [0]: 1
-  Tanzania [0]: 17
-  Bahamas [0]: 2
-  French Polynesia [0]: 1
-  Libya [0]: 5
-  Maldives [0]: 3
-  Zimbabwe [0]: 5
-  Cameroon [0]: 2
-  Iceland [0]: 8
-  Uganda [0]: 6
-  Mozambique [0]: 5
-  Afghanistan [0]: 5
-  Somalia [0]: 5
-  Zambia [0]: 3
-  Namibia [0]: 4
-  Nicaragua [0]: 8
-  Guadeloupe [0]: 1
-  Madagascar [0]: 2
-  Yemen [0]: 1
-  Sudan [0]: 0
-  Democratic Republic of Congo [0]: 8
-  Botswana [0]: 3
-  Fiji [0]: 5
-  Netherlands Antilles [0]: 2
-  Other Canada [0]: 0
-  Benin [0]: 3
-  Gabon [0]: 3
-  Barbados [0]: 2
-  Virgin [0]: 0
-  Togo [0]: 2
-  Faeroe Islands [0]: 0
-  Belize [0]: 6
-  Monaco [0]: 1
-  Bermuda [0]: 5
-  Aruba [0]: 1
-  Bhutan [0]: 2
-  Suriname [0]: 2
-  Mali [0]: 2
-  Cayman Islands [0]: 4
-  Rwanda [0]: 4
-  Burkina [0]: 0
-  Andorra [0]: 1
-  French Guiana [0]: 1
-  Malawi [0]: 5
-  Tadjikistan [0]: 0
-  Guyana [0]: 2
-  Liechtenstein [0]: 4
-  Gibraltar [0]: 3
-  Antigua and Barbuda [0]: 4
-  Mauritania [0]: 1
-  Greenland [0]: 1
-  Seychelles [0]: 2
-  Guinea [0]: 2
-  Haiti [0]: 3
-  Congo [0]: 6
-  Niger [0]: 1
-  Turkmenistan [0]: 0
-  Sierra Leone [0]: 3
-  St Lucia [0]: 0
-  Burundi [0]: 2
-  San Marino [0]: 0
-  Liberia [0]: 3
-  American Samoa [0]: 1
-  Cape Verde [0]: 2
-  Papua New Guinea [0]: 2
-  Lesotho [0]: 2
-  Djibouti [0]: 0
-  Swaziland [0]: 1
-  Equatorial Guinea [0]: 1
-  Turks And Caicos Islands [0]: 0
-  Grenada [0]: 2
-  St Kitts And Nevis [0]: 0
-  Northern Mariana Islands [0]: 0
-  East Timor [0]: 0
-  British Virgin Islands [0]: 0
-  St Vincent And The Grenadines [0]: 0
-  Gambia [0]: 2
-  Samoa [0]: 1
-  Chad [0]: 3
-  St Tome And Principe [0]: 0
-  Micronesia [0]: 0
-  Mayotte [0]: 0
-  Vanuatu [0]: 2
-  Comoros [0]: 0
-  Cuba [0]: 0
-  Dominica [0]: 1
-  Palau [0]: 0
-  Marshall Islands [0]: 1
-  Vatican City [0]: 0
-  Tonga [0]: 0
-  Solomon Islands [0]: 1
-  St Pierre And Miquelon [0]: 0
-  Central African Republic [0]: 0
-  Cook Islands [0]: 1
-  Wallis And Futana [0]: 0
-  Guinea Bissau [0]: 0
-  Norfolk Island [0]: 0
-  Falkland Islands [0]: 0
-  Nauru [0]: 0
-  British Indian Ocean Territory [0]: 0
-  Kiribati [0]: 1
-  Eritrea [0]: 0
-  Christmas Island [0]: 0
-  Niue [0]: 0
-  St Helena [0]: 0
-  Anguilla [0]: 1
-  Tokelau [0]: 0
-  North Korea [0]: 0
-  Tuvalu [0]: 0
+  United States [22]: 1104 servers, 705 cities (Los Angeles, CA; Chicago, IL; New York, NY; Dallas, TX; Seattle, WA; Miami, FL; Denver, CO; Ashburn, VA; Atlanta, GA; Salt Lake City, UT; Kansas City, MO; Phoenix, AZ; Indianapolis, IN; Portland, OR; Houston, TX; Las Vegas, NV; San Francisco, CA; San Jose, CA; San Diego, CA; Tampa, FL; Omaha, NE; Lincoln, NE; Boise, ID; Tucson, AZ; Detroit, MI; Madison, WI; Des Moines, IA; Jacksonville, FL; Orlando, FL; Tallahassee, FL; Cheyenne, WY; Colorado Springs, CO; Albuquerque, NM; Austin, TX; Laredo, TX; Boston, MA; Syracuse, NY; Rochester, NY; Baltimore, MD; Washington, DC; Winchester, VA; Cleveland, OH; Richmond, VA; Grand Rapids, MI; Columbus, OH; Milwaukee, WI; Eau Claire, WI; Raleigh, NC; Fargo, ND; Lexington, KY; Bismarck, ND; Asheville, NC; Sioux Falls, SD; Sioux City, IA; Nashville, TN; Rapid City, SD; Billings, MT; Gillette, WY; Helena, MT; Casper, WY; Ammon, ID; Idaho Falls, ID; Oklahoma City, OK; New Orleans, LA; Grand Junction, CO; Amarillo, TX; Fort Worth, TX; Santa Fe, NM; Lubbock, TX; St. George, UT; San Antonio, TX; Sacramento, CA; Honolulu, HI; Potsdam, NY; Albany, NY; Philadelphia, PA; Delta Junction, AK; State College, PA; Troy, MI; Pittsburgh, PA; Southfield, MI; Ann Arbor, MI; Morgantown, WV; Duluth, MN; Anchorage, AK; Bemidji, MN; Germantown, WI; Rocky Mount, NC; Charleston, WV; Juneau, AK; Devils Lake, ND; Durham, NC; St. Paul, MN; Charlotte, NC; Cedar Rapids, IA; Aberdeen, SD; Columbia, SC; Urbandale, IA; St. Louis, MO; Chattanooga, TN; Paducah, KY; Mayfield, KY; Columbia, MO; Livingston, MT; Bozeman, MT; Springfield, MO; Montgomery, AL; Joplin, MO; Lake Buena Vista, FL; Vinita, OK; Wichita, KS; Tacoma, WA; Walla Walla, WA; Rexburg, ID; Yakima, WA; Tulsa, OK; Jackson, MS; Fort Myers, FL; Mobile, AL; Enid, OK; Ogden, UT; Natchitoches, LA; Montrose, CO; College Station, TX; Abilene, TX; San Angelo, TX; Reno, NV; Midland, TX; Stockton, CA; Fremont, CA; McAllen, TX; Presque Isle, ME; Bangor, ME; Portland, ME; Richmond, VT; Plattsburgh, NY; Burlington, VT; Hanover, NH; South Royalton, VT; Somerville, MA; Braintree, MA; Norwood, MA; Nicholville, NY; Shrewsbury, MA; Providence, RI; Oxford, MA; Springfield, MA; Troy, NY; Hartford, CT; Watertown, NY; Hudson, NY; Wallingford, CT; Utica, NY; Margaretville, NY; Hicksville, NY; Orangeburg, NY; Garden City, NY; Secaucus , NJ; Secaucus, NJ; Brooklyn, NY; Jersey City, NJ; Binghamton, NY; Honesdale, PA; Harrison, NJ; Ithaca, NY; Parsippany, NJ; Spencer, NY; Matawan, NJ; Clarks Summit, PA; Piscataway, NJ; Plainfield, NJ; Prattsburgh, NY; Stroudsburg, PA; Wilkes-Barre, PA; Fairbanks, AK; New Jersey, NJ; Bethlehem, PA; Palmerton, PA; Amherst, NY; Buffalo, NY; Reading, PA; Selinsgrove, PA; New Castle, DE; Alpena, MI; Lititz, PA; Harrisburg, PA; Warren, PA; Carlisle, PA; Erie, PA; Boyne City, MI; Marquette, MI; Edinboro, PA; Houghton, MI; Elkridge, MD; Branch, MI; Baraga, Mi; Hagerstown, MD; Traverse City, MI; Washington DC; Butler, PA; Berkeley Springs, WV; Leesburg, VA; Dulles, VA; Fairfax, VA; McBain, MI; Ely, MN; Manassas, VA; International Falls, MN; Mount Pleasant, MI; Owosso, MI; Dearborn, MI; Livonia, MI; Akron, OH; Fairlawn, OH; Wayne, MI; Stanton, MI; Canton, OH; Edinburg, VA; Massillon, OH; Lansing, MI; East Lansing, MI; Hampton, VA; Norfolk, VA; Chesapeake, VA; Petersburg, MI; Green Bay, WI; Toledo, OH; Valdez, AK; Bridgeport, WV; Charlottesville, VA; Cable, WI; Allendale, MI; Byesville, OH; Delton, MI; Waynesboro, VA; Buckhannon, WV; Karlstad, MN; Weston, WV; Climax, MI; Marathon, WI; Mount Gilead, OH; Kalamazoo, MI; Edenton, NC; Cordova, AK; Bloomingdale, MI; Random Lake, WI; Defiance, OH; Appomattox, VA; Parkersburg, WV; Hicksville, OH; Wisconsin Rapids, WI; Langdon, ND; Cassopolis, MI; Iron Ridge, WI; Dallas, WI; Grand Forks, ND; Wapakoneta, OH; Fort Wayne, IN; Brainerd, MN; Oxford, WI; Notre Dame, IN; Greenville, NC; South Bend, IN; Sebeka, MN; Cambridge, MN; Cedarville, OH; Yellow Springs, OH; Snow Hill, NC; Perham, MN; Rocky Mount, VA; Reedsburg, WI; Homer, AK; Beckley, WV; Blacksburg, VA; Minford, OH; Arlington Heights, IL; St Cloud, MN; Moorhead, MN; Elk Grove Village, IL; Cicero, IL; Monticello, MN; Schaumburg, IL; Mount Horeb, WI; Floyd, VA; Winona, MN; Albany, MN; La Crosse, WI; Chapel Hill, NC; Oak Forest, IL; Minneapolis, MN; Cedar Lake, IN; Brandon, MN; Durand, IL; Louisa, KY; Sycamore, IL; Oxford, OH; Clinton, NC; Oswego, IL; Kermit, WV; Valley City, ND; Carrington, ND; War, WV; Minot, ND; Greenfield, IN; Staffordsville, KY; Grundy, VA; Lafayette, IN; Harold, KY; Yadkinville, NC; Elkader, IA; Bellevue, IA; West Jefferson, NC; Wilkesboro, NC; New Ulm, MN; Hindman, KY; Cascade, IA; Osage, IA; Ray, ND; Steele, ND; Bristol, VA; Martinsville, IN; Mooresville, NC; Cloverdale, IN; Winthrop, IA; Ellendale, ND; Readlyn, IA; Gate City, VA; Lenoir, NC; Geneseo, IL; Brownstown, IN; Eldridge, IA; Duffield, VA; Ellettsville, IN; Kingsport, TN; Jesup, IA; Williston, ND; Mckee, KY; Johnson City, TN; Clear Lake, IA; Davenport, IA; Champaign, IL; Metamora, IL; Fairmont, MN; Cedar Falls, IA; Mandan, ND; Normal, IL; Harlan, KY; Bloomington, IL; Conway, SC; Clear Lake, SD; Terre Haute, IN; Pineville, NC; Watertown, SD; New Pekin, IN; East Peoria, IL; Peoria, IL; Jefferson, SC; Danville, KY; Atkins, IA; Fort Mill, SC; Louisville, KY; Rogersville, TN; Burnsville, NC; Orleans, IN; Muscatine, IA; Rock HIll, SC; Barbourville, KY; Brookings, SD; Morristown, TN; Chester, SC; Ketchikan, AK; Elizabethtown, KY; Dickinson, ND; Sumter, SC; Spencer, IA; Vincennes, IN; Hendersonville, NC; St Meinrad, IN; Colo, IA; Oneida, TN; Taylorville, IL; Ames, IA; Glasgow, MT; Virginia, IL; Moncks Corner, SC; Lexington, SC; Laurens, SC; Louisville, IL; Sioux Center, IA; Woonsocket, SD; Evansville, IN; Highlands, NC; Litchfield, IL; Mitchell, SD; Bowling Green, KY; Abbeville, SC; Gainesboro, TN; Walterboro, SC; Lafayette, TN; Dahlgren, IL; Lawton, IA; Hartwell, GA; Toccoa, GA; Franklin, KY; Sergeant Bluff, IA; Augusta, GA; Russellville, KY; Clarkesville, GA; Yankton, SD; Equality, IL; Fairfax, SC; Leon, IA; Green City, MO; Washington, GA; Hopkinsville, KY; Olivette, MO; McMinnville, TN; Princeton, MO; Ellijay, GA; Newington, GA; Wrens, GA; Blair, NE; New Florence, MO; Pacific, MO; Ringgold, GA; Auxvasse, MO; Suwanee, GA; Norfolk, NE; Sugar Hill, GA; Tullahoma, TN; Alpharetta, GA; South Pittsburg, TN; Chapel Hill, TN; Pembroke, GA; Metter, GA; Tucker, GA; Stevenson, AL; Sullivan, MO; Marietta, GA; Centerville, TN; Rock Port, MO; Scottsboro, AL; Savannah, MO; Sikeston, MO; Hohenwald, TN; Union City, TN; Gurley, AL; Tipton, MO; St. Joseph, MO; Kalispell, MT; Dexter, MO; Milford, NE; Sardis City, AL; Trenton, TN; Warrensburg, MO; Everest, KS; Independence, MO; Beatrice, NE; Courtland, AL; Aurora, NE; Anniston, AL; San Juan, PR; Oneonta, AL; Sheridan, WY; Home, KS; Waverly Hall, GA; Baldwin City, KS; Phenix City, AL; Kearney, NE; Sylacauga, AL; Birmingham, AL; Wamego, KS; Blue Hill, NE; Brookland, AR; Jonesboro, AR; Hamilton, AL; Belgrade, MT; Fulton, MS; Salem, AR; Spokane, WA; Missoula, MT; Miltonvale, KS; Nixa, MO; Allen, KS; Cody, WY; Pontotoc, MS; Beloit, KS; Thomasville, GA; Gassville, AR; Batesville, AR; Bellingham, WA; Tuscaloosa, AL; Iola, KS; Hamilton, MT; Flippin, AR; Blakely, GA; Oxford, MS; Girard, KS; Gering, NE; Torrington, WY; Winter Park, FL; Lopez Island, WA; Cassville, MO; The Villages, FL; Columbus, KS; Moscow, ID; Mississippi State, MS; Clinton, AR; Wheatland, WY; Ephrata, WA; Greenville, AL; Wilson, KS; Langley, WA; Kooskia, ID; Wenatchee, WA; Holyrood, KS; Winona, MS; Atwood, KS; Conway, AR; Hays, KS; Fayetteville, AR; Riverton, WY; Hutchinson, KS; Bainbridge Island, WA; Silverdale, WA; Tukwilla, WA; Little Rock, AR; Port Orchard, WA; Colby, KS; Boca Raton, FL; Shannon Hills, AR; Danville, AR; Laramie, WY; Wellington, KS; Fort Lauderdale, FL; Kennewick, WA; Belzoni, MS; Leland, MS; Lavaca, AR; Rigby, ID; Nunn, CO; Fort Morgan, CO; Joes, CO; Fort Walton Beach, FL; Sallisaw, OK; Wiggins, CO; Bixby, OK; Hermiston, OR; Pendleton, OR; Haviland, KS; Boardman, OR; Pensacola, FL; La Grande, OR; Afton, WY; Dodge City, KS; Daphne, AL; Bonita Springs, FL; Estes Park, CO; Stillwater, OK; Naples, FL; Louisville, CO; Rock Springs, WY; Hood River, OR; Steamboat Springs, CO; Centennial, CO; Monroe, LA; Fruitland, ID; Rockland, ID; Ulysses, KS; Texarkana, AR; Sandy, OR; Long Beach, MS; Caldwell, ID; Lyman, WY; Antlers, OK; Norman, OK; Estacada, OR; Woodland Park, CO; Albion, ID; Canby, OR; Evanston, WY; Woodburn, OR; McMinnville, OR; Madras, OR; Sulphur, OK; Glenwood Springs, CO; Bossier, LA; Key West, FL; Hammond, LA; Shreveport, LA; Slidell, LA; Pueblo, CO; Rangely, CO; Guymon, OK; Stayton, OR; Turner, OR; Calera, OK; Monmouth, OR; Ardmore, OK; Marshall, TX; Roosevelt, UT; Duncan, OK; Baton Rouge, LA; Reserve, LA; Gilmer, TX; Bend, OR; Colorado City, CO; Kamas, UT; Corvallis, OR; Gonzales, LA; Lawton, OK; Park City, UT; Maringouin, LA; Newport, OR; Lake Point, UT; Muenster, TX; Eugene, OR; Tyler, TX; Provo, UT; Saratoga Springs, UT; Delta, CO; Eagle Mountain, UT; Sachse; Lafayette, LA; Spanish Fork, UT; Wichita Falls, TX; Price, UT; Alamosa, CO; Monte Vista, CO; Richardson, TX; Windthorst, TX; Fairview, UT; Lake Charles, LA; Ephraim, UT; Roseburg, OR; Graham, TX; Taos, NM; Livingston, TX; Durango, CO; Klamath Falls, OR; Huntsville, TX; Central Point, OR; Cleveland, TX; Medford, OR; Dorris, CA; Española, NM; Conroe, TX; Clovis, NM; Mont Belvieu, TX; Spring, TX; Shiprock, NM; Santa Rosa, NM; Brookings, OR; Fort Jones, CA; Katy, TX; Lincoln, TX; Georgetown, TX; Rio Rancho, NM; Panguitch, UT; Cedar City, UT; Wharton, TX; Redding, CA; Gallup, NM; Stanton, TX; Quincy, CA; Roswell, NM; San Marcos, TX; Eureka, CA; Odessa, TX; Artesia, NM; Ingram, TX; Grass Valley, CA; Auburn, CA; Overton, NV; Alamogordo, NM; Flagstaff, AZ; Corpus Christi, TX; Manchester, CA; Galt, CA; Manteca, CA; Prescott, AZ; El Paso, TX; Daly City, CA; Fresno, CA; Palo Alto, CA; Santa Clara, CA; Mojave, CA; Pima, AZ; Raymondville, TX; Harlingen, TX; Chandler Heights, AZ; Santa Cruz, CA; Willcox, AZ; Sahuarita, AZ; San Luis Obispo, CA; Ontario, CA; Nogales, AZ; Santa Maria, CA; Monterey Park, CA; Burbank, CA; Diamond Bar, CA; Anaheim, CA; Orange County, CA; Mililani, HI; Mauna Lani, HI)
+  India [14]: 493 servers, 187 cities (New Delhi; Bangalore; Chennai; Mumbai; Hyderabad; Kolkata; Noida; Pune; Ahmedabad; Lucknow; Indore; Gurgaon; Jaipur; Coimbatore; Surat; Nagpur; Patna; Ghaziabad; Faridabad; Vijayawada; Guwahati; Chandigarh; Rajkot; Bhopal; Raipur; Bhubaneswar; Visakhapatnam; Salem; Madurai; Jalandhar; Ludhiana; Yamunanagar; Udaipur; Vadodara; Kanpur; Gorakhpur; Tirupati; Guntur; Mysore; Kochi; Pondicherry; Srinagar; Mohali; Bhiwani; Agra; Anand; Gwalior; Navi Mumbai; Aurangabad; Varanasi; Latur; Solapur; Bijapur; Margao; Goa; Kalaburagi; Siliguri; warangal; Rourkela; Jagdalpur; Khammam; Mangalore; Ongole; Kakinada; Bengaluru; Erode; Tiruchengode; Imphal; Ernakulam; Puducherry; Thiruvananthapuram; Jammu; Kapurthala; Abohar; Bhatinda; Sirsa; Baddi; Shimla; Panchkula; Adampur; JIND; Haryana; Assandh; Jodhpur; Karnal; Bhuj; Surajgarh; Okha; Dehradun; Gandhidham; Roorkee; Sonipat; Bahadurgarh; Khekra; Gurugram; Delhi; Greater Noida West; Patan; Gautam Budh Nagar; Junagadh; Haldwani; Ahemdabad; Kota; Borsad; Bhavnagar; Banswara; Sandhiyer; Kamrej; Hardoi; Vapi; Palghar; Shirpur; Nasik; Chembur; Jalgaon; Panvel; Pratapgarh; Ballia; Singrauli; Yavatmal; Hajipur; Darbhanga; Calangute; Panaji; Panjim; Ambikapur; Gokak; Belagavi; Bhilai; Bidar; Gulbarga; Bagalkot; Hubli; Purnea; Raigarh; Ranchi; Godda; Jharsuguda; Bhatkal; Dhanbad; Dantewada; Asansol; Bellary; Udupi; Huzurnagar; Berhampore; Barpeta; Plassey; Koraput; Burdwan; Vijawada; Belda; Rajahmundry; Anaparthy; Vizianagaram; Anakapally; Haldia; Srikakulam; Vishakapatnam; North Lakhimpur; Electronic City; Benguluru; Hojai; Kadugodi; Madanapalle; Calicut; Nellore; Dibrugarh; Jorhat; Dimapur; Chittor; Vellore; Thrissur; Kaniyur; Komarapalayam; Cochin; Namakkal; Kottayam; Thiruvalla; Chengannur; Trichy; Kollam; Sattur; Trivandrum; Kaliakkavilai; Thoothukudi; Nagercoil)
+  Japan [7]: 17 servers, 14 cities (Tokyo; Misawa; Nomi; Hitoyoshi; Kyoto; Maibara; Sakai; Fussa-shi; Tsukuba; Sagamihara; Bunkyo; Yamato; Naha; Haebaru)
+  United Kingdom [7]: 90 servers, 46 cities (London; Manchester; Norwich; Sheffield; Leeds; Maidstone; Kingston Upon Hull; Maidenhead; Gosport; Bradford; Newcastle Upon Tyne; Bath; Cardiff; Felixstowe; Canterbury; Braintree; Welwyn Garden City; Eastbourne; Sevenoaks; Enfield; Grimsby; Acton; Hull; Cranleigh; Slough; Bracknell; Nottingham; York; Fareham; Middlesbrough; Cowes; Stockton On Tees; Coventry; Gateshead; Ilkley; Cheltenham; Gloucester; Telford; Bristol; Preston; Lancaster; Aberdeen; Liverpool; Carlisle; Edinburgh; Haverfordwest)
+  Australia [5]: 92 servers, 23 cities (Sydney; Brisbane; Melbourne; Perth; Adelaide; Hobart; Darwin; Gold Coast; Canberra; Sunshine Coast; Broome; Geraldton; Rockingham; Townsville; Mackay; Barossa Valley; Limestonecoast; Ballarat; Mudgee; Geelong; Burwood East; Windsor; Chatswood)
+  Germany [4]: 97 servers, 63 cities (Frankfurt; Nuremberg; Berlin; Bremen; Karlsruhe; Dresden; Falkenstein; Magdeburg; Munich; Kiel; Ludwigshafen; Cologne; Finsterwalde; Passau; Deggendorf; Lutherstadt Wittenberg; Leipzig; Dessau; Mühldorf; Wunsiedel; Hof; Regensburg; Binz; Rosenheim; Weimar; Pavelsbach; Lauf a.d. Pegnitz; Garching; Riethnordhausen; Coburg; Ilmenau; Wernigerode; Schwerin; Eibelstadt; Göttingen; Ulm; Eutin; Bad Oldesloe; Hamburg; Buchholz in der Nordheide; Norderstedt; Schorndorf; Neumunster; Remseck; Ludwigsburg; Verden; Stuttgart; Friedrichshafen; Darmstadt; Schleswig; Konstanz; Riedstadt; Waghäusel; Freisbach; Oldenburg; Koblenz; Nümbrecht; Hagen; Dusseldorf; Saarbrucken; Saarwellingen; Losheim am See; Saarlouis)
+  France [3]: 52 servers, 32 cities (Paris; Reims; Lyon; Courbevoie; Marseille; Hatten; Reichshoffen; Strasbourg; Colmar; Forbach; Hombourg-Haut; Creutzwald; Falck; Talange; Woippy; Rombas; Saulnes; Archamps; Chambéry; Nice; Roubaix; Lille; Douai; Gravelines; Vitry-sur-Seine; Puteaux; Massy; Val de Reuil; Rennes; Bordeaux; Saint-Pierre; Saint-Denis La Réunion)
+  Indonesia [2]: 123 servers, 36 cities (Jakarta; Surabaya; Bandung; Semarang; Denpasar; Yogyakarta; Pekanbaru; Medan; Batam; Manado; Kuta; Palembang; Tangerang; Bekasi; Banjarmasin; Jogjakarta; Surakarta; Bali; Makassar; Pontianak; Bandarlampung; Sentul; Bogor; Cirebon; Tanah Bumbu; Malang; Gianyar; Ubud; Badung; Sanur; Mataram; Ternate; Sorong; Ambon; Timika; Jayapura)
+  South Korea [2]: 1 servers, 1 cities (Seoul)
+  Russian Federation [2]: 647 servers, 248 cities (Moscow; Saint Petersburg; Irkutsk; Voronezh; Krasnodar; Kaliningrad; Nizhny Novgorod; Tyumen; Makhachkala; Ekaterinburg; Novosibirsk; Simferopol; Tver; Yaroslavl; Kazan; Chelyabinsk; Khabarovsk; Kursk; Belgorod; Saratov; Astrakhan; Samara; Magnitogorsk; Omsk; Krasnoyarsk; Vladivostok; Tula; Sochi; Stavropol; Saransk; Cheboksary; Ufa; Tomsk; Barnaul; Kemerovo; Chita; Bryansk; Orel; Kaluga; Lipetsk; Rostov-on-Don; Tambov; Ivanovo; Penza; Volgograd; Vladikavkaz; Kirov; Izhevsk; Kurgan; Surgut; Yakutsk; Blagoveshchensk; Smolensk; Pskov; Mytishchi; Ryazan; Vladimir; Petrozavodsk; Pyatigorsk; Kostroma; Nalchik; Glazov; Syktyvkar; Orenburg; Murmansk; Perm; Yekaterinburg; Salekhard; Noyabrsk; Nizhnevartovsk; Novy Urengoy; Novokuznetsk; Abakan; Ust-ilimsk; Bratsk; Angarsk; Ulan-Ude; Yevpatoria; Sevastopol; Bakhchisaray; Yalta; Krasnogorsk; Bronnicy; Korolev; Ramenskoye; Voskresensk; Slavyansk-on-Kuban; Novorossiysk; Rostov on Don; Kirovsk; Vsevolozhsk; Alexandrov; Kstovo; Tuapse; Kovrov; Vologda; Cherkessk; Sukhumi; Sukhum; Ulyanovsk; Yoshkar-ola; Tolyatti; Kizilyurt; Kaspiysk; Naberezhnye Chelny; Apatity; Nyagan; Nadym; Mezhdurechensk; Tulun; Magadan; Petropavlovsk-Kamchatsky; Klintsy; Starodub; Trubchevsk; Zheleznogorsk; Velikiye Luki; Stroitel; Симферополь; Stary Oskol; Feodosia; Theodosia; Mozhaysk; Obninsk; Volokolamsk; Protvino; Luga; Uzlovaya; Veliky Novgorod; Golitsyno; Taman; Chekhov; Troitsk; Istra; Novaya Usman; Kingisepp; Podolsk; Odintsovo; Nakhabino; Nahabino; Stupino; Arkhangel'skoye; Bologoe; Zelenograd; Vidnoe; Domodedovo; Dolgoprudny; Taganrog; Tomilino; Balashikha; Pushkino; Gatchina; Dmitrov; Fryazino; Gostilitsy; Dubna; Monino; Luhovicy; Khotkovo; Pushkin; Noginsk; Azov; Chernogolovka; Kirishi; Otradnoe; Kanevskaya; St. Petersburg; Saint-Petersburg; St. Leningradskaya; Kamensk-Shakhtinsky; Aksay; Kamenolomni; Sertolovo; Volkhov; Tikhoretsk; Babaevo; Belorechensk; Maykop; Volgodonsk; Sortavala; Gagra; Pitsunda; Gudauta; Volzhsky; Ruzayevka; Nizhniy Novgorod; Krasnoarmeysk; Elista; Engels; Medvezhyegorsk; Segezha; Nazran; Zhigulevsk; Grozny; Khasavyurt; Hasavurt; Kotlas; Armavir; Arkhangelsk; Buzuluk; Izberbash; Orenberg; Sterlitamak; Lysva; Kachkanar; Pervouralsk; Nizhny Tagil; Nizhniy Tagil; Snezhinsk; Berezovskiy; Niznyaya Salda; Kosulino; Naryan-Mar; Dvurechensk; Korkino; Rezh; Kopeysk; Bogdanovich; Usinsk; Shadrinsk; Tobolsk; Labytnangi; Khanty-Mansiysk; Nefteyugansk; Megion; Kamen-na-Obi; Ob; Rubcovsk; Norilsk; Belovo; Biysk; Kiselevsk; Gorno-altaisk; Sharypovo; Tashtagol; Achinsk; Zaozerny; Kansk; Kyzyl; Ust-Kut; Mirny; Shelekhov; Irskutsk; Severobaykalsk; Neryungri; Ussuriysk; Nakhodka; Yuzhno-sakhalinsk)
+  Italy [2]: 198 servers, 128 cities (Milan; Rome; Venice; Arezzo; Milano; Turin; Padova; Verona; Pescara; Campobasso; Florence; Salerno; Napoli; Latina; Cagliari; Ancona; Barletta; Bologna; Brescia; Altamura; Potenza; Avellino; Massa; Rende; Savona; Reggio Calabria; Catania; Palermo; Sassari; Trieste; Udine; Brunico; Badia; Sedico; Bolzano; Bozen; Rossano Veneto; Fiesso D'artico; Montecchio Maggiore; Vicenza; Chiaravalle; Ravenna; Fermo; Ferrara; Matelica; Ascoli Piceno; Bari; Molfetta; Fasano; Teramo; Rotello; Modena; Correggio; Lecce; Lizzanello; Foligno; Reggio Emilia; Martina Franca; Perugia; Serrano; Bergamo; Lavello; Parma; Matera; L'Aquila; Scanno; Prato; Ariano Irpino; Terni; Quarrata; Piacenza; Cologno Monzese; Siena; Sora; Varese; Siziano; Tursi; Oliveto Citra; Caserta; Frosinone; Tivoli; Massarosa; Viterbo; Campagna; Nola; Fisciano; Padula; San Cesareo; Pomigliano D'Arco; Battipaglia; Capaccio; Aversa; La Spezia; Giugliano in Campania; Angri; Livorno; Naples; Lagonegro; Grosseto; Terracina; Novi Velia; Castrovillari; Cicitavecchia; Perdifumo; Biella; Genoa; Mongrassano; Crotone; Bra; Pietra Ligure; Catanzaro; Lamezia Terme; Albenga; Giaveno; Fossano; Saluzzo; Sanremo; Lipari; Olbia; Nuoro; Carini; Partinico; Carlentini; Francofonte; Caltagirone; Niscemi; Vittoria; Comiso)
+  China [2]: 56 servers, 33 cities (Wuhan; Shanghai; Lanzhou; ChongQing; Jinan; Hefei; Hong Kong; Urumqi; Tianjin; Changchun; Nanjing; Nanning; Hangzhou; Guangzhou; Kashi; Aletai; Hetian; Lhasa; Xining; Ningxia; Chengdu; Taiyuan; Xi'an; Shijiazhuang; Harbin; Zhengzhou; Kunming; Dalian; Suzhou; ZhenJiang; Ningbo; Haikou; Fuzhou)
+  Mexico [1]: 120 servers, 64 cities (Guadalajara; Mexico City; Cancun; Monterrey; Tijuana; Queretaro; Merida; Chihuahua; Ciudad Juarez; Toluca; Reynosa; Mexicali; Torreon; Hermosillo; Villahermosa; Veracruz; Durango; Culiacan; Aguascalientes; San Miguel de Allende; Puebla; Leon; Tlalnepantla; Morelia; Nuevo Laredo; Nogales; Campeche; Apodaca; Saltillo; La Joya; Hidalgo del Parral; Ciudad Madero; Obregon; Coatzacoalcos; San Luis Potosi; Jalapa; Zacatecas; Tuxtla Gutierrez; San Luis de la Paz; Los Mochis; El Marques; San Juan Del Rio; Ecatepec; Ecatepec de Morelos; Tultitlan de Mariano Escobedo; Tultitlán; Celaya; Lopez Mateos; Mexico; Naucalpan de Juarez; Coyoacan; Santa Fe; Mazatlan; Cuernavaca; Oaxaca; Coeneo de la Libertad; Zapopan; Tlaquepaque; Tepic; La Paz; Patzcuaro; Puerto Vallarta; Acapulco; Manzanillo)
+  Brazil [1]: 2002 servers, 1122 cities (Fortaleza; Salvador; Rio de Janeiro; Sao Paulo; Recife; São Paulo; Aracaju; Manaus; Brasilia; Goiania; Feira de Santana; Belo Horizonte; Campo Grande; Imperatriz; Curitiba; Guarulhos; Maceio; Teresina; Anapolis; Limeira; Campinas; Porto Alegre; Natal; Joao Pessoa; Caruaru; Belem; Campos dos Goytacazes; Sao Jose do Rio Preto; Presidente Prudente; João Pessoa; Campina Grande; Camaragibe; Maceió; Arapiraca; Boa Vista; Palmas; Montes Claros; Ipatinga; Uberlandia; Duque de Caxias; Itaquaquecetuba; Maracanau; Santa Rita; Petrolina; Juazeiro; Mage; Pouso Alegre; Ribeirao Preto; Aracatuba; Sorocaba; Dourados; Caucaia; Sobral; Parnaiba; Sao Luis; Macapa; Altamira; Itabuna; Vitoria Da Conquista; Eunapolis; Aracruz; Governador Valadares; Cariacica; Caratinga; Coronel Fabriciano; Nova Friburgo; Niteroi; Varginha; Passos; Alfenas; Rio Verde; Barretos; Cuiaba; Catanduva; Votuporanga; Maua; Santo Andre; Sao Bernardo do Campo; Birigui; Marilia; Londrina; Ponta Grossa; Florianopolis; Ponta Pora; Cascavel; Caxias Do Sul; Alvorada; Viamao; Pelotas; Piracicaba; Aquiraz; Horizonte; Guarabira; Itabaiana; Paulista; Caico; Castanhal; Salgueiro; Bacabal; Lauro de Freitas; Balsas; Araguaina; Brumado; Vitória da Conquista; Luis Eduardo Magalhaes; Teixeira de Freitas; Vila Velha; Vitoria; Vitória; Guarapari; Anápolis; Contagem; Itauna; Goiânia; Sinop; Arcos; Cabo Frio; Araxa; Teresopolis; Lucas do Rio Verde; Sao Goncalo; Mesquita; Rio Claro; Primavera do Leste; Angra dos Reis; Itajuba; Jatai; Ubatuba; Jaboticabal; Cuiabá; Mirassol; Americana; Ibitinga; Mauá; Osasco; Diadema; Barueri; Santos; Tres Lagoas; Pontes e Lacerda; Ourinhos; Maringa; Cianorte; Jaragua Do Sul; Balneario Camboriu; Assis Chateaubriand; Toledo; Criciuma; Foz Do Iguacu; Chapeco; Torres; Passo Fundo; Taquara; Sapiranga; Novo Hamburgo; Montenegro; Santa Rosa; Arroio do Tigre; São Gonçalo do Amarante; Parnamirim; Macaiba; Itaitinga; Mossoro; Pentecoste; Morrinhos; Russas; Bayeux; Currais Novos; Granja; Jaboatão dos Guararapes; Santa Luzia; Joao Alfredo; Patos; Sousa; São Luís; Belo Jardim; Cajazeiras; Arcoverde; Garanhuns; Santa Helena; Juazeiro do Norte; Caxias; Araripina; Pedreiras; Nossa Senhora Das Dores; Floriano; Alagoinhas; Conceicao Do Coite; Retirolandia; Camaçari; Camacari; Santo Estevao; Parauapebas; Ourilandia Do Norte; Redencao; Porto Seguro; Cacule; Almenara; Catuti; Itaituba; Sao Mateus; Teófilo Otoni; Colatina; Porangatu; Diamantina; Sobradinho; Unai; Águas Lindas de Goiás; Santo Antonio Do Descoberto; Curvelo; Alta Floresta; Sete Lagoas; Pedro Leopoldo; Ribeirao Das Neves; Sao Fidelis; Para De Minas; Mateus Leme; Patos de Minas; Divinópolis; Sao Joao Nepomuceno; Catalao; Rio das Ostras; Lagoa Da Prata; Monte Carmelo; Araguari; Araruama; Goiatuba; Lavras; Itaborai; Itumbiara; Niterói; Japeri; Queimados; Carmo Do Rio Claro; Seropedica; Tres Pontas; Tres Coracoes; Volta Redonda; Nova Mutum; Franca; Sao Sebastiao; Orlandia; Lorena; Pocos de Caldas; Mococa; Jardinopolis; Cachoeira Alta; Ouro Fino; Sertãozinho; Cravinhos; Taubaté; Sao Jose dos Campos; Conchal; Leme; Artur Nogueira; Cacoal; Pimenta Bueno; Monte Aprazivel; Itajobi; Jales; Itatiba; Jundiaí; Itupeva; Santo André; Itapevi; Sao Vicente; Embu das Artes; Itapecerica da Serra; Guaiçara; Penapolis; Lencois Paulista; Bofete; Itapetininga; Santa Cruz do Rio Pardo; Assis; Taquarituba; Ribas Do Rio Pardo; Rio Branco; Marialva; Maringá; Paranavai; Campo Magro; Loanda; Joinville; Maracaju; Douradina; Itajai; Gaspar; Timbo; Boa Esperanca; Brusque; Guarapuava; Florianópolis; Ponta Porã; Porto Uniao; Taio; Maripa; Curitibanos; Tubarao; Dois Vizinhos; Medianeira; Planalto; Ararangua; Turvo; Foz do Iguaçu; Maravilha; Frederico Westphalen; Flores da Cunha; Gramado; Tramandai; Osorio; Santo Antonio Da Patrulha; Cidreira; Dois Irmaos; Campo Bom; Bom Princípio; Sao Leopoldo; Sapucaia do Sul; Canoas; Lajeado; Taquari; Venancio Aires; Ijui; Santo Cristo; Santa Cruz do Sul; Camaqua; Santa Maria; Jaguarão; Santana do Livramento; Cacequi; Inhambupe; Jupi; Santa Maria do Para; São Mateus do Maranhão; Cruzeiro do Sul; Touros; São Miguel do Gostos; Macau; Eusebio; Sao Jose de Mipibu; São José de Mipibu; Lagoa Redonda; Paraipaba; Pindoretama; Icapuí; Aracati; Acaraú; Pacajus; Cruz; Nova Cruz; Jijoca de Jericoacoara; Jandira; Itapipoca; Jaguaruana; Mossoró; Barauna; Santa Cruz; Marco; Itapororoca; Ocara; Itapaje; Solanea; Aratuba; Sape; Cuite; Martinópole; Massape; Canindé; Itambe; Chaval; Forquilha; São João do Jaguaribe; Apodi; Groairas; Macaparana; Carire; Vicencia; Olinda; Frecheirinha; Mucambo; Tianguá; Carpina; Pacuja; Madalena; Varjota; Joaboatao dos Guararapes; Graca; Jaboatao dos Guararapes; Jaboatao; Catole do Rocha; Cabo De Santi Agostinho; Vitoria de Santo Antao; Surubim; Pau Dos Ferros; Ipu; Jaguaribe; Lagoa Seca; Ipojuca; Gravatá; Gravata; Ipueiras; Taquaritinga do Norte; Lagoa; Nova Russas; Bezerros; Ribeirão; Pedra Branca; Sta Cruz do Capibaribe; Tamandaré; Barra de Guabiraba; Uirauna; Barreiros; Sume; Mombaca; Sao Jose Do Egito; Batalha; Agrestina; Paço do Lumiar; Sao Joao do Rio Do Peixe; Crateús; São Jose de Ribamar; Brejo; Lagoa Dos Gatos; Maranhão; São Luis; Monteiro; Ibirajuba; Colonia Leopoldina; Sao Bento do Una; Pesqueira; São Miguel dos Milagres; Sao Jose de Priranhas; Sertania; Taua; Princesa Isabel; União dos Palmares; Pinheiro; Campo Maior; Triunfo; Coelho Neto; Custódia; Rio Largo; Buíque; Serra Talhada; São Miguel do Tapuio; Crato; Marechal Deodoro; Altos; Viana; Palmeira dos Índios; Palmeira dos Indios; Santana do Cariri; Taquarana; Penaforte; Timon; Campo Alegre; Exu; Ouro Branco; Teotônio Vilela; Rua Padre Gerosa; Junqueiro; Codo; Santana do Ipanema; Girau do Ponciano; Lago Verde; Valença do Piauí; Ipubi; Santa Inês; Petrolandia; Ananindeua; Francisco Santos; Inhuma; Belém; Ouricuri; Piranhas; Marcolandia; Jatobá; Propria; Canindé de São Francisco; Picos; Pacatuba; Nossa Senhora da Gloria; Joselândia; Tomé-Açu; Malhador; Nossa Senhora do Socorro; Areia Branca; Jeremoabo; Lagoa Grande; Paulistana; Colinas; Sao Joao dos Patos; Lagarto; Poco Verde; Cicero Dantas; Estância; Queimada Nova; Euclides da Cunha; Casa Nova; Monte Santo; Itinga do Maranhão; Canto do Buriti; Grajau; Grajaú; Cupira; Itiúba; Senhor Do Bonfim; Teofilândia; Barrocas; Porto de Sauipe; Serrinha; Alagoingas; Queimadas; Pojuca; Mata de São João; Riachão do Jacuipe; Feira de Satana; Santo Amaro; Candeias; Madre de Deus; Cachoeira; Miguel Calmon; Pacajá; Varzea Nova; Estreito; Sapeaçu; Marabá; Bom Jesus; Nazare; São Benedito; Santo Antonio de Jesus; Valenca; Cafarnaum; Amargosa; Eldorado dos Carajas; Goiatins; Itubera; Ituberá; Gentio do Ouro; Irece; Marcionílio Souza; Araguaçu; Ibirapitanga; Ibirataia; Canaa dos Carajas; Canaã dos Carajás; Jequie; Jequié; Ilheus; Oliveira dos Brejinhos; Bahia; Colinas do Tocantins; Formosa do Rio Preto; Iguaí; Livramento de Nossa Senhora; Dom Basilio; Tucumã; Camacan; Guaraí; Conceicao do Araguaia; Brumado-Bahia; Bom Jesus da Lapa; Malhada de Pedras; Barreiras; Maiquinique; Caetité; Rio Do Antonio; Belo Campo; Caculé; Piripá; Guanambi; Luis Eduardo Magalhães; Condeuba; Santa Maria da Vitória; Palmas de Monte Alto; Palmas De Mote Alto; Paraiso Do Tocantins; Mortugaba; Itamaraju; São João do Paraiso; Porto Nacional; Santana do Araguaia; Monte Azul; Juvenilia; Medina; Taiobeiras; Manga; Salinas; Campos Belos; Vila Rica; Virgem da Lapa; Itaipé; Posse; Nova Venécia; Minas Novas; Confresa Mato Grosso; Turmalina; Itambacuri; Minaçu; Linhares; Mantena; Bocaiúva; Serra; Itarana; Niquelândia; Formosa; Guanhaes; Mutum; Iapu; São Gabriel de Goiás; Planaltina; Afonso Cláudio; Belo Oriente; Ipaba; Venda Nova do Imigrante; Lajinha; Ibatiba; Bom Jesus do Galho; Timóteo; Santa Bárbara do Leste; Brazlandia; Brazlândia; Ceilandia; Aguas Lindas de Goiás; Valparaiso; Valparaiso De Goias; Goiás; Itabira; Luziania; Matipo; Dores do Rio Preto; Joao Monlevade; Abre Campo; Paracatu; Piedade de Ponta Nova; Alexania; Cristalina; Rubiataba; Sao Francisco de Itabapoana; São Francisco de Itabapoana; Bom Jesus do Itabapoana; Morro do Coco; Lagoa Santa; Colider; Vespasiano; Natividade; Itaperuna; Ribeirão das Neves; Raposos; Santa Juliana; Nova Lima; Campos dos goitacazes, Rio de janeiro; Pompeu; Maravilhas; Muriae; Paineiras; Silvania; Vargem Alegre; Ibirité; Itabirito; Itaberaí; Pará de Minas; Santo Antônio de Pádua; Quissama; Inhumas; Uba; Senador Canedo; Cataguases; Lagoa Formosa; Dona Eusébia; Trindade; Goianira; Nova Serrana; Leopoldina; Dores do Indaiá; Conceicao de Macabu; Tabaporã; Rio Pomba; Itaguara; Carmo do Cajuru; Volta Grande; Divinopolis; Oliveira; Araújos; Macuco; Anicuns; Carandai; Cantagalo; Desterro de Entre Rios; Luz; Ouvidor; Patrocinio; Barbacena; Paranatinga; Caldas Novas; Sao Luis de Montes Belos; Santo Antonio do Monte; Sao Joao del Rei; Sorriso; Corumbaíba; Indiara; Juara; Cachoeiras De Macacu; Silva Jardim; Tres Rios; Edeia; Iporá; Rio Bonito; Buriti Alegre; Piumhi; Perdoes; Saquarema; Tangua; Petropolis; Barra Do Garcas; Tupaciguara; Acreuna; Bom Jardim de Minas; Miguel Pereira; São Gonçalo; Tapurah; Itaipuacu; Humaitá; Sacramento; Rio de Jeneiro; Santo Antonio da Barra; Nova Iguaçu; Nova Iguacu; Campo do Meio; São João Batista do Glória; Paracambi; Nilópolis; Copacabana; Turvelandia; Campos Gerais; Uberaba; Barra Mansa; Igarapava; Eloi Mendes; Brasnorte; Alterosa; Paraguacu; Caiaponia; Resende; Nova Resende; São Lourenço; Sao Lourenco; Bananal; Mangaratiba; Ituverava; Sao Sebastiao do Paraiso; São Sebastião do Paraíso; Quirinopolis; Heliodora; Guaxupe; Guaxupé; Monte Santo de Minas; São Joaquim da Barra; Machadinho dOeste; Santa Rita do Sapucai; Colombia; Brazópolis; Morro Agudo; Guaratingueta; São José do Rio Pardo; Sao Jose Do Rio Pardo; Santa Rita de Caldas; Borda da Mata; Paraisópolis; Mineiros; Campos do Jordao; Terra Roxa; Ribeirão Preto; Casa Branca; Pindamonhangaba; Sertaozinho; Fronteira; Tambaú; Bebedouro; Campo Novo do Parecis; Barrinha; Santa Rita Do Passa Quatro; Monte Azul Paulista; Porto Velho; Severinia; Nova Granada; Monte Verde; Caçapava; Cajobi; Porto Ferreira; Águas de Lindoia; Rondonopolis; Mogi Guaçu; Guariba; Pirangi; Pirassununga; Paraíso; Cruzeiro; Itapira; Guapiacu; Tabapuã; Tabapua; Itaja; Paraibuna; Espigão do Oeste; Macedonia; Caraguatatuba; Taquaritinga; Ariquemes; São José do Rio Preto; Amparo; Matão; Matao; CHAPADÃO DO CÉU; Ilhabela; Braganca Paulista; Bragança Paulista; Araras; Araraquara; Sao Carlos; Fernandopolis; Valentim Gentil; Ibirá; Potirendaba; Estrela d'Oeste; Atibaia; Itirapina; Urupês; Itapolis; Aruja; Nhandeara; Vilhena; Macaubal; Hortolandia; Sumare; Sumaré; Irapuã; Louveira; Ferraz de Vasconcelos; Novo Horizonte; Varzea Paulista; Santa Fe Do Sul; Francisco Morato; Aparecida do Taboado; Jundiai; Bertioga; Rolim De Moura; Cajamar; Rio das Pedras; Alvorada do Oeste; Capivari; Iacanga; São Bernardo do Campo; Santana de Parnaiba; Santana de Parnaíba; Arealva; Carapicuíba; Novo Horizonte d'Oeste; Santa Luzia d'Oeste; Guarujá; Guaruja; São Vicente; Cotia; Praia Grande; Avanhandava; Ilha Solteira; Pereira Barreto; Penápolis; Lins; Embu Guaçu; Embu-Guaçu; Cerquilho; Araçatuba; Boituva; Bauru; Mongagua; Agudos; Botucatu; Araçoiaba; Itanhaem; Salto de Pirapora; Pardinho; Clementina; Andradina; Lavinia; Coxim; Seringueiras; MaríLia; Avare; Tupa; Tupã; Bastos; Adamantina; Tupi Paulista; Água Clara; Brasilandia; Chavantes; Paraguacu Paulista; Registro; Ribeirao Claro; Fartura; Itapeva; Santo Anastacio; Rio Negro; Presidente Venceslau; Carlópolis; Carlopolis; Salto Do Itarare; Presidente Epitácio; Bandeirantes; Pirapozinho; Quatigua; Primeiro de Maio; Cornelio Procopio; Mirante do Paranapanema; Porecatu; Senges; Japira; Bela Vista do Paraíso; Ibaiti; Ibiporã; Figueira; Curiúva; Arapongas; Pontal do Paraná; Campina Grande do Sul; Apucarana; Terra Rica; Sidrolandia; Colombo; Rosana; Matinhos; Mandaguari; Castro; Almirante Tamandaré; Nova Esperança; Guaratuba; Mandaguacu; São José dos Pinhais; Paiçandu; Faxinal; Campo Largo; Araucária; Fazenda Rio Grande; Palmeira; Rondon; Santa Isabel do Ivai; Cidade Gaucha; Terra Boa; Corumbataí do Sul; Fatima do Sul; Sao Bento do Sul; Campo Mourão; Campo Mourao; Balneario Piçarras; Iretama; Prudentopolis; São João do Triunfo; Navegantes; Itajaí; Luiz Alves; Camboriu; Bombinhas; Porto Belo; São Matheus do Sul; Macaé; Macae; Mambore; Navirai; Umuarama; Tijucas; Roncador; Indaial; Mariluz; Canelinha; Goioere; Sao Joao Batista; Juranda; Pérola; Quarto Centenário; Campina Da Lagoa; Palhoca; Palhoça; Formosa do Oeste; Ubiratã; Ubirata; Eldorado; Angelina; Candoi; Jesuitas; Amambai; Mundo Novo; Cafelandia; Tupassi; Guaira; Imbituba; Agrolandia; Bituruna; Ibema; General Carneiro; Lebon Regis; Bom Retiro; Mangueirinha; Marechal Candido Rondon; Braço do Norte; Braco Do Norte; Grão-Pará; Chopinzinho; Capivari de Baixo; São Ludgero; Tubarão; Três Barras do Paraná; Pato Bragado; Videira; São José das Palmeiras; Ceu Azul; Lages; Agua Doce; Pato Branco; Luzerna; Criciúma; Mariopolis; São Joaquim; Missal; Joaçaba; Balneário Rincão; Catanduvas; Francisco Beltrão; Francisco Beltrao; Forquilhinha; Itaipulândia; Sao Lourenco Do Oeste; Ampere; Bal. Arroio do Silva; Pérola D'Oeste; Xanxerê; Xanxere; Balneário Arroio do Silva; Peritiba; Concordia; Santo Antonio do Sudoeste; Sombrio; Sao Jose do Ouro; Barracao; Barracão; Vacaria; Chapecó; Pinhalzinho; Passo de Torres; São João da Urtiga; Cunha Porã; Guaraciaba; Dom Pedro De Alcantara; Erechim; Palmitos; Arroio do Sal; São Marcos; São Francisco de Paula; Constantina; Itapiranga; Canela; Nova Prata; Rolante; Veranopolis; Sarandi; Serafina Correa; Igrejinha; Santa Maria do Herval; Parobé; Nova Hartz; Bento Goncalves; Bento Gonçalves; Carazinho; Palmeira das Missões; Palmeira das Missoes; Três Passos; Tres Passos; Feliz; Garibaldi; Glorinha; Campo Novo; Estancia Velha; Crissiumal; Nao-Me-Toque; Salvador do Sul; São Leopoldo; Cachoeirinha; Teutônia; Arroio do Meio; Chiapetta; Panambi; Três de Maio; Porot Alegre; Estrela; Bom Retiro do Sul; Ajuricaba; Guaiba; Guaíba; Campos Borges; Alecrim; Barra do Ribeiro; Cruz Alta; Santo Angelo; Cândido Godói; Campina das Missões; Tapes; Rio Pardo; Tupanciretã; Cachoeira do Sul; Cacapava do Sul; São Vicente do Sul; Cangucu; Sao Gabriel; São Gabriel; Capão do Leão; Capao Do Leao; Itaqui; Alegrete; Dom Pedrito; Arroio Grande; Uruguaiana; Cassia)
+  Vietnam [1]: 30 servers, 6 cities (Hanoi; Ho Chi Minh City; Da Nang; Ho Chi Minh; Ha Noi; Can Tho)
+  Canada [1]: 153 servers, 68 cities (Toronto, ON; Montreal, QC; Winnipeg, MB; Vancouver, BC; Edmonton, AB; Calgary, AB; Halifax, NS; Waterloo, ON; Brandon, MB; St. John's, NL; Laval, QC; Beauharnois, QC; Ottawa, ON; Yellowknife, NT; Hamilton, ON; London, ON; Saskatoon, SK; Grande Prairie, AB; Regina, SK; Burnaby, BC; Victoria, BC; Sydney, NS; Moncton, NB; Rimouski, QC; Saint John, NB; Quebec, QC; Nicolet, QC; Knowlton, QC; Pointe-Claire, QC; Kanata, ON; Hearst, ON; Kingston, ON; Sudbury, ON; Bracebridge, ON; Fenelon Falls, ON; Port Perry, ON; Barrie, ON; North York, ON; North York; St Catharines, ON; Milton, ON; Clifford, ON; Kitchener, ON; Ripley, ON; Milverton, ON; Dublin, ON; Thunder Bay, ON; Kirkton, ON; Zurich, ON; Cottam, ON; Windsor, ON; Whitehorse, YT; Winkler, MB; Morden, MB; Virden, MB; Estevan, SK; Rocky Mountain House, AB; Olds, AB; Cochrane, AB; Terrace, BC; Prince Rupert, BC; Lethbridge, AB; Revelstoke, BC; Salmon Arm, BC; Nelson, BC; Kelowna, BC; Trail, BC; Delta, BC)
+  Spain [1]: 139 servers, 99 cities (Madrid; Barcelona; Murcia; Palma; Valencia; Alicante; Manresa; Lleida; Paterna; Torrevieja; Granada; Malaga; L'Escala; Palafrugell; Vall-llobrega; Sant Antoni de Calonge; Platja d'Aro; Girona; Vidreres; Sant Julià de Vilatorta; Vic; Llinars del Valles; Mahón; Centelles; Berga; Avinyó; Castelldefels; Igualada; Vilanova i la Geltrú; Inca; Reus; Mora d'Ebre; L'Ametlla de Mar; Tortosa; Donostia / San Sebastian; Pamplona; Zaragoza; Ibiza; Zamudio; Derio; La Rioja; Javea; Villanueva de castellon; Xativa; Ontinyent; Bocairent; Castalla; Casas-Ibáñez; Almansa; Fuentealbilla; Elda; Elche; Crevillent; Pinoso; Gijón; Benijófar; Almoradi; El Chaparral; Albacete; Oviedo; San Pedro Del Pinatar; Alcobendas; Llano de Brujas; La Arboleja; Molina de Segura; Ceutí; Alguazas; Alcazar de San Juan; Caravaca; Valdepeñas; Bolanos de Calatrava; Ciudad Real; Alcalá la Real; Churriana De La Vega; Alange; Ecija; El Rubio; Lantejuela; Pizarra; Badajoz; Segura de Leon; Marbella; Alcala del Rio; San Jose de la Rinconada; Guillena; Umbrete; Ubrique; Paterna del Campo; San Roque; Huelva; Puerto Real; Chiclana de la Frontera; Lanzarote; Santa Cruz De Tenerife; Mogan; La Orotava; Canarias; Santa Cruz de la Palma; San Sebastian de La Gomera)
+  Turkey [1]: 93 servers, 43 cities (Istanbul; Bursa; Izmir; Ankara; Adana; Konya; Antalya; Tekirdag; Kocaeli; Manisa; Samsun; Denizli; Kayseri; Erzurum; Gaziantep; Antakya; Diyarbakir; Edirne; Tekirdağ; Cayirova; Gebze; Derince; Izmit; Zonguldak; Golcuk; Kartepe; Sakarya; Bolu; Balikesir; Eskisehir; Aksaray; Sivas; Trabzon; Karaman; Gazipasa; Erzincan; Toroslar; Mersin; Elazig; Kilis; Nicosia; Famagusta; Reyhanli)
+  Saudi Arabia [1]: 47 servers, 24 cities (Riyadh; Jeddah; Dammam; Tabuk; Hail; Qassim; Yanbu; Taif; Khobar; Makkah; Kharj; Baha; Abha; Khamis Mushait; Najran; Jouf; Aljouf; Medina; Madina; Jubail; Bisha; AlAhsa; Jizan; Jazan)
+  Thailand [1]: 58 servers, 27 cities (Bangkok; Khon Kaen; Pathum Thani; Surat Thani; Songkhla; Phitsanulok; Nakhon Pathom; Nonthaburi; Pathum Wan; Samut Prakarn; Chonburi; Chiang Rai; Chiang Mai; Chiangmai; Nakhon Sawan; Udon Thani; Ayutthaya; Sakon Nakhon; Chatuchak; Nakhon Ratchasima; Pattaya; Ubon Ratchathani; Phuket; Nakhon Si Thammarat; Songkhla Province; Hatyai; Yala)
+  New Zealand [1]: 52 servers, 16 cities (Auckland; Wellington; Hamilton; Christchurch; Dunedin; Tauranga; Palmerston North; Whangarei; Queenstown; Wanaka; New Plymouth; Gore; Taupo; Culverden; Napier; Hastings)
+  Philippines [1]: 66 servers, 37 cities (Makati; Manila; Quezon City; Cebu City; Pasig City; Cagayan de Oro City; Davao City; Baguio City; Mandaluyong; Lucena; Bacolod; Dagupan City; Tarlac; Angeles City; Olongapo; San Juan; Cavite; Pasig; Taguig; Parañaque; Imus; Antipolo; Alabang; Carmona; Sta Rosa Laguna; Santa Rosa; Los Baños; Batangas City; Lucena City; Legazpi City; Sorsogon; Iloilo; Tacloban; Cebu; Dumaguete; Davao; General Santos City)
+  Taiwan [1]: 72 servers, 23 cities (Taipei; Taichung; New Taipei; Kaohsiung; Hsinchu; Tainan; Taoyuan; Yilan; Hsinying; Hualien; Zhongli; Banqiao; Keelung; Changhua; Douliu; Pingtung; Miaoli; New Taipei City; Douliu City; Puli Township; Nantou; Chiayi; Taitung)
+  Netherlands [1]: 63 servers, 33 cities (Amsterdam; Groningen; Meppel; Arnhem; Dronten; Harderwijk; Eindhoven; Amersfoort; Hoorn; Haarlem; Rotterdam; Enschede; Hengelo; Veendam; Hardenberg; Doetinchem; Deventer; Heerlen; Apeldoorn; Ede; Voorthuizen; Sint-Oedenrode; Almere; Hilversum; Purmerend; Alblasserdam; Den Burg; Zoetermeer; Den Haag; Naaldwijk; Goes; Middelburg; Willemstad)
+  Sweden [1]: 12 servers, 10 cities (Stockholm; Kista; Olofstom; Malmo; Malmö; Laholm; Varberg; Akersberga; Gothenburg; Umea)
+  Poland [1]: 219 servers, 152 cities (Wroclaw; Warsaw; Warszawa; Krakow; Szczecin; Lublin; Lodz; Poznan; Gdansk; Rzeszow; Bielsko-Biała; Katowice; Bialystok; Stalowa Wola; Krosno; Debica; Mielec; Wlodawa; Brzesko; Kielce; Siedlce; Kraków; Sosnowiec; Bedzin; Gliwice; Suwalki; Torun; Bydgoszcz; Poznań; Chojnice; Gdynia; Lubaczow; Oleszyce; Przemysl; Jaroslaw; Zamosc; Biłgoraj; Lancut; Krasnystaw; Laka; Tyczyn; Rzeszów; Strzyzow; Nowa Deba; Ropczyce; Krasnik; Świdnik; Leczna; Tarnow; Zakliczyn; Bodzentyn; Biala Podlaska; Biała Podlaska; Miedzyrzec Podlaski; Międzyrzec Podlaski; Kuczki Kolonia; Lukow; Łuków; Skalbmierz; Niepolomice; Jedrzejow; Nowy Targ; Harbutowice; Sucha Beskidzka; Hajnowka; Zator; Slawkow; Sulkowice; Wolomin; Ząbki; Jaworzno; Pruszkow; Myszkow; Pajeczno; Kety; Ożarow Mazowiecki; Żywiec; Dąbrowa Górnicza; Radomsko; Piotrków Trybunalski; Ledziny; Bielsko-Biala; Lapy; Czestochowa; Mikolow; Choroszcz; Białystok; Zambrow; Ruda Slaska; Ruda Śląska; Tarnowskie Góry; Zabrze; Zory; Knurów; Cieszyn; Lubliniec; Rusiec; Rybnik; Zgierz; Lomza; Zduńska Wola; Wielun; Kutno; Kolno; Opole; Glogowek; Wieruszow; Prószków; Pisz; Orzysz; Ełk; Dzialdowo; Wloclawek; Nowe Skalmierzyce; Ostrów Wielkopolski; Konin; Golub-Dobrzyń; Olsztyn; Paczków; Września; Lidzbark Warminski; Bartoszyce; Barcin; Gniezno; Grudziadz; Świdnica; Prabuty; Chelmno; Nowe; Naklo nad Notecia; Lubin; Polkowice; Tczew; Starogard Gdański; Głogów; Tuchola; Jelenia Gora; Kamien Krajenski; Szklarska Poręba; Gdańsk; Zbaszyn; Szprotawa; Banino; Zielona GóRa; Zielona Gora; Kosakowo; Rumia; Zgorzelec; Gorzow Wielkopolski; Bialogard; Koszalin; Kolobrzeg)
+  Denmark [1]: 19 servers, 10 cities (Copenhagen; Taastrup; Kolding; Søborg; Middelfart; Tranbjerg; Skanderborg; Tønder; Aalborg; Hirtshals)
+  Finland [1]: 18 servers, 11 cities (Helsinki; Jyvaskyla; Hamina; Laitila; Tampere; Mikkeli; Jyväskylä; Bennäs; Jakobstad; Kajaani; Oulu)
+  Pakistan [1]: 38 servers, 11 cities (Karachi; Lahore; Islamabad; Quetta; Muzaffarabad; Sargodha; Multan; Toba Tek Singh; Faisalabad; Jaranwala; Hyderabad)
+  Malaysia [1]: 30 servers, 12 cities (Kuala Lumpur; Cyberjaya; Kota Kinabalu; Petaling Jaya; Kuching; Mandalay; Penang; Bayan Lepas; Kuala Terengganu; Shah Alam; Puchong; Putrajaya)
+  Norway [1]: 33 servers, 21 cities (Oslo; Trondheim; Alesund; Bergen; Bodø; Alta; Sandefjord; Lillehammer; Sandnes; Stavanger; Oppdal; Sunndalsora; Forde; Steinkjer; Kyrksæterøra; Sykkylven; Orsta; Kristiansund; Tromsø; Vadso; Hammerfest)
+  Belgium [1]: 10 servers, 7 cities (Brussels; Liège; Louvain-La-Neuve; Diegem; Antwerp; Schaarbeek; Sint-Niklaas)
+  United Arab Emirates [1]: 5 servers, 1 cities (Dubai)
+  Argentina [1]: 105 servers, 73 cities (Buenos Aires; Rosario; Salta; Santiago del Estero; Ramos Mejia; Resistencia; Santa Fe; La Plata; Benavidez; Lujan; Cordoba; Mar del Plata; San Juan; Coronel Suarez; Mendoza; Bahía Blanca; San Rafael; Rio Gallegos; Comandante Andresito; San Pedro; Jardin America; Posadas; Corrientes; Saenz Peña; La Tigra; Curuzu Cuatia; Reconquista; San Miguel de Tucumán; San Miguel de Tucúman; San Miguel de Tucuman; Tucuman; Parana; Sunchales; Rafaela; Berisso; Tigre; San Isidro; Lanús; Nordelta; Vicente Lopez; Quilmes; Caseros; Villa Constitucion; Del Viso; Totoras; El Trebol; Roldan; Villa Gobernador Galvez; San Clemente del Tuyú; Pinamar; Bell Ville; Córdoba; Villa Gesell; Villa Maria; La Rioja; Villa Mercedes; San Luis; Tres Arroyos; Salliquelo; Coronel Pringles; Sierra de la Ventana; Lujan de Cuyo; Tunuyan; General Acha; Viedma; General Roca; Neuquen; Neuquén; Cutral Co; Comodoro Rivadavia; Rio Grande; El Calafate; Ushuaia)
+  Switzerland [0]: 40 servers, 26 cities (Zurich; Lausanne; Lugano; Geneva; Chur; Winterthur; Linthal; Duebendorf; Binz; Dübendorf; Zürich; Uitikon Waldegg; Dietikon; Zug; Bellinzona; Lupfig; Locarno; Mendrisio; Stabio; Basel; Solothurn; Sierre; Martigny; Yverdon-les-Bains; Mont sur Lausanne; Carouge)
+  South Africa [0]: 85 servers, 20 cities (Johannesburg; Cape Town; Durban; Pretoria; Midrand; Randburg; Vanderbijlpark; Bloemfontein; Port Elizabeth; Polokwane; Mokopane; Nelspruit; Mbombela; Roodepoort; Bedfordview; Potchefstroom; Kuruman; Queenstown; Worcester; Paarl)
+  Hong Kong [0]: 13 servers, 6 cities (Hong Kong; Tai Po; New Territories; Kwai Chung; Shatin; Chai Wan)
+  Singapore [0]: 12 servers, 1 cities (Singapore)
+  Austria [0]: 29 servers, 16 cities (Vienna; Klagenfurt; Grein; Graz; Linz; Wels; Gmunden; Ried; Schorfling am Attersee; Frankenburg; Neumarkt am Wallersee; Kufstein; Hall in Tirol; Innsbruck; Telfs; Rankweil)
+  Ukraine [0]: 217 servers, 112 cities (Kiev; Lviv; Kharkiv; Chernivtsi; Odessa; Kherson; Dnepropetrovsk; Zaporizhzhya; Mariupol; Luhansk; Khmelnitskiy; Simferopol; Donetsk; Kolomyia; Vasylkiv; Kyiv; Chernihiv; Kropyvnytskyi; Sumy; Sevastopol; Severodonetsk; Kalush; Kovel; Uzhgorod; Vinnytsia; Irpin; Mykolaiv; Kremenchuk; Poltava; Nova Kakhovka; Nikopol; Dnipro; Kramatorsk; Slavyansk; Ugledar; Berdyansk; Horlivka; Lisichansk; Alchevsk; Torez; L'viv; Novoiavorivsk; Novy Rozdil; Zolochiv; Stryi; Berezhany; Galich; Ivano-Frankivsk; Ternopil; Tysmenytsya; Nadvirna; Svalyava; Zabolotiv; Rivne; Beregovo; Khmelnitsky; Khmelnytskyi; Kamenets-Podolskiy; Khmelnik; Zhytomyr; Ovruch; Ladyzhyn; Ivankiv; Pologi; Nemishayeve; Uman; Myronivka; Pervomaysk; Yagotin; Nizhyn; Cherkasy; Bilhorod-Dnistrovskyi; Одесса; Chornomorsk; Znamianka; Lubny; Globino; Hadiach; Krivoy Rog; Oleshki; Volnogorsk; Akhtyrka; Kamianske; Energodar; Solone; Marhanets; Zaporozhye; Sinelnikovo; Yevpatoria; Saki; Slobozhanske; Yalta; Pokrovsk; Дружковка; Konstantinovka; Shelkino; Volnovaha; Volnovakha; Svatovo; Toretsk; Dzerzhinsk; Artemivsk; Makeyevka; Rubizhne; Zhdanivka; Shakhtersk; Bryanka; Amvrosiivka; Shakhtarsk; Stanica Luganskaya; Rovenki; Krasnodon)
+  Israel [0]: 17 servers, 10 cities (Petah Tikva; Tel Aviv; Jerusalem; Haifa; Baqa el-Gharbiya; Petah Tikwa; Rosh HaAyin; Rishon LeZion; Lod; Ashkelon)
+  Romania [0]: 57 servers, 20 cities (Bucharest; Cluj-Napoca; Timisoara; Constanta; Oradea; Iasi; Arad; Brasov; Galati; Suceava; Botosani; Sovata; Bacau; Adjud; Ramnicu Valcea; Pitesti; Buzau; Drobeta-Turnu Severin; Racari; Lehliu-gara)
+  Czech Republic [0]: 77 servers, 50 cities (Prague; Brno; Opava; Roznov; Zlin; Trutnov; Mlada Boleslav; Jesenice; Ceske Budejovice; Plzen; Sedliste; Ostrava; Hlucin; Koprivnice; Vsetin; Olomouc; Veseli nad Moravou; Lutin; Hodonin; Slavkov u Brna; Polička; Rtyně v Podkrkonoší; Upice; Hradec Kralove; Pardubice; Vrchlabi; Havlíčkův Brod; Caslav; Zelezny Brod; Kolin; Turnov; Mnichovo Hradiste; Jablonné v Podještědí; Krenice; Benesov; Říčany; Dobřejovice; Tabor; Veseli nad Luznici; Mesice; Praha; Hluboka nad Vltavou; Decin; Pribram; Ústí nad Labem; Usti nad Labem; Ktis; Strakonice; Klatovy; Tachov)
+  Iraq [0]: 21 servers, 9 cities (Sulaymaniyah; Erbil; Mosul; Baghdad; Al Basrah; Khanaqin; Maysan; Nasiriyah; Basra)
+  Ireland [0]: 15 servers, 8 cities (Dublin; Waterford; Cork; Limerick; Carlow; Ballina; Galway; Tralee)
+  Greece [0]: 16 servers, 6 cities (Athens; Thessaloniki; Larisa; Argalasti; Mytilene; Corinth)
+  Egypt [0]: 9 servers, 4 cities (Cairo; Giza; Alexandria; Qena)
+  Chile [0]: 44 servers, 24 cities (Santiago; La Pintana; Curico; Temuco; Arica; Antofagasta; Coquimbo; Ovalle; La Ligua; Quillota; Valdivia; Renca; Vina Del Mar; Valparaíso; Molina; Talca; San Javier; Retiro; Chillan; Concepción; Los Angeles; Villarrica; Gorbea; Punta Arenas)
+  Other USA [0]: 0 servers, 0 cities ()
+  Hungary [0]: 27 servers, 18 cities (Budapest; Szombathely; Kisvárda; Nyiregyhaza; Arnót; Turkeve; Bekescsaba; Szentes; Kecskemet; Szeged; Szekesfehervar; Gyor; Győr; Szekszard; Kapuvar; Pecs; Zalaegerszeg; Nagykanizsa)
+  Portugal [0]: 10 servers, 8 cities (Lisbon; Porto; Castelo Branco; Evora; Palmela; Lisboa; Almancil; Funchal)
+  Cambodia [0]: 24 servers, 3 cities (Phnom Penh; Poipet; Sihanouk)
+  Kazakhstan [0]: 57 servers, 20 cities (Almaty; Astana; Karaganda; Aktau; Kyzylorda; Shymkent; Pavlodar; Taraz; Atyrau; Aktobe; Petropavlovsk; Semey; Oskemen; Oral; Uralsk; Kostanai; Kostanay; Kokshetau; Jezkazgan; Taldykorgan)
+  Nepal [0]: 12 servers, 6 cities (Kathmandu; Jawalakhel; Baliya; Bhairahawa; Banepa; Damak)
+  Colombia [0]: 21 servers, 12 cities (Bogota; Cali; Barranquilla; Medellin; Puerto Colombia; Cartagena; San Andres; Bogotá D.C.; Bogotá; Ginebra; Pitalito; San Agustin)
+  Kuwait [0]: 12 servers, 6 cities (Kuwait City; Kaifan; Al Ahmadi; Shuwaikh City; Bayan; Fahaheel)
+  Peru [0]: 16 servers, 7 cities (Lima; Trujillo; Iquitos; Arequipa; Cercado de Lima; San Isidro; Villa Salvador)
+  Bulgaria [0]: 30 servers, 14 cities (Sofia; Burgas; Isperih; Pleven; Varna; Sliven; Karnobat; Aytos; Yambol; Blagoevgrad; Haskovo; Kiten; Kurdzhali; Kapitan Andreevo)
+  Bangladesh [0]: 24 servers, 3 cities (Dhaka; Chittagong; Narsingdi)
+  Belarus [0]: 25 servers, 6 cities (Minsk; Brest; Gomel; Grodno; Vitebsk; Mogilev)
+  Slovakia [0]: 41 servers, 30 cities (Bratislava; Banska Bystrica; Martin; Zilina; Snina; Svidnik; Giraltovce; Hanušovce nad Topľou; Bardejov; Raslavice; Trebisov; Presov; Kosice; Levoča; Liptovsky Mikulas; Rimavska Sobota; Ruzomberok; Detva; Kotešová; Bytca; Povazska Bystrica; Puchov; Dubnica nad Vahom; Banovce nad Bebravou; Trencin; Piestany; Hlohovec; Sered; Trnava; Dunajska Streda)
+  Puerto Rico [0]: 13 servers, 7 cities (San Juan; Guaynabo; Carolina; Juncos; Arecibo; Hatillo; Ponce)
+  Qatar [0]: 3 servers, 2 cities (Doha; Al Rayyan)
+  Oman [0]: 6 servers, 2 cities (Seeb; Muscat)
+  Myanmar [0]: 19 servers, 3 cities (Yangon; Mandalay; Naypyidaw)
+  Croatia [0]: 7 servers, 2 cities (Zagreb; Čakovec)
+  Yugoslavia [0]: 0 servers, 0 cities ()
+  Morocco [0]: 10 servers, 4 cities (Rabat; Casablanca; Fez; Marrakesh)
+  Jordan [0]: 7 servers, 1 cities (Amman)
+  Iran [0]: 41 servers, 16 cities (Tehran; Tabriz; Shiraz; Kerman; Ahvaz; Mashhad; Chapar; Rasht; Kermanshah; Hamedan; Karaj; Qom; Shahroud; Esfahan; Isfahan; Bandar Abbas)
+  Reunion [0]: 0 servers, 0 cities ()
+  Costa Rica [0]: 15 servers, 8 cities (San Jose; San José; Heredia; Alajuela; Ciudad Quesada; Curridabat; Escazú; Santa Cruz)
+  Algeria [0]: 4 servers, 1 cities (Algiers)
+  Estonia [0]: 7 servers, 3 cities (Tallinn; Tartu; Narva)
+  Lebanon [0]: 21 servers, 11 cities (Beirut; Tripoli; Batroun; Ras Beirut; Kfardebian; Jdeideh; Baabda; Zahleh; Sarafand; Zrarieh; Tyre)
+  Lithuania [0]: 19 servers, 6 cities (Vilnius; Klaipeda; Kaunas; Siauliai; Kursenai; Mazeikiai)
+  Ecuador [0]: 21 servers, 12 cities (Guayaquil; Quito; Manta; Ibarra; Latacunga; Ambato; Babahoyo; Daule; Cuenca; Guayas; Gualaquiza; Loja)
+  Nigeria [0]: 21 servers, 5 cities (Lagos; Abuja; Benin; Ojota; Lekki)
+  Kenya [0]: 9 servers, 2 cities (Nairobi; Mombasa)
+  Slovenia [0]: 8 servers, 3 cities (Ljubljana; Maribor; Ruse)
+  Sri Lanka [0]: 7 servers, 3 cities (Colombo; Veravil; Anuradhapura)
+  Bahrain [0]: 4 servers, 2 cities (Manama; Seef)
+  Tunisia [0]: 8 servers, 5 cities (Tunis; Belvedere; Kasbah; Enfidha; Sousse)
+  Laos [0]: 4 servers, 2 cities (Vientiane Capital; Vientiane)
+  Latvia [0]: 17 servers, 6 cities (Riga; Liepaja; Daugavpils; Jelgava; Ogre; Ventspils)
+  Azerbaijan [0]: 16 servers, 3 cities (Baku; Sumgait; Absheron)
+  Georgia (country) [0]: 0 servers, 0 cities ()
+  Dominican Republic [0]: 14 servers, 9 cities (Santo Domingo; Bavaro; Sosua; Puerto Plata; San Francisco de Macoris; Moca; Santiago; La Vega; Bonao)
+  Venezuela [0]: 5 servers, 3 cities (Caracas; Pampatar; Valencia)
+  Other Europe [0]: 0 servers, 0 cities ()
+  Albania [0]: 13 servers, 5 cities (Tirana; Shkoder; Peje; Prrenjas; Durres)
+  Guatemala [0]: 13 servers, 4 cities (Guatemala City; Guatemala; Jalapa; Ciudad Guatemala)
+  Cyprus [0]: 12 servers, 5 cities (Nicosia; Limassol; Kyrenia; Larnaca; Paphos)
+  Bosnia/Herzegovina [0]: 17 servers, 11 cities (Gradacac; Sarajevo; Gracanica; Banja Luka; Bijeljina; Kalesija; Tuzla; Lukavac; Zivinice; Visoko; Mostar)
+  Uruguay [0]: 3 servers, 1 cities (Montevideo)
+  Ghana [0]: 6 servers, 1 cities (Accra)
+  Luxembourg [0]: 9 servers, 5 cities (Luxembourg; Contern; Hesperange; Bettembourg; Kayl)
+  Bolivia [0]: 7 servers, 4 cities (La Paz; Santa Cruz de la Sierra; Santa Cruz; Cochabamba)
+  Mauritius [0]: 10 servers, 8 cities (Port Louis; Ebene; La Tour Koenig; Arsenal; Floreal; Rose-Hill; Rose Hill; Curepipe)
+  Moldavia [0]: 7 servers, 2 cities (Chisinau; Tiraspol)
+  El Salvador [0]: 8 servers, 3 cities (San Salvador; San Miguel; La Unión)
+  Honduras [0]: 14 servers, 7 cities (San Pedro Sula; Tegucigalpa; Santa Barbara; Roatan; La Ceiba; El Progreso; Tegucigalpa M.D.C)
+  Armenia [0]: 12 servers, 4 cities (Yerevan; Vagharshapat; Sevan; Stepanakert)
+  Panama [0]: 8 servers, 3 cities (Panama City; Panama; Panama East)
+  Guam [0]: 5 servers, 4 cities (Tamuning; Tumon; Barrigada; Mangilao)
+  Macau [0]: 4 servers, 2 cities (Macau; Taipa)
+  Mongolia [0]: 5 servers, 1 cities (Ulaanbaatar)
+  Malta [0]: 3 servers, 3 cities (Madliena; B'Kara; Marsa)
+  Uzbekistan [0]: 5 servers, 1 cities (Tashkent)
+  New Caledonia [0]: 3 servers, 1 cities (Noumea)
+  Trinidad And Tobago [0]: 0 servers, 0 cities ()
+  Macedonia [0]: 10 servers, 5 cities (Skopje; Strumica; Gevgelija; Prilep; Bitola)
+  Cote D'Ivoire [0]: 0 servers, 0 cities ()
+  Kyrgyzstan [0]: 5 servers, 1 cities (Bishkek)
+  Jamaica [0]: 2 servers, 1 cities (Kingston)
+  Ethiopia [0]: 1 servers, 1 cities (Addis Ababa)
+  Angola [0]: 7 servers, 4 cities (Luanda; Huambo; Benguela; Lubango)
+  Senegal [0]: 4 servers, 2 cities (Dakar; Mbour)
+  Brunei [0]: 2 servers, 2 cities (Tungku; Bandar Seri Begawan)
+  Paraguay [0]: 20 servers, 9 cities (Ciudad del Este; Asuncion; Pedro Juan Caballero; Nueva Esperanza; Katuete; San Alberto; Hernandarias; Asunción; Obligado)
+  Syria [0]: 2 servers, 1 cities (Damascus)
+  Martinique [0]: 1 servers, 1 cities (Le Lamentin)
+  Tanzania [0]: 17 servers, 2 cities (Dar es Salaam; Arusha)
+  Bahamas [0]: 2 servers, 1 cities (Nassau)
+  French Polynesia [0]: 1 servers, 1 cities (Papeete)
+  Libya [0]: 5 servers, 5 cities (Benghazi; Misurata; Tripoli; Zawiya; Nalut)
+  Maldives [0]: 3 servers, 1 cities (Male)
+  Zimbabwe [0]: 5 servers, 2 cities (Harare; Bulawayo)
+  Cameroon [0]: 2 servers, 2 cities (Yaounde; Douala)
+  Iceland [0]: 7 servers, 4 cities (Reykjavik; Reykjavík; Akureyri; Isafjordur)
+  Uganda [0]: 6 servers, 1 cities (Kampala)
+  Mozambique [0]: 5 servers, 1 cities (Maputo)
+  Afghanistan [0]: 5 servers, 4 cities (Kabul; Herat; Kunduz; Kandahar)
+  Somalia [0]: 5 servers, 3 cities (Hargeisa; Mogadishu; Mogadisho)
+  Zambia [0]: 3 servers, 1 cities (Lusaka)
+  Namibia [0]: 4 servers, 1 cities (Windhoek)
+  Nicaragua [0]: 8 servers, 1 cities (Managua)
+  Guadeloupe [0]: 1 servers, 1 cities (Baie-Mahault)
+  Madagascar [0]: 2 servers, 1 cities (Antananarivo)
+  Yemen [0]: 1 servers, 1 cities (Sanaa)
+  Sudan [0]: 0 servers, 0 cities ()
+  Democratic Republic of Congo [0]: 8 servers, 3 cities (Goma; Kinshasa; Lubumbashi)
+  Botswana [0]: 2 servers, 1 cities (Gaborone)
+  Fiji [0]: 5 servers, 1 cities (Suva)
+  Netherlands Antilles [0]: 2 servers, 2 cities (Saint Maarten; Willemstad)
+  Other Canada [0]: 0 servers, 0 cities ()
+  Benin [0]: 3 servers, 1 cities (Cotonou)
+  Gabon [0]: 3 servers, 1 cities (Libreville)
+  Barbados [0]: 2 servers, 1 cities (Bridgetown)
+  Virgin [0]: 0 servers, 0 cities ()
+  Togo [0]: 2 servers, 2 cities (Lome; Lomé)
+  Faeroe Islands [0]: 0 servers, 0 cities ()
+  Belize [0]: 6 servers, 4 cities (Belize City; Belmopan; Orange Walk; Belmopan City)
+  Monaco [0]: 1 servers, 1 cities (Monaco)
+  Bermuda [0]: 5 servers, 3 cities (Hamilton; Smith's Parish; Saint Georges)
+  Aruba [0]: 1 servers, 1 cities (Oranjestad)
+  Bhutan [0]: 2 servers, 1 cities (Thimphu)
+  Suriname [0]: 2 servers, 1 cities (Paramaribo)
+  Mali [0]: 2 servers, 1 cities (Bamako)
+  Cayman Islands [0]: 4 servers, 2 cities (George Town; Grand Cayman)
+  Rwanda [0]: 4 servers, 1 cities (Kigali)
+  Burkina [0]: 0 servers, 0 cities ()
+  Andorra [0]: 1 servers, 1 cities (Andorra La Vella)
+  French Guiana [0]: 1 servers, 1 cities (Cayenne)
+  Malawi [0]: 5 servers, 2 cities (Blantyre; Lilongwe)
+  Tadjikistan [0]: 0 servers, 0 cities ()
+  Guyana [0]: 2 servers, 1 cities (Georgetown)
+  Liechtenstein [0]: 4 servers, 3 cities (Vaduz; Eschen; Bendern)
+  Gibraltar [0]: 3 servers, 1 cities (Gibraltar)
+  Antigua and Barbuda [0]: 4 servers, 2 cities (Saint John's; St. John)
+  Mauritania [0]: 1 servers, 1 cities (Nouakchott)
+  Greenland [0]: 1 servers, 1 cities (Nuuk)
+  Seychelles [0]: 2 servers, 1 cities (Victoria)
+  Guinea [0]: 2 servers, 1 cities (Conakry)
+  Haiti [0]: 3 servers, 2 cities (Port Au Prince; Petion-Ville)
+  Congo [0]: 5 servers, 3 cities (Brazzaville; Pointe Noire; Pointe-Noire)
+  Niger [0]: 1 servers, 1 cities (Niamey)
+  Turkmenistan [0]: 0 servers, 0 cities ()
+  Sierra Leone [0]: 3 servers, 1 cities (Freetown)
+  St Lucia [0]: 0 servers, 0 cities ()
+  Burundi [0]: 2 servers, 1 cities (Bujumbura)
+  San Marino [0]: 0 servers, 0 cities ()
+  Liberia [0]: 3 servers, 1 cities (Monrovia)
+  American Samoa [0]: 1 servers, 1 cities (Pago Pago)
+  Cape Verde [0]: 2 servers, 1 cities (Praia)
+  Papua New Guinea [0]: 2 servers, 1 cities (Port Moresby)
+  Lesotho [0]: 2 servers, 1 cities (Maseru)
+  Djibouti [0]: 0 servers, 0 cities ()
+  Swaziland [0]: 1 servers, 1 cities (Mbabane)
+  Equatorial Guinea [0]: 1 servers, 1 cities (Bata)
+  Turks And Caicos Islands [0]: 0 servers, 0 cities ()
+  Grenada [0]: 2 servers, 2 cities (St. George's; Grand Anse)
+  St Kitts And Nevis [0]: 0 servers, 0 cities ()
+  Northern Mariana Islands [0]: 0 servers, 0 cities ()
+  East Timor [0]: 0 servers, 0 cities ()
+  British Virgin Islands [0]: 0 servers, 0 cities ()
+  St Vincent And The Grenadines [0]: 0 servers, 0 cities ()
+  Gambia [0]: 2 servers, 1 cities (Serekunda)
+  Samoa [0]: 1 servers, 1 cities (Apia)
+  Chad [0]: 3 servers, 2 cities (Ndjamena; N'Djamena)
+  St Tome And Principe [0]: 0 servers, 0 cities ()
+  Micronesia [0]: 0 servers, 0 cities ()
+  Mayotte [0]: 0 servers, 0 cities ()
+  Vanuatu [0]: 2 servers, 1 cities (Port Vila)
+  Comoros [0]: 0 servers, 0 cities ()
+  Cuba [0]: 0 servers, 0 cities ()
+  Dominica [0]: 1 servers, 1 cities (Roseau)
+  Palau [0]: 0 servers, 0 cities ()
+  Marshall Islands [0]: 1 servers, 1 cities (Majuro)
+  Vatican City [0]: 0 servers, 0 cities ()
+  Tonga [0]: 0 servers, 0 cities ()
+  Solomon Islands [0]: 1 servers, 1 cities (Honiara)
+  St Pierre And Miquelon [0]: 0 servers, 0 cities ()
+  Central African Republic [0]: 0 servers, 0 cities ()
+  Cook Islands [0]: 1 servers, 1 cities (Rarotonga)
+  Wallis And Futana [0]: 0 servers, 0 cities ()
+  Guinea Bissau [0]: 0 servers, 0 cities ()
+  Norfolk Island [0]: 0 servers, 0 cities ()
+  Falkland Islands [0]: 0 servers, 0 cities ()
+  Nauru [0]: 0 servers, 0 cities ()
+  British Indian Ocean Territory [0]: 0 servers, 0 cities ()
+  Kiribati [0]: 1 servers, 1 cities (Bairiki)
+  Eritrea [0]: 0 servers, 0 cities ()
+  Christmas Island [0]: 0 servers, 0 cities ()
+  Niue [0]: 0 servers, 0 cities ()
+  St Helena [0]: 0 servers, 0 cities ()
+  Anguilla [0]: 1 servers, 1 cities (The Valley)
+  Tokelau [0]: 0 servers, 0 cities ()
+  North Korea [0]: 0 servers, 0 cities ()
+  Tuvalu [0]: 0 servers, 0 cities ()
 
 America
-  California [4]: 79
-  Texas [2]: 78
-  Mexico [1]: 121
-  Brazil [1]: 2007
-  Florida [1]: 41
-  New York [1]: 44
-  Illinois [1]: 43
-  Washington [1]: 30
-  Georgia [1]: 31
-  Virginia [1]: 35
-  Ohio [1]: 20
-  Pennsylvania [1]: 21
-  Arizona [1]: 21
-  Argentina [1]: 106
-  New Jersey [1]: 8
-  Ontario [1]: 0
-  Michigan [1]: 36
-  North Carolina [1]: 26
-  Colorado [0]: 39
-  Tennessee [0]: 21
-  Oregon [0]: 29
-  Massachusetts [0]: 0
-  Missouri [0]: 34
-  Maryland [0]: 5
-  Indiana [0]: 21
-  Minnesota [0]: 22
-  Nevada [0]: 9
-  Louisiana [0]: 16
-  Wisconsin [0]: 22
-  British Columbia [0]: 0
-  South Carolina [0]: 14
-  Chile [0]: 44
-  Other USA [0]: 0
-  Alabama [0]: 16
-  Oklahoma [0]: 19
-  Kentucky [0]: 0
-  Alberta [0]: 0
-  Utah [0]: 28
-  Quebec [0]: 0
-  Iowa [0]: 28
-  Kansas [0]: 22
-  Arkansas [0]: 14
-  Hawaii [0]: 5
-  Connecticut [0]: 2
-  Colombia [0]: 21
-  Peru [0]: 16
-  Puerto Rico [0]: 13
-  Costa Rica [0]: 15
-  Ecuador [0]: 21
-  Mississippi [0]: 10
-  Nebraska [0]: 18
-  New Mexico [0]: 18
-  Idaho [0]: 20
-  Alaska [0]: 11
-  West Virginia [0]: 12
-  Rhode Island [0]: 1
-  District Of Columbia [0]: 3
-  Saskatchewan [0]: 0
-  Delaware [0]: 1
-  Montana [0]: 14
-  South Dakota [0]: 14
-  Maine [0]: 3
-  Dominican Republic [0]: 15
-  Venezuela [0]: 4
-  Guatemala [0]: 13
-  Uruguay [0]: 3
-  Bolivia [0]: 7
-  El Salvador [0]: 8
-  Honduras [0]: 14
-  Panama [0]: 8
-  Trinidad And Tobago [0]: 0
-  Jamaica [0]: 2
-  Paraguay [0]: 21
-  Martinique [0]: 1
-  Bahamas [0]: 2
-  Nicaragua [0]: 8
-  Guadeloupe [0]: 1
-  Netherlands Antilles [0]: 2
-  Other Canada [0]: 0
-  Barbados [0]: 2
-  Virgin [0]: 0
-  Belize [0]: 6
-  Bermuda [0]: 5
-  Aruba [0]: 1
-  Suriname [0]: 2
-  Cayman Islands [0]: 4
-  French Guiana [0]: 1
-  Guyana [0]: 2
-  Antigua and Barbuda [0]: 4
-  Greenland [0]: 1
-  Haiti [0]: 3
-  St Lucia [0]: 0
-  Turks And Caicos Islands [0]: 0
-  Grenada [0]: 2
-  St Kitts And Nevis [0]: 0
-  British Virgin Islands [0]: 0
-  St Vincent And The Grenadines [0]: 0
-  St Tome And Principe [0]: 0
-  Cuba [0]: 0
-  Dominica [0]: 1
-  St Pierre And Miquelon [0]: 0
-  Falkland Islands [0]: 0
-  Anguilla [0]: 1
-  New Hampshire [0]: 1
-  Manitoba [0]: 0
-  North Dakota [0]: 19
-  Wyoming [0]: 20
-  Nova Scotia [0]: 0
-  New Brunswick [0]: 0
-  Newfoundland [0]: 0
-  Vermont [0]: 3
+  California [4]: 79 servers, 31 cities (Los Angeles, CA; San Francisco, CA; San Jose, CA; San Diego, CA; Sacramento, CA; Stockton, CA; Fremont, CA; Dorris, CA; Fort Jones, CA; Redding, CA; Quincy, CA; Eureka, CA; Grass Valley, CA; Auburn, CA; Manchester, CA; Galt, CA; Manteca, CA; Daly City, CA; Fresno, CA; Palo Alto, CA; Santa Clara, CA; Mojave, CA; Santa Cruz, CA; San Luis Obispo, CA; Ontario, CA; Santa Maria, CA; Monterey Park, CA; Burbank, CA; Diamond Bar, CA; Anaheim, CA; Orange County, CA)
+  Texas [2]: 78 servers, 39 cities (Dallas, TX; Houston, TX; Austin, TX; Amarillo, TX; Fort Worth, TX; Lubbock, TX; San Antonio, TX; Laredo, TX; College Station, TX; Abilene, TX; San Angelo, TX; Midland, TX; McAllen, TX; Marshall, TX; Gilmer, TX; Muenster, TX; Tyler, TX; Wichita Falls, TX; Richardson, TX; Windthorst, TX; Graham, TX; Livingston, TX; Huntsville, TX; Cleveland, TX; Conroe, TX; Mont Belvieu, TX; Spring, TX; Katy, TX; Lincoln, TX; Georgetown, TX; Wharton, TX; Stanton, TX; San Marcos, TX; Odessa, TX; Ingram, TX; Corpus Christi, TX; El Paso, TX; Raymondville, TX; Harlingen, TX)
+  Mexico [1]: 120 servers, 64 cities (Guadalajara; Mexico City; Cancun; Monterrey; Tijuana; Queretaro; Merida; Chihuahua; Ciudad Juarez; Toluca; Reynosa; Mexicali; Torreon; Hermosillo; Villahermosa; Veracruz; Durango; Culiacan; Aguascalientes; San Miguel de Allende; Puebla; Leon; Tlalnepantla; Morelia; Nuevo Laredo; Nogales; Campeche; Apodaca; Saltillo; La Joya; Hidalgo del Parral; Ciudad Madero; Obregon; Coatzacoalcos; San Luis Potosi; Jalapa; Zacatecas; Tuxtla Gutierrez; San Luis de la Paz; Los Mochis; El Marques; San Juan Del Rio; Ecatepec; Ecatepec de Morelos; Tultitlan de Mariano Escobedo; Tultitlán; Celaya; Lopez Mateos; Mexico; Naucalpan de Juarez; Coyoacan; Santa Fe; Mazatlan; Cuernavaca; Oaxaca; Coeneo de la Libertad; Zapopan; Tlaquepaque; Tepic; La Paz; Patzcuaro; Puerto Vallarta; Acapulco; Manzanillo)
+  Brazil [1]: 2002 servers, 1122 cities (Fortaleza; Salvador; Rio de Janeiro; Sao Paulo; Recife; São Paulo; Aracaju; Manaus; Brasilia; Goiania; Feira de Santana; Belo Horizonte; Campo Grande; Imperatriz; Curitiba; Guarulhos; Maceio; Teresina; Anapolis; Limeira; Campinas; Porto Alegre; Natal; Joao Pessoa; Caruaru; Belem; Campos dos Goytacazes; Sao Jose do Rio Preto; Presidente Prudente; João Pessoa; Campina Grande; Camaragibe; Maceió; Arapiraca; Boa Vista; Palmas; Montes Claros; Ipatinga; Uberlandia; Duque de Caxias; Itaquaquecetuba; Maracanau; Santa Rita; Petrolina; Juazeiro; Mage; Pouso Alegre; Ribeirao Preto; Aracatuba; Sorocaba; Dourados; Caucaia; Sobral; Parnaiba; Sao Luis; Macapa; Altamira; Itabuna; Vitoria Da Conquista; Eunapolis; Aracruz; Governador Valadares; Cariacica; Caratinga; Coronel Fabriciano; Nova Friburgo; Niteroi; Varginha; Passos; Alfenas; Rio Verde; Barretos; Cuiaba; Catanduva; Votuporanga; Maua; Santo Andre; Sao Bernardo do Campo; Birigui; Marilia; Londrina; Ponta Grossa; Florianopolis; Ponta Pora; Cascavel; Caxias Do Sul; Alvorada; Viamao; Pelotas; Piracicaba; Aquiraz; Horizonte; Guarabira; Itabaiana; Paulista; Caico; Castanhal; Salgueiro; Bacabal; Lauro de Freitas; Balsas; Araguaina; Brumado; Vitória da Conquista; Luis Eduardo Magalhaes; Teixeira de Freitas; Vila Velha; Vitoria; Vitória; Guarapari; Anápolis; Contagem; Itauna; Goiânia; Sinop; Arcos; Cabo Frio; Araxa; Teresopolis; Lucas do Rio Verde; Sao Goncalo; Mesquita; Rio Claro; Primavera do Leste; Angra dos Reis; Itajuba; Jatai; Ubatuba; Jaboticabal; Cuiabá; Mirassol; Americana; Ibitinga; Mauá; Osasco; Diadema; Barueri; Santos; Tres Lagoas; Pontes e Lacerda; Ourinhos; Maringa; Cianorte; Jaragua Do Sul; Balneario Camboriu; Assis Chateaubriand; Toledo; Criciuma; Foz Do Iguacu; Chapeco; Torres; Passo Fundo; Taquara; Sapiranga; Novo Hamburgo; Montenegro; Santa Rosa; Arroio do Tigre; São Gonçalo do Amarante; Parnamirim; Macaiba; Itaitinga; Mossoro; Pentecoste; Morrinhos; Russas; Bayeux; Currais Novos; Granja; Jaboatão dos Guararapes; Santa Luzia; Joao Alfredo; Patos; Sousa; São Luís; Belo Jardim; Cajazeiras; Arcoverde; Garanhuns; Santa Helena; Juazeiro do Norte; Caxias; Araripina; Pedreiras; Nossa Senhora Das Dores; Floriano; Alagoinhas; Conceicao Do Coite; Retirolandia; Camaçari; Camacari; Santo Estevao; Parauapebas; Ourilandia Do Norte; Redencao; Porto Seguro; Cacule; Almenara; Catuti; Itaituba; Sao Mateus; Teófilo Otoni; Colatina; Porangatu; Diamantina; Sobradinho; Unai; Águas Lindas de Goiás; Santo Antonio Do Descoberto; Curvelo; Alta Floresta; Sete Lagoas; Pedro Leopoldo; Ribeirao Das Neves; Sao Fidelis; Para De Minas; Mateus Leme; Patos de Minas; Divinópolis; Sao Joao Nepomuceno; Catalao; Rio das Ostras; Lagoa Da Prata; Monte Carmelo; Araguari; Araruama; Goiatuba; Lavras; Itaborai; Itumbiara; Niterói; Japeri; Queimados; Carmo Do Rio Claro; Seropedica; Tres Pontas; Tres Coracoes; Volta Redonda; Nova Mutum; Franca; Sao Sebastiao; Orlandia; Lorena; Pocos de Caldas; Mococa; Jardinopolis; Cachoeira Alta; Ouro Fino; Sertãozinho; Cravinhos; Taubaté; Sao Jose dos Campos; Conchal; Leme; Artur Nogueira; Cacoal; Pimenta Bueno; Monte Aprazivel; Itajobi; Jales; Itatiba; Jundiaí; Itupeva; Santo André; Itapevi; Sao Vicente; Embu das Artes; Itapecerica da Serra; Guaiçara; Penapolis; Lencois Paulista; Bofete; Itapetininga; Santa Cruz do Rio Pardo; Assis; Taquarituba; Ribas Do Rio Pardo; Rio Branco; Marialva; Maringá; Paranavai; Campo Magro; Loanda; Joinville; Maracaju; Douradina; Itajai; Gaspar; Timbo; Boa Esperanca; Brusque; Guarapuava; Florianópolis; Ponta Porã; Porto Uniao; Taio; Maripa; Curitibanos; Tubarao; Dois Vizinhos; Medianeira; Planalto; Ararangua; Turvo; Foz do Iguaçu; Maravilha; Frederico Westphalen; Flores da Cunha; Gramado; Tramandai; Osorio; Santo Antonio Da Patrulha; Cidreira; Dois Irmaos; Campo Bom; Bom Princípio; Sao Leopoldo; Sapucaia do Sul; Canoas; Lajeado; Taquari; Venancio Aires; Ijui; Santo Cristo; Santa Cruz do Sul; Camaqua; Santa Maria; Jaguarão; Santana do Livramento; Cacequi; Inhambupe; Jupi; Santa Maria do Para; São Mateus do Maranhão; Cruzeiro do Sul; Touros; São Miguel do Gostos; Macau; Eusebio; Sao Jose de Mipibu; São José de Mipibu; Lagoa Redonda; Paraipaba; Pindoretama; Icapuí; Aracati; Acaraú; Pacajus; Cruz; Nova Cruz; Jijoca de Jericoacoara; Jandira; Itapipoca; Jaguaruana; Mossoró; Barauna; Santa Cruz; Marco; Itapororoca; Ocara; Itapaje; Solanea; Aratuba; Sape; Cuite; Martinópole; Massape; Canindé; Itambe; Chaval; Forquilha; São João do Jaguaribe; Apodi; Groairas; Macaparana; Carire; Vicencia; Olinda; Frecheirinha; Mucambo; Tianguá; Carpina; Pacuja; Madalena; Varjota; Joaboatao dos Guararapes; Graca; Jaboatao dos Guararapes; Jaboatao; Catole do Rocha; Cabo De Santi Agostinho; Vitoria de Santo Antao; Surubim; Pau Dos Ferros; Ipu; Jaguaribe; Lagoa Seca; Ipojuca; Gravatá; Gravata; Ipueiras; Taquaritinga do Norte; Lagoa; Nova Russas; Bezerros; Ribeirão; Pedra Branca; Sta Cruz do Capibaribe; Tamandaré; Barra de Guabiraba; Uirauna; Barreiros; Sume; Mombaca; Sao Jose Do Egito; Batalha; Agrestina; Paço do Lumiar; Sao Joao do Rio Do Peixe; Crateús; São Jose de Ribamar; Brejo; Lagoa Dos Gatos; Maranhão; São Luis; Monteiro; Ibirajuba; Colonia Leopoldina; Sao Bento do Una; Pesqueira; São Miguel dos Milagres; Sao Jose de Priranhas; Sertania; Taua; Princesa Isabel; União dos Palmares; Pinheiro; Campo Maior; Triunfo; Coelho Neto; Custódia; Rio Largo; Buíque; Serra Talhada; São Miguel do Tapuio; Crato; Marechal Deodoro; Altos; Viana; Palmeira dos Índios; Palmeira dos Indios; Santana do Cariri; Taquarana; Penaforte; Timon; Campo Alegre; Exu; Ouro Branco; Teotônio Vilela; Rua Padre Gerosa; Junqueiro; Codo; Santana do Ipanema; Girau do Ponciano; Lago Verde; Valença do Piauí; Ipubi; Santa Inês; Petrolandia; Ananindeua; Francisco Santos; Inhuma; Belém; Ouricuri; Piranhas; Marcolandia; Jatobá; Propria; Canindé de São Francisco; Picos; Pacatuba; Nossa Senhora da Gloria; Joselândia; Tomé-Açu; Malhador; Nossa Senhora do Socorro; Areia Branca; Jeremoabo; Lagoa Grande; Paulistana; Colinas; Sao Joao dos Patos; Lagarto; Poco Verde; Cicero Dantas; Estância; Queimada Nova; Euclides da Cunha; Casa Nova; Monte Santo; Itinga do Maranhão; Canto do Buriti; Grajau; Grajaú; Cupira; Itiúba; Senhor Do Bonfim; Teofilândia; Barrocas; Porto de Sauipe; Serrinha; Alagoingas; Queimadas; Pojuca; Mata de São João; Riachão do Jacuipe; Feira de Satana; Santo Amaro; Candeias; Madre de Deus; Cachoeira; Miguel Calmon; Pacajá; Varzea Nova; Estreito; Sapeaçu; Marabá; Bom Jesus; Nazare; São Benedito; Santo Antonio de Jesus; Valenca; Cafarnaum; Amargosa; Eldorado dos Carajas; Goiatins; Itubera; Ituberá; Gentio do Ouro; Irece; Marcionílio Souza; Araguaçu; Ibirapitanga; Ibirataia; Canaa dos Carajas; Canaã dos Carajás; Jequie; Jequié; Ilheus; Oliveira dos Brejinhos; Bahia; Colinas do Tocantins; Formosa do Rio Preto; Iguaí; Livramento de Nossa Senhora; Dom Basilio; Tucumã; Camacan; Guaraí; Conceicao do Araguaia; Brumado-Bahia; Bom Jesus da Lapa; Malhada de Pedras; Barreiras; Maiquinique; Caetité; Rio Do Antonio; Belo Campo; Caculé; Piripá; Guanambi; Luis Eduardo Magalhães; Condeuba; Santa Maria da Vitória; Palmas de Monte Alto; Palmas De Mote Alto; Paraiso Do Tocantins; Mortugaba; Itamaraju; São João do Paraiso; Porto Nacional; Santana do Araguaia; Monte Azul; Juvenilia; Medina; Taiobeiras; Manga; Salinas; Campos Belos; Vila Rica; Virgem da Lapa; Itaipé; Posse; Nova Venécia; Minas Novas; Confresa Mato Grosso; Turmalina; Itambacuri; Minaçu; Linhares; Mantena; Bocaiúva; Serra; Itarana; Niquelândia; Formosa; Guanhaes; Mutum; Iapu; São Gabriel de Goiás; Planaltina; Afonso Cláudio; Belo Oriente; Ipaba; Venda Nova do Imigrante; Lajinha; Ibatiba; Bom Jesus do Galho; Timóteo; Santa Bárbara do Leste; Brazlandia; Brazlândia; Ceilandia; Aguas Lindas de Goiás; Valparaiso; Valparaiso De Goias; Goiás; Itabira; Luziania; Matipo; Dores do Rio Preto; Joao Monlevade; Abre Campo; Paracatu; Piedade de Ponta Nova; Alexania; Cristalina; Rubiataba; Sao Francisco de Itabapoana; São Francisco de Itabapoana; Bom Jesus do Itabapoana; Morro do Coco; Lagoa Santa; Colider; Vespasiano; Natividade; Itaperuna; Ribeirão das Neves; Raposos; Santa Juliana; Nova Lima; Campos dos goitacazes, Rio de janeiro; Pompeu; Maravilhas; Muriae; Paineiras; Silvania; Vargem Alegre; Ibirité; Itabirito; Itaberaí; Pará de Minas; Santo Antônio de Pádua; Quissama; Inhumas; Uba; Senador Canedo; Cataguases; Lagoa Formosa; Dona Eusébia; Trindade; Goianira; Nova Serrana; Leopoldina; Dores do Indaiá; Conceicao de Macabu; Tabaporã; Rio Pomba; Itaguara; Carmo do Cajuru; Volta Grande; Divinopolis; Oliveira; Araújos; Macuco; Anicuns; Carandai; Cantagalo; Desterro de Entre Rios; Luz; Ouvidor; Patrocinio; Barbacena; Paranatinga; Caldas Novas; Sao Luis de Montes Belos; Santo Antonio do Monte; Sao Joao del Rei; Sorriso; Corumbaíba; Indiara; Juara; Cachoeiras De Macacu; Silva Jardim; Tres Rios; Edeia; Iporá; Rio Bonito; Buriti Alegre; Piumhi; Perdoes; Saquarema; Tangua; Petropolis; Barra Do Garcas; Tupaciguara; Acreuna; Bom Jardim de Minas; Miguel Pereira; São Gonçalo; Tapurah; Itaipuacu; Humaitá; Sacramento; Rio de Jeneiro; Santo Antonio da Barra; Nova Iguaçu; Nova Iguacu; Campo do Meio; São João Batista do Glória; Paracambi; Nilópolis; Copacabana; Turvelandia; Campos Gerais; Uberaba; Barra Mansa; Igarapava; Eloi Mendes; Brasnorte; Alterosa; Paraguacu; Caiaponia; Resende; Nova Resende; São Lourenço; Sao Lourenco; Bananal; Mangaratiba; Ituverava; Sao Sebastiao do Paraiso; São Sebastião do Paraíso; Quirinopolis; Heliodora; Guaxupe; Guaxupé; Monte Santo de Minas; São Joaquim da Barra; Machadinho dOeste; Santa Rita do Sapucai; Colombia; Brazópolis; Morro Agudo; Guaratingueta; São José do Rio Pardo; Sao Jose Do Rio Pardo; Santa Rita de Caldas; Borda da Mata; Paraisópolis; Mineiros; Campos do Jordao; Terra Roxa; Ribeirão Preto; Casa Branca; Pindamonhangaba; Sertaozinho; Fronteira; Tambaú; Bebedouro; Campo Novo do Parecis; Barrinha; Santa Rita Do Passa Quatro; Monte Azul Paulista; Porto Velho; Severinia; Nova Granada; Monte Verde; Caçapava; Cajobi; Porto Ferreira; Águas de Lindoia; Rondonopolis; Mogi Guaçu; Guariba; Pirangi; Pirassununga; Paraíso; Cruzeiro; Itapira; Guapiacu; Tabapuã; Tabapua; Itaja; Paraibuna; Espigão do Oeste; Macedonia; Caraguatatuba; Taquaritinga; Ariquemes; São José do Rio Preto; Amparo; Matão; Matao; CHAPADÃO DO CÉU; Ilhabela; Braganca Paulista; Bragança Paulista; Araras; Araraquara; Sao Carlos; Fernandopolis; Valentim Gentil; Ibirá; Potirendaba; Estrela d'Oeste; Atibaia; Itirapina; Urupês; Itapolis; Aruja; Nhandeara; Vilhena; Macaubal; Hortolandia; Sumare; Sumaré; Irapuã; Louveira; Ferraz de Vasconcelos; Novo Horizonte; Varzea Paulista; Santa Fe Do Sul; Francisco Morato; Aparecida do Taboado; Jundiai; Bertioga; Rolim De Moura; Cajamar; Rio das Pedras; Alvorada do Oeste; Capivari; Iacanga; São Bernardo do Campo; Santana de Parnaiba; Santana de Parnaíba; Arealva; Carapicuíba; Novo Horizonte d'Oeste; Santa Luzia d'Oeste; Guarujá; Guaruja; São Vicente; Cotia; Praia Grande; Avanhandava; Ilha Solteira; Pereira Barreto; Penápolis; Lins; Embu Guaçu; Embu-Guaçu; Cerquilho; Araçatuba; Boituva; Bauru; Mongagua; Agudos; Botucatu; Araçoiaba; Itanhaem; Salto de Pirapora; Pardinho; Clementina; Andradina; Lavinia; Coxim; Seringueiras; MaríLia; Avare; Tupa; Tupã; Bastos; Adamantina; Tupi Paulista; Água Clara; Brasilandia; Chavantes; Paraguacu Paulista; Registro; Ribeirao Claro; Fartura; Itapeva; Santo Anastacio; Rio Negro; Presidente Venceslau; Carlópolis; Carlopolis; Salto Do Itarare; Presidente Epitácio; Bandeirantes; Pirapozinho; Quatigua; Primeiro de Maio; Cornelio Procopio; Mirante do Paranapanema; Porecatu; Senges; Japira; Bela Vista do Paraíso; Ibaiti; Ibiporã; Figueira; Curiúva; Arapongas; Pontal do Paraná; Campina Grande do Sul; Apucarana; Terra Rica; Sidrolandia; Colombo; Rosana; Matinhos; Mandaguari; Castro; Almirante Tamandaré; Nova Esperança; Guaratuba; Mandaguacu; São José dos Pinhais; Paiçandu; Faxinal; Campo Largo; Araucária; Fazenda Rio Grande; Palmeira; Rondon; Santa Isabel do Ivai; Cidade Gaucha; Terra Boa; Corumbataí do Sul; Fatima do Sul; Sao Bento do Sul; Campo Mourão; Campo Mourao; Balneario Piçarras; Iretama; Prudentopolis; São João do Triunfo; Navegantes; Itajaí; Luiz Alves; Camboriu; Bombinhas; Porto Belo; São Matheus do Sul; Macaé; Macae; Mambore; Navirai; Umuarama; Tijucas; Roncador; Indaial; Mariluz; Canelinha; Goioere; Sao Joao Batista; Juranda; Pérola; Quarto Centenário; Campina Da Lagoa; Palhoca; Palhoça; Formosa do Oeste; Ubiratã; Ubirata; Eldorado; Angelina; Candoi; Jesuitas; Amambai; Mundo Novo; Cafelandia; Tupassi; Guaira; Imbituba; Agrolandia; Bituruna; Ibema; General Carneiro; Lebon Regis; Bom Retiro; Mangueirinha; Marechal Candido Rondon; Braço do Norte; Braco Do Norte; Grão-Pará; Chopinzinho; Capivari de Baixo; São Ludgero; Tubarão; Três Barras do Paraná; Pato Bragado; Videira; São José das Palmeiras; Ceu Azul; Lages; Agua Doce; Pato Branco; Luzerna; Criciúma; Mariopolis; São Joaquim; Missal; Joaçaba; Balneário Rincão; Catanduvas; Francisco Beltrão; Francisco Beltrao; Forquilhinha; Itaipulândia; Sao Lourenco Do Oeste; Ampere; Bal. Arroio do Silva; Pérola D'Oeste; Xanxerê; Xanxere; Balneário Arroio do Silva; Peritiba; Concordia; Santo Antonio do Sudoeste; Sombrio; Sao Jose do Ouro; Barracao; Barracão; Vacaria; Chapecó; Pinhalzinho; Passo de Torres; São João da Urtiga; Cunha Porã; Guaraciaba; Dom Pedro De Alcantara; Erechim; Palmitos; Arroio do Sal; São Marcos; São Francisco de Paula; Constantina; Itapiranga; Canela; Nova Prata; Rolante; Veranopolis; Sarandi; Serafina Correa; Igrejinha; Santa Maria do Herval; Parobé; Nova Hartz; Bento Goncalves; Bento Gonçalves; Carazinho; Palmeira das Missões; Palmeira das Missoes; Três Passos; Tres Passos; Feliz; Garibaldi; Glorinha; Campo Novo; Estancia Velha; Crissiumal; Nao-Me-Toque; Salvador do Sul; São Leopoldo; Cachoeirinha; Teutônia; Arroio do Meio; Chiapetta; Panambi; Três de Maio; Porot Alegre; Estrela; Bom Retiro do Sul; Ajuricaba; Guaiba; Guaíba; Campos Borges; Alecrim; Barra do Ribeiro; Cruz Alta; Santo Angelo; Cândido Godói; Campina das Missões; Tapes; Rio Pardo; Tupanciretã; Cachoeira do Sul; Cacapava do Sul; São Vicente do Sul; Cangucu; Sao Gabriel; São Gabriel; Capão do Leão; Capao Do Leao; Itaqui; Alegrete; Dom Pedrito; Arroio Grande; Uruguaiana; Cassia)
+  Florida [1]: 42 servers, 16 cities (Miami, FL; Tampa, FL; Jacksonville, FL; Orlando, FL; Tallahassee, FL; Lake Buena Vista, FL; Winter Park, FL; The Villages, FL; Boca Raton, FL; Fort Lauderdale, FL; Fort Walton Beach, FL; Pensacola, FL; Fort Myers, FL; Bonita Springs, FL; Naples, FL; Key West, FL)
+  New York [1]: 44 servers, 22 cities (New York, NY; Syracuse, NY; Rochester, NY; Albany, NY; Plattsburgh, NY; Nicholville, NY; Potsdam, NY; Troy, NY; Watertown, NY; Hudson, NY; Utica, NY; Margaretville, NY; Hicksville, NY; Orangeburg, NY; Garden City, NY; Brooklyn, NY; Binghamton, NY; Ithaca, NY; Spencer, NY; Prattsburgh, NY; Amherst, NY; Buffalo, NY)
+  Illinois [1]: 43 servers, 22 cities (Chicago, IL; Arlington Heights, IL; Elk Grove Village, IL; Cicero, IL; Schaumburg, IL; Oak Forest, IL; Durand, IL; Sycamore, IL; Oswego, IL; Geneseo, IL; Champaign, IL; Metamora, IL; Normal, IL; Bloomington, IL; East Peoria, IL; Peoria, IL; Taylorville, IL; Virginia, IL; Louisville, IL; Litchfield, IL; Dahlgren, IL; Equality, IL)
+  Washington [1]: 30 servers, 15 cities (Seattle, WA; Tacoma, WA; Yakima, WA; Spokane, WA; Bellingham, WA; Lopez Island, WA; Ephrata, WA; Langley, WA; Wenatchee, WA; Bainbridge Island, WA; Silverdale, WA; Tukwilla, WA; Port Orchard, WA; Walla Walla, WA; Kennewick, WA)
+  Georgia [1]: 31 servers, 20 cities (Atlanta, GA; Hartwell, GA; Toccoa, GA; Augusta, GA; Clarkesville, GA; Washington, GA; Ellijay, GA; Newington, GA; Wrens, GA; Ringgold, GA; Suwanee, GA; Sugar Hill, GA; Alpharetta, GA; Pembroke, GA; Metter, GA; Tucker, GA; Marietta, GA; Waverly Hall, GA; Thomasville, GA; Blakely, GA)
+  Virginia [1]: 35 servers, 21 cities (Ashburn, VA; Winchester, VA; Richmond, VA; Leesburg, VA; Dulles, VA; Fairfax, VA; Manassas, VA; Edinburg, VA; Hampton, VA; Norfolk, VA; Chesapeake, VA; Charlottesville, VA; Waynesboro, VA; Appomattox, VA; Rocky Mount, VA; Blacksburg, VA; Floyd, VA; Grundy, VA; Bristol, VA; Gate City, VA; Duffield, VA)
+  Ohio [1]: 20 servers, 16 cities (Cleveland, OH; Columbus, OH; Akron, OH; Fairlawn, OH; Canton, OH; Massillon, OH; Toledo, OH; Byesville, OH; Mount Gilead, OH; Defiance, OH; Hicksville, OH; Wapakoneta, OH; Cedarville, OH; Yellow Springs, OH; Minford, OH; Oxford, OH)
+  Pennsylvania [1]: 21 servers, 18 cities (Philadelphia, PA; State College, PA; Pittsburgh, PA; Honesdale, PA; Clarks Summit, PA; Stroudsburg, PA; Wilkes-Barre, PA; Bethlehem, PA; Palmerton, PA; Reading, PA; Selinsgrove, PA; Lititz, PA; Harrisburg, PA; Warren, PA; Carlisle, PA; Erie, PA; Edinboro, PA; Butler, PA)
+  Arizona [1]: 21 servers, 8 cities (Phoenix, AZ; Tucson, AZ; Flagstaff, AZ; Prescott, AZ; Pima, AZ; Chandler Heights, AZ; Willcox, AZ; Sahuarita, AZ)
+  Argentina [1]: 105 servers, 73 cities (Buenos Aires; Rosario; Salta; Santiago del Estero; Ramos Mejia; Resistencia; Santa Fe; La Plata; Benavidez; Lujan; Cordoba; Mar del Plata; San Juan; Coronel Suarez; Mendoza; Bahía Blanca; San Rafael; Rio Gallegos; Comandante Andresito; San Pedro; Jardin America; Posadas; Corrientes; Saenz Peña; La Tigra; Curuzu Cuatia; Reconquista; San Miguel de Tucumán; San Miguel de Tucúman; San Miguel de Tucuman; Tucuman; Parana; Sunchales; Rafaela; Berisso; Tigre; San Isidro; Lanús; Nordelta; Vicente Lopez; Quilmes; Caseros; Villa Constitucion; Del Viso; Totoras; El Trebol; Roldan; Villa Gobernador Galvez; San Clemente del Tuyú; Pinamar; Bell Ville; Córdoba; Villa Gesell; Villa Maria; La Rioja; Villa Mercedes; San Luis; Tres Arroyos; Salliquelo; Coronel Pringles; Sierra de la Ventana; Lujan de Cuyo; Tunuyan; General Acha; Viedma; General Roca; Neuquen; Neuquén; Cutral Co; Comodoro Rivadavia; Rio Grande; El Calafate; Ushuaia)
+  New Jersey [1]: 8 servers, 8 cities (Secaucus , NJ; Secaucus, NJ; Jersey City, NJ; Harrison, NJ; Matawan, NJ; Piscataway, NJ; Plainfield, NJ; New Jersey, NJ)
+  Ontario [1]: 0 servers, 0 cities ()
+  Michigan [1]: 36 servers, 28 cities (Detroit, MI; Grand Rapids, MI; Troy, MI; Southfield, MI; Ann Arbor, MI; Alpena, MI; Boyne City, MI; Marquette, MI; Houghton, MI; Branch, MI; Baraga, Mi; Traverse City, MI; McBain, MI; Mount Pleasant, MI; Owosso, MI; Dearborn, MI; Livonia, MI; Wayne, MI; Stanton, MI; Lansing, MI; East Lansing, MI; Petersburg, MI; Allendale, MI; Delton, MI; Climax, MI; Kalamazoo, MI; Bloomingdale, MI; Cassopolis, MI)
+  North Carolina [1]: 26 servers, 19 cities (Raleigh, NC; Asheville, NC; Rocky Mount, NC; Durham, NC; Charlotte, NC; Edenton, NC; Greenville, NC; Snow Hill, NC; Chapel Hill, NC; Clinton, NC; Yadkinville, NC; West Jefferson, NC; Wilkesboro, NC; Mooresville, NC; Lenoir, NC; Pineville, NC; Burnsville, NC; Hendersonville, NC; Highlands, NC)
+  Colorado [0]: 39 servers, 21 cities (Denver, CO; Colorado Springs, CO; Grand Junction, CO; Montrose, CO; Nunn, CO; Fort Morgan, CO; Joes, CO; Wiggins, CO; Estes Park, CO; Louisville, CO; Steamboat Springs, CO; Centennial, CO; Woodland Park, CO; Glenwood Springs, CO; Pueblo, CO; Rangely, CO; Colorado City, CO; Delta, CO; Alamosa, CO; Monte Vista, CO; Durango, CO)
+  Tennessee [0]: 20 servers, 17 cities (Nashville, TN; Chattanooga, TN; Kingsport, TN; Johnson City, TN; Rogersville, TN; Morristown, TN; Oneida, TN; Gainesboro, TN; Lafayette, TN; McMinnville, TN; Tullahoma, TN; South Pittsburg, TN; Chapel Hill, TN; Centerville, TN; Hohenwald, TN; Union City, TN; Trenton, TN)
+  Oregon [0]: 29 servers, 23 cities (Portland, OR; Hermiston, OR; Pendleton, OR; Boardman, OR; La Grande, OR; Hood River, OR; Sandy, OR; Estacada, OR; Canby, OR; Woodburn, OR; McMinnville, OR; Madras, OR; Stayton, OR; Turner, OR; Monmouth, OR; Corvallis, OR; Newport, OR; Eugene, OR; Roseburg, OR; Klamath Falls, OR; Central Point, OR; Medford, OR; Brookings, OR)
+  Massachusetts [0]: 9 servers, 7 cities (Boston, MA; Somerville, MA; Braintree, MA; Norwood, MA; Shrewsbury, MA; Oxford, MA; Springfield, MA)
+  Missouri [0]: 34 servers, 21 cities (Kansas City, MO; St. Louis, MO; Columbia, MO; Springfield, MO; Joplin, MO; Green City, MO; Olivette, MO; Princeton, MO; New Florence, MO; Pacific, MO; Auxvasse, MO; Sullivan, MO; Rock Port, MO; Savannah, MO; Sikeston, MO; Tipton, MO; St. Joseph, MO; Dexter, MO; Warrensburg, MO; Independence, MO; Nixa, MO)
+  Maryland [0]: 5 servers, 3 cities (Baltimore, MD; Elkridge, MD; Hagerstown, MD)
+  Indiana [0]: 21 servers, 15 cities (Indianapolis, IN; Fort Wayne, IN; Notre Dame, IN; Cedar Lake, IN; Greenfield, IN; Martinsville, IN; Cloverdale, IN; Brownstown, IN; Ellettsville, IN; Terre Haute, IN; New Pekin, IN; Orleans, IN; Vincennes, IN; St Meinrad, IN; Evansville, IN)
+  Minnesota [0]: 22 servers, 19 cities (Duluth, MN; Bemidji, MN; St. Paul, MN; Ely, MN; International Falls, MN; Karlstad, MN; Brainerd, MN; Sebeka, MN; Cambridge, MN; Perham, MN; St Cloud, MN; Moorhead, MN; Monticello, MN; Winona, MN; Albany, MN; Minneapolis, MN; Brandon, MN; New Ulm, MN; Fairmont, MN)
+  Nevada [0]: 9 servers, 3 cities (Las Vegas, NV; Reno, NV; Overton, NV)
+  Louisiana [0]: 16 servers, 13 cities (New Orleans, LA; Natchitoches, LA; Monroe, LA; Bossier, LA; Hammond, LA; Shreveport, LA; Slidell, LA; Baton Rouge, LA; Reserve, LA; Gonzales, LA; Maringouin, LA; Lafayette, LA; Lake Charles, LA)
+  Wisconsin [0]: 22 servers, 14 cities (Madison, WI; Milwaukee, WI; Eau Claire, WI; Germantown, WI; Green Bay, WI; Cable, WI; Marathon, WI; Wisconsin Rapids, WI; Iron Ridge, WI; Dallas, WI; Oxford, WI; Reedsburg, WI; Mount Horeb, WI; La Crosse, WI)
+  British Columbia [0]: 0 servers, 0 cities ()
+  South Carolina [0]: 14 servers, 13 cities (Columbia, SC; Conway, SC; Jefferson, SC; Fort Mill, SC; Rock HIll, SC; Chester, SC; Sumter, SC; Moncks Corner, SC; Lexington, SC; Laurens, SC; Abbeville, SC; Walterboro, SC; Fairfax, SC)
+  Chile [0]: 44 servers, 24 cities (Santiago; La Pintana; Curico; Temuco; Arica; Antofagasta; Coquimbo; Ovalle; La Ligua; Quillota; Valdivia; Renca; Vina Del Mar; Valparaíso; Molina; Talca; San Javier; Retiro; Chillan; Concepción; Los Angeles; Villarrica; Gorbea; Punta Arenas)
+  Other USA [0]: 0 servers, 0 cities ()
+  Alabama [0]: 16 servers, 15 cities (Mobile, AL; Stevenson, AL; Scottsboro, AL; Gurley, AL; Sardis City, AL; Courtland, AL; Anniston, AL; Phenix City, AL; Sylacauga, AL; Birmingham, AL; Hamilton, AL; Tuscaloosa, AL; Montgomery, AL; Greenville, AL; Daphne, AL)
+  Oklahoma [0]: 19 servers, 15 cities (Vinita, OK; Tulsa, OK; Enid, OK; Oklahoma City, OK; Sallisaw, OK; Bixby, OK; Stillwater, OK; Antlers, OK; Norman, OK; Sulphur, OK; Guymon, OK; Calera, OK; Ardmore, OK; Duncan, OK; Lawton, OK)
+  Kentucky [0]: 21 servers, 17 cities (Lexington, KY; Paducah, KY; Mayfield, KY; Louisa, KY; Staffordsville, KY; Harold, KY; Hindman, KY; Mckee, KY; Harlan, KY; Danville, KY; Louisville, KY; Barbourville, KY; Elizabethtown, KY; Bowling Green, KY; Franklin, KY; Russellville, KY; Hopkinsville, KY)
+  Alberta [0]: 0 servers, 0 cities ()
+  Utah [0]: 28 servers, 15 cities (Salt Lake City, UT; St. George, UT; Ogden, UT; Roosevelt, UT; Kamas, UT; Park City, UT; Lake Point, UT; Provo, UT; Saratoga Springs, UT; Eagle Mountain, UT; Spanish Fork, UT; Price, UT; Fairview, UT; Panguitch, UT; Cedar City, UT)
+  Quebec [0]: 0 servers, 0 cities ()
+  Iowa [0]: 28 servers, 22 cities (Des Moines, IA; Sioux City, IA; Cedar Rapids, IA; Urbandale, IA; Elkader, IA; Bellevue, IA; Cascade, IA; Osage, IA; Winthrop, IA; Eldridge, IA; Jesup, IA; Clear Lake, IA; Davenport, IA; Cedar Falls, IA; Atkins, IA; Muscatine, IA; Spencer, IA; Colo, IA; Ames, IA; Sioux Center, IA; Lawton, IA; Sergeant Bluff, IA)
+  Kansas [0]: 22 servers, 21 cities (Wichita, KS; Everest, KS; Home, KS; Baldwin City, KS; Wamego, KS; Miltonvale, KS; Allen, KS; Beloit, KS; Iola, KS; Girard, KS; Columbus, KS; Wilson, KS; Holyrood, KS; Atwood, KS; Hays, KS; Hutchinson, KS; Colby, KS; Wellington, KS; Haviland, KS; Dodge City, KS; Ulysses, KS)
+  Arkansas [0]: 14 servers, 14 cities (Brookland, AR; Jonesboro, AR; Salem, AR; Gassville, AR; Batesville, AR; Flippin, AR; Clinton, AR; Conway, AR; Fayetteville, AR; Little Rock, AR; Shannon Hills, AR; Danville, AR; Lavaca, AR; Texarkana, AR)
+  Hawaii [0]: 5 servers, 3 cities (Honolulu, HI; Mililani, HI; Mauna Lani, HI)
+  Connecticut [0]: 2 servers, 2 cities (Hartford, CT; Wallingford, CT)
+  Colombia [0]: 21 servers, 12 cities (Bogota; Cali; Barranquilla; Medellin; Puerto Colombia; Cartagena; San Andres; Bogotá D.C.; Bogotá; Ginebra; Pitalito; San Agustin)
+  Peru [0]: 16 servers, 7 cities (Lima; Trujillo; Iquitos; Arequipa; Cercado de Lima; San Isidro; Villa Salvador)
+  Puerto Rico [0]: 13 servers, 7 cities (San Juan; Guaynabo; Carolina; Juncos; Arecibo; Hatillo; Ponce)
+  Costa Rica [0]: 15 servers, 8 cities (San Jose; San José; Heredia; Alajuela; Ciudad Quesada; Curridabat; Escazú; Santa Cruz)
+  Ecuador [0]: 21 servers, 12 cities (Guayaquil; Quito; Manta; Ibarra; Latacunga; Ambato; Babahoyo; Daule; Cuenca; Guayas; Gualaquiza; Loja)
+  Mississippi [0]: 10 servers, 9 cities (Jackson, MS; Fulton, MS; Pontotoc, MS; Oxford, MS; Mississippi State, MS; Winona, MS; Belzoni, MS; Leland, MS; Long Beach, MS)
+  Nebraska [0]: 18 servers, 10 cities (Omaha, NE; Lincoln, NE; Blair, NE; Norfolk, NE; Milford, NE; Beatrice, NE; Aurora, NE; Kearney, NE; Blue Hill, NE; Gering, NE)
+  New Mexico [0]: 17 servers, 12 cities (Albuquerque, NM; Santa Fe, NM; Taos, NM; Española, NM; Clovis, NM; Shiprock, NM; Santa Rosa, NM; Rio Rancho, NM; Gallup, NM; Roswell, NM; Artesia, NM; Alamogordo, NM)
+  Idaho [0]: 20 servers, 11 cities (Boise, ID; Ammon, ID; Idaho Falls, ID; Rexburg, ID; Moscow, ID; Kooskia, ID; Rigby, ID; Fruitland, ID; Rockland, ID; Caldwell, ID; Albion, ID)
+  Alaska [0]: 11 servers, 8 cities (Delta Junction, AK; Anchorage, AK; Juneau, AK; Fairbanks, AK; Valdez, AK; Cordova, AK; Homer, AK; Ketchikan, AK)
+  West Virginia [0]: 12 servers, 10 cities (Morgantown, WV; Charleston, WV; Berkeley Springs, WV; Bridgeport, WV; Buckhannon, WV; Weston, WV; Parkersburg, WV; Beckley, WV; Kermit, WV; War, WV)
+  Rhode Island [0]: 1 servers, 1 cities (Providence, RI)
+  District Of Columbia [0]: 3 servers, 1 cities (Washington, DC)
+  Saskatchewan [0]: 0 servers, 0 cities ()
+  Delaware [0]: 1 servers, 1 cities (New Castle, DE)
+  Montana [0]: 15 servers, 9 cities (Billings, MT; Helena, MT; Livingston, MT; Bozeman, MT; Glasgow, MT; Kalispell, MT; Belgrade, MT; Missoula, MT; Hamilton, MT)
+  South Dakota [0]: 14 servers, 9 cities (Sioux Falls, SD; Rapid City, SD; Aberdeen, SD; Clear Lake, SD; Watertown, SD; Brookings, SD; Woonsocket, SD; Mitchell, SD; Yankton, SD)
+  Maine [0]: 3 servers, 3 cities (Presque Isle, ME; Bangor, ME; Portland, ME)
+  Dominican Republic [0]: 14 servers, 9 cities (Santo Domingo; Bavaro; Sosua; Puerto Plata; San Francisco de Macoris; Moca; Santiago; La Vega; Bonao)
+  Venezuela [0]: 5 servers, 3 cities (Caracas; Pampatar; Valencia)
+  Guatemala [0]: 13 servers, 4 cities (Guatemala City; Guatemala; Jalapa; Ciudad Guatemala)
+  Uruguay [0]: 3 servers, 1 cities (Montevideo)
+  Bolivia [0]: 7 servers, 4 cities (La Paz; Santa Cruz de la Sierra; Santa Cruz; Cochabamba)
+  El Salvador [0]: 8 servers, 3 cities (San Salvador; San Miguel; La Unión)
+  Honduras [0]: 14 servers, 7 cities (San Pedro Sula; Tegucigalpa; Santa Barbara; Roatan; La Ceiba; El Progreso; Tegucigalpa M.D.C)
+  Panama [0]: 8 servers, 3 cities (Panama City; Panama; Panama East)
+  Trinidad And Tobago [0]: 0 servers, 0 cities ()
+  Jamaica [0]: 2 servers, 1 cities (Kingston)
+  Paraguay [0]: 20 servers, 9 cities (Ciudad del Este; Asuncion; Pedro Juan Caballero; Nueva Esperanza; Katuete; San Alberto; Hernandarias; Asunción; Obligado)
+  Martinique [0]: 1 servers, 1 cities (Le Lamentin)
+  Bahamas [0]: 2 servers, 1 cities (Nassau)
+  Nicaragua [0]: 8 servers, 1 cities (Managua)
+  Guadeloupe [0]: 1 servers, 1 cities (Baie-Mahault)
+  Netherlands Antilles [0]: 2 servers, 2 cities (Saint Maarten; Willemstad)
+  Other Canada [0]: 0 servers, 0 cities ()
+  Barbados [0]: 2 servers, 1 cities (Bridgetown)
+  Virgin [0]: 0 servers, 0 cities ()
+  Belize [0]: 6 servers, 4 cities (Belize City; Belmopan; Orange Walk; Belmopan City)
+  Bermuda [0]: 5 servers, 3 cities (Hamilton; Smith's Parish; Saint Georges)
+  Aruba [0]: 1 servers, 1 cities (Oranjestad)
+  Suriname [0]: 2 servers, 1 cities (Paramaribo)
+  Cayman Islands [0]: 4 servers, 2 cities (George Town; Grand Cayman)
+  French Guiana [0]: 1 servers, 1 cities (Cayenne)
+  Guyana [0]: 2 servers, 1 cities (Georgetown)
+  Antigua and Barbuda [0]: 4 servers, 2 cities (Saint John's; St. John)
+  Greenland [0]: 1 servers, 1 cities (Nuuk)
+  Haiti [0]: 3 servers, 2 cities (Port Au Prince; Petion-Ville)
+  St Lucia [0]: 0 servers, 0 cities ()
+  Turks And Caicos Islands [0]: 0 servers, 0 cities ()
+  Grenada [0]: 2 servers, 2 cities (St. George's; Grand Anse)
+  St Kitts And Nevis [0]: 0 servers, 0 cities ()
+  British Virgin Islands [0]: 0 servers, 0 cities ()
+  St Vincent And The Grenadines [0]: 0 servers, 0 cities ()
+  St Tome And Principe [0]: 0 servers, 0 cities ()
+  Cuba [0]: 0 servers, 0 cities ()
+  Dominica [0]: 1 servers, 1 cities (Roseau)
+  St Pierre And Miquelon [0]: 0 servers, 0 cities ()
+  Falkland Islands [0]: 0 servers, 0 cities ()
+  Anguilla [0]: 1 servers, 1 cities (The Valley)
+  New Hampshire [0]: 1 servers, 1 cities (Hanover, NH)
+  Manitoba [0]: 0 servers, 0 cities ()
+  North Dakota [0]: 19 servers, 14 cities (Fargo, ND; Bismarck, ND; Devils Lake, ND; Langdon, ND; Grand Forks, ND; Valley City, ND; Carrington, ND; Minot, ND; Ray, ND; Steele, ND; Ellendale, ND; Williston, ND; Mandan, ND; Dickinson, ND)
+  Wyoming [0]: 20 servers, 13 cities (Cheyenne, WY; Gillette, WY; Casper, WY; Sheridan, WY; Cody, WY; Torrington, WY; Wheatland, WY; Riverton, WY; Laramie, WY; Afton, WY; Rock Springs, WY; Lyman, WY; Evanston, WY)
+  Nova Scotia [0]: 0 servers, 0 cities ()
+  New Brunswick [0]: 0 servers, 0 cities ()
+  Newfoundland [0]: 0 servers, 0 cities ()
+  Vermont [0]: 3 servers, 3 cities (Richmond, VT; Burlington, VT; South Royalton, VT)
 
 EMEA
-  United Kingdom [7]: 89
-  Germany [4]: 97
-  France [3]: 54
-  Russian Federation [2]: 648
-  Italy [2]: 201
-  Spain [1]: 139
-  Turkey [1]: 93
-  Netherlands [1]: 64
-  Sweden [1]: 10
-  Poland [1]: 219
-  Denmark [1]: 20
-  Finland [1]: 18
-  Norway [1]: 33
-  Belgium [1]: 10
-  Switzerland [0]: 40
-  South Africa [0]: 83
-  Austria [0]: 29
-  Ukraine [0]: 218
-  Romania [0]: 57
-  Czech Republic [0]: 77
-  Ireland [0]: 15
-  Greece [0]: 16
-  Egypt [0]: 9
-  Hungary [0]: 27
-  Portugal [0]: 10
-  Bulgaria [0]: 31
-  Belarus [0]: 25
-  Slovakia [0]: 41
-  Croatia [0]: 7
-  Yugoslavia [0]: 0
-  Morocco [0]: 10
-  Reunion [0]: 0
-  Algeria [0]: 5
-  Estonia [0]: 7
-  Lithuania [0]: 19
-  Nigeria [0]: 22
-  Kenya [0]: 9
-  Slovenia [0]: 8
-  Tunisia [0]: 7
-  Latvia [0]: 18
-  Other Europe [0]: 0
-  Albania [0]: 13
-  Bosnia/Herzegovina [0]: 23
-  Ghana [0]: 6
-  Luxembourg [0]: 9
-  Mauritius [0]: 10
-  Moldavia [0]: 7
-  Malta [0]: 3
-  Macedonia [0]: 10
-  Cote D'Ivoire [0]: 0
-  Ethiopia [0]: 1
-  Angola [0]: 7
-  Senegal [0]: 4
-  Tanzania [0]: 17
-  Libya [0]: 5
-  Zimbabwe [0]: 5
-  Cameroon [0]: 2
-  Iceland [0]: 8
-  Uganda [0]: 6
-  Mozambique [0]: 5
-  Somalia [0]: 5
-  Zambia [0]: 3
-  Namibia [0]: 4
-  Madagascar [0]: 2
-  Sudan [0]: 0
-  Democratic Republic of Congo [0]: 8
-  Botswana [0]: 3
-  Benin [0]: 3
-  Gabon [0]: 3
-  Togo [0]: 2
-  Faeroe Islands [0]: 0
-  Monaco [0]: 1
-  Mali [0]: 2
-  Rwanda [0]: 4
-  Burkina [0]: 0
-  Andorra [0]: 1
-  Malawi [0]: 5
-  Liechtenstein [0]: 4
-  Gibraltar [0]: 3
-  Mauritania [0]: 1
-  Seychelles [0]: 2
-  Guinea [0]: 2
-  Congo [0]: 6
-  Niger [0]: 1
-  Sierra Leone [0]: 3
-  Burundi [0]: 2
-  San Marino [0]: 0
-  Liberia [0]: 3
-  Cape Verde [0]: 2
-  Lesotho [0]: 2
-  Djibouti [0]: 0
-  Swaziland [0]: 1
-  Equatorial Guinea [0]: 1
-  Gambia [0]: 2
-  Chad [0]: 3
-  Mayotte [0]: 0
-  Comoros [0]: 0
-  Vatican City [0]: 0
-  Central African Republic [0]: 0
-  Guinea Bissau [0]: 0
-  British Indian Ocean Territory [0]: 0
-  Eritrea [0]: 0
-  St Helena [0]: 0
+  United Kingdom [7]: 90 servers, 46 cities (London; Manchester; Norwich; Sheffield; Leeds; Maidstone; Kingston Upon Hull; Maidenhead; Gosport; Bradford; Newcastle Upon Tyne; Bath; Cardiff; Felixstowe; Canterbury; Braintree; Welwyn Garden City; Eastbourne; Sevenoaks; Enfield; Grimsby; Acton; Hull; Cranleigh; Slough; Bracknell; Nottingham; York; Fareham; Middlesbrough; Cowes; Stockton On Tees; Coventry; Gateshead; Ilkley; Cheltenham; Gloucester; Telford; Bristol; Preston; Lancaster; Aberdeen; Liverpool; Carlisle; Edinburgh; Haverfordwest)
+  Germany [4]: 97 servers, 63 cities (Frankfurt; Nuremberg; Berlin; Bremen; Karlsruhe; Dresden; Falkenstein; Magdeburg; Munich; Kiel; Ludwigshafen; Cologne; Finsterwalde; Passau; Deggendorf; Lutherstadt Wittenberg; Leipzig; Dessau; Mühldorf; Wunsiedel; Hof; Regensburg; Binz; Rosenheim; Weimar; Pavelsbach; Lauf a.d. Pegnitz; Garching; Riethnordhausen; Coburg; Ilmenau; Wernigerode; Schwerin; Eibelstadt; Göttingen; Ulm; Eutin; Bad Oldesloe; Hamburg; Buchholz in der Nordheide; Norderstedt; Schorndorf; Neumunster; Remseck; Ludwigsburg; Verden; Stuttgart; Friedrichshafen; Darmstadt; Schleswig; Konstanz; Riedstadt; Waghäusel; Freisbach; Oldenburg; Koblenz; Nümbrecht; Hagen; Dusseldorf; Saarbrucken; Saarwellingen; Losheim am See; Saarlouis)
+  France [3]: 52 servers, 32 cities (Paris; Reims; Lyon; Courbevoie; Marseille; Hatten; Reichshoffen; Strasbourg; Colmar; Forbach; Hombourg-Haut; Creutzwald; Falck; Talange; Woippy; Rombas; Saulnes; Archamps; Chambéry; Nice; Roubaix; Lille; Douai; Gravelines; Vitry-sur-Seine; Puteaux; Massy; Val de Reuil; Rennes; Bordeaux; Saint-Pierre; Saint-Denis La Réunion)
+  Russian Federation [2]: 647 servers, 248 cities (Moscow; Saint Petersburg; Irkutsk; Voronezh; Krasnodar; Kaliningrad; Nizhny Novgorod; Tyumen; Makhachkala; Ekaterinburg; Novosibirsk; Simferopol; Tver; Yaroslavl; Kazan; Chelyabinsk; Khabarovsk; Kursk; Belgorod; Saratov; Astrakhan; Samara; Magnitogorsk; Omsk; Krasnoyarsk; Vladivostok; Tula; Sochi; Stavropol; Saransk; Cheboksary; Ufa; Tomsk; Barnaul; Kemerovo; Chita; Bryansk; Orel; Kaluga; Lipetsk; Rostov-on-Don; Tambov; Ivanovo; Penza; Volgograd; Vladikavkaz; Kirov; Izhevsk; Kurgan; Surgut; Yakutsk; Blagoveshchensk; Smolensk; Pskov; Mytishchi; Ryazan; Vladimir; Petrozavodsk; Pyatigorsk; Kostroma; Nalchik; Glazov; Syktyvkar; Orenburg; Murmansk; Perm; Yekaterinburg; Salekhard; Noyabrsk; Nizhnevartovsk; Novy Urengoy; Novokuznetsk; Abakan; Ust-ilimsk; Bratsk; Angarsk; Ulan-Ude; Yevpatoria; Sevastopol; Bakhchisaray; Yalta; Krasnogorsk; Bronnicy; Korolev; Ramenskoye; Voskresensk; Slavyansk-on-Kuban; Novorossiysk; Rostov on Don; Kirovsk; Vsevolozhsk; Alexandrov; Kstovo; Tuapse; Kovrov; Vologda; Cherkessk; Sukhumi; Sukhum; Ulyanovsk; Yoshkar-ola; Tolyatti; Kizilyurt; Kaspiysk; Naberezhnye Chelny; Apatity; Nyagan; Nadym; Mezhdurechensk; Tulun; Magadan; Petropavlovsk-Kamchatsky; Klintsy; Starodub; Trubchevsk; Zheleznogorsk; Velikiye Luki; Stroitel; Симферополь; Stary Oskol; Feodosia; Theodosia; Mozhaysk; Obninsk; Volokolamsk; Protvino; Luga; Uzlovaya; Veliky Novgorod; Golitsyno; Taman; Chekhov; Troitsk; Istra; Novaya Usman; Kingisepp; Podolsk; Odintsovo; Nakhabino; Nahabino; Stupino; Arkhangel'skoye; Bologoe; Zelenograd; Vidnoe; Domodedovo; Dolgoprudny; Taganrog; Tomilino; Balashikha; Pushkino; Gatchina; Dmitrov; Fryazino; Gostilitsy; Dubna; Monino; Luhovicy; Khotkovo; Pushkin; Noginsk; Azov; Chernogolovka; Kirishi; Otradnoe; Kanevskaya; St. Petersburg; Saint-Petersburg; St. Leningradskaya; Kamensk-Shakhtinsky; Aksay; Kamenolomni; Sertolovo; Volkhov; Tikhoretsk; Babaevo; Belorechensk; Maykop; Volgodonsk; Sortavala; Gagra; Pitsunda; Gudauta; Volzhsky; Ruzayevka; Nizhniy Novgorod; Krasnoarmeysk; Elista; Engels; Medvezhyegorsk; Segezha; Nazran; Zhigulevsk; Grozny; Khasavyurt; Hasavurt; Kotlas; Armavir; Arkhangelsk; Buzuluk; Izberbash; Orenberg; Sterlitamak; Lysva; Kachkanar; Pervouralsk; Nizhny Tagil; Nizhniy Tagil; Snezhinsk; Berezovskiy; Niznyaya Salda; Kosulino; Naryan-Mar; Dvurechensk; Korkino; Rezh; Kopeysk; Bogdanovich; Usinsk; Shadrinsk; Tobolsk; Labytnangi; Khanty-Mansiysk; Nefteyugansk; Megion; Kamen-na-Obi; Ob; Rubcovsk; Norilsk; Belovo; Biysk; Kiselevsk; Gorno-altaisk; Sharypovo; Tashtagol; Achinsk; Zaozerny; Kansk; Kyzyl; Ust-Kut; Mirny; Shelekhov; Irskutsk; Severobaykalsk; Neryungri; Ussuriysk; Nakhodka; Yuzhno-sakhalinsk)
+  Italy [2]: 198 servers, 128 cities (Milan; Rome; Venice; Arezzo; Milano; Turin; Padova; Verona; Pescara; Campobasso; Florence; Salerno; Napoli; Latina; Cagliari; Ancona; Barletta; Bologna; Brescia; Altamura; Potenza; Avellino; Massa; Rende; Savona; Reggio Calabria; Catania; Palermo; Sassari; Trieste; Udine; Brunico; Badia; Sedico; Bolzano; Bozen; Rossano Veneto; Fiesso D'artico; Montecchio Maggiore; Vicenza; Chiaravalle; Ravenna; Fermo; Ferrara; Matelica; Ascoli Piceno; Bari; Molfetta; Fasano; Teramo; Rotello; Modena; Correggio; Lecce; Lizzanello; Foligno; Reggio Emilia; Martina Franca; Perugia; Serrano; Bergamo; Lavello; Parma; Matera; L'Aquila; Scanno; Prato; Ariano Irpino; Terni; Quarrata; Piacenza; Cologno Monzese; Siena; Sora; Varese; Siziano; Tursi; Oliveto Citra; Caserta; Frosinone; Tivoli; Massarosa; Viterbo; Campagna; Nola; Fisciano; Padula; San Cesareo; Pomigliano D'Arco; Battipaglia; Capaccio; Aversa; La Spezia; Giugliano in Campania; Angri; Livorno; Naples; Lagonegro; Grosseto; Terracina; Novi Velia; Castrovillari; Cicitavecchia; Perdifumo; Biella; Genoa; Mongrassano; Crotone; Bra; Pietra Ligure; Catanzaro; Lamezia Terme; Albenga; Giaveno; Fossano; Saluzzo; Sanremo; Lipari; Olbia; Nuoro; Carini; Partinico; Carlentini; Francofonte; Caltagirone; Niscemi; Vittoria; Comiso)
+  Spain [1]: 139 servers, 99 cities (Madrid; Barcelona; Murcia; Palma; Valencia; Alicante; Manresa; Lleida; Paterna; Torrevieja; Granada; Malaga; L'Escala; Palafrugell; Vall-llobrega; Sant Antoni de Calonge; Platja d'Aro; Girona; Vidreres; Sant Julià de Vilatorta; Vic; Llinars del Valles; Mahón; Centelles; Berga; Avinyó; Castelldefels; Igualada; Vilanova i la Geltrú; Inca; Reus; Mora d'Ebre; L'Ametlla de Mar; Tortosa; Donostia / San Sebastian; Pamplona; Zaragoza; Ibiza; Zamudio; Derio; La Rioja; Javea; Villanueva de castellon; Xativa; Ontinyent; Bocairent; Castalla; Casas-Ibáñez; Almansa; Fuentealbilla; Elda; Elche; Crevillent; Pinoso; Gijón; Benijófar; Almoradi; El Chaparral; Albacete; Oviedo; San Pedro Del Pinatar; Alcobendas; Llano de Brujas; La Arboleja; Molina de Segura; Ceutí; Alguazas; Alcazar de San Juan; Caravaca; Valdepeñas; Bolanos de Calatrava; Ciudad Real; Alcalá la Real; Churriana De La Vega; Alange; Ecija; El Rubio; Lantejuela; Pizarra; Badajoz; Segura de Leon; Marbella; Alcala del Rio; San Jose de la Rinconada; Guillena; Umbrete; Ubrique; Paterna del Campo; San Roque; Huelva; Puerto Real; Chiclana de la Frontera; Lanzarote; Santa Cruz De Tenerife; Mogan; La Orotava; Canarias; Santa Cruz de la Palma; San Sebastian de La Gomera)
+  Turkey [1]: 93 servers, 43 cities (Istanbul; Bursa; Izmir; Ankara; Adana; Konya; Antalya; Tekirdag; Kocaeli; Manisa; Samsun; Denizli; Kayseri; Erzurum; Gaziantep; Antakya; Diyarbakir; Edirne; Tekirdağ; Cayirova; Gebze; Derince; Izmit; Zonguldak; Golcuk; Kartepe; Sakarya; Bolu; Balikesir; Eskisehir; Aksaray; Sivas; Trabzon; Karaman; Gazipasa; Erzincan; Toroslar; Mersin; Elazig; Kilis; Nicosia; Famagusta; Reyhanli)
+  Netherlands [1]: 63 servers, 33 cities (Amsterdam; Groningen; Meppel; Arnhem; Dronten; Harderwijk; Eindhoven; Amersfoort; Hoorn; Haarlem; Rotterdam; Enschede; Hengelo; Veendam; Hardenberg; Doetinchem; Deventer; Heerlen; Apeldoorn; Ede; Voorthuizen; Sint-Oedenrode; Almere; Hilversum; Purmerend; Alblasserdam; Den Burg; Zoetermeer; Den Haag; Naaldwijk; Goes; Middelburg; Willemstad)
+  Sweden [1]: 12 servers, 10 cities (Stockholm; Kista; Olofstom; Malmo; Malmö; Laholm; Varberg; Akersberga; Gothenburg; Umea)
+  Poland [1]: 219 servers, 152 cities (Wroclaw; Warsaw; Warszawa; Krakow; Szczecin; Lublin; Lodz; Poznan; Gdansk; Rzeszow; Bielsko-Biała; Katowice; Bialystok; Stalowa Wola; Krosno; Debica; Mielec; Wlodawa; Brzesko; Kielce; Siedlce; Kraków; Sosnowiec; Bedzin; Gliwice; Suwalki; Torun; Bydgoszcz; Poznań; Chojnice; Gdynia; Lubaczow; Oleszyce; Przemysl; Jaroslaw; Zamosc; Biłgoraj; Lancut; Krasnystaw; Laka; Tyczyn; Rzeszów; Strzyzow; Nowa Deba; Ropczyce; Krasnik; Świdnik; Leczna; Tarnow; Zakliczyn; Bodzentyn; Biala Podlaska; Biała Podlaska; Miedzyrzec Podlaski; Międzyrzec Podlaski; Kuczki Kolonia; Lukow; Łuków; Skalbmierz; Niepolomice; Jedrzejow; Nowy Targ; Harbutowice; Sucha Beskidzka; Hajnowka; Zator; Slawkow; Sulkowice; Wolomin; Ząbki; Jaworzno; Pruszkow; Myszkow; Pajeczno; Kety; Ożarow Mazowiecki; Żywiec; Dąbrowa Górnicza; Radomsko; Piotrków Trybunalski; Ledziny; Bielsko-Biala; Lapy; Czestochowa; Mikolow; Choroszcz; Białystok; Zambrow; Ruda Slaska; Ruda Śląska; Tarnowskie Góry; Zabrze; Zory; Knurów; Cieszyn; Lubliniec; Rusiec; Rybnik; Zgierz; Lomza; Zduńska Wola; Wielun; Kutno; Kolno; Opole; Glogowek; Wieruszow; Prószków; Pisz; Orzysz; Ełk; Dzialdowo; Wloclawek; Nowe Skalmierzyce; Ostrów Wielkopolski; Konin; Golub-Dobrzyń; Olsztyn; Paczków; Września; Lidzbark Warminski; Bartoszyce; Barcin; Gniezno; Grudziadz; Świdnica; Prabuty; Chelmno; Nowe; Naklo nad Notecia; Lubin; Polkowice; Tczew; Starogard Gdański; Głogów; Tuchola; Jelenia Gora; Kamien Krajenski; Szklarska Poręba; Gdańsk; Zbaszyn; Szprotawa; Banino; Zielona GóRa; Zielona Gora; Kosakowo; Rumia; Zgorzelec; Gorzow Wielkopolski; Bialogard; Koszalin; Kolobrzeg)
+  Denmark [1]: 19 servers, 10 cities (Copenhagen; Taastrup; Kolding; Søborg; Middelfart; Tranbjerg; Skanderborg; Tønder; Aalborg; Hirtshals)
+  Finland [1]: 18 servers, 11 cities (Helsinki; Jyvaskyla; Hamina; Laitila; Tampere; Mikkeli; Jyväskylä; Bennäs; Jakobstad; Kajaani; Oulu)
+  Norway [1]: 33 servers, 21 cities (Oslo; Trondheim; Alesund; Bergen; Bodø; Alta; Sandefjord; Lillehammer; Sandnes; Stavanger; Oppdal; Sunndalsora; Forde; Steinkjer; Kyrksæterøra; Sykkylven; Orsta; Kristiansund; Tromsø; Vadso; Hammerfest)
+  Belgium [1]: 10 servers, 7 cities (Brussels; Liège; Louvain-La-Neuve; Diegem; Antwerp; Schaarbeek; Sint-Niklaas)
+  Switzerland [0]: 40 servers, 26 cities (Zurich; Lausanne; Lugano; Geneva; Chur; Winterthur; Linthal; Duebendorf; Binz; Dübendorf; Zürich; Uitikon Waldegg; Dietikon; Zug; Bellinzona; Lupfig; Locarno; Mendrisio; Stabio; Basel; Solothurn; Sierre; Martigny; Yverdon-les-Bains; Mont sur Lausanne; Carouge)
+  South Africa [0]: 85 servers, 20 cities (Johannesburg; Cape Town; Durban; Pretoria; Midrand; Randburg; Vanderbijlpark; Bloemfontein; Port Elizabeth; Polokwane; Mokopane; Nelspruit; Mbombela; Roodepoort; Bedfordview; Potchefstroom; Kuruman; Queenstown; Worcester; Paarl)
+  Austria [0]: 29 servers, 16 cities (Vienna; Klagenfurt; Grein; Graz; Linz; Wels; Gmunden; Ried; Schorfling am Attersee; Frankenburg; Neumarkt am Wallersee; Kufstein; Hall in Tirol; Innsbruck; Telfs; Rankweil)
+  Ukraine [0]: 217 servers, 112 cities (Kiev; Lviv; Kharkiv; Chernivtsi; Odessa; Kherson; Dnepropetrovsk; Zaporizhzhya; Mariupol; Luhansk; Khmelnitskiy; Simferopol; Donetsk; Kolomyia; Vasylkiv; Kyiv; Chernihiv; Kropyvnytskyi; Sumy; Sevastopol; Severodonetsk; Kalush; Kovel; Uzhgorod; Vinnytsia; Irpin; Mykolaiv; Kremenchuk; Poltava; Nova Kakhovka; Nikopol; Dnipro; Kramatorsk; Slavyansk; Ugledar; Berdyansk; Horlivka; Lisichansk; Alchevsk; Torez; L'viv; Novoiavorivsk; Novy Rozdil; Zolochiv; Stryi; Berezhany; Galich; Ivano-Frankivsk; Ternopil; Tysmenytsya; Nadvirna; Svalyava; Zabolotiv; Rivne; Beregovo; Khmelnitsky; Khmelnytskyi; Kamenets-Podolskiy; Khmelnik; Zhytomyr; Ovruch; Ladyzhyn; Ivankiv; Pologi; Nemishayeve; Uman; Myronivka; Pervomaysk; Yagotin; Nizhyn; Cherkasy; Bilhorod-Dnistrovskyi; Одесса; Chornomorsk; Znamianka; Lubny; Globino; Hadiach; Krivoy Rog; Oleshki; Volnogorsk; Akhtyrka; Kamianske; Energodar; Solone; Marhanets; Zaporozhye; Sinelnikovo; Yevpatoria; Saki; Slobozhanske; Yalta; Pokrovsk; Дружковка; Konstantinovka; Shelkino; Volnovaha; Volnovakha; Svatovo; Toretsk; Dzerzhinsk; Artemivsk; Makeyevka; Rubizhne; Zhdanivka; Shakhtersk; Bryanka; Amvrosiivka; Shakhtarsk; Stanica Luganskaya; Rovenki; Krasnodon)
+  Romania [0]: 57 servers, 20 cities (Bucharest; Cluj-Napoca; Timisoara; Constanta; Oradea; Iasi; Arad; Brasov; Galati; Suceava; Botosani; Sovata; Bacau; Adjud; Ramnicu Valcea; Pitesti; Buzau; Drobeta-Turnu Severin; Racari; Lehliu-gara)
+  Czech Republic [0]: 77 servers, 50 cities (Prague; Brno; Opava; Roznov; Zlin; Trutnov; Mlada Boleslav; Jesenice; Ceske Budejovice; Plzen; Sedliste; Ostrava; Hlucin; Koprivnice; Vsetin; Olomouc; Veseli nad Moravou; Lutin; Hodonin; Slavkov u Brna; Polička; Rtyně v Podkrkonoší; Upice; Hradec Kralove; Pardubice; Vrchlabi; Havlíčkův Brod; Caslav; Zelezny Brod; Kolin; Turnov; Mnichovo Hradiste; Jablonné v Podještědí; Krenice; Benesov; Říčany; Dobřejovice; Tabor; Veseli nad Luznici; Mesice; Praha; Hluboka nad Vltavou; Decin; Pribram; Ústí nad Labem; Usti nad Labem; Ktis; Strakonice; Klatovy; Tachov)
+  Ireland [0]: 15 servers, 8 cities (Dublin; Waterford; Cork; Limerick; Carlow; Ballina; Galway; Tralee)
+  Greece [0]: 16 servers, 6 cities (Athens; Thessaloniki; Larisa; Argalasti; Mytilene; Corinth)
+  Egypt [0]: 9 servers, 4 cities (Cairo; Giza; Alexandria; Qena)
+  Hungary [0]: 27 servers, 18 cities (Budapest; Szombathely; Kisvárda; Nyiregyhaza; Arnót; Turkeve; Bekescsaba; Szentes; Kecskemet; Szeged; Szekesfehervar; Gyor; Győr; Szekszard; Kapuvar; Pecs; Zalaegerszeg; Nagykanizsa)
+  Portugal [0]: 10 servers, 8 cities (Lisbon; Porto; Castelo Branco; Evora; Palmela; Lisboa; Almancil; Funchal)
+  Bulgaria [0]: 30 servers, 14 cities (Sofia; Burgas; Isperih; Pleven; Varna; Sliven; Karnobat; Aytos; Yambol; Blagoevgrad; Haskovo; Kiten; Kurdzhali; Kapitan Andreevo)
+  Belarus [0]: 25 servers, 6 cities (Minsk; Brest; Gomel; Grodno; Vitebsk; Mogilev)
+  Slovakia [0]: 41 servers, 30 cities (Bratislava; Banska Bystrica; Martin; Zilina; Snina; Svidnik; Giraltovce; Hanušovce nad Topľou; Bardejov; Raslavice; Trebisov; Presov; Kosice; Levoča; Liptovsky Mikulas; Rimavska Sobota; Ruzomberok; Detva; Kotešová; Bytca; Povazska Bystrica; Puchov; Dubnica nad Vahom; Banovce nad Bebravou; Trencin; Piestany; Hlohovec; Sered; Trnava; Dunajska Streda)
+  Croatia [0]: 7 servers, 2 cities (Zagreb; Čakovec)
+  Yugoslavia [0]: 0 servers, 0 cities ()
+  Morocco [0]: 10 servers, 4 cities (Rabat; Casablanca; Fez; Marrakesh)
+  Reunion [0]: 0 servers, 0 cities ()
+  Algeria [0]: 4 servers, 1 cities (Algiers)
+  Estonia [0]: 7 servers, 3 cities (Tallinn; Tartu; Narva)
+  Lithuania [0]: 19 servers, 6 cities (Vilnius; Klaipeda; Kaunas; Siauliai; Kursenai; Mazeikiai)
+  Nigeria [0]: 21 servers, 5 cities (Lagos; Abuja; Benin; Ojota; Lekki)
+  Kenya [0]: 9 servers, 2 cities (Nairobi; Mombasa)
+  Slovenia [0]: 8 servers, 3 cities (Ljubljana; Maribor; Ruse)
+  Tunisia [0]: 8 servers, 5 cities (Tunis; Belvedere; Kasbah; Enfidha; Sousse)
+  Latvia [0]: 17 servers, 6 cities (Riga; Liepaja; Daugavpils; Jelgava; Ogre; Ventspils)
+  Other Europe [0]: 0 servers, 0 cities ()
+  Albania [0]: 13 servers, 5 cities (Tirana; Shkoder; Peje; Prrenjas; Durres)
+  Bosnia/Herzegovina [0]: 17 servers, 11 cities (Gradacac; Sarajevo; Gracanica; Banja Luka; Bijeljina; Kalesija; Tuzla; Lukavac; Zivinice; Visoko; Mostar)
+  Ghana [0]: 6 servers, 1 cities (Accra)
+  Luxembourg [0]: 9 servers, 5 cities (Luxembourg; Contern; Hesperange; Bettembourg; Kayl)
+  Mauritius [0]: 10 servers, 8 cities (Port Louis; Ebene; La Tour Koenig; Arsenal; Floreal; Rose-Hill; Rose Hill; Curepipe)
+  Moldavia [0]: 7 servers, 2 cities (Chisinau; Tiraspol)
+  Malta [0]: 3 servers, 3 cities (Madliena; B'Kara; Marsa)
+  Macedonia [0]: 10 servers, 5 cities (Skopje; Strumica; Gevgelija; Prilep; Bitola)
+  Cote D'Ivoire [0]: 0 servers, 0 cities ()
+  Ethiopia [0]: 1 servers, 1 cities (Addis Ababa)
+  Angola [0]: 7 servers, 4 cities (Luanda; Huambo; Benguela; Lubango)
+  Senegal [0]: 4 servers, 2 cities (Dakar; Mbour)
+  Tanzania [0]: 17 servers, 2 cities (Dar es Salaam; Arusha)
+  Libya [0]: 5 servers, 5 cities (Benghazi; Misurata; Tripoli; Zawiya; Nalut)
+  Zimbabwe [0]: 5 servers, 2 cities (Harare; Bulawayo)
+  Cameroon [0]: 2 servers, 2 cities (Yaounde; Douala)
+  Iceland [0]: 7 servers, 4 cities (Reykjavik; Reykjavík; Akureyri; Isafjordur)
+  Uganda [0]: 6 servers, 1 cities (Kampala)
+  Mozambique [0]: 5 servers, 1 cities (Maputo)
+  Somalia [0]: 5 servers, 3 cities (Hargeisa; Mogadishu; Mogadisho)
+  Zambia [0]: 3 servers, 1 cities (Lusaka)
+  Namibia [0]: 4 servers, 1 cities (Windhoek)
+  Madagascar [0]: 2 servers, 1 cities (Antananarivo)
+  Sudan [0]: 0 servers, 0 cities ()
+  Democratic Republic of Congo [0]: 8 servers, 3 cities (Goma; Kinshasa; Lubumbashi)
+  Botswana [0]: 2 servers, 1 cities (Gaborone)
+  Benin [0]: 3 servers, 1 cities (Cotonou)
+  Gabon [0]: 3 servers, 1 cities (Libreville)
+  Togo [0]: 2 servers, 2 cities (Lome; Lomé)
+  Faeroe Islands [0]: 0 servers, 0 cities ()
+  Monaco [0]: 1 servers, 1 cities (Monaco)
+  Mali [0]: 2 servers, 1 cities (Bamako)
+  Rwanda [0]: 4 servers, 1 cities (Kigali)
+  Burkina [0]: 0 servers, 0 cities ()
+  Andorra [0]: 1 servers, 1 cities (Andorra La Vella)
+  Malawi [0]: 5 servers, 2 cities (Blantyre; Lilongwe)
+  Liechtenstein [0]: 4 servers, 3 cities (Vaduz; Eschen; Bendern)
+  Gibraltar [0]: 3 servers, 1 cities (Gibraltar)
+  Mauritania [0]: 1 servers, 1 cities (Nouakchott)
+  Seychelles [0]: 2 servers, 1 cities (Victoria)
+  Guinea [0]: 2 servers, 1 cities (Conakry)
+  Congo [0]: 5 servers, 3 cities (Brazzaville; Pointe Noire; Pointe-Noire)
+  Niger [0]: 1 servers, 1 cities (Niamey)
+  Sierra Leone [0]: 3 servers, 1 cities (Freetown)
+  Burundi [0]: 2 servers, 1 cities (Bujumbura)
+  San Marino [0]: 0 servers, 0 cities ()
+  Liberia [0]: 3 servers, 1 cities (Monrovia)
+  Cape Verde [0]: 2 servers, 1 cities (Praia)
+  Lesotho [0]: 2 servers, 1 cities (Maseru)
+  Djibouti [0]: 0 servers, 0 cities ()
+  Swaziland [0]: 1 servers, 1 cities (Mbabane)
+  Equatorial Guinea [0]: 1 servers, 1 cities (Bata)
+  Gambia [0]: 2 servers, 1 cities (Serekunda)
+  Chad [0]: 3 servers, 2 cities (Ndjamena; N'Djamena)
+  Mayotte [0]: 0 servers, 0 cities ()
+  Comoros [0]: 0 servers, 0 cities ()
+  Vatican City [0]: 0 servers, 0 cities ()
+  Central African Republic [0]: 0 servers, 0 cities ()
+  Guinea Bissau [0]: 0 servers, 0 cities ()
+  British Indian Ocean Territory [0]: 0 servers, 0 cities ()
+  Eritrea [0]: 0 servers, 0 cities ()
+  St Helena [0]: 0 servers, 0 cities ()
 
 APJ
-  India [14]: 495
-  Japan [7]: 17
-  Australia [5]: 92
-  Indonesia [2]: 121
-  South Korea [2]: 1
-  China [2]: 59
-  Vietnam [1]: 30
-  Saudi Arabia [1]: 47
-  Thailand [1]: 58
-  New Zealand [1]: 52
-  Philippines [1]: 65
-  Taiwan [1]: 69
-  Pakistan [1]: 37
-  Malaysia [1]: 30
-  United Arab Emirates [1]: 5
-  Hong Kong [0]: 13
-  Singapore [0]: 12
-  Israel [0]: 17
-  Iraq [0]: 21
-  Cambodia [0]: 24
-  Kazakhstan [0]: 57
-  Nepal [0]: 12
-  Kuwait [0]: 12
-  Bangladesh [0]: 24
-  Qatar [0]: 3
-  Oman [0]: 6
-  Myanmar [0]: 20
-  Jordan [0]: 7
-  Iran [0]: 41
-  Lebanon [0]: 21
-  Sri Lanka [0]: 7
-  Bahrain [0]: 4
-  Laos [0]: 4
-  Azerbaijan [0]: 16
-  Georgia (country) [0]: 0
-  Cyprus [0]: 12
-  Armenia [0]: 12
-  Guam [0]: 5
-  Macau [0]: 4
-  Mongolia [0]: 5
-  Uzbekistan [0]: 5
-  New Caledonia [0]: 3
-  Kyrgyzstan [0]: 5
-  Brunei [0]: 2
-  Syria [0]: 0
-  French Polynesia [0]: 1
-  Maldives [0]: 3
-  Afghanistan [0]: 5
-  Yemen [0]: 1
-  Fiji [0]: 5
-  Bhutan [0]: 2
-  Tadjikistan [0]: 0
-  Turkmenistan [0]: 0
-  American Samoa [0]: 1
-  Papua New Guinea [0]: 2
-  Northern Mariana Islands [0]: 0
-  East Timor [0]: 0
-  Samoa [0]: 1
-  Micronesia [0]: 0
-  Vanuatu [0]: 2
-  Palau [0]: 0
-  Marshall Islands [0]: 1
-  Tonga [0]: 0
-  Solomon Islands [0]: 1
-  Cook Islands [0]: 1
-  Wallis And Futana [0]: 0
-  Norfolk Island [0]: 0
-  Nauru [0]: 0
-  Kiribati [0]: 1
-  Christmas Island [0]: 0
-  Niue [0]: 0
-  Tokelau [0]: 0
-  North Korea [0]: 0
-  Tuvalu [0]: 0
+  India [14]: 493 servers, 187 cities (New Delhi; Bangalore; Chennai; Mumbai; Hyderabad; Kolkata; Noida; Pune; Ahmedabad; Lucknow; Indore; Gurgaon; Jaipur; Coimbatore; Surat; Nagpur; Patna; Ghaziabad; Faridabad; Vijayawada; Guwahati; Chandigarh; Rajkot; Bhopal; Raipur; Bhubaneswar; Visakhapatnam; Salem; Madurai; Jalandhar; Ludhiana; Yamunanagar; Udaipur; Vadodara; Kanpur; Gorakhpur; Tirupati; Guntur; Mysore; Kochi; Pondicherry; Srinagar; Mohali; Bhiwani; Agra; Anand; Gwalior; Navi Mumbai; Aurangabad; Varanasi; Latur; Solapur; Bijapur; Margao; Goa; Kalaburagi; Siliguri; warangal; Rourkela; Jagdalpur; Khammam; Mangalore; Ongole; Kakinada; Bengaluru; Erode; Tiruchengode; Imphal; Ernakulam; Puducherry; Thiruvananthapuram; Jammu; Kapurthala; Abohar; Bhatinda; Sirsa; Baddi; Shimla; Panchkula; Adampur; JIND; Haryana; Assandh; Jodhpur; Karnal; Bhuj; Surajgarh; Okha; Dehradun; Gandhidham; Roorkee; Sonipat; Bahadurgarh; Khekra; Gurugram; Delhi; Greater Noida West; Patan; Gautam Budh Nagar; Junagadh; Haldwani; Ahemdabad; Kota; Borsad; Bhavnagar; Banswara; Sandhiyer; Kamrej; Hardoi; Vapi; Palghar; Shirpur; Nasik; Chembur; Jalgaon; Panvel; Pratapgarh; Ballia; Singrauli; Yavatmal; Hajipur; Darbhanga; Calangute; Panaji; Panjim; Ambikapur; Gokak; Belagavi; Bhilai; Bidar; Gulbarga; Bagalkot; Hubli; Purnea; Raigarh; Ranchi; Godda; Jharsuguda; Bhatkal; Dhanbad; Dantewada; Asansol; Bellary; Udupi; Huzurnagar; Berhampore; Barpeta; Plassey; Koraput; Burdwan; Vijawada; Belda; Rajahmundry; Anaparthy; Vizianagaram; Anakapally; Haldia; Srikakulam; Vishakapatnam; North Lakhimpur; Electronic City; Benguluru; Hojai; Kadugodi; Madanapalle; Calicut; Nellore; Dibrugarh; Jorhat; Dimapur; Chittor; Vellore; Thrissur; Kaniyur; Komarapalayam; Cochin; Namakkal; Kottayam; Thiruvalla; Chengannur; Trichy; Kollam; Sattur; Trivandrum; Kaliakkavilai; Thoothukudi; Nagercoil)
+  Japan [7]: 17 servers, 14 cities (Tokyo; Misawa; Nomi; Hitoyoshi; Kyoto; Maibara; Sakai; Fussa-shi; Tsukuba; Sagamihara; Bunkyo; Yamato; Naha; Haebaru)
+  Australia [5]: 92 servers, 23 cities (Sydney; Brisbane; Melbourne; Perth; Adelaide; Hobart; Darwin; Gold Coast; Canberra; Sunshine Coast; Broome; Geraldton; Rockingham; Townsville; Mackay; Barossa Valley; Limestonecoast; Ballarat; Mudgee; Geelong; Burwood East; Windsor; Chatswood)
+  Indonesia [2]: 123 servers, 36 cities (Jakarta; Surabaya; Bandung; Semarang; Denpasar; Yogyakarta; Pekanbaru; Medan; Batam; Manado; Kuta; Palembang; Tangerang; Bekasi; Banjarmasin; Jogjakarta; Surakarta; Bali; Makassar; Pontianak; Bandarlampung; Sentul; Bogor; Cirebon; Tanah Bumbu; Malang; Gianyar; Ubud; Badung; Sanur; Mataram; Ternate; Sorong; Ambon; Timika; Jayapura)
+  South Korea [2]: 1 servers, 1 cities (Seoul)
+  China [2]: 56 servers, 33 cities (Wuhan; Shanghai; Lanzhou; ChongQing; Jinan; Hefei; Hong Kong; Urumqi; Tianjin; Changchun; Nanjing; Nanning; Hangzhou; Guangzhou; Kashi; Aletai; Hetian; Lhasa; Xining; Ningxia; Chengdu; Taiyuan; Xi'an; Shijiazhuang; Harbin; Zhengzhou; Kunming; Dalian; Suzhou; ZhenJiang; Ningbo; Haikou; Fuzhou)
+  Vietnam [1]: 30 servers, 6 cities (Hanoi; Ho Chi Minh City; Da Nang; Ho Chi Minh; Ha Noi; Can Tho)
+  Saudi Arabia [1]: 47 servers, 24 cities (Riyadh; Jeddah; Dammam; Tabuk; Hail; Qassim; Yanbu; Taif; Khobar; Makkah; Kharj; Baha; Abha; Khamis Mushait; Najran; Jouf; Aljouf; Medina; Madina; Jubail; Bisha; AlAhsa; Jizan; Jazan)
+  Thailand [1]: 58 servers, 27 cities (Bangkok; Khon Kaen; Pathum Thani; Surat Thani; Songkhla; Phitsanulok; Nakhon Pathom; Nonthaburi; Pathum Wan; Samut Prakarn; Chonburi; Chiang Rai; Chiang Mai; Chiangmai; Nakhon Sawan; Udon Thani; Ayutthaya; Sakon Nakhon; Chatuchak; Nakhon Ratchasima; Pattaya; Ubon Ratchathani; Phuket; Nakhon Si Thammarat; Songkhla Province; Hatyai; Yala)
+  New Zealand [1]: 52 servers, 16 cities (Auckland; Wellington; Hamilton; Christchurch; Dunedin; Tauranga; Palmerston North; Whangarei; Queenstown; Wanaka; New Plymouth; Gore; Taupo; Culverden; Napier; Hastings)
+  Philippines [1]: 66 servers, 37 cities (Makati; Manila; Quezon City; Cebu City; Pasig City; Cagayan de Oro City; Davao City; Baguio City; Mandaluyong; Lucena; Bacolod; Dagupan City; Tarlac; Angeles City; Olongapo; San Juan; Cavite; Pasig; Taguig; Parañaque; Imus; Antipolo; Alabang; Carmona; Sta Rosa Laguna; Santa Rosa; Los Baños; Batangas City; Lucena City; Legazpi City; Sorsogon; Iloilo; Tacloban; Cebu; Dumaguete; Davao; General Santos City)
+  Taiwan [1]: 72 servers, 23 cities (Taipei; Taichung; New Taipei; Kaohsiung; Hsinchu; Tainan; Taoyuan; Yilan; Hsinying; Hualien; Zhongli; Banqiao; Keelung; Changhua; Douliu; Pingtung; Miaoli; New Taipei City; Douliu City; Puli Township; Nantou; Chiayi; Taitung)
+  Pakistan [1]: 38 servers, 11 cities (Karachi; Lahore; Islamabad; Quetta; Muzaffarabad; Sargodha; Multan; Toba Tek Singh; Faisalabad; Jaranwala; Hyderabad)
+  Malaysia [1]: 30 servers, 12 cities (Kuala Lumpur; Cyberjaya; Kota Kinabalu; Petaling Jaya; Kuching; Mandalay; Penang; Bayan Lepas; Kuala Terengganu; Shah Alam; Puchong; Putrajaya)
+  United Arab Emirates [1]: 5 servers, 1 cities (Dubai)
+  Hong Kong [0]: 13 servers, 6 cities (Hong Kong; Tai Po; New Territories; Kwai Chung; Shatin; Chai Wan)
+  Singapore [0]: 12 servers, 1 cities (Singapore)
+  Israel [0]: 17 servers, 10 cities (Petah Tikva; Tel Aviv; Jerusalem; Haifa; Baqa el-Gharbiya; Petah Tikwa; Rosh HaAyin; Rishon LeZion; Lod; Ashkelon)
+  Iraq [0]: 21 servers, 9 cities (Sulaymaniyah; Erbil; Mosul; Baghdad; Al Basrah; Khanaqin; Maysan; Nasiriyah; Basra)
+  Cambodia [0]: 24 servers, 3 cities (Phnom Penh; Poipet; Sihanouk)
+  Kazakhstan [0]: 57 servers, 20 cities (Almaty; Astana; Karaganda; Aktau; Kyzylorda; Shymkent; Pavlodar; Taraz; Atyrau; Aktobe; Petropavlovsk; Semey; Oskemen; Oral; Uralsk; Kostanai; Kostanay; Kokshetau; Jezkazgan; Taldykorgan)
+  Nepal [0]: 12 servers, 6 cities (Kathmandu; Jawalakhel; Baliya; Bhairahawa; Banepa; Damak)
+  Kuwait [0]: 12 servers, 6 cities (Kuwait City; Kaifan; Al Ahmadi; Shuwaikh City; Bayan; Fahaheel)
+  Bangladesh [0]: 24 servers, 3 cities (Dhaka; Chittagong; Narsingdi)
+  Qatar [0]: 3 servers, 2 cities (Doha; Al Rayyan)
+  Oman [0]: 6 servers, 2 cities (Seeb; Muscat)
+  Myanmar [0]: 19 servers, 3 cities (Yangon; Mandalay; Naypyidaw)
+  Jordan [0]: 7 servers, 1 cities (Amman)
+  Iran [0]: 41 servers, 16 cities (Tehran; Tabriz; Shiraz; Kerman; Ahvaz; Mashhad; Chapar; Rasht; Kermanshah; Hamedan; Karaj; Qom; Shahroud; Esfahan; Isfahan; Bandar Abbas)
+  Lebanon [0]: 21 servers, 11 cities (Beirut; Tripoli; Batroun; Ras Beirut; Kfardebian; Jdeideh; Baabda; Zahleh; Sarafand; Zrarieh; Tyre)
+  Sri Lanka [0]: 7 servers, 3 cities (Colombo; Veravil; Anuradhapura)
+  Bahrain [0]: 4 servers, 2 cities (Manama; Seef)
+  Laos [0]: 4 servers, 2 cities (Vientiane Capital; Vientiane)
+  Azerbaijan [0]: 16 servers, 3 cities (Baku; Sumgait; Absheron)
+  Georgia (country) [0]: 0 servers, 0 cities ()
+  Cyprus [0]: 12 servers, 5 cities (Nicosia; Limassol; Kyrenia; Larnaca; Paphos)
+  Armenia [0]: 12 servers, 4 cities (Yerevan; Vagharshapat; Sevan; Stepanakert)
+  Guam [0]: 5 servers, 4 cities (Tamuning; Tumon; Barrigada; Mangilao)
+  Macau [0]: 4 servers, 2 cities (Macau; Taipa)
+  Mongolia [0]: 5 servers, 1 cities (Ulaanbaatar)
+  Uzbekistan [0]: 5 servers, 1 cities (Tashkent)
+  New Caledonia [0]: 3 servers, 1 cities (Noumea)
+  Kyrgyzstan [0]: 5 servers, 1 cities (Bishkek)
+  Brunei [0]: 2 servers, 2 cities (Tungku; Bandar Seri Begawan)
+  Syria [0]: 2 servers, 1 cities (Damascus)
+  French Polynesia [0]: 1 servers, 1 cities (Papeete)
+  Maldives [0]: 3 servers, 1 cities (Male)
+  Afghanistan [0]: 5 servers, 4 cities (Kabul; Herat; Kunduz; Kandahar)
+  Yemen [0]: 1 servers, 1 cities (Sanaa)
+  Fiji [0]: 5 servers, 1 cities (Suva)
+  Bhutan [0]: 2 servers, 1 cities (Thimphu)
+  Tadjikistan [0]: 0 servers, 0 cities ()
+  Turkmenistan [0]: 0 servers, 0 cities ()
+  American Samoa [0]: 1 servers, 1 cities (Pago Pago)
+  Papua New Guinea [0]: 2 servers, 1 cities (Port Moresby)
+  Northern Mariana Islands [0]: 0 servers, 0 cities ()
+  East Timor [0]: 0 servers, 0 cities ()
+  Samoa [0]: 1 servers, 1 cities (Apia)
+  Micronesia [0]: 0 servers, 0 cities ()
+  Vanuatu [0]: 2 servers, 1 cities (Port Vila)
+  Palau [0]: 0 servers, 0 cities ()
+  Marshall Islands [0]: 1 servers, 1 cities (Majuro)
+  Tonga [0]: 0 servers, 0 cities ()
+  Solomon Islands [0]: 1 servers, 1 cities (Honiara)
+  Cook Islands [0]: 1 servers, 1 cities (Rarotonga)
+  Wallis And Futana [0]: 0 servers, 0 cities ()
+  Norfolk Island [0]: 0 servers, 0 cities ()
+  Nauru [0]: 0 servers, 0 cities ()
+  Kiribati [0]: 1 servers, 1 cities (Bairiki)
+  Christmas Island [0]: 0 servers, 0 cities ()
+  Niue [0]: 0 servers, 0 cities ()
+  Tokelau [0]: 0 servers, 0 cities ()
+  North Korea [0]: 0 servers, 0 cities ()
+  Tuvalu [0]: 0 servers, 0 cities ()
 

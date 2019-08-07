@@ -57,7 +57,8 @@ namespace NetBenchmarkLab
             new KeyValuePair<string, string>("FJ", "Fiji"),
             new KeyValuePair<string, string>("CL", "Chile"),
             
-            new KeyValuePair<string, string>("Republic of Maldives", "Maldives"), 
+            new KeyValuePair<string, string>("Republic of Maldives", "Maldives"),
+            new KeyValuePair<string, string>("Phillipines", "Philippines"), 
             
             
             

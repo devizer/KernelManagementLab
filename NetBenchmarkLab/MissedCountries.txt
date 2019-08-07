@@ -10,8 +10,8 @@ Id   |Name                 |!|Country                                   |Sponsor
 14476|Belgrade             | |Serbia                                    |Telenor d.o.o.                       |speedtest.telenor.rs:8080                |620062.4  |0
 1301 |Belgrade             | |Serbia                                    |Serbia BroadBand                     |speedtest.sbb.rs:8080                    |620062.4  |0
 4792 |Belgrade             | |Serbia                                    |Vip mobile doo                       |speedtest.vipmobile.rs:8080              |620062.4  |0
-7088 |Belgrade             | |Serbia                                    |Radijus Vektor                       |speedtest.vektor.net:8080                |620062.4  |0
 8262 |Belgrade             | |Serbia                                    |BeotelNet                            |speedtest.beotel.net:8080                |620062.4  |0
+7088 |Belgrade             | |Serbia                                    |Radijus Vektor                       |speedtest.vektor.net:8080                |620062.4  |0
 20742|Beograd              | |Serbia                                    |Oriontelekom                         |speedtest2.oriontelekom.rs:8080          |620062.4  |0
 23473|Belgrade             | |Serbia                                    |Orion Tim                            |speedtest.orion.rs:8080                  |620062.4  |0
 14833|Arandjelovac         | |Serbia                                    |Optel Telekom                        |speedtest.optel.rs:8080                  |669894.4  |0
@@ -22,8 +22,8 @@ Id   |Name                 |!|Country                                   |Sponsor
 23025|Aleksinac            | |Serbia                                    |NetNet Telekom d.o.o                 |st4.netnet.rs:8080                       |723020.6  |0
 12043|Nis                  | |Serbia                                    |NetNet Telekom d.o.o.                |st1.netnet.rs:8080                       |746009.7  |0
 20191|Nis                  | |Serbia                                    |mts                                  |speedtest2.mts.rs:8080                   |746009.7  |0
-1281 |Nis                  | |Serbia                                    |Exe Net d.o.o.                       |92.60.224.24:8080                        |746009.7  |0
 13378|Nis                  | |Serbia                                    |NiNet Company                        |st.ninet.rs:8080                         |746009.7  |0
+1281 |Nis                  | |Serbia                                    |Exe Net d.o.o.                       |92.60.224.24:8080                        |746009.7  |0
 4928 |Nis                  | |Serbia                                    |University of Nis                    |speedtest.junis.ni.ac.rs:8080            |746009.7  |0
 22960|Pecenjevce           | |Serbia                                    |NetNet Telekom d.o.o                 |st3.netnet.rs:8080                       |768493.3  |0
 17128|Leskovac             | |Serbia                                    |Exe Net d.o.o.                       |lespeedtest.exe-net.net:8080             |778412.7  |0
@@ -104,19 +104,17 @@ Id   |Name                 |!|Country                                   |Sponsor
 16749|Ho Chi Minh          | |VN                                        |Vietnamobile                         |vnmhcmspt1.vietnamobile.com.vn:8080      |8577352.0 |0
 13852|Caracas              | |Venezuela, Bolivarian Republic of         |Netuno, C.A.                         |speed-ookla.net-uno.net:8080             |9191228.4 |0
 11618|Valencia             | |Venezuela, Bolivarian Republic of         |Chircalnet WiFi                      |speedtest.chircalnetwifi.com.ve:8080     |9296777.9 |0
-18416|Batangas City        | |Phillipines                               |IntegraNet                           |speedtest.integranet.ph:8080             |9344916.7 |0
-16806|Cagayan de Oro City  | |Phillipines                               |Smart Communications Inc.            |cagayandeoro.smart.com.ph:8080           |10046929.3|0
 19008|Koror                | |Republic of Palau                         |PNCC                                 |speedtest.pnccpalau.com:8080             |10821602.0|0
 19143|Koror                | |Republic of Palau                         |Palau Telecoms                       |speedtest.telco.pw:8080                  |10821602.0|0
 17123|Ciudad Del Este      | |PY                                        |NEO TELECOM                          |speedtest.neo.com.py:8080                |11395586.8|0
 17822|Filadelfia           | |PY                                        |FilaNET                              |speedtest.fila.net.py:8080               |11489410.7|0
-18210|Chisinau             | |MD                                        |ARAX I.S.P.                          |speedtest.arax.md:8080                   |479843.4  |0
 17971|Vrhnika              | |SI                                        |SGH HostMachine                      |st-new.sgh.si:8080                       |843485.9  |0
 12446|Skopje               | |Macedonia, the former Yugoslav Republic of|Akton                                |speedtest.akton.com.mk:8080              |895462.0  |0
 11424|Nizhny Novgorod      | |Российская Федерация                      |TTK                                  |speed.ttknn.net:8080                     |1510239.3 |0
 5833 |Newport              | |Wales                                     |Hub Network Services Ltd             |quartz.hns.net:8080                      |1903517.7 |0
 10686|Saint Peter Port     | |Guernsey                                  |Sure Telecom                         |speedtest3.sure.com:8080                 |1905591.8 |0
 17084|Zalka                | |LB                                        |Mnets                                |speed.mnets.net:8080                     |2010218.7 |0
+13296|Damascus             | |Syrian Arab Republic                      |Takamol ISP                          |speedtest.takamol.sy:8080                |2077536.1 |0
 18025|Zawiya               | |LY                                        |ABRAJ LIBYA (LTC)                    |speedtest4.ltc.net.ly:8080               |2116825.3 |0
 17022|Tel Aviv             | |IL                                        |Partner Communications               |speedtest2.partner.co.il:8080            |2169835.1 |0
 1144 |Derry                | |Northern Ireland                          |Bluebox Broadband                    |78.155.251.131:8080                      |2182443.6 |0
@@ -133,6 +131,7 @@ Id   |Name                 |!|Country                                   |Sponsor
 17139|Lomé                 | |TG                                        |Canalbox Togo                        |speedtest.lom.tg.canalbox.net:8080       |5312960.5 |0
 6660 |Bissau               | |Guinea-Bissau                             |MTN Bissau                           |154.73.60.90:8080                        |5560385.9 |0
 6133 |Abidjan              | |Ivory Coast                               |YOOMEE COTE D'IVOIRE                 |okla.yoomee.ci:8080                      |5607147.9 |0
+15448|Abidjan              | |Côte d'Ivoire                             |MTN COTE D'IVOIRE                    |speedtest.mtnbusiness.ci:8080            |5607147.9 |0
 24472|Saint-Pierre         | |Saint Pierre and Miquelon                 |SPM Telecom                          |speedtest-sp-02.cheznoo.net:8080         |5653679.3 |0
 15888|Arusha               | |Tanzania, United Republic of              |Arusha Art Ltd                       |speedtest.cybernet.co.tz:8080            |6045328.1 |0
 17415|Kinshasa             | |Democratic Republic of the Congo          |ORANGE RDC                           |kin.speedtest.orange.cd:8080             |6086425.7 |0

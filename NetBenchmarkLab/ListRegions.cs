@@ -32,7 +32,11 @@ namespace NetBenchmarkLab
                     // var foundServers = servers.Where(s => s.GetCountry() == region.Name);
                     List<Server> foundServers = FindUsaServers(area,region,usaServers);
                     if (foundServers == null || foundServers.Count <= 0) foundServers = serversByCountry[region.Name].ToList();
-                    var reportRow = $"  {region.Name} [{region.Fraction:f0}]: {foundServers.Count}";
+                    // var cities = foundServers.Select(x => x.Name).Distinct(StringComparer.InvariantCultureIgnoreCase).OrderBy(x => x).ToArray();
+                    var cities = foundServers.Select(x => x.Name)
+                        .ToLookup(x => x, x => x, StringComparer.CurrentCultureIgnoreCase).OrderByDescending(x => x.Count()).Select(x => x.Key).ToArray();
+                    
+                    var reportRow = $"  {region.Name} [{region.Fraction:f0}]: {foundServers.Count} servers, {cities.Length} cities ({string.Join("; ", cities)})";
                     serversByRegions.AppendLine(reportRow);
                 }
 
@@ -76,4 +80,18 @@ namespace NetBenchmarkLab
             }
         }
     }
+
+/*    class StringEqualityComparer : IEqualityComparer<string>
+    {
+        StringComparer a = StringComparer.InvariantCultureIgnoreCase
+        public bool Equals(string x, string y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetHashCode(string obj)
+        {
+            throw new NotImplementedException();
+        }
+    }*/
 }

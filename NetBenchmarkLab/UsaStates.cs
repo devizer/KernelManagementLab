@@ -23,11 +23,11 @@ Illinois:IL
 Indiana:IN
 Iowa:IA
 Kansas:KS
-Kentucky[E]:KY
+Kentucky:KY
 Louisiana:LA
 Maine:ME
 Maryland:MD
-Massachusetts[E]:MA
+Massachusetts:MA
 Michigan:MI
 Minnesota:MN
 Mississippi:MS
