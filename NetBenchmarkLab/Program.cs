@@ -7,6 +7,8 @@ namespace NetBenchmarkLab
         static void Main(string[] args)
         {
             ListServers.Run();
+            
+            ListRegions.Run();
         }
     }
 }

@@ -18,9 +18,15 @@ namespace NetBenchmarkLab
             new KeyValuePair<string, string>("SK", "Slovakia"), 
             new KeyValuePair<string, string>("Russia", "Russian Federation"),
             new KeyValuePair<string, string>("RU", "Russian Federation"),
+            new KeyValuePair<string, string>("Ekaterinburg", "Russian Federation"), 
+                
             new KeyValuePair<string, string>("CZ", "Czech Republic"),
             new KeyValuePair<string, string>("DE", "Germany"),
             new KeyValuePair<string, string>("Great Britain", "United Kingdom"),
+            new KeyValuePair<string, string>("GB", "United Kingdom"),
+            new KeyValuePair<string, string>("AU", "Australia"),
+            new KeyValuePair<string, string>("FR", "France"),
+            new KeyValuePair<string, string>("CA", "Canada"),
             new KeyValuePair<string, string>("Brasil", "Brazil"),
             new KeyValuePair<string, string>("BR", "Brazil"),
             new KeyValuePair<string, string>("US", "United States"),
@@ -49,7 +55,9 @@ namespace NetBenchmarkLab
             new KeyValuePair<string, string>("Republic of Singapore", "Singapore"),
             
             new KeyValuePair<string, string>("FJ", "Fiji"),
-            new KeyValuePair<string, string>("CL", "Chile"), 
+            new KeyValuePair<string, string>("CL", "Chile"),
+            
+            new KeyValuePair<string, string>("Republic of Maldives", "Maldives"), 
             
             
             

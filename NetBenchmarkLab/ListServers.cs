@@ -16,12 +16,10 @@ namespace NetBenchmarkLab
             var regionsByTraffic = RegionsByTrafficPopularity.RegionsByTrafficSource.Model;
             
             SpeedTestClient _speedTestClientClient = new SpeedTestClient();
-
             var settings = _speedTestClientClient.GetSettings();
-
             var ignoredIds = settings.ServerConfig.IgnoreIds.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
-
             Server[] servers = settings.Servers.Where(s => !ignoredIds.Contains(s.Id.ToString(CultureInfo.InvariantCulture))).ToArray();
+            
             var columns = new[] {
                 "Id", "Name", "!", "Country", "Sponsor", "Host", "Distance", "Latency"
             };
