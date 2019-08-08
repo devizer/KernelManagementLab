@@ -458,7 +458,7 @@ function DiskBenchmarkDialog(props) {
     let formatBytes = Helper.Common.formatBytes; 
     let renderDiskSize = () => selectedDisk.freeSpace ? `${formatBytes(selectedDisk.freeSpace)} of ${formatBytes(selectedDisk.totalSize)} free` : `${formatBytes(selectedDisk.totalSize)}`;
     const renderDialogHeader = () =>
-        selectedDisk == null ? <React.Fragment>Benchmark a local or network disk</React.Fragment> : (
+        selectedDisk == null ? <span>Benchmark a local or network disk</span> : (
             <span>
                 Benchmark <b className="nowrap">{selectedDisk.mountEntry.mountPath}</b>{' '}
                 ({selectedDisk.mountEntry.fileSystem})
@@ -496,7 +496,9 @@ function DiskBenchmarkDialog(props) {
             
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"sm"}>
                 <DialogTitle id="form-dialog-title" style={{textAlign:"center"}}>
-                    {renderDialogHeader()}
+                    <div style={{minHeight:50}} className="Aligner">
+                        {renderDialogHeader()}
+                    </div>
                 </DialogTitle>
                 <DialogContent style={{textAlign: "center"}} >
                     {/*<Button variant="contained" ref={errorElement}>WTH</Button>*/}

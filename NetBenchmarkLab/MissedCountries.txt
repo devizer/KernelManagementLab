@@ -10,9 +10,8 @@ Id   |Name                 |!|Country                                   |Sponsor
 14476|Belgrade             | |Serbia                                    |Telenor d.o.o.                       |speedtest.telenor.rs:8080                |620062.4  |0
 1301 |Belgrade             | |Serbia                                    |Serbia BroadBand                     |speedtest.sbb.rs:8080                    |620062.4  |0
 4792 |Belgrade             | |Serbia                                    |Vip mobile doo                       |speedtest.vipmobile.rs:8080              |620062.4  |0
-8262 |Belgrade             | |Serbia                                    |BeotelNet                            |speedtest.beotel.net:8080                |620062.4  |0
 7088 |Belgrade             | |Serbia                                    |Radijus Vektor                       |speedtest.vektor.net:8080                |620062.4  |0
-20742|Beograd              | |Serbia                                    |Oriontelekom                         |speedtest2.oriontelekom.rs:8080          |620062.4  |0
+8262 |Belgrade             | |Serbia                                    |BeotelNet                            |speedtest.beotel.net:8080                |620062.4  |0
 23473|Belgrade             | |Serbia                                    |Orion Tim                            |speedtest.orion.rs:8080                  |620062.4  |0
 14833|Arandjelovac         | |Serbia                                    |Optel Telekom                        |speedtest.optel.rs:8080                  |669894.4  |0
 8162 |Cuprija              | |Serbia                                    |InterCom Computers                   |194.106.166.120:8080                     |687963.1  |0
@@ -45,11 +44,6 @@ Id   |Name                 |!|Country                                   |Sponsor
 3212 |Dushanbe             | |Tajikistan                                |Babilon-M                            |speedtest.babilon-m.tj:8080              |3722413.3 |0
 24269|Dushanbe             | |Tajikistan                                |Babilon-T ISP                        |speedtest.cloud.babilon-t.com:8080       |3722413.3 |0
 7575 |Dushanbe             | |Tajikistan                                |Eastera Co. Ltd.                     |speedtest.eastera.tj:8080                |3722413.3 |0
-7633 |Road Town            | |Virgin Islands                            |CCTBVI                               |speedtest.cctwireless.com:8080           |8364557.6 |0
-2888 |Saint Thomas         | |Virgin Islands                            |Viya                                 |stt-cha-speedtest.vipowernet.net:8080    |8393973.4 |0
-4470 |Saint Croix          | |Virgin Islands                            |Viya                                 |stx-fre-speedtest.vipowernet.net:8080    |8430671.1 |0
-2885 |Saint Croix          | |Virgin Islands                            |Broadband VI                         |speedteststx.broadband.vi:8080           |8430671.1 |0
-6762 |Saint Croix          | |Virgin Islands                            |VI Next Generation Network           |speedtest.vingn.com:8080                 |8430671.1 |0
 17644|Aguascalientes       | |MX                                        |NUEVARED                             |sp.nuevared.mx:8080                      |10460136.2|0
 17105|Tultitlan            | |MX                                        |Triara                               |speedtest2-tultitlan.triara.com:8080     |10498725.7|0
 17108|Ciudad Nezahualcoyotl| |MX                                        |Triara                               |speedtest2-nezahualcoyotl.triara.com:8080|10511478.1|0
@@ -57,12 +51,16 @@ Id   |Name                 |!|Country                                   |Sponsor
 17107|Santa Fe             | |MX                                        |Triara                               |speedtest2-santafe.triara.com:8080       |10526244.5|0
 2910 |Prishtina            | |Kosovo                                    |IPKO Telecommunications              |80.80.160.222:8080                       |828227.9  |0
 19187|Prishtina            | |Kosovo                                    |TelKos L.L.C                         |speedtest.telkos.net:8080                |828227.9  |0
-2836 |Prishtina            | |Kosovo                                    |Kujtesa Net                          |sr1.kujtesa.com:8080                     |828227.9  |0
 3392 |Prishtina            | |Kosovo                                    |PTK                                  |speedtest1.telekomi.net:8080             |828227.9  |0
+2836 |Prishtina            | |Kosovo                                    |Kujtesa Net                          |sr1.kujtesa.com:8080                     |828227.9  |0
 5373 |Podgorica            | |Montenegro                                |Crnogorski Telekom AD                |speedtest.t-com.me:8080                  |901459.3  |0
 8819 |Podgorica            | |Montenegro                                |m:tel doo                            |62.4.62.62:8080                          |901459.3  |0
 24464|Podgorica            | |Montenegro                                |Telemach d.o.o.                      |speedtest.telemach.me:8080               |901459.3  |0
 16250|Podgorica            | |Montenegro                                |Telenor Montenegro                   |ookla.telenor.me:8080                    |901459.3  |0
+2888 |Saint Thomas         | |Virgin Islands                            |Viya                                 |stt-cha-speedtest.vipowernet.net:8080    |8393973.4 |0
+4470 |Saint Croix          | |Virgin Islands                            |Viya                                 |stx-fre-speedtest.vipowernet.net:8080    |8430671.1 |0
+2885 |Saint Croix          | |Virgin Islands                            |Broadband VI                         |speedteststx.broadband.vi:8080           |8430671.1 |0
+6762 |Saint Croix          | |Virgin Islands                            |VI Next Generation Network           |speedtest.vingn.com:8080                 |8430671.1 |0
 17502|Dobrich              | |BG                                        |Dobrich Telecom Provider             |speedtest.dtp-bg.bg:8080                 |756138.0  |0
 17988|Sofia                | |BG                                        |Nilsat Ltd                           |speedtestsofya.nilsat.net:8080           |801577.6  |0
 17787|Sofia                | |BG                                        |SKYNET BG                            |speed.skynet.bg:8080                     |801577.6  |0
@@ -72,15 +70,15 @@ Id   |Name                 |!|Country                                   |Sponsor
 462  |Tórshavn             | |Faroe Islands                             |Faroese Telecom                      |speedtest1.internet.fo:8080              |2314602.6 |0
 22203|Tórshavn             | |Faroe Islands                             |Hey                                  |speedtest.hey.fo:8080                    |2314602.6 |0
 25645|Tórshavn             | |Faroe Islands                             |Føroya Tele                          |speedtest.lte.fo:8080                    |2314602.6 |0
-13370|Ouagadougou          | |Burkina Faso                              |Virtual Technologies and Solutions   |speedtest.vts.bf:8080                    |4816052.7 |0
-22850|Ouagadougou          | |Burkina Faso                              |Orange Burkina                       |speedtest.orange.bf:8080                 |4816052.7 |0
-14304|Dakola               | |Burkina Faso                              |Virtual Technologies and Solutions SA|speedtest3.vts.bf:8080                   |4900394.6 |0
 17134|Phitsanulok          | |TH                                        |AIS                                  |speedtest-plk1.ais-idc.net:8080          |7613003.2 |0
 17690|Ayutthaya            | |TH                                        |AIS                                  |speedtest-aya1.ais-idc.net:8080          |7838770.9 |0
 17111|Nakhon Ratchasima    | |TH                                        |AIS                                  |speedtest-nma1.ais-idc.net:8080          |7897051.0 |0
 16810|Banda Aceh           | |ID                                        |Universitas Syiah Kuala              |speedtest.unsyiah.ac.id:8080             |8208339.2 |0
 17516|Jakarta              | |ID                                        |PT Des Teknologi Informasi           |speedtest.desnet.id:8080                 |10027553.0|0
 17534|Jakarta              | |ID                                        |INETKU                               |speedtest.inetku.net.id:8080             |10027553.0|0
+17123|Ciudad Del Este      | |PY                                        |NEO TELECOM                          |speedtest.neo.com.py:8080                |11395586.8|0
+17969|Loma Plata           | |PY                                        |ChacoNET                             |speedtest.chaco.net.py:8080              |11477169.2|0
+17822|Filadelfia           | |PY                                        |FilaNET                              |speedtest.fila.net.py:8080               |11489410.7|0
 5016 |Dili                 | |Timor-Leste                               |Telin Timor Leste                    |speedtest1.telkomcel.tl:8080             |11569427.7|0
 11851|Dili                 | |Timor-Leste                               |Telemor                              |speedtest.telemor.tl:8080                |11569427.7|0
 14310|Dili                 | |Timor-Leste                               |Timor Telecom                        |myspeed.timortelecom.tl:8080             |11569543.5|0
@@ -96,6 +94,8 @@ Id   |Name                 |!|Country                                   |Sponsor
 17591|Tehran               | |IR                                        |MegaNet.IR                           |st4.ookla.meganetwork.ir:8080            |2712081.4 |0
 16672|Semey                | |KZ                                        |Altel JSC                            |speedtest19.altel.kz:8080                |3914034.4 |0
 16653|Almaty               | |KZ                                        |CBD AO Kazakhtelecom                 |online.kz:8080                           |4027413.2 |0
+13370|Ouagadougou          | |Burkina Faso                              |Virtual Technologies and Solutions   |speedtest.vts.bf:8080                    |4816052.7 |0
+14304|Dakola               | |Burkina Faso                              |Virtual Technologies and Solutions SA|speedtest3.vts.bf:8080                   |4900394.6 |0
 17654|Accra                | |GH                                        |Dolphin Telecom                      |speedtest.dolphintelecom.net:8080        |5426913.6 |0
 17770|Accra                | |GH                                        |ComSys Ghana Limited                 |sp1.comsysghana.net:8080                 |5426913.6 |0
 24214|São Tomé             | |São Tomé and Príncipe                     |Unitel ST                            |speedtest.unitel.st:8080                 |5750897.1 |0
@@ -106,10 +106,10 @@ Id   |Name                 |!|Country                                   |Sponsor
 11618|Valencia             | |Venezuela, Bolivarian Republic of         |Chircalnet WiFi                      |speedtest.chircalnetwifi.com.ve:8080     |9296777.9 |0
 19008|Koror                | |Republic of Palau                         |PNCC                                 |speedtest.pnccpalau.com:8080             |10821602.0|0
 19143|Koror                | |Republic of Palau                         |Palau Telecoms                       |speedtest.telco.pw:8080                  |10821602.0|0
-17123|Ciudad Del Este      | |PY                                        |NEO TELECOM                          |speedtest.neo.com.py:8080                |11395586.8|0
-17822|Filadelfia           | |PY                                        |FilaNET                              |speedtest.fila.net.py:8080               |11489410.7|0
+18210|Chisinau             | |MD                                        |ARAX I.S.P.                          |speedtest.arax.md:8080                   |479843.4  |0
 17971|Vrhnika              | |SI                                        |SGH HostMachine                      |st-new.sgh.si:8080                       |843485.9  |0
 12446|Skopje               | |Macedonia, the former Yugoslav Republic of|Akton                                |speedtest.akton.com.mk:8080              |895462.0  |0
+18136|Bertrange            | |LU                                        |TANGO SA                             |speedtest.tango.lu:8080                  |1290464.5 |0
 11424|Nizhny Novgorod      | |Российская Федерация                      |TTK                                  |speed.ttknn.net:8080                     |1510239.3 |0
 5833 |Newport              | |Wales                                     |Hub Network Services Ltd             |quartz.hns.net:8080                      |1903517.7 |0
 10686|Saint Peter Port     | |Guernsey                                  |Sure Telecom                         |speedtest3.sure.com:8080                 |1905591.8 |0

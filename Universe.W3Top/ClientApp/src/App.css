@@ -92,3 +92,13 @@ table.benchmark-progress td.step-status  {
     color: #ff0f17;
     
 }
+
+.Aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Aligner-item {
+    max-width: 99%;
+}
