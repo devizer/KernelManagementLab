@@ -1,10 +1,10 @@
 *) By Suggestions
 *) Drill down:
+     USA -> State -> City -> Server
+     America
      World
      Europe
      Asia
-     America
-     USA
      
    Each Display Server List
 *) Region With Largest Traffic

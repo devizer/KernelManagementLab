@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using KernelManagementJam.DebugUtils;
 using RegionsByTrafficPopularity;
 using SpeedTest;
 using SpeedTest.Models;
@@ -44,14 +45,13 @@ namespace NetBenchmarkLab
             }
             
             Console.WriteLine(serversByRegions);
-            File.WriteAllText("Servers-by-Regions.txt", serversByRegions.ToString());
+            DebugDumper.DumpText(serversByRegions.ToString(), "Servers-by-Regions.txt");
             
         }
 
         private static readonly Dictionary<string, string> StateCodes = UsaStates.StateAbbreviations;
         static List<Server> FindUsaServers(RegionsByTrafficModel.Area area, RegionsByTrafficModel.RegionInfo region, Server[] usaServers)
         {
-            
             if (area.AreaName == "America")
             {
                 List<Server> ret = new List<Server>();
@@ -81,17 +81,5 @@ namespace NetBenchmarkLab
         }
     }
 
-/*    class StringEqualityComparer : IEqualityComparer<string>
-    {
-        StringComparer a = StringComparer.InvariantCultureIgnoreCase
-        public bool Equals(string x, string y)
-        {
-            throw new NotImplementedException();
-        }
 
-        public int GetHashCode(string obj)
-        {
-            throw new NotImplementedException();
-        }
-    }*/
 }

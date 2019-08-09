@@ -46,12 +46,14 @@ namespace NetBenchmarkLab
             
             new KeyValuePair<string, string>("CN", "China"),
             new KeyValuePair<string, string>("Viet Nam", "Vietnam"),
+            new KeyValuePair<string, string>("VN", "Vietnam"), 
             new KeyValuePair<string, string>("Bosnia and Herzegovina", "Bosnia/Herzegovina"), 
             new KeyValuePair<string, string>("ES", "Spain"), 
             new KeyValuePair<string, string>("IT", "Italy"),
             new KeyValuePair<string, string>("AR", "Argentina"),
             
             new KeyValuePair<string, string>("Iran, Islamic Republic of", "Iran"),
+            new KeyValuePair<string, string>("IR", "Iran"), 
             new KeyValuePair<string, string>("Republic of Singapore", "Singapore"),
             
             new KeyValuePair<string, string>("FJ", "Fiji"),

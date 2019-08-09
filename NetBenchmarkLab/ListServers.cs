@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using KernelManagementJam;
+using KernelManagementJam.DebugUtils;
 using SpeedTest;
 using SpeedTest.Models;
 
@@ -53,7 +54,7 @@ namespace NetBenchmarkLab
             }
             
             Console.WriteLine($"REPORT{Environment.NewLine}{report}");
-            File.WriteAllText("Servers.txt", report.ToString());
+            DebugDumper.DumpText(report.ToString(), "Servers.txt");
             
             ConsoleTable reportMissedCountries = new ConsoleTable(columns);
             foreach (var country in missedCountries.Keys.OrderByDescending(x => missedCountries[x].Count))
@@ -64,7 +65,9 @@ namespace NetBenchmarkLab
                 }
             }
 
-            File.WriteAllText("MissedCountries.txt", reportMissedCountries.ToString());
+            DebugDumper.DumpText(reportMissedCountries.ToString(), "MissedCountries.txt");
+            // File.WriteAllText("Servers.json");
+            DebugDumper.Dump(servers, "Servers.json");
         }
     }
 }

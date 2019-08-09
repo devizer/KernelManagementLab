@@ -28,4 +28,6 @@ namespace RegionsByTrafficPopularity
             Areas = new List<Area>();
         }
     }
+    
+    
 }
