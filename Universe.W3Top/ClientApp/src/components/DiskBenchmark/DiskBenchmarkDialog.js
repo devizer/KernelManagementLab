@@ -69,8 +69,8 @@ const styles = {
         paddingTop: 1,
     },
     wizardButton: {
-        marginLeft: 0,
-        marginRight: 24,
+        marginLeft: 12,
+        marginRight: 12,
         marginBottom: 8,
     },
     wizardReset: {

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using KernelManagementJam.DebugUtils;
+using NetBenchmarkLab.NetBenchmarkModel;
 using RegionsByTrafficPopularity;
 using SpeedTest;
 using SpeedTest.Models;
@@ -79,7 +79,31 @@ namespace NetBenchmarkLab
                 return null;
             }
         }
+
+        static bool TryUsaCity(ServerModel server, out string city, out string stateName, out string stateCode)
+        {
+            city = null;
+            stateName = null;
+            stateCode = null;
+            bool ret = false;
+            if (server.Country == "United States")
+            {
+                var arr = server.City.Split(',');
+                if (arr.Length == 2)
+                {
+                    stateCode = arr[1].Trim();
+                    if (StateCodes.TryGetValue(stateCode, out stateName))
+                    {
+                        ret = true;
+                        city = arr[0].Trim();
+                    }
+                }
+            }
+
+            return ret;
+        }
     }
+    
 
 
 }

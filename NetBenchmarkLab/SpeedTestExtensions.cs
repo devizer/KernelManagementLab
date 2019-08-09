@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NetBenchmarkLab.NetBenchmarkModel;
 using SpeedTest.Models;
 
 namespace NetBenchmarkLab
@@ -61,9 +62,6 @@ namespace NetBenchmarkLab
             
             new KeyValuePair<string, string>("Republic of Maldives", "Maldives"),
             new KeyValuePair<string, string>("Phillipines", "Philippines"), 
-            
-            
-            
         };
     
         public static string GetCountry(this Server server)
@@ -72,6 +70,23 @@ namespace NetBenchmarkLab
                 x.Key.Equals(server.Country, StringComparison.InvariantCultureIgnoreCase));
 
             return string.IsNullOrEmpty(found.Value) ? server.Country : found.Value;
+        }
+
+        public static ServerModel ToServerModel(this Server server)
+        {
+            return new ServerModel
+            {
+                Id = server.Id,
+                City = server.Name,
+                Country = server.GetCountry(),
+                Distance = server.Distance,
+                Host = server.Host,
+                Url = server.Url,
+                Latency = server.Latency,
+                Latitude = server.Latitude,
+                Longitude = server.Longitude,
+                Sponsor = server.Sponsor,
+            };
         }
     }
 }
