@@ -72,6 +72,10 @@ namespace Universe.Dashboard.DAL
                 e.Property(x => x.MountPath).HasColumnType(types.String);
                 e.Property(x => x.Args).HasColumnType(types.Json);
                 e.Property(x => x.Report).HasColumnType(types.Json);
+                
+                e.Property(x => x.Environment)
+                    .HasColumnType(types.Json)
+                    .HasConversion(JsonDbConverter.Create<DiskbenchmarkEnvironment>());
             }
 
             // History Copy Entity
@@ -86,6 +90,7 @@ namespace Universe.Dashboard.DAL
                 var e = modelBuilder.Entity<DbInfoEntity>();
                 e.Property(x => x.Version).HasColumnType(types.String);
             }
+
         }
     }
 }

@@ -32,6 +32,14 @@ namespace Universe.W3Top.Controllers
             return MountsDataSource.Mounts.FilterForHuman().OrderBy(x => x.MountEntry.MountPath).ToList();
         }
 
+        private DriveDetails FindDriveDetails(string mountPath)
+        {
+            return MountsDataSource.Mounts
+                .Where(x => x.MountEntry.MountPath.StartsWith(mountPath))
+                .OrderBy(x => x.MountEntry.MountPath.Length)
+                .FirstOrDefault();
+        }
+
         [HttpPost, Route("start-disk-benchmark")]
         public BenchmarkProgressResponse StartBenchmark(StartBenchmarkArgs options)
         {
@@ -56,7 +64,9 @@ namespace Universe.W3Top.Controllers
                     : (IDiskBenchmark) new ReadonlyDiskBenchmark(Parameters, MountsDataSource.Mounts);
             
             Guid token = Guid.NewGuid();
-            Queue.Enqueue(token, diskBenchmark);
+            var fileSystem = FindDriveDetails(Parameters.WorkFolder)?.MountEntry.FileSystem;
+            var diskbenchmarkEnvironment = new DiskbenchmarkEnvironment() { FileSystems = fileSystem};
+            Queue.Enqueue(token, diskBenchmark, diskbenchmarkEnvironment);
             return new BenchmarkProgressResponse()
             {
                 Token = token,
@@ -113,7 +123,6 @@ namespace Universe.W3Top.Controllers
         {
             List<DiskBenchmarkEntity> entities = this.DbAccess.GetHistory();
             return entities.Select(x => x.ToHistoryItem()).ToList();
-
         }
 
 

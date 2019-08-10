@@ -120,6 +120,7 @@ export class DiskBenchmarkHistory extends React.Component {
             return ret === null ? "" : `${ret}/s`
         };
 
+        let cellMountPath = row => (<span><span style={{fontWeight:'bold'}}>{row.original.mountPath}{row.original.fileSystem ? <span style={{opacity:0.55,fontWeight:'normal'}}> ({row.original.fileSystem})</span> : ""}</span></span>);
         let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
         let speedCell = row => <span>{row.value ? `${Helper.Common.formatBytes(row.value, 2)}/s` : ""}</span>;
         let rightAlign = {textAlign: "right" };
@@ -178,7 +179,8 @@ export class DiskBenchmarkHistory extends React.Component {
                                         Header: "Mount Path",
                                         accessor: "mountPath",
                                         minWidth: 135,
-                                        style: {fontWeight: "bold"},
+                                        Cell: cellMountPath,
+                                        // style: ,
                                         aggregate: () => null,
                                     },
                                     {

@@ -18,6 +18,11 @@ namespace Universe.Dashboard.DAL
         public ProgressInfo Report { get; set; }
         
         public string ErrorInfo { get; set; }
+        public DiskbenchmarkEnvironment Environment { get; set; }
     }
 
+    public class DiskbenchmarkEnvironment
+    {
+        public string FileSystems { get; set; }
+    }
 }

@@ -75,6 +75,7 @@ namespace Universe.Dashboard.DAL
         public Guid Token { get; set; } // It is used for tests only
         public DateTime CreatedAt { get; set; }
         public string MountPath { get; set; }
+        public string FileSystem { get; set; }
         public long WorkingSetSize { get; set; }
         public string O_Direct { get; set; } // "" (disabled) | "True" (present) | "False" (absent)
         public double? Allocate { get; set; }
@@ -101,6 +102,7 @@ namespace Universe.Dashboard.DAL
                 Token = benchmark.Token,
                 CreatedAt = benchmark.CreatedAt,
                 MountPath = benchmark.Args.WorkFolder,
+                FileSystem = benchmark.Environment?.FileSystems,
                 WorkingSetSize = benchmark.Args.WorkingSetSize,
                 O_Direct = Convert.ToString(GetStep(ProgressStepHistoryColumn.CheckODirect)?.Value),
                 Allocate = GetSpeed(ProgressStepHistoryColumn.Allocate),

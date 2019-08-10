@@ -16,6 +16,7 @@ namespace Universe.Dashboard.Agent
         {
             public Guid Token;
             public IDiskBenchmark Benchmark;
+            public DiskbenchmarkEnvironment Environment;
         }
 
         public class EnlistedDiskBenchmark
@@ -24,6 +25,7 @@ namespace Universe.Dashboard.Agent
             public int Index;
             public Guid Token;
             public IDiskBenchmark Benchmark;
+            public DiskbenchmarkEnvironment Environment;
         }
         private readonly Func<DashboardContext> GetDbContext;
         private List<DiskBenchmarkWithToken> Queue = new List<DiskBenchmarkWithToken>();
@@ -38,9 +40,9 @@ namespace Universe.Dashboard.Agent
             t.Start();
         }
 
-        public void Enqueue(Guid token, IDiskBenchmark benchmark)
+        public void Enqueue(Guid token, IDiskBenchmark benchmark, DiskbenchmarkEnvironment environment)
         {
-            var item = new DiskBenchmarkWithToken() {Token = token, Benchmark = benchmark};
+            var item = new DiskBenchmarkWithToken() {Token = token, Benchmark = benchmark, Environment = environment};
             lock(SyncQueue) Queue.Add(item);
             Waiter.Set();
         }
@@ -82,6 +84,7 @@ namespace Universe.Dashboard.Agent
                     Token = token,
                     Index = index,
                     Benchmark = Queue[index].Benchmark,
+                    Environment = Queue[index].Environment,
                 };
             }
         }
@@ -129,6 +132,7 @@ namespace Universe.Dashboard.Agent
                                 CreatedAt = DateTime.UtcNow,
                                 MountPath = benchmark.Parameters.WorkFolder,
                                 ErrorInfo = benchmarkException?.GetExceptionDigest(),
+                                Environment = nextJob.Environment,
                             };
 
                             using (var db = GetDbContext())
