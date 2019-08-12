@@ -5,23 +5,10 @@ import MomentFormat from 'moment';
 import {faCheck, faCheckDouble} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import MenuItem from '@material-ui/core/MenuItem';
-
-import BenchmarkProgressTable from "./BenchmarkProgressTable";
-import DiskAvatarContent from "./DiskAvatarContent"
-
-import * as Enumerable from "linq-es2015";
-import classNames from "classnames";
-import * as queryString from 'query-string';
-import * as DataSourceActions from "../../stores/DataSourceActions";
-import { BenchmarkStepStatusIcon } from "./BenchmarkStepStatusIcon"
 import * as Helper from "../../Helper";
 
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-
-// Done: add threads count for random access
-// Done: Icon for O_DIRECT
 
 const renderODirectIcon = o_Direct => {
     if (o_Direct === "True") return <FontAwesomeIcon style={{color:"#555"}} icon={faCheckDouble} />;
