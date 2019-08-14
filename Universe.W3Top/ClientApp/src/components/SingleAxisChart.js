@@ -4,7 +4,7 @@ import * as Helper from "../Helper";
 
 //import c3 from 'c3';
 
-if (window.SVGPathElement === undefined) { var JSDOM = require('jsdom').JSDOM; global.window = new JSDOM().window; window.SVGPathElement = function () {}; }
+// if (window.SVGPathElement === undefined) { var JSDOM = require('jsdom').JSDOM; global.window = new JSDOM().window; window.SVGPathElement = function () {}; }
 const c3 = require('c3');
 
 export class SingleAxisChart extends Component {
