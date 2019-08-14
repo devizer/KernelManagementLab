@@ -5,7 +5,6 @@ import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { faNetworkWired } from '@fortawesome/free-solid-svg-icons'
 import { faMemory } from '@fortawesome/free-solid-svg-icons'
 import { faFile } from '@fortawesome/free-regular-svg-icons'
-
 // const iconStyle = {width:16, minWidth: 16, display: "inline-block", marginRight: 0, fontSize_ignore: 6};
 const chipStyle = {};
 
@@ -24,3 +23,4 @@ export default function DiskAvatarContent (props){
     if (props.disk.isSwap) return chipIcons.Swap;
     return chipIcons.Unknown;
 }
+

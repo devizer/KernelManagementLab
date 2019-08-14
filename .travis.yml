@@ -9,6 +9,8 @@ matrix:
   - name: Ubuntu 16.04
     os: linux
     dist: xenial
+    addons:
+      chrome: stable
   - name: Ubuntu 18.04
     os: linux
     dist: bionic
@@ -18,7 +20,19 @@ matrix:
   - name: OS X 10.14
     os: osx
     osx_image: xcode10.2
+
+before_script:
+- |
+  if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
+    export NEED_DEPLOY=sure  
+    export DISPLAY=:99.0"
+    sh -e /etc/init.d/xvfb start
+    sleep 3
+    google-chrome-stable --version || true
+  fi
+  
 script:
+- google-chrome-stable --version || true
 - echo "Docker server is [$(docker version --format '{{.Server.Version}}')]" || true
 - url=https://raw.githubusercontent.com/devizer/glist/master/install-docker-on-debian.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
 - echo "Docker server is [$(docker version --format '{{.Server.Version}}')]" || true
