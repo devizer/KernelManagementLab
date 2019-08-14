@@ -7,6 +7,11 @@ import App from './App';
 var JSDOM = require('jsdom').JSDOM; global.window = new JSDOM().window; window.SVGPathElement = function () {};
 // console.log(require('c3')); // => no error!
 
+it('sums numbers', () => {
+    expect(1+2).toEqual(3);
+    expect(2+2).toEqual(4);
+});
+
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(

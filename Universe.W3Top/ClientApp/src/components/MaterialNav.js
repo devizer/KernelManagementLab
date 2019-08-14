@@ -203,11 +203,12 @@ class PersistentDrawerLeft extends React.Component {
             </tr>
         )};
 
-        const MainMenuLink = (icon, text,routeTo) => {
+        let idMainLink = 0;
+        const MainMenuLink = (icon, text, routeTo) => {
             return (
-                <ListItem button component={NavLink} tag={Link} to={routeTo} key={`${text}@MainMenu`} onClick={() => this.handleDrawerClose()}>
+                <ListItem id={`THE_MENU_${++idMainLink}`} button component={NavLink} tag={Link} to={routeTo} key={`${text}@MainMenu`} onClick={() => this.handleDrawerClose()}>
                     <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText primary={text} />
+                    <ListItemText id={`THE_MENU_LINK_${idMainLink}`} primary={text} />
                 </ListItem>
             );
         };
@@ -229,7 +230,7 @@ class PersistentDrawerLeft extends React.Component {
                     })}
                 >
                     <Toolbar disableGutters={!open}>
-                        <IconButton
+                        <IconButton id={"APP_SYSTEM_ICON"}
                             color="inherit"
                             aria-label="Open drawer"
                             onClick={this.handleDrawerOpen}

@@ -141,7 +141,7 @@ namespace Universe.W3Top
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
-                spa.Options.StartupTimeout = TimeSpan.FromSeconds(120);
+                spa.Options.StartupTimeout = TimeSpan.FromSeconds(180);
 
                 if (env.IsDevelopment())
                 {

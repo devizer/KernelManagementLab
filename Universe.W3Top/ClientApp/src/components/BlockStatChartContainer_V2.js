@@ -29,7 +29,7 @@ export class BlockChartContainer_V2 extends Component {
     componentDidMount() {
         let isAlreadyBound = this.state.blockChartList !== null;
         if (!isAlreadyBound)
-            this.timerId = setInterval(this.waiterTick.bind(this));
+            this.timerId = setInterval(this.waiterTick.bind(this), 100);
     }
 
     componentWillUnmount() {

@@ -288,10 +288,10 @@ function DiskBenchmarkDialog(props) {
         return (
             <React.Fragment>
                 {/* <Typography>Choose disk:</Typography> */}   
-                {disks.map(disk => (
+                {disks.map((disk, diskIndex) => (
                 <React.Fragment key={disk.mountEntry.mountPath}>
                     <MuiThemeProvider theme={getTheme(disk)}>
-                    <Chip 
+                    <Chip id={`DISK_${diskIndex+1}`}
                         avatar={<Avatar><DiskAvatarContent disk={disk}/></Avatar>}
                         clickable
                         label={(<span><b>{disk.mountEntry.mountPath}</b> <span style={{opacity:0.66}}>({disk.mountEntry.fileSystem})</span></span>)} 
@@ -517,12 +517,13 @@ function DiskBenchmarkDialog(props) {
                     <React.Fragment>
                     {activeStep === steps.length ? (
                         <div style={styles.actions}>
-                            <Button onClick={handleReset} style={classes.wizardReset}>New Benchmark</Button>
+                            <Button id={"BTN_DISK_BENCHMARK_ANOTHER"} onClick={handleReset} style={classes.wizardReset}>New Benchmark</Button>
                         </div>
                     ) : (
                         <div style={ activeStep === 2 ? styles.actions : styles.actions}>
                             
-                            <Button variant="contained"
+                            <Button id={"BTN_DISK_BENCHMARK_BACK"}
+                                    variant="contained"
                                     disabled={!isBackAllowed}
                                     onClick={handleBack}
                                     style={classes.wizardButton}
@@ -531,7 +532,8 @@ function DiskBenchmarkDialog(props) {
                                 « Back
                             </Button>
                             
-                            <Button variant="contained" 
+                            <Button id={"BTN_DISK_BENCHMARK_NEXT"}
+                                    variant="contained" 
                                     disabled={isNextDisabled}
                                     color="primary" 
                                     onClick={handleNext} 
@@ -541,7 +543,8 @@ function DiskBenchmarkDialog(props) {
                                 {nextButtonNames[activeStep]}
                             </Button>
 
-                            <Button variant="contained"
+                            <Button id={"BTN_DISK_BENCHMARK_CLOSE"}
+                                    variant="contained"
                                     disabled={activeStep === 0 && false}
                                     onClick={handleCancel}
                                     style={classes.wizardButton}
@@ -549,7 +552,8 @@ function DiskBenchmarkDialog(props) {
                                 {closeButtonNames[activeStep]}
                             </Button>
 
-                            <Button variant="contained"
+                            <Button id={"BTN_DISK_BENCHMARK_BACKGROUND"}
+                                    variant="contained"
                                     disabled={activeStep === 0 && false}
                                     onClick={handleClose}
                                     style={classes.wizardButton}

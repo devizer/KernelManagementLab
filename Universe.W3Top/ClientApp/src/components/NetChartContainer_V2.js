@@ -15,6 +15,7 @@ export class NetChartContainer_V2 extends Component {
     constructor(props) {
         super(props);
 
+        if (process.env.NODE_ENV === "test") console.log("TEST: NetChartContainer_V2.constructor()");
         this.tryInitNetChartList = this.tryInitNetChartList.bind(this);
         this.tryBuildNetChartList = this.tryBuildNetChartList.bind(this);
         
@@ -26,10 +27,10 @@ export class NetChartContainer_V2 extends Component {
     }
     
     componentDidMount() {
+        if (process.env.NODE_ENV === "test") console.log("TEST: NetChartContainer_V2.componentDidMount()");
         let isAlreadyBound = this.state.netChartList !== null; 
         if (!isAlreadyBound)
-            this.timerId = setInterval(this.waiterTick.bind(this));
-
+            this.timerId = setInterval(this.waiterTick.bind(this), 100);
     }
 
     
