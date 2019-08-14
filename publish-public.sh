@@ -51,7 +51,7 @@ say "yarn install [$ver]"
 cd ClientApp; time (yarn install); cd ..
 
 say "SKIP yarn test [$ver]"
-# cd ClientApp; time (yarn test); cd ..
+cd ClientApp; time (yarn test); cd ..
 
 say "yarn build [$ver]"
 cd ClientApp; time (yarn build); cd ..

@@ -77,7 +77,7 @@ script:
 
 - pushd Universe.W3Top/ClientApp
 - time yarn install
-- # time yarn test 
+- time yarn test 
 - time yarn build
 - popd
 
