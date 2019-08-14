@@ -26,6 +26,7 @@ matrix:
 before_script:
 - |
   if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
+    sudo apt-get install libatk-bridge2.0-0 -y
     export NEED_DEPLOY=sure  
     export DISPLAY=:99.0
     sh -e /etc/init.d/xvfb start
