@@ -11,6 +11,8 @@ matrix:
     dist: xenial
     addons:
       chrome: stable
+    services:
+      - xvfb
   - name: Ubuntu 18.04
     os: linux
     dist: bionic
