@@ -11,6 +11,10 @@ namespace NetBenchmarkLab.NetBenchmarkModel
 
         // Name -> City
         public string City { get; set; }
+        
+        // For USA only?
+        public string State { get; set; }
+        public string StateCode { get; set; }
 
         public string Country { get; set; }
 
@@ -26,6 +30,7 @@ namespace NetBenchmarkLab.NetBenchmarkModel
 
         public double Distance { get; set; }
 
+        [JsonIgnore]
         public int Latency { get; set; }
 
     }

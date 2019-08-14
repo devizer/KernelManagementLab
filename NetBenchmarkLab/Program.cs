@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using KernelManagementJam.DebugUtils;
 using Newtonsoft.Json;
+using SpeedTest;
 
 namespace NetBenchmarkLab
 {
@@ -13,6 +15,17 @@ namespace NetBenchmarkLab
             ListServers.Run();
             
             ListRegions.Run();
+            
+            JsonDataSource();
+        }
+
+        private static void JsonDataSource()
+        {
+            SpeedTestClient _speedTestClientClient = new SpeedTestClient();
+            var settings = _speedTestClientClient.GetSettings();
+            var dataSource = NetServersDataSource.Build(settings.Servers);
+            DebugDumper.Dump(dataSource, "Net-Servers-Data-Source.json", minify: false);
+            DebugDumper.Dump(dataSource, "Net-Servers-Data-Source.min.json", minify: true);
         }
 
         private static void HellOfDictionary()

@@ -74,7 +74,12 @@ script:
   fi
   
 - docker logs sql-2019-for-tests | head -9999 || true
-- pushd Universe.W3Top/ClientApp; time yarn install; time yarn build; popd
+
+- pushd Universe.W3Top/ClientApp
+- time yarn install
+- time yarn test 
+- time yarn build
+- popd
 
 - |
    time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m

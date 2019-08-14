@@ -50,7 +50,7 @@ namespace NetBenchmarkLab
         }
 
         private static readonly Dictionary<string, string> StateCodes = UsaStates.StateAbbreviations;
-        static List<Server> FindUsaServers(RegionsByTrafficModel.Area area, RegionsByTrafficModel.RegionInfo region, Server[] usaServers)
+        static List<Server> FindUsaServers_Legacy(RegionsByTrafficModel.Area area, RegionsByTrafficModel.RegionInfo region, Server[] usaServers)
         {
             if (area.AreaName == "America")
             {
@@ -80,15 +80,44 @@ namespace NetBenchmarkLab
             }
         }
 
-        static bool TryUsaCity(ServerModel server, out string city, out string stateName, out string stateCode)
+        static List<Server> FindUsaServers(RegionsByTrafficModel.Area area, RegionsByTrafficModel.RegionInfo region, Server[] usaServers)
+        {
+            if (area.AreaName == "America")
+            {
+                List<Server> ret = new List<Server>();
+                foreach (var usaServer in usaServers)
+                {
+                    bool isUsaCity = TryUsaCity(
+                        usaServer.Country, usaServer.Name, out var city, out var stateName, out var stateCode
+                    );
+
+                    if (isUsaCity)
+                    {
+                        if (stateName.Equals(region.Name, StringComparison.InvariantCultureIgnoreCase))
+                            ret.Add(usaServer);
+                    }
+                }
+
+                return ret;
+            }
+            else
+            {
+                // Not an America
+                return null;
+            }
+        }
+
+
+        // San Francisco, CA -> { San Francisco; California; CA }  
+        static bool TryUsaCity(string serverCountry, string serverCity, out string city, out string stateName, out string stateCode)
         {
             city = null;
             stateName = null;
             stateCode = null;
             bool ret = false;
-            if (server.Country == "United States")
+            if (serverCountry == "United States")
             {
-                var arr = server.City.Split(',');
+                var arr = serverCity.Split(',');
                 if (arr.Length == 2)
                 {
                     stateCode = arr[1].Trim();

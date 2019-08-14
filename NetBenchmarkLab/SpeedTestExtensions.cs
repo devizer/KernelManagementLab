@@ -74,12 +74,22 @@ namespace NetBenchmarkLab
 
         public static ServerModel ToServerModel(this Server server)
         {
+            var serverCountry = server.GetCountry();
+            if (!TryUsaCity(serverCountry, server.Name, out var city, out var stateName, out var stateCode))
+            {
+                city = server.Name;
+                stateName = null;
+                stateCode = null;
+            }
+            
             return new ServerModel
             {
                 Id = server.Id,
-                City = server.Name,
-                Country = server.GetCountry(),
-                Distance = server.Distance,
+                City = city,
+                State = stateName,
+                StateCode = stateCode,
+                Country = serverCountry,
+                Distance = Math.Round(server.Distance,1),
                 Host = server.Host,
                 Url = server.Url,
                 Latency = server.Latency,
@@ -88,5 +98,30 @@ namespace NetBenchmarkLab
                 Sponsor = server.Sponsor,
             };
         }
+        
+        private static readonly Dictionary<string, string> StateCodes = UsaStates.StateAbbreviations;
+        static bool TryUsaCity(string serverCountry, string serverCity, out string city, out string stateName, out string stateCode)
+        {
+            city = null;
+            stateName = null;
+            stateCode = null;
+            bool ret = false;
+            if (serverCountry == "United States")
+            {
+                var arr = serverCity.Split(',');
+                if (arr.Length == 2)
+                {
+                    stateCode = arr[1].Trim();
+                    if (StateCodes.TryGetValue(stateCode, out stateName))
+                    {
+                        ret = true;
+                        city = arr[0].Trim();
+                    }
+                }
+            }
+
+            return ret;
+        }
+
     }
 }

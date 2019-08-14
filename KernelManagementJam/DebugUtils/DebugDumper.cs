@@ -29,7 +29,7 @@ namespace KernelManagementJam.DebugUtils
             }
         }
         
-        [Conditional("DUMPS")]
+        // [Conditional("DUMPS")]
         public static void Dump(object anObject, string fileName, bool minify = false)
         {
             if (!AreDumpsEnabled) return;
