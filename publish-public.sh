@@ -50,6 +50,9 @@ echo $ver > $clone/public/version.txt
 say "yarn install [$ver]"
 cd ClientApp; time (yarn install); cd ..
 
+say "yarn test [$ver]"
+cd ClientApp; time (yarn test); cd ..
+
 say "yarn build [$ver]"
 cd ClientApp; time (yarn build); cd ..
 
