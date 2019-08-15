@@ -59,6 +59,27 @@ export default class App extends Component {
         </h6>
     );
     
+    static GetMenuComponents = () => {
+        App._404.displayName = "Page_404";
+        PopperLab.displayName = "PopperLab";
+        DiskBenchmarkDialog.displayName = "DiskBenchmarkDialog";
+        
+        return [
+            NetChartContainer_V2,
+            BlockChartContainer_V2,
+            MNav,
+            Poc1Chart,
+            Poc2Chart,
+            NetChartContainer,
+            NetChartContainer_V2,
+            MountsList,
+            DiskBenchmarkDialog,
+            NetBenchmarkV1,
+            PopperLab,
+            App._404,
+        ];
+    };
+    
     render () {
         return (
             <Layout>

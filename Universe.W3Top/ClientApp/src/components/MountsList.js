@@ -20,6 +20,7 @@ const iconNet = <FontAwesomeIcon style={iconStyle} icon={faNetworkWired}/>;
 const iconSwap = <FontAwesomeIcon style={iconStyle} icon={faFile}/>;
 
 export class MountsList extends React.Component {
+    // static displayName = MountsList.name;
 
     timerId = null;
 
@@ -221,6 +222,7 @@ export class MountsList extends React.Component {
     }
 
     render () {
+        if (process.env.NODE_ENV === "test") console.log("MountsList.render()");
         return this.renderNormal();
     }
 
