@@ -44,6 +44,7 @@ function reinstall_service() {
   cd ClientApp; time (yarn install); cd ..
   # time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service
   time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
+  pushd ClientApp; yarn test; popd
   cd bin/service
   chmod 644 *.dll
   chmod 755 Universe.W3Top
