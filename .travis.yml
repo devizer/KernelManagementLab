@@ -34,12 +34,13 @@ before_script:
     sleep 3
     google-chrome-stable --version || true
   fi
+- |
+  echo "Docker server BEFORE [$(docker version --format '{{.Server.Version}}')]" || true
+  # url=https://raw.githubusercontent.com/devizer/glist/master/install-docker-on-debian.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
+  echo "Docker server AFTER [$(docker version --format '{{.Server.Version}}')]" || true
   
 script:
 - google-chrome-stable --version || true
-- echo "Docker server is [$(docker version --format '{{.Server.Version}}')]" || true
-- url=https://raw.githubusercontent.com/devizer/glist/master/install-docker-on-debian.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
-- echo "Docker server is [$(docker version --format '{{.Server.Version}}')]" || true
 - if [[ "$(lsb_release -c -s)" == xenial ]]; then export NEED_DEPLOY=sure; fi; echo "NEED_DEPLOY = [$NEED_DEPLOY]"
 - export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 - git branch
