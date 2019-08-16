@@ -49,7 +49,7 @@ function reinstall_service() {
   chmod 644 *.dll
   chmod 755 Universe.W3Top
   chmod 755 install-systemd-service.sh
-  if [[ -z "${INSTALL_DIR-}" ]]; then INSTALL_DIR=/opt/w3top; fi
+  if [[ -z "${INSTALL_DIR:-}" ]]; then INSTALL_DIR=/opt/w3top; fi
   sudo mkdir -p $INSTALL_DIR
   sudo rm -rf $INSTALL_DIR/*
   sudo cp -fR * $INSTALL_DIR

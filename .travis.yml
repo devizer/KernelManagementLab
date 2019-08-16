@@ -35,6 +35,7 @@ before_script:
     google-chrome-stable --version || true
   fi
 - |
+  # UPGRADE DOCKER
   echo "Docker server BEFORE [$(docker version --format '{{.Server.Version}}')]" || true
   # url=https://raw.githubusercontent.com/devizer/glist/master/install-docker-on-debian.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
   echo "Docker server AFTER [$(docker version --format '{{.Server.Version}}')]" || true
