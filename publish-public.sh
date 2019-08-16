@@ -50,7 +50,7 @@ echo $ver > $clone/public/version.txt
 say "yarn install [$ver]"
 cd ClientApp; time (yarn install); cd ..
 
-say "SKIP yarn test [$ver]"
+say "yarn test [$ver]"
 cd ClientApp; time (yarn test); cd ..
 
 say "yarn build [$ver]"
@@ -67,7 +67,7 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 
   say "Compressing $r [$ver] as GZIP"
   echo $ver > VERSION
-  compress=pigz
+  compress="pigz -p 8 -b 128"
   time sudo bash -c "tar cf - . | pv | $compress -9 > ../w3top-$r.tar.gz"
   [ "${TRAVIS:-}" == "true" ] && sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.hash256
   sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.sha256
