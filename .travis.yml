@@ -63,7 +63,7 @@ script:
   # install pv
   echo "A. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    brew install jq mysql-client pv pigz  
+    brew install jq mysql-client pv pigz coreutils
   else
     sudo apt-get install jq pv mysql-client postgresql-client pigz -y 
     ruby --version || true; gem --version || true
