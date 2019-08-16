@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 
-it('renders without crashing', () => {
+it('default route renders without crashing', () => {
   const div1 = document.createElement('div');
   ReactDOM.render(
     <MemoryRouter>
