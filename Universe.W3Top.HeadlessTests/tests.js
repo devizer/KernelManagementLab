@@ -67,6 +67,12 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
       if (err) console.log(`Screenshot error: ${err}`);
     });
 
+      const script_Metrics = "document.MetricsArrived";
+      const result_Metrics = await Runtime.evaluate({expression: script_Metrics});
+      const metricsArrived = result_Metrics.result.value;
+      console.log(`Metrics Arrived: '${metricsArrived}'`);
+    
+
     protocol.close();
     chrome.kill();
     console.log("The End");

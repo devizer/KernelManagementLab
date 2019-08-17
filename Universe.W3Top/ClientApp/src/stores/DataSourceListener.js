@@ -27,6 +27,7 @@ class DataSourceListener {
             Helper.toConsole(`DataSource RECEIVED [${messageId}] at ` + (new Date().toLocaleTimeString()), dataSource);
             try {
                 DataSourceActions.DataSourceUpdated(dataSource);
+                if (global.document) global.document.MetricsArrived = "true"; 
                 this.applyDocumentTitle(dataSource);
             } catch(err){
                 console.error(err);
