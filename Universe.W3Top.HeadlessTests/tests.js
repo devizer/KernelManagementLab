@@ -24,6 +24,13 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
   const protocol = await CDP({port: chrome.port});
 
   const { DOM, Page, Emulation, Runtime} = protocol;
+  
+  const getElementById = async (idName) => {
+      const innerText = await Runtime.evaluate({expression: `document.getElementById('${idName}').innerText`});
+      const ret = innerText.result.value;
+      return ret;
+  };
+  
   await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
 
   Page.navigate({ url: w3topUrl });
@@ -40,16 +47,15 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
     const result_Whole = await Runtime.evaluate({expression: script_Whole});
     const wholeText = result_Whole.result.value;
     console.log(`wholeText: '${wholeText}'`);
-
+      
     for(let sysInfoIndex=1; sysInfoIndex<=4; sysInfoIndex++)
     {
-      let id=`SYS_INFO_HEADER_${sysInfoIndex}`;
-      const result_Header = await Runtime.evaluate({expression: `document.getElementById('${id}').innerText`});
-      const headerValue = result_Header.result.value;
+      let id=`FOOTER_INFO_HEADER_${sysInfoIndex}`;
+      const headerValue = await getElementById(id);
       if (headerValue === undefined)
-        console.log(`Missed Sys Info Header ${id}`);
+        console.error(`ERROR: Missed Sys Info Header ${id}`);
       else
-        console.error(`ERROR: header [${id}]: '${headerValue ? headerValue : "MISSED"}'`);
+        console.log(`Header [${id}]: '${headerValue ? headerValue : "MISSED"}'`);
     }
 
     // wait for websocket lazy message
@@ -57,16 +63,14 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
     console.log("Waited 5s");
 
     const ss = await Page.captureScreenshot({format: 'png', fromSurface: true});
-    file.writeFile('bin/screenshot.png', ss.data, 'base64', function(err) {
+    file.writeFile('bin/screenshot [home].png', ss.data, 'base64', function(err) {
       if (err) console.log(`Screenshot error: ${err}`);
     });
 
     protocol.close();
     chrome.kill();
+    console.log("The End");
   });
 
 })();
-
-
-
 
