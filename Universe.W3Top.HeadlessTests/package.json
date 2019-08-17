@@ -1,0 +1,10 @@
+{
+  "name": "Universe.W3Top.HeadlessTests",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "chrome-launcher": "^0.11.2",
+    "chrome-remote-interface": "^0.28.0"
+  }
+}
