@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
-docker run -d --name sql-2017-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1434:1433 microsoft/mssql-server-linux:2017-latest \
- || sudo docker start sql-2017-for-tests
+name=sql-2017-for-tests
+exists=false; sudo docker logs "$name" >/dev/null 2>&1 && echo $name already exists && exists=true && sudo docker start $name >/dev/null 2>&1
+[ $exists == false ] && (echo creating $name; docker run -d --name sql-2017-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1434:1433 microsoft/mssql-server-linux:2017-latest )
+# exit;
 
 # what the hell
 privileged=""; if [[ "TRAVIS" == "true" ]]; then privileged="--privileged"; fi
 echo "Privileged: [$privileged]"  
-docker run -d $privileged --name sql-2019-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1435:1433 mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu \
- || sudo docker start sql-2019-for-tests
+
+name=sql-2019-for-tests
+exists=false; sudo docker logs "$name" >/dev/null 2>&1 && echo $name already exists && exists=true && sudo docker start $name >/dev/null 2>&1
+[ $exists == false ] && (echo creating $name; docker run -d $privileged --name sql-2019-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1435:1433 mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu )
 
 export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
 url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests-V2.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
