@@ -33,6 +33,7 @@ namespace Universe.Dashboard.DAL.Migrations
                     MountPath = table.Column<string>(type: types.String, nullable: true),
                     Args = table.Column<string>(type: types.Json, nullable: true),
                     Report = table.Column<string>(type: types.Json, nullable: true),
+                    IsSuccess = table.Column<bool>(nullable: false, type: types.Bool),
                     ErrorInfo = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -59,6 +60,13 @@ namespace Universe.Dashboard.DAL.Migrations
                 table: "W3Top_DiskBenchmark",
                 column: "Token",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_W3Top_DiskBenchmark_History",
+                table: "W3Top_DiskBenchmark",
+                columns: new[] {"IsSuccess", "CreatedAt"},
+                unique: true);
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -52,7 +52,9 @@ namespace NetBenchmarkLab
                     if (foundServers == null || foundServers.Count <= 0) foundServers = serversByCountry[region.Name].ToList();
                     // var cities = foundServers.Select(x => x.Name).Distinct(StringComparer.InvariantCultureIgnoreCase).OrderBy(x => x).ToArray();
                     var cities = foundServers.Select(x => x.City)
-                        .ToLookup(x => x, x => x, StringComparer.CurrentCultureIgnoreCase).OrderByDescending(x => x.Count()).Select(x => x.Key).ToArray();
+                        .ToLookup(x => x, x => x, StringComparer.CurrentCultureIgnoreCase).OrderByDescending(x => x.Count())
+                        .Select(x => x.Key)
+                        .ToArray();
                     
                     var reportRow = $"  {region.Name} [{region.Fraction:f0}%]: {foundServers.Count} servers, {cities.Length} cities ({string.Join("; ", cities)})";
                     regionModel.Description = reportRow.TrimStart();
@@ -84,10 +86,6 @@ namespace NetBenchmarkLab
 
             // Not an America
             return null;
-            
         }
-
-        
- 
     }
 }

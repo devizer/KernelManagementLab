@@ -35,6 +35,8 @@ namespace Tests
             {
                 CreatedAt = DateTime.UtcNow, 
                 MountPath = b.Parameters.WorkFolder,
+                IsSuccess = true,
+                ErrorInfo = null,
                 Token = Guid.NewGuid()
             };
             

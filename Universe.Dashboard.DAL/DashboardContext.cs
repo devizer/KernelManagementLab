@@ -72,10 +72,12 @@ namespace Universe.Dashboard.DAL
                 e.Property(x => x.MountPath).HasColumnType(types.String);
                 e.Property(x => x.Args).HasColumnType(types.Json);
                 e.Property(x => x.Report).HasColumnType(types.Json);
+                e.Property(x => x.IsSuccess).HasColumnType(types.Bool);
                 
                 e.Property(x => x.Environment)
                     .HasColumnType(types.Json)
                     .HasConversion(JsonDbConverter.Create<DiskbenchmarkEnvironment>());
+                
             }
 
             // History Copy Entity

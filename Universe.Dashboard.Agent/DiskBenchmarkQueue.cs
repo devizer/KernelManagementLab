@@ -131,6 +131,7 @@ namespace Universe.Dashboard.Agent
                                 Report = benchmark.Progress, // Progress is complete
                                 CreatedAt = DateTime.UtcNow,
                                 MountPath = benchmark.Parameters.WorkFolder,
+                                IsSuccess = benchmarkException == null,
                                 ErrorInfo = benchmarkException?.GetExceptionDigest(),
                                 Environment = nextJob.Environment,
                             };

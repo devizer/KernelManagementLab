@@ -58,7 +58,7 @@ namespace Universe.Dashboard.DAL
                 {
                     var query =
                         from b in _DbContext.DiskBenchmark
-                        where b.ErrorInfo == null
+                        where b.IsSuccess
                         orderby b.CreatedAt descending
                         select b;
 

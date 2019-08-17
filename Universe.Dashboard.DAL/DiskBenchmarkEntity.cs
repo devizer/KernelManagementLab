@@ -17,6 +17,7 @@ namespace Universe.Dashboard.DAL
         public DiskBenchmarkOptions Args { get; set; }
         public ProgressInfo Report { get; set; }
         
+        public bool IsSuccess { get; set; }
         public string ErrorInfo { get; set; }
         public DiskbenchmarkEnvironment Environment { get; set; }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using NUnit.Framework;
 using Polly;
 using Universe.Dashboard.DAL;
@@ -12,13 +13,14 @@ namespace Tests
         {
             decimal Do()
             {
+                Thread.Sleep(1);
                 throw new Exception("Fail again");
             }
 
             var operationName = "Always fail";
             try
             {
-                decimal result = DbResilience.Query(operationName, Do, 111, 222);
+                decimal result = DbResilience.Query(operationName, Do, 11, 22);
                 Assert.Fail("TimeoutException expected");
             }
             catch (TimeoutException ex)
@@ -47,8 +49,12 @@ namespace Tests
             {
                 DbResilience.ExecuteWriting(
                     operationName,
-                    () => throw new Exception("No Way"),
-                    totalMilliseconds: 1000,
+                    () =>
+                    {
+                        Thread.Sleep(1);
+                        throw new Exception("No Way");
+                    },
+                    totalMilliseconds: 11,
                     retryCount: 9999999);
                 
                 Assert.Fail("TimeoutException expected");
