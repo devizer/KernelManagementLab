@@ -6,6 +6,8 @@ const file = require('fs');
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
+const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
+
 (async function() {
 
   async function launchChrome() {
@@ -24,9 +26,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
   const { DOM, Page, Emulation, Runtime} = protocol;
   await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
 
-  Page.navigate({
-    url: 'http://localhost:5050/'
-  });
+  Page.navigate({ url: w3topUrl });
 
   Page.loadEventFired(async() => {
     console.log("PAGE LOADED");
@@ -40,24 +40,26 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
     const result_Whole = await Runtime.evaluate({expression: script_Whole});
     const wholeText = result_Whole.result.value;
     console.log(`wholeText: '${wholeText}'`);
-    
+
     for(let sysInfoIndex=1; sysInfoIndex<=4; sysInfoIndex++)
     {
-      let id=`SYS_INFO_HEADER_` + sysInfoIndex;
-      const result_Header = await Runtime.evaluate({expression: `var el=document.getElementById('${id}'); return el ? el.innerText : null`});
-      const header = result_Header.result.value;
-      console.log(`header [${sysInfoIndex}]: '${header}'`);
+      let id=`SYS_INFO_HEADER_${sysInfoIndex}`;
+      const result_Header = await Runtime.evaluate({expression: `document.getElementById('${id}').innerText`});
+      const headerValue = result_Header.result.value;
+      if (headerValue === undefined)
+        console.log(`Missed Sys Info Header ${id}`);
+      else
+        console.error(`ERROR: header [${id}]: '${headerValue ? headerValue : "MISSED"}'`);
     }
 
     // wait for websocket lazy message
-    await delay(4000);
+    await delay(5000);
     console.log("Waited 5s");
 
     const ss = await Page.captureScreenshot({format: 'png', fromSurface: true});
     file.writeFile('bin/screenshot.png', ss.data, 'base64', function(err) {
       if (err) console.log(`Screenshot error: ${err}`);
     });
-
 
     protocol.close();
     chrome.kill();
