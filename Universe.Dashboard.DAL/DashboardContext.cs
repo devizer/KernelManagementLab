@@ -64,16 +64,22 @@ namespace Universe.Dashboard.DAL
             // Disk Benchmark Entity
             {
                 var e = modelBuilder.Entity<DiskBenchmarkEntity>();
-                e.Property(x => x.Args).HasConversion(JsonDbConverter.Create<DiskBenchmarkOptions>());
-                e.Property(x => x.Report).HasConversion(JsonDbConverter.Create<ProgressInfo>());
                 e.HasIndex(p => new {p.Token}).IsUnique();
                 e.Property(x => x.Token).HasColumnType(types.Guid);
                 e.Property(x => x.CreatedAt).HasColumnType(types.DateTime).HasDefaultValueSql(types.CurrentDateTime);
                 e.Property(x => x.MountPath).HasColumnType(types.String);
-                e.Property(x => x.Args).HasColumnType(types.Json);
-                e.Property(x => x.Report).HasColumnType(types.Json);
-                e.Property(x => x.IsSuccess).HasColumnType(types.Bool);
                 
+                e.Property(x => x.Args)
+                    .HasColumnType(types.Json)
+                    .HasConversion(JsonDbConverter.Create<DiskBenchmarkOptions>());
+                
+                e.Property(x => x.Report)
+                    .HasColumnType(types.Json)
+                    .HasConversion(JsonDbConverter.Create<ProgressInfo>());
+                
+                e.Property(x => x.IsSuccess).HasColumnType(types.Bool);
+                e.Property(x => x.ErrorInfo).HasColumnType(types.Json);
+
                 e.Property(x => x.Environment)
                     .HasColumnType(types.Json)
                     .HasConversion(JsonDbConverter.Create<DiskbenchmarkEnvironment>());

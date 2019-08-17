@@ -55,12 +55,14 @@ namespace Universe.Dashboard.DAL.Migrations
                     table.PrimaryKey("PK_W3Top_HistoryCopy", x => x.Id);
                 });
 
+            // for UI's progress
             migrationBuilder.CreateIndex(
                 name: "IX_W3Top_DiskBenchmark_Token",
                 table: "W3Top_DiskBenchmark",
                 column: "Token",
                 unique: true);
 
+            // for History UI
             migrationBuilder.CreateIndex(
                 name: "IX_W3Top_DiskBenchmark_History",
                 table: "W3Top_DiskBenchmark",
