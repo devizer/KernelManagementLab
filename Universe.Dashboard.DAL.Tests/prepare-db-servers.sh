@@ -11,7 +11,7 @@ echo "Privileged: [$privileged]"
 
 name=sql-2019-for-tests
 exists=false; sudo docker logs "$name" >/dev/null 2>&1 && echo $name already exists && exists=true && sudo docker start $name >/dev/null 2>&1
-[ $exists == false ] && (echlo creating $name; docker run -d $privileged --name sql-2019-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1435:1433 mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu )
+[ $exists == false ] && (echo creating $name; docker run -d $privileged --name sql-2019-for-tests -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p 1435:1433 mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu )
 
 export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
 url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests-V2.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
