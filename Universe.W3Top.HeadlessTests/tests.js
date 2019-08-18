@@ -6,7 +6,7 @@ const file = require('fs');
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010";
+const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
 
 const pages = {
     home: {url:`/`, width: 1024, height: 600 },
@@ -81,11 +81,13 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         let ms = 1;
         while(true)
         {
-            const value = await getExpression(`window.ApplicationLevelTriggers.${triggerKey}.first`);
+            let value = await getExpression(`window.ApplicationLevelTriggers.${triggerKey}.first`);
             // console.log(`Wait for ${triggerKey}: ${value} (${new Date() - start})`);
             if (value > 0) {
-                console.debug(`Trigger [${triggerKey}] successfully confirmed in ${new Date() - start} milliseconds. Raised at ${value} milliseconds`);
-                return value;
+                value = Math.round(value*10)/10;
+                if (value < 0.00999) value = 0.01;
+                console.debug(`Trigger [${triggerKey}] successfully confirmed in ${new Date() - start} milliseconds. Raised at ${value.toFixed(1)} milliseconds`);
+                return ;
             }
 
             await delay(ms);
