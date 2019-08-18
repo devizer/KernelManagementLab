@@ -20,6 +20,7 @@ class DataSourceListener {
         // hub.
         this.connection = hub.build();
         this.connection.on("ReceiveDataSource", dataSource => {
+            if (global.document) global.document.MetricsArriving = "true";
 
             let [hasMessageId, messageId] = Helper.Common.tryGetProperty(dataSource, "messageId");
             messageId = messageId || "<unknown-message>";
@@ -27,8 +28,8 @@ class DataSourceListener {
             Helper.toConsole(`DataSource RECEIVED [${messageId}] at ` + (new Date().toLocaleTimeString()), dataSource);
             try {
                 DataSourceActions.DataSourceUpdated(dataSource);
-                if (global.document) global.document.MetricsArrived = "true"; 
                 this.applyDocumentTitle(dataSource);
+                if (global.document) global.document.MetricsArrived = "true";
             } catch(err){
                 console.error(err);
             }

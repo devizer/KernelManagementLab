@@ -31,6 +31,27 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
       return ret;
   };
   
+  const waitForTrigger = async (timeout, triggerKey, isSuccess) => {
+    const start = new Date();
+    while(true)
+    {
+      const result_Value = await Runtime.evaluate({expression: `document.${triggerKey}`});
+      const value = result_Value.result.value;
+      // console.log(`Wait for ${triggerKey}: ${value} (${new Date() - start})`);
+      if (value !== undefined && (isSuccess === undefined || isSuccess === null || isSuccess(value))) {
+        console.debug(`Trigger successfully confirmed: [${triggerKey}]`);
+        return true;
+      }
+      
+      await delay(1);
+      let elapsed = new Date() - start;
+      if (elapsed > timeout) break;
+    }
+    
+    console.warn(`Warning: trigger [${triggerKey}] was not raised:`);
+    return false;
+  };
+  
   await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
 
   Page.navigate({ url: w3topUrl });
@@ -59,19 +80,14 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
     }
 
     // wait for websocket lazy message
-    await delay(5000);
-    console.log("Waited 5s");
+    // await delay(5000);
+    // console.log("Waited 5s");
+    await waitForTrigger(15000,"MetricsArrived", status => status === "true");
 
     const ss = await Page.captureScreenshot({format: 'png', fromSurface: true});
     file.writeFile('bin/screenshot [home].png', ss.data, 'base64', function(err) {
       if (err) console.log(`Screenshot error: ${err}`);
     });
-
-      const script_Metrics = "document.MetricsArrived";
-      const result_Metrics = await Runtime.evaluate({expression: script_Metrics});
-      const metricsArrived = result_Metrics.result.value;
-      console.log(`Metrics Arrived: '${metricsArrived}'`);
-    
 
     protocol.close();
     chrome.kill();
