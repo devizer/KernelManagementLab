@@ -25,6 +25,9 @@ matrix:
 
 before_script:
 - |
+  mkdir -p ~/build-artifacts/screenshots
+  exec &> >(tee "~/build-artifacts/full-build-log.txt");
+- |
   if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
     sudo apt-get -f install
     sudo apt-get install libatk-bridge2.0-0 -y
@@ -117,6 +120,7 @@ script:
     pushd Universe.W3Top.HeadlessTests
     yarn install
     bash tests.sh
+    cp bin/* ~/build-artifacts/screenshots
     popd
   fi
   
@@ -138,6 +142,7 @@ script:
   mkdir -p public-bintray/$ver;
   cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz* public-bintray/$ver/;
   cp build/AppGitInfo.json public-bintray/$ver/version.json
+  tar czf public-bintray/$ver/build-log.tar.gz ~/build-artifacts
 - cat bintray.json || true
 - pwd; df -h; ls -la public-bintray/$ver
 
