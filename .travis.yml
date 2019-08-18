@@ -110,11 +110,13 @@ script:
   popd
   
 - |
-  echo "HEADLESS INTEGRATION TESTS"
-  pushd Universe.W3Top.HeadlessTests
-  yarn install
-  node tests.js
-  popd
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    echo "HEADLESS INTEGRATION TESTS"
+    pushd Universe.W3Top.HeadlessTests
+    yarn install
+    node tests.js
+    popd
+  fi
   
   
 - |
