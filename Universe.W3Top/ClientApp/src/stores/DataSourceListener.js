@@ -56,6 +56,7 @@ class DataSourceListener {
                 })
                 .then(briefInfo => {
                     Helper.notifyTrigger("BriefInfoArrived", "wow!");
+                    if (global.document) global.document.MetricsArrived = "wow!";
                     // if (global.document) global.document.BriefInfoArrived = "true";
                     this.applyDocumentTitle(briefInfo);
                     DataSourceActions.BriefUpdated(briefInfo);
