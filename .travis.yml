@@ -68,7 +68,6 @@ script:
   else
     sudo apt-get install jq pv mysql-client postgresql-client pigz -y 
     ruby --version || true; gem --version || true
-
     mysql --version
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
@@ -102,7 +101,21 @@ script:
 - popd
 
 - |
-   time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m
+  time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m
+  pushd Universe.W3Top
+  SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m
+  cd bin/service
+  export ASPNETCORE_URLS=http://0.0.0.0:5050
+  dotnet Universe.W3Top.dll &
+  popd
+  
+- |
+  echo "HEADLESS INTEGRATION TESTS"
+  pushd Universe.W3Top.HeadlessTests
+  yarn install
+  node tests.js
+  popd
+  
   
 - |
    # publish self-contained
