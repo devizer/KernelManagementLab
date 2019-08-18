@@ -103,7 +103,7 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         `);
         */
 
-        let isBriefInfoArrived = await waitForTrigger(5000,"BriefInfoArrived");
+        let isBriefInfoArrived = await waitForTrigger(5000,"BriefInfoArrived", status => true);
         // next loop will fail if BriefInfoArrived is lost 
         for(let footerHeaderIndex=1; footerHeaderIndex<=4; footerHeaderIndex++)
         {
