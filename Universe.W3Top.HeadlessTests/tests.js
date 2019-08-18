@@ -9,8 +9,8 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
 
 const pages = {
-    home: {url:`/`, width: 1024, height: 600 },
-    mounts: {url:`/mounts`, width: 1024, height: 600 },
+    home:          {url:`/`,       width: 1024, height: 600 },
+    mounts:        {url:`/mounts`, width: 1024, height: 600 },
     diskBenchmark: {url:'/disk-benchmark', width: 1180, height: 600 },
 };
 
@@ -111,16 +111,7 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         console.log(`User Agent: '${await getExpression("navigator.userAgent")}'`);
         console.log(`Version: '${await getVersion()}'`);
         console.log(`LoadingStartedAt: '${await getExpression("window.LoadingStartedAt")}'`);
-        console.log(`LoadingStartedAt: '${await getExpression("document.LoadingStartedAt")}'`);
         
-
-
-        /*
-              console.log(`WHOLE DOCUMENT (incomplete): 
-        ${await getExpression("document.body.innerText")}
-        `);
-        */
-
         let isBriefInfoArrived = await waitForTrigger(5000,"BriefInfoArrived", status => true);
         // next loop will fail if BriefInfoArrived is lost 
         for(let footerHeaderIndex=1; footerHeaderIndex<=4; footerHeaderIndex++)
@@ -134,21 +125,14 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         }
 
         let areMetricsArriving = await waitForTrigger(15000,"MetricsArriving");
-        if (!areMetricsArriving)
-            console.error("ERROR: Web Socket broadcast for metrics is not obtained in 15 seconds");
+        if (areMetricsArriving === false)
+            console.error("ERROR: Web Socket broadcast for metrics was not obtained in 15 seconds");
 
         let areMetricsArrived = await waitForTrigger(5000,"MetricsArrived");
-        if (!areMetricsArrived)
-            console.error("ERROR: Metrics are not bound in 5 seconds");
-
-        /*
-              console.log(`WHOLE COMPLETED DOCUMENT: 
-        ${await getExpression("document.body.innerText")}
-        `);
-        */
+        if (areMetricsArrived === false)
+            console.error("ERROR: Metrics were not bound in 5 seconds");
 
         console.log(`LoadingStartedAt: '${await getExpression("window.LoadingStartedAt")}'`);
-
 
         const ss = await Page.captureScreenshot({format: 'png', fromSurface: true});
         file.writeFile('bin/screenshot [home].png', ss.data, 'base64', function(err) {
