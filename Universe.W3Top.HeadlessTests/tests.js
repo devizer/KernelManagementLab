@@ -62,31 +62,41 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
     console.log("PAGE LOADED");
     console.log(`TITLE: '${await getExpression("document.title")}'`);
 
+/*
       console.log(`WHOLE DOCUMENT (incomplete): 
 ${await getExpression("document.body.innerText")}
 `);
+*/
       
     for(let sysInfoIndex=1; sysInfoIndex<=4; sysInfoIndex++)
     {
       let id=`FOOTER_INFO_HEADER_${sysInfoIndex}`;
       const headerValue = await getElementById(id);
       if (headerValue === undefined)
-        console.error(`ERROR: Missed Sys Info Header ${id}`);
+        console.error(`ERROR: Missed Footer Info Header ${id}`);
       else
         console.log(`Header [${id}]: '${headerValue ? headerValue : "MISSED"}'`);
     }
 
-    await waitForTrigger(15000,"MetricsArrived", status => status === "true");
+      let areMetricsArriving = await waitForTrigger(15000,"MetricsArriving", status => status === "true");
+      if (!areMetricsArriving)
+          console.error("ERROR: Web Socket broadcast for metrics is not obtained in 15 seconds");
 
+      let areMetricsArrived = await waitForTrigger(5000,"MetricsArrived", status => status === "true");
+      if (!areMetricsArrived)
+          console.error("ERROR: Metrics are not bound in 5 seconds");
+
+/*
       console.log(`WHOLE COMPLETED DOCUMENT: 
 ${await getExpression("document.body.innerText")}
 `);
+*/
 
 
       const ss = await Page.captureScreenshot({format: 'png', fromSurface: true});
-    file.writeFile('bin/screenshot [home].png', ss.data, 'base64', function(err) {
-      if (err) console.log(`Screenshot error: ${err}`);
-    });
+      file.writeFile('bin/screenshot [home].png', ss.data, 'base64', function(err) {
+          if (err) console.log(`Screenshot error: ${err}`);
+      });
 
     protocol.close();
     chrome.kill();
