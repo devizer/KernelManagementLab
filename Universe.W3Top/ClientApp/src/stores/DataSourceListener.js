@@ -20,7 +20,8 @@ class DataSourceListener {
         // hub.
         this.connection = hub.build();
         this.connection.on("ReceiveDataSource", dataSource => {
-            if (global.document) global.document.MetricsArriving = "true";
+            Helper.notifyTrigger("MetricsArriving", "wow!");
+            // if (global.document) global.document.MetricsArriving = "true";
 
             let [hasMessageId, messageId] = Helper.Common.tryGetProperty(dataSource, "messageId");
             messageId = messageId || "<unknown-message>";
@@ -29,7 +30,8 @@ class DataSourceListener {
             try {
                 DataSourceActions.DataSourceUpdated(dataSource);
                 this.applyDocumentTitle(dataSource);
-                if (global.document) global.document.MetricsArrived = "true";
+                Helper.notifyTrigger("MetricsArrived", "wow!");
+                // if (global.document) global.document.MetricsArrived = "true";
             } catch(err){
                 console.error(err);
             }
@@ -56,11 +58,10 @@ class DataSourceListener {
                 })
                 .then(briefInfo => {
                     // if (global.document) global.document.BriefInfoArrived = "true";
-                    Helper.notifyTrigger("BriefInfoArrived", "wow!");
-                    // if (global.document) global.document.BriefInfoArrived = "true";
                     this.applyDocumentTitle(briefInfo);
                     DataSourceActions.BriefUpdated(briefInfo);
                     Helper.toConsole("BRIEF INFO", briefInfo);
+                    Helper.notifyTrigger("BriefInfoArrived", "wow!");
                 })
                 .catch(error => console.log(error));
         }
