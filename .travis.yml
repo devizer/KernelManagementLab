@@ -106,7 +106,9 @@ script:
   SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m
   cd bin/service
   export ASPNETCORE_URLS=http://0.0.0.0:5050
-  dotnet Universe.W3Top.dll &
+  sudo dotnet Universe.W3Top.dll >~/w3top.log 2>&1 &
+  sleep 3
+  cat ~/w3top.log
   popd
   
 - |
@@ -114,7 +116,7 @@ script:
     echo "HEADLESS INTEGRATION TESTS"
     pushd Universe.W3Top.HeadlessTests
     yarn install
-    node tests.js
+    bash tests.sh
     popd
   fi
   
