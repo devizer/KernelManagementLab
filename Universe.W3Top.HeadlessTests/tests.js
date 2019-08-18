@@ -6,7 +6,16 @@ const file = require('fs');
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
+const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
+
+const pages = {
+    home: {url:`/`, width: 1024, height: 600 },
+    mounts: {url:`/mounts`, width: 1024, height: 600 },
+    diskBenchmark: {url:'/disk-benchmark', width: 1180, height: 600 },
+};
+
+const pageSpec = pages.diskBenchmark;
+const pageUrl = `${w3topUrl}${pageSpec.url}`;
 
 (async function() {
 
@@ -39,9 +48,7 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
         await Browser.setWindowBounds(window);
     };
     
-    await setWindowSize(1024,1200);
-
-
+    await setWindowSize(pageSpec.width,pageSpec.height);
 
     const getExpression = async (expression) => {
         const expressionValue = await Runtime.evaluate({expression: expression});
@@ -80,7 +87,7 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
 
     await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
 
-    Page.navigate({ url: w3topUrl });
+    Page.navigate({ url: pageUrl });
 
     Page.loadEventFired(async() => {
         console.log("PAGE LOADED");
@@ -96,6 +103,8 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
         `);
         */
 
+        let isBriefInfoArrived = await waitForTrigger(5000,"BriefInfoArrived");
+        // next loop will fail if BriefInfoArrived is lost 
         for(let footerHeaderIndex=1; footerHeaderIndex<=4; footerHeaderIndex++)
         {
             let id=`FOOTER_INFO_HEADER_${footerHeaderIndex}`;

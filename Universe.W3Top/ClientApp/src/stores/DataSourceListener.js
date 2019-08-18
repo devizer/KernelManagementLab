@@ -55,6 +55,8 @@ class DataSourceListener {
                     return response.ok ? response.json() : {error: response.status, details: response.json()}
                 })
                 .then(briefInfo => {
+                    Helper.notifyTrigger("BriefInfoArrived", "wow!");
+                    // if (global.document) global.document.BriefInfoArrived = "true";
                     this.applyDocumentTitle(briefInfo);
                     DataSourceActions.BriefUpdated(briefInfo);
                     Helper.toConsole("BRIEF INFO", briefInfo);

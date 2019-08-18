@@ -25,6 +25,10 @@ export const isDocumentHidden = () => {
     return isHidden;
 }
 
+export const notifyTrigger = (triggerName, message) => {
+    if (global.document) global.document[triggerName] = message; 
+};
+
 export const log = function(caption) {
     if (process.env.NODE_ENV !== 'production') {
         console.log(`${caption}`);
