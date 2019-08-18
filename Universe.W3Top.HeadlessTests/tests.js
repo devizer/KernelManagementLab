@@ -131,6 +131,8 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         `);
         */
 
+        console.log(`LoadingStartedAt: '${await getExpression("window.LoadingStartedAt")}'`);
+
 
         const ss = await Page.captureScreenshot({format: 'png', fromSurface: true});
         file.writeFile('bin/screenshot [home].png', ss.data, 'base64', function(err) {
