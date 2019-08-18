@@ -14,7 +14,7 @@ const pages = {
     diskBenchmark: {url:'/disk-benchmark', width: 1180, height: 600 },
 };
 
-const pageSpec = pages.diskBenchmark;
+const pageSpec = pages.home;
 const pageUrl = `${w3topUrl}${pageSpec.url}`;
 
 (async function() {
@@ -52,6 +52,10 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
 
     const getExpression = async (expression) => {
         const expressionValue = await Runtime.evaluate({expression: expression});
+        // console.log(`Expression [${expression}] value is [%o]`, expressionValue);
+        if (expressionValue.result.className === "Date")
+            return Date.parse(expressionValue.result.description);
+        
         return expressionValue.result.value;
     };
 
@@ -67,6 +71,7 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
 
     const waitForTrigger = async (timeout, triggerKey, isSuccess) => {
         const start = new Date();
+        let ms = 1;
         while(true)
         {
             const value = await getExpression(`document.${triggerKey}`);
@@ -76,7 +81,8 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
                 return true;
             }
 
-            await delay(1);
+            await delay(ms);
+            ms = ms >= 128 ? ms : ms * 2;
             let elapsed = new Date() - start;
             if (elapsed > timeout) break;
         }
@@ -96,6 +102,7 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         console.log(`User Agent: '${await getExpression("navigator.userAgent")}'`);
         console.log(`Version: '${await getVersion()}'`);
         console.log(`LoadingStartedAt: '${await getExpression("window.LoadingStartedAt")}'`);
+        console.log(`LoadingStartedAt: '${await getExpression("document.LoadingStartedAt")}'`);
         
 
 

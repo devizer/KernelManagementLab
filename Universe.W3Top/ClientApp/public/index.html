@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8">
     <script>
-      var _LoadingStartedAt = new Date();
-      window.LoadingStartedAt = new Date();
-      document.LoadingStartedAt = new Date();
+      window.LoadingStartedAt = (window.performance) ? window.performance.now() : +new Date();
 /*
       document.addEventListener('DOMContentLoaded', function(){ 
       });
