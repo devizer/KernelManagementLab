@@ -32,9 +32,6 @@ import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ReactComponent as HardDiskIcon } from '../icons/hard-disk.svg';
 
-
-
-
 import AppGitInfo from "../AppGitInfo"
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
@@ -301,7 +298,7 @@ class PersistentDrawerLeft extends React.Component {
 
                     <table border="0" cellSpacing="0" cellPadding="0"><tbody>
                         {SysRow("host", system.hostname)}
-                        {SysRow("os", "The " + system.os)}
+                        {SysRow("os", system.os)}
                         {SysRow("cpu", system.processor)}
                         {SysRow("ram", system.memory)}
                     </tbody></table>

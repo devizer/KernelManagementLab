@@ -6,7 +6,7 @@ const file = require('fs');
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
+const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
 
 const pages = {
     home: {url:`/`, width: 1024, height: 600 },
