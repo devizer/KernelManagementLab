@@ -301,7 +301,7 @@ class PersistentDrawerLeft extends React.Component {
 
                     <table border="0" cellSpacing="0" cellPadding="0"><tbody>
                         {SysRow("host", system.hostname)}
-                        {SysRow("os", system.os)}
+                        {SysRow("os", "The " + system.os)}
                         {SysRow("cpu", system.processor)}
                         {SysRow("ram", system.memory)}
                     </tbody></table>
