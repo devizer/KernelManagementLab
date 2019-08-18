@@ -95,6 +95,8 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         console.log(`Visibility State: '${await getExpression("document.visibilityState")}'`);
         console.log(`User Agent: '${await getExpression("navigator.userAgent")}'`);
         console.log(`Version: '${await getVersion()}'`);
+        console.log(`LoadingStartedAt: '${await getExpression("window.LoadingStartedAt")}'`);
+        
 
 
         /*
