@@ -26,7 +26,8 @@ matrix:
 before_script:
 - |
   mkdir -p ~/build-artifacts/screenshots
-  exec &> >(tee "~/build-artifacts/full-build-log.txt");
+  exec &> >(tee ~/build-artifacts/full-build-log.txt);
+  echo "Build Started"
 - |
   if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
     sudo apt-get -f install
@@ -145,6 +146,7 @@ script:
   tar czf public-bintray/$ver/build-log.tar.gz ~/build-artifacts
 - cat bintray.json || true
 - pwd; df -h; ls -la public-bintray/$ver
+- ls -la ~/build-artifacts
 
 deploy:
 
