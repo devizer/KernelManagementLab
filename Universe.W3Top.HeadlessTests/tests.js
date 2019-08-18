@@ -22,8 +22,15 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
     console.log(`Chrome port: ${chrome.port}`);
 
     const protocol = await CDP({port: chrome.port});
+    let ver = protocol.Version;
+    console.log(`VER: ${ver}`);
 
-    const { DOM, Page, Emulation, Runtime} = protocol;
+    const { DOM, Page, Emulation, Runtime, Browser} = protocol;
+    // console.log(protocol);
+    
+    console.log(`BROWSER VER: 
+%O`, await Browser.getVersion());
+    
 
     const getExpression = async (expression) => {
         const expressionValue = await Runtime.evaluate({expression: expression});
@@ -113,5 +120,5 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
         console.log("The End");
     });
 
-})().then(() => {});
+})();
 
