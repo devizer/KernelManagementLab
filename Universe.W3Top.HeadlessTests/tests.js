@@ -30,7 +30,18 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
     
     console.log(`BROWSER VER: 
 %O`, await Browser.getVersion());
+
+    const setWindowSize = async (width, height) => {
+        var window = await Browser.getWindowForTarget();
+        console.log("New Size: [%d * %d], Prev Window: %o", width, height, window);
+        window.bounds.width=width;
+        window.bounds.height=height;
+        await Browser.setWindowBounds(window);
+    };
     
+    await setWindowSize(1024,1200);
+
+
 
     const getExpression = async (expression) => {
         const expressionValue = await Runtime.evaluate({expression: expression});

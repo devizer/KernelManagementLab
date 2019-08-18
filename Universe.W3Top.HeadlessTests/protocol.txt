@@ -1,0 +1,4725 @@
+Chrome {
+  _events: [Object: null prototype] {},
+  _eventsCount: 0,
+  _maxListeners: undefined,
+  host: 'localhost',
+  port: 33461,
+  secure: false,
+  useHostName: false,
+  alterPath: [Function],
+  protocol:
+   { domains:
+      [ [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object],
+        [Object] ],
+     version: { major: '1', minor: '3' } },
+  local: false,
+  target: [Function: defaultTarget],
+  _notifier:
+   EventEmitter {
+     _events: [Object: null prototype] { error: [Function] },
+     _eventsCount: 1,
+     _maxListeners: undefined },
+  _callbacks: {},
+  _nextCommandId: 1,
+  webSocketUrl:
+   'ws://127.0.0.1:33461/devtools/page/B61775AFCA41F800461F3A053B82B136',
+  Accessibility:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables the accessibility domain.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables the accessibility domain which causes `AXNodeId`s to remain consistent between method calls.\nThis turns on accessibility for the page, which can impact performance until accessibility is disabled.' },
+     getPartialAXTree:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Fetches the accessibility node and partial accessibility tree for this DOM node, if it exists.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getFullAXTree:
+      { [Function: handler]
+        category: 'command',
+        description: 'Fetches the entire accessibility tree',
+        experimental: true,
+        returns: [Array] },
+     AXNodeId:
+      { category: 'type',
+        id: 'AXNodeId',
+        description: 'Unique accessibility node identifier.',
+        type: 'string' },
+     AXValueType:
+      { category: 'type',
+        id: 'AXValueType',
+        description: 'Enum of possible property types.',
+        type: 'string',
+        enum: [Array] },
+     AXValueSourceType:
+      { category: 'type',
+        id: 'AXValueSourceType',
+        description: 'Enum of possible property sources.',
+        type: 'string',
+        enum: [Array] },
+     AXValueNativeSourceType:
+      { category: 'type',
+        id: 'AXValueNativeSourceType',
+        description:
+         'Enum of possible native property sources (as a subtype of a particular AXValueSourceType).',
+        type: 'string',
+        enum: [Array] },
+     AXValueSource:
+      { category: 'type',
+        id: 'AXValueSource',
+        description: 'A single source for a computed AX property.',
+        type: 'object',
+        properties: [Object] },
+     AXRelatedNode:
+      { category: 'type',
+        id: 'AXRelatedNode',
+        type: 'object',
+        properties: [Object] },
+     AXProperty:
+      { category: 'type',
+        id: 'AXProperty',
+        type: 'object',
+        properties: [Object] },
+     AXValue:
+      { category: 'type',
+        id: 'AXValue',
+        description: 'A single computed AX property.',
+        type: 'object',
+        properties: [Object] },
+     AXPropertyName:
+      { category: 'type',
+        id: 'AXPropertyName',
+        description:
+         'Values of AXProperty name:\n- from \'busy\' to \'roledescription\': states which apply to every AX node\n- from \'live\' to \'root\': attributes which apply to nodes in live regions\n- from \'autocomplete\' to \'valuetext\': attributes which apply to widgets\n- from \'checked\' to \'selected\': states which apply to widgets\n- from \'activedescendant\' to \'owns\' - relationships between elements other than parent/child/sibling.',
+        type: 'string',
+        enum: [Array] },
+     AXNode:
+      { category: 'type',
+        id: 'AXNode',
+        description: 'A node in the accessibility tree.',
+        type: 'object',
+        properties: [Object] } },
+  Animation:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables animation domain notifications.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables animation domain notifications.' },
+     getCurrentTime:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns the current time of the an animation.',
+        parameters: [Object],
+        returns: [Array] },
+     getPlaybackRate:
+      { [Function: handler]
+        category: 'command',
+        description: 'Gets the playback rate of the document timeline.',
+        returns: [Array] },
+     releaseAnimations:
+      { [Function: handler]
+        category: 'command',
+        description: 'Releases a set of animations to no longer be manipulated.',
+        parameters: [Object] },
+     resolveAnimation:
+      { [Function: handler]
+        category: 'command',
+        description: 'Gets the remote object of the Animation.',
+        parameters: [Object],
+        returns: [Array] },
+     seekAnimations:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Seek a set of animations to a particular time within each animation.',
+        parameters: [Object] },
+     setPaused:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets the paused state of a set of animations.',
+        parameters: [Object] },
+     setPlaybackRate:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets the playback rate of the document timeline.',
+        parameters: [Object] },
+     setTiming:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets the timing of an animation node.',
+        parameters: [Object] },
+     animationCanceled:
+      { [Function: handler]
+        category: 'event',
+        description: 'Event for when an animation has been cancelled.',
+        parameters: [Object] },
+     animationCreated:
+      { [Function: handler]
+        category: 'event',
+        description: 'Event for each animation that has been created.',
+        parameters: [Object] },
+     animationStarted:
+      { [Function: handler]
+        category: 'event',
+        description: 'Event for animation that has been started.',
+        parameters: [Object] },
+     Animation:
+      { category: 'type',
+        id: 'Animation',
+        description: 'Animation instance.',
+        type: 'object',
+        properties: [Object] },
+     AnimationEffect:
+      { category: 'type',
+        id: 'AnimationEffect',
+        description: 'AnimationEffect instance',
+        type: 'object',
+        properties: [Object] },
+     KeyframesRule:
+      { category: 'type',
+        id: 'KeyframesRule',
+        description: 'Keyframes Rule',
+        type: 'object',
+        properties: [Object] },
+     KeyframeStyle:
+      { category: 'type',
+        id: 'KeyframeStyle',
+        description: 'Keyframe Style',
+        type: 'object',
+        properties: [Object] } },
+  ApplicationCache:
+   { enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables application cache domain notifications.' },
+     getApplicationCacheForFrame:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns relevant application cache data for the document in given frame.',
+        parameters: [Object],
+        returns: [Array] },
+     getFramesWithManifests:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns array of frame identifiers with manifest urls for each frame containing a document\nassociated with some application cache.',
+        returns: [Array] },
+     getManifestForFrame:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns manifest URL for document in the given frame.',
+        parameters: [Object],
+        returns: [Array] },
+     applicationCacheStatusUpdated:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     networkStateUpdated:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     ApplicationCacheResource:
+      { category: 'type',
+        id: 'ApplicationCacheResource',
+        description: 'Detailed application cache resource information.',
+        type: 'object',
+        properties: [Object] },
+     ApplicationCache:
+      { category: 'type',
+        id: 'ApplicationCache',
+        description: 'Detailed application cache information.',
+        type: 'object',
+        properties: [Object] },
+     FrameWithManifest:
+      { category: 'type',
+        id: 'FrameWithManifest',
+        description: 'Frame identifier - manifest URL pair.',
+        type: 'object',
+        properties: [Object] } },
+  Audits:
+   { getEncodedResponse:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns the response body and size if it were re-encoded with the specified settings. Only\napplies to images.',
+        parameters: [Object],
+        returns: [Array] } },
+  BackgroundService:
+   { startObserving:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables event updates for the service.',
+        parameters: [Object] },
+     stopObserving:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables event updates for the service.',
+        parameters: [Object] },
+     setRecording:
+      { [Function: handler]
+        category: 'command',
+        description: 'Set the recording state for the service.',
+        parameters: [Object] },
+     clearEvents:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears all stored data for the service.',
+        parameters: [Object] },
+     recordingStateChanged:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Called when the recording state for the service has been updated.',
+        parameters: [Object] },
+     backgroundServiceEventReceived:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Called with all existing backgroundServiceEvents when enabled, and all new\nevents afterwards if enabled and recording.',
+        parameters: [Object] },
+     ServiceName:
+      { category: 'type',
+        id: 'ServiceName',
+        description:
+         'The Background Service that will be associated with the commands/events.\nEvery Background Service operates independently, but they share the same\nAPI.',
+        type: 'string',
+        enum: [Array] },
+     EventMetadata:
+      { category: 'type',
+        id: 'EventMetadata',
+        description:
+         'A key-value pair for additional event information to pass along.',
+        type: 'object',
+        properties: [Object] },
+     BackgroundServiceEvent:
+      { category: 'type',
+        id: 'BackgroundServiceEvent',
+        type: 'object',
+        properties: [Object] } },
+  Browser:
+   { grantPermissions:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Grant specific permissions to the given origin and reject all others.',
+        experimental: true,
+        parameters: [Object] },
+     resetPermissions:
+      { [Function: handler]
+        category: 'command',
+        description: 'Reset all permission management for all origins.',
+        experimental: true,
+        parameters: [Object] },
+     close:
+      { [Function: handler]
+        category: 'command',
+        description: 'Close browser gracefully.' },
+     crash:
+      { [Function: handler]
+        category: 'command',
+        description: 'Crashes browser on the main thread.',
+        experimental: true },
+     crashGpuProcess:
+      { [Function: handler]
+        category: 'command',
+        description: 'Crashes GPU process.',
+        experimental: true },
+     getVersion:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns version information.',
+        returns: [Array] },
+     getBrowserCommandLine:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns the command line switches for the browser process if, and only if\n--enable-automation is on the commandline.',
+        experimental: true,
+        returns: [Array] },
+     getHistograms:
+      { [Function: handler]
+        category: 'command',
+        description: 'Get Chrome histograms.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getHistogram:
+      { [Function: handler]
+        category: 'command',
+        description: 'Get a Chrome histogram by name.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getWindowBounds:
+      { [Function: handler]
+        category: 'command',
+        description: 'Get position and size of the browser window.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getWindowForTarget:
+      { [Function: handler]
+        category: 'command',
+        description: 'Get the browser window that contains the devtools target.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     setWindowBounds:
+      { [Function: handler]
+        category: 'command',
+        description: 'Set position and/or size of the browser window.',
+        experimental: true,
+        parameters: [Object] },
+     setDockTile:
+      { [Function: handler]
+        category: 'command',
+        description: 'Set dock tile details, platform-specific.',
+        experimental: true,
+        parameters: [Object] },
+     WindowID:
+      { category: 'type',
+        id: 'WindowID',
+        experimental: true,
+        type: 'integer' },
+     WindowState:
+      { category: 'type',
+        id: 'WindowState',
+        description: 'The state of the browser window.',
+        experimental: true,
+        type: 'string',
+        enum: [Array] },
+     Bounds:
+      { category: 'type',
+        id: 'Bounds',
+        description: 'Browser window bounds information',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     PermissionType:
+      { category: 'type',
+        id: 'PermissionType',
+        experimental: true,
+        type: 'string',
+        enum: [Array] },
+     Bucket:
+      { category: 'type',
+        id: 'Bucket',
+        description: 'Chrome histogram bucket.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     Histogram:
+      { category: 'type',
+        id: 'Histogram',
+        description: 'Chrome histogram.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] } },
+  CSS:
+   { addRule:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Inserts a new rule with the given `ruleText` in a stylesheet with given `styleSheetId`, at the\nposition specified by `location`.',
+        parameters: [Object],
+        returns: [Array] },
+     collectClassNames:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns all class names from specified stylesheet.',
+        parameters: [Object],
+        returns: [Array] },
+     createStyleSheet:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Creates a new special "via-inspector" stylesheet in the frame with given `frameId`.',
+        parameters: [Object],
+        returns: [Array] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables the CSS agent for the given page.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables the CSS agent for the given page. Clients should not assume that the CSS agent has been\nenabled until the result of this command is received.' },
+     forcePseudoState:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Ensures that the given node will have specified pseudo-classes whenever its style is computed by\nthe browser.',
+        parameters: [Object] },
+     getBackgroundColors:
+      { [Function: handler] category: 'command', parameters: [Object], returns: [Array] },
+     getComputedStyleForNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns the computed style for a DOM node identified by `nodeId`.',
+        parameters: [Object],
+        returns: [Array] },
+     getInlineStylesForNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns the styles defined inline (explicitly in the "style" attribute and implicitly, using DOM\nattributes) for a DOM node identified by `nodeId`.',
+        parameters: [Object],
+        returns: [Array] },
+     getMatchedStylesForNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns requested styles for a DOM node identified by `nodeId`.',
+        parameters: [Object],
+        returns: [Array] },
+     getMediaQueries:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns all media queries parsed by the rendering engine.',
+        returns: [Array] },
+     getPlatformFontsForNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Requests information about platform fonts which we used to render child TextNodes in the given\nnode.',
+        parameters: [Object],
+        returns: [Array] },
+     getStyleSheetText:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns the current textual content for a stylesheet.',
+        parameters: [Object],
+        returns: [Array] },
+     setEffectivePropertyValueForNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Find a rule with the given active property for the given node and set the new value for this\nproperty',
+        parameters: [Object] },
+     setKeyframeKey:
+      { [Function: handler]
+        category: 'command',
+        description: 'Modifies the keyframe rule key text.',
+        parameters: [Object],
+        returns: [Array] },
+     setMediaText:
+      { [Function: handler]
+        category: 'command',
+        description: 'Modifies the rule selector.',
+        parameters: [Object],
+        returns: [Array] },
+     setRuleSelector:
+      { [Function: handler]
+        category: 'command',
+        description: 'Modifies the rule selector.',
+        parameters: [Object],
+        returns: [Array] },
+     setStyleSheetText:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets the new stylesheet text.',
+        parameters: [Object],
+        returns: [Array] },
+     setStyleTexts:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Applies specified style edits one after another in the given order.',
+        parameters: [Object],
+        returns: [Array] },
+     startRuleUsageTracking:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables the selector recording.' },
+     stopRuleUsageTracking:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Stop tracking rule usage and return the list of rules that were used since last call to\n`takeCoverageDelta` (or since start of coverage instrumentation)',
+        returns: [Array] },
+     takeCoverageDelta:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Obtain list of rules that became used since last call to this method (or since start of coverage\ninstrumentation)',
+        returns: [Array] },
+     fontsUpdated:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded\nweb font',
+        parameters: [Object] },
+     mediaQueryResultChanged:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fires whenever a MediaQuery result changes (for example, after a browser window has been\nresized.) The current implementation considers only viewport-dependent media features.' },
+     styleSheetAdded:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired whenever an active document stylesheet is added.',
+        parameters: [Object] },
+     styleSheetChanged:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired whenever a stylesheet is changed as a result of the client operation.',
+        parameters: [Object] },
+     styleSheetRemoved:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired whenever an active document stylesheet is removed.',
+        parameters: [Object] },
+     StyleSheetId: { category: 'type', id: 'StyleSheetId', type: 'string' },
+     StyleSheetOrigin:
+      { category: 'type',
+        id: 'StyleSheetOrigin',
+        description:
+         'Stylesheet type: "injected" for stylesheets injected via extension, "user-agent" for user-agent\nstylesheets, "inspector" for stylesheets created by the inspector (i.e. those holding the "via\ninspector" rules), "regular" for regular stylesheets.',
+        type: 'string',
+        enum: [Array] },
+     PseudoElementMatches:
+      { category: 'type',
+        id: 'PseudoElementMatches',
+        description: 'CSS rule collection for a single pseudo style.',
+        type: 'object',
+        properties: [Object] },
+     InheritedStyleEntry:
+      { category: 'type',
+        id: 'InheritedStyleEntry',
+        description: 'Inherited CSS rule collection from ancestor node.',
+        type: 'object',
+        properties: [Object] },
+     RuleMatch:
+      { category: 'type',
+        id: 'RuleMatch',
+        description: 'Match data for a CSS rule.',
+        type: 'object',
+        properties: [Object] },
+     Value:
+      { category: 'type',
+        id: 'Value',
+        description:
+         'Data for a simple selector (these are delimited by commas in a selector list).',
+        type: 'object',
+        properties: [Object] },
+     SelectorList:
+      { category: 'type',
+        id: 'SelectorList',
+        description: 'Selector list data.',
+        type: 'object',
+        properties: [Object] },
+     CSSStyleSheetHeader:
+      { category: 'type',
+        id: 'CSSStyleSheetHeader',
+        description: 'CSS stylesheet metainformation.',
+        type: 'object',
+        properties: [Object] },
+     CSSRule:
+      { category: 'type',
+        id: 'CSSRule',
+        description: 'CSS rule representation.',
+        type: 'object',
+        properties: [Object] },
+     RuleUsage:
+      { category: 'type',
+        id: 'RuleUsage',
+        description: 'CSS coverage information.',
+        type: 'object',
+        properties: [Object] },
+     SourceRange:
+      { category: 'type',
+        id: 'SourceRange',
+        description: 'Text range within a resource. All numbers are zero-based.',
+        type: 'object',
+        properties: [Object] },
+     ShorthandEntry:
+      { category: 'type',
+        id: 'ShorthandEntry',
+        type: 'object',
+        properties: [Object] },
+     CSSComputedStyleProperty:
+      { category: 'type',
+        id: 'CSSComputedStyleProperty',
+        type: 'object',
+        properties: [Object] },
+     CSSStyle:
+      { category: 'type',
+        id: 'CSSStyle',
+        description: 'CSS style representation.',
+        type: 'object',
+        properties: [Object] },
+     CSSProperty:
+      { category: 'type',
+        id: 'CSSProperty',
+        description: 'CSS property declaration data.',
+        type: 'object',
+        properties: [Object] },
+     CSSMedia:
+      { category: 'type',
+        id: 'CSSMedia',
+        description: 'CSS media rule descriptor.',
+        type: 'object',
+        properties: [Object] },
+     MediaQuery:
+      { category: 'type',
+        id: 'MediaQuery',
+        description: 'Media query descriptor.',
+        type: 'object',
+        properties: [Object] },
+     MediaQueryExpression:
+      { category: 'type',
+        id: 'MediaQueryExpression',
+        description: 'Media query expression descriptor.',
+        type: 'object',
+        properties: [Object] },
+     PlatformFontUsage:
+      { category: 'type',
+        id: 'PlatformFontUsage',
+        description:
+         'Information about amount of glyphs that were rendered with given font.',
+        type: 'object',
+        properties: [Object] },
+     FontFace:
+      { category: 'type',
+        id: 'FontFace',
+        description:
+         'Properties of a web font: https://www.w3.org/TR/2008/REC-CSS2-20080411/fonts.html#font-descriptions',
+        type: 'object',
+        properties: [Object] },
+     CSSKeyframesRule:
+      { category: 'type',
+        id: 'CSSKeyframesRule',
+        description: 'CSS keyframes rule representation.',
+        type: 'object',
+        properties: [Object] },
+     CSSKeyframeRule:
+      { category: 'type',
+        id: 'CSSKeyframeRule',
+        description: 'CSS keyframe rule representation.',
+        type: 'object',
+        properties: [Object] },
+     StyleDeclarationEdit:
+      { category: 'type',
+        id: 'StyleDeclarationEdit',
+        description:
+         'A descriptor of operation to mutate style declaration text.',
+        type: 'object',
+        properties: [Object] } },
+  CacheStorage:
+   { deleteCache:
+      { [Function: handler]
+        category: 'command',
+        description: 'Deletes a cache.',
+        parameters: [Object] },
+     deleteEntry:
+      { [Function: handler]
+        category: 'command',
+        description: 'Deletes a cache entry.',
+        parameters: [Object] },
+     requestCacheNames:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests cache names.',
+        parameters: [Object],
+        returns: [Array] },
+     requestCachedResponse:
+      { [Function: handler]
+        category: 'command',
+        description: 'Fetches cache entry.',
+        parameters: [Object],
+        returns: [Array] },
+     requestEntries:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests data from cache.',
+        parameters: [Object],
+        returns: [Array] },
+     CacheId:
+      { category: 'type',
+        id: 'CacheId',
+        description: 'Unique identifier of the Cache object.',
+        type: 'string' },
+     CachedResponseType:
+      { category: 'type',
+        id: 'CachedResponseType',
+        description: 'type of HTTP response cached',
+        type: 'string',
+        enum: [Array] },
+     DataEntry:
+      { category: 'type',
+        id: 'DataEntry',
+        description: 'Data entry.',
+        type: 'object',
+        properties: [Object] },
+     Cache:
+      { category: 'type',
+        id: 'Cache',
+        description: 'Cache identifier.',
+        type: 'object',
+        properties: [Object] },
+     Header:
+      { category: 'type',
+        id: 'Header',
+        type: 'object',
+        properties: [Object] },
+     CachedResponse:
+      { category: 'type',
+        id: 'CachedResponse',
+        description: 'Cached response',
+        type: 'object',
+        properties: [Object] } },
+  Cast:
+   { enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Starts observing for sinks that can be used for tab mirroring, and if set,\nsinks compatible with |presentationUrl| as well. When sinks are found, a\n|sinksUpdated| event is fired.\nAlso starts observing for issue messages. When an issue is added or removed,\nan |issueUpdated| event is fired.',
+        parameters: [Object] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Stops observing for sinks and issues.' },
+     setSinkToUse:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sets a sink to be used when the web page requests the browser to choose a\nsink via Presentation API, Remote Playback API, or Cast SDK.',
+        parameters: [Object] },
+     startTabMirroring:
+      { [Function: handler]
+        category: 'command',
+        description: 'Starts mirroring the tab to the sink.',
+        parameters: [Object] },
+     stopCasting:
+      { [Function: handler]
+        category: 'command',
+        description: 'Stops the active Cast session on the sink.',
+        parameters: [Object] },
+     sinksUpdated:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'This is fired whenever the list of available sinks changes. A sink is a\ndevice or a software surface that you can cast to.',
+        parameters: [Object] },
+     issueUpdated:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'This is fired whenever the outstanding issue/error message changes.\n|issueMessage| is empty if there is no issue.',
+        parameters: [Object] } },
+  DOM:
+   { collectClassNamesFromSubtree:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Collects class names for the node with given id and all of it\'s child nodes.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     copyTo:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Creates a deep copy of the specified node and places it into the target container before the\ngiven anchor.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     describeNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Describes node given its id, does not require domain to be enabled. Does not start tracking any\nobjects, can be used for automation.',
+        parameters: [Object],
+        returns: [Array] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables DOM agent for the given page.' },
+     discardSearchResults:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Discards search results from the session with the given id. `getSearchResults` should no longer\nbe called for that search.',
+        experimental: true,
+        parameters: [Object] },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables DOM agent for the given page.' },
+     focus:
+      { [Function: handler]
+        category: 'command',
+        description: 'Focuses the given element.',
+        parameters: [Object] },
+     getAttributes:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns attributes for the specified node.',
+        parameters: [Object],
+        returns: [Array] },
+     getBoxModel:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns boxes for the given node.',
+        parameters: [Object],
+        returns: [Array] },
+     getContentQuads:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns quads that describe node position on the page. This method\nmight return multiple quads for inline nodes.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getDocument:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns the root DOM node (and optionally the subtree) to the caller.',
+        parameters: [Object],
+        returns: [Array] },
+     getFlattenedDocument:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns the root DOM node (and optionally the subtree) to the caller.',
+        parameters: [Object],
+        returns: [Array] },
+     getNodeForLocation:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns node id at given location. Depending on whether DOM domain is enabled, nodeId is\neither returned or not.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getOuterHTML:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns node\'s HTML markup.',
+        parameters: [Object],
+        returns: [Array] },
+     getRelayoutBoundary:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns the id of the nearest ancestor that is a relayout boundary.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getSearchResults:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns search results from given `fromIndex` to given `toIndex` from the search with the given\nidentifier.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     hideHighlight:
+      { [Function: handler]
+        category: 'command',
+        description: 'Hides any highlight.',
+        redirect: 'Overlay' },
+     highlightNode:
+      { [Function: handler]
+        category: 'command',
+        description: 'Highlights DOM node.',
+        redirect: 'Overlay' },
+     highlightRect:
+      { [Function: handler]
+        category: 'command',
+        description: 'Highlights given rectangle.',
+        redirect: 'Overlay' },
+     markUndoableState:
+      { [Function: handler]
+        category: 'command',
+        description: 'Marks last undoable state.',
+        experimental: true },
+     moveTo:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Moves node into the new container, places it before the given anchor.',
+        parameters: [Object],
+        returns: [Array] },
+     performSearch:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Searches for a given string in the DOM tree. Use `getSearchResults` to access search results or\n`cancelSearch` to end this search session.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     pushNodeByPathToFrontend:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Requests that the node is sent to the caller given its path. // FIXME, use XPath',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     pushNodesByBackendIdsToFrontend:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Requests that a batch of nodes is sent to the caller given their backend node ids.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     querySelector:
+      { [Function: handler]
+        category: 'command',
+        description: 'Executes `querySelector` on a given node.',
+        parameters: [Object],
+        returns: [Array] },
+     querySelectorAll:
+      { [Function: handler]
+        category: 'command',
+        description: 'Executes `querySelectorAll` on a given node.',
+        parameters: [Object],
+        returns: [Array] },
+     redo:
+      { [Function: handler]
+        category: 'command',
+        description: 'Re-does the last undone action.',
+        experimental: true },
+     removeAttribute:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Removes attribute with given name from an element with given id.',
+        parameters: [Object] },
+     removeNode:
+      { [Function: handler]
+        category: 'command',
+        description: 'Removes node with given id.',
+        parameters: [Object] },
+     requestChildNodes:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Requests that children of the node with given id are returned to the caller in form of\n`setChildNodes` events where not only immediate children are retrieved, but all children down to\nthe specified depth.',
+        parameters: [Object] },
+     requestNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Requests that the node is sent to the caller given the JavaScript node object reference. All\nnodes that form the path from the node to the root are also sent to the client as a series of\n`setChildNodes` notifications.',
+        parameters: [Object],
+        returns: [Array] },
+     resolveNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Resolves the JavaScript node object for a given NodeId or BackendNodeId.',
+        parameters: [Object],
+        returns: [Array] },
+     setAttributeValue:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets attribute for an element with given id.',
+        parameters: [Object] },
+     setAttributesAsText:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sets attributes on element with given id. This method is useful when user edits some existing\nattribute value and types in several attribute name/value pairs.',
+        parameters: [Object] },
+     setFileInputFiles:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets files for the given file input element.',
+        parameters: [Object] },
+     getFileInfo:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns file information for the given\nFile wrapper.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     setInspectedNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables console to refer to the node with given id via $x (see Command Line API for more details\n$x functions).',
+        experimental: true,
+        parameters: [Object] },
+     setNodeName:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets node name for a node with given id.',
+        parameters: [Object],
+        returns: [Array] },
+     setNodeValue:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets node value for a node with given id.',
+        parameters: [Object] },
+     setOuterHTML:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets node HTML markup, returns new node id.',
+        parameters: [Object] },
+     undo:
+      { [Function: handler]
+        category: 'command',
+        description: 'Undoes the last performed action.',
+        experimental: true },
+     getFrameOwner:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns iframe node that owns iframe with the given domain.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     attributeModified:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when `Element`\'s attribute is modified.',
+        parameters: [Object] },
+     attributeRemoved:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when `Element`\'s attribute is removed.',
+        parameters: [Object] },
+     characterDataModified:
+      { [Function: handler]
+        category: 'event',
+        description: 'Mirrors `DOMCharacterDataModified` event.',
+        parameters: [Object] },
+     childNodeCountUpdated:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when `Container`\'s child node count has changed.',
+        parameters: [Object] },
+     childNodeInserted:
+      { [Function: handler]
+        category: 'event',
+        description: 'Mirrors `DOMNodeInserted` event.',
+        parameters: [Object] },
+     childNodeRemoved:
+      { [Function: handler]
+        category: 'event',
+        description: 'Mirrors `DOMNodeRemoved` event.',
+        parameters: [Object] },
+     distributedNodesUpdated:
+      { [Function: handler]
+        category: 'event',
+        description: 'Called when distrubution is changed.',
+        experimental: true,
+        parameters: [Object] },
+     documentUpdated:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when `Document` has been totally updated. Node ids are no longer valid.' },
+     inlineStyleInvalidated:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when `Element`\'s inline style is modified via a CSS property modification.',
+        experimental: true,
+        parameters: [Object] },
+     pseudoElementAdded:
+      { [Function: handler]
+        category: 'event',
+        description: 'Called when a pseudo element is added to an element.',
+        experimental: true,
+        parameters: [Object] },
+     pseudoElementRemoved:
+      { [Function: handler]
+        category: 'event',
+        description: 'Called when a pseudo element is removed from an element.',
+        experimental: true,
+        parameters: [Object] },
+     setChildNodes:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when backend wants to provide client with the missing DOM structure. This happens upon\nmost of the calls requesting node ids.',
+        parameters: [Object] },
+     shadowRootPopped:
+      { [Function: handler]
+        category: 'event',
+        description: 'Called when shadow root is popped from the element.',
+        experimental: true,
+        parameters: [Object] },
+     shadowRootPushed:
+      { [Function: handler]
+        category: 'event',
+        description: 'Called when shadow root is pushed into the element.',
+        experimental: true,
+        parameters: [Object] },
+     NodeId:
+      { category: 'type',
+        id: 'NodeId',
+        description: 'Unique DOM node identifier.',
+        type: 'integer' },
+     BackendNodeId:
+      { category: 'type',
+        id: 'BackendNodeId',
+        description:
+         'Unique DOM node identifier used to reference a node that may not have been pushed to the\nfront-end.',
+        type: 'integer' },
+     BackendNode:
+      { category: 'type',
+        id: 'BackendNode',
+        description: 'Backend node with a friendly name.',
+        type: 'object',
+        properties: [Object] },
+     PseudoType:
+      { category: 'type',
+        id: 'PseudoType',
+        description: 'Pseudo element type.',
+        type: 'string',
+        enum: [Array] },
+     ShadowRootType:
+      { category: 'type',
+        id: 'ShadowRootType',
+        description: 'Shadow root type.',
+        type: 'string',
+        enum: [Array] },
+     Node:
+      { category: 'type',
+        id: 'Node',
+        description:
+         'DOM interaction is implemented in terms of mirror objects that represent the actual DOM nodes.\nDOMNode is a base node mirror type.',
+        type: 'object',
+        properties: [Object] },
+     RGBA:
+      { category: 'type',
+        id: 'RGBA',
+        description: 'A structure holding an RGBA color.',
+        type: 'object',
+        properties: [Object] },
+     Quad:
+      { category: 'type',
+        id: 'Quad',
+        description:
+         'An array of quad vertices, x immediately followed by y for each point, points clock-wise.',
+        type: 'array',
+        items: [Object] },
+     BoxModel:
+      { category: 'type',
+        id: 'BoxModel',
+        description: 'Box model.',
+        type: 'object',
+        properties: [Object] },
+     ShapeOutsideInfo:
+      { category: 'type',
+        id: 'ShapeOutsideInfo',
+        description: 'CSS Shape Outside details.',
+        type: 'object',
+        properties: [Object] },
+     Rect:
+      { category: 'type',
+        id: 'Rect',
+        description: 'Rectangle.',
+        type: 'object',
+        properties: [Object] } },
+  DOMDebugger:
+   { getEventListeners:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns event listeners of the given object.',
+        parameters: [Object],
+        returns: [Array] },
+     removeDOMBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Removes DOM breakpoint that was set using `setDOMBreakpoint`.',
+        parameters: [Object] },
+     removeEventListenerBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Removes breakpoint on particular DOM event.',
+        parameters: [Object] },
+     removeInstrumentationBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Removes breakpoint on particular native event.',
+        experimental: true,
+        parameters: [Object] },
+     removeXHRBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Removes breakpoint from XMLHttpRequest.',
+        parameters: [Object] },
+     setDOMBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets breakpoint on particular operation with DOM.',
+        parameters: [Object] },
+     setEventListenerBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets breakpoint on particular DOM event.',
+        parameters: [Object] },
+     setInstrumentationBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets breakpoint on particular native event.',
+        experimental: true,
+        parameters: [Object] },
+     setXHRBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets breakpoint on XMLHttpRequest.',
+        parameters: [Object] },
+     DOMBreakpointType:
+      { category: 'type',
+        id: 'DOMBreakpointType',
+        description: 'DOM breakpoint type.',
+        type: 'string',
+        enum: [Array] },
+     EventListener:
+      { category: 'type',
+        id: 'EventListener',
+        description: 'Object event listener.',
+        type: 'object',
+        properties: [Object] } },
+  DOMSnapshot:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables DOM snapshot agent for the given page.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables DOM snapshot agent for the given page.' },
+     getSnapshot:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns a document snapshot, including the full DOM tree of the root node (including iframes,\ntemplate contents, and imported documents) in a flattened array, as well as layout and\nwhite-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is\nflattened.',
+        deprecated: true,
+        parameters: [Object],
+        returns: [Array] },
+     captureSnapshot:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns a document snapshot, including the full DOM tree of the root node (including iframes,\ntemplate contents, and imported documents) in a flattened array, as well as layout and\nwhite-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is\nflattened.',
+        parameters: [Object],
+        returns: [Array] },
+     DOMNode:
+      { category: 'type',
+        id: 'DOMNode',
+        description: 'A Node in the DOM tree.',
+        type: 'object',
+        properties: [Object] },
+     InlineTextBox:
+      { category: 'type',
+        id: 'InlineTextBox',
+        description:
+         'Details of post layout rendered text positions. The exact layout should not be regarded as\nstable and may change between versions.',
+        type: 'object',
+        properties: [Object] },
+     LayoutTreeNode:
+      { category: 'type',
+        id: 'LayoutTreeNode',
+        description: 'Details of an element in the DOM tree with a LayoutObject.',
+        type: 'object',
+        properties: [Object] },
+     ComputedStyle:
+      { category: 'type',
+        id: 'ComputedStyle',
+        description:
+         'A subset of the full ComputedStyle as defined by the request whitelist.',
+        type: 'object',
+        properties: [Object] },
+     NameValue:
+      { category: 'type',
+        id: 'NameValue',
+        description: 'A name/value pair.',
+        type: 'object',
+        properties: [Object] },
+     StringIndex:
+      { category: 'type',
+        id: 'StringIndex',
+        description: 'Index of the string in the strings table.',
+        type: 'integer' },
+     ArrayOfStrings:
+      { category: 'type',
+        id: 'ArrayOfStrings',
+        description: 'Index of the string in the strings table.',
+        type: 'array',
+        items: [Object] },
+     RareStringData:
+      { category: 'type',
+        id: 'RareStringData',
+        description: 'Data that is only present on rare nodes.',
+        type: 'object',
+        properties: [Object] },
+     RareBooleanData:
+      { category: 'type',
+        id: 'RareBooleanData',
+        type: 'object',
+        properties: [Object] },
+     RareIntegerData:
+      { category: 'type',
+        id: 'RareIntegerData',
+        type: 'object',
+        properties: [Object] },
+     Rectangle:
+      { category: 'type',
+        id: 'Rectangle',
+        type: 'array',
+        items: [Object] },
+     DocumentSnapshot:
+      { category: 'type',
+        id: 'DocumentSnapshot',
+        description: 'Document snapshot.',
+        type: 'object',
+        properties: [Object] },
+     NodeTreeSnapshot:
+      { category: 'type',
+        id: 'NodeTreeSnapshot',
+        description: 'Table containing nodes.',
+        type: 'object',
+        properties: [Object] },
+     LayoutTreeSnapshot:
+      { category: 'type',
+        id: 'LayoutTreeSnapshot',
+        description: 'Details of an element in the DOM tree with a LayoutObject.',
+        type: 'object',
+        properties: [Object] },
+     TextBoxSnapshot:
+      { category: 'type',
+        id: 'TextBoxSnapshot',
+        description:
+         'Details of post layout rendered text positions. The exact layout should not be regarded as\nstable and may change between versions.',
+        type: 'object',
+        properties: [Object] } },
+  DOMStorage:
+   { clear:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Disables storage tracking, prevents storage events from being sent to the client.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables storage tracking, storage events will now be delivered to the client.' },
+     getDOMStorageItems:
+      { [Function: handler] category: 'command', parameters: [Object], returns: [Array] },
+     removeDOMStorageItem:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     setDOMStorageItem:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     domStorageItemAdded:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     domStorageItemRemoved:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     domStorageItemUpdated:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     domStorageItemsCleared:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     StorageId:
+      { category: 'type',
+        id: 'StorageId',
+        description: 'DOM Storage identifier.',
+        type: 'object',
+        properties: [Object] },
+     Item:
+      { category: 'type',
+        id: 'Item',
+        description: 'DOM Storage item.',
+        type: 'array',
+        items: [Object] } },
+  Database:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Disables database tracking, prevents database events from being sent to the client.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables database tracking, database events will now be delivered to the client.' },
+     executeSQL:
+      { [Function: handler] category: 'command', parameters: [Object], returns: [Array] },
+     getDatabaseTableNames:
+      { [Function: handler] category: 'command', parameters: [Object], returns: [Array] },
+     addDatabase:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     DatabaseId:
+      { category: 'type',
+        id: 'DatabaseId',
+        description: 'Unique identifier of Database object.',
+        type: 'string' },
+     Database:
+      { category: 'type',
+        id: 'Database',
+        description: 'Database object.',
+        type: 'object',
+        properties: [Object] },
+     Error:
+      { category: 'type',
+        id: 'Error',
+        description: 'Database error.',
+        type: 'object',
+        properties: [Object] } },
+  DeviceOrientation:
+   { clearDeviceOrientationOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears the overridden Device Orientation.' },
+     setDeviceOrientationOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Overrides the Device Orientation.',
+        parameters: [Object] } },
+  Emulation:
+   { canEmulate:
+      { [Function: handler]
+        category: 'command',
+        description: 'Tells whether emulation is supported.',
+        returns: [Array] },
+     clearDeviceMetricsOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears the overriden device metrics.' },
+     clearGeolocationOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears the overriden Geolocation Position and Error.' },
+     resetPageScaleFactor:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Requests that page scale factor is reset to initial values.',
+        experimental: true },
+     setFocusEmulationEnabled:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables or disables simulating a focused and active page.',
+        experimental: true,
+        parameters: [Object] },
+     setCPUThrottlingRate:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables CPU throttling to emulate slow CPUs.',
+        experimental: true,
+        parameters: [Object] },
+     setDefaultBackgroundColorOverride:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sets or clears an override of the default background color of the frame. This override is used\nif the content does not specify one.',
+        parameters: [Object] },
+     setDeviceMetricsOverride:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Overrides the values of device screen dimensions (window.screen.width, window.screen.height,\nwindow.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media\nquery results).',
+        parameters: [Object] },
+     setScrollbarsHidden:
+      { [Function: handler] category: 'command', experimental: true, parameters: [Object] },
+     setDocumentCookieDisabled:
+      { [Function: handler] category: 'command', experimental: true, parameters: [Object] },
+     setEmitTouchEventsForMouse:
+      { [Function: handler] category: 'command', experimental: true, parameters: [Object] },
+     setEmulatedMedia:
+      { [Function: handler]
+        category: 'command',
+        description: 'Emulates the given media for CSS media queries.',
+        parameters: [Object] },
+     setGeolocationOverride:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position\nunavailable.',
+        parameters: [Object] },
+     setNavigatorOverrides:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Overrides value returned by the javascript navigator object.',
+        experimental: true,
+        deprecated: true,
+        parameters: [Object] },
+     setPageScaleFactor:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets a specified page scale factor.',
+        experimental: true,
+        parameters: [Object] },
+     setScriptExecutionDisabled:
+      { [Function: handler]
+        category: 'command',
+        description: 'Switches script execution in the page.',
+        parameters: [Object] },
+     setTouchEmulationEnabled:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables touch on platforms which do not support them.',
+        parameters: [Object] },
+     setVirtualTimePolicy:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Turns on virtual time for all frames (replacing real-time with a synthetic time source) and sets\nthe current virtual time policy.  Note this supersedes any previous time budget.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     setVisibleSize:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Resizes the frame/viewport of the page. Note that this does not affect the frame\'s container\n(e.g. browser window). Can be used to produce screenshots of the specified size. Not supported\non Android.',
+        experimental: true,
+        deprecated: true,
+        parameters: [Object] },
+     setUserAgentOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Allows overriding user agent with the given string.',
+        parameters: [Object] },
+     virtualTimeBudgetExpired:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Notification sent after the virtual time budget for the current VirtualTimePolicy has run out.',
+        experimental: true },
+     ScreenOrientation:
+      { category: 'type',
+        id: 'ScreenOrientation',
+        description: 'Screen orientation.',
+        type: 'object',
+        properties: [Object] },
+     VirtualTimePolicy:
+      { category: 'type',
+        id: 'VirtualTimePolicy',
+        description:
+         'advance: If the scheduler runs out of immediate work, the virtual time base may fast forward to\nallow the next delayed task (if any) to run; pause: The virtual time base may not advance;\npauseIfNetworkFetchesPending: The virtual time base may not advance if there are any pending\nresource fetches.',
+        experimental: true,
+        type: 'string',
+        enum: [Array] } },
+  HeadlessExperimental:
+   { beginFrame:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sends a BeginFrame to the target and returns when the frame was completed. Optionally captures a\nscreenshot from the resulting frame. Requires that the target was created with enabled\nBeginFrameControl. Designed for use with --run-all-compositor-stages-before-draw, see also\nhttps://goo.gl/3zHXhB for more background.',
+        parameters: [Object],
+        returns: [Array] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables headless events for the target.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables headless events for the target.' },
+     needsBeginFramesChanged:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Issued when the target starts or stops needing BeginFrames.',
+        parameters: [Object] },
+     ScreenshotParams:
+      { category: 'type',
+        id: 'ScreenshotParams',
+        description: 'Encoding options for a screenshot.',
+        type: 'object',
+        properties: [Object] } },
+  IO:
+   { close:
+      { [Function: handler]
+        category: 'command',
+        description: 'Close the stream, discard any temporary backing storage.',
+        parameters: [Object] },
+     read:
+      { [Function: handler]
+        category: 'command',
+        description: 'Read a chunk of the stream',
+        parameters: [Object],
+        returns: [Array] },
+     resolveBlob:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Return UUID of Blob object specified by a remote object id.',
+        parameters: [Object],
+        returns: [Array] },
+     StreamHandle:
+      { category: 'type',
+        id: 'StreamHandle',
+        description:
+         'This is either obtained from another method or specifed as `blob:&lt;uuid&gt;` where\n`&lt;uuid&gt` is an UUID of a Blob.',
+        type: 'string' } },
+  IndexedDB:
+   { clearObjectStore:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears all entries from an object store.',
+        parameters: [Object] },
+     deleteDatabase:
+      { [Function: handler]
+        category: 'command',
+        description: 'Deletes a database.',
+        parameters: [Object] },
+     deleteObjectStoreEntries:
+      { [Function: handler]
+        category: 'command',
+        description: 'Delete a range of entries from an object store',
+        parameters: [Object] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables events from backend.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables events from backend.' },
+     requestData:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests data from object store or index.',
+        parameters: [Object],
+        returns: [Array] },
+     getMetadata:
+      { [Function: handler]
+        category: 'command',
+        description: 'Gets metadata of an object store',
+        parameters: [Object],
+        returns: [Array] },
+     requestDatabase:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests database with given name in given frame.',
+        parameters: [Object],
+        returns: [Array] },
+     requestDatabaseNames:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests database names for given security origin.',
+        parameters: [Object],
+        returns: [Array] },
+     DatabaseWithObjectStores:
+      { category: 'type',
+        id: 'DatabaseWithObjectStores',
+        description: 'Database with an array of object stores.',
+        type: 'object',
+        properties: [Object] },
+     ObjectStore:
+      { category: 'type',
+        id: 'ObjectStore',
+        description: 'Object store.',
+        type: 'object',
+        properties: [Object] },
+     ObjectStoreIndex:
+      { category: 'type',
+        id: 'ObjectStoreIndex',
+        description: 'Object store index.',
+        type: 'object',
+        properties: [Object] },
+     Key:
+      { category: 'type',
+        id: 'Key',
+        description: 'Key.',
+        type: 'object',
+        properties: [Object] },
+     KeyRange:
+      { category: 'type',
+        id: 'KeyRange',
+        description: 'Key range.',
+        type: 'object',
+        properties: [Object] },
+     DataEntry:
+      { category: 'type',
+        id: 'DataEntry',
+        description: 'Data entry.',
+        type: 'object',
+        properties: [Object] },
+     KeyPath:
+      { category: 'type',
+        id: 'KeyPath',
+        description: 'Key path.',
+        type: 'object',
+        properties: [Object] } },
+  Input:
+   { dispatchKeyEvent:
+      { [Function: handler]
+        category: 'command',
+        description: 'Dispatches a key event to the page.',
+        parameters: [Object] },
+     insertText:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'This method emulates inserting text that doesn\'t come from a key press,\nfor example an emoji keyboard or an IME.',
+        experimental: true,
+        parameters: [Object] },
+     dispatchMouseEvent:
+      { [Function: handler]
+        category: 'command',
+        description: 'Dispatches a mouse event to the page.',
+        parameters: [Object] },
+     dispatchTouchEvent:
+      { [Function: handler]
+        category: 'command',
+        description: 'Dispatches a touch event to the page.',
+        parameters: [Object] },
+     emulateTouchFromMouseEvent:
+      { [Function: handler]
+        category: 'command',
+        description: 'Emulates touch event from the mouse event parameters.',
+        experimental: true,
+        parameters: [Object] },
+     setIgnoreInputEvents:
+      { [Function: handler]
+        category: 'command',
+        description: 'Ignores input events (useful while auditing page).',
+        parameters: [Object] },
+     synthesizePinchGesture:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Synthesizes a pinch gesture over a time period by issuing appropriate touch events.',
+        experimental: true,
+        parameters: [Object] },
+     synthesizeScrollGesture:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Synthesizes a scroll gesture over a time period by issuing appropriate touch events.',
+        experimental: true,
+        parameters: [Object] },
+     synthesizeTapGesture:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Synthesizes a tap gesture over a time period by issuing appropriate touch events.',
+        experimental: true,
+        parameters: [Object] },
+     TouchPoint:
+      { category: 'type',
+        id: 'TouchPoint',
+        type: 'object',
+        properties: [Object] },
+     GestureSourceType:
+      { category: 'type',
+        id: 'GestureSourceType',
+        experimental: true,
+        type: 'string',
+        enum: [Array] },
+     TimeSinceEpoch:
+      { category: 'type',
+        id: 'TimeSinceEpoch',
+        description: 'UTC time in seconds, counted from January 1, 1970.',
+        type: 'number' } },
+  Inspector:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables inspector domain notifications.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables inspector domain notifications.' },
+     detached:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when remote debugging connection is about to be terminated. Contains detach reason.',
+        parameters: [Object] },
+     targetCrashed:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when debugging target has crashed' },
+     targetReloadedAfterCrash:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when debugging target has reloaded after crash' } },
+  LayerTree:
+   { compositingReasons:
+      { [Function: handler]
+        category: 'command',
+        description: 'Provides the reasons why the given layer was composited.',
+        parameters: [Object],
+        returns: [Array] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables compositing tree inspection.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables compositing tree inspection.' },
+     loadSnapshot:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns the snapshot identifier.',
+        parameters: [Object],
+        returns: [Array] },
+     makeSnapshot:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns the layer snapshot identifier.',
+        parameters: [Object],
+        returns: [Array] },
+     profileSnapshot:
+      { [Function: handler] category: 'command', parameters: [Object], returns: [Array] },
+     releaseSnapshot:
+      { [Function: handler]
+        category: 'command',
+        description: 'Releases layer snapshot captured by the back-end.',
+        parameters: [Object] },
+     replaySnapshot:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Replays the layer snapshot and returns the resulting bitmap.',
+        parameters: [Object],
+        returns: [Array] },
+     snapshotCommandLog:
+      { [Function: handler]
+        category: 'command',
+        description: 'Replays the layer snapshot and returns canvas log.',
+        parameters: [Object],
+        returns: [Array] },
+     layerPainted:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     layerTreeDidChange:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     LayerId:
+      { category: 'type',
+        id: 'LayerId',
+        description: 'Unique Layer identifier.',
+        type: 'string' },
+     SnapshotId:
+      { category: 'type',
+        id: 'SnapshotId',
+        description: 'Unique snapshot identifier.',
+        type: 'string' },
+     ScrollRect:
+      { category: 'type',
+        id: 'ScrollRect',
+        description: 'Rectangle where scrolling happens on the main thread.',
+        type: 'object',
+        properties: [Object] },
+     StickyPositionConstraint:
+      { category: 'type',
+        id: 'StickyPositionConstraint',
+        description: 'Sticky position constraints.',
+        type: 'object',
+        properties: [Object] },
+     PictureTile:
+      { category: 'type',
+        id: 'PictureTile',
+        description:
+         'Serialized fragment of layer picture along with its offset within the layer.',
+        type: 'object',
+        properties: [Object] },
+     Layer:
+      { category: 'type',
+        id: 'Layer',
+        description: 'Information about a compositing layer.',
+        type: 'object',
+        properties: [Object] },
+     PaintProfile:
+      { category: 'type',
+        id: 'PaintProfile',
+        description: 'Array of timings, one per paint step.',
+        type: 'array',
+        items: [Object] } },
+  Log:
+   { clear:
+      { [Function: handler] category: 'command', description: 'Clears the log.' },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Disables log domain, prevents further log entries from being reported to the client.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables log domain, sends the entries collected so far to the client by means of the\n`entryAdded` notification.' },
+     startViolationsReport:
+      { [Function: handler]
+        category: 'command',
+        description: 'start violation reporting.',
+        parameters: [Object] },
+     stopViolationsReport:
+      { [Function: handler]
+        category: 'command',
+        description: 'Stop violation reporting.' },
+     entryAdded:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when new message was logged.',
+        parameters: [Object] },
+     LogEntry:
+      { category: 'type',
+        id: 'LogEntry',
+        description: 'Log entry.',
+        type: 'object',
+        properties: [Object] },
+     ViolationSetting:
+      { category: 'type',
+        id: 'ViolationSetting',
+        description: 'Violation configuration setting.',
+        type: 'object',
+        properties: [Object] } },
+  Memory:
+   { getDOMCounters:
+      { [Function: handler] category: 'command', returns: [Array] },
+     prepareForLeakDetection: { [Function: handler] category: 'command' },
+     forciblyPurgeJavaScriptMemory:
+      { [Function: handler]
+        category: 'command',
+        description: 'Simulate OomIntervention by purging V8 memory.' },
+     setPressureNotificationsSuppressed:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enable/disable suppressing memory pressure notifications in all processes.',
+        parameters: [Object] },
+     simulatePressureNotification:
+      { [Function: handler]
+        category: 'command',
+        description: 'Simulate a memory pressure notification in all processes.',
+        parameters: [Object] },
+     startSampling:
+      { [Function: handler]
+        category: 'command',
+        description: 'Start collecting native memory profile.',
+        parameters: [Object] },
+     stopSampling:
+      { [Function: handler]
+        category: 'command',
+        description: 'Stop collecting native memory profile.' },
+     getAllTimeSamplingProfile:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Retrieve native memory allocations profile\ncollected since renderer process startup.',
+        returns: [Array] },
+     getBrowserSamplingProfile:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Retrieve native memory allocations profile\ncollected since browser process startup.',
+        returns: [Array] },
+     getSamplingProfile:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Retrieve native memory allocations profile collected since last\n`startSampling` call.',
+        returns: [Array] },
+     PressureLevel:
+      { category: 'type',
+        id: 'PressureLevel',
+        description: 'Memory pressure level.',
+        type: 'string',
+        enum: [Array] },
+     SamplingProfileNode:
+      { category: 'type',
+        id: 'SamplingProfileNode',
+        description: 'Heap profile sample.',
+        type: 'object',
+        properties: [Object] },
+     SamplingProfile:
+      { category: 'type',
+        id: 'SamplingProfile',
+        description: 'Array of heap profile samples.',
+        type: 'object',
+        properties: [Object] },
+     Module:
+      { category: 'type',
+        id: 'Module',
+        description: 'Executable module information',
+        type: 'object',
+        properties: [Object] } },
+  Network:
+   { canClearBrowserCache:
+      { [Function: handler]
+        category: 'command',
+        description: 'Tells whether clearing browser cache is supported.',
+        deprecated: true,
+        returns: [Array] },
+     canClearBrowserCookies:
+      { [Function: handler]
+        category: 'command',
+        description: 'Tells whether clearing browser cookies is supported.',
+        deprecated: true,
+        returns: [Array] },
+     canEmulateNetworkConditions:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Tells whether emulation of network conditions is supported.',
+        deprecated: true,
+        returns: [Array] },
+     clearBrowserCache:
+      { [Function: handler] category: 'command', description: 'Clears browser cache.' },
+     clearBrowserCookies:
+      { [Function: handler] category: 'command', description: 'Clears browser cookies.' },
+     continueInterceptedRequest:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Response to Network.requestIntercepted which either modifies the request to continue with any\nmodifications, or blocks it, or completes it with the provided response bytes. If a network\nfetch occurs as a result which encounters a redirect an additional Network.requestIntercepted\nevent will be sent with the same InterceptionId.',
+        experimental: true,
+        parameters: [Object] },
+     deleteCookies:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Deletes browser cookies with matching name and url or domain/path pair.',
+        parameters: [Object] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Disables network tracking, prevents network events from being sent to the client.' },
+     emulateNetworkConditions:
+      { [Function: handler]
+        category: 'command',
+        description: 'Activates emulation of network conditions.',
+        parameters: [Object] },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables network tracking, network events will now be delivered to the client.',
+        parameters: [Object] },
+     getAllCookies:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns all browser cookies. Depending on the backend support, will return detailed cookie\ninformation in the `cookies` field.',
+        returns: [Array] },
+     getCertificate:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns the DER-encoded certificate.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getCookies:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns all browser cookies for the current URL. Depending on the backend support, will return\ndetailed cookie information in the `cookies` field.',
+        parameters: [Object],
+        returns: [Array] },
+     getResponseBody:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns content served for the given request.',
+        parameters: [Object],
+        returns: [Array] },
+     getRequestPostData:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns post data sent with the request. Returns an error when no data was sent with the request.',
+        parameters: [Object],
+        returns: [Array] },
+     getResponseBodyForInterception:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns content served for the given currently intercepted request.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     takeResponseBodyForInterceptionAsStream:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns a handle to the stream representing the response body. Note that after this command,\nthe intercepted request can\'t be continued as is -- you either need to cancel it or to provide\nthe response body. The stream only supports sequential read, IO.read will fail if the position\nis specified.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     replayXHR:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'This method sends a new XMLHttpRequest which is identical to the original one. The following\nparameters should be identical: method, url, async, request body, extra headers, withCredentials\nattribute, user, password.',
+        experimental: true,
+        parameters: [Object] },
+     searchInResponseBody:
+      { [Function: handler]
+        category: 'command',
+        description: 'Searches for given string in response content.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     setBlockedURLs:
+      { [Function: handler]
+        category: 'command',
+        description: 'Blocks URLs from loading.',
+        experimental: true,
+        parameters: [Object] },
+     setBypassServiceWorker:
+      { [Function: handler]
+        category: 'command',
+        description: 'Toggles ignoring of service worker for each request.',
+        experimental: true,
+        parameters: [Object] },
+     setCacheDisabled:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Toggles ignoring cache for each request. If `true`, cache will not be used.',
+        parameters: [Object] },
+     setCookie:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.',
+        parameters: [Object],
+        returns: [Array] },
+     setCookies:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets given cookies.',
+        parameters: [Object] },
+     setDataSizeLimitsForTest:
+      { [Function: handler]
+        category: 'command',
+        description: 'For testing.',
+        experimental: true,
+        parameters: [Object] },
+     setExtraHTTPHeaders:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Specifies whether to always send extra HTTP headers with the requests from this page.',
+        parameters: [Object] },
+     setRequestInterception:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sets the requests to intercept that match the provided patterns and optionally resource types.',
+        experimental: true,
+        parameters: [Object] },
+     setUserAgentOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Allows overriding user agent with the given string.',
+        redirect: 'Emulation',
+        parameters: [Object] },
+     dataReceived:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when data chunk was received over the network.',
+        parameters: [Object] },
+     eventSourceMessageReceived:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when EventSource message is received.',
+        parameters: [Object] },
+     loadingFailed:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when HTTP request has failed to load.',
+        parameters: [Object] },
+     loadingFinished:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when HTTP request has finished loading.',
+        parameters: [Object] },
+     requestIntercepted:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Details of an intercepted HTTP request, which must be either allowed, blocked, modified or\nmocked.',
+        experimental: true,
+        parameters: [Object] },
+     requestServedFromCache:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired if request ended up loading from cache.',
+        parameters: [Object] },
+     requestWillBeSent:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when page is about to send HTTP request.',
+        parameters: [Object] },
+     resourceChangedPriority:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when resource loading priority is changed',
+        experimental: true,
+        parameters: [Object] },
+     signedExchangeReceived:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when a signed exchange was received over the network',
+        experimental: true,
+        parameters: [Object] },
+     responseReceived:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when HTTP response is available.',
+        parameters: [Object] },
+     webSocketClosed:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when WebSocket is closed.',
+        parameters: [Object] },
+     webSocketCreated:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired upon WebSocket creation.',
+        parameters: [Object] },
+     webSocketFrameError:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when WebSocket message error occurs.',
+        parameters: [Object] },
+     webSocketFrameReceived:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when WebSocket message is received.',
+        parameters: [Object] },
+     webSocketFrameSent:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when WebSocket message is sent.',
+        parameters: [Object] },
+     webSocketHandshakeResponseReceived:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when WebSocket handshake response becomes available.',
+        parameters: [Object] },
+     webSocketWillSendHandshakeRequest:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when WebSocket is about to initiate handshake.',
+        parameters: [Object] },
+     ResourceType:
+      { category: 'type',
+        id: 'ResourceType',
+        description: 'Resource type as it was perceived by the rendering engine.',
+        type: 'string',
+        enum: [Array] },
+     LoaderId:
+      { category: 'type',
+        id: 'LoaderId',
+        description: 'Unique loader identifier.',
+        type: 'string' },
+     RequestId:
+      { category: 'type',
+        id: 'RequestId',
+        description: 'Unique request identifier.',
+        type: 'string' },
+     InterceptionId:
+      { category: 'type',
+        id: 'InterceptionId',
+        description: 'Unique intercepted request identifier.',
+        type: 'string' },
+     ErrorReason:
+      { category: 'type',
+        id: 'ErrorReason',
+        description: 'Network level fetch failure reason.',
+        type: 'string',
+        enum: [Array] },
+     TimeSinceEpoch:
+      { category: 'type',
+        id: 'TimeSinceEpoch',
+        description: 'UTC time in seconds, counted from January 1, 1970.',
+        type: 'number' },
+     MonotonicTime:
+      { category: 'type',
+        id: 'MonotonicTime',
+        description:
+         'Monotonically increasing time in seconds since an arbitrary point in the past.',
+        type: 'number' },
+     Headers:
+      { category: 'type',
+        id: 'Headers',
+        description:
+         'Request / response headers as keys / values of JSON object.',
+        type: 'object' },
+     ConnectionType:
+      { category: 'type',
+        id: 'ConnectionType',
+        description:
+         'The underlying connection technology that the browser is supposedly using.',
+        type: 'string',
+        enum: [Array] },
+     CookieSameSite:
+      { category: 'type',
+        id: 'CookieSameSite',
+        description:
+         'Represents the cookie\'s \'SameSite\' status:\nhttps://tools.ietf.org/html/draft-west-first-party-cookies',
+        type: 'string',
+        enum: [Array] },
+     ResourceTiming:
+      { category: 'type',
+        id: 'ResourceTiming',
+        description: 'Timing information for the request.',
+        type: 'object',
+        properties: [Object] },
+     ResourcePriority:
+      { category: 'type',
+        id: 'ResourcePriority',
+        description: 'Loading priority of a resource request.',
+        type: 'string',
+        enum: [Array] },
+     Request:
+      { category: 'type',
+        id: 'Request',
+        description: 'HTTP request data.',
+        type: 'object',
+        properties: [Object] },
+     SignedCertificateTimestamp:
+      { category: 'type',
+        id: 'SignedCertificateTimestamp',
+        description: 'Details of a signed certificate timestamp (SCT).',
+        type: 'object',
+        properties: [Object] },
+     SecurityDetails:
+      { category: 'type',
+        id: 'SecurityDetails',
+        description: 'Security details about a request.',
+        type: 'object',
+        properties: [Object] },
+     CertificateTransparencyCompliance:
+      { category: 'type',
+        id: 'CertificateTransparencyCompliance',
+        description:
+         'Whether the request complied with Certificate Transparency policy.',
+        type: 'string',
+        enum: [Array] },
+     BlockedReason:
+      { category: 'type',
+        id: 'BlockedReason',
+        description: 'The reason why request was blocked.',
+        type: 'string',
+        enum: [Array] },
+     Response:
+      { category: 'type',
+        id: 'Response',
+        description: 'HTTP response data.',
+        type: 'object',
+        properties: [Object] },
+     WebSocketRequest:
+      { category: 'type',
+        id: 'WebSocketRequest',
+        description: 'WebSocket request data.',
+        type: 'object',
+        properties: [Object] },
+     WebSocketResponse:
+      { category: 'type',
+        id: 'WebSocketResponse',
+        description: 'WebSocket response data.',
+        type: 'object',
+        properties: [Object] },
+     WebSocketFrame:
+      { category: 'type',
+        id: 'WebSocketFrame',
+        description:
+         'WebSocket message data. This represents an entire WebSocket message, not just a fragmented frame as the name suggests.',
+        type: 'object',
+        properties: [Object] },
+     CachedResource:
+      { category: 'type',
+        id: 'CachedResource',
+        description: 'Information about the cached resource.',
+        type: 'object',
+        properties: [Object] },
+     Initiator:
+      { category: 'type',
+        id: 'Initiator',
+        description: 'Information about the request initiator.',
+        type: 'object',
+        properties: [Object] },
+     Cookie:
+      { category: 'type',
+        id: 'Cookie',
+        description: 'Cookie object',
+        type: 'object',
+        properties: [Object] },
+     CookieParam:
+      { category: 'type',
+        id: 'CookieParam',
+        description: 'Cookie parameter object',
+        type: 'object',
+        properties: [Object] },
+     AuthChallenge:
+      { category: 'type',
+        id: 'AuthChallenge',
+        description: 'Authorization challenge for HTTP status code 401 or 407.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     AuthChallengeResponse:
+      { category: 'type',
+        id: 'AuthChallengeResponse',
+        description: 'Response to an AuthChallenge.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     InterceptionStage:
+      { category: 'type',
+        id: 'InterceptionStage',
+        description:
+         'Stages of the interception to begin intercepting. Request will intercept before the request is\nsent. Response will intercept after the response is received.',
+        experimental: true,
+        type: 'string',
+        enum: [Array] },
+     RequestPattern:
+      { category: 'type',
+        id: 'RequestPattern',
+        description: 'Request pattern for interception.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     SignedExchangeSignature:
+      { category: 'type',
+        id: 'SignedExchangeSignature',
+        description:
+         'Information about a signed exchange signature.\nhttps://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#rfc.section.3.1',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     SignedExchangeHeader:
+      { category: 'type',
+        id: 'SignedExchangeHeader',
+        description:
+         'Information about a signed exchange header.\nhttps://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#cbor-representation',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     SignedExchangeErrorField:
+      { category: 'type',
+        id: 'SignedExchangeErrorField',
+        description: 'Field type for a signed exchange related error.',
+        experimental: true,
+        type: 'string',
+        enum: [Array] },
+     SignedExchangeError:
+      { category: 'type',
+        id: 'SignedExchangeError',
+        description: 'Information about a signed exchange response.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     SignedExchangeInfo:
+      { category: 'type',
+        id: 'SignedExchangeInfo',
+        description: 'Information about a signed exchange response.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] } },
+  Overlay:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables domain notifications.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables domain notifications.' },
+     getHighlightObjectForTest:
+      { [Function: handler]
+        category: 'command',
+        description: 'For testing.',
+        parameters: [Object],
+        returns: [Array] },
+     hideHighlight:
+      { [Function: handler] category: 'command', description: 'Hides any highlight.' },
+     highlightFrame:
+      { [Function: handler]
+        category: 'command',
+        description: 'Highlights owner element of the frame with given id.',
+        parameters: [Object] },
+     highlightNode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Highlights DOM node with given id or with the given JavaScript object wrapper. Either nodeId or\nobjectId must be specified.',
+        parameters: [Object] },
+     highlightQuad:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Highlights given quad. Coordinates are absolute with respect to the main frame viewport.',
+        parameters: [Object] },
+     highlightRect:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Highlights given rectangle. Coordinates are absolute with respect to the main frame viewport.',
+        parameters: [Object] },
+     setInspectMode:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enters the \'inspect\' mode. In this mode, elements that user is hovering over are highlighted.\nBackend then generates \'inspectNodeRequested\' event upon element selection.',
+        parameters: [Object] },
+     setShowAdHighlights:
+      { [Function: handler]
+        category: 'command',
+        description: 'Highlights owner element of all frames detected to be ads.',
+        parameters: [Object] },
+     setPausedInDebuggerMessage:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     setShowDebugBorders:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests that backend shows debug borders on layers',
+        parameters: [Object] },
+     setShowFPSCounter:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests that backend shows the FPS counter',
+        parameters: [Object] },
+     setShowPaintRects:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests that backend shows paint rectangles',
+        parameters: [Object] },
+     setShowScrollBottleneckRects:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests that backend shows scroll bottleneck rects',
+        parameters: [Object] },
+     setShowHitTestBorders:
+      { [Function: handler]
+        category: 'command',
+        description: 'Requests that backend shows hit-test borders on layers',
+        parameters: [Object] },
+     setShowViewportSizeOnResize:
+      { [Function: handler]
+        category: 'command',
+        description: 'Paints viewport size upon main frame resize.',
+        parameters: [Object] },
+     inspectNodeRequested:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when the node should be inspected. This happens after call to `setInspectMode` or when\nuser manually inspects an element.',
+        parameters: [Object] },
+     nodeHighlightRequested:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when the node should be highlighted. This happens after call to `setInspectMode`.',
+        parameters: [Object] },
+     screenshotRequested:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when user asks to capture screenshot of some area on the page.',
+        parameters: [Object] },
+     inspectModeCanceled:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when user cancels the inspect mode.' },
+     HighlightConfig:
+      { category: 'type',
+        id: 'HighlightConfig',
+        description: 'Configuration data for the highlighting of page elements.',
+        type: 'object',
+        properties: [Object] },
+     InspectMode:
+      { category: 'type',
+        id: 'InspectMode',
+        type: 'string',
+        enum: [Array] } },
+  Page:
+   { addScriptToEvaluateOnLoad:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Deprecated, please use addScriptToEvaluateOnNewDocument instead.',
+        experimental: true,
+        deprecated: true,
+        parameters: [Object],
+        returns: [Array] },
+     addScriptToEvaluateOnNewDocument:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Evaluates given script in every frame upon creation (before loading frame\'s scripts).',
+        parameters: [Object],
+        returns: [Array] },
+     bringToFront:
+      { [Function: handler]
+        category: 'command',
+        description: 'Brings page to front (activates tab).' },
+     captureScreenshot:
+      { [Function: handler]
+        category: 'command',
+        description: 'Capture page screenshot.',
+        parameters: [Object],
+        returns: [Array] },
+     captureSnapshot:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns a snapshot of the page as a string. For MHTML format, the serialization includes\niframes, shadow DOM, external resources, and element-inline styles.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     clearDeviceMetricsOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears the overriden device metrics.',
+        experimental: true,
+        deprecated: true,
+        redirect: 'Emulation' },
+     clearDeviceOrientationOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears the overridden Device Orientation.',
+        experimental: true,
+        deprecated: true,
+        redirect: 'DeviceOrientation' },
+     clearGeolocationOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears the overriden Geolocation Position and Error.',
+        deprecated: true,
+        redirect: 'Emulation' },
+     createIsolatedWorld:
+      { [Function: handler]
+        category: 'command',
+        description: 'Creates an isolated world for the given frame.',
+        parameters: [Object],
+        returns: [Array] },
+     deleteCookie:
+      { [Function: handler]
+        category: 'command',
+        description: 'Deletes browser cookie with given name, domain and path.',
+        experimental: true,
+        deprecated: true,
+        redirect: 'Network',
+        parameters: [Object] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables page domain notifications.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables page domain notifications.' },
+     getAppManifest:
+      { [Function: handler] category: 'command', returns: [Array] },
+     getInstallabilityErrors:
+      { [Function: handler] category: 'command', experimental: true, returns: [Array] },
+     getCookies:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns all browser cookies. Depending on the backend support, will return detailed cookie\ninformation in the `cookies` field.',
+        experimental: true,
+        deprecated: true,
+        redirect: 'Network',
+        returns: [Array] },
+     getFrameTree:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns present frame tree structure.',
+        returns: [Array] },
+     getLayoutMetrics:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns metrics relating to the layouting of the page, such as viewport bounds/scale.',
+        returns: [Array] },
+     getNavigationHistory:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns navigation history for the current page.',
+        returns: [Array] },
+     resetNavigationHistory:
+      { [Function: handler]
+        category: 'command',
+        description: 'Resets navigation history for the current page.' },
+     getResourceContent:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns content of the given resource.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getResourceTree:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns present frame / resource tree structure.',
+        experimental: true,
+        returns: [Array] },
+     handleJavaScriptDialog:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Accepts or dismisses a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload).',
+        parameters: [Object] },
+     navigate:
+      { [Function: handler]
+        category: 'command',
+        description: 'Navigates current page to the given URL.',
+        parameters: [Object],
+        returns: [Array] },
+     navigateToHistoryEntry:
+      { [Function: handler]
+        category: 'command',
+        description: 'Navigates current page to the given history entry.',
+        parameters: [Object] },
+     printToPDF:
+      { [Function: handler]
+        category: 'command',
+        description: 'Print page as PDF.',
+        parameters: [Object],
+        returns: [Array] },
+     reload:
+      { [Function: handler]
+        category: 'command',
+        description: 'Reloads given page optionally ignoring the cache.',
+        parameters: [Object] },
+     removeScriptToEvaluateOnLoad:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Deprecated, please use removeScriptToEvaluateOnNewDocument instead.',
+        experimental: true,
+        deprecated: true,
+        parameters: [Object] },
+     removeScriptToEvaluateOnNewDocument:
+      { [Function: handler]
+        category: 'command',
+        description: 'Removes given script from the list.',
+        parameters: [Object] },
+     screencastFrameAck:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Acknowledges that a screencast frame has been received by the frontend.',
+        experimental: true,
+        parameters: [Object] },
+     searchInResource:
+      { [Function: handler]
+        category: 'command',
+        description: 'Searches for given string in resource content.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     setAdBlockingEnabled:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enable Chrome\'s experimental ad filter on all sites.',
+        experimental: true,
+        parameters: [Object] },
+     setBypassCSP:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enable page Content Security Policy by-passing.',
+        experimental: true,
+        parameters: [Object] },
+     setDeviceMetricsOverride:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Overrides the values of device screen dimensions (window.screen.width, window.screen.height,\nwindow.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media\nquery results).',
+        experimental: true,
+        deprecated: true,
+        redirect: 'Emulation',
+        parameters: [Object] },
+     setDeviceOrientationOverride:
+      { [Function: handler]
+        category: 'command',
+        description: 'Overrides the Device Orientation.',
+        experimental: true,
+        deprecated: true,
+        redirect: 'DeviceOrientation',
+        parameters: [Object] },
+     setFontFamilies:
+      { [Function: handler]
+        category: 'command',
+        description: 'Set generic font families.',
+        experimental: true,
+        parameters: [Object] },
+     setFontSizes:
+      { [Function: handler]
+        category: 'command',
+        description: 'Set default font sizes.',
+        experimental: true,
+        parameters: [Object] },
+     setDocumentContent:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets given markup as the document\'s HTML.',
+        parameters: [Object] },
+     setDownloadBehavior:
+      { [Function: handler]
+        category: 'command',
+        description: 'Set the behavior when downloading a file.',
+        experimental: true,
+        parameters: [Object] },
+     setGeolocationOverride:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position\nunavailable.',
+        deprecated: true,
+        redirect: 'Emulation',
+        parameters: [Object] },
+     setLifecycleEventsEnabled:
+      { [Function: handler]
+        category: 'command',
+        description: 'Controls whether page will emit lifecycle events.',
+        experimental: true,
+        parameters: [Object] },
+     setTouchEmulationEnabled:
+      { [Function: handler]
+        category: 'command',
+        description: 'Toggles mouse event-based touch event emulation.',
+        experimental: true,
+        deprecated: true,
+        redirect: 'Emulation',
+        parameters: [Object] },
+     startScreencast:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Starts sending each frame using the `screencastFrame` event.',
+        experimental: true,
+        parameters: [Object] },
+     stopLoading:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Force the page stop all navigations and pending resource fetches.' },
+     crash:
+      { [Function: handler]
+        category: 'command',
+        description: 'Crashes renderer on the IO thread, generates minidumps.',
+        experimental: true },
+     close:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Tries to close page, running its beforeunload hooks, if any.',
+        experimental: true },
+     setWebLifecycleState:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Tries to update the web lifecycle state of the page.\nIt will transition the page to the given state according to:\nhttps://github.com/WICG/web-lifecycle/',
+        experimental: true,
+        parameters: [Object] },
+     stopScreencast:
+      { [Function: handler]
+        category: 'command',
+        description: 'Stops sending each frame in the `screencastFrame`.',
+        experimental: true },
+     setProduceCompilationCache:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Forces compilation cache to be generated for every subresource script.',
+        experimental: true,
+        parameters: [Object] },
+     addCompilationCache:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Seeds compilation cache for given url. Compilation cache does not survive\ncross-process navigation.',
+        experimental: true,
+        parameters: [Object] },
+     clearCompilationCache:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears seeded compilation cache.',
+        experimental: true },
+     generateTestReport:
+      { [Function: handler]
+        category: 'command',
+        description: 'Generates a report for testing.',
+        experimental: true,
+        parameters: [Object] },
+     waitForDebugger:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Pauses page execution. Can be resumed using generic Runtime.runIfWaitingForDebugger.',
+        experimental: true },
+     domContentEventFired:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     frameAttached:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when frame has been attached to its parent.',
+        parameters: [Object] },
+     frameClearedScheduledNavigation:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when frame no longer has a scheduled navigation.',
+        deprecated: true,
+        parameters: [Object] },
+     frameDetached:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when frame has been detached from its parent.',
+        parameters: [Object] },
+     frameNavigated:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired once navigation of the frame has completed. Frame is now associated with the new loader.',
+        parameters: [Object] },
+     frameResized:
+      { [Function: handler] category: 'event', experimental: true },
+     frameRequestedNavigation:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when a renderer-initiated navigation is requested.\nNavigation may still be cancelled after the event is issued.',
+        experimental: true,
+        parameters: [Object] },
+     frameScheduledNavigation:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when frame schedules a potential navigation.',
+        deprecated: true,
+        parameters: [Object] },
+     frameStartedLoading:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when frame has started loading.',
+        experimental: true,
+        parameters: [Object] },
+     frameStoppedLoading:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when frame has stopped loading.',
+        experimental: true,
+        parameters: [Object] },
+     interstitialHidden:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when interstitial page was hidden' },
+     interstitialShown:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when interstitial page was shown' },
+     javascriptDialogClosed:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been\nclosed.',
+        parameters: [Object] },
+     javascriptDialogOpening:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to\nopen.',
+        parameters: [Object] },
+     lifecycleEvent:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired for top level page lifecycle events such as navigation, load, paint, etc.',
+        parameters: [Object] },
+     loadEventFired:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     navigatedWithinDocument:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation.',
+        experimental: true,
+        parameters: [Object] },
+     screencastFrame:
+      { [Function: handler]
+        category: 'event',
+        description: 'Compressed image data requested by the `startScreencast`.',
+        experimental: true,
+        parameters: [Object] },
+     screencastVisibilityChanged:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when the page with currently enabled screencast was shown or hidden `.',
+        experimental: true,
+        parameters: [Object] },
+     windowOpen:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when a new window is going to be opened, via window.open(), link click, form submission,\netc.',
+        parameters: [Object] },
+     compilationCacheProduced:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Issued for every compilation cache generated. Is only available\nif Page.setGenerateCompilationCache is enabled.',
+        experimental: true,
+        parameters: [Object] },
+     FrameId:
+      { category: 'type',
+        id: 'FrameId',
+        description: 'Unique frame identifier.',
+        type: 'string' },
+     Frame:
+      { category: 'type',
+        id: 'Frame',
+        description: 'Information about the Frame on the page.',
+        type: 'object',
+        properties: [Object] },
+     FrameResource:
+      { category: 'type',
+        id: 'FrameResource',
+        description: 'Information about the Resource on the page.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     FrameResourceTree:
+      { category: 'type',
+        id: 'FrameResourceTree',
+        description:
+         'Information about the Frame hierarchy along with their cached resources.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     FrameTree:
+      { category: 'type',
+        id: 'FrameTree',
+        description: 'Information about the Frame hierarchy.',
+        type: 'object',
+        properties: [Object] },
+     ScriptIdentifier:
+      { category: 'type',
+        id: 'ScriptIdentifier',
+        description: 'Unique script identifier.',
+        type: 'string' },
+     TransitionType:
+      { category: 'type',
+        id: 'TransitionType',
+        description: 'Transition type.',
+        type: 'string',
+        enum: [Array] },
+     NavigationEntry:
+      { category: 'type',
+        id: 'NavigationEntry',
+        description: 'Navigation history entry.',
+        type: 'object',
+        properties: [Object] },
+     ScreencastFrameMetadata:
+      { category: 'type',
+        id: 'ScreencastFrameMetadata',
+        description: 'Screencast frame metadata.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     DialogType:
+      { category: 'type',
+        id: 'DialogType',
+        description: 'Javascript dialog type.',
+        type: 'string',
+        enum: [Array] },
+     AppManifestError:
+      { category: 'type',
+        id: 'AppManifestError',
+        description: 'Error while paring app manifest.',
+        type: 'object',
+        properties: [Object] },
+     LayoutViewport:
+      { category: 'type',
+        id: 'LayoutViewport',
+        description: 'Layout viewport position and dimensions.',
+        type: 'object',
+        properties: [Object] },
+     VisualViewport:
+      { category: 'type',
+        id: 'VisualViewport',
+        description: 'Visual viewport position, dimensions, and scale.',
+        type: 'object',
+        properties: [Object] },
+     Viewport:
+      { category: 'type',
+        id: 'Viewport',
+        description: 'Viewport for capturing screenshot.',
+        type: 'object',
+        properties: [Object] },
+     FontFamilies:
+      { category: 'type',
+        id: 'FontFamilies',
+        description: 'Generic font families collection.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     FontSizes:
+      { category: 'type',
+        id: 'FontSizes',
+        description: 'Default font sizes.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     ClientNavigationReason:
+      { category: 'type',
+        id: 'ClientNavigationReason',
+        experimental: true,
+        type: 'string',
+        enum: [Array] } },
+  Performance:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disable collecting and reporting metrics.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enable collecting and reporting metrics.' },
+     setTimeDomain:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sets time domain to use for collecting and reporting duration metrics.\nNote that this must be called before enabling metrics collection. Calling\nthis method while metrics collection is enabled returns an error.',
+        experimental: true,
+        parameters: [Object] },
+     getMetrics:
+      { [Function: handler]
+        category: 'command',
+        description: 'Retrieve current values of run-time metrics.',
+        returns: [Array] },
+     metrics:
+      { [Function: handler]
+        category: 'event',
+        description: 'Current values of the metrics.',
+        parameters: [Object] },
+     Metric:
+      { category: 'type',
+        id: 'Metric',
+        description: 'Run-time execution metric.',
+        type: 'object',
+        properties: [Object] } },
+  Security:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables tracking security state changes.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables tracking security state changes.' },
+     setIgnoreCertificateErrors:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enable/disable whether all certificate errors should be ignored.',
+        experimental: true,
+        parameters: [Object] },
+     handleCertificateError:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Handles a certificate error that fired a certificateError event.',
+        deprecated: true,
+        parameters: [Object] },
+     setOverrideCertificateErrors:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enable/disable overriding certificate errors. If enabled, all certificate error events need to\nbe handled by the DevTools client and should be answered with `handleCertificateError` commands.',
+        deprecated: true,
+        parameters: [Object] },
+     certificateError:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'There is a certificate error. If overriding certificate errors is enabled, then it should be\nhandled with the `handleCertificateError` command. Note: this event does not fire if the\ncertificate error has been allowed internally. Only one client per target should override\ncertificate errors at the same time.',
+        deprecated: true,
+        parameters: [Object] },
+     securityStateChanged:
+      { [Function: handler]
+        category: 'event',
+        description: 'The security state of the page changed.',
+        parameters: [Object] },
+     CertificateId:
+      { category: 'type',
+        id: 'CertificateId',
+        description: 'An internal certificate ID value.',
+        type: 'integer' },
+     MixedContentType:
+      { category: 'type',
+        id: 'MixedContentType',
+        description:
+         'A description of mixed content (HTTP resources on HTTPS pages), as defined by\nhttps://www.w3.org/TR/mixed-content/#categories',
+        type: 'string',
+        enum: [Array] },
+     SecurityState:
+      { category: 'type',
+        id: 'SecurityState',
+        description: 'The security level of a page or resource.',
+        type: 'string',
+        enum: [Array] },
+     SecurityStateExplanation:
+      { category: 'type',
+        id: 'SecurityStateExplanation',
+        description:
+         'An explanation of an factor contributing to the security state.',
+        type: 'object',
+        properties: [Object] },
+     InsecureContentStatus:
+      { category: 'type',
+        id: 'InsecureContentStatus',
+        description: 'Information about insecure content on the page.',
+        deprecated: true,
+        type: 'object',
+        properties: [Object] },
+     CertificateErrorAction:
+      { category: 'type',
+        id: 'CertificateErrorAction',
+        description:
+         'The action to take when a certificate error occurs. continue will continue processing the\nrequest and cancel will cancel the request.',
+        type: 'string',
+        enum: [Array] } },
+  ServiceWorker:
+   { deliverPushMessage:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     disable: { [Function: handler] category: 'command' },
+     dispatchSyncEvent:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     enable: { [Function: handler] category: 'command' },
+     inspectWorker:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     setForceUpdateOnPageLoad:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     skipWaiting:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     startWorker:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     stopAllWorkers: { [Function: handler] category: 'command' },
+     stopWorker:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     unregister:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     updateRegistration:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     workerErrorReported:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     workerRegistrationUpdated:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     workerVersionUpdated:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     RegistrationID: { category: 'type', id: 'RegistrationID', type: 'string' },
+     ServiceWorkerRegistration:
+      { category: 'type',
+        id: 'ServiceWorkerRegistration',
+        description: 'ServiceWorker registration.',
+        type: 'object',
+        properties: [Object] },
+     ServiceWorkerVersionRunningStatus:
+      { category: 'type',
+        id: 'ServiceWorkerVersionRunningStatus',
+        type: 'string',
+        enum: [Array] },
+     ServiceWorkerVersionStatus:
+      { category: 'type',
+        id: 'ServiceWorkerVersionStatus',
+        type: 'string',
+        enum: [Array] },
+     ServiceWorkerVersion:
+      { category: 'type',
+        id: 'ServiceWorkerVersion',
+        description: 'ServiceWorker version.',
+        type: 'object',
+        properties: [Object] },
+     ServiceWorkerErrorMessage:
+      { category: 'type',
+        id: 'ServiceWorkerErrorMessage',
+        description: 'ServiceWorker error message.',
+        type: 'object',
+        properties: [Object] } },
+  Storage:
+   { clearDataForOrigin:
+      { [Function: handler]
+        category: 'command',
+        description: 'Clears storage for origin.',
+        parameters: [Object] },
+     getUsageAndQuota:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns usage and quota in bytes.',
+        parameters: [Object],
+        returns: [Array] },
+     trackCacheStorageForOrigin:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Registers origin to be notified when an update occurs to its cache storage list.',
+        parameters: [Object] },
+     trackIndexedDBForOrigin:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Registers origin to be notified when an update occurs to its IndexedDB.',
+        parameters: [Object] },
+     untrackCacheStorageForOrigin:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Unregisters origin from receiving notifications for cache storage.',
+        parameters: [Object] },
+     untrackIndexedDBForOrigin:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Unregisters origin from receiving notifications for IndexedDB.',
+        parameters: [Object] },
+     cacheStorageContentUpdated:
+      { [Function: handler]
+        category: 'event',
+        description: 'A cache\'s contents have been modified.',
+        parameters: [Object] },
+     cacheStorageListUpdated:
+      { [Function: handler]
+        category: 'event',
+        description: 'A cache has been added/deleted.',
+        parameters: [Object] },
+     indexedDBContentUpdated:
+      { [Function: handler]
+        category: 'event',
+        description: 'The origin\'s IndexedDB object store has been modified.',
+        parameters: [Object] },
+     indexedDBListUpdated:
+      { [Function: handler]
+        category: 'event',
+        description: 'The origin\'s IndexedDB database list has been modified.',
+        parameters: [Object] },
+     StorageType:
+      { category: 'type',
+        id: 'StorageType',
+        description: 'Enum of possible storage types.',
+        type: 'string',
+        enum: [Array] },
+     UsageForType:
+      { category: 'type',
+        id: 'UsageForType',
+        description: 'Usage for a storage type.',
+        type: 'object',
+        properties: [Object] } },
+  SystemInfo:
+   { getInfo:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns information about the system.',
+        returns: [Array] },
+     getProcessInfo:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns information about all running processes.',
+        returns: [Array] },
+     GPUDevice:
+      { category: 'type',
+        id: 'GPUDevice',
+        description: 'Describes a single graphics processor (GPU).',
+        type: 'object',
+        properties: [Object] },
+     GPUInfo:
+      { category: 'type',
+        id: 'GPUInfo',
+        description: 'Provides information about the GPU(s) on the system.',
+        type: 'object',
+        properties: [Object] },
+     ProcessInfo:
+      { category: 'type',
+        id: 'ProcessInfo',
+        description: 'Represents process info.',
+        type: 'object',
+        properties: [Object] } },
+  Target:
+   { activateTarget:
+      { [Function: handler]
+        category: 'command',
+        description: 'Activates (focuses) the target.',
+        parameters: [Object] },
+     attachToTarget:
+      { [Function: handler]
+        category: 'command',
+        description: 'Attaches to the target with given id.',
+        parameters: [Object],
+        returns: [Array] },
+     attachToBrowserTarget:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Attaches to the browser target, only uses flat sessionId mode.',
+        experimental: true,
+        returns: [Array] },
+     closeTarget:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Closes the target. If the target is a page that gets closed too.',
+        parameters: [Object],
+        returns: [Array] },
+     exposeDevToolsProtocol:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Inject object to the target\'s main frame that provides a communication\nchannel with browser target.\n\nInjected object will be available as `window[bindingName]`.\n\nThe object has the follwing API:\n- `binding.send(json)` - a method to send messages over the remote debugging protocol\n- `binding.onmessage = json => handleMessage(json)` - a callback that will be called for the protocol notifications and command responses.',
+        experimental: true,
+        parameters: [Object] },
+     createBrowserContext:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Creates a new empty BrowserContext. Similar to an incognito profile but you can have more than\none.',
+        experimental: true,
+        returns: [Array] },
+     getBrowserContexts:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns all browser contexts created with `Target.createBrowserContext` method.',
+        experimental: true,
+        returns: [Array] },
+     createTarget:
+      { [Function: handler]
+        category: 'command',
+        description: 'Creates a new page.',
+        parameters: [Object],
+        returns: [Array] },
+     detachFromTarget:
+      { [Function: handler]
+        category: 'command',
+        description: 'Detaches session with given id.',
+        parameters: [Object] },
+     disposeBrowserContext:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Deletes a BrowserContext. All the belonging pages will be closed without calling their\nbeforeunload hooks.',
+        experimental: true,
+        parameters: [Object] },
+     getTargetInfo:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns information about a target.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     getTargets:
+      { [Function: handler]
+        category: 'command',
+        description: 'Retrieves a list of available targets.',
+        returns: [Array] },
+     sendMessageToTarget:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sends protocol message over session with given id.',
+        parameters: [Object] },
+     setAutoAttach:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Controls whether to automatically attach to new targets which are considered to be related to\nthis one. When turned on, attaches to all existing related targets as well. When turned off,\nautomatically detaches from all currently attached targets.',
+        experimental: true,
+        parameters: [Object] },
+     setDiscoverTargets:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Controls whether to discover available targets and notify via\n`targetCreated/targetInfoChanged/targetDestroyed` events.',
+        parameters: [Object] },
+     setRemoteLocations:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables target discovery for the specified locations, when `setDiscoverTargets` was set to\n`true`.',
+        experimental: true,
+        parameters: [Object] },
+     attachedToTarget:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Issued when attached to target because of auto-attach or `attachToTarget` command.',
+        experimental: true,
+        parameters: [Object] },
+     detachedFromTarget:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Issued when detached from target for any reason (including `detachFromTarget` command). Can be\nissued multiple times per target if multiple sessions have been attached to it.',
+        experimental: true,
+        parameters: [Object] },
+     receivedMessageFromTarget:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Notifies about a new protocol message received from the session (as reported in\n`attachedToTarget` event).',
+        parameters: [Object] },
+     targetCreated:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when a possible inspection target is created.',
+        parameters: [Object] },
+     targetDestroyed:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when a target is destroyed.',
+        parameters: [Object] },
+     targetCrashed:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when a target has crashed.',
+        parameters: [Object] },
+     targetInfoChanged:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Issued when some information about a target has changed. This only happens between\n`targetCreated` and `targetDestroyed`.',
+        parameters: [Object] },
+     TargetID: { category: 'type', id: 'TargetID', type: 'string' },
+     SessionID:
+      { category: 'type',
+        id: 'SessionID',
+        description: 'Unique identifier of attached debugging session.',
+        type: 'string' },
+     BrowserContextID:
+      { category: 'type',
+        id: 'BrowserContextID',
+        experimental: true,
+        type: 'string' },
+     TargetInfo:
+      { category: 'type',
+        id: 'TargetInfo',
+        type: 'object',
+        properties: [Object] },
+     RemoteLocation:
+      { category: 'type',
+        id: 'RemoteLocation',
+        experimental: true,
+        type: 'object',
+        properties: [Object] } },
+  Tethering:
+   { bind:
+      { [Function: handler]
+        category: 'command',
+        description: 'Request browser port binding.',
+        parameters: [Object] },
+     unbind:
+      { [Function: handler]
+        category: 'command',
+        description: 'Request browser port unbinding.',
+        parameters: [Object] },
+     accepted:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Informs that port was successfully bound and got a specified connection id.',
+        parameters: [Object] } },
+  Tracing:
+   { end:
+      { [Function: handler]
+        category: 'command',
+        description: 'Stop trace events collection.' },
+     getCategories:
+      { [Function: handler]
+        category: 'command',
+        description: 'Gets supported tracing categories.',
+        returns: [Array] },
+     recordClockSyncMarker:
+      { [Function: handler]
+        category: 'command',
+        description: 'Record a clock sync marker in the trace.',
+        parameters: [Object] },
+     requestMemoryDump:
+      { [Function: handler]
+        category: 'command',
+        description: 'Request a global memory dump.',
+        returns: [Array] },
+     start:
+      { [Function: handler]
+        category: 'command',
+        description: 'Start trace events collection.',
+        parameters: [Object] },
+     bufferUsage:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     dataCollected:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Contains an bucket of collected trace events. When tracing is stopped collected events will be\nsend as a sequence of dataCollected events followed by tracingComplete event.',
+        parameters: [Object] },
+     tracingComplete:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Signals that tracing is stopped and there is no trace buffers pending flush, all data were\ndelivered via dataCollected events.',
+        parameters: [Object] },
+     MemoryDumpConfig:
+      { category: 'type',
+        id: 'MemoryDumpConfig',
+        description:
+         'Configuration for memory dump. Used only when "memory-infra" category is enabled.',
+        type: 'object' },
+     TraceConfig:
+      { category: 'type',
+        id: 'TraceConfig',
+        type: 'object',
+        properties: [Object] },
+     StreamFormat:
+      { category: 'type',
+        id: 'StreamFormat',
+        description:
+         'Data format of a trace. Can be either the legacy JSON format or the\nprotocol buffer format. Note that the JSON format will be deprecated soon.',
+        type: 'string',
+        enum: [Array] },
+     StreamCompression:
+      { category: 'type',
+        id: 'StreamCompression',
+        description: 'Compression type to use for traces returned via streams.',
+        type: 'string',
+        enum: [Array] } },
+  Fetch:
+   { disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables the fetch domain.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables issuing of requestPaused events. A request will be paused until client\ncalls one of failRequest, fulfillRequest or continueRequest/continueWithAuth.',
+        parameters: [Object] },
+     failRequest:
+      { [Function: handler]
+        category: 'command',
+        description: 'Causes the request to fail with specified reason.',
+        parameters: [Object] },
+     fulfillRequest:
+      { [Function: handler]
+        category: 'command',
+        description: 'Provides response to the request.',
+        parameters: [Object] },
+     continueRequest:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Continues the request, optionally modifying some of its parameters.',
+        parameters: [Object] },
+     continueWithAuth:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Continues a request supplying authChallengeResponse following authRequired event.',
+        parameters: [Object] },
+     getResponseBody:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Causes the body of the response to be received from the server and\nreturned as a single string. May only be issued for a request that\nis paused in the Response stage and is mutually exclusive with\ntakeResponseBodyForInterceptionAsStream. Calling other methods that\naffect the request or disabling fetch domain before body is received\nresults in an undefined behavior.',
+        parameters: [Object],
+        returns: [Array] },
+     takeResponseBodyAsStream:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns a handle to the stream representing the response body.\nThe request must be paused in the HeadersReceived stage.\nNote that after this command the request can\'t be continued\nas is -- client either needs to cancel it or to provide the\nresponse body.\nThe stream only supports sequential read, IO.read will fail if the position\nis specified.\nThis method is mutually exclusive with getResponseBody.\nCalling other methods that affect the request or disabling fetch\ndomain before body is received results in an undefined behavior.',
+        parameters: [Object],
+        returns: [Array] },
+     requestPaused:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Issued when the domain is enabled and the request URL matches the\nspecified filter. The request is paused until the client responds\nwith one of continueRequest, failRequest or fulfillRequest.\nThe stage of the request can be determined by presence of responseErrorReason\nand responseStatusCode -- the request is at the response stage if either\nof these fields is present and in the request stage otherwise.',
+        parameters: [Object] },
+     authRequired:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Issued when the domain is enabled with handleAuthRequests set to true.\nThe request is paused until client responds with continueWithAuth.',
+        parameters: [Object] },
+     RequestId:
+      { category: 'type',
+        id: 'RequestId',
+        description: 'Unique request identifier.',
+        type: 'string' },
+     RequestStage:
+      { category: 'type',
+        id: 'RequestStage',
+        description:
+         'Stages of the request to handle. Request will intercept before the request is\nsent. Response will intercept after the response is received (but before response\nbody is received.',
+        experimental: true,
+        type: 'string',
+        enum: [Array] },
+     RequestPattern:
+      { category: 'type',
+        id: 'RequestPattern',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     HeaderEntry:
+      { category: 'type',
+        id: 'HeaderEntry',
+        description: 'Response HTTP header entry',
+        type: 'object',
+        properties: [Object] },
+     AuthChallenge:
+      { category: 'type',
+        id: 'AuthChallenge',
+        description: 'Authorization challenge for HTTP status code 401 or 407.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     AuthChallengeResponse:
+      { category: 'type',
+        id: 'AuthChallengeResponse',
+        description: 'Response to an AuthChallenge.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] } },
+  WebAudio:
+   { enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables the WebAudio domain and starts sending context lifetime events.' },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables the WebAudio domain.' },
+     getRealtimeData:
+      { [Function: handler]
+        category: 'command',
+        description: 'Fetch the realtime data from the registered contexts.',
+        parameters: [Object],
+        returns: [Array] },
+     contextCreated:
+      { [Function: handler]
+        category: 'event',
+        description: 'Notifies that a new BaseAudioContext has been created.',
+        parameters: [Object] },
+     contextDestroyed:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Notifies that existing BaseAudioContext has been destroyed.',
+        parameters: [Object] },
+     contextChanged:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Notifies that existing BaseAudioContext has changed some properties (id stays the same)..',
+        parameters: [Object] },
+     ContextId:
+      { category: 'type',
+        id: 'ContextId',
+        description: 'Context\'s UUID in string',
+        type: 'string' },
+     ContextType:
+      { category: 'type',
+        id: 'ContextType',
+        description: 'Enum of BaseAudioContext types',
+        type: 'string',
+        enum: [Array] },
+     ContextState:
+      { category: 'type',
+        id: 'ContextState',
+        description: 'Enum of AudioContextState from the spec',
+        type: 'string',
+        enum: [Array] },
+     ContextRealtimeData:
+      { category: 'type',
+        id: 'ContextRealtimeData',
+        description:
+         'Fields in AudioContext that change in real-time. These are not updated\non OfflineAudioContext.',
+        type: 'object',
+        properties: [Object] },
+     BaseAudioContext:
+      { category: 'type',
+        id: 'BaseAudioContext',
+        description: 'Protocol object for BaseAudioContext',
+        type: 'object',
+        properties: [Object] } },
+  Console:
+   { clearMessages:
+      { [Function: handler] category: 'command', description: 'Does nothing.' },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Disables console domain, prevents further console messages from being reported to the client.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables console domain, sends the messages collected so far to the client by means of the\n`messageAdded` notification.' },
+     messageAdded:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when new console message is added.',
+        parameters: [Object] },
+     ConsoleMessage:
+      { category: 'type',
+        id: 'ConsoleMessage',
+        description: 'Console message.',
+        type: 'object',
+        properties: [Object] } },
+  Debugger:
+   { continueToLocation:
+      { [Function: handler]
+        category: 'command',
+        description: 'Continues execution until specific location is reached.',
+        parameters: [Object] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables debugger for given page.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables debugger for the given page. Clients should not assume that the debugging has been\nenabled until the result for this command is received.',
+        parameters: [Object],
+        returns: [Array] },
+     evaluateOnCallFrame:
+      { [Function: handler]
+        category: 'command',
+        description: 'Evaluates expression on a given call frame.',
+        parameters: [Object],
+        returns: [Array] },
+     getPossibleBreakpoints:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns possible locations for breakpoint. scriptId in start and end range locations should be\nthe same.',
+        parameters: [Object],
+        returns: [Array] },
+     getScriptSource:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns source for the script with given id.',
+        parameters: [Object],
+        returns: [Array] },
+     getStackTrace:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns stack trace with given `stackTraceId`.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     pause:
+      { [Function: handler]
+        category: 'command',
+        description: 'Stops on the next JavaScript statement.' },
+     pauseOnAsyncCall:
+      { [Function: handler] category: 'command', experimental: true, parameters: [Object] },
+     removeBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Removes JavaScript breakpoint.',
+        parameters: [Object] },
+     restartFrame:
+      { [Function: handler]
+        category: 'command',
+        description: 'Restarts particular call frame from the beginning.',
+        parameters: [Object],
+        returns: [Array] },
+     resume:
+      { [Function: handler]
+        category: 'command',
+        description: 'Resumes JavaScript execution.' },
+     searchInContent:
+      { [Function: handler]
+        category: 'command',
+        description: 'Searches for given string in script content.',
+        parameters: [Object],
+        returns: [Array] },
+     setAsyncCallStackDepth:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables or disables async call stacks tracking.',
+        parameters: [Object] },
+     setBlackboxPatterns:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in\nscripts with url matching one of the patterns. VM will try to leave blackboxed script by\nperforming \'step in\' several times, finally resorting to \'step out\' if unsuccessful.',
+        experimental: true,
+        parameters: [Object] },
+     setBlackboxedRanges:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Makes backend skip steps in the script in blackboxed ranges. VM will try leave blacklisted\nscripts by performing \'step in\' several times, finally resorting to \'step out\' if unsuccessful.\nPositions array contains positions where blackbox state is changed. First interval isn\'t\nblackboxed. Array should be sorted.',
+        experimental: true,
+        parameters: [Object] },
+     setBreakpoint:
+      { [Function: handler]
+        category: 'command',
+        description: 'Sets JavaScript breakpoint at a given location.',
+        parameters: [Object],
+        returns: [Array] },
+     setBreakpointByUrl:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this\ncommand is issued, all existing parsed scripts will have breakpoints resolved and returned in\n`locations` property. Further matching script parsing will result in subsequent\n`breakpointResolved` events issued. This logical breakpoint will survive page reloads.',
+        parameters: [Object],
+        returns: [Array] },
+     setBreakpointOnFunctionCall:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Sets JavaScript breakpoint before each call to the given function.\nIf another function was created from the same source as a given one,\ncalling it will also trigger the breakpoint.',
+        experimental: true,
+        parameters: [Object],
+        returns: [Array] },
+     setBreakpointsActive:
+      { [Function: handler]
+        category: 'command',
+        description: 'Activates / deactivates all breakpoints on the page.',
+        parameters: [Object] },
+     setPauseOnExceptions:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions or\nno exceptions. Initial pause on exceptions state is `none`.',
+        parameters: [Object] },
+     setReturnValue:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Changes return value in top frame. Available only at return break position.',
+        experimental: true,
+        parameters: [Object] },
+     setScriptSource:
+      { [Function: handler]
+        category: 'command',
+        description: 'Edits JavaScript source live.',
+        parameters: [Object],
+        returns: [Array] },
+     setSkipAllPauses:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Makes page not interrupt on any pauses (breakpoint, exception, dom exception etc).',
+        parameters: [Object] },
+     setVariableValue:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Changes value of variable in a callframe. Object-based scopes are not supported and must be\nmutated manually.',
+        parameters: [Object] },
+     stepInto:
+      { [Function: handler]
+        category: 'command',
+        description: 'Steps into the function call.',
+        parameters: [Object] },
+     stepOut:
+      { [Function: handler]
+        category: 'command',
+        description: 'Steps out of the function call.' },
+     stepOver:
+      { [Function: handler]
+        category: 'command',
+        description: 'Steps over the statement.' },
+     breakpointResolved:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when breakpoint is resolved to an actual script and location.',
+        parameters: [Object] },
+     paused:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria.',
+        parameters: [Object] },
+     resumed:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when the virtual machine resumed execution.' },
+     scriptFailedToParse:
+      { [Function: handler]
+        category: 'event',
+        description: 'Fired when virtual machine fails to parse the script.',
+        parameters: [Object] },
+     scriptParsed:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Fired when virtual machine parses script. This event is also fired for all known and uncollected\nscripts upon enabling debugger.',
+        parameters: [Object] },
+     BreakpointId:
+      { category: 'type',
+        id: 'BreakpointId',
+        description: 'Breakpoint identifier.',
+        type: 'string' },
+     CallFrameId:
+      { category: 'type',
+        id: 'CallFrameId',
+        description: 'Call frame identifier.',
+        type: 'string' },
+     Location:
+      { category: 'type',
+        id: 'Location',
+        description: 'Location in the source code.',
+        type: 'object',
+        properties: [Object] },
+     ScriptPosition:
+      { category: 'type',
+        id: 'ScriptPosition',
+        description: 'Location in the source code.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     CallFrame:
+      { category: 'type',
+        id: 'CallFrame',
+        description:
+         'JavaScript call frame. Array of call frames form the call stack.',
+        type: 'object',
+        properties: [Object] },
+     Scope:
+      { category: 'type',
+        id: 'Scope',
+        description: 'Scope description.',
+        type: 'object',
+        properties: [Object] },
+     SearchMatch:
+      { category: 'type',
+        id: 'SearchMatch',
+        description: 'Search match for resource.',
+        type: 'object',
+        properties: [Object] },
+     BreakLocation:
+      { category: 'type',
+        id: 'BreakLocation',
+        type: 'object',
+        properties: [Object] } },
+  HeapProfiler:
+   { addInspectedHeapObject:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables console to refer to the node with given id via $x (see Command Line API for more details\n$x functions).',
+        parameters: [Object] },
+     collectGarbage: { [Function: handler] category: 'command' },
+     disable: { [Function: handler] category: 'command' },
+     enable: { [Function: handler] category: 'command' },
+     getHeapObjectId:
+      { [Function: handler] category: 'command', parameters: [Object], returns: [Array] },
+     getObjectByHeapObjectId:
+      { [Function: handler] category: 'command', parameters: [Object], returns: [Array] },
+     getSamplingProfile:
+      { [Function: handler] category: 'command', returns: [Array] },
+     startSampling:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     startTrackingHeapObjects:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     stopSampling:
+      { [Function: handler] category: 'command', returns: [Array] },
+     stopTrackingHeapObjects:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     takeHeapSnapshot:
+      { [Function: handler] category: 'command', parameters: [Object] },
+     addHeapSnapshotChunk:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     heapStatsUpdate:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'If heap objects tracking has been started then backend may send update for one or more fragments',
+        parameters: [Object] },
+     lastSeenObjectId:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'If heap objects tracking has been started then backend regularly sends a current value for last\nseen object id and corresponding timestamp. If the were changes in the heap since last event\nthen one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event.',
+        parameters: [Object] },
+     reportHeapSnapshotProgress:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     resetProfiles: { [Function: handler] category: 'event' },
+     HeapSnapshotObjectId:
+      { category: 'type',
+        id: 'HeapSnapshotObjectId',
+        description: 'Heap snapshot object id.',
+        type: 'string' },
+     SamplingHeapProfileNode:
+      { category: 'type',
+        id: 'SamplingHeapProfileNode',
+        description:
+         'Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes.',
+        type: 'object',
+        properties: [Object] },
+     SamplingHeapProfileSample:
+      { category: 'type',
+        id: 'SamplingHeapProfileSample',
+        description: 'A single sample from a sampling profile.',
+        type: 'object',
+        properties: [Object] },
+     SamplingHeapProfile:
+      { category: 'type',
+        id: 'SamplingHeapProfile',
+        description: 'Sampling profile.',
+        type: 'object',
+        properties: [Object] } },
+  Profiler:
+   { disable: { [Function: handler] category: 'command' },
+     enable: { [Function: handler] category: 'command' },
+     getBestEffortCoverage:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Collect coverage data for the current isolate. The coverage data may be incomplete due to\ngarbage collection.',
+        returns: [Array] },
+     setSamplingInterval:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Changes CPU profiler sampling interval. Must be called before CPU profiles recording started.',
+        parameters: [Object] },
+     start: { [Function: handler] category: 'command' },
+     startPreciseCoverage:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enable precise code coverage. Coverage data for JavaScript executed before enabling precise code\ncoverage may be incomplete. Enabling prevents running optimized code and resets execution\ncounters.',
+        parameters: [Object] },
+     startTypeProfile:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enable type profile.',
+        experimental: true },
+     stop:
+      { [Function: handler] category: 'command', returns: [Array] },
+     stopPreciseCoverage:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Disable precise code coverage. Disabling releases unnecessary execution count records and allows\nexecuting optimized code.' },
+     stopTypeProfile:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Disable type profile. Disabling releases type profile data collected so far.',
+        experimental: true },
+     takePreciseCoverage:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Collect coverage data for the current isolate, and resets execution counters. Precise code\ncoverage needs to have started.',
+        returns: [Array] },
+     takeTypeProfile:
+      { [Function: handler]
+        category: 'command',
+        description: 'Collect type profile.',
+        experimental: true,
+        returns: [Array] },
+     consoleProfileFinished:
+      { [Function: handler] category: 'event', parameters: [Object] },
+     consoleProfileStarted:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Sent when new profile recording is started using console.profile() call.',
+        parameters: [Object] },
+     ProfileNode:
+      { category: 'type',
+        id: 'ProfileNode',
+        description:
+         'Profile node. Holds callsite information, execution statistics and child nodes.',
+        type: 'object',
+        properties: [Object] },
+     Profile:
+      { category: 'type',
+        id: 'Profile',
+        description: 'Profile.',
+        type: 'object',
+        properties: [Object] },
+     PositionTickInfo:
+      { category: 'type',
+        id: 'PositionTickInfo',
+        description:
+         'Specifies a number of samples attributed to a certain source position.',
+        type: 'object',
+        properties: [Object] },
+     CoverageRange:
+      { category: 'type',
+        id: 'CoverageRange',
+        description: 'Coverage data for a source range.',
+        type: 'object',
+        properties: [Object] },
+     FunctionCoverage:
+      { category: 'type',
+        id: 'FunctionCoverage',
+        description: 'Coverage data for a JavaScript function.',
+        type: 'object',
+        properties: [Object] },
+     ScriptCoverage:
+      { category: 'type',
+        id: 'ScriptCoverage',
+        description: 'Coverage data for a JavaScript script.',
+        type: 'object',
+        properties: [Object] },
+     TypeObject:
+      { category: 'type',
+        id: 'TypeObject',
+        description: 'Describes a type collected during runtime.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     TypeProfileEntry:
+      { category: 'type',
+        id: 'TypeProfileEntry',
+        description: 'Source offset and types for a parameter or return value.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     ScriptTypeProfile:
+      { category: 'type',
+        id: 'ScriptTypeProfile',
+        description:
+         'Type profile data collected during runtime for a JavaScript script.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] } },
+  Runtime:
+   { awaitPromise:
+      { [Function: handler]
+        category: 'command',
+        description: 'Add handler to promise with given promise object id.',
+        parameters: [Object],
+        returns: [Array] },
+     callFunctionOn:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Calls function with given declaration on the given object. Object group of the result is\ninherited from the target object.',
+        parameters: [Object],
+        returns: [Array] },
+     compileScript:
+      { [Function: handler]
+        category: 'command',
+        description: 'Compiles expression.',
+        parameters: [Object],
+        returns: [Array] },
+     disable:
+      { [Function: handler]
+        category: 'command',
+        description: 'Disables reporting of execution contexts creation.' },
+     discardConsoleEntries:
+      { [Function: handler]
+        category: 'command',
+        description: 'Discards collected exceptions and console API calls.' },
+     enable:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Enables reporting of execution contexts creation by means of `executionContextCreated` event.\nWhen the reporting gets enabled the event will be sent immediately for each existing execution\ncontext.' },
+     evaluate:
+      { [Function: handler]
+        category: 'command',
+        description: 'Evaluates expression on global object.',
+        parameters: [Object],
+        returns: [Array] },
+     getIsolateId:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns the isolate id.',
+        experimental: true,
+        returns: [Array] },
+     getHeapUsage:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns the JavaScript heap usage.\nIt is the total usage of the corresponding isolate not scoped to a particular Runtime.',
+        experimental: true,
+        returns: [Array] },
+     getProperties:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns properties of a given object. Object group of the result is inherited from the target\nobject.',
+        parameters: [Object],
+        returns: [Array] },
+     globalLexicalScopeNames:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Returns all let, const and class variables from global scope.',
+        parameters: [Object],
+        returns: [Array] },
+     queryObjects:
+      { [Function: handler] category: 'command', parameters: [Object], returns: [Array] },
+     releaseObject:
+      { [Function: handler]
+        category: 'command',
+        description: 'Releases remote object with given id.',
+        parameters: [Object] },
+     releaseObjectGroup:
+      { [Function: handler]
+        category: 'command',
+        description: 'Releases all remote objects that belong to a given group.',
+        parameters: [Object] },
+     runIfWaitingForDebugger:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Tells inspected instance to run if it was waiting for debugger to attach.' },
+     runScript:
+      { [Function: handler]
+        category: 'command',
+        description: 'Runs script with given id in a given context.',
+        parameters: [Object],
+        returns: [Array] },
+     setAsyncCallStackDepth:
+      { [Function: handler]
+        category: 'command',
+        description: 'Enables or disables async call stacks tracking.',
+        redirect: 'Debugger',
+        parameters: [Object] },
+     setCustomObjectFormatterEnabled:
+      { [Function: handler] category: 'command', experimental: true, parameters: [Object] },
+     setMaxCallStackSizeToCapture:
+      { [Function: handler] category: 'command', experimental: true, parameters: [Object] },
+     terminateExecution:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'Terminate current or next JavaScript execution.\nWill cancel the termination when the outer-most script execution ends.',
+        experimental: true },
+     addBinding:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'If executionContextId is empty, adds binding with the given name on the\nglobal objects of all inspected contexts, including those created later,\nbindings survive reloads.\nIf executionContextId is specified, adds binding only on global object of\ngiven execution context.\nBinding function takes exactly one argument, this argument should be string,\nin case of any other input, function throws an exception.\nEach binding function call produces Runtime.bindingCalled notification.',
+        experimental: true,
+        parameters: [Object] },
+     removeBinding:
+      { [Function: handler]
+        category: 'command',
+        description:
+         'This method does not remove binding function from global object but\nunsubscribes current runtime agent from Runtime.bindingCalled notifications.',
+        experimental: true,
+        parameters: [Object] },
+     bindingCalled:
+      { [Function: handler]
+        category: 'event',
+        description: 'Notification is issued every time when binding is called.',
+        experimental: true,
+        parameters: [Object] },
+     consoleAPICalled:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when console API was called.',
+        parameters: [Object] },
+     exceptionRevoked:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when unhandled exception was revoked.',
+        parameters: [Object] },
+     exceptionThrown:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when exception was thrown and unhandled.',
+        parameters: [Object] },
+     executionContextCreated:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when new execution context is created.',
+        parameters: [Object] },
+     executionContextDestroyed:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when execution context is destroyed.',
+        parameters: [Object] },
+     executionContextsCleared:
+      { [Function: handler]
+        category: 'event',
+        description: 'Issued when all executionContexts were cleared in browser' },
+     inspectRequested:
+      { [Function: handler]
+        category: 'event',
+        description:
+         'Issued when object should be inspected (for example, as a result of inspect() command line API\ncall).',
+        parameters: [Object] },
+     ScriptId:
+      { category: 'type',
+        id: 'ScriptId',
+        description: 'Unique script identifier.',
+        type: 'string' },
+     RemoteObjectId:
+      { category: 'type',
+        id: 'RemoteObjectId',
+        description: 'Unique object identifier.',
+        type: 'string' },
+     UnserializableValue:
+      { category: 'type',
+        id: 'UnserializableValue',
+        description:
+         'Primitive value which cannot be JSON-stringified. Includes values `-0`, `NaN`, `Infinity`,\n`-Infinity`, and bigint literals.',
+        type: 'string' },
+     RemoteObject:
+      { category: 'type',
+        id: 'RemoteObject',
+        description: 'Mirror object referencing original JavaScript object.',
+        type: 'object',
+        properties: [Object] },
+     CustomPreview:
+      { category: 'type',
+        id: 'CustomPreview',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     ObjectPreview:
+      { category: 'type',
+        id: 'ObjectPreview',
+        description: 'Object containing abbreviated remote object value.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     PropertyPreview:
+      { category: 'type',
+        id: 'PropertyPreview',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     EntryPreview:
+      { category: 'type',
+        id: 'EntryPreview',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     PropertyDescriptor:
+      { category: 'type',
+        id: 'PropertyDescriptor',
+        description: 'Object property descriptor.',
+        type: 'object',
+        properties: [Object] },
+     InternalPropertyDescriptor:
+      { category: 'type',
+        id: 'InternalPropertyDescriptor',
+        description:
+         'Object internal property descriptor. This property isn\'t normally visible in JavaScript code.',
+        type: 'object',
+        properties: [Object] },
+     PrivatePropertyDescriptor:
+      { category: 'type',
+        id: 'PrivatePropertyDescriptor',
+        description: 'Object private field descriptor.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] },
+     CallArgument:
+      { category: 'type',
+        id: 'CallArgument',
+        description:
+         'Represents function call argument. Either remote object id `objectId`, primitive `value`,\nunserializable primitive value or neither of (for undefined) them should be specified.',
+        type: 'object',
+        properties: [Object] },
+     ExecutionContextId:
+      { category: 'type',
+        id: 'ExecutionContextId',
+        description: 'Id of an execution context.',
+        type: 'integer' },
+     ExecutionContextDescription:
+      { category: 'type',
+        id: 'ExecutionContextDescription',
+        description: 'Description of an isolated world.',
+        type: 'object',
+        properties: [Object] },
+     ExceptionDetails:
+      { category: 'type',
+        id: 'ExceptionDetails',
+        description:
+         'Detailed information about exception (or error) that was thrown during script compilation or\nexecution.',
+        type: 'object',
+        properties: [Object] },
+     Timestamp:
+      { category: 'type',
+        id: 'Timestamp',
+        description: 'Number of milliseconds since epoch.',
+        type: 'number' },
+     TimeDelta:
+      { category: 'type',
+        id: 'TimeDelta',
+        description: 'Number of milliseconds.',
+        type: 'number' },
+     CallFrame:
+      { category: 'type',
+        id: 'CallFrame',
+        description: 'Stack entry for runtime errors and assertions.',
+        type: 'object',
+        properties: [Object] },
+     StackTrace:
+      { category: 'type',
+        id: 'StackTrace',
+        description: 'Call frames for assertions or error messages.',
+        type: 'object',
+        properties: [Object] },
+     UniqueDebuggerId:
+      { category: 'type',
+        id: 'UniqueDebuggerId',
+        description: 'Unique identifier of current debugger.',
+        experimental: true,
+        type: 'string' },
+     StackTraceId:
+      { category: 'type',
+        id: 'StackTraceId',
+        description:
+         'If `debuggerId` is set stack trace comes from another debugger and can be resolved there. This\nallows to track cross-debugger calls. See `Runtime.StackTrace` and `Debugger.paused` for usages.',
+        experimental: true,
+        type: 'object',
+        properties: [Object] } },
+  Schema:
+   { getDomains:
+      { [Function: handler]
+        category: 'command',
+        description: 'Returns supported domains.',
+        returns: [Array] },
+     Domain:
+      { category: 'type',
+        id: 'Domain',
+        description: 'Description of the protocol domain.',
+        type: 'object',
+        properties: [Object] } },
+  _ws:
+   WebSocket {
+     _events:
+      [Object: null prototype] {
+        open: [Function],
+        message: [Function],
+        close: [Function],
+        error: [Function] },
+     _eventsCount: 4,
+     _maxListeners: undefined,
+     readyState: 1,
+     protocol: '',
+     _binaryType: 'nodebuffer',
+     _closeFrameReceived: false,
+     _closeFrameSent: false,
+     _closeMessage: '',
+     _closeTimer: null,
+     _closeCode: 1006,
+     _extensions: { 'permessage-deflate': [PerMessageDeflate] },
+     _receiver:
+      Receiver {
+        _writableState: [WritableState],
+        writable: true,
+        _events: [Object],
+        _eventsCount: 6,
+        _maxListeners: undefined,
+        _binaryType: 'nodebuffer',
+        _extensions: [Object],
+        _maxPayload: 104857600,
+        _bufferedBytes: 0,
+        _buffers: [],
+        _compressed: false,
+        _payloadLength: 0,
+        _mask: undefined,
+        _fragmented: 0,
+        _masked: false,
+        _fin: false,
+        _opcode: 0,
+        _totalPayloadLength: 0,
+        _messageLength: 0,
+        _fragments: [],
+        _state: 0,
+        _loop: false,
+        [Symbol(websocket)]: [Circular] },
+     _sender:
+      Sender {
+        _extensions: [Object],
+        _socket: [Socket],
+        _firstFragment: true,
+        _compress: false,
+        _bufferedBytes: 0,
+        _deflating: false,
+        _queue: [] },
+     _socket:
+      Socket {
+        connecting: false,
+        _hadError: false,
+        _handle: [TCP],
+        _parent: null,
+        _host: null,
+        _readableState: [ReadableState],
+        readable: true,
+        _events: [Object],
+        _eventsCount: 4,
+        _maxListeners: undefined,
+        _writableState: [WritableState],
+        writable: true,
+        allowHalfOpen: false,
+        _sockname: null,
+        _pendingData: null,
+        _pendingEncoding: '',
+        server: null,
+        _server: null,
+        parser: null,
+        _httpMessage: null,
+        timeout: 0,
+        [Symbol(asyncId)]: 82,
+        [Symbol(lastWriteQueueSize)]: 0,
+        [Symbol(timeout)]: null,
+        [Symbol(kBytesRead)]: 0,
+        [Symbol(kBytesWritten)]: 0,
+        [Symbol(websocket)]: [Circular] },
+     _isServer: false,
+     _redirects: 0,
+     url:
+      'ws://127.0.0.1:33461/devtools/page/B61775AFCA41F800461F3A053B82B136',
+     _req: null } }
