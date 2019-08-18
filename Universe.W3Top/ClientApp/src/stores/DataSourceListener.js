@@ -21,7 +21,6 @@ class DataSourceListener {
         this.connection = hub.build();
         this.connection.on("ReceiveDataSource", dataSource => {
             Helper.notifyTrigger("MetricsArriving", "true");
-            // if (global.document) global.document.MetricsArriving = "true";
 
             let [hasMessageId, messageId] = Helper.Common.tryGetProperty(dataSource, "messageId");
             messageId = messageId || "<unknown-message>";
@@ -31,7 +30,6 @@ class DataSourceListener {
                 DataSourceActions.DataSourceUpdated(dataSource);
                 this.applyDocumentTitle(dataSource);
                 Helper.notifyTrigger("MetricsArrived", "true");
-                // if (global.document) global.document.MetricsArrived = "true";
             } catch(err){
                 console.error(err);
             }
@@ -57,11 +55,10 @@ class DataSourceListener {
                     return response.ok ? response.json() : {error: response.status, details: response.json()}
                 })
                 .then(briefInfo => {
-                    // if (global.document) global.document.BriefInfoArrived = "true";
                     this.applyDocumentTitle(briefInfo);
                     DataSourceActions.BriefUpdated(briefInfo);
-                    Helper.toConsole("BRIEF INFO", briefInfo);
                     Helper.notifyTrigger("BriefInfoArrived", "wow!");
+                    Helper.toConsole("BRIEF INFO", briefInfo);
                 })
                 .catch(error => console.log(error));
         }
