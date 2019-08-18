@@ -25,8 +25,18 @@ export const isDocumentHidden = () => {
     return isHidden;
 }
 
-export const notifyTrigger = (triggerName, message) => {
-    if (global.document) global.document[triggerName] = message; 
+global.ApplicationLevelTriggers = {};
+export const notifyTrigger = (triggerName) => {
+    const start = window.LoadingStartedAt || 0;
+    const current = (window.performance && window.performance.now) ? window.performance.now() : +new Date();
+    if (window.ApplicationLevelTriggers === undefined) window.ApplicationLevelTriggers = {};
+    let prev = window.ApplicationLevelTriggers[triggerName];
+    if (prev === undefined) {
+        prev = {first: current - start};
+        window.ApplicationLevelTriggers[triggerName] = prev;
+    }
+    
+    prev.last = current - start;
 };
 
 export const log = function(caption) {

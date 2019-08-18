@@ -6,7 +6,7 @@ const file = require('fs');
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
+const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010";
 
 const pages = {
     home: {url:`/`, width: 1024, height: 600 },
@@ -53,8 +53,15 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
     const getExpression = async (expression) => {
         const expressionValue = await Runtime.evaluate({expression: expression});
         // console.log(`Expression [${expression}] value is [%o]`, expressionValue);
+        
+        if (expressionValue.subtype === "error")
+            return undefined;
+        
         if (expressionValue.result.className === "Date")
             return Date.parse(expressionValue.result.description);
+
+        if (expressionValue.result.type === "number")
+            return expressionValue.result.value;
         
         return expressionValue.result.value;
     };
@@ -69,16 +76,16 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         return raw ? parseInt(raw[2], 10) : false;
     };
 
-    const waitForTrigger = async (timeout, triggerKey, isSuccess) => {
+    const waitForTrigger = async (timeout, triggerKey) => {
         const start = new Date();
         let ms = 1;
         while(true)
         {
-            const value = await getExpression(`document.${triggerKey}`);
+            const value = await getExpression(`window.ApplicationLevelTriggers.${triggerKey}.first`);
             // console.log(`Wait for ${triggerKey}: ${value} (${new Date() - start})`);
-            if (value !== undefined && (isSuccess === undefined || isSuccess === null || isSuccess(value))) {
-                console.debug(`Trigger [${triggerKey}] successfully confirmed in ${new Date() - start} milliseconds`);
-                return true;
+            if (value > 0) {
+                console.debug(`Trigger [${triggerKey}] successfully confirmed in ${new Date() - start} milliseconds. Raised at ${value} milliseconds`);
+                return value;
             }
 
             await delay(ms);
@@ -124,11 +131,11 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
                 console.log(`Header [${id}]: '${headerValue ? headerValue : "MISSED"}'`);
         }
 
-        let areMetricsArriving = await waitForTrigger(15000,"MetricsArriving", status => status === "true");
+        let areMetricsArriving = await waitForTrigger(15000,"MetricsArriving");
         if (!areMetricsArriving)
             console.error("ERROR: Web Socket broadcast for metrics is not obtained in 15 seconds");
 
-        let areMetricsArrived = await waitForTrigger(5000,"MetricsArrived", status => status === "true");
+        let areMetricsArrived = await waitForTrigger(5000,"MetricsArrived");
         if (!areMetricsArrived)
             console.error("ERROR: Metrics are not bound in 5 seconds");
 
