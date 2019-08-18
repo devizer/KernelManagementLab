@@ -6,7 +6,7 @@ const file = require('fs');
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
+const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/mounts";
 
 (async function() {
 
@@ -25,31 +25,33 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
 
   const { DOM, Page, Emulation, Runtime} = protocol;
   
-  const getElementById = async (idName) => {
-      const innerText = await Runtime.evaluate({expression: `document.getElementById('${idName}').innerText`});
-      const ret = innerText.result.value;
-      return ret;
+  const getExpression = async (expression) => {
+      const innerText = await Runtime.evaluate({expression: expression});
+      return innerText.result.value;
   };
   
-  const waitForTrigger = async (timeout, triggerKey, isSuccess) => {
-    const start = new Date();
-    while(true)
-    {
-      const result_Value = await Runtime.evaluate({expression: `document.${triggerKey}`});
-      const value = result_Value.result.value;
-      // console.log(`Wait for ${triggerKey}: ${value} (${new Date() - start})`);
-      if (value !== undefined && (isSuccess === undefined || isSuccess === null || isSuccess(value))) {
-        console.debug(`Trigger successfully confirmed: [${triggerKey}]`);
-        return true;
-      }
-      
-      await delay(1);
-      let elapsed = new Date() - start;
-      if (elapsed > timeout) break;
-    }
-    
-    console.warn(`Warning: trigger [${triggerKey}] was not raised:`);
-    return false;
+  const getElementById = async (idName) => {
+      return await getExpression(`document.getElementById('${idName}').innerText`);
+  };
+
+    const waitForTrigger = async (timeout, triggerKey, isSuccess) => {
+        const start = new Date();
+        while(true)
+        {
+            const value = await getExpression(`document.${triggerKey}`);
+            // console.log(`Wait for ${triggerKey}: ${value} (${new Date() - start})`);
+            if (value !== undefined && (isSuccess === undefined || isSuccess === null || isSuccess(value))) {
+                console.debug(`Trigger [${triggerKey}] successfully confirmed in ${new Date() - start} milliseconds`);
+                return true;
+            }
+
+            await delay(1);
+            let elapsed = new Date() - start;
+            if (elapsed > timeout) break;
+        }
+
+        console.warn(`Warning! trigger [${triggerKey}] was not raised in ${new Date() - start} milliseconds`);
+        return false;
   };
   
   await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
@@ -58,16 +60,11 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
 
   Page.loadEventFired(async() => {
     console.log("PAGE LOADED");
-    
-    const script_Title = "document.title";
-    const result_Title = await Runtime.evaluate({expression: script_Title});
-    const title = result_Title.result.value;
-    console.log(`TITLE: '${title}'`);
+    console.log(`TITLE: '${await getExpression("document.title")}'`);
 
-    const script_Whole = "document.body.innerText";
-    const result_Whole = await Runtime.evaluate({expression: script_Whole});
-    const wholeText = result_Whole.result.value;
-    console.log(`wholeText: '${wholeText}'`);
+      console.log(`WHOLE DOCUMENT (incomplete): 
+${await getExpression("document.body.innerText")}
+`);
       
     for(let sysInfoIndex=1; sysInfoIndex<=4; sysInfoIndex++)
     {
@@ -79,12 +76,14 @@ const w3topUrl = process.env.W3TOP_URL || "http://localhost:5050/";
         console.log(`Header [${id}]: '${headerValue ? headerValue : "MISSED"}'`);
     }
 
-    // wait for websocket lazy message
-    // await delay(5000);
-    // console.log("Waited 5s");
     await waitForTrigger(15000,"MetricsArrived", status => status === "true");
 
-    const ss = await Page.captureScreenshot({format: 'png', fromSurface: true});
+      console.log(`WHOLE COMPLETED DOCUMENT: 
+${await getExpression("document.body.innerText")}
+`);
+
+
+      const ss = await Page.captureScreenshot({format: 'png', fromSurface: true});
     file.writeFile('bin/screenshot [home].png', ss.data, 'base64', function(err) {
       if (err) console.log(`Screenshot error: ${err}`);
     });
