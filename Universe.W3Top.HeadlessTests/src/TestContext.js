@@ -1,20 +1,19 @@
 const file = require('fs');
 
-export default class TestContext {
+class TestContext {
     
-    errors = [];
-    
-    constructor(Protocol, PageSpec)
+    constructor(Protocol, PageSpec, errors)
     {
         this.Protocol = Protocol;
         this.PageSpec = PageSpec;
+        this.errors = errors;
     }
     
-    addError = (error) => {
+    addError(error) {
         this.errors.push(error);
     };
 
-    setWindowSize = async (width, height) => {
+    async setWindowSize (width, height) {
         var window = await this.Protocol.Browser.getWindowForTarget();
         console.log("New Size: [%d * %d], Prev Window: %o", width, height, window);
         window.bounds.width=width;
@@ -22,7 +21,7 @@ export default class TestContext {
         await this.Protocol.Browser.setWindowBounds(window);
     };
 
-    getExpression = async (expression) => {
+    async getExpression (expression) {
         const expressionValue = await this.Protocol.Runtime.evaluate({expression: expression});
         // console.log(`Expression [${expression}] value is [%o]`, expressionValue);
 
@@ -38,17 +37,17 @@ export default class TestContext {
         return expressionValue.result.value;
     };
 
-    getElementById = async (idName) => {
+    async getElementById (idName) {
         return await this.getExpression(`document.getElementById('${idName}').innerText`);
     };
 
-    getVersion = async () => {
+    async getVersion () {
         const userAgent = await this.getExpression("navigator.userAgent");
         const raw = userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
         return raw ? parseInt(raw[2], 10) : false;
     };
 
-    waitForTrigger = async (timeout, triggerKey) => {
+    async waitForTrigger (timeout, triggerKey) {
         const start = new Date();
         let ms = 1;
         while(true)
@@ -72,9 +71,11 @@ export default class TestContext {
         return false;
     };
 
-    delay = ms => new Promise(res => setTimeout(res, ms));
+    delay(ms) {
+        return new Promise(res => setTimeout(res, ms));
+    } 
 
-    saveScreenshot = async (fileName) => {
+    async saveScreenshot (fileName) {
         const ss = await this.Protocol.Page.captureScreenshot({format: 'png', fromSurface: true});
         file.writeFile(fileName, ss.data, 'base64', function (err) {
             if (err) console.error(`${fileName} screenshot error: ${err}`);
@@ -82,3 +83,4 @@ export default class TestContext {
     }
 } 
 
+module.exports = TestContext;

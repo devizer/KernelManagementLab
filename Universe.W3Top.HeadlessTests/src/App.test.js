@@ -1,22 +1,18 @@
-import TestContext from "./TestContext";
+#!/usr/bin/env node 
+const runTest = require("./TestLauncher");
 
 const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
 
-const pages = {
-    home:          {url:`/`,       width: 1024, height: 600, fileName:"[home]", tests: [commonTest] },
-    mounts:        {url:`/mounts`, width: 1024, height: 600, fileName:"mounts" },
-    diskBenchmark: {url:'/disk-benchmark', width: 1180, height: 600, fileName:"disk-benchmark" },
-    netLiveChart:  {url:'/net-v2', width: 1024, height: 1024, fileName:"net-live-chart" },
-    diskLiveChart: {url:'/disks', width: 1024, height: 1024, fileName:"disk-live-chart" },
-    page404:       {url:'/not-found-404', width: 1024, height: 400, fileName:"[404]" },
-};
+let pages = [
+    {url:`/`,       width: 1024, height: 600, fileName:"[home]", tests: [commonTest] },
+    {url:`/mounts`, width: 1024, height: 600, fileName:"mounts" },
+    {url:'/disk-benchmark', width: 1180, height: 600, fileName:"disk-benchmark" },
+    {url:'/net-v2', width: 1024, height: 1024, fileName:"net-live-chart" },
+    {url:'/disks', width: 1024, height: 1024, fileName:"disk-live-chart" },
+    {url:'/not-found-404', width: 1024, height: 400, fileName:"[404]" },
+];
 
-
-
-// const homePageTests = async (context)
-// const context = new TestContext(null, pages.home);
-
-
+// pages = [pages[0]]; 
 
 const commonTest = async (context) => {
 
@@ -45,3 +41,14 @@ const commonTest = async (context) => {
 
     context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
 };
+
+
+const totalErrors = [];
+pages.map(async page => {
+    let errors = await runTest(commonTest, page, `${w3topUrl}${page.url}`);
+    totalErrors.push(errors);
+    console.log('');
+});
+
+if (totalErrors.length > 0) throw new Error(`Total errors: ${totalErrors.length}`);
+console.log("TOTAL THE END");

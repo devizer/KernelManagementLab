@@ -103,9 +103,9 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
     await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
 
 
-    let resolveCopy = null;
+    let resolveCopy = null, rejectCopy = null;
     const ret = new Promise( (resolve, reject) => {
-        resolveCopy = resolve;
+        resolveCopy = resolve; rejectCopy = reject;
     });
     
 

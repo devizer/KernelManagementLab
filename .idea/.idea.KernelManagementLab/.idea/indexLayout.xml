@@ -5,6 +5,8 @@
       <Path>Universe.W3Top.HeadlessTests</Path>
     </attachedFolders>
     <explicitIncludes />
-    <explicitExcludes />
+    <explicitExcludes>
+      <Path>Universe.W3Top.HeadlessTests/lib</Path>
+    </explicitExcludes>
   </component>
 </project>
