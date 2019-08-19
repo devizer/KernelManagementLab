@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-
 const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
 const file = require('fs');
+
+
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
@@ -36,7 +37,7 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
 
     const { DOM, Page, Emulation, Runtime, Browser} = protocol;
     // console.log(protocol);
-    
+
     console.log(`BROWSER VER: 
 %O`, await Browser.getVersion());
 
@@ -47,29 +48,29 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         window.bounds.height=height;
         await Browser.setWindowBounds(window);
     };
-    
+
     await setWindowSize(pageSpec.width,pageSpec.height);
 
     const getExpression = async (expression) => {
         const expressionValue = await Runtime.evaluate({expression: expression});
         // console.log(`Expression [${expression}] value is [%o]`, expressionValue);
-        
+
         if (expressionValue.subtype === "error")
             return undefined;
-        
+
         if (expressionValue.result.className === "Date")
             return Date.parse(expressionValue.result.description);
 
         if (expressionValue.result.type === "number")
             return expressionValue.result.value;
-        
+
         return expressionValue.result.value;
     };
 
     const getElementById = async (idName) => {
         return await getExpression(`document.getElementById('${idName}').innerText`);
     };
-    
+
     const getVersion = async () => {
         const userAgent = await getExpression("navigator.userAgent");
         const raw = userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
@@ -102,21 +103,16 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
 
     await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
 
+    Page.navigate({ url: pageUrl });
 
-    let resolveCopy = null;
-    const ret = new Promise( (resolve, reject) => {
-        resolveCopy = resolve;
-    });
-    
-
-    Page.loadEventFired(async() => {
+    Page.loadEventFired(async () => {
         console.log("PAGE LOADED");
         console.log(`TITLE: '${await getExpression("document.title")}'`);
         console.log(`Visibility State: '${await getExpression("document.visibilityState")}'`);
         console.log(`User Agent: '${await getExpression("navigator.userAgent")}'`);
         console.log(`Version: '${await getVersion()}'`);
         console.log(`LoadingStartedAt: '${await getExpression("window.LoadingStartedAt")}'`);
-        
+
         let isBriefInfoArrived = await waitForTrigger(5000,"BriefInfoArrived");
         // next loop will fail if BriefInfoArrived is lost 
         for(let footerHeaderIndex=1; footerHeaderIndex<=4; footerHeaderIndex++)
@@ -147,21 +143,14 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         protocol.close();
         try
         {
-            
+
         }
         finally
         {
             chrome.kill();
-            resolveCopy("ok");
-            // console.log("The End");
+            console.log("The End");
         }
     });
 
-    Page.navigate({ url: pageUrl });
-
-
-
-    return ret;
-
-})().then( ok => console.log("The End"));
+})();
 
