@@ -121,7 +121,7 @@ const pageUrl = `${w3topUrl}${pageSpec.url}`;
         // next loop will fail if BriefInfoArrived is lost 
         for(let footerHeaderIndex=1; footerHeaderIndex<=4; footerHeaderIndex++)
         {
-            let id=`FOOTER_INFO_HEADER_${footerHeaderIndex}`;
+            let id=`COMMON_INFO_HEADER_${footerHeaderIndex}`;
             const headerValue = await getElementById(id);
             if (headerValue === undefined)
                 console.error(`ERROR: Missed Footer Info Header ${id}`);
