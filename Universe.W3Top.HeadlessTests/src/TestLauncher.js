@@ -80,6 +80,8 @@ async function runTest (testCase, pageSpec, url) {
 
         resolveCopy(errors);
     });
+    
+    return ret;
 }
 
 module.exports = runTest;

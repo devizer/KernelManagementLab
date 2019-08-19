@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 yarn build
-cd lib
+cd build
 node App.test.js
 
