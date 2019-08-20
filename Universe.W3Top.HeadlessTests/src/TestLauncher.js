@@ -49,7 +49,9 @@ async function runTest (testCase, pageSpec, url) {
         errors.push(`Unable to create chrome with development API for [${url}]\n${e}`);
         if (protocol !== null) protocol.close();
         chrome.kill();
-        rejectCopy(e);
+        // rejectCopy(e);
+        resolveCopy(errors);
+        return ret;
     }
     
     context = new TestContext(protocol, pageSpec, errors);

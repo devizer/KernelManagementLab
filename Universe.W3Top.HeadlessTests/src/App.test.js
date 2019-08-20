@@ -8,8 +8,8 @@ let pages = [
     {url:`/mounts`, width: 1024, height: 600, fileName:"mounts" },
     {url:'/disk-benchmark', width: 1180, height: 620, fileName:"disk-benchmark" },
     {url:'/net-v2', width: 680, height: 800, fileName:"net-live-chart" },
-    {url:'/disks', width: 1024, height: 1024, fileName:"disk-live-chart" },
-    {url:'/not-found-404', width: 1024, height: 440, fileName:"[404]" },
+    {url:'/disks', width: 680, height: 800, fileName:"disk-live-chart" },
+    {url:'/not-found-404', width: 660, height: 440, fileName:"[404]" },
 ];
 
 // pages = [pages[0]]; 
@@ -45,11 +45,14 @@ const commonTest = async (context) => {
 
 
 const totalErrors = [];
-pages.map(async page => {
-    let errors = await runTest(commonTest, page, `${w3topUrl}${page.url}`);
-    totalErrors.push(errors);
-    console.log('');
-});
+(async function() {
+    for(let page of pages)
+    {
+        let errors = await runTest(commonTest, page, `${w3topUrl}${page.url}`);
+        totalErrors.push(...errors);
+        console.log('');
+    }
+})().then( ok => console.log("The TOTAL End"));
 
-if (totalErrors.length > 0) throw new Error(`Total errors: ${totalErrors.length}`);
-console.log("TOTAL THE END");
+if (totalErrors.length > 0) throw new Error(`Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`);
+
