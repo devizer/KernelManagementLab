@@ -39,7 +39,11 @@ const commonTest = async (context) => {
     if (areMetricsArrived === false)
         console.error("ERROR: Metrics were not bound in 5 seconds");
 
-    await context.delay(1000);
+    await context.delay(100);
+    const scrollHeight = await context.getExpression('document.documentElement.scrollHeight');
+    console.log(`document.scrollElement.clientHeight: ${scrollHeight}`);
+    await context.setWindowSize(context.PageSpec.width, scrollHeight + 130);
+    await context.delay(1234);
     await context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
 };
 
@@ -52,7 +56,11 @@ const totalErrors = [];
         totalErrors.push(...errors);
         console.log('');
     }
-})().then( ok => console.log("The TOTAL End"));
+})().then( ok => {
+    console.log("The End")
+    if (totalErrors.length > 0) 
+        throw new Error(`Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`);
+});
 
-if (totalErrors.length > 0) throw new Error(`Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`);
+
 
