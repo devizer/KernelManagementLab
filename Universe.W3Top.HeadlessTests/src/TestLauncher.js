@@ -4,9 +4,11 @@ const TestContext = require("./TestContext");
 const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
 
+let testIndex = 0;
 // return array of errors
 async function runTest (testCase, pageSpec, url) {
 
+    testIndex++;
     const errors = [];
 
     let resolveCopy = null, rejectCopy = null;
@@ -29,7 +31,7 @@ async function runTest (testCase, pageSpec, url) {
         chrome = await launchChrome();
         console.log(`Chrome port: ${chrome.port}`);
         protocol = await CDP({port: chrome.port});
-        let ver = protocol.Version;
+        let ver = protocol.get;
         console.log(`CDP Protocol version: ${ver}`);
         const {DOM, Page, Emulation, Runtime, Browser} = protocol;
         // console.log(protocol);
@@ -59,7 +61,7 @@ async function runTest (testCase, pageSpec, url) {
     protocol.Page.loadEventFired(async() => {
         
         try {
-            console.log(`PAGE ${url} LOADED`);
+            console.log(`PAGE #${testIndex} ${url} LOADED`);
             console.log(` - TITLE: '${await context.getExpression("document.title")}'`);
             console.log(` - Visibility State: '${await context.getExpression("document.visibilityState")}'`);
             console.log(` - User Agent: '${await context.getExpression("navigator.userAgent")}'`);
