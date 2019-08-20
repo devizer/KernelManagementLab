@@ -121,7 +121,8 @@ script:
     pushd Universe.W3Top.HeadlessTests
     yarn install
     export W3TOP_APP_URL="http://localhost:5050"
-    bash App.tests.sh \
+    set -o pipefail
+    bash App.tests.sh | tee ~/build-artifacts/frontend-integration-tests \
     && cp build/bin/* ~/build-artifacts/screenshots \
     && popd
   fi
@@ -129,7 +130,8 @@ script:
 - |
   # MULTIPLY DBs tests
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    pushd Universe.Dashboard.DAL.Tests && bash -e local-tests.sh && popd
+    set -o pipefail
+    pushd Universe.Dashboard.DAL.Tests && bash -e local-tests.sh | tee ~/build-artifacts/backend-integration-tests.log && popd
   fi
   
 - docker logs sql-2019-for-tests | head -9999 || true
