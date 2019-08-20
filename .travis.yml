@@ -108,10 +108,10 @@ script:
   # prepare data for disk benchmark history on travis-ci
   curl -i -H "Accept: application/json" \
       -H "Content-Type: application/json; charset=utf-8" \
-      -X POST -d '{mountPath: "/", workingSet: "1024", randomAccessDuration: "8", disableODirect: false, blockSize: 4096, threads: 16}' \
+      -X POST -d '{mountPath: "/", workingSet: "1024", randomAccessDuration: "5", disableODirect: false, blockSize: 4096, threads: 16}' \
       http://localhost:5050/api/benchmark/disk/start-disk-benchmark
 
-  sleep 60
+  sleep 40
   cat ~/build-artifacts/w3top-server-for-integration-tests.log
   popd
   
