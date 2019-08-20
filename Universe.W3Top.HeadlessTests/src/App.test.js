@@ -4,12 +4,12 @@ const runTest = require("./TestLauncher");
 const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
 
 let pages = [
-    {url:`/`,       width: 630, height: 800, fileName:"[home]", tests: [commonTest] },
+    {url:`/`,       width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
     {url:`/mounts`, width: 1024, height: 600, fileName:"mounts" },
     {url:'/disk-benchmark', width: 1180, height: 620, fileName:"disk-benchmark" },
-    {url:'/net-v2', width: 630, height: 800, fileName:"net-live-chart" },
-    {url:'/disks', width: 630, height: 800, fileName:"disk-live-chart" },
-    {url:'/not-found-404', width: 520, height: 440, fileName:"[404]" },
+    {url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart" },
+    {url:'/disks', width: 570, height: 800, fileName:"disk-live-chart" },
+    {url:'/not-found-404', width: 560, height: 440, fileName:"[404]" },
 ];
 
 // pages = [pages[0]]; 
@@ -41,8 +41,9 @@ const commonTest = async (context) => {
 
     await context.delay(1500);
     const scrollHeight = await context.getExpression('document.documentElement.scrollHeight');
-    console.log(`document.scrollElement.clientHeight: ${scrollHeight}`);
-    await context.setWindowSize(context.PageSpec.width, scrollHeight + 130);
+    const boundHeight = await context.getExpression('document.documentElement.getBoundingClientRect().height');
+    console.log(`document.scrollElement.clientHeight: ${scrollHeight}, boundRect: ${boundHeight}`);
+    await context.setWindowSize(context.PageSpec.width, boundHeight + 8);
     await context.delay(444);
     await context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
 };
