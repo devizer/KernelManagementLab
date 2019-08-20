@@ -120,9 +120,9 @@ script:
     echo "HEADLESS INTEGRATION TESTS"
     pushd Universe.W3Top.HeadlessTests
     yarn install
-    bash App.test.sh
-    cp build/bin/* ~/build-artifacts/screenshots
-    popd
+    bash App.tests.sh \
+    && cp build/bin/* ~/build-artifacts/screenshots \
+    && popd
   fi
   
 - |
