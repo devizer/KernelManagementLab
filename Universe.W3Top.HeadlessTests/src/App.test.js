@@ -39,11 +39,11 @@ const commonTest = async (context) => {
     if (areMetricsArrived === false)
         console.error("ERROR: Metrics were not bound in 5 seconds");
 
-    await context.delay(100);
+    await context.delay(1500);
     const scrollHeight = await context.getExpression('document.documentElement.scrollHeight');
     console.log(`document.scrollElement.clientHeight: ${scrollHeight}`);
     await context.setWindowSize(context.PageSpec.width, scrollHeight + 130);
-    await context.delay(1234);
+    await context.delay(444);
     await context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
 };
 
