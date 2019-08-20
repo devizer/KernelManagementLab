@@ -90,8 +90,6 @@ script:
   echo "Sqlite tests only"
   time dotnet test --no-restore -c Release # Test only sqlite provider on linux and osx
 
-- docker logs sql-2019-for-tests | head -9999 || true
-
 - pushd Universe.W3Top/ClientApp
 - time yarn install
 - time yarn test 
@@ -124,6 +122,9 @@ script:
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     pushd Universe.Dashboard.DAL.Tests && bash -e local-tests.sh && popd
   fi
+  
+- docker logs sql-2019-for-tests | head -9999 || true
+
 
 - |
    # publish self-contained
