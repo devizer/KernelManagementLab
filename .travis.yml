@@ -103,7 +103,7 @@ script:
   cd bin/service
   export ASPNETCORE_URLS=http://0.0.0.0:5050
   sudo dotnet Universe.W3Top.dll >~/build-artifacts/w3top-server-for-integration-tests.log 2>&1 &
-  sleep 10
+  sleep 15
 
   # prepare data for disk benchmark history on travis-ci
   curl -i -H "Accept: application/json" \
@@ -111,7 +111,7 @@ script:
       -X POST -d '{mountPath: "/", workingSet: "1024", randomAccessDuration: "6", disableODirect: false, blockSize: 4096, threads: 16}' \
       http://localhost:5050/api/benchmark/disk/start-disk-benchmark
 
-  sleep 48
+  sleep 60
   cat ~/build-artifacts/w3top-server-for-integration-tests.log
   popd
   
