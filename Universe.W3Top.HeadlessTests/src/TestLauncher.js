@@ -8,6 +8,7 @@ const CDP = require('chrome-remote-interface');
 async function runTest (testCase, pageSpec, url) {
 
     const errors = [];
+
     let resolveCopy = null, rejectCopy = null;
     const ret = new Promise( (resolve, reject) => {
         resolveCopy = resolve; rejectCopy = reject;
@@ -17,19 +18,17 @@ async function runTest (testCase, pageSpec, url) {
         return await chromeLauncher.launch({
             // chromePath: 'google-chrome',
             startingUrl: 'about:blank',
-            chromeFlags: ['--headless', '--disable-gpu', "--no-sandbox", "--enable-logging"],
+            chromeFlags: [/*'--headless',*/ '--disable-gpu', "--no-sandbox", "--enable-logging"],
         });
     }
 
-    let chrome = null, protocol = null;
+    let chrome = null, protocol = null, context = null;
     try {
         chrome = await launchChrome();
         console.log(`Chrome port: ${chrome.port}`);
-
         protocol = await CDP({port: chrome.port});
         let ver = protocol.Version;
-        console.log(`VER: ${ver}`);
-
+        console.log(`CDP Protocol version: ${ver}`);
         const {DOM, Page, Emulation, Runtime, Browser} = protocol;
         // console.log(protocol);
 
@@ -37,20 +36,24 @@ async function runTest (testCase, pageSpec, url) {
 %O`, await Browser.getVersion());
 
         await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
-
+        context = new TestContext(protocol, pageSpec, errors);
+        if (pageSpec.width && pageSpec.height)
+            await context.setWindowSize(pageSpec.width, pageSpec.height);
+        
         Page.navigate({url: url});
     }
     catch(e)
     {
         errors.push(`Unable to create chrome with development API for [${url}]\n${e}`);
-        rejectCopy(errors);
         if (protocol !== null) protocol.close();
         chrome.kill();
+        rejectCopy(e);
     }
     
-    const context = new TestContext(protocol, pageSpec, errors);
+    context = new TestContext(protocol, pageSpec, errors);
 
     protocol.Page.loadEventFired(async() => {
+        
         try {
             console.log(`PAGE ${url} LOADED`);
             console.log(` - TITLE: '${await context.getExpression("document.title")}'`);
@@ -59,20 +62,21 @@ async function runTest (testCase, pageSpec, url) {
             console.log(` - LoadingStartedAt: '${await context.getExpression("window.LoadingStartedAt")}'`);
         } catch (e) {
             errors.push(e);
+            // return;
         }
 
         try {
             await testCase(context);
         } catch (e) {
-            console.error(`Fail tests for ${url}\n${e}`);
+            // console.error(`Fail tests for ${url}\n${e}`);
             errors.push(e);
         }
-        
+
         if (errors.length === 0)
             console.log(`[${url}] tests completed successfully`);
         else {
             console.error(`[${url}] tests failed with ${errors.length} errors`);
-            for(const i in errors) console.error(` error: ${i}`);
+            for(const i of errors) console.error(` error: ${i}`);
         }
         
         protocol.close();

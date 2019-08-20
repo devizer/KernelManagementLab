@@ -4,12 +4,12 @@ const runTest = require("./TestLauncher");
 const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
 
 let pages = [
-    {url:`/`,       width: 1024, height: 600, fileName:"[home]", tests: [commonTest] },
+    {url:`/`,       width: 680, height: 800, fileName:"[home]", tests: [commonTest] },
     {url:`/mounts`, width: 1024, height: 600, fileName:"mounts" },
-    {url:'/disk-benchmark', width: 1180, height: 600, fileName:"disk-benchmark" },
-    {url:'/net-v2', width: 1024, height: 1024, fileName:"net-live-chart" },
+    {url:'/disk-benchmark', width: 1180, height: 620, fileName:"disk-benchmark" },
+    {url:'/net-v2', width: 680, height: 800, fileName:"net-live-chart" },
     {url:'/disks', width: 1024, height: 1024, fileName:"disk-live-chart" },
-    {url:'/not-found-404', width: 1024, height: 400, fileName:"[404]" },
+    {url:'/not-found-404', width: 1024, height: 440, fileName:"[404]" },
 ];
 
 // pages = [pages[0]]; 
@@ -39,7 +39,8 @@ const commonTest = async (context) => {
     if (areMetricsArrived === false)
         console.error("ERROR: Metrics were not bound in 5 seconds");
 
-    context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
+    await context.delay(1000);
+    await context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
 };
 
 

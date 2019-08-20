@@ -76,13 +76,10 @@ class TestContext {
     } 
 
     async saveScreenshot (fileName) {
-        console.log(`0. Saving screenshot to ${fileName}`);
         const ss = await this.Protocol.Page.captureScreenshot({format: 'png', fromSurface: true});
-        console.log(`1. Saving screenshot to ${fileName}`);
         file.writeFile(fileName, ss.data, 'base64', function (err) {
             if (err) console.error(`${fileName} screenshot error: ${err}`);
         });
-        console.log(`2. Saving screenshot to ${fileName}`);
     }
 } 
 
