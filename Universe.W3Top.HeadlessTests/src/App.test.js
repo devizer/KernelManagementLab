@@ -4,12 +4,12 @@ const runTest = require("./TestLauncher");
 const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
 
 let pages = [
-    {url:`/`,       width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
+    {url:'/not-found-404', width: 560, height: 440, fileName:"[404]" },
     {url:`/mounts`, width: 1024, height: 600, fileName:"mounts" },
     {url:'/disk-benchmark', width: 1180, height: 620, fileName:"disk-benchmark" },
     {url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart" },
     {url:'/disks', width: 570, height: 800, fileName:"disk-live-chart" },
-    {url:'/not-found-404', width: 560, height: 440, fileName:"[404]" },
+    {url:`/`,       width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
 ];
 
 // pages = [pages[0]]; 

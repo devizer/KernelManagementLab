@@ -105,7 +105,7 @@ script:
   cd bin/service
   export ASPNETCORE_URLS=http://0.0.0.0:5050
   sudo dotnet Universe.W3Top.dll >~/w3top.log 2>&1 &
-  sleep 4
+  sleep 40
   cat ~/w3top.log
   popd
   
