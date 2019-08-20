@@ -143,8 +143,19 @@ const validateOptions = (options) => {
 let timer = null; // for progress
 let token = null; // for progress
 
+const getNeedHideDialog = (props) => {
+    let needHideDialog = false;
+    // do we need to calc it on each render?
+    Helper.toConsole(`DiskBenchmarkDialog::props are`, props);
+    let queryParams = queryString.parse(props.location ? props.location.search : "");
+    Helper.toConsole(`DiskBenchmarkDialog::query string is`, queryParams);
+    needHideDialog = queryParams['history'] !== undefined;
+    Helper.log(`DiskBenchmarkDialog::needHideDialog ${needHideDialog}`);
+    return needHideDialog;
+}
+
 function DiskBenchmarkDialog(props) {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(!getNeedHideDialog(props));
     const [activeStep, setActiveStep] = React.useState(0);
     const [disks, setDisks] = React.useState(null);
     const [selectedDisk, setSelectedDisk] = React.useState(null);
@@ -155,16 +166,7 @@ function DiskBenchmarkDialog(props) {
     const [historyTrigger, setHistoryTrigger] = React.useState(null);
     const errorElement = React.useRef(); // where is popper bound to?
 
-    let needHideOpenButton = false;
-    {
-        // do we need to calc it on each render?
-        Helper.toConsole(`DiskBenchmarkDialog::props are`, props);
-        let queryParams = queryString.parse(props.location ? props.location.search : "");
-        Helper.toConsole(`DiskBenchmarkDialog::query string is`, queryParams);
-        needHideOpenButton = queryParams['hide-button'] !== undefined;
-        Helper.log(`DiskBenchmarkDialog::needHideOpenButton ${needHideOpenButton}`);
-    }
-    
+
     React.useEffect(() => {
         if (disks === null) initDisksSource();
     });
