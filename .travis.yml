@@ -102,17 +102,17 @@ script:
   SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service /v:m
   cd bin/service
   export ASPNETCORE_URLS=http://0.0.0.0:5050
-  sudo dotnet Universe.W3Top.dll >~/w3top.log 2>&1 &
-  sleep 15
+  sudo dotnet Universe.W3Top.dll >~/build-artifacts/w3top-server-for-integration-tests.log 2>&1 &
+  sleep 10
 
   # prepare data for disk benchmark history on travis-ci
   curl -i -H "Accept: application/json" \
       -H "Content-Type: application/json; charset=utf-8" \
-      -X POST -d '{mountPath: "/", workingSet: "256", randomAccessDuration: "3", disableODirect: false, blockSize: 4096, threads: 16}' \
+      -X POST -d '{mountPath: "/", workingSet: "1024", randomAccessDuration: "3", disableODirect: false, blockSize: 4096, threads: 16}' \
       http://localhost:5050/api/benchmark/disk/start-disk-benchmark
 
-  sleep 25
-  cat ~/w3top.log
+  sleep 42
+  cat ~/build-artifacts/w3top-server-for-integration-tests.log
   popd
   
 - |
