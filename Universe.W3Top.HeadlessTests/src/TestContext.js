@@ -10,14 +10,18 @@ class TestContext {
     }
     
     addError(error) {
+        console.error(`ERROR: ${error}`);
         this.errors.push(error);
     };
 
     async setWindowSize (width, height) {
         var window = await this.Protocol.Browser.getWindowForTarget();
         console.log("New Size: [%d * %d], Prev Window: %o", width, height, window);
-        window.bounds.width=width;
-        window.bounds.height=height;
+        let newWidth = window.bounds.width, newHeight = window.bounds.height;
+        if (width > 0) newWidth = width;
+        if (height > 0) newHeight = height;
+        window.bounds.width = newWidth;
+        window.bounds.height = newHeight;
         await this.Protocol.Browser.setWindowBounds(window);
     };
 
