@@ -6,7 +6,7 @@ const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010";
 let pages = [
     {url:'/not-found-404', width: 560, height: 440, fileName:"[404]" },
     {url:`/mounts`, width: 1024, height: 600, fileName:"mounts" },
-    {url:'/disk-benchmark',             width: 1180, height: 620, fileName:"disk-benchmark-start" },
+    {url:'/disk-benchmark',         width: 1180, height: 620, fileName:"disk-benchmark-start" },
     {url:'/disk-benchmark?history', width: 1180, height: 620, fileName:"disk-benchmark-history" },
     {url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart" },
     {url:'/disks', width: 570, height: 800, fileName:"disk-live-chart" },

@@ -120,6 +120,7 @@ script:
     echo "HEADLESS INTEGRATION TESTS"
     pushd Universe.W3Top.HeadlessTests
     yarn install
+    export W3TOP_APP_URL="http://localhost:5050"
     bash App.tests.sh \
     && cp build/bin/* ~/build-artifacts/screenshots \
     && popd
