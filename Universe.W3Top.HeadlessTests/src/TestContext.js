@@ -1,5 +1,13 @@
 const file = require('fs');
 
+const myJSON = arg => {
+    const s1 = JSON.stringify(arg,null, ' ');
+    let s2 = s1.replace(/\n/g, " ");
+    // .replace(/  /g, " ")
+    while(s2.indexOf("  ") >= 0) {s2 = s2.replace("  ", " "); }
+    return s2;
+}
+
 class TestContext {
     
     constructor(Protocol, PageSpec, errors)
@@ -16,7 +24,7 @@ class TestContext {
 
     async setWindowSize (width, height) {
         var window = await this.Protocol.Browser.getWindowForTarget();
-        console.log("New Size: [%d * %d], Prev Window: %o", width, height, window);
+        console.log("New Window Size: [%d * %d], Prev Size: %s", width, height, myJSON(window));
         let newWidth = window.bounds.width, newHeight = window.bounds.height;
         if (width > 0) newWidth = width;
         if (height > 0) newHeight = height;

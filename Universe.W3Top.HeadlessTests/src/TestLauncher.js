@@ -13,6 +13,7 @@ const myFormat = x => {
     return Number(x).toLocaleString(undefined, {useGrouping:true, minimumFractionDigits:1, maximumFractionDigits:1});
 }
 
+
 let testIndex = 0;
 // return array of errors
 async function runTest (testCase, pageSpec, url) {
@@ -77,7 +78,8 @@ async function runTest (testCase, pageSpec, url) {
                 maxLength = Math.max(maxLength, len);
             }
             const requestId = params.requestId;
-            console.log(`◄ ${timings} ${params.response.status} ${params.response.url} ${params.response.timing.receiveHeadersEnd} ${duration} ${sinceStart}`);
+            const deprecated = `${params.response.timing.receiveHeadersEnd} ${duration} ${sinceStart}`;
+            console.log(`◄ ${timings} ${params.response.status} ${params.response.url}`);
         });
 
 
