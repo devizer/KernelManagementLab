@@ -21,7 +21,7 @@ async function runTest (testCase, pageSpec, url) {
     testIndex++;
     const errors = [];
 
-    let resolveCopy = null, rejectCopy = null;
+    let resolveCopy = null, rejectCopy = null, resolved = false;
     const ret = new Promise( (resolve, reject) => {
         resolveCopy = resolve; rejectCopy = reject;
     });
@@ -133,6 +133,15 @@ async function runTest (testCase, pageSpec, url) {
         chrome.kill();
 
         resolveCopy(errors);
+    });
+    
+    new Promise(async () => {
+        await delay(1000);
+        if (!resolved)
+        {
+            errors.push("Timeout expired. Page cannot be not loaded");
+            resolveCopy(errors);
+        }
     });
     
     return ret;
