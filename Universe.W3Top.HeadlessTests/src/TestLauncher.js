@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const TestContext = require("./TestContext");
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
@@ -58,7 +59,7 @@ async function runTest (testCase, pageSpec, url) {
             // console.log(`○► #${params.requestId} ${params.request.method} ${params.request.url}`);
         });
 
-        let maxLength = 1, maxHeaderLength = 1;
+        let maxLength = 5, maxHeaderLength = 1;
         Network.responseReceived( params => {
             const startAt = startAtByRequestId[params.requestId];
             const now = performance.now();
