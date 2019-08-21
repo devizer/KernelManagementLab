@@ -231,7 +231,7 @@ class PersistentDrawerLeft extends React.Component {
                     <Toolbar disableGutters={!open}>
                         <IconButton id={"APP_SYSTEM_ICON"}
                             color="inherit"
-                            aria-label="Open drawer"
+                            aria-label="Show menu"
                             onClick={this.handleDrawerOpen}
                             className={classNames(classes.menuButton, open && classes.hide)}
                         >

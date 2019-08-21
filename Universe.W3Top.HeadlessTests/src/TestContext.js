@@ -1,4 +1,6 @@
 const file = require('fs');
+var colors = require('colors');
+
 
 const myJSON = arg => {
     const s1 = JSON.stringify(arg,null, ' ');
@@ -18,13 +20,13 @@ class TestContext {
     }
     
     addError(error) {
-        console.error(`ERROR: ${error}`);
+        console.error(`ERROR: ${error}`.red);
         this.errors.push(error);
     };
 
     async setWindowSize (width, height) {
         var window = await this.Protocol.Browser.getWindowForTarget();
-        console.log("New Window Size: [%d * %d], Prev Size: %s", width, height, myJSON(window));
+        console.log(`New Window Size: [${width} * ${height}], Prev Size: ${myJSON(window)}`.grey);
         let newWidth = window.bounds.width, newHeight = window.bounds.height;
         if (width > 0) newWidth = width;
         if (height > 0) newHeight = height;
@@ -69,7 +71,7 @@ class TestContext {
             if (value > 0) {
                 value = Math.round(value*10)/10;
                 if (value < 0.00999) value = 0.01;
-                console.debug(`Trigger [${triggerKey}] successfully confirmed in ${new Date() - start} milliseconds. Raised at ${value.toFixed(1)} milliseconds`);
+                console.debug(`Trigger ` + `[${triggerKey}]`.magenta.underline + ` successfully ${"confirmed".magenta} in ${new Date() - start} milliseconds. Raised at ${value.toFixed(1)} milliseconds`);
                 return ;
             }
 
@@ -79,7 +81,7 @@ class TestContext {
             if (elapsed > timeout) break;
         }
 
-        console.warn(`Warning! trigger [${triggerKey}] was not raised in ${new Date() - start} milliseconds`);
+        console.warn(`Warning! trigger [${triggerKey}] was not raised in ${new Date() - start} milliseconds`.red);
         return false;
     };
 
@@ -90,7 +92,7 @@ class TestContext {
     async saveScreenshot (fileName) {
         const ss = await this.Protocol.Page.captureScreenshot({format: 'png', fromSurface: true});
         file.writeFile(fileName, ss.data, 'base64', function (err) {
-            if (err) console.error(`${fileName} screenshot error: ${err}`);
+            if (err) console.error(`${fileName} screenshot error: ${err}`.red);
         });
     }
 } 

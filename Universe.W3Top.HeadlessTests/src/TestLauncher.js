@@ -137,7 +137,7 @@ async function runTest (testCase, pageSpec, url) {
     });
     
     new Promise(async () => {
-        await delay(1000);
+        await delay(29000);
         if (false && !resolved)
         {
             errors.push("Timeout expired. Page cannot be not loaded");
