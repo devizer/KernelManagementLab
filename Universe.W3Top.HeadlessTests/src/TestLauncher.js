@@ -60,6 +60,8 @@ async function runTest (testCase, pageSpec, url) {
         });
 
         let maxLength = 5, maxHeaderLength = 1;
+        const devToolsResponses = new Map();
+        const responseReceivedInfo = {};
         Network.responseReceived( params => {
             const startAt = startAtByRequestId[params.requestId];
             const now = performance.now();
@@ -80,7 +82,19 @@ async function runTest (testCase, pageSpec, url) {
             }
             const requestId = params.requestId;
             const deprecated = `${params.response.timing.receiveHeadersEnd} ${duration} ${sinceStart}`;
-            console.log(`◄ ${timings} ${params.response.status} ${params.response.url}`);
+            responseReceivedInfo[params.requestId] = `◄ ${timings} ${params.response.status} ${params.response.url}`;
+            devToolsResponses.set(params.requestId, params.response);
+
+            // console.log(params);
+        });
+
+        Network.loadingFinished( params => {
+            const response = devToolsResponses.get(params.requestId);
+            const responseInfo = responseReceivedInfo[params.requestId];
+            if (response && responseInfo) {
+                const encodedBodyLength = params.encodedDataLength - /*response.headersText.length*/ 0;
+                console.log(`${responseInfo} (${encodedBodyLength} bytes)`);
+            }
         });
 
 
@@ -124,7 +138,7 @@ async function runTest (testCase, pageSpec, url) {
         }
 
         if (errors.length === 0)
-            console.log(`[${url}] tests completed successfully`);
+            console.log(`[${url}] tests completed successfully. No errors of fails found.`);
         else {
             console.error(`[${url}] tests failed with ${errors.length} errors`);
             for(const i of errors) console.error(` error: ${i}`);

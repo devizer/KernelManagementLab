@@ -10,7 +10,7 @@ const trimHtml = (html) => {
     return p < 0 ? html : html.substr(0,p) + " ...";
 };
 
-const testShredHeader = async (context) => {
+const testSharedHeader = async (context) => {
     let isBriefInfoArrived = await context.waitForTrigger(8000,"BriefInfoArrived");
     if (isBriefInfoArrived === false)
         console.error("Warning! BriefInfo was not bound in 8 seconds");
@@ -40,9 +40,13 @@ const waitForMetrics = async (context) => {
 }
 
 const showDrawerTest = async(context) => {
+    await testSharedHeader(context);
     await waitForMetrics(context);
     const idSystemIcon = "APP_SYSTEM_ICON";
     const buttonHtml = await context.getExpression(`document.getElementById('${idSystemIcon}').outerHTML`);
+    if (!buttonHtml)
+        context.addError(`Unable to find ${APP_SYSTEM_ICON} button`);
+    
     console.log(`SYSTEM BUTTON: ${trimHtml(buttonHtml)}`);
     await context.getExpression(`document.getElementById('${idSystemIcon}').click()`);
     await context.delay(444);
@@ -54,7 +58,7 @@ showDrawerTest.description = "Drawer screenshot";
 const commonTest = async (context) => {
 
 
-    await testShredHeader(context);
+    await testSharedHeader(context);
     await waitForMetrics(context);
     
     await context.delay(1000);
