@@ -49,7 +49,6 @@ const commonTest = async (context) => {
     await context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
 };
 
-
 const totalErrors = [];
 (async function() {
     for(let page of pages)

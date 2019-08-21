@@ -104,6 +104,9 @@ script:
   export ASPNETCORE_URLS=http://0.0.0.0:5050
   sudo dotnet Universe.W3Top.dll >~/build-artifacts/w3top-server-for-integration-tests.log 2>&1 &
   sleep 15
+  
+  # dont waste time - add load for net chart
+  nohup bash -c "sudo apt install speedtest-cli -y && speedtest-cli" &
 
   # prepare data for disk benchmark history on travis-ci
   curl -i -H "Accept: application/json" \
