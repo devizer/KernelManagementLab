@@ -110,7 +110,7 @@ async function runTest (testCase, pageSpec, url) {
             console.log(`• TITLE: '${await context.getExpression("document.title")}'`);
             console.log(`• Visibility State: '${await context.getExpression("document.visibilityState")}'`);
             console.log(`• User Agent: '${await context.getExpression("navigator.userAgent")}'`);
-            console.log(`• LoadingStartedAt: '${await context.getExpression("window.LoadingStartedAt")}'`);
+            console.log(`• LoadingStartedAt: '${Math.round(await context.getExpression("window.LoadingStartedAt"))} milliseconds'`);
         } catch (e) {
             errors.push(e);
             // return;
@@ -137,7 +137,7 @@ async function runTest (testCase, pageSpec, url) {
     });
     
     new Promise(async () => {
-        await delay(29000);
+        await delay(1);
         if (false && !resolved)
         {
             errors.push("Timeout expired. Page cannot be not loaded");
