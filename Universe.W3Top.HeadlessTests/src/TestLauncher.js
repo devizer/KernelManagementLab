@@ -12,7 +12,7 @@ const {
 
 const myFormat = x => {
     return Number(x).toLocaleString(undefined, {useGrouping:true, minimumFractionDigits:1, maximumFractionDigits:1});
-}
+};
 
 
 let testIndex = 0;
