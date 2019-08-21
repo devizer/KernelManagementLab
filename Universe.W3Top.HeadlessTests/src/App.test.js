@@ -64,5 +64,3 @@ const totalErrors = [];
         throw new Error(`Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`);
 });
 
-
-

@@ -4,6 +4,15 @@ const TestContext = require("./TestContext");
 const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
 
+const {
+    performance,
+    PerformanceObserver
+} = require('perf_hooks');
+
+const myFormat = x => {
+    return Number(x).toLocaleString(undefined, {useGrouping:true, minimumFractionDigits:1, maximumFractionDigits:1});
+}
+
 let testIndex = 0;
 // return array of errors
 async function runTest (testCase, pageSpec, url) {
@@ -33,13 +42,46 @@ async function runTest (testCase, pageSpec, url) {
         protocol = await CDP({port: chrome.port});
         let ver = protocol.get;
         console.log(`CDP Protocol version: ${ver}`);
-        const {DOM, Page, Emulation, Runtime, Browser} = protocol;
+        const {DOM, Page, Emulation, Runtime, Browser, Network} = protocol;
         // console.log(protocol);
 
         console.log(`BROWSER VER: 
 %O`, await Browser.getVersion());
 
-        await Promise.all([Page.enable(), Runtime.enable(), DOM.enable()]);
+        const startAtByRequestId = {};
+        let firstAt = undefined;
+        Network.requestWillBeSent((params) => {
+            const now = performance.now();
+            startAtByRequestId[params.requestId] = now;
+            if (firstAt === undefined) firstAt = now; 
+            // console.log(`○► #${params.requestId} ${params.request.method} ${params.request.url}`);
+        });
+
+        let maxLength = 1, maxHeaderLength = 1;
+        Network.responseReceived( params => {
+            const startAt = startAtByRequestId[params.requestId];
+            const now = performance.now();
+            const duration = startAt !== undefined ? Math.round((now - startAt)*10)/10 : "";
+            const sinceStart = firstAt !== undefined ? Math.round((now - firstAt)*10)/10 : "";
+            let timings = "";
+            if (firstAt !== undefined && startAt !== undefined)
+            {
+                const v1 = startAt - firstAt; // sent
+                const v2 = now - startAt; // spent for entire request
+                const v3 = now - firstAt; // finished since start
+                const vServer = Number(params.response.timing.receiveHeadersEnd);
+                const v1s = myFormat(v1), v2s = myFormat(v2), v3s = myFormat(v3), fServer = myFormat(vServer);
+                const len = Math.max(v1s.length, v2s.length, v2s.length, maxLength);
+                maxHeaderLength = Math.max(fServer.length, maxHeaderLength);
+                timings = `${v1s.padStart(len)} + ${v2s.padStart(len)} = ${v3s.padStart(len)} (${fServer.padStart(maxHeaderLength)})`;
+                maxLength = Math.max(maxLength, len);
+            }
+            const requestId = params.requestId;
+            console.log(`◄ ${timings} ${params.response.status} ${params.response.url} ${params.response.timing.receiveHeadersEnd} ${duration} ${sinceStart}`);
+        });
+
+
+        await Promise.all([Page.enable(), Runtime.enable(), DOM.enable(), Network.enable()]);
         context = new TestContext(protocol, pageSpec, errors);
         if (pageSpec.width && pageSpec.height)
             await context.setWindowSize(pageSpec.width, pageSpec.height);
@@ -62,10 +104,10 @@ async function runTest (testCase, pageSpec, url) {
         
         try {
             console.log(`PAGE #${testIndex} ${url} LOADED`);
-            console.log(` - TITLE: '${await context.getExpression("document.title")}'`);
-            console.log(` - Visibility State: '${await context.getExpression("document.visibilityState")}'`);
-            console.log(` - User Agent: '${await context.getExpression("navigator.userAgent")}'`);
-            console.log(` - LoadingStartedAt: '${await context.getExpression("window.LoadingStartedAt")}'`);
+            console.log(`• TITLE: '${await context.getExpression("document.title")}'`);
+            console.log(`• Visibility State: '${await context.getExpression("document.visibilityState")}'`);
+            console.log(`• User Agent: '${await context.getExpression("navigator.userAgent")}'`);
+            console.log(`• LoadingStartedAt: '${await context.getExpression("window.LoadingStartedAt")}'`);
         } catch (e) {
             errors.push(e);
             // return;
