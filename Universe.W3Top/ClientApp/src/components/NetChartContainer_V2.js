@@ -115,10 +115,12 @@ export class NetChartContainer_V2 extends Component {
     }
     
     renderNormal() {
+        let chartCounter = 0; // for integration tests
         return (
             <div id="NetCharts">
                 {this.state.netChartList.map(netChart =>
                     <div className="CHART" key={netChart.name}>
+                        <span id={`NET_NAME_${++chartCounter}`} style={{display:'none'}}>{netChart.name}</span>
                         <NetDevChartHeader name={netChart.name}/>
                         <NetDevChart
                             name={netChart.name}

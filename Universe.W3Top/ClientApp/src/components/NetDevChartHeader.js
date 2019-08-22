@@ -93,6 +93,7 @@ export class NetDevChartHeader extends Component {
 
         let format = x => x > 0 ? Helper.Common.formatBytes(x) : "";
         // totals = {rxBytes: 0, txBytes: 0};
+
         
         return (
             <div style={this.dd.container}>&nbsp;

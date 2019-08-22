@@ -39,16 +39,22 @@ class TestContext {
         const expressionValue = await this.Protocol.Runtime.evaluate({expression: expression});
         // console.log(`Expression [${expression}] value is [%o]`, expressionValue);
 
-        if (expressionValue.subtype === "error")
+        if (expressionValue.result.type === "undefined")
             return undefined;
+        
+        if (expressionValue.result.subtype === "error") {
+            const err = new Error(expressionValue.result.description);
+            return undefined;
+        }
 
         if (expressionValue.result.className === "Date")
             return Date.parse(expressionValue.result.description);
 
-        if (expressionValue.result.type === "number")
+        if (expressionValue.result.type === "number" || expressionValue.result.type === 'string')
             return expressionValue.result.value;
+        
+        throw new Error(`Unknown CDP expression type [${expressionValue.result.type}] for expression [${expression}]`);
 
-        return expressionValue.result.value;
     };
 
     async getElementById (idName) {

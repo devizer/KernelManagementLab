@@ -2,7 +2,7 @@
 const runTest = require("./TestLauncher");
 var colors = require('colors');
 
-const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050";
+const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010";
 
 const trimHtml = (html) => {
     if (html === undefined || html === null) return html;
@@ -14,6 +14,8 @@ const testSharedHeader = async (context) => {
     let isBriefInfoArrived = await context.waitForTrigger(8000,"BriefInfoArrived");
     if (isBriefInfoArrived === false)
         console.error("Warning! BriefInfo was not bound in 8 seconds");
+    
+    await context.delay(1);
 
     // next loop will fail if BriefInfoArrived is lost 
     for(let footerHeaderIndex=1; footerHeaderIndex<=4; footerHeaderIndex++)
@@ -72,13 +74,36 @@ const commonTest = async (context) => {
 
 commonTest.description = "Common test for header and metrics binding";
 
+const netStatTest = async(context) => {
+
+    await testSharedHeader(context);
+    await waitForMetrics(context);
+    await context.delay(666);
+
+    for(let netStatIndex=1; netStatIndex<=6; netStatIndex++)
+    {
+        const isOptional = Boolean(netStatIndex > 2); 
+        let idName=`NET_NAME_${netStatIndex}`;
+        const nameValue = await context.getElementById(idName);
+        console.log(`${isOptional ? "Optional " : ""}Net Name [${idName}]: ` + `'${nameValue ? nameValue : ">MISSED<"}'`.yellow.bold);
+        if (netStatIndex <= 2 && nameValue === undefined)
+            context.addError(`Missed Net Live Chart ${netStatIndex}`);
+    }
+
+    await context.delay(1000);
+    const boundHeight = await context.getExpression('document.documentElement.getBoundingClientRect().height');
+    await context.setWindowSize(undefined, boundHeight + 8);
+    await context.delay(444);
+    await context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
+};
+
 
 let pages = [
     {url:'/not-found-404', width: 560, height: 440, fileName:"[404]", tests: [commonTest] },
     {url:`/mounts`, width: 1024, height: 600, fileName:"mounts", tests: [commonTest] },
     {url:'/disk-benchmark',         width: 1180, height: 620, fileName:"disk-benchmark-start", tests: [commonTest] },
     {url:'/disk-benchmark?history', width: 1180, height: 620, fileName:"disk-benchmark-history", tests: [commonTest] },
-    {url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart", tests: [commonTest] },
+    {url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart", tests: [commonTest, netStatTest] },
     {url:'/disks', width: 570, height: 800, fileName:"disk-live-chart", tests: [commonTest] },
     {url:`/`,       width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
     {url:`/`,       width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
@@ -97,7 +122,9 @@ const totalErrors = [];
     }
 })().then( ok => {
     console.log(`The End. Total fails: ${totalErrors.length}`);
-    if (totalErrors.length > 0) 
+    if (totalErrors.length > 0) {
         throw new Error(`Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`);
+        process.exit(1);
+    }
 });
 
