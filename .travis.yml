@@ -26,7 +26,7 @@ matrix:
 before_script:
 - |
   mkdir -p ~/build-artifacts/screenshots
-  exec &> >(tee ~/build-artifacts/full-build-log.txt);
+  exec &> >(tee ~/build-artifacts/full-build-log.log);
   echo "Build Started"
 - |
   if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
@@ -125,7 +125,7 @@ script:
     yarn install
     export W3TOP_APP_URL="http://localhost:5050"
     set -o pipefail
-    bash App.tests.sh | tee ~/build-artifacts/frontend-integration-tests \
+    bash App.tests.sh | tee ~/build-artifacts/frontend-integration-tests.log \
     && cp build/bin/* ~/build-artifacts/screenshots \
     && popd
   fi
@@ -156,6 +156,12 @@ script:
   mkdir -p public-bintray/$ver;
   cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz* public-bintray/$ver/;
   cp build/AppGitInfo.json public-bintray/$ver/version.json
+  
+  find -name '*.log' ~/build-artifacts | while read log; do
+    echo LOG FILE [$log]
+    sed -i -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" "${log}"
+  done
+  
   tar czf public-bintray/$ver/build-log.tar.gz ~/build-artifacts
 - cat bintray.json || true
 - pwd; df -h; ls -la public-bintray/$ver

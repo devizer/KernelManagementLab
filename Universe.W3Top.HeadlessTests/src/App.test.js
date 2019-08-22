@@ -2,7 +2,8 @@
 const runTest = require("./TestLauncher");
 var colors = require('colors');
 
-const w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010";
+let w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010/";
+w3topUrl = w3topUrl.replace(new RegExp("[/]+$"), "");
 
 const trimHtml = (html) => {
     if (html === undefined || html === null) return html;

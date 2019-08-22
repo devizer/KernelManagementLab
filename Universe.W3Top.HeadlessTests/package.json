@@ -8,7 +8,8 @@
     "babel-preset-es2015": "^6.24.1",
     "chrome-launcher": "^0.11.2",
     "chrome-remote-interface": "^0.28.0",
-    "colors": "^1.3.3"
+    "colors": "^1.3.3",
+    "lodash": "^4.17.15"
   },
   "scripts": {
     "test": "yarn build && cd build && mkdir -p bin && node App.test.js",
