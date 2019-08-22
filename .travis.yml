@@ -157,7 +157,7 @@ script:
   cp /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin/*.tar.gz* public-bintray/$ver/;
   cp build/AppGitInfo.json public-bintray/$ver/version.json
   
-  find -name '*.log' ~/build-artifacts | while read log; do
+  find ~/build-artifacts -name '*.log' | while read log; do
     echo LOG FILE [$log]
     sed -i -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" "${log}"
   done
