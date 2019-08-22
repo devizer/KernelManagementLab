@@ -120,7 +120,7 @@ async function runTest (testCase, pageSpec, url) {
     protocol.Page.loadEventFired(async() => {
         
         try {
-            console.log(`PAGE #${testIndex} ${url} LOADED`);
+            console.log(`PAGE #${testIndex} `+`${url}`.yellow.bold + ` LOADED`);
             console.log(`• TITLE: '${await context.getExpression("document.title")}'`);
             console.log(`• Visibility State: '${await context.getExpression("document.visibilityState")}'`);
             console.log(`• User Agent: '${await context.getExpression("navigator.userAgent")}'`);
@@ -138,7 +138,7 @@ async function runTest (testCase, pageSpec, url) {
         }
 
         if (errors.length === 0)
-            console.log(`[${url}] tests completed successfully. No errors of fails found.`);
+            console.log(`[${url}]`.yellow.bold + ` tests ` + `completed successfully`.green.bold + `. No errors of fails found.`);
         else {
             console.error(`[${url}] tests failed with ${errors.length} errors`);
             for(const i of errors) console.error(` error: ${i}`);

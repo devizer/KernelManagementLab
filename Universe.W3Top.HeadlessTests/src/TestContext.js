@@ -71,7 +71,7 @@ class TestContext {
             if (value > 0) {
                 value = Math.round(value*10)/10;
                 if (value < 0.00999) value = 0.01;
-                console.debug(`Trigger ` + `[${triggerKey}]`.magenta.underline + ` successfully ${"confirmed".magenta} in ${new Date() - start} milliseconds. Raised at ${value.toFixed(1)} milliseconds`);
+                console.debug(`Trigger ` + `[${triggerKey}]`.magenta.bold + ` successfully ${"confirmed".magenta.bold} in ${new Date() - start} milliseconds. Raised at ${value.toFixed(1)} milliseconds`);
                 return ;
             }
 

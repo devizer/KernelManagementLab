@@ -23,7 +23,7 @@ const testSharedHeader = async (context) => {
         if (headerValue === undefined)
             context.addError(`Missed Footer Info Header ${id}`);
         else
-            console.log(`Header [${id}]: ` + `'${headerValue ? headerValue : "MISSED"}'`.yellow.underline);
+            console.log(`Header [${id}]: ` + `'${headerValue ? headerValue : "MISSED"}'`.yellow.bold);
     }
 };
 
@@ -37,7 +37,7 @@ const waitForMetrics = async (context) => {
     if (areMetricsArrived === false)
         context.addError("Metrics were not bound in 5 seconds");
 
-}
+};
 
 const showDrawerTest = async(context) => {
     await testSharedHeader(context);
@@ -81,7 +81,7 @@ let pages = [
     {url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart", tests: [commonTest] },
     {url:'/disks', width: 570, height: 800, fileName:"disk-live-chart", tests: [commonTest] },
     {url:`/`,       width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
-    {url:`/`,       width: 620, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
+    {url:`/`,       width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
 ];
 
 // pages = [pages[0]]; 
