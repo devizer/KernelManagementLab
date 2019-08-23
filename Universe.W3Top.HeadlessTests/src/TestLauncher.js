@@ -16,6 +16,19 @@ async function runTest (testCase, pageSpec, url) {
     testIndex++;
     const errors = [];
 
+    const showResult = () => {
+        if(errors.length === 0
+        )
+            console.log(`[${url}]`.yellow.bold + ` tests ` + `completed successfully`.green.bold + `. No errors or fails found.`);
+        else
+        {
+            console.error(`[${url}] tests failed with ${errors.length} errors`.red);
+            for (const i of errors) console.error(`${i}`.red);
+        }
+    };
+
+
+
     let resolveCopy = null, rejectCopy = null, resolved = false;
     const ret = new Promise( (resolve, reject) => {
         resolveCopy = resolve; rejectCopy = reject;
@@ -106,6 +119,7 @@ async function runTest (testCase, pageSpec, url) {
         if (protocol !== null) protocol.close();
         chrome.kill();
         // rejectCopy(e);
+        showResult();
         resolveCopy(errors);
         return ret;
     }
@@ -135,7 +149,9 @@ async function runTest (testCase, pageSpec, url) {
         if (isError) {
             protocol.close();
             chrome.kill();
+            showResult();
             resolveCopy(errors);
+            return;
         }
 
         try {
@@ -145,13 +161,8 @@ async function runTest (testCase, pageSpec, url) {
             errors.push(e);
         }
 
-        if (errors.length === 0)
-            console.log(`[${url}]`.yellow.bold + ` tests ` + `completed successfully`.green.bold + `. No errors or fails found.`);
-        else {
-            console.error(`[${url}] tests failed with ${errors.length} errors`);
-            for(const i of errors) console.error(` error: ${i}`);
-        }
         
+        showResult();
         protocol.close();
         chrome.kill();
 

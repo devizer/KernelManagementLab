@@ -1,7 +1,7 @@
 const file = require('fs');
 var colors = require('colors');
 
-const { asJSON, myFormat } = require("./Utils");
+const Utils = require("./Utils");
 
 class TestContext {
     
@@ -19,7 +19,7 @@ class TestContext {
 
     async setWindowSize (width, height) {
         var window = await this.Protocol.Browser.getWindowForTarget();
-        console.log(`New Window Size: [${width} * ${height}], Prev Size: ${asJSON(window)}`.grey);
+        console.log(`New Window Size: [${width} * ${height}], Prev Size: ${Utils.asJSON(window)}`.grey);
         let newWidth = window.bounds.width, newHeight = window.bounds.height;
         if (width > 0) newWidth = width;
         if (height > 0) newHeight = height;

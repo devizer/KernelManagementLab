@@ -5,11 +5,7 @@ var colors = require('colors');
 let w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010/";
 w3topUrl = w3topUrl.replace(new RegExp("[/]+$"), "");
 
-const trimHtml = (html) => {
-    if (html === undefined || html === null) return html;
-    const p = html.indexOf('>');
-    return p < 0 ? html : html.substr(0,p) + " ...";
-};
+const Utils = require("./Utils");
 
 const testSharedHeader = async (context) => {
     let isBriefInfoArrived = await context.waitForTrigger(8000,"BriefInfoArrived");
@@ -50,7 +46,7 @@ const showDrawerTest = async(context) => {
     if (!buttonHtml)
         context.addError(`Unable to find ${idSystemIcon} button`);
     
-    console.log(`SYSTEM BUTTON: ${trimHtml(buttonHtml)}`);
+    console.log(`SYSTEM BUTTON: ${Utils.trimHtml(buttonHtml)}`);
     await context.getExpression(`document.getElementById('${idSystemIcon}').click()`);
     await context.delay(444);
     await context.saveScreenshot(`bin/${context.PageSpec.fileName}.png`);
@@ -133,5 +129,6 @@ const totalErrors = [];
     }
 }).catch(e => {
     // already handled
+    process.exit(1);
 });
 

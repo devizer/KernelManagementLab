@@ -14,10 +14,13 @@ const myFormat = x => {
 
 const printProperties = arg => {
     for(let pro of Object.keys(arg))
-    {
         console.log(`  ${pro}: ` + arg[pro].green);
-    }
-}
+};
 
+const trimHtml = (html) => {
+    if (html === undefined || html === null) return html;
+    const p = html.indexOf('>');
+    return p < 0 ? html : html.substr(0,p) + " ...";
+};
 
-module.exports = {asJSON, myFormat, printProperties};
+module.exports = {asJSON, myFormat, printProperties, trimHtml};
