@@ -28,7 +28,6 @@ async function runTest (testCase, pageSpec, url) {
     };
 
 
-
     let resolveCopy = null, rejectCopy = null, resolved = false;
     const ret = new Promise( (resolve, reject) => {
         resolveCopy = resolve; rejectCopy = reject;
