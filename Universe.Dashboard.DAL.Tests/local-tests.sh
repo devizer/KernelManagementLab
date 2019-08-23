@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "MYSQL_TEST_CONNECTION: [$MYSQL_TEST_CONNECTION]"
+[[ $TRAVIS == true ]] && export HIDE_PULL_PROGRESS=true
 bash -e ./prepare-db-servers.sh
 source ./prepare-db-servers.generated.sh
 dotnet test -v:m -c Release
