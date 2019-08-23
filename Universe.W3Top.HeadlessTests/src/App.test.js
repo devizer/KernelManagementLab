@@ -2,7 +2,7 @@
 const runTest = require("./TestLauncher");
 var colors = require('colors');
 
-let w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050/";
+let w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010/";
 w3topUrl = w3topUrl.replace(new RegExp("[/]+$"), "");
 
 const trimHtml = (html) => {
@@ -86,7 +86,7 @@ const netStatTest = async(context) => {
         const isOptional = Boolean(netStatIndex > 2); 
         let idName=`NET_NAME_${netStatIndex}`;
         const nameValue = await context.getElementById(idName);
-        console.log(`${isOptional ? "Optional " : ""}Net Name [${idName}]: ` + `'${nameValue ? nameValue : ">MISSED<"}'`.yellow.bold);
+        console.log(`${isOptional ? "Optional" : "MANDATORY"} Net Name [${idName}]: ` + `'${nameValue ? nameValue : ">MISSED<"}'`.yellow.bold);
         if (netStatIndex <= 2 && nameValue === undefined)
             context.addError(`Missed Net Live Chart ${netStatIndex}`);
     }

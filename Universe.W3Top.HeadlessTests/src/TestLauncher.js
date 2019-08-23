@@ -5,15 +5,9 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
 
-const {
-    performance,
-    PerformanceObserver
-} = require('perf_hooks');
+const Utils = require("./Utils");
 
-const myFormat = x => {
-    return Number(x).toLocaleString(undefined, {useGrouping:true, minimumFractionDigits:1, maximumFractionDigits:1});
-};
-
+const {performance, PerformanceObserver } = require('perf_hooks');
 
 let testIndex = 0;
 // return array of errors
@@ -42,13 +36,13 @@ async function runTest (testCase, pageSpec, url) {
         chrome = await launchChrome();
         console.log(`Chrome port: ${chrome.port}`);
         protocol = await CDP({port: chrome.port});
-        let ver = protocol.get;
-        console.log(`CDP Protocol version: ${ver}`);
+        let ver = protocol.protocol.version;
+        console.log(`CDP Protocol version: ` + Utils.asJSON(ver).green);
         const {DOM, Page, Emulation, Runtime, Browser, Network} = protocol;
         // console.log(protocol);
 
-        console.log(`BROWSER VER: 
-%O`, await Browser.getVersion());
+        console.log(`BROWSER VER:`); Utils.printProperties(await Browser.getVersion()); 
+
 
         const startAtByRequestId = {};
         let firstAt = undefined;
@@ -75,7 +69,7 @@ async function runTest (testCase, pageSpec, url) {
                 const v2 = now - startAt; // spent for entire request
                 const v3 = now - firstAt; // finished since start
                 const vServer = Number(timing ? timing.receiveHeadersEnd : 0);
-                const v1s = myFormat(v1), v2s = myFormat(v2), v3s = myFormat(v3), fServer = myFormat(vServer);
+                const v1s = Utils.myFormat(v1), v2s = Utils.myFormat(v2), v3s = Utils.myFormat(v3), fServer = Utils.myFormat(vServer);
                 const len = Math.max(v1s.length, v2s.length, v2s.length, maxLength);
                 maxHeaderLength = Math.max(fServer.length, maxHeaderLength);
                 timings = `${v1s.padStart(len)} + ${v2s.padStart(len)} = ${v3s.padStart(len)} (${fServer.padStart(maxHeaderLength)})`;
@@ -152,7 +146,7 @@ async function runTest (testCase, pageSpec, url) {
         }
 
         if (errors.length === 0)
-            console.log(`[${url}]`.yellow.bold + ` tests ` + `completed successfully`.green.bold + `. No errors of fails found.`);
+            console.log(`[${url}]`.yellow.bold + ` tests ` + `completed successfully`.green.bold + `. No errors or fails found.`);
         else {
             console.error(`[${url}] tests failed with ${errors.length} errors`);
             for(const i of errors) console.error(` error: ${i}`);
