@@ -68,12 +68,13 @@ async function runTest (testCase, pageSpec, url) {
             const duration = startAt !== undefined ? Math.round((now - startAt)*10)/10 : "";
             const sinceStart = firstAt !== undefined ? Math.round((now - firstAt)*10)/10 : "";
             let timings = "";
+            const timing = params.response.timing;
             if (firstAt !== undefined && startAt !== undefined)
             {
                 const v1 = startAt - firstAt; // sent
                 const v2 = now - startAt; // spent for entire request
                 const v3 = now - firstAt; // finished since start
-                const vServer = Number(params.response.timing.receiveHeadersEnd);
+                const vServer = Number(timing ? timing.receiveHeadersEnd : 0);
                 const v1s = myFormat(v1), v2s = myFormat(v2), v3s = myFormat(v3), fServer = myFormat(vServer);
                 const len = Math.max(v1s.length, v2s.length, v2s.length, maxLength);
                 maxHeaderLength = Math.max(fServer.length, maxHeaderLength);
@@ -81,7 +82,7 @@ async function runTest (testCase, pageSpec, url) {
                 maxLength = Math.max(maxLength, len);
             }
             const requestId = params.requestId;
-            const deprecated = `${params.response.timing.receiveHeadersEnd} ${duration} ${sinceStart}`;
+            const deprecated = `${timing ? timing.receiveHeadersEnd : ""} ${duration} ${sinceStart}`;
             responseReceivedInfo[params.requestId] = `◄ ${timings} ${params.response.status} ${params.response.url}`;
             devToolsResponses.set(params.requestId, params.response);
 
@@ -119,8 +120,15 @@ async function runTest (testCase, pageSpec, url) {
 
     protocol.Page.loadEventFired(async() => {
         
+        let isError = false;
         try {
-            console.log(`PAGE #${testIndex} `+`${url}`.yellow.bold + ` LOADED`);
+            const href = String(await context.getExpression("location.href"));
+            console.log(`PAGE #${testIndex} `+`${url}`.yellow.bold + ` LOADED to ${href}`);
+            if (href.startsWith("chrome-error://"))
+            {
+                isError = true;
+                throw new Error(`Unable to load ${url}. It was redirected to chrome-error://`);
+            }
             console.log(`• TITLE: '${await context.getExpression("document.title")}'`);
             console.log(`• Visibility State: '${await context.getExpression("document.visibilityState")}'`);
             console.log(`• User Agent: '${await context.getExpression("navigator.userAgent")}'`);
@@ -128,6 +136,12 @@ async function runTest (testCase, pageSpec, url) {
         } catch (e) {
             errors.push(e);
             // return;
+        }
+        
+        if (isError) {
+            protocol.close();
+            chrome.kill();
+            resolveCopy(errors);
         }
 
         try {

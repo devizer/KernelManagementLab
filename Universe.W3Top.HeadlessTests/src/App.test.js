@@ -2,7 +2,7 @@
 const runTest = require("./TestLauncher");
 var colors = require('colors');
 
-let w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010/";
+let w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5050/";
 w3topUrl = w3topUrl.replace(new RegExp("[/]+$"), "");
 
 const trimHtml = (html) => {
@@ -48,7 +48,7 @@ const showDrawerTest = async(context) => {
     const idSystemIcon = "APP_SYSTEM_ICON";
     const buttonHtml = await context.getExpression(`document.getElementById('${idSystemIcon}').outerHTML`);
     if (!buttonHtml)
-        context.addError(`Unable to find ${APP_SYSTEM_ICON} button`);
+        context.addError(`Unable to find ${idSystemIcon} button`);
     
     console.log(`SYSTEM BUTTON: ${trimHtml(buttonHtml)}`);
     await context.getExpression(`document.getElementById('${idSystemIcon}').click()`);
@@ -124,8 +124,14 @@ const totalErrors = [];
 })().then( ok => {
     console.log(`The End. Total fails: ${totalErrors.length}`);
     if (totalErrors.length > 0) {
-        throw new Error(`Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`);
-        process.exit(1);
+        {
+            const errorMessage = `Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`;
+            // throw new Error(message);
+            console.log(errorMessage.red.bold);
+            process.exit(1);
+        }
     }
+}).catch(e => {
+    // already handled
 });
 
