@@ -163,9 +163,8 @@ script:
   done
   
   dir=$(pwd); pushd ~/build-artifacts
-    touch VER-${ver}
-    touch BUILD-${TRAVIS_BUILD_NUMBER}
-    tar czf $dir/public-bintray/$ver/build-log-and-screenshots.tar.gz .
+    echo "${TRAVIS_BUILD_WEB_URL}" > "Ver ${ver} [${TRAVIS_BUILD_NUMBER}].txt"
+    tar czf $dir/public-bintray/$ver/build-log-and-screenshots.tar.gz
   popd
   
 - cat bintray.json || true
