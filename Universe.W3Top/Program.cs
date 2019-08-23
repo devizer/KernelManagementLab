@@ -78,7 +78,7 @@ namespace Universe.W3Top
                 try
                 {
                     ProcMountsSandbox.DumpProcMounts();
-                    Console.WriteLine($"ProcMountsParser(/proc/mounts) successfully pre-jitted in {sw.Elapsed} seconds");
+                    Console.WriteLine($"ProcMountsParser(/proc/mounts) successfully pre-jitted in {sw.ElapsedMilliseconds} milliseconds");
                 }
                 catch (Exception ex)
                 {
@@ -89,7 +89,7 @@ namespace Universe.W3Top
                 {
                     List<WithDeviceWithVolumes> snapshot = SysBlocksReader.GetSnapshot();
                     DebugDumper.Dump(snapshot, "SysBlocks.Snapshot.json");
-                    Console.WriteLine($"SysBlocksReader(/sys/block) successfully pre-jitted in {sw.Elapsed} seconds");
+                    Console.WriteLine($"SysBlocksReader(/sys/block) successfully pre-jitted in {sw.ElapsedMilliseconds} milliseconds");
                 }
                 catch (Exception ex)
                 {
