@@ -162,7 +162,12 @@ script:
     sed -i -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" "${log}"
   done
   
-  tar czf public-bintray/$ver/build-log-and-screenshots.tar.gz ~/build-artifacts
+  dir=$(pwd); pushd ~/build-artifacts
+    touch VER-${ver}
+    touch BUILD-${TRAVIS_BUILD_NUMBER}
+    tar czf $dir/public-bintray/$ver/build-log-and-screenshots.tar.gz .
+  popd
+  
 - cat bintray.json || true
 - pwd; df -h; ls -la public-bintray/$ver
 - ls -la ~/build-artifacts
