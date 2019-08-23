@@ -162,7 +162,7 @@ script:
     sed -i -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" "${log}"
   done
   
-  tar czf public-bintray/$ver/build-log.tar.gz ~/build-artifacts
+  tar czf public-bintray/$ver/build-log-and-screenshots.tar.gz ~/build-artifacts
 - cat bintray.json || true
 - pwd; df -h; ls -la public-bintray/$ver
 - ls -la ~/build-artifacts
