@@ -6,7 +6,7 @@ function run_sql_server() {
   name="$1"
   image="$2"
   port="$3"
-  exists=false; sudo docker logs "$name" >/dev/null 2>&1 && echo The SQL Server $name already exists && exists=true && sudo docker start $name >/dev/null 2>&1
+  exists=false; sudo docker logs "$name" >/dev/null 2>&1 && echo The SQL Server $name already exists && exists=true && sudo docker start $name 2>/dev/null || true
   [ $exists == false ] && (echo Creating SQL Server $name container using $image; eval "sudo docker pull $image $hide_pull"; sudo docker run -d --name $name -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p $port:1433 $image )
 }
 run_sql_server sql-2017-for-tests microsoft/mssql-server-linux:2017-latest 1434

@@ -45,6 +45,7 @@ namespace Universe.Dashboard.DAL.Tests
                     {
                         Environment.SetEnvironmentVariable("MYSQL_DATABASE", null);
                         Environment.SetEnvironmentVariable("PGSQL_DATABASE", null);
+                        Environment.SetEnvironmentVariable("MSSQL_DATABASE", null);
                         Environment.SetEnvironmentVariable(provider4Tests.EnvVarName, dbConnectionString);
                         
                         var optionsBuilder = new DbContextOptionsBuilder();
