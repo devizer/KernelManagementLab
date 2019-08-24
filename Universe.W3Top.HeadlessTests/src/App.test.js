@@ -12,7 +12,7 @@ const testSharedHeader = async (context) => {
     if (isBriefInfoArrived === false)
         console.error("Warning! BriefInfo was not bound in 8 seconds");
     
-    await context.delay(1);
+    await context.delay(333);
 
     // next loop will fail if BriefInfoArrived is lost 
     for(let footerHeaderIndex=1; footerHeaderIndex<=4; footerHeaderIndex++)
@@ -60,7 +60,7 @@ const commonTest = async (context) => {
     await testSharedHeader(context);
     await waitForMetrics(context);
     
-    await context.delay(1000);
+    await context.delay(333);
     const scrollHeight = await context.getExpression('document.documentElement.scrollHeight');
     const boundHeight = await context.getExpression('document.documentElement.getBoundingClientRect().height');
     console.log(`document.scrollElement.clientHeight: ${scrollHeight}, boundRect: ${boundHeight}`);
@@ -75,7 +75,7 @@ const netStatTest = async(context) => {
 
     await testSharedHeader(context);
     await waitForMetrics(context);
-    await context.delay(2666);
+    await context.delay(666);
 
     for(let netStatIndex=1; netStatIndex<=6; netStatIndex++)
     {
