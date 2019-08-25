@@ -19,11 +19,11 @@ namespace Universe.Dashboard.DAL.Tests
     {
         public static bool IsTravis => Environment.GetEnvironmentVariable("TRAVIS") == "true";
         
-        static Lazy<List<DbTestParameter>> _TestParameters = new Lazy<List<DbTestParameter>>(GetTestParameters, LazyThreadSafetyMode.ExecutionAndPublication);
+        static Lazy<List<DbTestParameter>> _TestParameters = new Lazy<List<DbTestParameter>>(GetTestDatabases, LazyThreadSafetyMode.ExecutionAndPublication);
 
         public static List<DbTestParameter> TestParameters => _TestParameters.Value;
 
-        static List<DbTestParameter> GetTestParameters()
+        static List<DbTestParameter> GetTestDatabases()
         {
             List<DbTestParameter> ret = new List<DbTestParameter> {CreateSqlLiteDbTestParameter()};
             
