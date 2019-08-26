@@ -192,7 +192,7 @@ class PersistentDrawerLeft extends React.Component {
         const { open } = this.state;
         
         const asHtml = (raw) => <span dangerouslySetInnerHTML={{__html: raw}} />;
-        const infoAsComponent = (info) => asHtml(Helper.Common.formatInfoHeader(info));
+        const infoAsComponent = (info) => info ? asHtml(Helper.Common.formatInfoHeader(info)) : null;
         const SysValueNotReady = () => (<span style={this.sis.notReady}>&nbsp;</span>);
         let sysInfoValueId = 0;
         const SysRow = (def,value) => { return (
