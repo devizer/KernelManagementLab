@@ -198,7 +198,7 @@ class PersistentDrawerLeft extends React.Component {
         const SysRow = (def,value) => { return (
             <tr>
                 <td style={this.sis.def}>{def}</td>
-                <td style={this.sis.val}>{ value ? <span style={this.sis.ready} id={`COMMON_INFO_HEADER_` + (++sysInfoValueId)}>{infoAsComponent(value)}</span> : <SysValueNotReady/>}</td>
+                <td style={this.sis.val}>{ value ? <span style={this.sis.ready} id={`COMMON_INFO_HEADER_` + (++sysInfoValueId)}>{value}</span> : <SysValueNotReady/>}</td>
             </tr>
         )};
 
@@ -298,8 +298,8 @@ class PersistentDrawerLeft extends React.Component {
 
                     <table border="0" cellSpacing="0" cellPadding="0"><tbody>
                         {SysRow("host", system.hostname)}
-                        {SysRow("os", system.os)}
-                        {SysRow("cpu", system.processor)}
+                        {SysRow("os", infoAsComponent(system.os))}
+                        {SysRow("cpu", infoAsComponent(system.processor))}
                         {SysRow("ram", system.memory)}
                     </tbody></table>
                     
