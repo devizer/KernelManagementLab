@@ -16,7 +16,7 @@ namespace NetBenchmarkLab
 
             string GetTitle(Server server)
             {
-                return server.Sponsor + ", " + server.Country;
+                return server.Sponsor + ", " + server.Country + ", " + server.Name;
             }
 
             var servers = settings.Servers.Take(22).ToArray();
