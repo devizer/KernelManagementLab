@@ -21,7 +21,6 @@ namespace Universe.Dashboard.DAL
 
         public DashboardContext() : base(DashboardContextOptionsFactory.Create())
         {
-            // Console.WriteLine("Warning! DashboardContext() (default constructor is for design-time only)");
         }
 
         public DashboardContext(DbContextOptions options) : base(options)

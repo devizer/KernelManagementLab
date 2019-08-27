@@ -2,7 +2,6 @@ using System;
 using System.Data;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Npgsql;
 
 namespace Universe.Dashboard.DAL.MultiProvider
@@ -48,8 +47,6 @@ namespace Universe.Dashboard.DAL.MultiProvider
             NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
             return $"PostgresSQL server {b.Host}:{b.Port}";
         }
-
-
 
         public string GetShortVersion(IDbConnection connection, int? commandTimeout = 20)
         {

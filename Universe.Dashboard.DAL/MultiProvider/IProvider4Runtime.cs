@@ -23,9 +23,8 @@ namespace Universe.Dashboard.DAL.MultiProvider
         string SetConnectionTimeout(string connectionString, int connectionTimeout);
 
         string GetServerName(string connectionString);
-
         
-        // for compatiblity, but sqlite provider do nothing
+        // for compatibility, but sqlite provider do nothing
         void CreateMigrationHistoryTableIfAbsent(IDbConnection connection, string migrationsHistoryTable);
     }
     
