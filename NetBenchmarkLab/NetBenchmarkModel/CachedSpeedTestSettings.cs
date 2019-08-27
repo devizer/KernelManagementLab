@@ -1,34 +1,21 @@
-using System.Diagnostics;
 using SpeedTest;
+using SpeedTest.Models;
 
 namespace NetBenchmarkLab.NetBenchmarkModel
 {
     public class CachedSpeedTestSettings
     {
-        private const long TTL = 600 * 1000; 
-        private Stopwatch Stopwatch = null;
-        private SpeedTest.Models.Settings _Settings;
-        static readonly object Sync = new object(); 
+        private static readonly CachedInstance<Settings> _Settings = new CachedInstance<Settings>(
+            600 * 1000,
+            () => new SpeedTestClient().GetSettings()
+        );
         
-        public static readonly CachedSpeedTestSettings Instance = new CachedSpeedTestSettings();
+        private static CachedInstance<dynamic> _ServersDataSource = new CachedInstance<dynamic>(
+            600*1000,
+            () => NetServersDataSource.Build(Settings.Servers)); 
 
-        public SpeedTest.Models.Settings Settings
-        {
-            get
-            {
-                if (_Settings != null && Stopwatch != null && Stopwatch.ElapsedMilliseconds <= TTL)
-                    return _Settings;
+        public static Settings Settings => _Settings.Value;
+        public static dynamic ServersDataSource => _ServersDataSource.Value;
 
-                var settings = new SpeedTestClient().GetSettings();
-                lock (Sync)
-                {
-                    if (_Settings != null) return _Settings;
-                    Stopwatch = Stopwatch ?? Stopwatch.StartNew();
-                    Stopwatch.Restart();
-                    _Settings = settings;
-                    return _Settings;
-                }
-            }
-        }
     }
 }

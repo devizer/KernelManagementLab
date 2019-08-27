@@ -17,17 +17,17 @@ namespace NetBenchmarkLab
             
             ListRegions.Run();
             
-            JsonDataSource();
+            SaveServersDataSourceAsJson();
             
             TestSpeed1.Run();
         }
 
-        private static void JsonDataSource()
+        private static void SaveServersDataSourceAsJson()
         {
             SpeedTestClient _speedTestClientClient = new SpeedTestClient();
             // var settings = _speedTestClientClient.GetSettings();
-            var settings = CachedSpeedTestSettings.Instance.Settings;
-            var dataSource = NetServersDataSource.Build(settings.Servers);
+            var settings = CachedSpeedTestSettings.Settings;
+            var dataSource = CachedSpeedTestSettings.ServersDataSource;
             DebugDumper.Dump(dataSource, "Net-Servers-Data-Source.json", minify: false);
             DebugDumper.Dump(dataSource, "Net-Servers-Data-Source.min.json", minify: true);
         }

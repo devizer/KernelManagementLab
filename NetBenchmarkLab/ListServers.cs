@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
+using NetBenchmarkLab.NetBenchmarkModel;
 using SpeedTest;
 using SpeedTest.Models;
 
@@ -16,8 +17,7 @@ namespace NetBenchmarkLab
         {
             var regionsByTraffic = RegionsByTrafficPopularity.RegionsByTrafficSource.Model;
             
-            SpeedTestClient _speedTestClientClient = new SpeedTestClient();
-            var settings = _speedTestClientClient.GetSettings();
+            var settings = CachedSpeedTestSettings.Settings;
             var ignoredIds = settings.ServerConfig.IgnoreIds.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
             Server[] servers = settings.Servers.Where(s => !ignoredIds.Contains(s.Id.ToString(CultureInfo.InvariantCulture))).ToArray();
             

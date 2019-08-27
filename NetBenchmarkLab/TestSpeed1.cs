@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using KernelManagementJam;
+using NetBenchmarkLab.NetBenchmarkModel;
 using SpeedTest;
 using SpeedTest.Models;
 
@@ -12,7 +13,7 @@ namespace NetBenchmarkLab
         public static void Run()
         {
             SpeedTestClient client = new SpeedTestClient();
-            Settings settings = client.GetSettings();
+            Settings settings = CachedSpeedTestSettings.Settings;
 
             string GetTitle(Server server)
             {

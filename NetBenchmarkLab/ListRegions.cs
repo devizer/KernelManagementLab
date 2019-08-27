@@ -11,14 +11,14 @@ using SpeedTest.Models;
 
 namespace NetBenchmarkLab
 {
+    [Obsolete("Moved to NetServersDataSource.Build()")]
     public class ListRegions
     {
         public static void Run()
         {
             var areas = RegionsByTrafficSource.Model.Areas;
             
-            SpeedTestClient _speedTestClientClient = new SpeedTestClient();
-            var settings = _speedTestClientClient.GetSettings();
+            var settings = CachedSpeedTestSettings.Settings;
             var ignoredIds = settings.ServerConfig.IgnoreIds.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
             Server[] servers = settings.Servers.Where(s => !ignoredIds.Contains(s.Id.ToString(CultureInfo.InvariantCulture))).ToArray();
             var serversByCountry = servers.ToLookup(x => x.GetCountry());
