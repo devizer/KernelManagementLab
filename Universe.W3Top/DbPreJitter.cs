@@ -12,16 +12,14 @@ namespace Universe.W3Top
         {
 
             using (StopwatchLog.ToConsole("PreJIT DB's Metrics History logic"))
+            using (DashboardContext db = new DashboardContext())
             {
-                using (DashboardContext db = new DashboardContext())
-                {
-                    HistoryLogic history = new HistoryLogic(db);
-                    history.Save("StartAt", new {At = DateTime.UtcNow});
-                }
+                HistoryLogic history = new HistoryLogic(db);
+                history.Save("StartAt", new {At = DateTime.UtcNow});
             }
 
             using (StopwatchLog.ToConsole("PreJIT DB's Disk Benchmark History logic")) 
-            using(DashboardContext db = new DashboardContext())
+            using (DashboardContext db = new DashboardContext())
             {
                 
                 DiskBenchmarkDataAccess benchmarkDA = new DiskBenchmarkDataAccess(db);

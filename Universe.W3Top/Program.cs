@@ -100,6 +100,6 @@ namespace Universe.W3Top
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Universe.W3Top.Startup>();
+                .UseStartup<Startup>();
     }
 }
