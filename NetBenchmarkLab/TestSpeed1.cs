@@ -12,7 +12,7 @@ namespace NetBenchmarkLab
     {
         public static void Run()
         {
-            SpeedTestClient client = new SpeedTestClient();
+            AdvancedSpeedTestClient client = new AdvancedSpeedTestClient();
             Settings settings = CachedSpeedTestSettings.Settings;
 
             string GetTitle(Server server)

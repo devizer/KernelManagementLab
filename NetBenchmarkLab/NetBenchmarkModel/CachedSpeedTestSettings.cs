@@ -7,7 +7,7 @@ namespace NetBenchmarkLab.NetBenchmarkModel
     {
         private static readonly CachedInstance<Settings> _Settings = new CachedInstance<Settings>(
             600 * 1000,
-            () => new SpeedTestClient().GetSettings()
+            () => new AdvancedSpeedTestClient().GetSettings()
         );
         
         private static CachedInstance<dynamic> _ServersDataSource = new CachedInstance<dynamic>(

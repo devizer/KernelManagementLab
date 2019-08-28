@@ -24,7 +24,7 @@ namespace NetBenchmarkLab
 
         private static void SaveServersDataSourceAsJson()
         {
-            SpeedTestClient _speedTestClientClient = new SpeedTestClient();
+            AdvancedSpeedTestClient _speedTestClientClient = new AdvancedSpeedTestClient();
             // var settings = _speedTestClientClient.GetSettings();
             var settings = CachedSpeedTestSettings.Settings;
             var dataSource = CachedSpeedTestSettings.ServersDataSource;

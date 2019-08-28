@@ -10,4 +10,4 @@ git clone https://github.com/devizer/KernelManagementLab net
 cd net/NetBenchmarkLab
 dotnet build -c Release -o bin/temp
 cd bin/temp
-time dotnet NetBenchmarkLab.dll
+time dotnet NetBenchmarkLab.dll | tee NetBenchmarkLab.report.log 
