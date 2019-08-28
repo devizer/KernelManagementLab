@@ -17,16 +17,16 @@ namespace NetBenchmarkLab
 
             string GetTitle(Server server)
             {
-                return server.Sponsor + ", " + server.Country + ", " + server.Name;
+                return $"{server.Sponsor} ({server.Country}) {server.Name}";
             }
 
-            var servers = settings.Servers.Take(22).ToArray();
+            var servers = settings.Servers.Take(999).ToArray();
             int len = servers.Select(x => GetTitle(x).Length).Max();
             // Console.WriteLine($"Server: {server.Name}");
             for (int i = 0; i < servers.Length; i++)
             {
                 Stopwatch swError = Stopwatch.StartNew();
-                Console.Write("Server: {0," + len + "}", GetTitle(servers[i]));
+                Console.Write($"{i,2}: {{0,{len}}}", GetTitle(servers[i]));
                 try
                 {
                     for (int t = 0; t < 5; t++)
