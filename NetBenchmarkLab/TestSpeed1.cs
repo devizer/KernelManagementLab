@@ -17,7 +17,7 @@ namespace NetBenchmarkLab
 
             string GetTitle(Server server)
             {
-                return $"{server.Sponsor} ({server.Country}) {server.Name}";
+                return $"{server.Sponsor} ({server.Country}) {server.Name} {{{server.Distance/1000:n0} km}}";
             }
 
             var servers = settings.Servers.Take(999).ToArray();
