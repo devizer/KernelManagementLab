@@ -253,9 +253,9 @@ namespace Universe.Benchmark.DiskBench
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, FileOptions.WriteThrough))
             {
-                // fs.Position = Parameters.WorkingSetSize - 1;
-                // fs.WriteByte(0);
-                // fs.Position = 0;
+                fs.Position = Parameters.WorkingSetSize - 1;
+                fs.WriteByte(0);
+                fs.Position = 0;
                 _allocate.Start();
                 
                 long len = 0;
