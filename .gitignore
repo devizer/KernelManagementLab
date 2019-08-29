@@ -12,6 +12,8 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+Universe.W3Top.HeadlessTests/build
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

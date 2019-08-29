@@ -21,8 +21,8 @@ class TestContext {
         var window = await this.Protocol.Browser.getWindowForTarget();
         console.log(`New Window Size: [${width} * ${height}], Prev Size: ${Utils.asJSON(window)}`.grey);
         let newWidth = window.bounds.width, newHeight = window.bounds.height;
-        if (width > 0) newWidth = width;
-        if (height > 0) newHeight = height;
+        if (width > 0) newWidth = Math.floor(width+0.9999);
+        if (height > 0) newHeight = Math.floor(height+0.9999);
         window.bounds.width = newWidth;
         window.bounds.height = newHeight;
         await this.Protocol.Browser.setWindowBounds(window);
