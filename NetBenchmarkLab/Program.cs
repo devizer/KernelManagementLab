@@ -54,5 +54,6 @@ namespace NetBenchmarkLab
             Console.WriteLine(json);
             Console.WriteLine(json2);
         }
+
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,9 +29,9 @@ namespace Universe.Dashboard.DAL.MultiProvider
             });
         }
 
-        public string GetShortVersion(IDbConnection connection, int? commandTimeout)
+        public string GetShortVersion(IDbConnection connection, int? commandTimeout = 20)
         {
-            dynamic row = connection.QueryFirst("Select @@MICROSOFTVERSION Ver32Bit, SERVERPROPERTY('ProductLevel') Level, SERVERPROPERTY('ProductUpdateLevel') UpdateLevel");
+            dynamic row = connection.QueryFirst(@"Select @@MICROSOFTVERSION Ver32Bit, SERVERPROPERTY('ProductLevel') Level, SERVERPROPERTY('ProductUpdateLevel') UpdateLevel", commandTimeout: commandTimeout);
 
             int ver32Bit = row.Ver32Bit;
             string level = row.Level;
@@ -39,10 +40,10 @@ namespace Universe.Dashboard.DAL.MultiProvider
             int v2 = ver32Bit >> 16 & 0xFF;
             int v3 = ver32Bit & 0xFFFF;
             var ver = new Version(v1, v2, v3);
-            var ret = ver.ToString();
-            if (!string.IsNullOrEmpty(level) && level != "RTM") ret += $"-{level}";
-            if (!string.IsNullOrEmpty(updateLevel)) ret += $"-{updateLevel}";
-            return ret;
+            var ret = new StringBuilder(ver.ToString());
+            if (!string.IsNullOrEmpty(level) && level != "RTM") ret.Append('-').Append(level);
+            if (!string.IsNullOrEmpty(updateLevel)) ret.Append('-').Append(updateLevel);
+            return ret.ToString();
         }
 
         public string GetShortVersion_Legacy(IDbConnection connection, int? commandTimeout)

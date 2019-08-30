@@ -12,11 +12,12 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "rimraf": "^3.0.0"
   },
 
   "scripts": {
-    "test": "yarn build && cd build && mkdir -p bin && node App.test.js",
+    "test": "rimraf ./build && yarn build && cd build && mkdir -p bin && node App.test.js",
     "build": "babel --presets es2015 -d build/ src"
   }
 }

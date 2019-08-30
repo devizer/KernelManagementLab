@@ -7,6 +7,47 @@ w3topUrl = w3topUrl.replace(new RegExp("[/]+$"), "");
 
 const Utils = require("./Utils");
 
+const diskBenchmarkFullTest = async (context) => {
+    
+    // DISK_1.click 
+    // BTN_DISK_BENCHMARK_NEXT.click
+    // #benchark-options-duration = 5, benchmark-options-working-set = 128
+    // BTN_DISK_BENCHMARK_NEXT.click
+    // wait for #BTN_DISK_BENCHMARK_ANOTHER
+    
+    const click = async (selector) => await context.getExpression(`document.getElementById('${selector}').click()`);
+    const setValue = async (selector, value) => {
+        await context.getExpression(`document.getElementById('${selector}').value = '${value}'`);
+    };
+
+
+    const steps = [
+        async () => { await testSharedHeader(context); await waitForMetrics(context); },
+        async () => await click('DISK_1'),
+        async () => await click('BTN_DISK_BENCHMARK_NEXT'),
+        async () => {
+            await setValue('benchmark-options-working-set', '128');
+            await setValue('benchmark-options-duration', '5');
+        },
+        async () => await click('BTN_DISK_BENCHMARK_NEXT'),
+        async () => {
+            const isOk1 = await context.waitForElement(60000, 'BTN_DISK_BENCHMARK_ANOTHER');
+            console.log(`isOk1: ${isOk1}`);
+            await click('BTN_DISK_BENCHMARK_ANOTHER'); 
+        },
+    ];
+    
+    let stepIndex = 0;
+    for(let step of steps) {
+        await step();
+
+        stepIndex++;
+        await context.delay(444);
+        await context.saveScreenshot(`bin/${context.PageSpec.fileName}-${stepIndex}.png`);
+    }
+    
+}
+
 const testSharedHeader = async (context) => {
     let isBriefInfoArrived = await context.waitForTrigger(8000,"BriefInfoArrived");
     if (isBriefInfoArrived === false)
@@ -54,6 +95,8 @@ const showDrawerTest = async(context) => {
 
 showDrawerTest.description = "Drawer screenshot";
 
+
+
 const commonTest = async (context) => {
 
 
@@ -96,14 +139,15 @@ const netStatTest = async(context) => {
 
 
 let pages = [
-    {url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart", tests: [commonTest, netStatTest] },
-    {url:'/not-found-404', width: 560, height: 440, fileName:"[404]", tests: [commonTest] },
-    {url:`/mounts`, width: 1024, height: 600, fileName:"mounts", tests: [commonTest] },
-    {url:'/disk-benchmark',         width: 1180, height: 620, fileName:"disk-benchmark-start", tests: [commonTest] },
-    {url:'/disk-benchmark?history', width: 1180, height: 620, fileName:"disk-benchmark-history", tests: [commonTest] },
-    {url:'/disks', width: 570, height: 800, fileName:"disk-live-chart", tests: [commonTest] },
-    {url:`/`,       width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
-    {url:`/`,       width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
+    { url:'/disk-benchmark', width: 1180, height: 768, fileName:"disk-benchmark-progress", tests: [diskBenchmarkFullTest] },
+    { url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart", tests: [commonTest, netStatTest] },
+    { url:'/not-found-404', width: 560, height: 440, fileName:"[404]", tests: [commonTest] },
+    { url:`/mounts`, width: 1024, height: 600, fileName:"mounts", tests: [commonTest] },
+    { url:'/disk-benchmark',         width: 1180, height: 620, fileName:"disk-benchmark-start", tests: [commonTest] },
+    { url:'/disk-benchmark?history', width: 1180, height: 620, fileName:"disk-benchmark-history", tests: [commonTest] },
+    { url:'/disks', width: 570, height: 800, fileName:"disk-live-chart", tests: [commonTest] },
+    { url:`/`,       width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
+    { url:`/`,       width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
 ];
 
 // pages = [pages[0]]; 

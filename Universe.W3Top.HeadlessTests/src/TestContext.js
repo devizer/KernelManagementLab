@@ -60,6 +60,42 @@ class TestContext {
         return raw ? parseInt(raw[2], 10) : false;
     };
 
+    async waitForElement(timeout, idElementName) {
+        return this.waitForLambda(timeout, `Element ${idElementName}`, async () => {
+            return undefined != await this.getElementById(idElementName);
+        })
+    }
+    
+    async waitForLambda (timeout, caption, func) {
+        const start = new Date();
+        let ms = 1;
+        while(true)
+        {
+            let isOk = false;
+            try
+            {
+                isOk = Boolean(await func());
+            }
+            catch(err)
+            {
+                isOk = false; 
+            }
+            // console.log(`Wait for ${triggerKey}: ${value} (${new Date() - start})`);
+            if (isOk) {
+                console.debug(`Waiter for ` + `[${caption}]`.magenta.bold + ` successfully ${"confirmed".magenta.bold} in ${new Date() - start} milliseconds.`);
+                return true;
+            }
+
+            await this.delay(ms);
+            ms = ms >= 128 ? ms : ms * 2;
+            let elapsed = new Date() - start;
+            if (elapsed > timeout) break;
+        }
+
+        console.warn(`Warning! Waiter for [${caption}] was incomplete in ${new Date() - start} milliseconds`.red);
+        return false;
+    };
+
     async waitForTrigger (timeout, triggerKey) {
         const start = new Date();
         let ms = 1;
