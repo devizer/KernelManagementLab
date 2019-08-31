@@ -50,7 +50,7 @@ async function runTest (testCase, pageSpec, url) {
         protocol = await CDP({port: chrome.port});
         let ver = protocol.protocol.version;
         console.log(`CDP Protocol version: ` + Utils.asJSON(ver).green);
-        const {DOM, Page, Emulation, Runtime, Browser, Network} = protocol;
+        const {DOM, Page, Emulation, Runtime, Browser, Network, Input} = protocol;
         // console.log(protocol);
 
         console.log(`BROWSER VER:`); Utils.printProperties(await Browser.getVersion()); 

@@ -17,7 +17,18 @@ const diskBenchmarkFullTest = async (context) => {
     
     const click = async (selector) => await context.getExpression(`document.getElementById('${selector}').click()`);
     const setValue = async (selector, value) => {
-        await context.getExpression(`document.getElementById('${selector}').value = '${value}'`);
+        let v1 = value.substr(0,value.length - 1);
+        let v2 = value.substr(value.length - 1, 1);
+        // console.log({value, v1, v2});
+        await context.getExpression(`document.getElementById('${selector}').focus()`);
+        await context.getExpression(`document.getElementById('${selector}').select()`);
+        // await context.getExpression(`document.getElementById('${selector}').value = '${''}'`);
+        await context.delay(1);
+        for(let c of value)
+            await context.Protocol.Input.dispatchKeyEvent({type:"keyDown", text:String(c)});
+        
+        await context.delay(333);
+        // console.log("Input %o", context.Protocol.Input);
     };
 
 
@@ -27,11 +38,11 @@ const diskBenchmarkFullTest = async (context) => {
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
             await setValue('benchmark-options-working-set', '128');
-            await setValue('benchmark-options-duration', '5');
+            await setValue('benchmark-options-duration', '3');
         },
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
-            const isOk1 = await context.waitForElement(200000, 'BTN_DISK_BENCHMARK_ANOTHER');
+            const isOk1 = await context.waitForElement(50000, 'BTN_DISK_BENCHMARK_ANOTHER');
             console.log(`isOk1: ${isOk1}`);
             // await click('BTN_DISK_BENCHMARK_ANOTHER'); 
         },
@@ -42,7 +53,7 @@ const diskBenchmarkFullTest = async (context) => {
         await step();
 
         stepIndex++;
-        await context.delay(444);
+        await context.delay(777);
         await context.saveScreenshot(`bin/${context.PageSpec.fileName}-${stepIndex}.png`);
     }
     
