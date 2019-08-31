@@ -35,7 +35,7 @@ async function runTest (testCase, pageSpec, url) {
 
     async function launchChrome() {
         let chromeFlags = ['--disable-gpu', "--no-sandbox", "--enable-logging"];
-        if (process.env.TRAVIS !== undefined || true) chromeFlags.push('--headless');
+        if (process.env.TRAVIS !== undefined /*|| true*/) chromeFlags.push('--headless');
         return await chromeLauncher.launch({
             // chromePath: 'google-chrome',
             startingUrl: 'about:blank',

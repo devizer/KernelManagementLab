@@ -22,12 +22,13 @@ const diskBenchmarkFullTest = async (context) => {
         // console.log({value, v1, v2});
         await context.getExpression(`document.getElementById('${selector}').focus()`);
         await context.getExpression(`document.getElementById('${selector}').select()`);
+        // await context.getExpression(`document.getElementById('${selector}').blur()`);
+        // await context.getExpression(`document.getElementById('${selector}').value = '${value}'`);
         // await context.getExpression(`document.getElementById('${selector}').value = '${''}'`);
         await context.delay(1);
-        for(let c of value)
-            await context.Protocol.Input.dispatchKeyEvent({type:"keyDown", text:String(c)});
-        
-        await context.delay(33);
+        for(let c of value) await context.Protocol.Input.dispatchKeyEvent({type:"keyDown", text:String(c)});
+            
+        await context.delay(3);
         // console.log("Input %o", context.Protocol.Input);
     };
 
@@ -37,8 +38,8 @@ const diskBenchmarkFullTest = async (context) => {
         async () => await click('DISK_1'),
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
-            await setValue('benchmark-options-working-set', '128');
-            await setValue('benchmark-options-duration', '3');
+            await setValue('benchmark-options-working-set', '32');
+            await setValue('benchmark-options-duration', '1');
         },
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
