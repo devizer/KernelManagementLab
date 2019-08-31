@@ -18,13 +18,13 @@ namespace Tests
     {
 
         [Test]
-        [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
-        public void Perform_Full_Lifecycle(DbTestParameter argDB)
+        [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestDatabases))]
+        public void Perform_Full_Lifecycle(TestDatabase arg)
         {
-            ShowDbTestArgument(argDB);
+            ShowDbTestArgument(arg);
             Environment.SetEnvironmentVariable("SKIP_FLUSHING", "true");
             
-            DashboardContext context = argDB.GetDashboardContext();
+            DashboardContext context = arg.GetDashboardContext();
             Console.WriteLine($"Provider: [{context.Database.ProviderName}]");
             Console.WriteLine($"Connection String: [{context.Database.GetDbConnection().ConnectionString}]");
             DiskBenchmark b = new DiskBenchmark(".", 128*1024,DataGeneratorFlavour.Random, 4096, 1);
@@ -72,7 +72,7 @@ namespace Tests
 
         }
         
-        void ShowDbTestArgument(DbTestParameter arg)
+        void ShowDbTestArgument(TestDatabase arg)
         {
             using (var db = arg.GetDashboardContext())
             {

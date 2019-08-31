@@ -38,7 +38,7 @@ public class GlobalCleanUp
                 {
                     action();
                     counter = Interlocked.Increment(ref Counter);
-                    Console.WriteLine($"[Cleanup] #{counter} OK: {title} in {sw.ElapsedMilliseconds:n0} msec");
+                    Console.WriteLine($"[Cleanup] #{counter,2} OK: {title} in {sw.ElapsedMilliseconds:n0} msec");
                 }
                 catch (Exception ex)
                 {

@@ -19,33 +19,41 @@ namespace Universe.Dashboard.DAL.Tests
     {
         public static bool IsTravis => Environment.GetEnvironmentVariable("TRAVIS") == "true";
         
-        static Lazy<List<DbTestParameter>> _TestParameters = new Lazy<List<DbTestParameter>>(GetTestDatabases, LazyThreadSafetyMode.ExecutionAndPublication);
+        static Lazy<List<TestDatabase>> _TestDatabases = new Lazy<List<TestDatabase>>(GetTestDatabases, LazyThreadSafetyMode.ExecutionAndPublication);
 
-        public static List<DbTestParameter> TestParameters => _TestParameters.Value;
+        public static List<TestDatabase> TestDatabases => _TestDatabases.Value;
 
-        static List<DbTestParameter> GetTestDatabases()
+        static List<TestDatabase> GetTestDatabases()
         {
-            List<DbTestParameter> ret = new List<DbTestParameter> {CreateSqlLiteDbTestParameter()};
+            List<TestDatabase> ret = new List<TestDatabase> {CreateSqlLiteDbTestParameter()};
             
             var dbNameFormat = $"W3Top_{{0}}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
-            int counter = 0;
             var providers = new IProvider4Tests[] { new MySqlProvider4Tests(), new PgSqlProvider4Tests(), new SqlServerProvider4Tests(), };
+            var providerCounter = 0;
             foreach (var provider4Tests in providers)
             {
+                providerCounter++;
                 var serverConnectionStrings = provider4Tests.GetServerConnectionStrings();
+                int versionCounter = 0;
                 foreach (var serverConnectionString in serverConnectionStrings)
                 {
-                    counter++;
-                    var dbName = string.Format(dbNameFormat, (char) (64 + counter));
-                    var artifact = $"DB `{dbName}` on {provider4Tests.Provider4Runtime.GetServerName(serverConnectionString)}";
+                    versionCounter++;
+                    var dbName = string.Format(dbNameFormat, $"{(char) (64 + providerCounter)}{(char) (48 + versionCounter)}");
+                    
+                    string shortVer;
+                    using (var con = provider4Tests.Provider4Runtime.CreateConnection(serverConnectionString))
+                        shortVer = provider4Tests.Provider4Runtime.GetShortVersion(con);
+                    
+                    var artifact = $"DB `{dbName}` on {provider4Tests.Provider4Runtime.GetServerName(serverConnectionString)} ver {shortVer}";
 
                     var dbConnectionString = provider4Tests.CreateDatabase(serverConnectionString, dbName);
 
+
                     Func<string, DashboardContext> newDbContext = delegate(string cs)
                     {
-                        Environment.SetEnvironmentVariable("MYSQL_DATABASE", null);
-                        Environment.SetEnvironmentVariable("PGSQL_DATABASE", null);
-                        Environment.SetEnvironmentVariable("MSSQL_DATABASE", null);
+                        foreach (var pro in providers)
+                            Environment.SetEnvironmentVariable(pro.EnvVarName, null);
+
                         Environment.SetEnvironmentVariable(provider4Tests.EnvVarName, dbConnectionString);
                         
                         var optionsBuilder = new DbContextOptionsBuilder();
@@ -57,9 +65,9 @@ namespace Universe.Dashboard.DAL.Tests
 
                     var db = newDbContext(dbConnectionString);
                     GracefulFail($"Apply migrations for {artifact}", () => provider4Tests.Provider4Runtime.Migrate(db, dbConnectionString));
+
                     
-                    var shortVer = db.Database.GetShortVersion();
-                    ret.Add(new DbTestParameter()
+                    ret.Add(new TestDatabase()
                     {
                         Family = db.Database.GetFamily(),
                         ShortVersion = shortVer,
@@ -83,14 +91,14 @@ namespace Universe.Dashboard.DAL.Tests
             }
         }
 
-        private static DbTestParameter CreateSqlLiteDbTestParameter()
+        private static TestDatabase CreateSqlLiteDbTestParameter()
         {
             var family = EF.Family.Sqlite;
             using (var db = CreateSqliteDbContext())
             {
                 db.Database.Migrate();
                 var shortVer = db.Database.GetShortVersion();
-                return new DbTestParameter
+                return new TestDatabase
                 {
                     Family = family,
                     ShortVersion = shortVer,

@@ -3,7 +3,7 @@ using Universe.Dashboard.DAL.MultiProvider;
 
 namespace Universe.Dashboard.DAL.Tests
 {
-    public class DbTestParameter
+    public class TestDatabase
     {
         public EF.Family Family;
         public string ShortVersion;

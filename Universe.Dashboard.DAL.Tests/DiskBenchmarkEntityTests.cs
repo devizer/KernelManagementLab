@@ -81,13 +81,13 @@ namespace Tests
         }
         
         [Test]
-        [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestParameters))]
-        public void Test_Environment_Column(DbTestParameter argDB)
+        [TestCaseSource(typeof(DbTestEnv), nameof(DbTestEnv.TestDatabases))]
+        public void Test_Environment_Column(TestDatabase arg)
         {
             var token = Guid.NewGuid();
             var expectedFileSystem = "myfs";
             
-            DashboardContext context = argDB.GetDashboardContext();
+            DashboardContext context = arg.GetDashboardContext();
             DiskBenchmark b = new DiskBenchmark("/test-empty-report");
             var entity = new DiskBenchmarkEntity()
             {

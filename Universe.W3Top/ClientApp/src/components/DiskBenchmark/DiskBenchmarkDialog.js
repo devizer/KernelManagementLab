@@ -187,6 +187,17 @@ function DiskBenchmarkDialog(props) {
     }
 
     const handleChangeOption = name => event => {
+        function kill_it() {
+            const replacer = (key, value) => {
+                if (key === 'FiberNode') return undefined;
+                return value;
+            };
+            // Helper.log(`INTUP EVENT ${JSON.stringify(event, replacer)}`);
+            Helper.log(`INPUT EVENT [${event.type}] [${JSON.stringify(event.target.id)}] [${JSON.stringify(event.target.value)}]`);
+            Helper.toConsole(`INPUT EVENT`, event);
+            const {type, nativeEvent} = event;
+        }
+        
         let tempOptions = {...options};
         tempOptions[name] = event.target.value;
         validateOptions(tempOptions);
