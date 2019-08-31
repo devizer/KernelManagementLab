@@ -17,8 +17,8 @@ const diskBenchmarkFullTest = async (context) => {
     
     const click = async (selector) => await context.getExpression(`document.getElementById('${selector}').click()`);
     const setValue = async (selector, value) => {
-        let v1 = value.substr(0,value.length - 1);
-        let v2 = value.substr(value.length - 1, 1);
+        // let v1 = value.substr(0,value.length - 1);
+        // let v2 = value.substr(value.length - 1, 1);
         // console.log({value, v1, v2});
         await context.getExpression(`document.getElementById('${selector}').focus()`);
         await context.getExpression(`document.getElementById('${selector}').select()`);
@@ -27,7 +27,7 @@ const diskBenchmarkFullTest = async (context) => {
         for(let c of value)
             await context.Protocol.Input.dispatchKeyEvent({type:"keyDown", text:String(c)});
         
-        await context.delay(333);
+        await context.delay(33);
         // console.log("Input %o", context.Protocol.Input);
     };
 
@@ -53,7 +53,7 @@ const diskBenchmarkFullTest = async (context) => {
         await step();
 
         stepIndex++;
-        await context.delay(777);
+        await context.delay(33);
         await context.saveScreenshot(`bin/${context.PageSpec.fileName}-${stepIndex}.png`);
     }
     
