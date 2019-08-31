@@ -38,7 +38,7 @@ const diskBenchmarkFullTest = async (context) => {
         async () => await click('DISK_1'),
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
-            await setValue('benchmark-options-working-set', '32');
+            await setValue('benchmark-options-working-set', '128');
             await setValue('benchmark-options-duration', '1');
         },
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
@@ -54,7 +54,7 @@ const diskBenchmarkFullTest = async (context) => {
         await step();
 
         stepIndex++;
-        await context.delay(33);
+        await context.delay(777);
         await context.saveScreenshot(`bin/${context.PageSpec.fileName}-${stepIndex}.png`);
     }
     
