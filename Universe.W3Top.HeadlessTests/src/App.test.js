@@ -44,7 +44,7 @@ const diskBenchmarkFullTest = async (context) => {
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
             const isOk1 = await context.waitForElement(50000, 'BTN_DISK_BENCHMARK_ANOTHER');
-            console.log(`isOk1: ${isOk1}`);
+            console.log(`BTN_DISK_BENCHMARK_ANOTHER element found: ${isOk1}`);
             // await click('BTN_DISK_BENCHMARK_ANOTHER'); 
         },
     ];
