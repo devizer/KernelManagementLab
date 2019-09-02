@@ -16,25 +16,37 @@ const diskBenchmarkFullTest = async (context) => {
     // wait for #BTN_DISK_BENCHMARK_ANOTHER
     
     const click = async (selector) => await context.getExpression(`document.getElementById('${selector}').click()`);
-    const setValue = async (selector, value) => {
+    const setValue = async (elementId, value) => {
         // let v1 = value.substr(0,value.length - 1);
         // let v2 = value.substr(value.length - 1, 1);
         // console.log({value, v1, v2});
-        await context.getExpression(`document.getElementById('${selector}').focus()`);
-        await context.getExpression(`document.getElementById('${selector}').select()`);
-        // await context.getExpression(`document.getElementById('${selector}').blur()`);
-        // await context.getExpression(`document.getElementById('${selector}').value = '${value}'`);
-        // await context.getExpression(`document.getElementById('${selector}').value = '${''}'`);
-        await context.delay(1);
-        for(let c of value) await context.Protocol.Input.dispatchKeyEvent({type:"keyDown", text:String(c)});
+        await context.getExpression(`document.getElementById('${elementId}').focus()`);
+        await context.getExpression(`document.getElementById('${elementId}').select()`);
+        // await context.getExpression(`document.getElementById('${elementId}').blur()`);
+        // await context.getExpression(`document.getElementById('${elementId}').value = '${value}'`);
+        // await context.getExpression(`document.getElementById('${elementId}').value = '${''}'`);
+        // await context.delay(1);
+        
+        // await context.delay(2222);
+        // https://github.com/GoogleChrome/puppeteer/blob/master/lib/Input.js
+        // https://javascript.info/keyboard-events
+        const valueAsString = String(value);
+        if (value === null || value === undefined || valueAsString.length === 0)
+            // 8: Backspace, 46: Delete
+            await context.Protocol.Input.dispatchKeyEvent({type:"rawKeyDown", windowsVirtualKeyCode:8});
+        else
+            await context.Protocol.Input.dispatchKeyEvent({type:"keyDown", text:valueAsString});
             
-        await context.delay(3);
+        // await context.delay(3);
         // console.log("Input %o", context.Protocol.Input);
     };
 
 
     const steps = [
-        async () => { await testSharedHeader(context); await waitForMetrics(context); },
+        async () => { 
+            await testSharedHeader(context); 
+            await waitForMetrics(context);
+        },
         async () => await click('DISK_1'),
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
@@ -43,8 +55,8 @@ const diskBenchmarkFullTest = async (context) => {
         },
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
-            const isOk1 = await context.waitForElement(50000, 'BTN_DISK_BENCHMARK_ANOTHER');
-            console.log(`BTN_DISK_BENCHMARK_ANOTHER element found: ${isOk1}`);
+            const isFound = await context.waitForElement(50000, 'BTN_DISK_BENCHMARK_ANOTHER');
+            if (!isFound) context.addError(`BTN_DISK_BENCHMARK_ANOTHER element expected`);
             // await click('BTN_DISK_BENCHMARK_ANOTHER'); 
         },
     ];
@@ -158,8 +170,8 @@ let pages = [
     { url:'/disk-benchmark',         width: 1180, height: 620, fileName:"disk-benchmark-start", tests: [commonTest] },
     { url:'/disk-benchmark?history', width: 1180, height: 620, fileName:"disk-benchmark-history", tests: [commonTest] },
     { url:'/disks', width: 570, height: 800, fileName:"disk-live-chart", tests: [commonTest] },
-    { url:`/`,       width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
-    { url:`/`,       width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
+    { url:`/`,      width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
+    { url:`/`,      width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
 ];
 
 // pages = [pages[0]]; 
