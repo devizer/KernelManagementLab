@@ -158,7 +158,12 @@ async function runTest (testCase, pageSpec, url) {
             errors.push(e);
         }
 
-        
+        // const si = protocol.SystemInfo;
+        // console.debug(`SystemInfo.getProcessInfo %o`, (await si.getProcessInfo())[0].cpuTime);        
+        // console.debug(`SystemInfo.getInfo %o`, protocol.SystemInfo.getInfo);
+
+
+
         showResult();
         protocol.close();
         chrome.kill();

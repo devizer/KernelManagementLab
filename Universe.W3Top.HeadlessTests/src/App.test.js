@@ -34,8 +34,8 @@ const diskBenchmarkFullTest = async (context) => {
         async () => await click('DISK_1'),
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {
-            await setValue('benchmark-options-working-set', '128');
-            await setValue('benchmark-options-duration', '2');
+            await setValue('benchmark-options-working-set', Utils.isTravis ? 256 : 1);
+            await setValue('benchmark-options-duration', Utils.isTravis ? 4 : 1);
         },
         async () => {
             await click('BTN_DISK_BENCHMARK_NEXT');

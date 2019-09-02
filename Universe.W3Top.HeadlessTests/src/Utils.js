@@ -23,4 +23,6 @@ const trimHtml = (html) => {
     return p < 0 ? html : html.substr(0,p) + " ...";
 };
 
-module.exports = {asJSON, myFormat, printProperties, trimHtml};
+const isTravis = Boolean(process.env.TRAVIS !== undefined);
+
+module.exports = {asJSON, myFormat, printProperties, trimHtml, isTravis};
