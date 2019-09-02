@@ -37,6 +37,7 @@ class TestContext {
         
         if (expressionValue.result.subtype === "error") {
             const err = new Error(expressionValue.result.description);
+            // console.debug(`Warning! Expression [${expression}] returned error: [${err.message}]`.grey);
             return undefined;
         }
 

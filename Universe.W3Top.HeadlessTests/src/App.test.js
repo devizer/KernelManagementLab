@@ -8,26 +8,12 @@ w3topUrl = w3topUrl.replace(new RegExp("[/]+$"), "");
 const Utils = require("./Utils");
 
 const diskBenchmarkFullTest = async (context) => {
-    
-    // DISK_1.click 
-    // BTN_DISK_BENCHMARK_NEXT.click
-    // #benchark-options-duration = 5, benchmark-options-working-set = 128
-    // BTN_DISK_BENCHMARK_NEXT.click
-    // wait for #BTN_DISK_BENCHMARK_ANOTHER
-    
+
     const click = async (selector) => await context.getExpression(`document.getElementById('${selector}').click()`);
+    
     const setValue = async (elementId, value) => {
-        // let v1 = value.substr(0,value.length - 1);
-        // let v2 = value.substr(value.length - 1, 1);
-        // console.log({value, v1, v2});
         await context.getExpression(`document.getElementById('${elementId}').focus()`);
         await context.getExpression(`document.getElementById('${elementId}').select()`);
-        // await context.getExpression(`document.getElementById('${elementId}').blur()`);
-        // await context.getExpression(`document.getElementById('${elementId}').value = '${value}'`);
-        // await context.getExpression(`document.getElementById('${elementId}').value = '${''}'`);
-        // await context.delay(1);
-        
-        // await context.delay(2222);
         // https://github.com/GoogleChrome/puppeteer/blob/master/lib/Input.js
         // https://javascript.info/keyboard-events
         const valueAsString = String(value);
@@ -36,10 +22,8 @@ const diskBenchmarkFullTest = async (context) => {
             await context.Protocol.Input.dispatchKeyEvent({type:"rawKeyDown", windowsVirtualKeyCode:8});
         else
             await context.Protocol.Input.dispatchKeyEvent({type:"keyDown", text:valueAsString});
-            
-        // await context.delay(3);
-        // console.log("Input %o", context.Protocol.Input);
     };
+     
 
 
     const steps = [
@@ -53,11 +37,14 @@ const diskBenchmarkFullTest = async (context) => {
             await setValue('benchmark-options-working-set', '128');
             await setValue('benchmark-options-duration', '2');
         },
-        async () => await click('BTN_DISK_BENCHMARK_NEXT'),
+        async () => {
+            await click('BTN_DISK_BENCHMARK_NEXT');
+            await context.delay(888);
+        },
         async () => {
             const isFound = await context.waitForElement(50000, 'BTN_DISK_BENCHMARK_ANOTHER');
             if (!isFound) context.addError(`BTN_DISK_BENCHMARK_ANOTHER element expected`);
-            // await click('BTN_DISK_BENCHMARK_ANOTHER'); 
+            // NOWAY: await click('BTN_DISK_BENCHMARK_ANOTHER'); 
         },
     ];
     
@@ -66,7 +53,7 @@ const diskBenchmarkFullTest = async (context) => {
         await step();
 
         stepIndex++;
-        await context.delay(777);
+        await context.delay(77);
         await context.saveScreenshot(`bin/${context.PageSpec.fileName}-${stepIndex}.png`);
     }
     
@@ -188,12 +175,9 @@ const totalErrors = [];
 })().then( ok => {
     console.log(`The End. Total fails: ${totalErrors.length}`);
     if (totalErrors.length > 0) {
-        {
-            const errorMessage = `Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`;
-            // throw new Error(message);
-            console.log(errorMessage.red.bold);
-            process.exit(1);
-        }
+        const errorMessage = `Total errors: ${totalErrors.length}\n${totalErrors.join('\n')}`;
+        console.log(errorMessage.red.bold);
+        process.exit(1);
     }
 }).catch(e => {
     // already handled

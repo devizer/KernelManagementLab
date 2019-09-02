@@ -2,14 +2,14 @@ var colors = require('colors');
 
 const asJSON = arg => {
     const s1 = JSON.stringify(arg,null, ' ');
-    let s2 = s1.replace(/\n/g, " ");
-    // .replace(/  /g, " ")
+    let s2 = s1.replace(/\n/g, " ").replace(/\r/g, " ");
     while(s2.indexOf("  ") >= 0) {s2 = s2.replace("  ", " "); }
     return s2;
 };
 
+const myFormatOptions = {useGrouping:true, minimumFractionDigits:1, maximumFractionDigits:1};
 const myFormat = x => {
-    return Number(x).toLocaleString(undefined, {useGrouping:true, minimumFractionDigits:1, maximumFractionDigits:1});
+    return Number(x).toLocaleString(undefined, myFormatOptions);
 };
 
 const printProperties = arg => {

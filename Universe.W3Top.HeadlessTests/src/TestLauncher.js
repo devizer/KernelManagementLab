@@ -17,13 +17,11 @@ async function runTest (testCase, pageSpec, url) {
     const errors = [];
 
     const showResult = () => {
-        if(errors.length === 0
-        )
-            console.log(`[${url}]`.yellow.bold + ` tests ` + `completed successfully`.green.bold + `. No errors or fails found.`);
-        else
-        {
-            console.error(`[${url}] tests failed with ${errors.length} errors`.red);
-            for (const i of errors) console.error(`${i}`.red);
+        if(errors.length === 0) {
+            console.log(`✓ ` + `[${url}]`.yellow.bold + ` tests ` + `completed successfully`.green.bold + `. No errors or fails found.`);
+        } else {
+            console.error(`✘ [${url}] tests failed with ${errors.length} errors`.red);
+            for (const i of errors) console.error(`✗ ${i}`.red);
         }
     };
 
@@ -34,7 +32,7 @@ async function runTest (testCase, pageSpec, url) {
     });
 
     async function launchChrome() {
-        let chromeFlags = ['--disable-gpu', "--no-sandbox", "--enable-logging"];
+        const chromeFlags = ['--disable-gpu', "--no-sandbox", "--enable-logging"];
         if (process.env.TRAVIS !== undefined /*|| true*/) chromeFlags.push('--headless');
         return await chromeLauncher.launch({
             // chromePath: 'google-chrome',
