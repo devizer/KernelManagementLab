@@ -23,8 +23,6 @@ const diskBenchmarkFullTest = async (context) => {
         else
             await context.Protocol.Input.dispatchKeyEvent({type:"keyDown", text:valueAsString});
     };
-     
-
 
     const steps = [
         async () => { 
@@ -43,7 +41,7 @@ const diskBenchmarkFullTest = async (context) => {
         },
         async () => {
             const isFound = await context.waitForElement(50000, 'BTN_DISK_BENCHMARK_ANOTHER');
-            if (!isFound) context.addError(`BTN_DISK_BENCHMARK_ANOTHER element expected`);
+            if (!isFound) context.addError(`BTN_DISK_BENCHMARK_ANOTHER button expected at the finish of benchmark`);
             // NOWAY: await click('BTN_DISK_BENCHMARK_ANOTHER'); 
         },
     ];

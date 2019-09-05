@@ -93,6 +93,8 @@ async function runTest (testCase, pageSpec, url) {
             // console.log(params);
         });
 
+        protocol.Performance.enable();
+        
         Network.loadingFinished( params => {
             const response = devToolsResponses.get(params.requestId);
             const responseInfo = responseReceivedInfo[params.requestId];
@@ -157,6 +159,8 @@ async function runTest (testCase, pageSpec, url) {
             // console.error(`Fail tests for ${url}\n${e}`);
             errors.push(e);
         }
+        
+        await context.showPerformanceMetrics();
 
         // const si = protocol.SystemInfo;
         // console.debug(`SystemInfo.getProcessInfo %o`, (await si.getProcessInfo())[0].cpuTime);        

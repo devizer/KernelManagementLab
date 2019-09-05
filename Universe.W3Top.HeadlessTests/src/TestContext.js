@@ -131,6 +131,12 @@ class TestContext {
             if (err) console.error(`${fileName} screenshot error: ${err}`.red);
         });
     }
+    
+    async showPerformanceMetrics()
+    {
+        const metrics = await this.Protocol.Performance.getMetrics();
+        console.log(`Performance Metrics: %O`, metrics);
+    }
 } 
 
 module.exports = TestContext;

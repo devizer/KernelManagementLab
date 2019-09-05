@@ -11,6 +11,8 @@ namespace NetBenchmarkLab
     {
         static void Main(string[] args)
         {
+            Environment.SetEnvironmentVariable("DUMPS_ARE_ENABLED", "True");
+            
             HellOfDictionary();
             
             ListServers.Run();
