@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using KernelManagementJam;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -147,6 +148,12 @@ namespace Universe.W3Top
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
+            });
+
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
+                Thread.Sleep(2000);
+                this.PreJitAspNet();
             });
 
         }

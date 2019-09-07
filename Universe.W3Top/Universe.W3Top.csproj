@@ -78,6 +78,7 @@
       <ProjectReference Include="..\KernelManagementJam\KernelManagementJam.csproj" />
       <ProjectReference Include="..\Universe.Dashboard.Agent\Universe.Dashboard.Agent.csproj" />
       <ProjectReference Include="..\Universe.Dashboard.DAL\Universe.Dashboard.DAL.csproj" />
+      <ProjectReference Include="..\Universe.HttpWaiter\Universe.HttpWaiter.csproj" />
     </ItemGroup>
 
 

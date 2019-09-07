@@ -34,6 +34,7 @@ namespace Universe.W3Top
             {
                 ICollection<string> addresses = webHost.ServerFeatures.Get<IServerAddressesFeature>().Addresses;
                 IpConfig.AddAddresses(addresses);
+                Console.WriteLine($"{addresses.Count} listening address(es): {string.Join(", ", addresses)}");
             }
             catch (Exception ex)
             {
