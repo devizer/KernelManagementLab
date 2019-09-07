@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonLab.Tests", "JsonLab.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBenchmarkLab", "NetBenchmarkLab\NetBenchmarkLab.csproj", "{E0549F6B-BE3D-4E07-97E4-74E6B204B428}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.HttpWaiter", "Universe.HttpWaiter\Universe.HttpWaiter.csproj", "{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,14 @@ Global
 		{E0549F6B-BE3D-4E07-97E4-74E6B204B428}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0549F6B-BE3D-4E07-97E4-74E6B204B428}.Release|x86.ActiveCfg = Release|Any CPU
 		{E0549F6B-BE3D-4E07-97E4-74E6B204B428}.Release|x86.Build.0 = Release|Any CPU
+		{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}.Debug|x86.Build.0 = Debug|Any CPU
+		{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}.Release|x86.ActiveCfg = Release|Any CPU
+		{D47E3EE2-677C-432E-8E27-AB78AF93D1EF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
