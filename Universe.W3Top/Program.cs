@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Universe.Dashboard.Agent;
 
 namespace Universe.W3Top
@@ -27,6 +29,17 @@ namespace Universe.W3Top
             JitCrossInfo();
             CheckCompliance();
             var webHost = CreateWebHostBuilder(args).Build();
+            
+            try
+            {
+                ICollection<string> addresses = webHost.ServerFeatures.Get<IServerAddressesFeature>().Addresses;
+                IpConfig.AddAddresses(addresses);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops. Unable to obtain actual addresses for http[s]-server. {ex.GetExceptionDigest()}");
+            }
+
 
             PreciseTimer.Services = webHost.Services;
             NetStatTimer.Process();
