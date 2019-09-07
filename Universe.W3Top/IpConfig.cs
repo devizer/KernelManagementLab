@@ -15,7 +15,7 @@ namespace Universe.W3Top
             SortBySecurity();
         }
 
-        public static void SortBySecurity()
+        /* public */ static void SortBySecurity()
         {
             var copy = Addresses.OrderBy(x => x.StartsWith("http://") ? 0 : 1).ToArray();
             Addresses.Clear();
