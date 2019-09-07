@@ -10,20 +10,17 @@ namespace Universe.W3Top
 
         public static void AddAddresses(IEnumerable<string> addresses)
         {
-            Func<string, string> trans = x => x
+            Func<string, int> orderBy = x => x.StartsWith("http://") ? 0 : 1;
+            Addresses.AddRange(addresses.Select(Translate).OrderBy(orderBy));
+        }
+
+        static string Translate(string x)
+        {
+            return x
                 .Replace("://+", "://localhost")
                 .Replace("://0.0.0.0", "://localhost")
                 .Replace("://[::]", "://localhost");
-            
-            Addresses.AddRange(addresses.Select(trans));
-            SortBySecurity();
         }
 
-        /* public */ static void SortBySecurity()
-        {
-            var copy = Addresses.OrderBy(x => x.StartsWith("http://") ? 0 : 1).ToArray();
-            Addresses.Clear();
-            Addresses.AddRange(copy);
-        }
     }
 }

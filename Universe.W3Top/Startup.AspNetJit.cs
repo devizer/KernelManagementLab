@@ -34,7 +34,7 @@ namespace Universe.W3Top
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine($"Warning! Pre-JIT [{req}] failed. " + ex.GetExceptionDigest());
+                    Console.WriteLine($"Warning! Optional Pre-JIT [{req}] failed. " + ex.GetExceptionDigest());
                 }
 
             });
