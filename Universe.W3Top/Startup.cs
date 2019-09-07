@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using KernelManagementJam;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Timeout;
 using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
 
@@ -152,9 +158,47 @@ namespace Universe.W3Top
 
             ThreadPool.QueueUserWorkItem(_ =>
             {
-                Thread.Sleep(42000);
+                // Thread.Sleep(42000);
+                var urlBase = "http://localhost:5050";
+                if (IpConfig.Addresses.Any()) urlBase = IpConfig.Addresses.First();
+                Uri uri = new Uri(urlBase);
+                var server = uri.Host;
+                var port = uri.Port;
+                WaitForTcp.Run(server, port, 30);
                 this.PreJitAspNet();
             });
+
+        }
+    }
+
+    class WaitForTcp
+    {
+        public static bool Run(string server, int port, int timeout)
+        {
+            Console.WriteLine($"Waiting for {server}:{port}");
+            Stopwatch sw = Stopwatch.StartNew();
+            do
+            {
+                try
+                {
+                    TcpClient client = new TcpClient();
+                    using (client)
+                    {
+                        client.Connect(server, port);
+                        Console.WriteLine(
+                            $"TCP connection to {server}:{port} is available in {sw.ElapsedMilliseconds:n0} milliseconds");
+                        return true;
+                    }
+                }
+                catch
+                {
+                    Thread.Sleep(42);
+                }
+
+            } while (sw.ElapsedMilliseconds <= timeout * 1000);
+            
+            Console.WriteLine($"TCP connection to {server}:{port} is NOT available during {sw.ElapsedMilliseconds:n0} milliseconds");
+            return false;
 
         }
     }
