@@ -10,7 +10,11 @@ namespace Universe.W3Top
 
         public static void AddAddresses(IEnumerable<string> addresses)
         {
-            Func<string, string> trans = x => x.Replace("://+", "://localhost").Replace("://0.0.0.0", "://localhost");
+            Func<string, string> trans = x => x
+                .Replace("://+", "://localhost")
+                .Replace("://0.0.0.0", "://localhost")
+                .Replace("://[::]", "://localhost");
+            
             Addresses.AddRange(addresses.Select(trans));
             SortBySecurity();
         }
