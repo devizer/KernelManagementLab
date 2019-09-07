@@ -152,7 +152,7 @@ namespace Universe.W3Top
 
             ThreadPool.QueueUserWorkItem(_ =>
             {
-                Thread.Sleep(18000);
+                Thread.Sleep(42000);
                 this.PreJitAspNet();
             });
 
