@@ -25,6 +25,7 @@ namespace Universe.W3Top
 
             Parallel.ForEach(reqs, (req) =>
             {
+                Stopwatch swFail = Stopwatch.StartNew();
                 try
                 {
                     double[] durations = new double[2]; 
@@ -39,7 +40,7 @@ namespace Universe.W3Top
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine($"Warning! Optional Pre-JIT [{req}] failed. " + ex.GetExceptionDigest());
+                    Console.WriteLine($"Warning! Optional Pre-JIT [{req}] failed ({swFail.ElapsedMilliseconds:n1} msec). " + ex.GetExceptionDigest());
                 }
 
             });
