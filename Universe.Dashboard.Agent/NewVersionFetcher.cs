@@ -27,7 +27,7 @@ namespace Universe.Dashboard.Agent
                     FirstRoundDone.Set();
                     waitDurationOnFail = isOk ? 1 : Math.Min(60, waitDurationOnFail * 2);
                     var sleepDuration = isOk ? 5*60 : waitDurationOnFail;
-                    PreciseTimer.Shutdown.WaitOne(sleepDuration*1000);
+                    PreciseTimer.Shutdown.WaitOne(sleepDuration * 1000);
                 }
             }) { IsBackground = true, Name = "New Version Fetcher"};
             
@@ -44,6 +44,7 @@ namespace Universe.Dashboard.Agent
                     handler.AllowAutoRedirect = true;
                     handler.ServerCertificateCustomValidationCallback += (message, certificate2, chain, error) =>
                     {
+                        // ca-certificates package may be too old or malformed 
                         return true;
                     };
 
