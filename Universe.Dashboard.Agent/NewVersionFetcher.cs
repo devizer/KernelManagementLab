@@ -9,8 +9,7 @@ namespace Universe.Dashboard.Agent
 {
     public class NewVersionFetcher
     {
-        public static readonly string Url =
-            "https://raw.githubusercontent.com/devizer/w3top-bin/master/public/version.json";
+        public static readonly string Url = "https://raw.githubusercontent.com/devizer/w3top-bin/master/public/version.json";
         
         static ManualResetEvent FirstRoundDone = new ManualResetEvent(false);
 
@@ -42,7 +41,7 @@ namespace Universe.Dashboard.Agent
                 using (HttpClient httpClient = new HttpClient(handler))
                 {
                     handler.AllowAutoRedirect = true;
-                    handler.ServerCertificateCustomValidationCallback += (message, certificate2, chain, error) =>
+                    handler.ServerCertificateCustomValidationCallback += (message, certificate, chain, error) =>
                     {
                         // ca-certificates package may be too old or malformed 
                         return true;

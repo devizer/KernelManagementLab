@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using KernelManagementJam;
-using Polly;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 
@@ -12,13 +10,15 @@ namespace Universe.Dashboard.Agent
     // Threadsafe, deterministic order
     public class DiskBenchmarkQueue
     {
-        public class DiskBenchmarkWithToken
+        // private queue element
+        private class DiskBenchmarkWithToken
         {
             public Guid Token;
             public IDiskBenchmark Benchmark;
             public DiskbenchmarkEnvironment Environment;
         }
 
+        // for progress visualization
         public class EnlistedDiskBenchmark
         {
             // 0: InProgress, >0: Pending, <0: not found 
@@ -27,6 +27,7 @@ namespace Universe.Dashboard.Agent
             public IDiskBenchmark Benchmark;
             public DiskbenchmarkEnvironment Environment;
         }
+        
         private readonly Func<DashboardContext> GetDbContext;
         private List<DiskBenchmarkWithToken> Queue = new List<DiskBenchmarkWithToken>();
         private readonly object SyncQueue = new Object(); 
@@ -144,7 +145,7 @@ namespace Universe.Dashboard.Agent
                                 DbResilience.ExecuteWriting(
                                     "Save DiskBenchmark History", 
                                     () => db.SaveChanges(),
-                                    totalMilliseconds: 3000,
+                                    totalMilliseconds: 15000,
                                     retryCount: 9999999);
                             }
                         }
@@ -155,7 +156,7 @@ namespace Universe.Dashboard.Agent
                     }
                 }
 
-                WaitHandle.WaitAll(new[] {(WaitHandle)Waiter, PreciseTimer.Shutdown}, 499);
+                WaitHandle.WaitAny(new[] {(WaitHandle)Waiter, PreciseTimer.Shutdown}, 499);
             }
         }
     }
