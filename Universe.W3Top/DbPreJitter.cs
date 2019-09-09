@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using KernelManagementJam;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
@@ -49,6 +50,8 @@ namespace Universe.W3Top
 
                 db.DiskBenchmark.Remove(copy1);
                 db.SaveChanges();
+
+                benchmarkDA.GetHistory().Select(x => x.ToHistoryItem()).ToList();
             }
             
         }
