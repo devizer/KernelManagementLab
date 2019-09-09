@@ -148,15 +148,15 @@ const netStatTest = async(context) => {
 
 
 let pages = [
-    { url:'/disk-benchmark', width: 1180, height: 768, fileName:"disk-benchmark-progress", tests: [diskBenchmarkFullTest] },
     { url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart", tests: [commonTest, netStatTest] },
-    { url:'/not-found-404', width: 560, height: 440, fileName:"[404]", tests: [commonTest] },
+    { url:`/`,      width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
+    { url:`/`,      width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
+    { url:'/disk-benchmark', width: 1180, height: 768, fileName:"disk-benchmark-progress", tests: [diskBenchmarkFullTest] },
     { url:`/mounts`, width: 1024, height: 600, fileName:"mounts", tests: [commonTest] },
     { url:'/disk-benchmark',         width: 1180, height: 620, fileName:"disk-benchmark-start", tests: [commonTest] },
     { url:'/disk-benchmark?history', width: 1180, height: 620, fileName:"disk-benchmark-history", tests: [commonTest] },
     { url:'/disks', width: 570, height: 800, fileName:"disk-live-chart", tests: [commonTest] },
-    { url:`/`,      width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
-    { url:`/`,      width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
+    { url:'/not-found-404', width: 560, height: 440, fileName:"[404]", tests: [commonTest] },
 ];
 
 // pages = [pages[0]]; 
