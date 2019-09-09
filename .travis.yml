@@ -30,6 +30,7 @@ before_script:
   echo "Build Started"
 - |
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    echo w3top-build-server | sudo tee -a /etc/hosts
     sudo hostname w3top-build-server
     cat /etc/hosts || true
   fi
