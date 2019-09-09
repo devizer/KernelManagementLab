@@ -80,6 +80,7 @@ namespace Universe.W3Top.Controllers
             var enlistedBenchmark = Queue.Find(benchmarkToken);
             if (enlistedBenchmark.Index >= 0)
             {
+                // incomplete
                 var progress = enlistedBenchmark.Benchmark.Progress.Clone();
                 if (enlistedBenchmark.Index > 0)
                 {
@@ -102,6 +103,7 @@ namespace Universe.W3Top.Controllers
 
             else
             {
+                // archived
                 DiskBenchmarkDataAccess.DiskBenchmarkResult benchmarkResult = DbAccess.GetDiskBenchmarkResult(benchmarkToken);
                 return new BenchmarkProgressResponse()
                 {
