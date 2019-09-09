@@ -25,8 +25,6 @@ namespace Tests
             Environment.SetEnvironmentVariable("SKIP_FLUSHING", "true");
             
             DashboardContext context = arg.GetDashboardContext();
-            Console.WriteLine($"Provider: [{context.Database.ProviderName}]");
-            Console.WriteLine($"Connection String: [{context.Database.GetDbConnection().ConnectionString}]");
             DiskBenchmark b = new DiskBenchmark(".", 128*1024,DataGeneratorFlavour.Random, 4096, 1);
             b.Perform();
             var entity = new DiskBenchmarkEntity()
@@ -80,8 +78,7 @@ namespace Tests
                 Console.WriteLine($@"Arg.Family: ............... {arg.Family}
 Arg.Provider .............. [{db.Database.ProviderName}]
 Arg.DB.ConnectionString ... [{connection.ConnectionString}]
-Arg.DB.SelectVersion() .... [{db.Database.GetShortVersion()}]
-");
+Arg.DB.SelectVersion() .... [{db.Database.GetShortVersion()}]");
             }
         }
 

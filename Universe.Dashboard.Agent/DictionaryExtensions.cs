@@ -14,6 +14,5 @@ namespace Universe.Dashboard.Agent
             dictionary.Add(key, ret);
             return ret;
         }
-        
     }
 }
