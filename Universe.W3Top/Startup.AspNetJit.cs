@@ -25,7 +25,8 @@ namespace Universe.W3Top
                 $"{urlBase}/api/benchmark/disk/get-disk-benchmark-progress-{Guid.NewGuid()}; Method=Post; Valid Status = 100-399",
             };
 
-            Parallel.ForEach(reqs, (req) =>
+            ParallelOptions po = new ParallelOptions() {MaxDegreeOfParallelism = 2};
+            Parallel.ForEach(reqs, po, (req) =>
             {
                 Stopwatch swFail = Stopwatch.StartNew();
                 try
