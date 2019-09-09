@@ -29,6 +29,11 @@ before_script:
   exec &> >(tee ~/build-artifacts/full-build-log.log); exec 2>&1
   echo "Build Started"
 - |
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    hostname w3top-build-server
+    cat /etc/hosts || true
+  fi
+- |
   if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
     sudo apt-get -f install
     sudo apt-get install libatk-bridge2.0-0 -y
