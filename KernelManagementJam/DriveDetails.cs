@@ -98,15 +98,15 @@ namespace KernelManagementJam
 
     public static class DriveDetailsExtensions
     {
-        private static readonly string[] ToSkip = new[] {"run", "sys", "dev"};
+        private static readonly string[] PathsToSkip = new[] {"/run", "/sys", "/dev"};
         private static readonly string[] DevicesToSkip = new[] {"shm", "overlay"};
 
         public static IEnumerable<DriveDetails> FilterForHuman(this IEnumerable<DriveDetails> list)
         {
             var filtered = list
                 .Where(x => x.TotalSize > 0)
-                .Where(x => !ToSkip.Any(skip =>
-                    x.MountEntry.MountPath == $"/{skip}" || x.MountEntry.MountPath.StartsWith($"/{skip}/")))
+                .Where(x => !PathsToSkip.Any(skip =>
+                    x.MountEntry.MountPath == $"{skip}" || x.MountEntry.MountPath.StartsWith($"{skip}/")))
                 .Where(x => !DevicesToSkip.Contains(x.MountEntry.Device))
                 .ToArray();
 

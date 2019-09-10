@@ -19,8 +19,10 @@ namespace Universe.W3Top
             {
                 $"{urlBase}/; Method=Get; Valid Status = 100-399",
                 $"{urlBase}/manifest.json; Method=Get; Valid Status = 100-399",
+                
                 $"{urlBase}/api/BriefInfo; Method=Get; Valid Status = 100-399",
                 $"{urlBase}/api/benchmark/disk/get-disks; Method=Get; Valid Status = 100-399",
+                
                 $"{urlBase}/api/benchmark/disk/get-disk-benchmark-history; Method=Post; Valid Status = 100-399",
                 $"{urlBase}/api/benchmark/disk/get-disk-benchmark-progress-{Guid.NewGuid()}; Method=Post; Valid Status = 100-399",
             };
