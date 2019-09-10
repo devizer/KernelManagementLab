@@ -156,7 +156,6 @@ namespace Universe.W3Top
 
             ThreadPool.QueueUserWorkItem(_ =>
             {
-                // Thread.Sleep(42000);
                 var urlBase = "http://localhost:5050";
                 if (IpConfig.Addresses.Any()) urlBase = IpConfig.Addresses.First();
                 Uri uri = new Uri(urlBase);
