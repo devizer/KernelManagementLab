@@ -154,16 +154,14 @@ namespace Universe.W3Top
                 }
             });
 
-            ThreadPool.QueueUserWorkItem(_ =>
-            {
-                var urlBase = "http://localhost:5050";
-                if (IpConfig.Addresses.Any()) urlBase = IpConfig.Addresses.First();
-                Uri uri = new Uri(urlBase);
-                var server = uri.Host;
-                var port = uri.Port;
-                WaitForTcp.Run(server, port, 30);
-                this.PreJitAspNet();
-            });
+            var urlBase = IpConfig.Addresses.FirstOrDefault();
+            if (urlBase != null)
+                ThreadPool.QueueUserWorkItem(_ =>
+                {
+                    Uri uri = new Uri(urlBase);
+                    WaitForTcp.Run(uri.Host, uri.Port, 30);
+                    this.PreJitAspNet();
+                });
 
         }
     }

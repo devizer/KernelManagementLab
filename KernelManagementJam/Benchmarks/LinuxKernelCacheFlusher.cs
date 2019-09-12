@@ -6,6 +6,7 @@ namespace KernelManagementJam.Benchmarks
 {
     public class LinuxKernelCacheFlusher
     {
+        // skipping is used for integration tests only
         private static bool SkipFlushing => Environment.GetEnvironmentVariable("SKIP_FLUSHING") == "true";
         public static void Sync()
         {
