@@ -34,20 +34,6 @@ namespace Universe.HttpWaiter
 
             public bool HasKey { get; set; }
 
-            public bool IsValueTrue
-            {
-                get
-                {
-                    const StringComparison Ignore = StringComparison.OrdinalIgnoreCase;
-
-                    return Value != null &&
-                           ("True".Equals(Value, Ignore)
-                            || "On".Equals(Value, Ignore)
-                            || "Yes".Equals(Value, Ignore));
-                }
-
-            }
-
             public override string ToString()
             {
                 return $"{nameof(HasKey)}: {HasKey}, {nameof(Key)}: {Key}, {nameof(Value)}: {Value}";
@@ -147,7 +133,7 @@ namespace Universe.HttpWaiter
 
         public static bool GetFirstBool(this IEnumerable<ConnectionStringParser.Pair> pairs, string parameterName, bool defVal = false)
         {
-            return pairs.FirstOrDefault(x => parameterName.Equals(x.Key, Ignore))?.IsValueTrue ?? defVal;
+            return pairs.FirstOrDefault(x => parameterName.Equals(x.Key, Ignore))?.IsItTrue() ?? defVal;
         }
 
         public static int GetFirstInt(this IEnumerable<ConnectionStringParser.Pair> pairs, string parameterName, int defVal, int min = 0, int max = Int32.MaxValue)
@@ -169,6 +155,17 @@ namespace Universe.HttpWaiter
         {
             return pairs.FirstOrDefault(x => !x.HasKey && !string.IsNullOrWhiteSpace(x.Value))?.Value;
         }
+
+        public static bool IsItTrue(this ConnectionStringParser.Pair pair)
+        {
+            var v = pair.Value;
+            return v != null &&
+                   ("True".Equals(v, Ignore)
+                    || "On".Equals(v, Ignore)
+                    || "Yes".Equals(v, Ignore));
+
+        }
+
     }
 
 }

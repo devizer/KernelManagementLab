@@ -40,16 +40,7 @@ namespace KernelManagementJam.DebugUtils
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             };
 
-            DefaultContractResolver contractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new CamelCaseNamingStrategy
-                {
-                    OverrideSpecifiedNames = false,
-                    ProcessDictionaryKeys = true,
-                }
-            };
-
-            ser.ContractResolver = contractResolver;
+            ser.ContractResolver = TheContractResolver;
 
             StringBuilder json = new StringBuilder();
             StringWriter jwr = new StringWriter(json);
@@ -151,6 +142,13 @@ namespace KernelManagementJam.DebugUtils
             return ret;
         });
 
-
+        private static readonly DefaultContractResolver TheContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new CamelCaseNamingStrategy
+            {
+                OverrideSpecifiedNames = false,
+                ProcessDictionaryKeys = true,
+            }
+        };
     }
 }

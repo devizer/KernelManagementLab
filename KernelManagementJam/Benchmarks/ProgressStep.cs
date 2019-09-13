@@ -107,6 +107,9 @@ namespace Universe.DiskBench
                 Seconds = Seconds,
                 Name = Name,
                 CanHaveMetrics = CanHaveMetrics,
+                // ?
+                Value = Value,
+                Column = Column,
             };
         }
     }

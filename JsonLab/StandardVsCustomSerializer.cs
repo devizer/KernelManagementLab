@@ -38,6 +38,15 @@ namespace MyBenchmarks
 
         private long[] TheLongs = new[] { 0, 1L, 12L, 123L, 1234L, 12345678987654321L, -1L, -12L, -123L, -1234L, -12345678987654321L };
 
+        private static readonly DefaultContractResolver TheContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new CamelCaseNamingStrategy
+            {
+                OverrideSpecifiedNames = false,
+                ProcessDictionaryKeys = true,
+            }
+        };
+
         [GlobalSetup]
         public void Setup()
         {
@@ -76,21 +85,8 @@ namespace MyBenchmarks
                 Formatting = !Minify ? Formatting.Indented : Formatting.None,
             };
 
-            if (optionalConverter != null)
-                ser.Converters.Add(optionalConverter);
-
-/*
-            DefaultContractResolver contractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new CamelCaseNamingStrategy
-                {
-                    OverrideSpecifiedNames = false,
-                    ProcessDictionaryKeys = true,
-                }
-            };
-
-            ser.ContractResolver = contractResolver;
-*/
+            if (optionalConverter != null) ser.Converters.Add(optionalConverter);
+            ser.ContractResolver = TheContractResolver;
 
             StringBuilder json = new StringBuilder();
             StringWriter jwr = new StringWriter(json);
