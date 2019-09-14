@@ -12,6 +12,8 @@ const {performance, PerformanceObserver } = require('perf_hooks');
 let testIndex = 0;
 // return array of errors
 async function runTest (testCase, pageSpec, url) {
+    
+    const myScale = {scale: 3};
 
     testIndex++;
     const errors = [];
@@ -33,7 +35,7 @@ async function runTest (testCase, pageSpec, url) {
 
     async function launchChrome() {
         const chromeFlags = ['--disable-gpu', "--no-sandbox", "--enable-logging"];
-        if (process.env.TRAVIS !== undefined /*|| true*/) chromeFlags.push('--headless');
+        if (process.env.TRAVIS !== undefined || true) chromeFlags.push('--headless');
         return await chromeLauncher.launch({
             // chromePath: 'google-chrome',
             startingUrl: 'about:blank',
@@ -107,6 +109,14 @@ async function runTest (testCase, pageSpec, url) {
 
         await Promise.all([Page.enable(), Runtime.enable(), DOM.enable(), Network.enable()]);
         context = new TestContext(protocol, pageSpec, errors);
+
+        await context.Protocol.Emulation.setDeviceMetricsOverride({
+            width: 0 /*pageSpec.width * myScale.scale*/,
+            height: 0 /*pageSpec.height * myScale.scale*/,
+            deviceScaleFactor: myScale.scale,
+            mobile: true,
+        });
+        
         if (pageSpec.width && pageSpec.height)
             await context.setWindowSize(pageSpec.width, pageSpec.height);
         

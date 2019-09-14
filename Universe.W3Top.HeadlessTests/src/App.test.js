@@ -1,6 +1,9 @@
 #!/usr/bin/env node 
 const runTest = require("./TestLauncher");
 var colors = require('colors');
+var devicesDictionary = require('./DevicesDictionary');
+
+console.log(devicesDictionary.asString(true));
 
 let w3topUrl = process.env.W3TOP_APP_URL || "http://localhost:5010/";
 w3topUrl = w3topUrl.replace(new RegExp("[/]+$"), "");
