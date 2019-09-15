@@ -234,19 +234,20 @@ devicesDictionary.map(d => {
 
 devicesDictionary.asString = (colorful) => {
     const ret = [];
-    for(const d of devicesDictionary) {
-        const vals = [
-            d.name.padEnd(maxLength),
-            `${d.width}*${d.height}`.padEnd(12),
-            `${d.scale}`
-        ];
-        if (colorful) {
-            vals[0] = vals[0].yellow;
-            vals[1] = vals[1].green;
-            vals[2] = vals[2].green.bold;
-        }
+    const nop = x => x;
+    let t1 = colorful ? colors.yellow : nop,
+        t2 = colorful ? colors.green : nop,
+        t3 = colorful ? colors.magenta : nop;
         
-        ret.push(`${vals[0]} ${vals[1]} ${vals[2]}`);
+    for(const d of devicesDictionary) {
+
+        let vals = [
+            t1(d.name.padEnd(maxLength)),
+            t2(`${d.width}*${d.height}`.padEnd(12)),
+            t3(`${d.scale}`)
+        ];
+
+        ret.push(vals.join(' '));
     }
     
     return ret.join('\n');
