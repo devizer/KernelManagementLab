@@ -35,7 +35,7 @@ export class DiskBenchmarkHistory extends React.Component {
     }
     
     historyProjection(history) {
-        history.map(bechmark => {
+        history.forEach(bechmark => {
             let mo = MomentFormat(bechmark.createdAt);
             bechmark.createdDate = mo.format("MMM DD, YYYY");
         })

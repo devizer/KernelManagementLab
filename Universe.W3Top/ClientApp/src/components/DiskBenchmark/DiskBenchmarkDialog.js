@@ -130,7 +130,7 @@ const defaultOptions = {
 const validateOptions = (options) => {
     options.errors = {isValid: true};
     const numberFields = ["workingSet", "randomAccessDuration", "blockSize", "threads"];
-    numberFields.map(name => {
+    numberFields.forEach(name => {
         let errorText = Helper.Numbers.isInt(options[name]) && Helper.Numbers.greaterOrEqual(options[name],1)
             ? null
             : "Should be a valid number";

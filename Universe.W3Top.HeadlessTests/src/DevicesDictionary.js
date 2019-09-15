@@ -221,35 +221,35 @@ const devicesDictionary = [
     }
 ];
 
-devicesDictionary.map(x => {
-    x.width = Number(x.width);
-    x.height = Number(x.height);
-    x.scale = Number(x.scale);
+devicesDictionary.forEach(device => {
+    device.width = Number(device.width);
+    device.height = Number(device.height);
+    device.scale = Number(device.scale);
 });
 
 let maxLength = 0;
-devicesDictionary.map(d => {
+devicesDictionary.forEach(d => {
     maxLength = Math.max(maxLength, d.name.length);
 });
 
 devicesDictionary.asString = (colorful) => {
-    const ret = [];
     const nop = x => x;
     let t1 = colorful ? colors.yellow : nop,
         t2 = colorful ? colors.green : nop,
         t3 = colorful ? colors.magenta : nop;
-        
-    for(const d of devicesDictionary) {
+
+    const ret = [];
+    for(const device of devicesDictionary) {
 
         let vals = [
-            t1(d.name.padEnd(maxLength)),
-            t2(`${d.width}*${d.height}`.padEnd(12)),
-            t3(`${d.scale}`)
+            t1(device.name.padEnd(maxLength)),
+            t2(`${device.width}*${device.height}`.padEnd(12)),
+            t3(`${device.scale}`)
         ];
 
         ret.push(vals.join(' '));
     }
-    
+
     return ret.join('\n');
 };
 
