@@ -6,6 +6,12 @@ dotnet test -v:m -c Release
 
 exit;
 
+cd bin/Release/netcoreapp*/bin
+mkdir -p ~/build-artifacts
+cp -r * ~/build-artifacts
+
+exit;
+
 count=5
 names=("mysql-5.1" "mysql-5.5" "mysql-5.6" "mysql-5.7" "mysql-8.0")
 MYSQL_ROOT_PASSWORD=pass
