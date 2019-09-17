@@ -67,6 +67,14 @@ namespace Universe.Dashboard.DAL.Tests
                             MySqlDumper.Dump(dbConnectionString, $"bin/Databases/MySQL-{shortVer}.sql");
                         });
                     }
+
+                    if (provider4Tests.Provider4Runtime.Family == EF.Family.PgSql)
+                    {
+                        GlobalCleanUp.Enqueue($"Dump {artifact}", () =>
+                        {
+                            PgSqlDumper.Dump(dbConnectionString, $"bin/Databases/PgSQL-{shortVer}.sql");
+                        });
+                    }
                     
                     GlobalCleanUp.Enqueue($"Delete {artifact}", () => { provider4Tests.DropDatabase(serverConnectionString, dbName); });
 

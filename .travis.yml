@@ -32,7 +32,6 @@ before_script:
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     echo "127.0.0.1 w3top-build-server" | sudo tee -a /etc/hosts
     sudo hostname w3top-build-server
-    cat /etc/hosts || true
   fi
 - |
   if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
@@ -79,6 +78,8 @@ script:
     sudo apt-get install jq pv mysql-client postgresql-client pigz -y 
     ruby --version || true; gem --version || true
     mysql --version
+    pg_dump --version; pg_dump --help
+    true
   fi;
   echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
   # - time gem search dpl | grep  -E '^dpl' | sort || true;
