@@ -11,7 +11,7 @@ using SpeedTest.Models;
 
 namespace SpeedTest
 {
-    public class AdvancedSpeedTestClient : ISpeedTestClient
+    public class AdvancedSpeedTestClient 
     {
         private const string ConfigUrl = "http://www.speedtest.net/speedtest-config.php";
 
@@ -88,6 +88,50 @@ namespace SpeedTest
                     try
                     {
                         timer.Start();
+                        testString = client.GetStringAsync(latencyUri).ConfigureAwait(false).GetAwaiter().GetResult();
+                    }
+                    catch (WebException)
+                    {
+                        continue;
+                    }
+                    finally
+                    {
+                        timer.Stop();    
+                    }
+
+                    if (!testString.StartsWith("test=test"))
+                    {
+                        throw new InvalidOperationException("Server returned incorrect test string for latency.txt");
+                    }
+                }
+            }
+
+            return (int)timer.ElapsedMilliseconds / retryCount;
+        }
+
+        /// <summary>
+        /// Test latency (ping) to server
+        /// </summary>
+        /// <returns>Latency in milliseconds (ms)</returns>
+        public int TestServerCorrectLatency(Server server, int retryCount = 3)
+        {
+            var latencyUri = CreateTestUrl(server, "latency.txt");
+            var timer = new Stopwatch();
+
+            using (var client = new AdvancedSpeedTestHttpClient())
+            {
+                client.Timeout = TimeSpan.FromSeconds(4);
+                for (var i = 0; i < retryCount; i++)
+                {
+                    string testString;
+                    try
+                    {
+                        timer.Start();
+                        testString = client.GetStringAsync(latencyUri).ConfigureAwait(false).GetAwaiter().GetResult();
+                        if (!testString.StartsWith("test=test"))
+                            continue;
+                        
+                        timer.Restart();
                         testString = client.GetStringAsync(latencyUri).ConfigureAwait(false).GetAwaiter().GetResult();
                     }
                     catch (WebException)

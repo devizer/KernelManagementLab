@@ -168,6 +168,7 @@ function DiskBenchmarkDialog(props) {
 
 
     React.useEffect(() => {
+        // on hide disks are nullified
         if (disks === null) initDisksSource();
     });
 
@@ -336,25 +337,28 @@ function DiskBenchmarkDialog(props) {
         //setSelectedDisk(null);
         //setActiveStep(0);
     }
+    
+    function notifyCancelDiskBenchmark()
+    {
+        try {
+            let apiUrl = `api/benchmark/disk/cancel-disk-benchmark-${token}`;
+            fetch(apiUrl, {method: "POST"})
+                .then(response => {
+                    Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    return response.ok ? response.json() : {error: response.status, details: response}
+                })
+                .then(data => {
+                    // nothing to do
+                })
+                .catch(error => Helper.log(error));
+        } catch (err) {
+            console.error('FETCH failed. ' + err);
+        }
+    }
 
     function handleCancel() {
         setOpen(false);
-        if (token) {
-            try {
-                let apiUrl = `api/benchmark/disk/cancel-disk-benchmark-${token}`;
-                fetch(apiUrl, {method: "POST"})
-                    .then(response => {
-                        Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                        return response.ok ? response.json() : {error: response.status, details: response}
-                    })
-                    .then(disks => {
-                        // nothing to do
-                    })
-                    .catch(error => Helper.log(error));
-            } catch (err) {
-                console.error('FETCH failed. ' + err);
-            }
-        }
+        if (token) notifyCancelDiskBenchmark();
     }
 
 

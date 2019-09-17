@@ -38,13 +38,13 @@ public class GlobalCleanUp
                 {
                     action();
                     counter = Interlocked.Increment(ref Counter);
-                    Console.WriteLine($"[Cleanup] #{counter,2} OK: {title} in {sw.ElapsedMilliseconds:n0} msec");
+                    Console.WriteLine($"[Cleanup] {("#"+counter),3} OK: {title} in {sw.ElapsedMilliseconds:n0} msec");
                 }
                 catch (Exception ex)
                 {
                     counter = Interlocked.Increment(ref Counter);
                     Console.WriteLine(
-                        $"[Cleanup] #{counter} FAIL: {title} in {sw.ElapsedMilliseconds:n0} msec. {ex.GetExceptionDigest()}");
+                        $"[Cleanup] {("#"+counter),3} FAIL: {title} in {sw.ElapsedMilliseconds:n0} msec. {ex.GetExceptionDigest()}");
                 }
             });
         }

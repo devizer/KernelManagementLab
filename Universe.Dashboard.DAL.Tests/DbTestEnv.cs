@@ -6,7 +6,6 @@ using System.Threading;
 using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using MySql.Data.MySqlClient;
 using Npgsql;
 using Tests;
 using Universe.Dashboard.DAL.MultiProvider;
@@ -61,6 +60,14 @@ namespace Universe.Dashboard.DAL.Tests
                         return new DashboardContext(optionsBuilder.Options);
                     };
 
+                    if (provider4Tests.Provider4Runtime.Family == EF.Family.MySql)
+                    {
+                        GlobalCleanUp.Enqueue($"Dump {artifact}", () =>
+                        {
+                            MySqlDumper.Dump(dbConnectionString, $"bin/Databases/MySQL-{shortVer}.sql");
+                        });
+                    }
+                    
                     GlobalCleanUp.Enqueue($"Delete {artifact}", () => { provider4Tests.DropDatabase(serverConnectionString, dbName); });
 
                     var db = newDbContext(dbConnectionString);
@@ -125,5 +132,6 @@ namespace Universe.Dashboard.DAL.Tests
             DashboardContext ret = new DashboardContext(dbContextOptionsBuilder.Options);
             return ret;
         }
+
     }
 }

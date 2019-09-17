@@ -234,17 +234,17 @@ devicesDictionary.forEach(d => {
 
 devicesDictionary.asString = (colorful) => {
     const nop = x => x;
-    let t1 = colorful ? colors.yellow : nop,
-        t2 = colorful ? colors.green : nop,
-        t3 = colorful ? colors.magenta : nop;
+    let colorize1 = colorful ? colors.yellow : nop,
+        colorize2 = colorful ? colors.green : nop,
+        colorize3 = colorful ? colors.magenta : nop;
 
     const ret = [];
     for(const device of devicesDictionary) {
 
         let vals = [
-            t1(device.name.padEnd(maxLength)),
-            t2(`${device.width}*${device.height}`.padEnd(12)),
-            t3(`${device.scale}`)
+            colorize1(device.name.padEnd(maxLength)),
+            colorize2(`${device.width}*${device.height}`.padEnd(12)),
+            colorize3(`${device.scale}`)
         ];
 
         ret.push(vals.join(' '));
