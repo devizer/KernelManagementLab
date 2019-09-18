@@ -20,7 +20,7 @@ namespace NetBenchmarkLab
                 return $"{server.Sponsor} ({server.Country}) {server.Name} {{{server.Distance/1000:n0} km}}";
             }
 
-            var servers = settings.Servers.Take(999).ToArray();
+            var servers = settings.Servers.Take(9999).ToArray();
             int len = servers.Select(x => GetTitle(x).Length).Max();
             // Console.WriteLine($"Server: {server.Name}");
             for (int i = 0; i < servers.Length; i++)
