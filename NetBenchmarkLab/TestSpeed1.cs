@@ -34,7 +34,7 @@ namespace NetBenchmarkLab
                         Stopwatch sw = Stopwatch.StartNew();
                         var latency = client.TestServerLatency(servers[i], retryCount: 1);
                         var latency2 = client.TestServerCorrectLatency(servers[i], 1);
-                        Console.Write($" {latency+"/" + latency2,9}");
+                        Console.Write($" {latency.ToString("f0")+"/" + latency2.ToString("f2"),13}");
 
                         
                     }

@@ -74,7 +74,7 @@ namespace SpeedTest
         /// Test latency (ping) to server
         /// </summary>
         /// <returns>Latency in milliseconds (ms)</returns>
-        public int TestServerLatency(Server server, int retryCount = 3)
+        public double TestServerLatency(Server server, int retryCount = 3)
         {
             var latencyUri = CreateTestUrl(server, "latency.txt");
             var timer = new Stopwatch();
@@ -106,14 +106,14 @@ namespace SpeedTest
                 }
             }
 
-            return (int)timer.ElapsedMilliseconds / retryCount;
+            return timer.ElapsedTicks * 1000d / retryCount / Stopwatch.Frequency;
         }
 
         /// <summary>
         /// Test latency (ping) to server
         /// </summary>
         /// <returns>Latency in milliseconds (ms)</returns>
-        public int TestServerCorrectLatency(Server server, int retryCount = 3)
+        public double TestServerCorrectLatency(Server server, int retryCount = 3)
         {
             var latencyUri = CreateTestUrl(server, "latency.txt");
             var timer = new Stopwatch();
@@ -150,7 +150,7 @@ namespace SpeedTest
                 }
             }
 
-            return (int)timer.ElapsedMilliseconds / retryCount;
+            return timer.ElapsedTicks *1000d / retryCount / Stopwatch.Frequency;
         }
 
         /// <summary>
