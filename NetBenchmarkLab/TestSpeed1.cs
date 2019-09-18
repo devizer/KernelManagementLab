@@ -33,7 +33,10 @@ namespace NetBenchmarkLab
                     {
                         Stopwatch sw = Stopwatch.StartNew();
                         var latency = client.TestServerLatency(servers[i], retryCount: 1);
-                        Console.Write($" {latency,5}");
+                        var latency2 = client.TestServerCorrectLatency(servers[i], 1);
+                        Console.Write($" {latency+"/" + latency2,9}");
+
+                        
                     }
                 }
                 catch (Exception ex)

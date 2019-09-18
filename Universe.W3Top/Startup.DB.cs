@@ -13,6 +13,7 @@ namespace Universe.W3Top
         {
             var runtimeParameters = DashboardContextOptionsFactory.RuntimeParameters;
             IProvider4Runtime provider = DashboardContextOptionsFactory.Family.GetProvider();
+            // Prevent start if connection string is malformed.
             provider.ValidateConnectionString(runtimeParameters.ConnectionString);
             
             using (StopwatchLog.ToConsole($"Create/Upgrade {runtimeParameters.Family} DB Structure"))

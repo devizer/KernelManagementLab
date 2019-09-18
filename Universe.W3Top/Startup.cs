@@ -98,6 +98,7 @@ namespace Universe.W3Top
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             app.UseMiddleware<PreventSpaHtmlCachingMiddleware>();
+            
             if (!env.IsProduction())
                 app.UseMiddleware<KillerMiddleware>();
             
