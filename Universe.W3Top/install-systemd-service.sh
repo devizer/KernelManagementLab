@@ -6,7 +6,7 @@ pushd `dirname $0` > /dev/null; ScriptPath=`pwd`; popd > /dev/null
 
 if [[ ! -f "$ScriptPath/Universe.W3Top" ]]; then echo ERROR: publish the project first; exit 1; fi
 HTTP_PORT="${HTTP_PORT:-5050}"
-HTTP_HOST="${HTTP_PORT:-0.0.0.0}"
+HTTP_HOST="${HTTP_HOST:-0.0.0.0}"
 RESPONSE_COMPRESSION="${RESPONSE_COMPRESSION:-True}"
 MYSQL_DATABASE_ESCAPED="${MYSQL_DATABASE:-}"
 PGSQL_DATABASE_ESCAPED="${PGSQL_DATABASE:-}"
