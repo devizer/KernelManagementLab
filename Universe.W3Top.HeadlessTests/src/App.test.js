@@ -169,6 +169,9 @@ const totalErrors = [];
     for(let page of pages)
     for(let testCase of page.tests)
     {
+        // TODO:
+        // for desktop we need 100%,125%, 150%, 200%, 300% pixel scale ratio
+        // for mobile we should change browser size 
         let errors = await runTest(testCase, page, `${w3topUrl}${page.url}`);
         totalErrors.push(...errors);
         console.log('');
