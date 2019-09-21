@@ -11,7 +11,7 @@ namespace Universe.Dashboard.DAL.Tests
         {
             MySqlConnectionStringBuilder b = new MySqlConnectionStringBuilder(connectionString);
             // MYSQL_PWD=\"$MYSQL_ROOT_PASSWORD\" mysqldump --protocol=TCP -h localhost -u root -P 3306 mysql
-            ProcessStartInfo si = new ProcessStartInfo("mysqldump", $"--protocol=TCP -h \"{b.Server}\" -u \"{b.UserID}\" -P {b.Port} \"{b.Database}\"");
+            ProcessStartInfo si = new ProcessStartInfo("mysqldump", $"--hex-blob --protocol=TCP -h \"{b.Server}\" -u \"{b.UserID}\" -P {b.Port} \"{b.Database}\"");
             si.Environment["MYSQL_PWD"] = b.Password;
             si.RedirectStandardOutput = true;
             string content;

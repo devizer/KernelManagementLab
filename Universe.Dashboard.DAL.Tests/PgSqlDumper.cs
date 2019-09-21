@@ -12,7 +12,7 @@ namespace Universe.Dashboard.DAL.Tests
         public static void Dump(string connectionString, string fileName)
         {
             NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
-            ProcessStartInfo si = new ProcessStartInfo("pg_dump", $"-h \"{b.Host}\" -U \"{b.Username}\" -p {b.Port} \"{b.Database}\"");
+            ProcessStartInfo si = new ProcessStartInfo("pg_dump", $"--inserts -h \"{b.Host}\" -U \"{b.Username}\" -p {b.Port} \"{b.Database}\"");
             si.Environment["PGPASSWORD"] = b.Password;
             si.RedirectStandardOutput = true;
             string content;
