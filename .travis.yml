@@ -125,6 +125,7 @@ script:
       http://localhost:5050/api/benchmark/disk/start-disk-benchmark
 
   sleep 40
+  echo ""
   cat ~/build-artifacts/w3top-server-for-integration-tests.log
   popd
   
