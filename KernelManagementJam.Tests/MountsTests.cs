@@ -20,7 +20,6 @@ namespace KernelManagementJam.Tests
                 return;
             }
             
-            
             IList<MountEntry> mounts = ProcMountsParser.Parse("/proc/mounts").Entries;
             var root1 = mounts.FirstOrDefault(x => x.MountPath == "/");
             Assert.IsNotNull(root1, "ProcMountsParser.Parse: MountPath == '/' exists");
