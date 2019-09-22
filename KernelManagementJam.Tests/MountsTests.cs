@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using KernelManagementJam.DebugUtils;
 using NUnit.Framework;
@@ -13,9 +14,9 @@ namespace KernelManagementJam.Tests
         public void Root_FileSystem_Exists()
         {
             bool isLinux = Environment.OSVersion.Platform == PlatformID.Unix;
-            if (!isLinux)
+            if (!isLinux || !File.Exists("/proc/mounts"))
             {
-                Console.WriteLine("Warning! Test Ignored. Linux is required");
+                Console.WriteLine("Warning! Test Ignored. Linux and the /proc/mounts file are required");
                 return;
             }
             
