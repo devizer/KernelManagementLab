@@ -25,6 +25,8 @@ say "Loading w3top-bin working copy"
 if [ -n "${SKIP_GIT_PUSH:-}" ]; then w3topBinRepo=https://github.com/devizer/w3top-bin; else w3topBinRepo=git@github.com:devizer/w3top-bin; fi
 git clone ${w3topBinRepo} $clone
 
+
+
 work=$work/publish/KernelManagementLab;
 say "Loading source to [$work]"
 # work=/mnt/ftp-client/KernelManagementLab;
@@ -33,6 +35,7 @@ cd $(dirname $work);
 rm -rf $work;
 git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
+upgrade-2-to-3
 root=$(pwd)
 # repo root
 cd Universe.W3Top
