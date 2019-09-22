@@ -4,11 +4,12 @@ using System.IO;
 using System.Linq;
 using KernelManagementJam.DebugUtils;
 using NUnit.Framework;
+using Tests;
 
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class MountsTests
+    public class MountsTests : NUnitTestsBase
     {
         [Test]
         public void Root_FileSystem_Exists()

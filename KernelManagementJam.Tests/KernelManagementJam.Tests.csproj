@@ -16,6 +16,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Include="..\Shared-Files\NUnitTestsBase.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\KernelManagementJam\KernelManagementJam.csproj" />
     </ItemGroup>
 

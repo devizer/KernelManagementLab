@@ -1,16 +1,16 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading;
-using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
 using NUnit.Framework;
-using Universe.Dashboard.DAL;
 
 namespace Tests
 {
     public class NUnitTestsBase
     {
+        public static bool IsTravis => Environment.GetEnvironmentVariable("TRAVIS") == "true";
+
         protected static TextWriter OUT;
         private Stopwatch StartAt;
         private int TestCounter = 0;
@@ -50,6 +50,36 @@ namespace Tests
 #else
                 return false;
 #endif
+            }
+        }
+        
+        
+        public class TestConsole
+        {
+            static bool Done = false;
+            public static void Setup()
+            {
+                if (!Done)
+                {
+                    Done = true;
+                    Console.SetOut(new TW());
+                }
+            
+            }
+
+            class TW : TextWriter
+            {
+                public override Encoding Encoding { get; }
+
+                public override void WriteLine(string value)
+                {
+                    TestContext.Progress.WriteLine(value);
+                }
+
+                public override void Write(string format, params object[] arg)
+                {
+                    this.Write(string.Format(format, arg));
+                }
             }
         }
 

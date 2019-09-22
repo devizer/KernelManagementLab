@@ -3,13 +3,14 @@ using System.IO;
 using System.Runtime.InteropServices;
 using KernelManagementJam.Benchmarks;
 using NUnit.Framework;
+using Tests;
 using Universe;
 using Universe.Benchmark.DiskBench;
 
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class DiskBenchmarkTests
+    public class DiskBenchmarkTests : NUnitTestsBase
     {
         // HDD is preferred
         private string CurrentDirectory = "/hdd";

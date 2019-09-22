@@ -5,11 +5,12 @@ using System.IO.Compression;
 using System.Linq;
 using KernelManagementJam.Benchmarks;
 using NUnit.Framework;
+using Tests;
 
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class DataGeneratorTests
+    public class DataGeneratorTests : NUnitTestsBase
     {
         [Test]
         [TestCaseSourceAttribute(typeof(DataGeneratorTests), nameof(GetAllFlavour))]
