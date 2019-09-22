@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
@@ -25,6 +26,7 @@ namespace Universe.W3Top
                 return;
             }
 
+            Console.WriteLine($"Runtime: {RuntimeInformation.FrameworkDescription}");
             PidFileSupport.CreatePidFile();
             JitCrossInfo();
             CheckCompliance();
