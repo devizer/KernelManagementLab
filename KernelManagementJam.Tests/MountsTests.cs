@@ -28,9 +28,10 @@ namespace KernelManagementJam.Tests
             var root2 = analyz.Details.FirstOrDefault(x => x.MountEntry.MountPath == "/");
             Assert.IsNotNull(root2, "ProcMountsAnalyzer.Create: MountPath == '/' exists");
             
-            Console.WriteLine($"root volume:{Environment.NewLine}{root2.AsJson()}");
+            Console.WriteLine($"The Root Volume:{Environment.NewLine}{root2.AsJson()}");
             
-            Assert.Greater(root2.FreeSpace, 0, "FreeSpace of the '/' is positive number");
+            // we never run tests on the readonly root
+            Assert.Greater(root2.FreeSpace, 0, "FreeSpace of the '/' is positive number, except of the readonly root filesystem");
             Assert.Greater(root2.TotalSize, 0, "TotalSize of the '/' is positive number");
             
             Assert.IsNotNull(root2.MountEntry?.Device, "MountEntry.Device of the '/' is not null");
