@@ -91,6 +91,7 @@ script:
   bash -s dotnet node pwsh
   # dotnet 3?
   script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-core-3-x64.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | sudo bash -s /opt/dotnet
+  upgrade-2-to-3
 
 - pushd build; ./inject-git-info.ps1; popd; cat bintray.json || true
 - dotnet restore /v:m || dotnet restore /v:m || dotnet restore /v:m 
