@@ -31,7 +31,7 @@ namespace KernelManagementJam.Tests
             Console.WriteLine($"The Root Volume:{Environment.NewLine}{root2.AsJson()}");
             
             // we never run tests on the readonly root
-            Assert.Greater(root2.FreeSpace, 0, "FreeSpace of the '/' is positive number, except of the readonly root filesystem");
+            Assert.Greater(root2.FreeSpace, 0, "FreeSpace of the '/' is positive number (tests on readonly root filesystem is nonsense");
             Assert.Greater(root2.TotalSize, 0, "TotalSize of the '/' is positive number");
             
             Assert.IsNotNull(root2.MountEntry?.Device, "MountEntry.Device of the '/' is not null");
