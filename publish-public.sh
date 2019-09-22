@@ -35,7 +35,7 @@ cd $(dirname $work);
 rm -rf $work;
 git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
-upgrade-2-to-3
+# upgrade-2-to-3
 root=$(pwd)
 # repo root
 cd Universe.W3Top
