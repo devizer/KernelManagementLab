@@ -55,7 +55,7 @@ export default class App extends Component {
     static _404 = () => (
         <h6 style={{textAlign: "center"}}>
             <img src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2611.png" width={24}/>&nbsp;
-            Oops! 404 had been happened
+            Oops! 404
         </h6>
     );
     
