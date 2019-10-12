@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Npgsql;
-using Tests;
 using Universe.Dashboard.DAL.MultiProvider;
 using Universe.Dashboard.DAL.Tests.MultiProvider;
 using EF = Universe.Dashboard.DAL.MultiProvider.EF;
