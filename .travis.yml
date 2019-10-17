@@ -74,6 +74,8 @@ script:
   echo "A. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew install jq mysql-client pv pigz coreutils
+    echo "content of /usr/local/opt/coreutils/libexec/gnubin:"
+    ls -la /usr/local/opt/coreutils/libexec/gnubin
   else
     sudo apt-get install jq pv mysql-client postgresql-client pigz -y 
     ruby --version || true; gem --version || true
