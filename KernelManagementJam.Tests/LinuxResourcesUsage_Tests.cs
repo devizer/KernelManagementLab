@@ -9,7 +9,7 @@ using Tests;
 
 namespace KernelManagementJam.Tests
 {
-    // git pull; dotnet test --filter LinuxResourcesUsage
+    // git pull; time dotnet test --filter LinuxResourcesUsage
     [TestFixture]
     public class LinuxResourcesUsage_Tests : NUnitTestsBase
     {
@@ -31,6 +31,20 @@ namespace KernelManagementJam.Tests
         {
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_SELF);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_SELF):{Environment.NewLine}{AsString(resources)}");
+        }
+
+        [Test]
+        public void Get_Process_Usage()
+        {
+            var usage = LinuxResourceUsage.GetByProcess();
+            Console.WriteLine($"LinuxResourceUsage.GetByProcess(): {usage}");
+        }
+
+        [Test]
+        public void Get_Thread_Usage()
+        {
+            var usage = LinuxResourceUsage.GetByThread();
+            Console.WriteLine($"LinuxResourceUsage.GetByThread(): {usage}");
         }
 
         static string AsString(IEnumerable arr)

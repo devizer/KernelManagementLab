@@ -12,7 +12,7 @@ namespace KernelManagementJam.ThreadInfo
 
         public override string ToString()
         {
-            return $"{nameof(UserUsage)}: {UserUsage}, {nameof(KernelUsage)}: {KernelUsage}";
+            return $"User: {UserUsage}, Kernel: {KernelUsage}";
         }
     }
 
