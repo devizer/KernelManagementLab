@@ -10,7 +10,8 @@ namespace KernelManagementJam.ThreadInfo
         {
             RawLinuxResourceUsage ret = new RawLinuxResourceUsage();
             ret.Raw = new int[IntPtr.Size == 4 ? 18 : 36];
-            getrusage(RUSAGE_THREAD, ref ret);
+            int result = getrusage(RUSAGE_THREAD, ref ret);
+            Console.WriteLine($"getrusage returns {result}");
             return ret;
         }
 
@@ -39,6 +40,7 @@ namespace KernelManagementJam.ThreadInfo
         // 36 for x64 and arm-64, 18 for arm-32
         [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I4, SizeConst = 36)]
         public int[] Raw;
+        // 1st - user time, 2nd is system time 
     }
     
     public struct TimeVal {
