@@ -6,6 +6,7 @@ using System.Text;
 using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
 using Tests;
+using Universe;
 
 namespace KernelManagementJam.Tests
 {
@@ -17,17 +18,20 @@ namespace KernelManagementJam.Tests
         public void Is_Supported()
         {
             Console.WriteLine($"LinuxResourceUsage.IsSupported: {LinuxResourceUsage.IsSupported}");
+            
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Linux && !LinuxResourceUsage.IsSupported)
+                Assert.Fail("On Linux 2.6.26+ the value of LinuxResourceUsage.IsSupported should be true");
         }
 
         [Test]
-        public void Get__Raw_Thread_Usage()
+        public void _Show_Raw_Thread_Usage()
         {
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_THREAD);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_THREAD):{Environment.NewLine}{AsString(resources)}");
         }
 
         [Test]
-        public void Get__Raw_Process_Usage()
+        public void _Show_Raw_Process_Usage()
         {
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_SELF);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_SELF):{Environment.NewLine}{AsString(resources)}");
