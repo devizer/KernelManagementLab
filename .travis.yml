@@ -76,6 +76,7 @@ script:
     brew install jq mysql-client pv pigz coreutils
     echo "content of /usr/local/opt/coreutils/libexec/gnubin:"
     ls -la /usr/local/opt/coreutils/libexec/gnubin
+    sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum || true
   else
     sudo apt-get install jq pv mysql-client postgresql-client pigz -y 
     ruby --version || true; gem --version || true
