@@ -50,9 +50,10 @@ namespace KernelManagementJam.Tests
             var usage = LinuxResourceUsage.GetByThread();
             Console.WriteLine($"LinuxResourceUsage.GetByThread(): {usage}");
         }
-
+        
         static string AsString(IEnumerable arr)
         {
+            if (arr == null) return "<null>";
             var count = arr.OfType<object>().Count();
             StringBuilder b = new StringBuilder();
             int n = 0;
