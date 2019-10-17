@@ -20,14 +20,14 @@ namespace KernelManagementJam.Tests
         }
 
         [Test]
-        public void Get_Raw_Thread_Usage()
+        public void Get__Raw_Thread_Usage()
         {
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_THREAD);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_THREAD):{Environment.NewLine}{AsString(resources)}");
         }
 
         [Test]
-        public void Get_Raw_Process_Usage()
+        public void Get__Raw_Process_Usage()
         {
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_SELF);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_SELF):{Environment.NewLine}{AsString(resources)}");
