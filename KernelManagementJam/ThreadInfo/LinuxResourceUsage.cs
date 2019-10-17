@@ -92,10 +92,11 @@ namespace KernelManagementJam.ThreadInfo
                 ret.Raw = new long[18];
                 int result = LinuxResourceUsageInterop.getrusage64(scope, ref ret);
                 if (result != 0) return null;
+                // microseconds are 4 bytes length on mac os and 8 bytes on linux
                 return new LinuxResources()
                 {
-                    UserUsage = new LinuxTime() {Seconds = ret.Raw[0], MicroSeconds = ret.Raw[1]},
-                    KernelUsage = new LinuxTime() {Seconds = ret.Raw[2], MicroSeconds = ret.Raw[3]},
+                    UserUsage = new LinuxTime() {Seconds = ret.Raw[0], MicroSeconds = ret.Raw[1] & 0xFFFFFFFF},
+                    KernelUsage = new LinuxTime() {Seconds = ret.Raw[2], MicroSeconds = ret.Raw[3] & 0xFFFFFFFF},
                 };
             }
         }
