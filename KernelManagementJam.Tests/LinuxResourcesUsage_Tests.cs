@@ -74,6 +74,7 @@ namespace KernelManagementJam.Tests
             
             var count = arr.OfType<object>().Count();
             StringBuilder b = new StringBuilder();
+            var vLength = arr.OfType<object>().Select(x => Convert.ToString(x).Length).Max();
             int n = 0;
             foreach (var v in arr)
             {
@@ -81,7 +82,7 @@ namespace KernelManagementJam.Tests
                 var name = n < names.Length ? (names[n] + " ") : "";
                 name += n;
                 name = name.PadLeft(11);
-                b.AppendFormat("{0,-20}", $"{name}:{v}{comma}");
+                b.AppendFormat("{0,-" + (11+1+vLength+2) + "}", $"{name}:{v}{comma}");
                 n++;
                 b.Append(" ");
                 if (n % 4 == 0) b.Append(Environment.NewLine);
