@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 
 namespace KernelManagementJam.ThreadInfo
@@ -6,13 +7,24 @@ namespace KernelManagementJam.ThreadInfo
     public class ThreadUsage
     {
 
-        public static RawLinuxResourceUsage GetRawThreadResources()
+        public static IList GetRawThreadResources()
         {
-            RawLinuxResourceUsage ret = new RawLinuxResourceUsage();
-            ret.Raw = new int[IntPtr.Size == 4 ? 18 : 36];
-            int result = getrusage(RUSAGE_THREAD, ref ret);
-            Console.WriteLine($"getrusage returns {result}");
-            return ret;
+            if (IntPtr.Size == 4)
+            {
+                RawLinuxResourceUsage_32 ret = new RawLinuxResourceUsage_32();
+                ret.Raw = new int[18];
+                int result = getrusage32(RUSAGE_THREAD, ref ret);
+                Console.WriteLine($"getrusage returns {result}");
+                return ret.Raw;
+            }
+            else
+            {
+                RawLinuxResourceUsage_64 ret = new RawLinuxResourceUsage_64();
+                ret.Raw = new long[18];
+                int result = getrusage64(RUSAGE_THREAD, ref ret);
+                Console.WriteLine($"getrusage returns {result}");
+                return ret.Raw;
+            }
         }
 
         private const int RUSAGE_SELF = 0;
@@ -21,8 +33,11 @@ namespace KernelManagementJam.ThreadInfo
         private const int RUSAGE_THREAD = 1;        /* only the calling thread */
         
         
-        [DllImport("libc", SetLastError = true)]
-        public static extern int getrusage(int who, ref RawLinuxResourceUsage resourceUsage);
+        [DllImport("libc", SetLastError = true, EntryPoint = "getrusage")]
+        public static extern int getrusage32(int who, ref RawLinuxResourceUsage_32 resourceUsage);
+
+        [DllImport("libc", SetLastError = true, EntryPoint = "getrusage")]
+        public static extern int getrusage64(int who, ref RawLinuxResourceUsage_64 resourceUsage);
 
         
     }
@@ -35,10 +50,19 @@ namespace KernelManagementJam.ThreadInfo
     
     
     [StructLayout(LayoutKind.Sequential)] 
-    public struct RawLinuxResourceUsage
+    public struct RawLinuxResourceUsage_64
     {
         // 36 for x64 and arm-64, 18 for arm-32
-        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I4, SizeConst = 36)]
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I4, SizeConst = 18)]
+        public long[] Raw;
+        // 1st - user time, 2nd is system time 
+    }
+
+    [StructLayout(LayoutKind.Sequential)] 
+    public struct RawLinuxResourceUsage_32
+    {
+        // 36 for x64 and arm-64, 18 for arm-32
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I4, SizeConst = 18)]
         public int[] Raw;
         // 1st - user time, 2nd is system time 
     }
