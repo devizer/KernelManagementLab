@@ -79,7 +79,9 @@ namespace KernelManagementJam.Tests
             {
                 var comma = n + 1 < count ? "," : "";
                 var name = n < names.Length ? (names[n] + " ") : "";
-                b.AppendFormat("{0,-20}", $"{name}{n}:{v}{comma}");
+                name += n;
+                name = name.PadLeft(11);
+                b.AppendFormat("{0,-20}", $"{name}:{v}{comma}");
                 n++;
                 b.Append(" ");
                 if (n % 4 == 0) b.Append(Environment.NewLine);
