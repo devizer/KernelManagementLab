@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace KernelManagementJam.ThreadInfo
 {
+    // Supported by kernel 2.6.26+ and mac os 10.9+
     [StructLayout(LayoutKind.Sequential)]
     public struct LinuxResources
     {
