@@ -54,6 +54,14 @@ namespace KernelManagementJam.Tests
         static string AsString(IEnumerable arr)
         {
             if (arr == null) return "<null>";
+            if (IntPtr.Size == 8 && CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX)
+            {
+                var copy = arr.OfType<object>().ToArray();
+                copy[1] = Convert.ToInt64(copy[1]) & 0xFFFFFFFF;
+                copy[3] = Convert.ToInt64(copy[3]) & 0xFFFFFFFF;
+                arr = copy;
+            }
+            
             var count = arr.OfType<object>().Count();
             StringBuilder b = new StringBuilder();
             int n = 0;
