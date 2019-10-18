@@ -30,11 +30,15 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Grow_Usage()
         {
+            if (CrossInfo.ThePlatform != CrossInfo.Platform.MacOSX && CrossInfo.ThePlatform != CrossInfo.Platform.Linux)
+                return;
+            
             LoadThread(1);
             LinuxResourcesScope scope = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX
                 ? LinuxResourcesScope.Process
                 : LinuxResourcesScope.Thread;
 
+            Console.WriteLine($"Supported scope: {scope}");
             LinuxResourceUsage.GetByScope(scope);
             var prev = LinuxResourceUsage.GetByScope(scope);
             for (int i = 0; i < 10; i++)
