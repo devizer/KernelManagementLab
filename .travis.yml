@@ -107,7 +107,7 @@ script:
 
 - |
   echo "Sqlite tests only"
-  time dotnet test --no-restore -c Release # Test only sqlite provider on linux and osx
+  time dotnet test --no-restore -c Release | cat # Test only sqlite provider on linux and osx
 
 - pushd Universe.W3Top/ClientApp
 - time yarn install

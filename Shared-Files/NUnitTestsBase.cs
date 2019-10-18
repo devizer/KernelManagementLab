@@ -1,8 +1,10 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Tests
@@ -73,13 +75,21 @@ namespace Tests
 
                 public override void WriteLine(string value)
                 {
+//                    TestContext.Progress.Write(string.Join(",", value.Select(x => ((int)x).ToString("X2"))) );
+//                    if (value.Length > Environment.NewLine.Length && value.EndsWith(Environment.NewLine))
+//                        value = value.Substring(0, value.Length - Environment.NewLine.Length);
+                    
+                    
                     TestContext.Progress.WriteLine(value);
+                    try
+                    {
+                        // TestContext.Error.WriteLine(value); // .WriteLine();
+                    }
+                    catch
+                    {
+                    }
                 }
 
-                public override void Write(string format, params object[] arg)
-                {
-                    this.Write(string.Format(format, arg));
-                }
             }
         }
 
