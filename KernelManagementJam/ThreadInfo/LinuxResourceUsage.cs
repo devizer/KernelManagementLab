@@ -29,7 +29,7 @@ namespace KernelManagementJam.ThreadInfo
 
         public override string ToString()
         {
-            return $"{TotalMicroSeconds / 1000d:n2} milliseconds";
+            return $"{TotalMicroSeconds / 1000d:n3} milliseconds";
         }
     }
 
