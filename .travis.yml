@@ -53,6 +53,7 @@ before_script:
   echo "Docker server AFTER [$(docker version --format '{{.Server.Version}}')]" || true
   
 script:
+- export CI=false
 - google-chrome-stable --version || true
 - if [[ "$(lsb_release -c -s)" == xenial ]]; then export NEED_DEPLOY=sure; fi; echo "NEED_DEPLOY = [$NEED_DEPLOY]"
 - export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
