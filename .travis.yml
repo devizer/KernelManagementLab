@@ -16,9 +16,12 @@ matrix:
   - name: Ubuntu 18.04
     os: linux
     dist: bionic
-  - name: OS X 10.12
+#  - name: OS X 10.12
+#    os: osx
+#    osx_image: xcode8.3
+  - name: OS X 10.13
     os: osx
-    osx_image: xcode8.3
+    osx_image: xcode9.3
   - name: OS X 10.14
     os: osx
     osx_image: xcode10.2
