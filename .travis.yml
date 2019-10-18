@@ -81,6 +81,16 @@ script:
     echo "content of /usr/local/opt/coreutils/libexec/gnubin:"
     ls -la /usr/local/opt/coreutils/libexec/gnubin
     sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum || true
+  
+    script=https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash -s dotnet node pwsh
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    nvm install --lts node  # 10.16.3
+    # nvm install node        # 12.12
+    npm install yarn npm npm-check-updates --global
+    node --version
+  
   else
     sudo apt-get install jq pv mysql-client postgresql-client pigz -y 
     ruby --version || true; gem --version || true
