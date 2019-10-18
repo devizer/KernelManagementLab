@@ -76,7 +76,7 @@ script:
   # install pv
   echo "A. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    brew install jq mysql-client pv pigz coreutils
+    brew install --quiet jq mysql-client pv pigz coreutils
     echo "content of /usr/local/opt/coreutils/libexec/gnubin:"
     ls -la /usr/local/opt/coreutils/libexec/gnubin
     sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum || true
