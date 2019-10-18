@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using KernelManagementJam.ThreadInfo;
@@ -27,11 +28,33 @@ namespace KernelManagementJam.Tests
         }
 
         [Test]
+        public void Grow_Usage()
+        {
+            LoadThread(1);
+            LinuxResourcesScope scope = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX
+                ? LinuxResourcesScope.Process
+                : LinuxResourcesScope.Thread;
+
+            LinuxResourceUsage.GetByScope(scope);
+            var prev = LinuxResourceUsage.GetByScope(scope);
+            for (int i = 0; i < 10; i++)
+            {
+                LoadThread(9);
+                var next = LinuxResourceUsage.GetByScope(scope);
+                Console.WriteLine($"#{i} -> {next}");
+                Assert.GreaterOrEqual(next.Value.KernelUsage.TotalMicroSeconds, prev.Value.KernelUsage.TotalMicroSeconds);
+                Assert.GreaterOrEqual(next.Value.UserUsage.TotalMicroSeconds, prev.Value.UserUsage.TotalMicroSeconds);
+                prev = next;
+            }
+        }
+        
+        [Test]
         public void Get_Process_Usage()
         {
             var usage = LinuxResourceUsage.GetByProcess();
             Console.WriteLine($"LinuxResourceUsage.GetByProcess(): {usage}");
         }
+        
 
         [Test]
         public void Get_Thread_Usage()
@@ -41,14 +64,14 @@ namespace KernelManagementJam.Tests
         }
         
         [Test]
-        public void _Show_Raw_Thread_Usage()
+        public void Show_Raw_Thread_Usage()
         {
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_THREAD);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_THREAD):{Environment.NewLine}{AsString(resources)}");
         }
 
         [Test]
-        public void _Show_Raw_Process_Usage()
+        public void Show_Raw_Process_Usage()
         {
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_SELF);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_SELF):{Environment.NewLine}{AsString(resources)}");
@@ -89,6 +112,14 @@ namespace KernelManagementJam.Tests
             }
 
             return b.ToString();
+        }
+
+        static void LoadThread(long milliseconds)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            while (sw.ElapsedMilliseconds < milliseconds)
+                new Random().Next();
+            
         }
         
     }

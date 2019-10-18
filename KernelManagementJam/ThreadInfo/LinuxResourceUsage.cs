@@ -106,7 +106,7 @@ namespace KernelManagementJam.ThreadInfo
     public class LinuxResourceUsageInterop
     {
 
-        // For integration tests
+        // For integration tests only
         public static IList GetRawUsageResources(int scope = RUSAGE_THREAD)
         {
             if (IntPtr.Size == 4)
