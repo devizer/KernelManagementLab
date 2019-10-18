@@ -94,6 +94,7 @@ script:
   bash -s dotnet node pwsh
   if [[ "$TRAVIS_OS_NAME" == linux ]]; then
     # dotnet 3 rc? no, it is already released
+    echo ""
     # script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-core-3-x64.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | sudo bash -s /opt/dotnet
     # upgrade-2-to-3
   fi
