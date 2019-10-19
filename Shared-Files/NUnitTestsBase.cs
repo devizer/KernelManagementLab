@@ -1,10 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
 
@@ -58,7 +56,7 @@ namespace Tests
                     var delta = LinuxResources.Substruct(onEnd.Value, _LinuxResources_OnStart.Value);
                     var user = delta.UserUsage.TotalMicroSeconds / 1000d;
                     var kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
-                    cpuUsage = $" (user: {user:n3}; kernel: {kernel:n3} microseconds)";
+                    cpuUsage = $" (user: {user:n3}, kernel: {kernel:n3} milliseconds)";
                 }
             }
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {StartAt.Elapsed}{cpuUsage}{Environment.NewLine}");
@@ -87,7 +85,6 @@ namespace Tests
             }
         }
         
-        
         public class TestConsole
         {
             static bool Done = false;
@@ -98,7 +95,6 @@ namespace Tests
                     Done = true;
                     Console.SetOut(new TW());
                 }
-            
             }
 
             class TW : TextWriter

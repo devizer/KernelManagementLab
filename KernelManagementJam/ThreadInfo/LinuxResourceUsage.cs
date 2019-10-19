@@ -164,7 +164,7 @@ namespace KernelManagementJam.ThreadInfo
     [StructLayout(LayoutKind.Sequential)] 
     public struct RawLinuxResourceUsage_64
     {
-        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I4, SizeConst = 18)]
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I8, SizeConst = 18)]
         public long[] Raw;
     }
 
