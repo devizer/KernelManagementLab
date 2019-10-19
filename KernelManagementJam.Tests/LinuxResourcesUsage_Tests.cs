@@ -80,8 +80,6 @@ namespace KernelManagementJam.Tests
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_SELF);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_SELF):{Environment.NewLine}{AsString(resources)}");
         }
-
-
         
         static string AsString(IEnumerable arr)
         {
