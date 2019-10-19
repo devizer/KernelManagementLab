@@ -14,7 +14,7 @@ namespace Tests
 
         protected static TextWriter OUT;
         private Stopwatch StartAt;
-        private LinuxResources? _LinuxResources_OnStart;
+        private CpuUsage? _LinuxResources_OnStart;
         private int TestCounter = 0;
 
         [SetUp]
@@ -28,7 +28,7 @@ namespace Tests
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} starting...");
         }
 
-        LinuxResources? GetLinuxResources()
+        CpuUsage? GetLinuxResources()
         {
             if (LinuxResourceUsage.IsSupported)
             {
@@ -54,7 +54,7 @@ namespace Tests
                 var onEnd = GetLinuxResources();
                 if (onEnd != null)
                 {
-                    var delta = LinuxResources.Substruct(onEnd.Value, _LinuxResources_OnStart.Value);
+                    var delta = CpuUsage.Substruct(onEnd.Value, _LinuxResources_OnStart.Value);
                     double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                     double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
                     double perCents = (user + kernel) / 1000d / elapsed.TotalSeconds; 

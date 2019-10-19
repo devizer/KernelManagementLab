@@ -44,7 +44,7 @@ namespace KernelManagementJam.Tests
             for (int i = 0; i < 10; i++)
             {
                 LoadThread(9);
-                LinuxResources? next = LinuxResourceUsage.GetByScope(scope);
+                CpuUsage? next = LinuxResourceUsage.GetByScope(scope);
                 Console.WriteLine($" {i} -> {next}");
                 Assert.GreaterOrEqual(next.Value.KernelUsage.TotalMicroSeconds, prev.Value.KernelUsage.TotalMicroSeconds);
                 Assert.GreaterOrEqual(next.Value.UserUsage.TotalMicroSeconds, prev.Value.UserUsage.TotalMicroSeconds);

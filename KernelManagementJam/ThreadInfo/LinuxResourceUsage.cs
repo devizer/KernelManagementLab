@@ -4,50 +4,8 @@ using System.Runtime.InteropServices;
 
 namespace KernelManagementJam.ThreadInfo
 {
-    // Supported by kernel 2.6.26+ and mac os 10.9+
-    [StructLayout(LayoutKind.Sequential)]
-    public struct LinuxResources
-    {
-        public LinuxTime UserUsage;
-        public LinuxTime KernelUsage;
-
-        public override string ToString()
-        {
-            return $"User: {UserUsage}, Kernel: {KernelUsage}";
-        }
-
-        public static LinuxResources Substruct(LinuxResources onEnd, LinuxResources onStart)
-        {
-            var user = onEnd.UserUsage.TotalMicroSeconds - onStart.UserUsage.TotalMicroSeconds;
-            var system = onEnd.KernelUsage.TotalMicroSeconds - onStart.KernelUsage.TotalMicroSeconds;
-            const long _1M = 1000000L;
-            return new LinuxResources()
-            {
-                UserUsage = new LinuxTime() {Seconds = user / _1M, MicroSeconds = user % _1M},
-                KernelUsage = new LinuxTime() {Seconds = system / _1M, MicroSeconds = system % _1M},
-            };
-        }
-    }
-
-    [StructLayout(LayoutKind.Sequential)] 
-    public struct LinuxTime
-    {
-        public long Seconds;
-        public long MicroSeconds;
-
-        public long TotalMicroSeconds => Seconds * 1000000 + MicroSeconds;
-        public double TotalSeconds => Seconds + MicroSeconds / 1000000d;
-
-
-        public override string ToString()
-        {
-            return $"{TotalMicroSeconds / 1000d:n3} milliseconds";
-        }
-    }
-
     public enum LinuxResourcesScope
     {
-        
         Thread, // Is not supported by mac OS 
         Process,
     }
@@ -56,19 +14,19 @@ namespace KernelManagementJam.ThreadInfo
     {
 
         public static bool IsSupported => _IsSupported.Value;
-        public static LinuxResources? GetByScope(LinuxResourcesScope scope)
+        public static CpuUsage? GetByScope(LinuxResourcesScope scope)
         {
             var s = scope == LinuxResourcesScope.Process ? LinuxResourceUsageInterop.RUSAGE_SELF : LinuxResourceUsageInterop.RUSAGE_THREAD; 
             return GetLinuxResourcesByScope(s);
         }
         
-        public static LinuxResources? GetByProcess()
+        public static CpuUsage? GetByProcess()
         {
             return GetLinuxResourcesByScope(LinuxResourceUsageInterop.RUSAGE_SELF);
         }
 
         // returns null on mac os x
-        public static LinuxResources? GetByThread()
+        public static CpuUsage? GetByThread()
         {
             return GetLinuxResourcesByScope(LinuxResourceUsageInterop.RUSAGE_THREAD);
         }
@@ -87,7 +45,7 @@ namespace KernelManagementJam.ThreadInfo
             }
         });
 
-        private static LinuxResources? GetLinuxResourcesByScope(int scope)
+        private static CpuUsage? GetLinuxResourcesByScope(int scope)
         {
             if (IntPtr.Size == 4)
             {
@@ -95,10 +53,10 @@ namespace KernelManagementJam.ThreadInfo
                 ret.Raw = new int[18];
                 int result = LinuxResourceUsageInterop.getrusage32(scope, ref ret);
                 if (result != 0) return null;
-                return new LinuxResources()
+                return new CpuUsage()
                 {
-                    UserUsage = new LinuxTime() {Seconds = ret.Raw[0], MicroSeconds = ret.Raw[1]},
-                    KernelUsage = new LinuxTime() {Seconds = ret.Raw[2], MicroSeconds = ret.Raw[3]},
+                    UserUsage = new TimeValue() {Seconds = ret.Raw[0], MicroSeconds = ret.Raw[1]},
+                    KernelUsage = new TimeValue() {Seconds = ret.Raw[2], MicroSeconds = ret.Raw[3]},
                 };
             }
             else
@@ -108,10 +66,10 @@ namespace KernelManagementJam.ThreadInfo
                 int result = LinuxResourceUsageInterop.getrusage64(scope, ref ret);
                 if (result != 0) return null;
                 // microseconds are 4 bytes length on mac os and 8 bytes on linux
-                return new LinuxResources()
+                return new CpuUsage()
                 {
-                    UserUsage = new LinuxTime() {Seconds = ret.Raw[0], MicroSeconds = ret.Raw[1] & 0xFFFFFFFF},
-                    KernelUsage = new LinuxTime() {Seconds = ret.Raw[2], MicroSeconds = ret.Raw[3] & 0xFFFFFFFF},
+                    UserUsage = new TimeValue() {Seconds = ret.Raw[0], MicroSeconds = ret.Raw[1] & 0xFFFFFFFF},
+                    KernelUsage = new TimeValue() {Seconds = ret.Raw[2], MicroSeconds = ret.Raw[3] & 0xFFFFFFFF},
                 };
             }
         }
