@@ -33,9 +33,9 @@ namespace KernelManagementJam.Tests
                 return;
             
             CrossPlatformCpuUsage_Tests.LoadThread(1);
-            LinuxResourcesScope scope = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX
-                ? LinuxResourcesScope.Process
-                : LinuxResourcesScope.Thread;
+            CpuUsageScope scope = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX
+                ? CpuUsageScope.Process
+                : CpuUsageScope.Thread;
 
             Console.WriteLine($"Supported scope: {scope}");
             LinuxResourceUsage.GetByScope(scope);

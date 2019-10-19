@@ -4,19 +4,19 @@ using System.Runtime.InteropServices;
 
 namespace KernelManagementJam.ThreadInfo
 {
-    public enum LinuxResourcesScope
+    public enum CpuUsageScope
     {
-        Thread, // Is not supported by mac OS 
-        Process,
+        Thread, 
+        Process, // Is not implemented for Windows 
     }
 
     public class LinuxResourceUsage
     {
 
         public static bool IsSupported => _IsSupported.Value;
-        public static CpuUsage? GetByScope(LinuxResourcesScope scope)
+        public static CpuUsage? GetByScope(CpuUsageScope scope)
         {
-            var s = scope == LinuxResourcesScope.Process ? LinuxResourceUsageInterop.RUSAGE_SELF : LinuxResourceUsageInterop.RUSAGE_THREAD; 
+            var s = scope == CpuUsageScope.Process ? LinuxResourceUsageInterop.RUSAGE_SELF : LinuxResourceUsageInterop.RUSAGE_THREAD; 
             return GetLinuxResourcesByScope(s);
         }
         
@@ -35,8 +35,8 @@ namespace KernelManagementJam.ThreadInfo
         {
             try
             {
-                GetByScope(LinuxResourcesScope.Process);
-                GetByScope(LinuxResourcesScope.Thread);
+                GetByScope(CpuUsageScope.Process);
+                GetByScope(CpuUsageScope.Thread);
                 return true;
             }
             catch

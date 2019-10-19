@@ -13,16 +13,16 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Grow_Usage_By_Thread()
         {
-            GrowUsage_Impl(LinuxResourcesScope.Thread);
+            GrowUsage_Impl(CpuUsageScope.Thread);
         }
 
         [Test]
         public void Grow_Usage_By_Process()
         {
-            GrowUsage_Impl(LinuxResourcesScope.Process);
+            GrowUsage_Impl(CpuUsageScope.Process);
         }
 
-        private static void GrowUsage_Impl(LinuxResourcesScope scope)
+        private static void GrowUsage_Impl(CpuUsageScope scope)
         {
             if (CrossInfo.ThePlatform != CrossInfo.Platform.MacOSX && CrossInfo.ThePlatform != CrossInfo.Platform.Linux)
                 return;
@@ -46,7 +46,7 @@ namespace KernelManagementJam.Tests
         public void Get_Process_Usage()
         {
             var usage = CpuUsageReader.GetByProcess();
-            Console.WriteLine($"LinuxResourceUsage.GetByProcess(): {usage}");
+            Console.WriteLine($"CpuUsageReader.GetByProcess(): {usage}");
         }
         
 
@@ -54,7 +54,7 @@ namespace KernelManagementJam.Tests
         public void Get_Thread_Usage()
         {
             var usage = CpuUsageReader.GetByThread();
-            Console.WriteLine($"LinuxResourceUsage.GetByThread(): {usage}");
+            Console.WriteLine($"CpuUsageReader.GetByThread(): {usage}");
         }
         
         public static void LoadThread(long milliseconds)

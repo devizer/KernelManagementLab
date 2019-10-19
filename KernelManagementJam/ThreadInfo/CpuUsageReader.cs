@@ -9,18 +9,18 @@ namespace KernelManagementJam.ThreadInfo
     {
         public static CpuUsage? GetByProcess()
         {
-            return Get(LinuxResourcesScope.Process);
+            return Get(CpuUsageScope.Process);
         }
 
         // returns null on mac os x
         public static CpuUsage? GetByThread()
         {
-            return Get(LinuxResourcesScope.Thread);
+            return Get(CpuUsageScope.Thread);
         }
 
-        public static CpuUsage? Get(LinuxResourcesScope scope)
+        public static CpuUsage? Get(CpuUsageScope scope)
         {
-            if (scope == LinuxResourcesScope.Process)
+            if (scope == CpuUsageScope.Process)
             {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     return LinuxResourceUsage.GetByProcess();
