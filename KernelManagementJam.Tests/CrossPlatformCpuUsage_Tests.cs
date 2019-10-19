@@ -31,8 +31,10 @@ namespace KernelManagementJam.Tests
 
         private static void GrowUsage_Impl(CpuUsageScope scope)
         {
+/*
             if (CrossInfo.ThePlatform != CrossInfo.Platform.MacOSX && CrossInfo.ThePlatform != CrossInfo.Platform.Linux)
                 return;
+*/
             
             LoadThread(1);
             Console.WriteLine($"Usage scope: {scope}");
