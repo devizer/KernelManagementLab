@@ -69,7 +69,7 @@ int main() {
   printf("mach_thread_self(): %d\n", mach_task_self());
   printf("mach_thread_self(): %d\n", mach_task_self());
   printf("mach_thread_self(): %d\n", mach_task_self());
-  mach_port_deallocate(mach_task_self(), thread);
+  int kResult = mach_port_deallocate(mach_task_self(), thread);
 }
 
 
@@ -83,7 +83,6 @@ struct thread_basic_info {
         integer_t       flags;          // various flags (see below) 
         integer_t       suspend_count;  // suspend count for thread 
         integer_t       sleep_time;     // number of seconds that thread has been sleeping 
-                                           
 }; 
 */
 

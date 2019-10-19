@@ -48,7 +48,8 @@ namespace KernelManagementJam.Tests
         [DllImport("libc", SetLastError = false, EntryPoint = "mach_port_deallocate")]
         public static extern int mach_port_deallocate(int threadId, int materializedThreadId);
         
-        [DllImport("libc", SetLastError = false)]
+        [DllImport("libc", SetLastError = false, CharSet=CharSet.Ansi,
+            CallingConvention=CallingConvention.Cdecl)]
         public static extern int thread_info(int threadId, int flavor, ref ThreadInfo info, ref int count);
 
         public class ThreadInfo
