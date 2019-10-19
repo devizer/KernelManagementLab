@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
 
 namespace Tests
@@ -15,21 +16,52 @@ namespace Tests
 
         protected static TextWriter OUT;
         private Stopwatch StartAt;
+        private LinuxResources? _LinuxResources_OnStart;
         private int TestCounter = 0;
 
         [SetUp]
         public void BaseSetUp()
         {
+            TestConsole.Setup();
             Environment.SetEnvironmentVariable("SKIP_FLUSHING", null);
             StartAt = Stopwatch.StartNew();
+            _LinuxResources_OnStart = GetLinuxResources();
             Interlocked.Increment(ref TestCounter);
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} starting...");
+        }
+
+        LinuxResources? GetLinuxResources()
+        {
+            if (LinuxResourceUsage.IsSupported)
+            {
+                try
+                {
+                    return LinuxResourceUsage.GetByThread();
+                }
+                catch
+                {
+                }
+            }
+
+            return null;
         }
 
         [TearDown]
         public void BaseTearDown()
         {
-            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {StartAt.Elapsed}{Environment.NewLine}");
+            string cpuUsage = "";
+            if (_LinuxResources_OnStart.HasValue)
+            {
+                var onEnd = GetLinuxResources();
+                if (onEnd != null)
+                {
+                    var delta = LinuxResources.Substruct(onEnd.Value, _LinuxResources_OnStart.Value);
+                    var user = delta.UserUsage.TotalMicroSeconds / 1000d;
+                    var kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
+                    cpuUsage = $" (user: {user:n3}; kernel: {kernel:n3} milliseconds)";
+                }
+            }
+            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {StartAt.Elapsed}{cpuUsage}{Environment.NewLine}");
         }
 
         [OneTimeSetUp]

@@ -15,6 +15,18 @@ namespace KernelManagementJam.ThreadInfo
         {
             return $"User: {UserUsage}, Kernel: {KernelUsage}";
         }
+
+        public static LinuxResources Substruct(LinuxResources onEnd, LinuxResources onStart)
+        {
+            var user = onEnd.UserUsage.TotalMicroSeconds - onStart.UserUsage.TotalMicroSeconds;
+            var system = onEnd.KernelUsage.TotalMicroSeconds - onStart.KernelUsage.TotalMicroSeconds;
+            const long _1M = 1000000L;
+            return new LinuxResources()
+            {
+                UserUsage = new LinuxTime() {Seconds = user / _1M, MicroSeconds = user % _1M},
+                KernelUsage = new LinuxTime() {Seconds = system / _1M, MicroSeconds = system % _1M},
+            };
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)] 
