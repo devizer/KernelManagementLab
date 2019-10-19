@@ -47,6 +47,7 @@ namespace Tests
         [TearDown]
         public void BaseTearDown()
         {
+            TimeSpan elapsed = StartAt.Elapsed;
             string cpuUsage = "";
             if (_LinuxResources_OnStart.HasValue)
             {
@@ -56,11 +57,12 @@ namespace Tests
                     var delta = LinuxResources.Substruct(onEnd.Value, _LinuxResources_OnStart.Value);
                     double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                     double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
-                    cpuUsage = $" (cpu: {(user+kernel):n3} = {user:n3} (user) + {kernel:n3} (kernel) milliseconds)";
+                    double perCents = (user + kernel) / 1000d / elapsed.TotalSeconds; 
+                    cpuUsage = $" (cpu: {(perCents*100):f0}%, {(user+kernel):n3} = {user:n3} [user] + {kernel:n3} [kernel] milliseconds)";
                 }
             }
-            
-            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {StartAt.Elapsed}{cpuUsage}{Environment.NewLine}");
+
+            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {elapsed}{cpuUsage}{Environment.NewLine}");
         }
 
         [OneTimeSetUp]
