@@ -28,7 +28,7 @@ namespace KernelManagementJam.Tests
             }
             finally
             {
-                int resDe = MacOsThreadInfoInterop.mach_port_deallocate(MacOsThreadInfoInterop.mach_thread_self(), threadId);
+                int resDeallocate = MacOsThreadInfoInterop.mach_port_deallocate(MacOsThreadInfoInterop.mach_thread_self(), threadId);
             }
 
             return null;
