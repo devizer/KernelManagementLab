@@ -52,6 +52,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Get_Process_Usage()
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.WriteLine("Ignored on Windows");
+                return;
+            }
+            
             var usage = CpuUsageReader.GetByProcess();
             Console.WriteLine($"CpuUsageReader.GetByProcess(): {usage}");
         }
