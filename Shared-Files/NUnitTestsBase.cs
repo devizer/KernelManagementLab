@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using KernelManagementJam.ThreadInfo;
@@ -60,7 +61,9 @@ namespace Tests
                 }
             }
 
-            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name} @ {TestContext.CurrentContext.Test.ClassName}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {elapsed}{cpuUsage}{Environment.NewLine}");
+            var testClassName = TestContext.CurrentContext.Test.ClassName;
+            testClassName = testClassName.Split('.').LastOrDefault();
+            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name} @ {testClassName}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {elapsed}{cpuUsage}{Environment.NewLine}");
         }
 
         [OneTimeSetUp]
