@@ -62,7 +62,8 @@ namespace KernelManagementJam.Tests
         public void _4_thread_info_Test3_Custom()
         {
             int interval = 11;
-            for (int i = 0; i < 5; i++)
+            Stopwatch sw = Stopwatch.StartNew();
+            for (int i = 0; sw.ElapsedMilliseconds < 6666; i++)
             {
                 _3_thread_info_Test2_Custom();
                 LoadThread(interval);
