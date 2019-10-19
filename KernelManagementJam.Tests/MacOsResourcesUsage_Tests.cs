@@ -64,7 +64,7 @@ namespace KernelManagementJam.Tests
         [DllImport("libc", SetLastError = false, EntryPoint = "mach_port_deallocate")]
         public static extern int mach_port_deallocate(int threadId, int materializedThreadId);
         
-        [DllImport("libc", SetLastError = false)]
+        [DllImport("libc", SetLastError = true)]
         public static extern int thread_info(int threadId, int flavor, ref ThreadInfo info, int count);
         
 
@@ -83,7 +83,7 @@ namespace KernelManagementJam.Tests
             return info.Raw;
         }
 
-        [DllImport("libc", SetLastError = false, EntryPoint = "thread_info")]
+        [DllImport("libc", SetLastError = true, EntryPoint = "thread_info")]
         public static extern int thread_info_custom(int threadId, int flavor, IntPtr threadInfo, int count);
         public static unsafe int[] GetRawThreadInfo_Custom(int threadId)
         {
