@@ -29,12 +29,12 @@ namespace KernelManagementJam.Tests
             
             LoadThread(1);
             Console.WriteLine($"Usage scope: {scope}");
-            LinuxResourceUsage.GetByScope(scope);
-            var prev = LinuxResourceUsage.GetByScope(scope);
+            CpuUsageReader.Get(scope);
+            var prev = CpuUsageReader.Get(scope);
             for (int i = 0; i < 10; i++)
             {
                 LoadThread(9);
-                CpuUsage? next = LinuxResourceUsage.GetByScope(scope);
+                CpuUsage? next = CpuUsageReader.Get(scope);
                 Console.WriteLine($" {i} -> {next}");
                 Assert.GreaterOrEqual(next.Value.KernelUsage.TotalMicroSeconds, prev.Value.KernelUsage.TotalMicroSeconds);
                 Assert.GreaterOrEqual(next.Value.UserUsage.TotalMicroSeconds, prev.Value.UserUsage.TotalMicroSeconds);
@@ -53,7 +53,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Get_Thread_Usage()
         {
-            var usage = LinuxResourceUsage.GetByThread();
+            var usage = CpuUsageReader.GetByThread();
             Console.WriteLine($"LinuxResourceUsage.GetByThread(): {usage}");
         }
         
@@ -62,7 +62,6 @@ namespace KernelManagementJam.Tests
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.ElapsedMilliseconds < milliseconds)
                 new Random().Next();
-            
         }
 
 
