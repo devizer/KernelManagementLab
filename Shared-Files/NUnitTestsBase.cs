@@ -30,16 +30,13 @@ namespace Tests
 
         CpuUsage? GetLinuxResources()
         {
-            if (LinuxResourceUsage.IsSupported)
+            try
             {
-                try
-                {
-                    // return LinuxResourceUsage.GetByThread();
-                    return CpuUsageReader.Get(CpuUsageScope.Thread);
-                }
-                catch
-                {
-                }
+                // return LinuxResourceUsage.GetByThread();
+                return CpuUsageReader.Get(CpuUsageScope.Thread);
+            }
+            catch
+            {
             }
 
             return null;
