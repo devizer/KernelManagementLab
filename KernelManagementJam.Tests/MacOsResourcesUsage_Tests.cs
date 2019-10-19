@@ -50,7 +50,7 @@ namespace KernelManagementJam.Tests
         
         [DllImport("libc", SetLastError = false, CharSet=CharSet.Ansi,
             CallingConvention=CallingConvention.Cdecl)]
-        public static extern int thread_info(int threadId, int flavor, ref ThreadInfo info, ref int count);
+        public static extern int thread_info(int threadId, int flavor, ref ThreadInfo info, int count);
 
         public class ThreadInfo
         {
@@ -62,7 +62,7 @@ namespace KernelManagementJam.Tests
         {
             ThreadInfo info = new ThreadInfo() {Raw = new int[10]};
             int count = 40;
-            int result = thread_info(threadId, 3, ref info, ref count);
+            int result = thread_info(threadId, 3, ref info, count);
             Console.WriteLine($"thread_info return value:${result}");
             return info.Raw;
         }
