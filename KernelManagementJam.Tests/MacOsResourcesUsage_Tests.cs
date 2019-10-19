@@ -14,7 +14,6 @@ namespace KernelManagementJam.Tests
     {
         private static bool IsMacOs => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         
-        [Test, Ignore("doesnt work")]
         public void _1_mach_thread_self_Test1()
         {
             if (!IsMacOs) return;
@@ -25,7 +24,7 @@ namespace KernelManagementJam.Tests
             Console.WriteLine($"mach_port_deallocate result: {resDe}");
         }
 
-        [Test]
+        [Test, Ignore("doesnt work")]
         public void _2_thread_info_Test1()
         {
             if (!IsMacOs) return;
@@ -67,7 +66,7 @@ namespace KernelManagementJam.Tests
             {
                 _3_thread_info_Test2_Custom();
                 LoadThread(interval);
-                interval = Math.Min(interval * 2, 1111);
+                interval = Math.Min(interval * 2, 7777);
             }
 
         }
