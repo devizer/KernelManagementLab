@@ -1,3 +1,4 @@
+using System.Dynamic;
 using System.Runtime.InteropServices;
 
 namespace KernelManagementJam.ThreadInfo
@@ -43,5 +44,4 @@ namespace KernelManagementJam.ThreadInfo
             return $"{TotalMicroSeconds / 1000d:n3} milliseconds";
         }
     }
-
 }
