@@ -26,7 +26,10 @@ namespace Tests
             StartAt = Stopwatch.StartNew();
             _LinuxResources_OnStart = GetLinuxResources();
             Interlocked.Increment(ref TestCounter);
-            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} starting...");
+
+            var testClassName = TestContext.CurrentContext.Test.ClassName;
+            testClassName = testClassName.Split('.').LastOrDefault();
+            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name} @ {testClassName}}} starting...");
         }
 
         CpuUsage? GetLinuxResources()
@@ -61,9 +64,7 @@ namespace Tests
                 }
             }
 
-            var testClassName = TestContext.CurrentContext.Test.ClassName;
-            testClassName = testClassName.Split('.').LastOrDefault();
-            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name} @ {testClassName}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {elapsed}{cpuUsage}{Environment.NewLine}");
+            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {elapsed}{cpuUsage}{Environment.NewLine}");
         }
 
         [OneTimeSetUp]
