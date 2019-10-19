@@ -29,7 +29,7 @@ namespace Tests
 
             var testClassName = TestContext.CurrentContext.Test.ClassName;
             testClassName = testClassName.Split('.').LastOrDefault();
-            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name} @ {testClassName}}} starting...");
+            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} @ {testClassName} starting...");
         }
 
         CpuUsage? GetLinuxResources()
