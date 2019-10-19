@@ -29,8 +29,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Grow_Usage()
         {
-            if (CrossInfo.ThePlatform != CrossInfo.Platform.MacOSX && CrossInfo.ThePlatform != CrossInfo.Platform.Linux)
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            {
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
                 return;
+            }
+
             
             CrossPlatformCpuUsage_Tests.LoadThread(1);
             CpuUsageScope scope = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX
@@ -54,6 +58,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Get_Process_Usage()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            {
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                return;
+            }
+            
             var usage = LinuxResourceUsage.GetByProcess();
             Console.WriteLine($"LinuxResourceUsage.GetByProcess(): {usage}");
         }
@@ -62,6 +72,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Get_Thread_Usage()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            {
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                return;
+            }
+            
             var usage = LinuxResourceUsage.GetByThread();
             Console.WriteLine($"LinuxResourceUsage.GetByThread(): {usage}");
         }
@@ -69,6 +85,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Show_Raw_Thread_Usage()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            {
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                return;
+            }
+            
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_THREAD);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_THREAD):{Environment.NewLine}{AsString(resources)}");
         }
@@ -76,6 +98,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Show_Raw_Process_Usage()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            {
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                return;
+            }
+            
             var resources = LinuxResourceUsageInterop.GetRawUsageResources(LinuxResourceUsageInterop.RUSAGE_SELF);
             Console.WriteLine($"GetRawUsageResources(RUSAGE_SELF):{Environment.NewLine}{AsString(resources)}");
         }
