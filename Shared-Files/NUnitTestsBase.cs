@@ -60,7 +60,7 @@ namespace Tests
                 }
             }
 
-            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {elapsed}{cpuUsage}{Environment.NewLine}");
+            Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name} @ {TestContext.CurrentContext.Test.ClassName}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {elapsed}{cpuUsage}{Environment.NewLine}");
         }
 
         [OneTimeSetUp]
