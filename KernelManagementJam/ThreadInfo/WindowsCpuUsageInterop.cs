@@ -20,8 +20,8 @@ namespace KernelManagementJam.Tests
             long user;
             if (GetThreadTimes(GetCurrentThread(), out ignored, out ignored, out kernel, out user))
             {
-                kernelMicroseconds = kernel * 100L;
-                userMicroseconds = user * 100L;
+                kernelMicroseconds = kernel / 10L;
+                userMicroseconds = user / 10L;
                 return true;
             }
             else
