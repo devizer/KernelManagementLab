@@ -46,7 +46,7 @@ namespace KernelManagementJam.Tests
             int threadId = MacOsThreadInfoInterop.mach_thread_self();
             Console.WriteLine($"Thread ID: {threadId}");
 
-            var raw = MacOsThreadInfoInterop.GetRawThreadInfo(threadId);
+            var raw = MacOsThreadInfoInterop.GetRawThreadInfo_Custom(threadId);
             for(int i=0; i<raw.Length; i++)
                 Console.WriteLine($"  {i}: {raw[i]}");
             
