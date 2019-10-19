@@ -20,6 +20,7 @@ namespace KernelManagementJam.Tests
             long user;
             if (GetThreadTimes(GetCurrentThread(), out ignored, out ignored, out kernel, out user))
             {
+                Console.WriteLine($"kernel: {kernel}, user: {user}");
                 kernelMicroseconds = kernel / 10L;
                 userMicroseconds = user / 10L;
                 return true;
