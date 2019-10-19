@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
@@ -11,7 +13,7 @@ namespace KernelManagementJam.Tests
     {
         private static bool IsMacOs => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         
-        [Test]
+        [Test, Ignore("doesnt work")]
         public void _1_mach_thread_self_Test1()
         {
             if (!IsMacOs) return;
@@ -47,8 +49,10 @@ namespace KernelManagementJam.Tests
             Console.WriteLine($"Thread ID: {threadId}");
 
             var raw = MacOsThreadInfoInterop.GetRawThreadInfo_Custom(threadId);
-            for(int i=0; i<raw.Length; i++)
-                Console.WriteLine($"  {i}: {raw[i]}");
+            var maxLen = raw.Select(x => x.ToString().Length).Max();
+            Console.WriteLine("Thread Info: " + string.Join(", ", raw.Select((x,i) => string.Format("{0,-2}:{1,-" + maxLen + "}", i, x))));
+//            for(int i=0; i<raw.Length; i++)
+//                Console.Write($"  {i}: {raw[i]}");
             
             int resDe = MacOsThreadInfoInterop.mach_port_deallocate(MacOsThreadInfoInterop.mach_thread_self(), threadId);
             Console.WriteLine($"mach_port_deallocate result: {resDe}");
@@ -65,7 +69,7 @@ namespace KernelManagementJam.Tests
         public static extern int mach_port_deallocate(int threadId, int materializedThreadId);
         
         [DllImport("libc", SetLastError = true)]
-        public static extern int thread_info(int threadId, int flavor, ref ThreadInfo info, int count);
+        public static extern int thread_info(int threadId, int flavor, ref ThreadInfo info, ref int count);
         
 
         public class ThreadInfo
@@ -74,11 +78,13 @@ namespace KernelManagementJam.Tests
             public int[] Raw;
         }
 
+        // Doesnt work:
+        // 
         public static int[] GetRawThreadInfo(int threadId)
         {
             ThreadInfo info = new ThreadInfo() {Raw = new int[10]};
             int count = 40;
-            int result = thread_info(threadId, 3, ref info, count);
+            int result = thread_info(threadId, 3, ref info, ref count);
             Console.WriteLine($"thread_info return value:${result}");
             return info.Raw;
         }
@@ -88,22 +94,27 @@ namespace KernelManagementJam.Tests
         public static unsafe int[] GetRawThreadInfo_Custom(int threadId)
         {
             IntPtr threadInfo = Marshal.AllocHGlobal(40);
-            int count = 40;
-            int result = thread_info_custom(threadId, 3, threadInfo, ref count);
-            Console.WriteLine($"thread_info return value:${result}");
-
-            int[] ret = new int[10];
-            int* ptr = (int*) threadInfo.ToPointer();
-            for (int i = 0; i < 10; i++)
+            try
             {
-                ret[i] = *ptr;
-                ptr++;
-            }
-            
-            Marshal.FreeHGlobal(threadInfo);
-            return ret;
-        }
+                int count = 40;
+                int result = thread_info_custom(threadId, 3, threadInfo, ref count);
+                Console.WriteLine($"thread_info return value: {result}");
 
+                int[] ret = new int[10];
+                int* ptr = (int*) threadInfo.ToPointer();
+                for (int i = 0; i < 10; i++)
+                {
+                    ret[i] = *ptr;
+                    ptr++;
+                }
+                
+                return ret;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(threadInfo);
+            }
+        }
         
     }
 }
