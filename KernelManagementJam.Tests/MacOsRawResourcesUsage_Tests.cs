@@ -57,6 +57,8 @@ namespace KernelManagementJam.Tests
         [Test]
         public void _4_thread_info_Test3_Custom()
         {
+            if (!IsMacOs) return;
+
             int interval = 11;
             Stopwatch sw = Stopwatch.StartNew();
             for (int i = 0; sw.ElapsedMilliseconds < 6666; i++)
