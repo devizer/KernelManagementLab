@@ -35,7 +35,8 @@ namespace KernelManagementJam.ThreadInfo
                 return MacOsThreadInfo.GetByThread();
             
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                throw new NotImplementedException("CPU Usage in the scope of the thread is not yet implemented for Windows");
+                // throw new NotImplementedException("CPU Usage in the scope of the thread is not yet implemented for Windows");
+                return WindowsCpuUsage.Get();
             
             throw new InvalidOperationException($"CPU usage in the scope of {scope} is a kind of an unknown on the {CrossInfo.ThePlatform}");
         }
