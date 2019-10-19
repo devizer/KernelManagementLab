@@ -6,6 +6,7 @@ namespace KernelManagementJam.Tests
 {
     public class MacOsThreadInfo
     {
+        public static bool IsSupported => _IsSupported.Value;
         public static CpuUsage? GetByThread()
         {
             return Get();
@@ -32,6 +33,20 @@ namespace KernelManagementJam.Tests
 
             return null;
         }
+
+        private static Lazy<bool> _IsSupported = new Lazy<bool>(() =>
+        {
+            try
+            {
+                GetByThread();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        });
+
     }
     
     public class MacOsThreadInfoInterop
