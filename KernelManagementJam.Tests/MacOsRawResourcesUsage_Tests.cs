@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
 using Tests;
 
@@ -24,7 +22,7 @@ namespace KernelManagementJam.Tests
             Console.WriteLine($"mach_port_deallocate result: {resDe}");
         }
 
-        [Test, Ignore("doesnt work")]
+        /*[Test, Ignore("doesnt work")]*/
         public void _2_thread_info_Test1()
         {
             if (!IsMacOs) return;
@@ -51,8 +49,6 @@ namespace KernelManagementJam.Tests
             var raw = MacOsThreadInfoInterop.GetRawThreadInfo_Custom(threadId);
             var maxLen = raw.Select(x => x.ToString().Length).Max();
             Console.WriteLine("Thread Info: " + string.Join(" | ", raw.Select((x,i) => string.Format("{0,2}:{1,-" + maxLen + "}", i, x))));
-//            for(int i=0; i<raw.Length; i++)
-//                Console.Write($"  {i}: {raw[i]}");
             
             int resDe = MacOsThreadInfoInterop.mach_port_deallocate(MacOsThreadInfoInterop.mach_thread_self(), threadId);
             Console.WriteLine($"mach_port_deallocate result: {resDe}");
@@ -69,7 +65,6 @@ namespace KernelManagementJam.Tests
                 LoadThread(interval);
                 interval = Math.Min(interval * 2, 7777);
             }
-
         }
         
         static void LoadThread(long milliseconds)
@@ -77,7 +72,6 @@ namespace KernelManagementJam.Tests
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.ElapsedMilliseconds < milliseconds)
                 new Random().Next();
-            
         }
 
         
