@@ -58,7 +58,7 @@ namespace Tests
                     var delta = LinuxResources.Substruct(onEnd.Value, _LinuxResources_OnStart.Value);
                     var user = delta.UserUsage.TotalMicroSeconds / 1000d;
                     var kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
-                    cpuUsage = $" (user: {user:n3}; kernel: {kernel:n3} milliseconds)";
+                    cpuUsage = $" (user: {user:n3}; kernel: {kernel:n3} microseconds)";
                 }
             }
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {StartAt.Elapsed}{cpuUsage}{Environment.NewLine}");
