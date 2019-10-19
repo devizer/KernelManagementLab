@@ -7,6 +7,17 @@ namespace KernelManagementJam.ThreadInfo
 {
     public class CpuUsageReader
     {
+        public static CpuUsage? GetByProcess()
+        {
+            return Get(LinuxResourcesScope.Process);
+        }
+
+        // returns null on mac os x
+        public static CpuUsage? GetByThread()
+        {
+            return Get(LinuxResourcesScope.Thread);
+        }
+
         public static CpuUsage? Get(LinuxResourcesScope scope)
         {
             if (scope == LinuxResourcesScope.Process)

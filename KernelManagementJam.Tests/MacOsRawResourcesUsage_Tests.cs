@@ -10,7 +10,7 @@ using Tests;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class MacOsResourcesUsage_Tests : NUnitTestsBase
+    public class MacOsRawResourcesUsage_Tests : NUnitTestsBase
     {
         private static bool IsMacOs => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         

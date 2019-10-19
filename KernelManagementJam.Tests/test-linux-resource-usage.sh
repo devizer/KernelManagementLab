@@ -5,4 +5,4 @@ git clone https://github.com/devizer/KernelManagementLab
 cd KernelManagementLab/KernelManagementJam.Tests
 
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-git pull; time dotnet test --filter LinuxResourcesUsage | cat
+git pull; time dotnet test --filter Usage_Tests | cat

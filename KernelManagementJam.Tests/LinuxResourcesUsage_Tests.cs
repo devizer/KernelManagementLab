@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using KernelManagementJam.ThreadInfo;
@@ -33,7 +32,7 @@ namespace KernelManagementJam.Tests
             if (CrossInfo.ThePlatform != CrossInfo.Platform.MacOSX && CrossInfo.ThePlatform != CrossInfo.Platform.Linux)
                 return;
             
-            LoadThread(1);
+            CrossPlatformCpuUsage_Tests.LoadThread(1);
             LinuxResourcesScope scope = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX
                 ? LinuxResourcesScope.Process
                 : LinuxResourcesScope.Thread;
@@ -43,7 +42,7 @@ namespace KernelManagementJam.Tests
             var prev = LinuxResourceUsage.GetByScope(scope);
             for (int i = 0; i < 10; i++)
             {
-                LoadThread(9);
+                CrossPlatformCpuUsage_Tests.LoadThread(9);
                 CpuUsage? next = LinuxResourceUsage.GetByScope(scope);
                 Console.WriteLine($" {i} -> {next}");
                 Assert.GreaterOrEqual(next.Value.KernelUsage.TotalMicroSeconds, prev.Value.KernelUsage.TotalMicroSeconds);
@@ -116,13 +115,6 @@ namespace KernelManagementJam.Tests
             return b.ToString();
         }
 
-        static void LoadThread(long milliseconds)
-        {
-            Stopwatch sw = Stopwatch.StartNew();
-            while (sw.ElapsedMilliseconds < milliseconds)
-                new Random().Next();
-            
-        }
         
     }
 }
