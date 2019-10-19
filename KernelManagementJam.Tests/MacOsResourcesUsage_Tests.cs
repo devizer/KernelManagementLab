@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using KernelManagementJam.ThreadInfo;
@@ -57,6 +58,29 @@ namespace KernelManagementJam.Tests
             int resDe = MacOsThreadInfoInterop.mach_port_deallocate(MacOsThreadInfoInterop.mach_thread_self(), threadId);
             Console.WriteLine($"mach_port_deallocate result: {resDe}");
         }
+
+        [Test]
+        public void _4_thread_info_Test3_Custom()
+        {
+            int interval = 11;
+            for (int i = 0; i < 5; i++)
+            {
+                _3_thread_info_Test2_Custom();
+                LoadThread(interval);
+                interval = Math.Min(interval * 2, 1111);
+            }
+
+        }
+        
+        static void LoadThread(long milliseconds)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            while (sw.ElapsedMilliseconds < milliseconds)
+                new Random().Next();
+            
+        }
+
+        
     }
 
     class MacOsThreadInfoInterop
