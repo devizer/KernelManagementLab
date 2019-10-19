@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
 using Tests;
@@ -19,6 +20,12 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Grow_Usage_By_Process()
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.WriteLine("Ignored on Windows");
+                return;
+            }
+            
             GrowUsage_Impl(CpuUsageScope.Process);
         }
 
