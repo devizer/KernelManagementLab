@@ -20,7 +20,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Grow_Usage_By_Process()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (false && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 Console.WriteLine("Ignored on Windows");
                 return;
