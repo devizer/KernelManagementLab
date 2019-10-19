@@ -84,12 +84,12 @@ namespace KernelManagementJam.Tests
         }
 
         [DllImport("libc", SetLastError = true, EntryPoint = "thread_info")]
-        public static extern int thread_info_custom(int threadId, int flavor, IntPtr threadInfo, int count);
+        public static extern int thread_info_custom(int threadId, int flavor, IntPtr threadInfo, ref int count);
         public static unsafe int[] GetRawThreadInfo_Custom(int threadId)
         {
             IntPtr threadInfo = Marshal.AllocHGlobal(40);
             int count = 40;
-            int result = thread_info_custom(threadId, 3, threadInfo, count);
+            int result = thread_info_custom(threadId, 3, threadInfo, ref count);
             Console.WriteLine($"thread_info return value:${result}");
 
             int[] ret = new int[10];
