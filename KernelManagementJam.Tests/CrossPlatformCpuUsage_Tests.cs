@@ -31,10 +31,12 @@ namespace KernelManagementJam.Tests
 
         private static void GrowUsage_Impl(CpuUsageScope scope)
         {
-/*
-            if (CrossInfo.ThePlatform != CrossInfo.Platform.MacOSX && CrossInfo.ThePlatform != CrossInfo.Platform.Linux)
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows && scope == CpuUsageScope.Process)
+            {
+                Console.WriteLine("Ignored on Windows");
                 return;
-*/
+            }
+                
             
             LoadThread(1);
             Console.WriteLine($"Usage scope: {scope}");
