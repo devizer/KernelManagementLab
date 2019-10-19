@@ -47,7 +47,8 @@ namespace KernelManagementJam.ThreadInfo
 
     public enum LinuxResourcesScope
     {
-        Thread,
+        
+        Thread, // Is not supported by mac OS 
         Process,
     }
 
@@ -66,6 +67,7 @@ namespace KernelManagementJam.ThreadInfo
             return GetLinuxResourcesByScope(LinuxResourceUsageInterop.RUSAGE_SELF);
         }
 
+        // returns null on mac os x
         public static LinuxResources? GetByThread()
         {
             return GetLinuxResourcesByScope(LinuxResourceUsageInterop.RUSAGE_THREAD);

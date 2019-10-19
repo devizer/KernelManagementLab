@@ -54,11 +54,12 @@ namespace Tests
                 if (onEnd != null)
                 {
                     var delta = LinuxResources.Substruct(onEnd.Value, _LinuxResources_OnStart.Value);
-                    var user = delta.UserUsage.TotalMicroSeconds / 1000d;
-                    var kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
-                    cpuUsage = $" (user: {user:n3}, kernel: {kernel:n3} milliseconds)";
+                    double user = delta.UserUsage.TotalMicroSeconds / 1000d;
+                    double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
+                    cpuUsage = $" (cpu: {(user+kernel):n3} = {user:n3} (user) + {kernel:n3} (kernel) milliseconds)";
                 }
             }
+            
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} >{TestContext.CurrentContext.Result.Outcome.Status.ToString().ToUpper()}< in {StartAt.Elapsed}{cpuUsage}{Environment.NewLine}");
         }
 
@@ -71,6 +72,7 @@ namespace Tests
         [OneTimeTearDown]
         public void BaseOneTimeTearDown()
         {
+            // nothing todo
         }
         
         protected static bool IsDebug
