@@ -31,7 +31,7 @@ namespace KernelManagementJam.Tests
 
         private static void GrowUsage_Impl(CpuUsageScope scope)
         {
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows && scope == CpuUsageScope.Process)
+            if (false && CrossInfo.ThePlatform == CrossInfo.Platform.Windows && scope == CpuUsageScope.Process)
             {
                 Console.WriteLine("Ignored on Windows");
                 return;
@@ -56,7 +56,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Get_Process_Usage()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (false && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 Console.WriteLine("Ignored on Windows");
                 return;

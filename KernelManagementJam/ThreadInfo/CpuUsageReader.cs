@@ -25,7 +25,8 @@ namespace KernelManagementJam.ThreadInfo
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     return LinuxResourceUsage.GetByProcess();
                 else
-                    throw new NotSupportedException("CPU Usage in the scope of the process is supported on Linux and OS X only");
+                    // throw new NotSupportedException("CPU Usage in the scope of the process is supported on Linux and OS X only");
+                    return WindowsCpuUsage.Get(CpuUsageScope.Process);
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -36,7 +37,7 @@ namespace KernelManagementJam.ThreadInfo
             
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 // throw new NotImplementedException("CPU Usage in the scope of the thread is not yet implemented for Windows");
-                return WindowsCpuUsage.Get();
+                return WindowsCpuUsage.Get(CpuUsageScope.Thread);
             
             throw new InvalidOperationException($"CPU usage in the scope of {scope} is a kind of an unknown on the {CrossInfo.ThePlatform}");
         }
