@@ -117,6 +117,19 @@ namespace KernelManagementJam.Tests
         public static extern int thread_info_custom(int threadId, int flavor, IntPtr threadInfo, ref int count);
         public static unsafe int[] GetRawThreadInfo_Custom(int threadId)
         {
+            int[] raw = new int[10];
+            fixed (int* ptr = &raw[0])
+            {
+                int count = 40;
+                IntPtr threadInfo = new IntPtr(ptr);
+                int result = thread_info_custom(threadId, 3, threadInfo, ref count);
+                Console.WriteLine($"thread_info return value: {result}");
+                return raw;
+            }
+        }
+        
+        public static unsafe int[] GetRawThreadInfo_Custom_Legacy(int threadId)
+        {
             IntPtr threadInfo = Marshal.AllocHGlobal(40);
             try
             {
