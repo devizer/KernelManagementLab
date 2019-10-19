@@ -50,7 +50,7 @@ namespace KernelManagementJam.Tests
 
             var raw = MacOsThreadInfoInterop.GetRawThreadInfo_Custom(threadId);
             var maxLen = raw.Select(x => x.ToString().Length).Max();
-            Console.WriteLine("Thread Info: " + string.Join(", ", raw.Select((x,i) => string.Format("{0,-2}:{1,-" + maxLen + "}", i, x))));
+            Console.WriteLine("Thread Info: " + string.Join(" | ", raw.Select((x,i) => string.Format("{0,2}:{1,-" + maxLen + "}", i, x))));
 //            for(int i=0; i<raw.Length; i++)
 //                Console.Write($"  {i}: {raw[i]}");
             
