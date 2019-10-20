@@ -40,7 +40,7 @@ namespace KernelManagementJam
                     }
                 }
 
-                Console.WriteLine($"Stopwatch #{Id}: {Caption} in {msec:n2} msec {cpuUsage}");
+                Console.WriteLine($"Stopwatch #{Id}: {Caption} in {msec:n3} msec {cpuUsage}");
             }
             
             internal static CpuUsage? GetCpuUsage()
@@ -77,7 +77,7 @@ namespace KernelManagementJam
                         double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                         double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
                         double perCents = (user + kernel) / msec; 
-                        cpuUsage = $"{stopwatch.Elapsed} (cpu: {(perCents*100):f0}%, {(user+kernel):n3} = {user:n3} [user] + {kernel:n3} [kernel] milliseconds)";
+                        cpuUsage = $"{msec:n3} msec (cpu: {(perCents*100):f0}%, {(user+kernel):n3} = {user:n3} [user] + {kernel:n3} [kernel] milliseconds)";
                     }
                 }
 
