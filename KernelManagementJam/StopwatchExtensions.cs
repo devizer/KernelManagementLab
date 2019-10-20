@@ -95,7 +95,7 @@ namespace KernelManagementJam
 
             try
             {
-                ProcMountsSandbox.DumpProcMounts();
+                action();
                 var cpuUsage = getMetrics();
                 Console.WriteLine($"Stopwatch #{id}: {successCaption} in {cpuUsage}");
             }
