@@ -32,9 +32,10 @@ namespace KernelManagementJam
                     if (onEnd != null)
                     {
                         var delta = CpuUsage.Substruct(onEnd.Value, CpuUsageAtStart.Value);
+                        // milli seconds
                         double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                         double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
-                        double perCents = (user + kernel) / 1000d / (msec * 1000); 
+                        double perCents = (user + kernel) / msec; 
                         cpuUsage = $" (cpu: {(perCents*100):f0}%, {(user+kernel):n3} = {user:n3} [user] + {kernel:n3} [kernel] milliseconds)";
                     }
                 }
