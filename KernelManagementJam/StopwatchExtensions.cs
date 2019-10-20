@@ -40,7 +40,7 @@ namespace KernelManagementJam
                     }
                 }
 
-                Console.WriteLine($"Stopwatch #{Id}: {Caption} in {msec:n3} msec {cpuUsage}");
+                Console.WriteLine($"Stopwatch #{Id}: {Caption} in {msec:n3} msec{cpuUsage}");
             }
             
             internal static CpuUsage? GetCpuUsage()
@@ -66,7 +66,7 @@ namespace KernelManagementJam
             return () =>
             {
                 double msec = stopwatch.ElapsedTicks * 1000d / Stopwatch.Frequency;
-                string cpuUsage = "";
+                string cpuUsage = null;
                 if (atStart.HasValue)
                 {
                     var onEnd = CpuUsageReader.SafeGet(CpuUsageScope.Thread);
@@ -80,6 +80,9 @@ namespace KernelManagementJam
                         cpuUsage = $"{msec:n3} msec (cpu: {(perCents*100):f0}%, {(user+kernel):n3} = {user:n3} [user] + {kernel:n3} [kernel] milliseconds)";
                     }
                 }
+
+                if (cpuUsage == null)
+                    cpuUsage = $"{msec:n3} msec";
 
                 return cpuUsage;
             };
