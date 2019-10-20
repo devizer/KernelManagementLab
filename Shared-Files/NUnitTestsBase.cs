@@ -15,7 +15,7 @@ namespace Tests
 
         protected static TextWriter OUT;
         private Stopwatch StartAt;
-        private CpuUsage? _LinuxResources_OnStart;
+        private CpuUsage? _CpuUsage_OnStart;
         private int TestCounter = 0;
 
         [SetUp]
@@ -24,7 +24,7 @@ namespace Tests
             TestConsole.Setup();
             Environment.SetEnvironmentVariable("SKIP_FLUSHING", null);
             StartAt = Stopwatch.StartNew();
-            _LinuxResources_OnStart = GetLinuxResources();
+            _CpuUsage_OnStart = GetCpuUsage();
             Interlocked.Increment(ref TestCounter);
 
             var testClassName = TestContext.CurrentContext.Test.ClassName;
@@ -32,7 +32,7 @@ namespace Tests
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} @ {testClassName} starting...");
         }
 
-        CpuUsage? GetLinuxResources()
+        CpuUsage? GetCpuUsage()
         {
             try
             {
@@ -51,12 +51,12 @@ namespace Tests
         {
             TimeSpan elapsed = StartAt.Elapsed;
             string cpuUsage = "";
-            if (_LinuxResources_OnStart.HasValue)
+            if (_CpuUsage_OnStart.HasValue)
             {
-                var onEnd = GetLinuxResources();
+                var onEnd = GetCpuUsage();
                 if (onEnd != null)
                 {
-                    var delta = CpuUsage.Substruct(onEnd.Value, _LinuxResources_OnStart.Value);
+                    var delta = CpuUsage.Substruct(onEnd.Value, _CpuUsage_OnStart.Value);
                     double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                     double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
                     double perCents = (user + kernel) / 1000d / elapsed.TotalSeconds; 

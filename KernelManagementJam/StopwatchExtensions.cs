@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Threading;
+using KernelManagementJam.ThreadInfo;
 
 namespace KernelManagementJam
 {
@@ -11,6 +12,8 @@ namespace KernelManagementJam
         {
             internal string Caption = null;
             internal Stopwatch Stowatch = null;
+            internal CpuUsage? CpuUsageAtStart = null;
+            
             private static long Counter = 0;
             private long Id;
 
@@ -21,9 +24,38 @@ namespace KernelManagementJam
 
             public void Dispose()
             {
-                var msec = Stowatch.ElapsedTicks * 1000d / Stopwatch.Frequency;
-                Console.WriteLine($"Stopwatch #{Id}: {Caption} in {msec:n2} msec");
+                double msec = Stowatch.ElapsedTicks * 1000d / Stopwatch.Frequency;
+                string cpuUsage = "";
+                if (CpuUsageAtStart.HasValue)
+                {
+                    var onEnd = GetCpuUsage();
+                    if (onEnd != null)
+                    {
+                        var delta = CpuUsage.Substruct(onEnd.Value, CpuUsageAtStart.Value);
+                        double user = delta.UserUsage.TotalMicroSeconds / 1000d;
+                        double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
+                        double perCents = (user + kernel) / 1000d / (msec * 1000); 
+                        cpuUsage = $" (cpu: {(perCents*100):f0}%, {(user+kernel):n3} = {user:n3} [user] + {kernel:n3} [kernel] milliseconds)";
+                    }
+                }
+
+                Console.WriteLine($"Stopwatch #{Id}: {Caption} in {msec:n2} msec {cpuUsage}");
             }
+            
+            internal static CpuUsage? GetCpuUsage()
+            {
+                try
+                {
+                    // return LinuxResourceUsage.GetByThread();
+                    return CpuUsageReader.Get(CpuUsageScope.Thread);
+                }
+                catch
+                {
+                }
+
+                return null;
+            }
+
         }
         
         public static IDisposable ToConsole(string caption)
@@ -31,7 +63,8 @@ namespace KernelManagementJam
             return new Consolas
             {
                 Caption = caption, 
-                Stowatch = Stopwatch.StartNew()
+                Stowatch = Stopwatch.StartNew(),
+                CpuUsageAtStart = Consolas.GetCpuUsage(),
             };
         }
     }
