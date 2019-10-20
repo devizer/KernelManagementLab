@@ -18,6 +18,18 @@ namespace KernelManagementJam.ThreadInfo
             return Get(CpuUsageScope.Thread);
         }
 
+        public static CpuUsage? SafeGet(CpuUsageScope scope)
+        {
+            try
+            {
+                return Get(scope);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        
         public static CpuUsage? Get(CpuUsageScope scope)
         {
             if (scope == CpuUsageScope.Process)

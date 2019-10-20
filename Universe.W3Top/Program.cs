@@ -89,8 +89,25 @@ namespace Universe.W3Top
         {
             ThreadPool.QueueUserWorkItem(_ =>
             {
-                Stopwatch sw = Stopwatch.StartNew(); 
-                    
+/*
+                Stopwatch sw = Stopwatch.StartNew();
+*/
+
+                StopwatchLog.SafeToConsole(
+                    "ProcMountsParser(/proc/mounts) successfully pre-jitted",
+                    "ProcMountsParser(/proc/mounts) fails. Mounts page may not work properly.",
+                    () => { ProcMountsSandbox.DumpProcMounts(); });
+
+                StopwatchLog.SafeToConsole(
+                    "SysBlocksReader(/sys/block) successfully pre-jitted",
+                    "SysBlocksReader(/sys/block) fails. Live chart of the disk activity on may not work properly",
+                    () =>
+                    {
+                        List<WithDeviceWithVolumes> snapshot = SysBlocksReader.GetSnapshot();
+                        DebugDumper.Dump(snapshot, "SysBlocks.Snapshot.json");
+                    });
+
+/*
                 try
                 {
                     ProcMountsSandbox.DumpProcMounts();
@@ -98,7 +115,7 @@ namespace Universe.W3Top
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Warning! ProcMountsParser(/proc/mounts) fails. Mounts page may not work properly. " + ex.GetExceptionDigest() + Environment.NewLine + ex);
+                    Console.WriteLine("Warning!  " + ex.GetExceptionDigest() + Environment.NewLine + ex);
                 }
 
                 try
@@ -109,8 +126,9 @@ namespace Universe.W3Top
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Warning! SysBlocksReader(/sys/block) fails. Disks activity live chart page may not work properly. " + ex.GetExceptionDigest() + Environment.NewLine + ex);
+                    Console.WriteLine("Warning! SysBlocksReader(/sys/block) fails. live chart of the disk activity on may not work properly. " + ex.GetExceptionDigest() + Environment.NewLine + ex);
                 }
+*/
             });
         }
 
