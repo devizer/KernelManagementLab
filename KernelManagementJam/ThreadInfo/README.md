@@ -4,7 +4,7 @@ It receives the amount of time that the **thread/process** has executed in _**ke
 Works everywhere: Linux, OSX and Windows.
 
 ## Coverage
-Minimum OS requirements: Mac OS 10.9, Windows XP/2003, Linux Kernel 2.6.26
+Minimum OS requirements: Linux Kernel 2.6.26, Mac OS 10.9, Windows XP/2003
 
 Autotests using .NET Core cover:  
 - Linux on x64 using plenty linux distributions 
