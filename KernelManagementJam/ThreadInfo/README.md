@@ -1,5 +1,5 @@
 ## Crossplatform CPU Usage metrics
-It receives the amount of time that the **thread/process** has executed in _**kernel**_ and _**user**_ mode.
+It receives the amount of time that the current **thread/process** has executed in _**kernel**_ and _**user**_ mode.
 
 Works everywhere: Linux, OSX and Windows.
 
