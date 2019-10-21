@@ -24,10 +24,10 @@ build_script:
 # - dotnet build -c %CONFIGURATION% 
 
 after_build:
-- echo Im AFTER a BUILD
+- echo Im AFTER a BUILD. Nothing todo
 test_script:
-- ps: ls
-- dotnet test "KernelManagementJam.Tests\KernelManagementJam.Tests.csproj" -c %CONFIGURATION%
+- dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
+- dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
 artifacts:
 # - path: artifacts\**\*.*
 cache:
