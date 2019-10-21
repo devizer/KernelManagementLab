@@ -7,8 +7,8 @@ image:
 - Visual Studio 2019
 # - Ubuntu
 
-services:
-- mssql2008r2sp2
+# services:
+# - mssql2008r2sp2
       
 configuration: 
 #- Debug
@@ -22,6 +22,47 @@ init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
+- ps: |
+    $names = @();
+    foreach($path in @('HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server', 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Microsoft SQL Server')) {
+        try { $v = (get-itemproperty $path).InstalledInstances; $names += $v } catch {}
+    }
+
+    [System.Array]::Sort($names);
+    foreach($sqlname in $names) {
+        Write-Host "SQL: $sqlname"
+
+        [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | Out-Null
+        [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.SqlWmiManagement") | Out-Null
+
+        $serverName = $env:COMPUTERNAME
+        $instanceName = $name
+        $smo = 'Microsoft.SqlServer.Management.Smo.'
+        $wmi = new-object ($smo + 'Wmi.ManagedComputer')
+
+        # Enable TCP/IP
+        $uri = "ManagedComputer[@Name='$serverName']/ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Tcp']"
+        $Tcp = $wmi.GetSmoObject($uri)
+        $Tcp.IsEnabled = $true
+        $TCP.alter()
+
+        # Enable named pipes
+        $uri = "ManagedComputer[@Name='$serverName']/ ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Np']"
+        $Np = $wmi.GetSmoObject($uri)
+        $Np.IsEnabled = $true
+        $Np.Alter()
+
+        # Set Alias
+        # New-Item HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client -Name ConnectTo | Out-Null
+        # Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo -Name '(local)' -Value "DBMSSOCN,$serverName\$instanceName" | Out-Null
+
+        # Start services
+        Set-Service SQLBrowser -StartupType Manual
+        Start-Service SQLBrowser
+        Start-Service "MSSQL`$$instanceName"
+    }
+
+
 - ps: |
         "SQL SERVERS:"
         get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
