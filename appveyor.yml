@@ -55,11 +55,11 @@ init:
         # New-Item HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client -Name ConnectTo | Out-Null
         # Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo -Name '(local)' -Value "DBMSSOCN,$serverName\$instanceName" | Out-Null
 
-        # Start services
         Set-Service SQLBrowser -StartupType Manual
         Start-Service SQLBrowser
         Start-Service "MSSQL`$$instanceName"
     }
+    get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
 
 - ps: |
         "SQL SERVERS:"
