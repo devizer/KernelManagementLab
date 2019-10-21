@@ -1,7 +1,16 @@
 version: '1.0.{build}'
-configuration:
-- Debug
+
+image:
+- Visual Studio 2013
+- Visual Studio 2015
+- Visual Studio 2017
+- Visual Studio 2019
+- Ubuntu
+  
+configuration: 
+#- Debug
 - Release
+
 platform: Any CPU
 environment:
   # Don't report back to the mothership
