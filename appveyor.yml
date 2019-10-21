@@ -36,9 +36,8 @@ init:
         [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.SqlWmiManagement") | Out-Null
 
         $serverName = $env:COMPUTERNAME
-        $instanceName = $name
-        $smo = 'Microsoft.SqlServer.Management.Smo.'
-        $wmi = new-object ($smo + 'Wmi.ManagedComputer')
+        $instanceName = $sqlname
+        $wmi = new-object ('Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer')
 
         # Enable TCP/IP
         $uri = "ManagedComputer[@Name='$serverName']/ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Tcp']"
@@ -61,7 +60,6 @@ init:
         Start-Service SQLBrowser
         Start-Service "MSSQL`$$instanceName"
     }
-
 
 - ps: |
         "SQL SERVERS:"
