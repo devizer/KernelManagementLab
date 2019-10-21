@@ -23,6 +23,9 @@ init:
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
 - ps: |
+    Set-Service RemoteAccess -StartupType Manual
+    Start-Service RemoteAccess
+      
     $names = @();
     foreach($path in @('HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server', 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Microsoft SQL Server')) {
         try { $v = (get-itemproperty $path).InstalledInstances; $names += $v } catch {}
