@@ -1,12 +1,15 @@
 version: '1.0.{build}'
-max_jobs: 5
+max_jobs: 2
 image:
 - Visual Studio 2013
 - Visual Studio 2015
 - Visual Studio 2017
 - Visual Studio 2019
 # - Ubuntu
-  
+
+services:
+      - mssql2014
+      
 configuration: 
 #- Debug
 - Release
