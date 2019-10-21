@@ -11,9 +11,9 @@ init:
 before_build:
 - appveyor-retry dotnet restore -v Minimal
 build_script:
-- ps: cd KernelManagementJam.Tests
+# - ps: cd KernelManagementJam.Tests
 - dotnet --info
-- rem dotnet test -c %CONFIGURATION% 
+# - dotnet build -c %CONFIGURATION% 
 
 after_build:
 - echo Im AFTER a BUILD
