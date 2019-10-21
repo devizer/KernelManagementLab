@@ -39,17 +39,21 @@ init:
         $instanceName = $sqlname
         $wmi = new-object ('Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer')
 
-        # Enable TCP/IP
-        $uri = "ManagedComputer[@Name='$serverName']/ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Tcp']"
-        $Tcp = $wmi.GetSmoObject($uri)
-        $Tcp.IsEnabled = $true
-        $TCP.alter()
+        try {
+          # Enable TCP/IP
+          $uri = "ManagedComputer[@Name='$serverName']/ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Tcp']"
+          $Tcp = $wmi.GetSmoObject($uri)
+          $Tcp.IsEnabled = $true
+          $TCP.alter()
+        } catch {}
 
-        # Enable named pipes
-        $uri = "ManagedComputer[@Name='$serverName']/ ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Np']"
-        $Np = $wmi.GetSmoObject($uri)
-        $Np.IsEnabled = $true
-        $Np.Alter()
+        try {
+          # Enable named pipes
+          $uri = "ManagedComputer[@Name='$serverName']/ ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Np']"
+          $Np = $wmi.GetSmoObject($uri)
+          $Np.IsEnabled = $true
+          $Np.Alter()
+        } catch {}
 
         # Set Alias
         # New-Item HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client -Name ConnectTo | Out-Null
@@ -61,6 +65,7 @@ init:
         net start "MSSQL`$$instanceName"
     }
     get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
+    get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ne 42 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
 
 - ps: |
         "SQL SERVERS:"
