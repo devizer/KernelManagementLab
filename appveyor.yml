@@ -8,7 +8,7 @@ image:
 # - Ubuntu
 
 services:
-- mssql2014
+- mssql2008r2sp2
       
 configuration: 
 #- Debug
@@ -47,8 +47,9 @@ test_script:
 - dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
 - dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
 - ps: |
-      $Env:MSSQL_TEST_SERVER_2014="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!"
-      dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+    # $Env:MSSQL_TEST_SERVER_2014="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!"
+    $Env:MSSQL_TEST_SERVER_2008R2SP2="Server=(local)\SQL2008R2SP2;Database=master;UID=sa;PWD=Password12!"
+    dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
         
 artifacts:
 # - path: artifacts\**\*.*
