@@ -20,13 +20,8 @@ namespace KernelManagementJam.Tests
             {
                 if (threadId == 0) return null;
 
-                var raw = MacOsThreadInfoInterop.GetRawThreadInfo(threadId);
-                if (raw != null)
-                    return new CpuUsage()
-                    {
-                        UserUsage = new TimeValue() {Seconds = raw[0], MicroSeconds = raw[1]},
-                        KernelUsage = new TimeValue() {Seconds = raw[2], MicroSeconds = raw[3]},
-                    };
+                var ret = MacOsThreadInfoInterop.GetRawThreadInfo(threadId);
+                return ret;
             }
             finally
             {
@@ -85,8 +80,22 @@ namespace KernelManagementJam.Tests
         [DllImport("libc", SetLastError = true, EntryPoint = "thread_info")]
         public static extern int thread_info_custom(int threadId, int flavor, IntPtr threadInfo, ref int count);
 
-        public static unsafe int[] GetRawThreadInfo(int threadId)
+        public static unsafe CpuUsage? GetRawThreadInfo(int threadId)
         {
+#if NETCORE || NETSTANDARD 
+            int* ptr = stackalloc int[10];
+            {
+                int count = 40;
+                IntPtr threadInfo = new IntPtr(ptr);
+                int result = thread_info_custom(threadId, 3, threadInfo, ref count);
+                if (result != 0) return null;
+                return new CpuUsage()
+                {
+                    UserUsage = new TimeValue() {Seconds = *ptr, MicroSeconds = *(ptr+1)},
+                    KernelUsage = new TimeValue() {Seconds = *(ptr+2), MicroSeconds = *(ptr+3)},
+                };
+            }
+#else
             int[] raw = new int[10];
             fixed (int* ptr = &raw[0])
             {
@@ -94,8 +103,13 @@ namespace KernelManagementJam.Tests
                 IntPtr threadInfo = new IntPtr(ptr);
                 int result = thread_info_custom(threadId, 3, threadInfo, ref count);
                 if (result != 0) return null;
-                return raw;
+                return new CpuUsage()
+                {
+                    UserUsage = new TimeValue() {Seconds = raw[0], MicroSeconds = raw[1]},
+                    KernelUsage = new TimeValue() {Seconds = raw[2], MicroSeconds = raw[3]},
+                };
             }
+#endif                
         }
 
         public static unsafe int[] GetRawThreadInfo_Custom(int threadId)
@@ -111,30 +125,6 @@ namespace KernelManagementJam.Tests
             }
         }
 
-        public static unsafe int[] GetRawThreadInfo_Custom_Legacy(int threadId)
-        {
-            IntPtr threadInfo = Marshal.AllocHGlobal(40);
-            try
-            {
-                int count = 40;
-                int result = thread_info_custom(threadId, 3, threadInfo, ref count);
-                Console.WriteLine($"thread_info return value: {result}");
-
-                int[] ret = new int[10];
-                int* ptr = (int*) threadInfo.ToPointer();
-                for (int i = 0; i < 10; i++)
-                {
-                    ret[i] = *ptr;
-                    ptr++;
-                }
-
-                return ret;
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(threadInfo);
-            }
-        }
 
     }
 }

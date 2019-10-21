@@ -13,7 +13,7 @@ Autotests using .NET Core cover:
 
 x64 Windows and ARM 32-bit Linux are manually tested only. 
 
-It should support Linux x86 and BSD-like system with linux compatibility layer using mono, but was never tested. 
+It should be supported on Linux x86 and BSD-like system with linux compatibility layer using mono, but was never tested. 
  
 ## Implementation
 The implementation utilizes platform invocation of the corresponding system libraries depending on the OS:  
