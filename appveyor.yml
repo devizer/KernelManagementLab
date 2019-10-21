@@ -8,7 +8,7 @@ image:
 # - Ubuntu
 
 services:
-      - mssql2014
+- mssql2014
       
 configuration: 
 #- Debug
@@ -41,7 +41,11 @@ after_build:
 - echo Im AFTER a BUILD. Nothing todo
 test_script:
 - dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
-- dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+- ps: |
+      dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+      $Env:MSSQL_TEST_SERVER_2014="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!"
+      dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+        
 artifacts:
 # - path: artifacts\**\*.*
 cache:
