@@ -11,7 +11,7 @@ init:
 before_build:
 - appveyor-retry dotnet restore -v Minimal
 build_script:
-- cd KernelManagementJam.Tests
+- ps: cd KernelManagementJam.Tests
 - dotnet test -c %CONFIGURATION% --no-dependencies --version-suffix %LABEL%
 
 after_build:
