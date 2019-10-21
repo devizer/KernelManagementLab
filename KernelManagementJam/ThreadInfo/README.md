@@ -10,8 +10,9 @@ Autotests using .NET Core cover:
 - Linux on x64 using plenty linux distributions 
 - Linux on ARM 64-bit using Debian
 - OS X x64 10.13 & 10.14
+- Windows 2012 R2 (x64) 
 
-x64 Windows and ARM 32-bit Linux are manually tested only. 
+ARM 32-bit Linux is manually tested only (because multiarch docker images does not work properly) 
 
 It should be supported on Linux x86 and BSD-like system with linux compatibility layer using mono, but was never tested. 
  
