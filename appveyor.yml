@@ -10,9 +10,9 @@ init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - ps: pushd "$($Env:UserProfile)"
 - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
-- ps: ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '2.2.204';
+# - ps: ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '2.2.204';
 - ps: ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '3.0.100';
-- ps: $path="$($Env:UserProfile)\.dotnet;$($Env:PATH)"; "PATH is [$PATH]"; ${Env:PATH}=$path; [Environment]::SetEnvironmentVariable("PATH", $path, "User")
+- ps: $path="$($Env:UserProfile)\.dotnet;$($Env:UserProfile)\.dotnet\tools;$($Env:PATH)"; "PATH is [$PATH]"; ${Env:PATH}=$path; [Environment]::SetEnvironmentVariable("PATH", $path, "User")
 - ps: dotnet --info
 - ps: popd
     
