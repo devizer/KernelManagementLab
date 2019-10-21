@@ -22,6 +22,9 @@ init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"' 
 - ps: |
+        "SQL SERVERS:"
+        get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
+- ps: |
       pushd "$($Env:UserProfile)"
       Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '2.2.204';
@@ -31,9 +34,6 @@ init:
       popd
     
 before_build:
-- ps: |
-      "SQL SERVERS:"
-      get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
 - appveyor-retry dotnet restore -v Minimal
 build_script:
 # - ps: cd KernelManagementJam.Tests
