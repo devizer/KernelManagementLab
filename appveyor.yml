@@ -13,12 +13,12 @@ before_build:
 build_script:
 - ps: cd KernelManagementJam.Tests
 - dotnet --info
-- dotnet test -c %CONFIGURATION% 
+- rem dotnet test -c %CONFIGURATION% 
 
 after_build:
 - echo Im AFTER a BUILD
 test_script:
-- rem dotnet test "test\MyFirstUnitTests" -c %CONFIGURATION%
+- dotnet test "KernelManagementJam.Tests" -c %CONFIGURATION%
 artifacts:
 # - path: artifacts\**\*.*
 cache:
