@@ -11,6 +11,8 @@ init:
 - ps: pushd "$($Env:UserProfile)"
 - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
 - ps: ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '2.2.204';
+- ps: ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '3.0.100';
+- ps: dotnet --info
 - ps: popd
     
 before_build:

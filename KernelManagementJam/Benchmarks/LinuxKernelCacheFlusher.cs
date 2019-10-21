@@ -53,7 +53,7 @@ namespace KernelManagementJam.Benchmarks
                     p.Start();
                     p.WaitForExit();
 #if DEBUG
-                    Console.WriteLine($"Process [{info}] successfully finished in {sw.ElapsedMilliseconds:n0} milliseconds");
+                    Console.WriteLine($"Info: Process [{info}] successfully finished in {sw.ElapsedMilliseconds:n0} milliseconds");
 #endif
                     return p.ExitCode;
                 }
@@ -61,7 +61,7 @@ namespace KernelManagementJam.Benchmarks
             catch
             {
 #if DEBUG
-                Console.WriteLine($"Process [{info}] failed in {sw.ElapsedMilliseconds:n0} milliseconds");
+                Console.WriteLine($"Info: Process [{info}] failed in {sw.ElapsedMilliseconds:n0} milliseconds");
 #endif
                 return -1;
             }
