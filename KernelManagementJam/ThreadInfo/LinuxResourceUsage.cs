@@ -4,12 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace KernelManagementJam.ThreadInfo
 {
-    public enum CpuUsageScope
-    {
-        Thread, 
-        Process, // Is not implemented for Windows 
-    }
-
     public class LinuxResourceUsage
     {
 

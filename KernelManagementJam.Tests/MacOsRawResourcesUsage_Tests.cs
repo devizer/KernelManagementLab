@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
 using Tests;
 
@@ -30,7 +31,7 @@ namespace KernelManagementJam.Tests
             int threadId = MacOsThreadInfoInterop.mach_thread_self();
             Console.WriteLine($"Thread ID: {threadId}");
 
-            var raw = MacOsThreadInfoInterop.GetRawThreadInfo_Custom(threadId);
+            var raw = MacOsThreadInfoInterop.GetRawThreadInfo_ForTests(threadId);
             for(int i=0; i<raw.Length; i++)
                 Console.WriteLine($"  {i}: {raw[i]}");
             
@@ -46,7 +47,7 @@ namespace KernelManagementJam.Tests
             int threadId = MacOsThreadInfoInterop.mach_thread_self();
             Console.WriteLine($"Thread ID: {threadId}");
 
-            var raw = MacOsThreadInfoInterop.GetRawThreadInfo_Custom(threadId);
+            var raw = MacOsThreadInfoInterop.GetRawThreadInfo_ForTests(threadId);
             var maxLen = raw.Select(x => x.ToString().Length).Max();
             Console.WriteLine("Thread Info: " + string.Join(" | ", raw.Select((x,i) => string.Format("{0,2}:{1,-" + maxLen + "}", i, x))));
             

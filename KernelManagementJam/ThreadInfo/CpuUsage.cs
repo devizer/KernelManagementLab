@@ -44,4 +44,11 @@ namespace KernelManagementJam.ThreadInfo
             return $"{TotalMicroSeconds / 1000d:n3} milliseconds";
         }
     }
+    
+    public enum CpuUsageScope
+    {
+        Thread, 
+        Process,  
+    }
+
 }
