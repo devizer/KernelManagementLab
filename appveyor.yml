@@ -36,6 +36,7 @@ init:
     }
 
     [System.Array]::Sort($names);
+    $info=""; foreach($name in $names) { $info += " [$name]"; } Write-Host "Sql Servers: $info";
     foreach($sqlname in $names) {
         Write-Host "SQL: $sqlname"
 
