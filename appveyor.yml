@@ -24,7 +24,7 @@ after_build:
 - echo Im AFTER a BUILD
 test_script:
 - ps: ls
-- dotnet test "KernelManagementJam.Tests\KernelManagementJam.csproj" -c %CONFIGURATION%
+- dotnet test "KernelManagementJam.Tests\KernelManagementJam.Tests.csproj" -c %CONFIGURATION%
 artifacts:
 # - path: artifacts\**\*.*
 cache:
