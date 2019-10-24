@@ -1,5 +1,5 @@
-version: '1.0.{build}'
-max_jobs: 2
+version: 'W3Top Integration Tests #{build}'
+max_jobs: 1
 image:
 - Visual Studio 2017
 # - Ubuntu
