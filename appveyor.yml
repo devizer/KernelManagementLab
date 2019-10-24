@@ -1,19 +1,13 @@
 version: '1.0.{build}'
 max_jobs: 2
 image:
-- Visual Studio 2013
-- Visual Studio 2015
-- Visual Studio 2017
 - Visual Studio 2019
 # - Ubuntu
 
 services:
-    - mssql2014
-    - mssql2016
     - mssql2017
       
 configuration: 
-#- Debug
 - Release
 
 platform: Any CPU
@@ -25,6 +19,7 @@ init:
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
 - ps: |
+
     Set-Service RemoteAccess -StartupType Manual
     Start-Service RemoteAccess
     Set-Service NetTcpPortSharing -StartupType Manual
@@ -101,10 +96,15 @@ test_script:
 - dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
 - dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
 - ps: |
-    # $Env:MSSQL_TEST_SERVER_2014="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
-    $Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
+    # Tests using MSSQL Storage    
+    $Env:MSSQL_TEST_SERVER_2017="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
+    #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
     dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
         
+after_test:
+- ps: 
+    & "7z" a -t7z -mx=3 -ms=on "AppVeyor Build Folder.7z" .
+
 artifacts:
 # - path: artifacts\**\*.*
 cache:
@@ -112,3 +112,5 @@ cache:
 on_finish: # Run the demo to show that it works
 # - dotnet artifacts\ConsoleApplication\ConsoleApplication.dll
 
+artifacts:
+ - path: 'AppVeyor Build Folder.7z'
