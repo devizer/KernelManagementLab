@@ -102,7 +102,7 @@ test_script:
     dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
         
 after_test:
-- ps: 
+- ps: |
     & "7z" a -t7z -mx=3 -ms=on "AppVeyor Build Folder.7z" .
 
 artifacts:
