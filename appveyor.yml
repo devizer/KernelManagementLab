@@ -32,7 +32,7 @@ init:
 
     [System.Array]::Sort($names);
     $info=""; foreach($name in $names) { $info += " [$name]"; } Write-Host "Sql Servers: $info";
-    foreach($sqlname in $names) {
+    foreach($sqlname in <# $names #> @()) {
         if ($sqlname.Length -eq 0) { continue; }
         Write-Host "SQL: $sqlname"
 
