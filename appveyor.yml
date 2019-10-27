@@ -81,7 +81,7 @@ test_script:
       Say "Test using SQLite and pre-installed SQL2017"
       $Env:MSSQL_TEST_SERVER_2017="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
       #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
-    dotnet test $cmd_test_args
+      dotnet test $cmd_test_args
 - ps: |
 
     # install sql servers only if SQLite & tests pass
