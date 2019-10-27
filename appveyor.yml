@@ -1,6 +1,7 @@
 version: 'W3Top Integration Tests #{build}'
 max_jobs: 1
 image:
+# SQL Server 2019 needs the Visual Studio 2019 image
 - Visual Studio 2019
 
 services:
@@ -14,7 +15,7 @@ configuration:
 platform: Any CPU
 environment:
   # Install SQL Server Instances
-  # SqlServers: 'SqlServer 2019: SQL_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2'
+  # SqlServers: 'SqlServer 2019: DEVELOPER_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2'
   # SqlServers: 'SqlServer 2012: EXPRESS_2012'
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   matrix:
@@ -22,21 +23,23 @@ environment:
     - JOB: "Only SQLite 3.22"
       SqlServers: ''
 
-    - JOB: "Plus MySQL 5.7.27"
+      # Rest of MySQL Server versions are tested using travis-ci.org usaing docker on linux
+    - JOB: "Plus pre-installed MySQL 5.7.27"
       MYSQL_TEST_SERVER_1:       'Server=localhost;Database=mysql;Port=3306;Uid=root;Pwd=Password12!;Connect Timeout=15;Pooling=false;'
 
-    - JOB: "Plus Postgres SQL 9.6.9"
+      # Rest of Postgres SQL versions are tested using travis-ci.org usaing docker on linux
+    - JOB: "Plus pre-installed Postgres SQL 9.6.9"
       PGSQL_TEST_SERVER_1:       'Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=Password12!;Timeout=15;Pooling=false;'
 
     - JOB: "Plus pre-installed SQL2017"
       SqlServers: ''
       MSSQL_TEST_SERVER_2017:    'Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false'
 
-    - JOB: "Plus SQL 2019 RC Developer"
+    - JOB: "Plus new SQL 2019 RC Developer"
       SqlServers: 'SqlServer 2019 Developer: DEVELOPER_2019'
       MSSQL_TEST_SERVER_2019:    'Server=(local)\DEVELOPER_2019;    Integrated Security=SSPI;Pooling=false'
 
-    - JOB: 'Plus 5 SQL Servers: 2016, 2014, 2012, 2008 R2 & 2008'
+    - JOB: 'Plus new 5 SQL Servers: 2016, 2014, 2012, 2008 R2 & 2008'
       SqlServers: 'SqlServer 2016: EXPRESS_2016, SqlServer 2014: EXPRESS_2014, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008'
       MSSQL_TEST_SERVER_2016:    'Server=(local)\EXPRESS_2016;    Integrated Security=SSPI;Pooling=false'
       MSSQL_TEST_SERVER_2014:    'Server=(local)\EXPRESS_2014;    Integrated Security=SSPI;Pooling=false'
@@ -44,10 +47,9 @@ environment:
       MSSQL_TEST_SERVER_2008_R2: 'Server=(local)\EXPRESS_2008_R2; Integrated Security=SSPI;Pooling=false'
       MSSQL_TEST_SERVER_2008:    'Server=(local)\EXPRESS_2008;    Integrated Security=SSPI;Pooling=false'
 
-    - JOB: 'Plus SQL 2005 SP4 Express'
+    - JOB: 'Plus new SQL 2005 SP4 Express'
       SqlServers: 'SqlServer 2005: EXPRESS_2005'
       MSSQL_TEST_SERVER_2005:    'Server=(local)\EXPRESS_2005;    Integrated Security=SSPI;Pooling=false'
-
 
 init:
 - docker version -f '{{.Server.Experimental}}'
@@ -62,14 +64,6 @@ init:
     Write-Host "Downloading SQL Installer Scripts to: $Work" -ForegroundColor Cyan
     (new-object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/devizer/glist/master/bin/SQL-Express/Sql-Setup-Bootstrap.ps1', "$Work\Sql-Setup-Bootstrap.ps1")
     pushd $Work; . .\Sql-Setup-Bootstrap.ps1; popd
-
-- ps: |
-
-    # Set-Service RemoteAccess -StartupType Manual
-    # Start-Service RemoteAccess
-    # Set-Service NetTcpPortSharing -StartupType Manual
-    # Start-Service NetTcpPortSharing
-
       
 install:
 - ps: |
@@ -109,9 +103,6 @@ install:
       dotnet --info
       popd
 
-
-      
-
 before_build:
 - ps: 'Say ".net Restore"' 
 - appveyor-retry dotnet restore -v Minimal
@@ -125,7 +116,7 @@ test_script:
     # copy paste it too
     if ("$($Env:SqlServers)") {
         Upgrade-PSReadLine
-        Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ } 
+        Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ }
         Show-SqlServers
     }
     
@@ -141,7 +132,6 @@ after_test:
 cache:
 - '%USERPROFILE%\.nuget\packages -> appveyor.yml'
 on_finish: # Run the demo to show that it works
-# - dotnet artifacts\ConsoleApplication\ConsoleApplication.dll
 
 artifacts:
 # - path: artifacts\**\*.*
