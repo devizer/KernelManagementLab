@@ -60,12 +60,16 @@ test_script:
 - dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
 - dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
 - ps: |
+    # Tests using pre-installed MSSQL 2017
+    $Env:MSSQL_TEST_SERVER_2017="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
+    #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
+    dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+- ps: |
 
-    # install sql servers only if SQLite tests pass
+    # install sql servers only if SQLite & tests pass
     Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ }
 
-    # Tests using MSSQL Storage    
-    $Env:MSSQL_TEST_SERVER_2017="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
+    # Newly installer 3 SQL Servers
     $Env:MSSQL_TEST_SERVER_2019="Server=(local)\SQL_2019;Database=master;Integrated Security=SSPI;Pooling=false"
     $Env:MSSQL_TEST_SERVER_2012="Server=(local)\EXPRESS_2012;Integrated Security=SSPI;Pooling=false"
     $Env:MSSQL_TEST_SERVER_2008_R2="Server=(local)\EXPRESS_2008_R2;Integrated Security=SSPI;Pooling=false"
