@@ -2,7 +2,6 @@ version: 'W3Top Integration Tests #{build}'
 max_jobs: 1
 image:
 - Visual Studio 2019
-# - Ubuntu
 
 services:
     - mssql2017
@@ -18,17 +17,28 @@ environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   matrix:
 
-    - JOB: "Only SQLite and pre-installed SQL2017"
+    - JOB: "Only SQLite"
       SqlServers: ''
+
+    - JOB: "Plus pre-installed SQL2017"
+      SqlServers: ''
+      MSSQL_TEST_SERVER_2017: 'Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false'
 
     - JOB: "Plus SQL 2019 RC Developer"
       SqlServers: 'SqlServer 2019 Developer: DEVELOPER_2019'
+      MSSQL_TEST_SERVER_2019:    "Server=(local)\DEVELOPER_2019;    Integrated Security=SSPI;Pooling=false"
 
     - JOB: "Plus SQL 2016, 2014, 2012, 2008 R2 & 2008"
       SqlServers: 'SqlServer 2016: EXPRESS_2016, SqlServer 2014: EXPRESS_2014, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008'
+      MSSQL_TEST_SERVER_2016:    "Server=(local)\EXPRESS_2016;    Integrated Security=SSPI;Pooling=false"
+      MSSQL_TEST_SERVER_2014:    "Server=(local)\EXPRESS_2014;    Integrated Security=SSPI;Pooling=false"
+      MSSQL_TEST_SERVER_2012:    "Server=(local)\EXPRESS_2012;    Integrated Security=SSPI;Pooling=false"
+      MSSQL_TEST_SERVER_2008_R2: "Server=(local)\EXPRESS_2008_R2; Integrated Security=SSPI;Pooling=false"
+      MSSQL_TEST_SERVER_2008:    "Server=(local)\EXPRESS_2008;    Integrated Security=SSPI;Pooling=false"
 
     - JOB: "Plus SQL 2005 SP4 Express"
       SqlServers: 'SqlServer 2005: EXPRESS_2005'
+      MSSQL_TEST_SERVER_2012:    "Server=(local)\EXPRESS_2005;    Integrated Security=SSPI;Pooling=false"
 
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
@@ -64,12 +74,14 @@ init:
 
       
 - ps: |
+      Say "Installing dotnet core 2.2"
       pushd "$($Env:UserProfile)"
       Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
-      Say "Installing dotnet core 2.2"
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '2.2.204';
+      
       Say "Installing dotnet core 3.0"
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '3.0.100';
+      
       $path="$($Env:UserProfile)\.dotnet;$($Env:UserProfile)\.dotnet\tools;$($Env:PATH)"; ${Env:PATH}=$path; [Environment]::SetEnvironmentVariable("PATH", $path, "User")
       Say ".net core installed"
       dotnet --info
@@ -79,45 +91,20 @@ before_build:
 - ps: 'Say ".net Restore"' 
 - appveyor-retry dotnet restore -v Minimal
 build_script:
-# - ps: cd KernelManagementJam.Tests
-- dotnet --info
-# - dotnet build -c %CONFIGURATION% 
 
 after_build:
-- echo Im AFTER a BUILD. Nothing todo
-- ps:
 
 test_script:
-- ps: 'Say "Test KernelManagementJam.Tests"'
-- dotnet test --test-adapter-path:. --logger:Appveyor KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
-- ps: | 
-    # --test-adapter-path:. --logger:Appveyor
+- ps: 'Say "Test KernelManagementJam.Tests.csproj"'
+- dotnet test --test-adapter-path:. --logger:Appveyor KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c Release
+- ps: |
+    if ("$($Env:SqlServers)") {
+      Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ } 
+      Show-SqlServers
+    }
+    
+    Say "Test Universe.Dashboard.DAL.Tests.csproj"
     $cmd_test_args='dotnet test --test-adapter-path:. --logger:Appveyor Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c Release'
-    Say "Test using SQLite ONLY"
-    & cmd /c $cmd_test_args
-- ps: |
-      Say "Test using SQLite and pre-installed SQL2017"
-      $Env:MSSQL_TEST_SERVER_2017="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
-      #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
-      & cmd /c $cmd_test_args
-- ps: |
-
-    # install sql servers only if SQLite & tests pass
-    $prev_servers="SqlServer 2016: EXPRESS_2016, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008"
-    Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ } 
-      
-    Show-SqlServers
-
-    # Newly installer 3 SQL Servers
-    # $Env:MSSQL_TEST_SERVER_2019="Server=(local)\SQL_2019;Database=master;Integrated Security=SSPI;Pooling=false"
-    # $Env:MSSQL_TEST_SERVER_2019    ="Server=(local)\SQL_2019;        Integrated Security=SSPI;Pooling=false"
-    $Env:MSSQL_TEST_SERVER_2012    ="Server=(local)\EXPRESS_2012;    Integrated Security=SSPI;Pooling=false"
-    $Env:MSSQL_TEST_SERVER_2008    ="Server=(local)\EXPRESS_2008;    Integrated Security=SSPI;Pooling=false"
-    $Env:MSSQL_TEST_SERVER_2008_R2 ="Server=(local)\EXPRESS_2008_R2; Integrated Security=SSPI;Pooling=false"
-    # $Env:MSSQL_TEST_SERVER_2008_R2="Server=(local)\EXPRESS_2008_R2;Integrated Security=SSPI;Pooling=false"
-    # $Env:MSSQL_TEST_SERVER_LocalDB="Server=(localdb)\MSSQLLocalDB;Integrated Security=SSPI;Pooling=false"
-
-    #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
     & cmd /c $cmd_test_args
         
 after_test:
