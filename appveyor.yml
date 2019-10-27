@@ -92,7 +92,7 @@ install:
        $commands=@( "echo Hi", 'echo $BASH_VERSION', "uname -a", "cat /etc/*release", "find /", "cat /etc/apt/sources.list", "printrnv", 
                     "pwd", "ls", "ls -la", "ls /etc/apt", 'echo $(</etc/apt/sources.list)', 'lsb_release -a') 
        $commands=@( "echo Hi", 'echo $BASH_VERSION', "printenv")
-       $command | % {
+       $commands | % {
            $file_counter++;
            Say "Inspect $($image) Linux. #$($file_counter): $_"
            $file="Linux-Inspector-on-$($image)-$($file_counter).log"
