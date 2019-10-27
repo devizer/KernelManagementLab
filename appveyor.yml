@@ -52,10 +52,6 @@ environment:
 init:
 - docker version -f '{{.Server.Experimental}}'
 - docker version -f '{{.Server.Version}}'
-- ps: |
-    docker run -t --rm busybox "ls -la /usr/bin"
-    "WTH"
-
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
@@ -78,6 +74,13 @@ init:
             Say "PSReadLine Upgrade Failed. $($_.Exception.GetType().Name) $($_.Exception.Message)"
         }
     }
+
+- ps: |
+    Say "Pull ubuntu"; docker pull ubuntu;
+    Say "Inspect Linux"
+    docker run -t --rm ubuntu "find /" *> "Ubuntu-Files.log"
+
+    "WTH"
 
 
 - ps: |
@@ -123,8 +126,6 @@ test_script:
         
 after_test:
 - ps: |
-    Say "Inspect Linux"
-    docker run -t --rm busybox "find /" *> "Linux-Files.log"
     Say "Store project folder as 'AppVeyor Build Folder.7z' artifact"
     & "7z" a -t7z -mx=3 -ms=on "-xr!.git" "AppVeyor Build Folder.7z" .
 
