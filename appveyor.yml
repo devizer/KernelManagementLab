@@ -55,6 +55,7 @@ init:
 - ps: |
     & wsl "uname -a"
     docker run -t --rm busybox echo hello_world
+    docker run -t --rm busybox "uname -a"
     "WTH"
 
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
