@@ -1,84 +1,55 @@
-version: '1.0.{build}'
-max_jobs: 2
+version: 'W3Top Integration Tests #{build}'
+max_jobs: 1
 image:
-- Visual Studio 2013
-- Visual Studio 2015
-- Visual Studio 2017
 - Visual Studio 2019
 # - Ubuntu
 
 services:
-    - mssql2014
-    - mssql2016
     - mssql2017
       
 configuration: 
-#- Debug
 - Release
 
 platform: Any CPU
 environment:
-  # Don't report back to the mothership
+  # Install SQL Server Instances
+  # SqlServers: 'SqlServer 2019: SQL_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2'
+  # SqlServers: 'SqlServer 2012: EXPRESS_2012'
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
 - ps: |
-    Set-Service RemoteAccess -StartupType Manual
-    Start-Service RemoteAccess
-    Set-Service NetTcpPortSharing -StartupType Manual
-    Start-Service NetTcpPortSharing
-      
-    $names = @();
-    foreach($path in @('HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server', 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Microsoft SQL Server')) {
-        try { $v = (get-itemproperty $path).InstalledInstances; $names += $v } catch {}
+
+    # copy paste it
+    $Work="$($Env:LocalAppData)"; if ($Work -eq "") { $Work="$($Env:UserProfile)"; }; $Work="$Work\Temp\Sql-Installers"
+    if (-not (Test-Path $Work)) { New-Item -ItemType Directory -Path $Work -EA SilentlyContinue | out-null }
+    Write-Host "Downloading SQL Installer Scripts to: $Work" -ForegroundColor Cyan
+    (new-object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/devizer/glist/master/bin/SQL-Express/Sql-Setup-Bootstrap.ps1', "$Work\Sql-Setup-Bootstrap.ps1")
+    pushd $Work; . .\Sql-Setup-Bootstrap.ps1; popd
+
+    # copy paste it too
+    if ($Env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2019") {
+        try {
+            Say "Upgrading PSReadLine on '$($Env:APPVEYOR_BUILD_WORKER_IMAGE)' image"
+            Install-Module PSReadLine -AllowPrerelease -Force
+            Say "PSReadLine Upgraded"
+        } catch {
+            Say "PSReadLine Upgrade Failed. $($_.Exception.GetType().Name) $($_.Exception.Message)"
+        }
     }
 
-    [System.Array]::Sort($names);
-    $info=""; foreach($name in $names) { $info += " [$name]"; } Write-Host "Sql Servers: $info";
-    foreach($sqlname in $names) {
-        if ($sqlname.Length -eq 0) { continue; }
-        Write-Host "SQL: $sqlname"
-
-        [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | Out-Null
-        [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.SqlWmiManagement") | Out-Null
-
-        $serverName = $env:COMPUTERNAME
-        $instanceName = $sqlname
-        $wmi = new-object ('Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer')
-
-        # try {
-          # Enable TCP/IP
-          $uri = "ManagedComputer[@Name='$serverName']/ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Tcp']"
-          $Tcp = $wmi.GetSmoObject($uri)
-          $Tcp.IsEnabled = $true
-          # $TCP.alter()
-        # } catch {}
-
-        # try {
-          # Enable named pipes
-          $uri = "ManagedComputer[@Name='$serverName']/ ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Np']"
-          $Np = $wmi.GetSmoObject($uri)
-          $Np.IsEnabled = $true
-          $Np.Alter()
-        # } catch {}
-
-        # Set Alias
-        # New-Item HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client -Name ConnectTo | Out-Null
-        # Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo -Name '(local)' -Value "DBMSSOCN,$serverName\$instanceName" | Out-Null
-
-        Set-Service SQLBrowser -StartupType Manual
-        Start-Service SQLBrowser
-        Start-Service "MSSQL`$$instanceName"
-        net start "MSSQL`$$instanceName"
-    }
-    get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
-    get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ne 42 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
 
 - ps: |
-        "SQL SERVERS:"
-        get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
+
+    # Set-Service RemoteAccess -StartupType Manual
+    # Start-Service RemoteAccess
+    # Set-Service NetTcpPortSharing -StartupType Manual
+    # Start-Service NetTcpPortSharing
+
+      
 - ps: |
       pushd "$($Env:UserProfile)"
       Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
@@ -97,18 +68,43 @@ build_script:
 
 after_build:
 - echo Im AFTER a BUILD. Nothing todo
+- ps:
+
 test_script:
 - dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
 - dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
 - ps: |
-    # $Env:MSSQL_TEST_SERVER_2014="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
-    $Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
+    # Tests using pre-installed MSSQL 2017
+    $Env:MSSQL_TEST_SERVER_2017="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
+    #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
+    dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+- ps: |
+
+    # install sql servers only if SQLite & tests pass
+    Parse-SqlServers "SqlServer 2019: SQL_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008" | 
+          % { Install-SqlServer $_ }
+
+    # Newly installer 3 SQL Servers
+    # $Env:MSSQL_TEST_SERVER_2019="Server=(local)\SQL_2019;Database=master;Integrated Security=SSPI;Pooling=false"
+    $Env:MSSQL_TEST_SERVER_2019    ="Server=(local)\SQL_2019;        Integrated Security=SSPI;Pooling=false"
+    $Env:MSSQL_TEST_SERVER_2012    ="Server=(local)\EXPRESS_2012;    Integrated Security=SSPI;Pooling=false"
+    $Env:MSSQL_TEST_SERVER_2008    ="Server=(local)\EXPRESS_2008;    Integrated Security=SSPI;Pooling=false"
+    $Env:MSSQL_TEST_SERVER_2008_R2 ="Server=(local)\EXPRESS_2008_R2; Integrated Security=SSPI;Pooling=false"
+    # $Env:MSSQL_TEST_SERVER_2008_R2="Server=(local)\EXPRESS_2008_R2;Integrated Security=SSPI;Pooling=false"
+    # $Env:MSSQL_TEST_SERVER_LocalDB="Server=(localdb)\MSSQLLocalDB;Integrated Security=SSPI;Pooling=false"
+
+    #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
     dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
         
-artifacts:
-# - path: artifacts\**\*.*
+after_test:
+- ps: |
+    & "7z" a -t7z -mx=3 -ms=on "AppVeyor Build Folder.7z" .
+
 cache:
 - '%USERPROFILE%\.nuget\packages'
 on_finish: # Run the demo to show that it works
 # - dotnet artifacts\ConsoleApplication\ConsoleApplication.dll
 
+artifacts:
+# - path: artifacts\**\*.*
+ - path: 'AppVeyor Build Folder.7z'
