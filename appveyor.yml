@@ -56,6 +56,9 @@ init:
     & wsl "uname -a"
     docker run -t --rm busybox echo hello_world
     docker run -t --rm busybox "uname -a"
+    docker run -t --rm busybox "set"
+    docker run -t --rm busybox "printenv"
+
     "WTH"
 
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
