@@ -13,8 +13,10 @@ configuration:
 platform: Any CPU
 environment:
   # Install SQL Server Instances
-  SqlServers: 'SqlServer 2019: SQL_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2'
+  # SqlServers: 'SqlServer 2019: SQL_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2'
+  SqlServers: 'SqlServer 2012: EXPRESS_2012'
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
@@ -70,10 +72,10 @@ test_script:
     Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ }
 
     # Newly installer 3 SQL Servers
-    $Env:MSSQL_TEST_SERVER_2019="Server=(local)\SQL_2019;Database=master;Integrated Security=SSPI;Pooling=false"
+    # $Env:MSSQL_TEST_SERVER_2019="Server=(local)\SQL_2019;Database=master;Integrated Security=SSPI;Pooling=false"
     $Env:MSSQL_TEST_SERVER_2012="Server=(local)\EXPRESS_2012;Integrated Security=SSPI;Pooling=false"
-    $Env:MSSQL_TEST_SERVER_2008_R2="Server=(local)\EXPRESS_2008_R2;Integrated Security=SSPI;Pooling=false"
-    $Env:MSSQL_TEST_SERVER_LocalDB="Server=(localdb)\MSSQLLocalDB;Integrated Security=SSPI;Pooling=false"
+    # $Env:MSSQL_TEST_SERVER_2008_R2="Server=(local)\EXPRESS_2008_R2;Integrated Security=SSPI;Pooling=false"
+    # $Env:MSSQL_TEST_SERVER_LocalDB="Server=(localdb)\MSSQLLocalDB;Integrated Security=SSPI;Pooling=false"
 
     #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
     dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
