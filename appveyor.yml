@@ -91,7 +91,7 @@ before_build:
 - ps: 'Say ".net Restore"' 
 - appveyor-retry dotnet restore -v Minimal
 build_script:
-  - ps: 'Say "Building"'; dotnet build -c Release -v q
+  - ps: 'Say "Building"; dotnet build -c Release -v q'
     
 test_script:
 - ps: 'Say "Test KernelManagementJam.Tests.csproj"'
