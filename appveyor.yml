@@ -19,18 +19,18 @@ environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   matrix:
 
-    - JOB: "Only SQLite"
+    - JOB: "Only SQLite 3.22"
       SqlServers: ''
 
-    - JOB: "Plus MySQL"
-      MYSQL_TEST_SERVER_1: 'Server=localhost;Database=mysql;Port=3306;Uid=root;Pwd=Password12!;Connect Timeout=15;Pooling=false;'
+    - JOB: "Plus MySQL 5.7.27"
+      MYSQL_TEST_SERVER_1:       'Server=localhost;Database=mysql;Port=3306;Uid=root;Pwd=Password12!;Connect Timeout=15;Pooling=false;'
 
-    - JOB: "Plus Postgres SQL"
-      PGSQL_TEST_SERVER_1: 'Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=Password12!;Timeout=15;Pooling=false;'
+    - JOB: "Plus Postgres SQL 9.6.9"
+      PGSQL_TEST_SERVER_1:       'Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=Password12!;Timeout=15;Pooling=false;'
 
     - JOB: "Plus pre-installed SQL2017"
       SqlServers: ''
-      MSSQL_TEST_SERVER_2017: 'Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false'
+      MSSQL_TEST_SERVER_2017:    'Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false'
 
     - JOB: "Plus SQL 2019 RC Developer"
       SqlServers: 'SqlServer 2019 Developer: DEVELOPER_2019'
