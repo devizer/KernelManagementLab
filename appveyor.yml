@@ -1,7 +1,7 @@
 version: 'W3Top Integration Tests #{build}'
 max_jobs: 1
 image:
-- Visual Studio 2019
+- Visual Studio 2017
 # - Ubuntu
 
 services:
@@ -12,7 +12,8 @@ configuration:
 
 platform: Any CPU
 environment:
-  # Don't report back to the mothership
+  # Install SQL Server Instances
+  SqlServers: 'SqlServer 2019: SQL_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2'
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
@@ -20,60 +21,21 @@ init:
 - cmd: set
 - ps: |
 
+    # copy paste it
+    $Work="$($Env:LocalAppData)"; if ($Work -eq "") { $Work="$($Env:UserProfile)"; }; $Work="$Work\Temp\Sql-Installers"
+    if (-not (Test-Path $Work)) { New-Item -ItemType Directory -Path $Work -EA SilentlyContinue | out-null }
+    Write-Host "Downloading SQL Installer Scripts to: $Work" -ForegroundColor Cyan
+    (new-object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/devizer/glist/master/bin/SQL-Express/Sql-Setup-Bootstrap.ps1', "$Work\Sql-Setup-Bootstrap.ps1")
+    pushd $Work; . .\Sql-Setup-Bootstrap.ps1; popd
+
+- ps: |
+
     Set-Service RemoteAccess -StartupType Manual
     Start-Service RemoteAccess
     Set-Service NetTcpPortSharing -StartupType Manual
     Start-Service NetTcpPortSharing
+
       
-    $names = @();
-    foreach($path in @('HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server', 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Microsoft SQL Server')) {
-        try { $v = (get-itemproperty $path).InstalledInstances; $names += $v } catch {}
-    }
-
-    [System.Array]::Sort($names);
-    $info=""; foreach($name in $names) { $info += " [$name]"; } Write-Host "Sql Servers: $info";
-    foreach($sqlname in <# $names #> @()) {
-        if ($sqlname.Length -eq 0) { continue; }
-        Write-Host "SQL: $sqlname"
-
-        [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo") | Out-Null
-        [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.SqlWmiManagement") | Out-Null
-
-        $serverName = $env:COMPUTERNAME
-        $instanceName = $sqlname
-        $wmi = new-object ('Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer')
-
-        # try {
-          # Enable TCP/IP
-          $uri = "ManagedComputer[@Name='$serverName']/ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Tcp']"
-          $Tcp = $wmi.GetSmoObject($uri)
-          $Tcp.IsEnabled = $true
-          # $TCP.alter()
-        # } catch {}
-
-        # try {
-          # Enable named pipes
-          $uri = "ManagedComputer[@Name='$serverName']/ ServerInstance[@Name='$instanceName']/ServerProtocol[@Name='Np']"
-          $Np = $wmi.GetSmoObject($uri)
-          $Np.IsEnabled = $true
-          $Np.Alter()
-        # } catch {}
-
-        # Set Alias
-        # New-Item HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client -Name ConnectTo | Out-Null
-        # Set-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo -Name '(local)' -Value "DBMSSOCN,$serverName\$instanceName" | Out-Null
-
-        Set-Service SQLBrowser -StartupType Manual
-        Start-Service SQLBrowser
-        Start-Service "MSSQL`$$instanceName"
-        net start "MSSQL`$$instanceName"
-    }
-    get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
-    get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ne 42 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
-
-- ps: |
-        "SQL SERVERS:"
-        get-wmiobject win32_service | where {$_.Name.ToLower().IndexOf("sql") -ge 0 } | sort-object -Property "DisplayName" | ft Name, DisplayName, StartMode, State
 - ps: |
       pushd "$($Env:UserProfile)"
       Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
@@ -92,12 +54,27 @@ build_script:
 
 after_build:
 - echo Im AFTER a BUILD. Nothing todo
+- ps:
+    # install sql servers
+    $todo = Parse-SqlServers "$($Env:SqlServers)"
+    $todo | % { Install-SqlServer $_ }
+    $has_Local_DB = $todo | where { $_.Keys -contains "LocalDB" }
+    if (!$has_Local_DB) { 
+        Say "Pre-installed SqlLocalDB.exe: $(Find-SqlLocalDB-Exe)"
+        Hide-LocalDB-Servers
+    }
+
 test_script:
 - dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
 - dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
 - ps: |
     # Tests using MSSQL Storage    
     $Env:MSSQL_TEST_SERVER_2017="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
+    $Env:MSSQL_TEST_SERVER_2019="Server=(local)\SQL_2019;Database=master;Integrated Security=SSPI;Pooling=false"
+    $Env:MSSQL_TEST_SERVER_2012="Server=(local)\EXPRESS_2012;Integrated Security=SSPI;Pooling=false"
+    $Env:MSSQL_TEST_SERVER_2008_R2="Server=(local)\EXPRESS_2008_R2;Integrated Security=SSPI;Pooling=false"
+    $Env:MSSQL_TEST_SERVER_LocalDB="Server=(localdb)\MSSQLLocalDB;Integrated Security=SSPI;Pooling=false"
+
     #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
     dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
         
