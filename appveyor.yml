@@ -36,7 +36,7 @@ environment:
       SqlServers: 'SqlServer 2019 Developer: DEVELOPER_2019'
       MSSQL_TEST_SERVER_2019:    'Server=(local)\DEVELOPER_2019;    Integrated Security=SSPI;Pooling=false'
 
-    - JOB: "Plus SQL 2016, 2014, 2012, 2008 R2 & 2008"
+    - JOB: 'Plus 5 SQL Servers: 2016, 2014, 2012, 2008 R2 & 2008'
       SqlServers: 'SqlServer 2016: EXPRESS_2016, SqlServer 2014: EXPRESS_2014, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008'
       MSSQL_TEST_SERVER_2016:    'Server=(local)\EXPRESS_2016;    Integrated Security=SSPI;Pooling=false'
       MSSQL_TEST_SERVER_2014:    'Server=(local)\EXPRESS_2014;    Integrated Security=SSPI;Pooling=false'
@@ -52,7 +52,6 @@ environment:
 init:
 - docker version -f '{{.Server.Experimental}}'
 - docker version -f '{{.Server.Version}}'
-- ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
 - ps: |
@@ -64,17 +63,6 @@ init:
     (new-object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/devizer/glist/master/bin/SQL-Express/Sql-Setup-Bootstrap.ps1', "$Work\Sql-Setup-Bootstrap.ps1")
     pushd $Work; . .\Sql-Setup-Bootstrap.ps1; popd
 
-    # copy paste it too
-    if ($Env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2019") {
-        try {
-            Say "Upgrading PSReadLine on '$($Env:APPVEYOR_BUILD_WORKER_IMAGE)' image"
-            Install-Module PSReadLine -AllowPrerelease -Force
-            Say "PSReadLine Upgraded"
-        } catch {
-            Say "PSReadLine Upgrade Failed. $($_.Exception.GetType().Name) $($_.Exception.Message)"
-        }
-    }
-
 - ps: |
 
     # Set-Service RemoteAccess -StartupType Manual
@@ -85,22 +73,24 @@ init:
       
 install:
 - ps: |
-    docker version
-    $images=@("ubuntu", "debian", "centos") 
-    $images=@("alpine", "debian") 
-    $images | % { $image=$_
-       Say "Pull $image"; docker pull $image;
-       $file_counter=0;
-       $commands=@( "echo Hi", 'echo $BASH_VERSION', "uname -a", "cat /etc/*release", "find /", "cat /etc/apt/sources.list", "printrnv", 
-                    "pwd", "ls", "ls -la", "ls /etc/apt", 'echo $(</etc/apt/sources.list)', 'lsb_release -a') 
-       $commands=@( 'ls /etc', 'ls /usr/bin', 'ls -1 /usr/bin', "echo Hi", 'echo Bash Is $BASH_VERSION', "printenv")
-       $commands | % {
-           $file_counter++;
-           Say "Inspect $($image) Linux. #$($file_counter): $_"
-           $file="Linux-Inspector-on-$($image)-$($file_counter).log"
-           "Command: $_" > $file
-           docker run -t --rm ubuntu "$_" *>> $file
-       }
+    if $(false) {
+        docker version
+        $images=@("ubuntu", "debian", "centos") 
+        $images=@("alpine", "debian") 
+        $images | % { $image=$_
+           Say "Pull $image"; docker pull $image;
+           $file_counter=0;
+           $commands=@( "echo Hi", 'echo $BASH_VERSION', "uname -a", "cat /etc/*release", "find /", "cat /etc/apt/sources.list", "printrnv", 
+                        "pwd", "ls", "ls -la", "ls /etc/apt", 'echo $(</etc/apt/sources.list)', 'lsb_release -a') 
+           $commands=@( 'ls /etc', 'ls /usr/bin', 'ls -1 /usr/bin', "echo Hi", 'echo Bash Is $BASH_VERSION', "printenv")
+           $commands | % {
+               $file_counter++;
+               Say "Inspect $($image) Linux. #$($file_counter): $_"
+               $file="Linux-Inspector-on-$($image)-$($file_counter).log"
+               "Command: $_" > $file
+               docker run -t --rm ubuntu "$_" *>> $file
+           }
+        }
     }
 
     ""
@@ -132,9 +122,11 @@ test_script:
 - ps: 'Say "Test KernelManagementJam.Tests.csproj"'
 - dotnet test --test-adapter-path:. --logger:Appveyor KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c Release
 - ps: |
+    # copy paste it too
     if ("$($Env:SqlServers)") {
-      Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ } 
-      Show-SqlServers
+        Upgrade-PSReadLine
+        Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ } 
+        Show-SqlServers
     }
     
     Say "Test Universe.Dashboard.DAL.Tests.csproj"
