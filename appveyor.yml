@@ -76,10 +76,10 @@ after_build:
 
 test_script:
 - ps: 'Say "Test KernelManagementJam.Tests"'
-- dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
+- dotnet test --test-adapter-path:. --logger:Appveyor KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
 - ps: | 
     # --test-adapter-path:. --logger:Appveyor
-    $cmd_test_args='dotnet test Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c Release'
+    $cmd_test_args='dotnet test --test-adapter-path:. --logger:Appveyor Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c Release'
     Say "Test using SQLite ONLY"
     & cmd /c $cmd_test_args
 - ps: |
