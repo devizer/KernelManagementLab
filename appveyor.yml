@@ -54,7 +54,7 @@ init:
 - docker version -f '{{.Server.Version}}'
 - ps: |
     & wsl "uname -a"
-    docker run --rm busybox echo hello_world
+    docker run -t --rm busybox echo hello_world
     "WTH"
 
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
