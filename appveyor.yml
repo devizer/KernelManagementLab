@@ -90,7 +90,7 @@ install:
     $file_counter=0;
     @("uname -a", "cat /etc/*release", "find /", "cat /etc/apt/sources.list", "printrnv", "pwd", "ls", "ls -la") | % {
         $file_counter++;
-        Say "Inspect Linux. $file_counter: $_"
+        Say "Inspect Linux. #$($file_counter): $_"
         $file="Ubuntu-Inspector-$($file_counter).log"
         "Command: $_" > $file
         docker run -t --rm ubuntu "$_" *>> $file
