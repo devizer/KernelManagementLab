@@ -112,6 +112,13 @@ namespace Universe.Dashboard.DAL.Tests
 
             return ret;
         }
+        
+        class ErrorDetails
+        {
+            public EF.Family Family;
+            public string ConnectionString;
+            public Exception Exception;
+        }
 
         static void GracefulFail(string caption, Action action)
         {
@@ -144,13 +151,6 @@ namespace Universe.Dashboard.DAL.Tests
                     }
                 };
             }
-        }
-
-        class ErrorDetails
-        {
-            public EF.Family Family;
-            public string ConnectionString;
-            public Exception Exception;
         }
 
         public static DashboardContext CreateSqliteDbContext()
