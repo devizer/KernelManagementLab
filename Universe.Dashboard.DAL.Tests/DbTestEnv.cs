@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace Universe.Dashboard.DAL.Tests
             var dbNameFormat = $"W3Top_{{0}}_{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}";
             var providers = new IProvider4Tests[] { new MySqlProvider4Tests(), new PgSqlProvider4Tests(), new SqlServerProvider4Tests(), };
             var providerCounter = 0;
+            List<ErrorDetails> errors = new List<ErrorDetails>();
             foreach (var provider4Tests in providers)
             {
                 providerCounter++;
@@ -34,57 +36,78 @@ namespace Universe.Dashboard.DAL.Tests
                 {
                     versionCounter++;
                     var dbName = string.Format(dbNameFormat, $"{(char) (64 + providerCounter)}{(char) (48 + versionCounter)}");
-                    
-                    string shortVer;
-                    using (var con = provider4Tests.Provider4Runtime.CreateConnection(serverConnectionString))
-                        shortVer = provider4Tests.Provider4Runtime.GetShortVersion(con);
-                    
-                    var artifact = $"DB `{dbName}` on {provider4Tests.Provider4Runtime.GetServerName(serverConnectionString)} ver {shortVer}";
-
-                    var dbConnectionString = provider4Tests.CreateDatabase(serverConnectionString, dbName);
-
-
-                    Func<string, DashboardContext> newDbContext = delegate(string cs)
+                    try
                     {
-                        foreach (var pro in providers)
-                            Environment.SetEnvironmentVariable(pro.EnvVarName, null);
+                        string shortVer;
+                        using (var con = provider4Tests.Provider4Runtime.CreateConnection(serverConnectionString))
+                            shortVer = provider4Tests.Provider4Runtime.GetShortVersion(con);
 
-                        Environment.SetEnvironmentVariable(provider4Tests.EnvVarName, dbConnectionString);
-                        
-                        var optionsBuilder = new DbContextOptionsBuilder();
-                        provider4Tests.Provider4Runtime.ApplyDbContextOptions(optionsBuilder, cs);
-                        return new DashboardContext(optionsBuilder.Options);
-                    };
+                        var artifact =
+                            $"DB `{dbName}` on {provider4Tests.Provider4Runtime.GetServerName(serverConnectionString)} ver {shortVer}";
 
-                    if (provider4Tests.Provider4Runtime.Family == EF.Family.MySql)
-                    {
-                        GlobalCleanUp.Enqueue($"Dump {artifact}", () =>
+                        var dbConnectionString = provider4Tests.CreateDatabase(serverConnectionString, dbName);
+
+
+                        Func<string, DashboardContext> newDbContext = delegate(string cs)
                         {
-                            MySqlDumper.Dump(dbConnectionString, $"bin/Databases/MySQL-{shortVer}.sql");
+                            foreach (var pro in providers)
+                                Environment.SetEnvironmentVariable(pro.EnvVarName, null);
+
+                            Environment.SetEnvironmentVariable(provider4Tests.EnvVarName, dbConnectionString);
+
+                            var optionsBuilder = new DbContextOptionsBuilder();
+                            provider4Tests.Provider4Runtime.ApplyDbContextOptions(optionsBuilder, cs);
+                            return new DashboardContext(optionsBuilder.Options);
+                        };
+
+                        if (provider4Tests.Provider4Runtime.Family == EF.Family.MySql)
+                        {
+                            GlobalCleanUp.Enqueue($"Dump {artifact}",
+                                () => { MySqlDumper.Dump(dbConnectionString, $"bin/Databases/MySQL-{shortVer}.sql"); });
+                        }
+
+                        if (provider4Tests.Provider4Runtime.Family == EF.Family.PgSql)
+                        {
+                            GlobalCleanUp.Enqueue($"Dump {artifact}",
+                                () => { PgSqlDumper.Dump(dbConnectionString, $"bin/Databases/PgSQL-{shortVer}.sql"); });
+                        }
+
+                        GlobalCleanUp.Enqueue($"Delete {artifact}",
+                            () => { provider4Tests.DropDatabase(serverConnectionString, dbName); });
+
+                        var db = newDbContext(dbConnectionString);
+                        GracefulFail($"Apply migrations for {artifact}",
+                            () => provider4Tests.Provider4Runtime.Migrate(db, dbConnectionString));
+
+
+                        ret.Add(new TestDatabase()
+                        {
+                            Family = db.Database.GetFamily(),
+                            ShortVersion = shortVer,
+                            GetDashboardContext = () => newDbContext(dbConnectionString)
                         });
                     }
-
-                    if (provider4Tests.Provider4Runtime.Family == EF.Family.PgSql)
+                    catch (Exception ex)
                     {
-                        GlobalCleanUp.Enqueue($"Dump {artifact}", () =>
+                        errors.Add(new ErrorDetails()
                         {
-                            PgSqlDumper.Dump(dbConnectionString, $"bin/Databases/PgSQL-{shortVer}.sql");
+                            Exception = ex,
+                            ConnectionString = serverConnectionString,
+                            Family = provider4Tests.Provider4Runtime.Family, 
                         });
                     }
-                    
-                    GlobalCleanUp.Enqueue($"Delete {artifact}", () => { provider4Tests.DropDatabase(serverConnectionString, dbName); });
-
-                    var db = newDbContext(dbConnectionString);
-                    GracefulFail($"Apply migrations for {artifact}", () => provider4Tests.Provider4Runtime.Migrate(db, dbConnectionString));
-
-                    
-                    ret.Add(new TestDatabase()
-                    {
-                        Family = db.Database.GetFamily(),
-                        ShortVersion = shortVer,
-                        GetDashboardContext = () => newDbContext(dbConnectionString)
-                    });
                 }
+            }
+
+            if (errors.Count > 0)
+            {
+                var getFormatted = errors.Select((x, i) =>
+                    $" #{i}: {x.Family} [{x.ConnectionString}]: {x.Exception.GetExceptionDigest()}");
+
+                var msg =
+                    $"Total {errors.Count} database(s) are not accessible{Environment.NewLine}{string.Join(Environment.NewLine, getFormatted)}";
+                
+                throw new AggregateException(msg, errors.Select(x => x.Exception).ToArray());
             }
 
             return ret;
@@ -121,6 +144,13 @@ namespace Universe.Dashboard.DAL.Tests
                     }
                 };
             }
+        }
+
+        class ErrorDetails
+        {
+            public EF.Family Family;
+            public string ConnectionString;
+            public Exception Exception;
         }
 
         public static DashboardContext CreateSqliteDbContext()
