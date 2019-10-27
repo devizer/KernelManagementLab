@@ -108,6 +108,7 @@ test_script:
         
 after_test:
 - ps: |
+    Say "Store project folder as 'AppVeyor Build Folder.7z' artifact"
     & "7z" a -t7z -mx=3 -ms=on "AppVeyor Build Folder.7z" .
 
 cache:
