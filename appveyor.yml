@@ -58,6 +58,7 @@ init:
       Say "Installing dotnet core 3.0"
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '3.0.100';
       $path="$($Env:UserProfile)\.dotnet;$($Env:UserProfile)\.dotnet\tools;$($Env:PATH)"; ${Env:PATH}=$path; [Environment]::SetEnvironmentVariable("PATH", $path, "User")
+      Say ".net core installed"
       dotnet --info
       popd
     
