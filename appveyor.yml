@@ -76,14 +76,6 @@ init:
     }
 
 - ps: |
-    Say "Pull ubuntu"; docker pull ubuntu;
-    Say "Inspect Linux"
-    docker run -t --rm ubuntu "find /" *> "Ubuntu-Files.log"
-
-    "WTH"
-
-
-- ps: |
 
     # Set-Service RemoteAccess -StartupType Manual
     # Start-Service RemoteAccess
@@ -91,6 +83,14 @@ init:
     # Start-Service NetTcpPortSharing
 
       
+install:
+- ps: |
+    Say "Pull ubuntu"; docker pull ubuntu;
+    Say "Inspect Linux"
+    docker run -t --rm ubuntu "uname -a; echo ''; cat /etc/*release; echo ''; find /" *> "Ubuntu-Files.log"
+
+    ""
+
 - ps: |
       Say "Installing dotnet core 2.2"
       pushd "$($Env:UserProfile)"
@@ -104,7 +104,10 @@ init:
       Say ".net core installed"
       dotnet --info
       popd
-    
+
+
+      
+
 before_build:
 - ps: 'Say ".net Restore"' 
 - appveyor-retry dotnet restore -v Minimal
