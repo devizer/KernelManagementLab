@@ -86,15 +86,17 @@ init:
 install:
 - ps: |
     docker version
-    Say "Pull ubuntu"; docker pull ubuntu;
-    $file_counter=0;
-    @("uname -a", "cat /etc/*release", "find /", "cat /etc/apt/sources.list", "printrnv", 
-        "pwd", "ls", "ls -la", "ls /etc/apt", 'echo $(</etc/apt/sources.list)') | % {
-        $file_counter++;
-        Say "Inspect Linux. #$($file_counter): $_"
-        $file="Ubuntu-Inspector-$($file_counter).log"
-        "Command: $_" > $file
-        docker run -t --rm ubuntu "$_" *>> $file
+    @("ubuntu", "debian", "centos") | % { $image=$_
+       Say "Pull $image"; docker pull $image;
+       $file_counter=0;
+       @("uname -a", "cat /etc/*release", "find /", "cat /etc/apt/sources.list", "printrnv", 
+           "pwd", "ls", "ls -la", "ls /etc/apt", 'echo $(</etc/apt/sources.list)') | % {
+           $file_counter++;
+           Say "Inspect $(image) Linux. #$($file_counter): $_"
+           $file="Ubuntu-Inspector-$($file_counter).log"
+           "Command: $_" > $file
+           docker run -t --rm ubuntu "$_" *>> $file
+       }
     }
 
     ""
