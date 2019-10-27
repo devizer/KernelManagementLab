@@ -52,6 +52,8 @@ environment:
 init:
 - docker version -f '{{.Server.Experimental}}'
 - docker version -f '{{.Server.Version}}'
+- 'wsl "cat /etc/*release"'
+- 'wsl "uname -a"'
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
