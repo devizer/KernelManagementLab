@@ -26,11 +26,17 @@ matrix:
     os: osx
     osx_image: xcode10.2
 
+# https://docs.travis-ci.com/user/caching/
+cache:
+  directories:
+    - /home/travis/.cache/yarn
+    - /home/travis/.nuget/packages 
+
 before_script:
 - |
   mkdir -p ~/build-artifacts/screenshots
   exec &> >(tee ~/build-artifacts/full-build-log.log); exec 2>&1
-  echo "Build Started"
+  echo "Build Started. \$HOME is [$HOME]"
 - |
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     echo "127.0.0.1 w3top-build-server" | sudo tee -a /etc/hosts
