@@ -11,7 +11,9 @@ function run_sql_server() {
   [[ $exists == false ]] && (echo Creating SQL Server $name container using $image; eval "sudo docker pull $image $hide_pull"; sudo docker run -d --name $name -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=`1qazxsw2' -p $port:1433 $image ) || true
 }
 run_sql_server 'sql-2017-for-tests' 'microsoft/mssql-server-linux:2017-latest' 1434
-run_sql_server 'sql-2019-for-tests' 'mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu' 1435
+# run_sql_server 'sql-2019-for-tests' 'mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu' 1435
+run_sql_server 'sql-2019-for-tests' 'mcr.microsoft.com/mssql/server:2019-RC1-ubuntu' 1435
+
 
 export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
 url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests-V2.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
