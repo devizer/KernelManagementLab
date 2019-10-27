@@ -90,14 +90,14 @@ test_script:
 - ps: |
 
     # install sql servers only if SQLite & tests pass
-    Parse-SqlServers "SqlServer 2019: SQL_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008" | 
+    Parse-SqlServers "SqlServer 2016: EXPRESS_2016, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008" | 
           % { Install-SqlServer $_ }
       
     Show-SqlServers
 
     # Newly installer 3 SQL Servers
     # $Env:MSSQL_TEST_SERVER_2019="Server=(local)\SQL_2019;Database=master;Integrated Security=SSPI;Pooling=false"
-    $Env:MSSQL_TEST_SERVER_2019    ="Server=(local)\SQL_2019;        Integrated Security=SSPI;Pooling=false"
+    # $Env:MSSQL_TEST_SERVER_2019    ="Server=(local)\SQL_2019;        Integrated Security=SSPI;Pooling=false"
     $Env:MSSQL_TEST_SERVER_2012    ="Server=(local)\EXPRESS_2012;    Integrated Security=SSPI;Pooling=false"
     $Env:MSSQL_TEST_SERVER_2008    ="Server=(local)\EXPRESS_2008;    Integrated Security=SSPI;Pooling=false"
     $Env:MSSQL_TEST_SERVER_2008_R2 ="Server=(local)\EXPRESS_2008_R2; Integrated Security=SSPI;Pooling=false"
