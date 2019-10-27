@@ -85,9 +85,15 @@ init:
       
 install:
 - ps: |
+    docker version
     Say "Pull ubuntu"; docker pull ubuntu;
     Say "Inspect Linux"
-    docker run -t --rm ubuntu "uname -a; echo ''; cat /etc/*release; echo ''; find /" *> "Ubuntu-Files.log"
+    @("uname -a", "cat /etc/*release", "find /", "cat /etc/apt/sources.list", "printrnv", "pwd", "ls", "ls -la") | % {
+        Say "Inspect Linux: $_"
+        $file="Ubuntu-Inspector-$(++$file_counter).log"
+        "Command: $_" > $file
+        docker run -t --rm ubuntu "$_" *>> $file
+    }
 
     ""
 
