@@ -19,10 +19,6 @@ environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   matrix:
 
-    - JOB: 'Plus SQL 2005 SP4 Express'
-      SqlServers: 'SqlServer 2005: EXPRESS_2005'
-      MSSQL_TEST_SERVER_2005:    'Server=(local)\EXPRESS_2005;    Integrated Security=SSPI;Pooling=false'
-
     - JOB: "Only SQLite 3.22"
       SqlServers: ''
 
@@ -48,7 +44,14 @@ environment:
       MSSQL_TEST_SERVER_2008_R2: 'Server=(local)\EXPRESS_2008_R2; Integrated Security=SSPI;Pooling=false'
       MSSQL_TEST_SERVER_2008:    'Server=(local)\EXPRESS_2008;    Integrated Security=SSPI;Pooling=false'
 
+    - JOB: 'Plus SQL 2005 SP4 Express'
+      SqlServers: 'SqlServer 2005: EXPRESS_2005'
+      MSSQL_TEST_SERVER_2005:    'Server=(local)\EXPRESS_2005;    Integrated Security=SSPI;Pooling=false'
+
+
 init:
+- docker version -f '{{.Server.Experimental}}'
+- docker version -f '{{.Server.Version}}'
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
