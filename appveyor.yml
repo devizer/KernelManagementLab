@@ -73,13 +73,15 @@ after_build:
 test_script:
 - dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
 - ps: | 
+    # --test-adapter-path:. --logger:Appveyor
+    $cmd_test_args='Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c Release'
     Say "Test using SQLite ONLY"
-    dotnet test --test-adapter-path:. --logger:Appveyor Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+    dotnet test $cmd_test_args
 - ps: |
       Say "Test using SQLite and pre-installed SQL2017"
       $Env:MSSQL_TEST_SERVER_2017="Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false"
       #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
-      dotnet test --test-adapter-path:. --logger:Appveyor Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+    dotnet test $cmd_test_args
 - ps: |
 
     # install sql servers only if SQLite & tests pass
@@ -98,7 +100,7 @@ test_script:
     # $Env:MSSQL_TEST_SERVER_LocalDB="Server=(localdb)\MSSQLLocalDB;Integrated Security=SSPI;Pooling=false"
 
     #$Env:MSSQL_TEST_SERVER_1="Server=(local)\SQL2014;Database=master;UID=sa;PWD=Password12!;Pooling=false"
-    dotnet test --test-adapter-path:. --logger:Appveyor Universe.Dashboard.DAL.Tests\Universe.Dashboard.DAL.Tests.csproj -c %CONFIGURATION%
+    dotnet test $cmd_test_args
         
 after_test:
 - ps: |
