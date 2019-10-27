@@ -111,7 +111,7 @@ after_test:
     & "7z" a -t7z -mx=3 -ms=on "AppVeyor Build Folder.7z" .
 
 cache:
-- '%USERPROFILE%\.nuget\packages'
+- '%USERPROFILE%\.nuget\packages -> appveyor.yml'
 on_finish: # Run the demo to show that it works
 # - dotnet artifacts\ConsoleApplication\ConsoleApplication.dll
 
