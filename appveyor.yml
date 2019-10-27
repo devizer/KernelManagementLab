@@ -91,9 +91,8 @@ before_build:
 - ps: 'Say ".net Restore"' 
 - appveyor-retry dotnet restore -v Minimal
 build_script:
-
-after_build:
-
+  - ps: 'Say "Nothing to do for building"'
+    
 test_script:
 - ps: 'Say "Test KernelManagementJam.Tests.csproj"'
 - dotnet test --test-adapter-path:. --logger:Appveyor KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c Release
