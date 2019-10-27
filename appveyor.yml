@@ -74,6 +74,7 @@ after_build:
 - ps:
 
 test_script:
+- ps: 'Say "Test KernelManagementJam.Tests"'
 - dotnet test KernelManagementJam.Tests\KernelManagementJam.Tests.csproj -c %CONFIGURATION%
 - ps: | 
     # --test-adapter-path:. --logger:Appveyor
