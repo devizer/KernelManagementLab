@@ -55,7 +55,7 @@ init:
       Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
       Say "Installing dotnet core 2.2"
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '2.2.204';
-      Sat "Installing dotnet core 3.0"
+      Say "Installing dotnet core 3.0"
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '3.0.100';
       $path="$($Env:UserProfile)\.dotnet;$($Env:UserProfile)\.dotnet\tools;$($Env:PATH)"; ${Env:PATH}=$path; [Environment]::SetEnvironmentVariable("PATH", $path, "User")
       dotnet --info
