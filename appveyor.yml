@@ -86,12 +86,14 @@ init:
 install:
 - ps: |
     docker version
-    @("ubuntu", "debian", "centos") | % { $image=$_
+    $images=@("ubuntu", "debian", "centos") 
+    $images=@("alpine", "debian") 
+    $images | % { $image=$_
        Say "Pull $image"; docker pull $image;
        $file_counter=0;
        $commands=@( "echo Hi", 'echo $BASH_VERSION', "uname -a", "cat /etc/*release", "find /", "cat /etc/apt/sources.list", "printrnv", 
                     "pwd", "ls", "ls -la", "ls /etc/apt", 'echo $(</etc/apt/sources.list)', 'lsb_release -a') 
-       $commands=@( "echo Hi", 'echo $BASH_VERSION', "printenv")
+       $commands=@( 'ls /etc', 'ls /usr/bin', 'ls -1 /usr/bin', "echo Hi", 'echo Bash Is $BASH_VERSION', "printenv")
        $commands | % {
            $file_counter++;
            Say "Inspect $($image) Linux. #$($file_counter): $_"
