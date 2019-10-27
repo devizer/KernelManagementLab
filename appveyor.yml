@@ -73,7 +73,7 @@ init:
       
 install:
 - ps: |
-    if $(false) {
+    if ($false) {
         docker version
         $images=@("ubuntu", "debian", "centos") 
         $images=@("alpine", "debian") 
