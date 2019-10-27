@@ -16,6 +16,19 @@ environment:
   # SqlServers: 'SqlServer 2019: SQL_2019, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2'
   # SqlServers: 'SqlServer 2012: EXPRESS_2012'
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  matrix:
+
+    - JOB: "Only SQLite and pre-installed SQL2017"
+      SqlServers: ''
+
+    - JOB: "Plus SQL 2019 RC Developer"
+      SqlServers: 'SqlServer 2019 Developer: DEVELOPER_2019'
+
+    - JOB: "Plus SQL 2016, 2014, 2012, 2008 R2 & 2008"
+      SqlServers: 'SqlServer 2016: EXPRESS_2016, SqlServer 2014: EXPRESS_2014, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008'
+
+    - JOB: "Plus SQL 2005 SP4 Express"
+      SqlServers: 'SqlServer 2005: EXPRESS_2005'
 
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
@@ -90,8 +103,8 @@ test_script:
 - ps: |
 
     # install sql servers only if SQLite & tests pass
-    Parse-SqlServers "SqlServer 2016: EXPRESS_2016, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008" | 
-          % { Install-SqlServer $_ }
+    $prev_servers="SqlServer 2016: EXPRESS_2016, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008"
+    Parse-SqlServers "$($Env:SqlServers)" | % { Install-SqlServer $_ } 
       
     Show-SqlServers
 
