@@ -6,6 +6,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="ThreadInfo\AdvancedStopwatch.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="ThreadInfo\AdvancedStopwatch.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     </ItemGroup>
