@@ -12,7 +12,10 @@ function run_sql_server() {
 }
 run_sql_server 'sql-2017-for-tests' 'microsoft/mssql-server-linux:2017-latest' 1434
 # run_sql_server 'sql-2019-for-tests' 'mcr.microsoft.com/mssql/server:2019-CTP3.2-ubuntu' 1435
-run_sql_server 'sql-2019-for-tests' 'mcr.microsoft.com/mssql/server:2019-RC1-ubuntu' 1435
+# run_sql_server 'sql-2019-for-tests' 'mcr.microsoft.com/mssql/server:2019-RC1-ubuntu' 1435
+run_sql_server 'sql-2019-for-tests' 'mcr.microsoft.com/mssql/server:2019-latest' 1435
+
+
 
 
 export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
@@ -30,7 +33,7 @@ export MSSQL_TEST_SERVER_2017
 ' >> $file
 
 # what the hell
-if [[ "${TRAVIS:-}" != "true" ]] || [[ "$(lsb_release -cs)" == "trusty" ]]; then
+if true || [[ "${TRAVIS:-}" != "true" ]] || [[ "$(lsb_release -cs)" == "trusty" ]]; then
 echo '
 MSSQL_TEST_SERVER_2019="Server=localhost,1435;User=sa;Password=\`1qazxsw2;Pooling=false"
 export MSSQL_TEST_SERVER_2019
