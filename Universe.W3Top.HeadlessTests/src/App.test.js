@@ -32,6 +32,7 @@ const diskBenchmarkFullTest = async (context) => {
             await testSharedHeader(context); 
             await waitForMetrics(context);
         },
+        // If any element on speps below are missed then the last step with the BTN_DISK_BENCHMARK_ANOTHER button is never reached
         async () => await click('DISK_1'),
         async () => await click('BTN_DISK_BENCHMARK_NEXT'),
         async () => {

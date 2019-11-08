@@ -138,6 +138,11 @@ const validateOptions = (options) => {
         options.errors[name] = errorText;
         if (errorText) options.errors.isValid = false; 
     });
+
+    if (!options.errors.blockSize && Number(options.blockSize) % 512 != 0) {
+        options.errors.blockSize = "Should be multiplier of 512"; 
+        options.errors.isValid = false;
+    }
 };
 
 let timer = null; // for progress
