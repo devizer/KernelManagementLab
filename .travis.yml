@@ -212,6 +212,8 @@ script:
 - cat bintray.json || true
 - pwd; df -h; ls -la public-bintray/$ver
 - ls -la ~/build-artifacts
+- printenv | grep TRAVIS | sort
+- echo TRAVIS_TAG is $TRAVIS_TAG 
 
 deploy:
 
