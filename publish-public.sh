@@ -33,7 +33,11 @@ say "Loading source to [$work]"
 mkdir -p "$(dirname $work)"
 cd $(dirname $work);
 rm -rf $work;
-git clone https://github.com/devizer/KernelManagementLab;
+if [[ -n "$TRAVIS" ]]; then
+  git clone https://github.com/devizer/KernelManagementLab
+else
+  git clone git@github.com:devizer/KernelManagementLab
+fi
 cd KernelManagementLab
 # upgrade-2-to-3
 root=$(pwd)
