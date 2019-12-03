@@ -227,3 +227,4 @@ deploy:
   on:
     # condition: ($NEED_DEPLOY = sure) && ($TRAVIS_TEST_RESULT = 0)
     condition: ($TRAVIS_DIST = xenial) && ($TRAVIS_TEST_RESULT = 0) && (-n "$TRAVIS_TAG")
+    # tag =~ /^(v)/
