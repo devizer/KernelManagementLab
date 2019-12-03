@@ -33,6 +33,7 @@ matrix:
 #     - /home/travis/.nuget/packages 
 
 before_script:
+- 'script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash'
 - |
   mkdir -p ~/build-artifacts/screenshots
   exec &> >(tee ~/build-artifacts/full-build-log.log); exec 2>&1
@@ -44,20 +45,49 @@ before_script:
   fi
 - |
   if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
-    sudo apt-get -f install
-    sudo apt-get install libatk-bridge2.0-0 -y
+    try-and-retry sudo apt-get -f install
+    try-and-retry sudo apt-get install libatk-bridge2.0-0 -y
     export NEED_DEPLOY=sure  
     # export DISPLAY=:99.0
     # sh -e /etc/init.d/xvfb start
     sleep 3
     google-chrome-stable --version || true
   fi
+  
 - |
   # UPGRADE DOCKER
   echo "Docker server BEFORE [$(docker version --format '{{.Server.Version}}')]" || true
   # url=https://raw.githubusercontent.com/devizer/glist/master/install-docker-on-debian.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
   echo "Docker server AFTER [$(docker version --format '{{.Server.Version}}')]" || true
   
+- |
+  # install pv
+  echo "A. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
+  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    time try-and-retry brew install jq mysql-client pv pigz coreutils | grep 'jq\|mysql-client\|pv\|pigz\|coreutils'
+    echo "content of /usr/local/opt/coreutils/libexec/gnubin:"
+    ls -la /usr/local/opt/coreutils/libexec/gnubin
+    sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum || true
+
+    script=https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    # nvm install --lts node  # 10.16.3
+    nvm install node        # 12.12
+    try-and-retry npm install yarn npm npm-check-updates --global
+    node --version
+
+  else
+    sudo smart-apt-install jq pv mysql-client postgresql-client pigz 
+    ruby --version || true; gem --version || true
+    mysql --version
+    pg_dump --version; pg_dump --help
+    true
+  fi;
+  echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
+  # - time gem search dpl | grep  -E '^dpl' | sort || true;
+
 script:
 - export CI=false
 - google-chrome-stable --version || true
@@ -78,34 +108,6 @@ script:
   export CI=false
 
 - sudo ls -la || true; apt-cache policy dotnet-sdk-2.2 || true; apt-cache search dotnet-sdk || true
-
-- |
-  # install pv
-  echo "A. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
-  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    time brew install jq mysql-client pv pigz coreutils | grep 'jq\|mysql-client\|pv\|pigz\|coreutils'
-    echo "content of /usr/local/opt/coreutils/libexec/gnubin:"
-    ls -la /usr/local/opt/coreutils/libexec/gnubin
-    sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum || true
-  
-    script=https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-    # nvm install --lts node  # 10.16.3
-    nvm install node        # 12.12
-    npm install yarn npm npm-check-updates --global
-    node --version
-  
-  else
-    sudo apt-get install jq pv mysql-client postgresql-client pigz -y 
-    ruby --version || true; gem --version || true
-    mysql --version
-    pg_dump --version; pg_dump --help
-    true
-  fi;
-  echo "B. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
-  # - time gem search dpl | grep  -E '^dpl' | sort || true;
 
 - |
   # Install Build Tools
