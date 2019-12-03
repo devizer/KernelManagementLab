@@ -39,6 +39,7 @@ function new_dpl() {
 
 function old_dpl() {
     # sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases
+    dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN --file=./Universe.W3Top/bin/w3top*.tar.gz* --skip-cleanup --repo=devizer/$repo_name
     dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN --file=WHATSNEW.md --skip-cleanup --repo=devizer/$repo_name
 }
 
