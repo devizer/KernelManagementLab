@@ -33,7 +33,7 @@ say "Loading source to [$work]"
 mkdir -p "$(dirname $work)"
 cd $(dirname $work);
 rm -rf $work;
-if [[ -n "$TRAVIS" ]]; then
+if [[ -n "${TRAVIS:-}" ]]; then
   git clone https://github.com/devizer/KernelManagementLab
 else
   git clone git@github.com:devizer/KernelManagementLab
