@@ -39,15 +39,16 @@ function new_dpl() {
 
 function old_dpl() {
     # sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases
-    dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
+    for files in "./Universe.W3Top/bin/w3top*.tar.gz*" "WHATSNEW.md"; do
+      dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
         --file-glob=true \
         --overwrite=true \
-        --name="W3Top Stable v${ver}" \
-        --body="The stable update {ver}" \
-        --file=./Universe.W3Top/bin/w3top*.tar.gz* \
-        --skip-cleanup --repo=devizer/$repo_name
-        
-    dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN --file=WHATSNEW.md --skip-cleanup --repo=devizer/$repo_name
+        --name="W3Top Stable ${ver}" \
+        --body="The stable update. It is not supposed to direct downloading files here. Please take a look on installation options on https://github.com/devizer/w3top-bin" \
+        --file="$files" \
+        --skip-cleanup \
+        --repo=devizer/$repo_name
+    done
 }
 
 old_dpl
