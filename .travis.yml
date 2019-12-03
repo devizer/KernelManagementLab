@@ -226,4 +226,4 @@ deploy:
   skip_cleanup: true # to upload artifacts created during the build
   on:
     # condition: ($NEED_DEPLOY = sure) && ($TRAVIS_TEST_RESULT = 0)
-    condition: ($TRAVIS_DIST = xenial) && ($TRAVIS_TEST_RESULT = 0) && ($TRAVIS_TAG != "")
+    condition: ($TRAVIS_DIST = xenial) && ($TRAVIS_TEST_RESULT = 0) && (-n "$TRAVIS_TAG")
