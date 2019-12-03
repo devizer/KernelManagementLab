@@ -5,7 +5,7 @@ set -e
 set -u
 
 pushd build >/dev/null
-./inject-git-info.ps1
+# ./inject-git-info.ps1
 verFile=./AppGitInfo.json
 ver=$(cat $verFile | jq -r ".Version")
 popd >/dev/null
