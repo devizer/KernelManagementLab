@@ -25,50 +25,51 @@ namespace KernelManagementJam
                 if (line == null) break;
                 
                 // line should start from '{name}:'
-                var arr1 = line.Split(':');
-                if (arr1.Length < 2) continue;
-                var name = arr1[0].Trim();
+                var arrNameAndColumns = line.Split(':');
+                if (arrNameAndColumns.Length < 2) continue;
+                var name = arrNameAndColumns[0].Trim();
+                var rawWholeColumnsAsString = arrNameAndColumns[1].Trim();
                 
                 // name is not empty
                 if (string.IsNullOrEmpty(name)) continue;
                 
                 // counters count should be 16 (or above?) 
-                var arrRaw = arr1[1].Split(' ').Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
-                var l = arrRaw.Length;
-                if (l < 16) continue;
+                var arrColumnsAsStrings = rawWholeColumnsAsString.Split(' ').Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+                var columnsCount = arrColumnsAsStrings.Length;
+                if (columnsCount < 16) continue;
                 
                 // all the counters should be valid numbers
-                var arr = new long[l];
-                for (int i = 0; i < l && i < 16; i++)
+                var columnsAsLongs = new long[columnsCount];
+                for (int i = 0; i < columnsCount && i < 16; i++)
                 {
                     long longValue;
-                    if (!long.TryParse(arrRaw[i], out longValue))
+                    if (!long.TryParse(arrColumnsAsStrings[i], out longValue))
                         continue;
 
-                    arr[i] = longValue;
+                    columnsAsLongs[i] = longValue;
                 }
 
                 yield return new NetDevInterfaceRow()
                 {
                     Name  = name,                  // 0:
                                   
-                    RxBytes  = arr[0],             // 1
-                    RxPackets  = arr[1],           // 2
-                    RxErrors  = arr[2],            // 3
-                    RxDrops  = arr[3],             // 4
-                    RxFifoErrors  = arr[4],        // 5
-                    RxFrameErrors  = arr[5],       // 6
-                    RxCompressed  = arr[6],        // 7   
-                    Multicast  = arr[7],           // 8
+                    RxBytes  = columnsAsLongs[0],             // 1
+                    RxPackets  = columnsAsLongs[1],           // 2
+                    RxErrors  = columnsAsLongs[2],            // 3
+                    RxDrops  = columnsAsLongs[3],             // 4
+                    RxFifoErrors  = columnsAsLongs[4],        // 5
+                    RxFrameErrors  = columnsAsLongs[5],       // 6
+                    RxCompressed  = columnsAsLongs[6],        // 7   
+                    Multicast  = columnsAsLongs[7],           // 8
                                   
-                    TxBytes  = arr[8],             // 9
-                    TxPackets  = arr[9],           // 10
-                    TxErrors  = arr[10],           // 11
-                    TxDrops  = arr[11],            // 12
-                    TxFifoErrors  = arr[12],       // 13
-                    Collisions  = arr[13],         // 14
-                    TxHeartbeatErrors  = arr[14],  // 15
-                    TxCompressed  = arr[15],       // 16 
+                    TxBytes  = columnsAsLongs[8],             // 9
+                    TxPackets  = columnsAsLongs[9],           // 10
+                    TxErrors  = columnsAsLongs[10],           // 11
+                    TxDrops  = columnsAsLongs[11],            // 12
+                    TxFifoErrors  = columnsAsLongs[12],       // 13
+                    Collisions  = columnsAsLongs[13],         // 14
+                    TxHeartbeatErrors  = columnsAsLongs[14],  // 15
+                    TxCompressed  = columnsAsLongs[15],       // 16 
                 };
             }
         }
