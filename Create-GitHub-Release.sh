@@ -44,7 +44,7 @@ function old_dpl() {
         --file-glob=true \
         --overwrite=true \
         --name="W3Top Stable ${ver}" \
-        --body="It is not supposed to direct downloading files here. \n\nPlease take a look on installation options on \n\nhttps://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries" \
+        --body="It is not supposed to direct downloading files here. Please take a look on installation options on https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries" \
         --file="$files" \
         --skip-cleanup \
         --repo=devizer/$repo_name
