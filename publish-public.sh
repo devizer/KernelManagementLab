@@ -108,6 +108,9 @@ pushd $root/build
 bash delete-bintray-versions-except-stable.sh
 popd
 
+cd $root
+say "RUN Create-GitHub-Release.sh [$ver]"
+bash Create-GitHub-Release.sh
 
 say "DONE: [$ver]"
 
