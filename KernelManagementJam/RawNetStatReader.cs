@@ -28,30 +28,44 @@ namespace KernelManagementJam
                 line = Reader.ReadLine();
                 if (!string.IsNullOrWhiteSpace(line))
                     lines.Add(line);
+                
             } while (line != null);
 
             for (var i = 0; i < lines.Count - 1; i += 2)
             {
-                var arr1 = lines[i].Split(':');
-                var arr2 = lines[i + 1].Split(':');
-                if (arr1.Length == arr2.Length && arr1.Length == 2 && arr1[0] == arr2[0])
+                var arr1Names = lines[i].Split(':');
+                var arr2Values = lines[i + 1].Split(':');
+                if (arr1Names.Length == arr2Values.Length && arr1Names.Length == 2 && arr1Names[0] == arr2Values[0])
                 {
-                    var group = arr1[0];
-                    var keys = arr1[1].Split(' ').Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
-                    var values = arr2[1].Split(' ').Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+                    var group = arr1Names[0];
+                    var rawKeys = arr1Names[1].Split(' ');
+                    var keys = rawKeys.Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+                    var rawValues = arr2Values[1].Split(' ');
+                    var values = rawValues.Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
                     if (keys.Length != values.Length)
                     {
-                        Console.WriteLine("DIFFERENT LENGTH");
-                        Debugger.Break();
+                        var message = $"/proc/net/netstat is corrupted. " +
+                                      $"Number of keys [{keys.Length}] differs from number of values [{values.Length}]. " +
+                                      $"Keys: [{rawKeys}]. " +
+                                      $"Values: [{rawValues}]";
+                        
+                        throw new InvalidOperationException(message);
                     }
 
-                    for (var k = 0; k < keys.Length; k++) 
+                    for (var k = 0; k < keys.Length; k++)
+                    {
+                        if (!long.TryParse(values[k], out var longValue))
+                            throw new InvalidOperationException(
+                                $"/proc/net/netstat is corrupted. " +
+                                $"Value of {group}.{keys[k]} (position is {k}) should be a long value, but it is the [{values[k]}]");
+                        
                         NetStatItems.Add(new NetStatRow
                         {
-                            Group = group, 
-                            Key = keys[k], 
-                            Long = long.Parse(values[k])
+                            Group = group,
+                            Key = keys[k],
+                            Long = longValue
                         });
+                    }
                 }
             }
         }
