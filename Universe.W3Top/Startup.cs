@@ -1,15 +1,21 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using KernelManagementJam;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 using Polly;
 using Polly.Timeout;
 using Universe.Dashboard.Agent;
@@ -53,7 +59,6 @@ namespace Universe.W3Top
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
-                
             });
 
             
@@ -91,12 +96,21 @@ namespace Universe.W3Top
                 x.SupportedProtocols = new List<string>() {"longPolling"};
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
+            
+            
         }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
+            app.Use(async (context, next) =>
+            {
+                Action dumpHeaders = () => DumpHeaders(context);
+                dumpHeaders.RunOnly(count: 4, "Dump Request Headers for " + context.Request.Path + context.Request.PathBase);
+                await next.Invoke();
+            });
+
             app.UseMiddleware<PreventSpaHtmlCachingMiddleware>();
             
             if (!env.IsProduction())
@@ -164,6 +178,22 @@ namespace Universe.W3Top
                     this.PreJitAspNet();
                 });
 
+        }
+
+        static void DumpHeaders(HttpContext context)
+        {
+            StringBuilder info = new StringBuilder();
+            info.AppendLine($"About {context.Request.Method} {context.Request.GetDisplayUrl()}:");
+            int n = 0;
+            foreach (KeyValuePair<string,StringValues> header in context.Request.Headers)
+            {
+                foreach (var value in header.Value)
+                {
+                    info.AppendLine($"  - {header.Key} #{++n}: '{value}'");
+                }
+            }
+            
+            Console.WriteLine(info);
         }
     }
 }
