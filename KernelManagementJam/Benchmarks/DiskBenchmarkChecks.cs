@@ -135,7 +135,7 @@ namespace KernelManagementJam.Benchmarks
         
         public static bool HasWritePermission(string folder)
         {
-            var fullFileName = Path.Combine(folder, "bnchmrk1.tmp");
+            var fullFileName = Path.Combine(folder, "bncmrk42.tmp");
             try
             {
                 using (FileStream fs = new FileStream(fullFileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
