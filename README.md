@@ -1,4 +1,7 @@
-## W3-Top [![Build Status](https://travis-ci.org/devizer/KernelManagementLab.svg?branch=master)](https://travis-ci.org/devizer/KernelManagementLab)
+## W3-Top 
+Current Build status: [![Build Status](https://travis-ci.org/devizer/KernelManagementLab.svg?branch=master)](https://travis-ci.org/devizer/KernelManagementLab)
+Stable version: [![Bintray](https://img.shields.io/bintray/v/devizer/W3-Top/W3Top)](https://bintray.com/devizer/W3-Top/W3Top)
+
 Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relies on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
 Supported architectures are restricted by dotnet-sdk: x86_64, arm and arm64.
