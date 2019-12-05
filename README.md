@@ -55,6 +55,6 @@ sudo rm -f /etc/systemd/system/w3top.service
 sudo rm -rf /opt/w3top
 ```
 
-### master branch [![Build Status](https://travis-ci.org/devizer/KernelManagementLab.svg?branch=master)](https://travis-ci.org/devizer/KernelManagementLab)
+### master branch &nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/devizer/KernelManagementLab.svg?branch=master)](https://travis-ci.org/devizer/KernelManagementLab)
 
 
