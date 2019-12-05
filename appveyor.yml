@@ -24,22 +24,22 @@ environment:
       SqlServers: ''
 
       # Rest of MySQL Server versions are tested using travis-ci.org usaing docker on linux
-    - JOB: "Plus pre-installed MySQL 5.7.27"
+    - JOB: "Pre-installed MySQL 5.7.27"
       MYSQL_TEST_SERVER_1:       'Server=localhost;Database=mysql;Port=3306;Uid=root;Pwd=Password12!;Connect Timeout=15;Pooling=false;'
 
       # Rest of Postgres SQL versions are tested using travis-ci.org usaing docker on linux
-    - JOB: "Plus pre-installed Postgres SQL 9.6.9"
+    - JOB: "Pre-installed Postgres SQL 9.6.9"
       PGSQL_TEST_SERVER_1:       'Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=Password12!;Timeout=15;Pooling=false;'
 
-    - JOB: "Plus pre-installed SQL2017"
+    - JOB: "Pre-installed MS SQL2017"
       SqlServers: ''
       MSSQL_TEST_SERVER_2017:    'Server=(local)\SQL2017;Database=master;User ID=sa;Password=Password12!;Pooling=false'
 
-    - JOB: "Plus new SQL 2019 RC Developer"
+    - JOB: "MS SQL 2019 Developer"
       SqlServers: 'SqlServer 2019 Developer: DEVELOPER_2019'
       MSSQL_TEST_SERVER_2019:    'Server=(local)\DEVELOPER_2019;    Integrated Security=SSPI;Pooling=false'
 
-    - JOB: 'Plus new 5 SQL Servers: 2016, 2014, 2012, 2008 R2 & 2008'
+    - JOB: '5 MS SQL Servers: 2016, 2014, 2012, 2008 R2 & 2008'
       SqlServers: 'SqlServer 2016: EXPRESS_2016, SqlServer 2014: EXPRESS_2014, SqlServer 2012: EXPRESS_2012, SqlServer 2008R2: EXPRESS_2008_R2, SqlServer 2008: EXPRESS_2008'
       MSSQL_TEST_SERVER_2016:    'Server=(local)\EXPRESS_2016;    Integrated Security=SSPI;Pooling=false'
       MSSQL_TEST_SERVER_2014:    'Server=(local)\EXPRESS_2014;    Integrated Security=SSPI;Pooling=false'
@@ -47,7 +47,7 @@ environment:
       MSSQL_TEST_SERVER_2008_R2: 'Server=(local)\EXPRESS_2008_R2; Integrated Security=SSPI;Pooling=false'
       MSSQL_TEST_SERVER_2008:    'Server=(local)\EXPRESS_2008;    Integrated Security=SSPI;Pooling=false'
 
-    - JOB: 'Plus new SQL 2005 SP4 Express'
+    - JOB: 'MS SQL 2005 SP4 Express'
       SqlServers: 'SqlServer 2005: EXPRESS_2005'
       MSSQL_TEST_SERVER_2005:    'Server=(local)\EXPRESS_2005;    Integrated Security=SSPI;Pooling=false'
 
