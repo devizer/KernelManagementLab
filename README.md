@@ -1,4 +1,4 @@
-## W3-Top &nbsp;&nbsp;&nbsp;[![W3Top Stable Version](https://img.shields.io/bintray/v/devizer/W3-Top/W3Top?label=Stable)](https://bintray.com/devizer/W3-Top/W3Top)
+## W3-Top &nbsp;&nbsp;&nbsp;[![W3Top Stable Version](https://img.shields.io/bintray/v/devizer/W3-Top/W3Top?label=Stable)](https://github.com/devizer/w3top-bin/blob/master/README.md#reinstallation-of-precompiled-binaries)
 
 Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relies on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
