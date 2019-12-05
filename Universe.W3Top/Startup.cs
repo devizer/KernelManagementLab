@@ -185,6 +185,9 @@ namespace Universe.W3Top
             StringBuilder info = new StringBuilder();
             info.AppendLine($"About {context.Request.Method} {context.Request.GetDisplayUrl()}:");
             int n = 0;
+            info.AppendLine($"  - Connection: {context.Connection}");
+            info.AppendLine($"  - Connection: {context.Connection?.GetType()}");
+            info.AppendLine($"  - Connection.RemoteIpAddress: {context.Connection?.RemoteIpAddress}");
             foreach (KeyValuePair<string,StringValues> header in context.Request.Headers)
             {
                 foreach (var value in header.Value)
