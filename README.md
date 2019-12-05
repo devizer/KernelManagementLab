@@ -1,6 +1,4 @@
-## W3-Top 
-Current Build status: [![Build Status](https://travis-ci.org/devizer/KernelManagementLab.svg?branch=master)](https://travis-ci.org/devizer/KernelManagementLab)
-Stable version: [![Bintray](https://img.shields.io/bintray/v/devizer/W3-Top/W3Top)](https://bintray.com/devizer/W3-Top/W3Top)
+## W3-Top [![W3Top Stable Version](https://img.shields.io/bintray/v/devizer/W3-Top/W3Top?label=W3Top%20Stable)](https://bintray.com/devizer/W3-Top/W3Top)
 
 Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relies on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
@@ -56,3 +54,7 @@ sudo systemctl disable w3top.service
 sudo rm -f /etc/systemd/system/w3top.service 
 sudo rm -rf /opt/w3top
 ```
+
+### master branch [![Build Status](https://travis-ci.org/devizer/KernelManagementLab.svg?branch=master)](https://travis-ci.org/devizer/KernelManagementLab)
+
+
