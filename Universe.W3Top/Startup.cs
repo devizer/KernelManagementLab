@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using KernelManagementJam;
+using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -195,6 +196,8 @@ namespace Universe.W3Top
                     info.AppendLine($"  - {header.Key} #{++n}: '{value}'");
                 }
             }
+
+            // info.AppendLine(context.AsJson());
             
             Console.WriteLine(info);
         }
