@@ -40,13 +40,18 @@ export MSSQL_TEST_SERVER_2019
 ' >> $file
 fi
 
+# postgres 8.4 doesnt work on core 2 duo
+has_avx="$(lscpu | grep ' avx')"
+
 echo '
 # postgres' >> $file
 for p in {54321..54328}; do
   name="PGSQL_TEST_SERVER_$p"
   line="$name=\"Host=localhost;Port=$p;Database=postgres;Username=postgres;Password=pass;Timeout=15;Pooling=false;\""
-  echo "$line" >> $file
-  echo "export $name" >> $file
+  if [[ $p -ne 54328 ]] || [[ -n "$has_avx" ]]; then
+    echo "$line" >> $file
+    echo "export $name" >> $file
+  fi
 done
 
 echo '
