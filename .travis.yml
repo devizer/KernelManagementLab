@@ -215,7 +215,7 @@ script:
 - pwd; df -h; ls -la public-bintray/$ver
 - ls -la ~/build-artifacts
 - printenv | grep TRAVIS | sort
-- Show-System-Stat || true  
+- printf '"\n\nSYSTEM STAT\n"; Show-System-Stat || true '
 
 deploy:
 
