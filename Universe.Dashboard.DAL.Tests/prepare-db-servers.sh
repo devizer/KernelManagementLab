@@ -40,8 +40,10 @@ export MSSQL_TEST_SERVER_2019
 ' >> $file
 fi
 
+
 # postgres 8.4 doesnt work on core 2 duo
-has_avx="$(lscpu | grep ' avx')"
+has_avx=`lscpu | grep 'avx'` || true
+# [ -n "$has_avx" ] && echo "AVX is presented" || echo "AVX is absent"
 
 echo '
 # postgres' >> $file
@@ -64,3 +66,4 @@ for p in {3307..3311}; do
 done
 
 chmod +x $file
+echo "Completed: $file"
