@@ -7,13 +7,17 @@
         <AssemblyName>Universe.Benchmark</AssemblyName>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 
-  <ServerGarbageCollection>false</ServerGarbageCollection>
-  <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
-  <RetainVMGarbageCollection>false</RetainVMGarbageCollection>
-  <ThreadPoolMinThreads>8</ThreadPoolMinThreads>
-  <ThreadPoolMaxThreads>50</ThreadPoolMaxThreads>
+        <ServerGarbageCollection>false</ServerGarbageCollection>
+        <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+        <RetainVMGarbageCollection>false</RetainVMGarbageCollection>
+        <ThreadPoolMinThreads>20</ThreadPoolMinThreads>
+        <ThreadPoolMaxThreads>50</ThreadPoolMaxThreads>
 
     </PropertyGroup>
+
+    <ItemGroup>
+        <RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
+    </ItemGroup>
 
     <ItemGroup>
       <Compile Include="..\build\*.cs" />

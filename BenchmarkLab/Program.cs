@@ -178,7 +178,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
         {
 
             StringBuilder buf = new StringBuilder();
-            buf.AppendLine($"Disk: {Disk}, Size: {Formatter.FormatBytes(FileSize*1024L)}, Flavour: {Flavour}, Block: {BlockSize} bytes");
+            buf.AppendLine($"Disk: {Disk}, WorkingSet: {Formatter.FormatBytes(FileSize*1024L)}, Flavour: {Flavour}, Block: {BlockSize} bytes");
             foreach (var step in progress.Steps)
             {
                 var s = FormatStepAsHumanString(step);
