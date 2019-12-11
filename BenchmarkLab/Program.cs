@@ -123,21 +123,27 @@ If disk/volume supports compression it is important to specify a flavour of the 
                 WriteProgress(dbench.Progress.Clone());
             };
 
-            ThreadPool.QueueUserWorkItem(_ =>
             {
-                do
+                ThreadPool.QueueUserWorkItem(_ =>
                 {
-                    updateProgress();
-                } while (!done.WaitOne(499));
+                    do
+                    {
+                        if (!Console.IsOutputRedirected)
+                            updateProgress();
+                        else
+                            Console.Write(".");
+                    } while (!done.WaitOne(499));
 
-            });
-            
+                });
+            }
+
             ThreadPool.QueueUserWorkItem(_ => { 
                 dbench.Perform();
                 done.Set();
             });
 
             done.WaitOne();
+            if (Console.IsOutputRedirected) Console.WriteLine();
             updateProgress();
             return 0;
 
@@ -172,7 +178,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
                 buf.AppendLine(s);
             }
             
-            Console.Clear();
+            if (!Console.IsOutputRedirected) Console.Clear();
             Console.Write(buf);
         }
 
