@@ -134,7 +134,9 @@ If disk/volume supports compression it is important to specify a flavour of the 
                         var nextCompletedStep = dbench.Progress.Clone().LastCompleted;
                         if (nextCompletedStep != null && nextCompletedStep?.Name != prevCompletedStep?.Name)
                         {
+                            prevCompletedStep = nextCompletedStep; 
                             if (hasDotsBuffer) Console.WriteLine();
+                            
                             hasDotsBuffer = false;
                             Console.WriteLine(FormatStepAsHumanString(nextCompletedStep));
                         }
