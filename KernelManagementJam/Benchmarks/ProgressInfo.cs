@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Universe.DiskBench
 {
@@ -20,5 +21,7 @@ namespace Universe.DiskBench
 
             return new ProgressInfo() {IsCompleted = IsCompleted, Steps = steps};
         }
+
+        public ProgressStep LastCompleted => Steps.LastOrDefault(x => x.State == ProgressStepState.Completed);
     }
 }

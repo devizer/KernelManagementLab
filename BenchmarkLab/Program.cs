@@ -123,19 +123,33 @@ If disk/volume supports compression it is important to specify a flavour of the 
                 WriteProgress(dbench.Progress.Clone());
             };
 
+            bool hasDotsBuffer = false;
+            var prevCompletedStep = dbench.Progress.Clone().LastCompleted;
+            ThreadPool.QueueUserWorkItem(_ =>
             {
-                ThreadPool.QueueUserWorkItem(_ =>
+                do
                 {
-                    do
+                    if (Console.IsOutputRedirected)
                     {
-                        if (!Console.IsOutputRedirected)
-                            updateProgress();
-                        else
-                            Console.Write(".");
-                    } while (!done.WaitOne(499));
+                        var nextCompletedStep = dbench.Progress.Clone().LastCompleted;
+                        if (nextCompletedStep != null && nextCompletedStep?.Name != prevCompletedStep?.Name)
+                        {
+                            if (hasDotsBuffer) Console.WriteLine();
+                            hasDotsBuffer = false;
+                            Console.WriteLine(FormatStepAsHumanString(nextCompletedStep));
+                        }
+                    }
 
-                });
-            }
+                    if (!Console.IsOutputRedirected)
+                        updateProgress();
+                    else
+                    {
+                        Console.Write(".");
+                        hasDotsBuffer = true;
+                    }
+                } while (!done.WaitOne(499));
+
+            });
 
             ThreadPool.QueueUserWorkItem(_ => { 
                 dbench.Perform();
@@ -143,7 +157,7 @@ If disk/volume supports compression it is important to specify a flavour of the 
             });
 
             done.WaitOne();
-            if (Console.IsOutputRedirected) Console.WriteLine();
+            if (hasDotsBuffer && Console.IsOutputRedirected) Console.WriteLine();
             updateProgress();
             return 0;
 
@@ -165,21 +179,29 @@ If disk/volume supports compression it is important to specify a flavour of the 
             buf.AppendLine($"Disk: {Disk}, Size: {Formatter.FormatBytes(FileSize*1024L)}, Flavour: {Flavour}, Block: {BlockSize} bytes");
             foreach (var step in progress.Steps)
             {
-                var s = $"[{step.State}]".PadRight(12);
-                if (step.PerCents.HasValue) s += " " + ((step.PerCents.Value * 100).ToString("##0.0")).PadLeft(5) + "%";
-                if (step.Seconds.HasValue)
-                    s += " " + new DateTime(0).Add(TimeSpan.FromSeconds(step.Seconds.Value)).ToString("HH:mm:ss");
-
-                var b = step.Bytes == 0 || !step.Seconds.HasValue ? "" : Formatter.FormatBytes((long) (step.Bytes / step.Seconds.Value)) + "/s";
-                if (b != "") s += " " + b.PadLeft(9);
-
-                s += " " + step.Name;
+                var s = FormatStepAsHumanString(step);
 
                 buf.AppendLine(s);
             }
             
             if (!Console.IsOutputRedirected) Console.Clear();
             Console.Write(buf);
+        }
+
+        private static string FormatStepAsHumanString(ProgressStep step)
+        {
+            var s = $"[{step.State}]".PadRight(12);
+            if (step.PerCents.HasValue) s += " " + ((step.PerCents.Value * 100).ToString("##0.0")).PadLeft(5) + "%";
+            if (step.Seconds.HasValue)
+                s += " " + new DateTime(0).Add(TimeSpan.FromSeconds(step.Seconds.Value)).ToString("HH:mm:ss");
+
+            var b = step.Bytes == 0 || !step.Seconds.HasValue
+                ? ""
+                : Formatter.FormatBytes((long) (step.Bytes / step.Seconds.Value)) + "/s";
+            if (b != "") s += " " + b.PadLeft(9);
+
+            s += " " + step.Name;
+            return s;
         }
 
         static DataGeneratorFlavour ParseFlavour(string raw)
