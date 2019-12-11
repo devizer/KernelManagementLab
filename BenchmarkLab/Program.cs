@@ -51,8 +51,13 @@ namespace Universe.DiskBench
                 return 0;
             }
             
-            var theLogo = $@"Disk Benchmark [v{ver}] tool is a sandbox of the KernelManagementJam for w3top app";
+            var theLogo = $@"Disk Benchmark [v{ver}] tool is a console spinoff of the KernelManagementJam for w3top app";
             
+            if (!nologo)
+            {
+                Console.WriteLine(theLogo);
+            }
+
             if (help)
             {
                 p.WriteOptionDescriptions(Console.Out);
@@ -64,11 +69,6 @@ If disk/volume supports compression it is important to specify a flavour of the 
  - random (compression impossible)");
                 
                 return 0;
-            }
-
-            if (!nologo)
-            {
-                Console.WriteLine(theLogo);
             }
 
             
