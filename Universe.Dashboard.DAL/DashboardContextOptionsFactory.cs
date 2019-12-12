@@ -1,4 +1,5 @@
 using System;
+using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
 using Universe.Dashboard.DAL.MultiProvider;
 using EF = Universe.Dashboard.DAL.MultiProvider.EF;
@@ -25,7 +26,7 @@ namespace Universe.Dashboard.DAL
         {
             var runtimeParameters = RuntimeParameters;
             var f = runtimeParameters.Family;
-            Console.WriteLine($"F*A*M*I*L*Y: {f}");
+            FirstRound.RunOnce(() => Console.WriteLine($"Storage FAMILY: {f}"), "Startup: Show Storage Family");
             f.GetProvider().ApplyDbContextOptions(optionsBuilder, runtimeParameters.ConnectionString);
             optionsBuilder.EnableSensitiveDataLogging(true);
             return optionsBuilder;
