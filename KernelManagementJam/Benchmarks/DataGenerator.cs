@@ -20,8 +20,13 @@ namespace KernelManagementJam.Benchmarks
             {
                 case DataGeneratorFlavour.Random:
                 case DataGeneratorFlavour.StableRandom:
-                    Random rand = Flavour == DataGeneratorFlavour.StableRandom ? new Random(42) : new Random();
-                    rand.NextBytes(arg);
+                    // Random rand = Flavour == DataGeneratorFlavour.StableRandom ? new Random(42) : new Random();
+                    // rand.NextBytes(arg);
+                    ulong seed = Flavour == DataGeneratorFlavour.StableRandom 
+                        ? 42 :
+                        (ulong) new Random().Next(int.MaxValue-1);
+                    
+                    XorShiftRandom.FillByteArray(arg, seed);
                     return;
                 
                 case DataGeneratorFlavour.FortyTwo:
