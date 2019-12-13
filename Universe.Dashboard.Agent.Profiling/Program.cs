@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Microsoft.AspNetCore;
@@ -14,9 +15,6 @@ namespace Universe.Dashboard.Agent.Profiling
             p.WaitForExit();
             Console.WriteLine("Done!");
 
-            var webHost = CreateWebHostBuilder(args).Build();
-            PreciseTimer.Services = webHost.Services;
-            BlockDiskTimer.Process();
             RunBlockStat();
         }
 
@@ -27,12 +25,30 @@ namespace Universe.Dashboard.Agent.Profiling
 
         static void RunBlockStat()
         {
+            var webHost = CreateWebHostBuilder(new string[0]).Build();
+            PreciseTimer.Services = webHost.Services;
+            BlockDiskTimer.Process();
+
+            var atStart = CpuUsage.CpuUsage.GetByThread().Value;
+            int total = 0;
             while (true)
             {
-                var blockStatStorage = BlockDiskDataSource.Instance.By_1_Seconds;
-                var blockStatView = BlockDiskDataSourceView.AsViewModel(blockStatStorage);
+                
                 Thread.Sleep(1000);
-                Console.Write("." + blockStatStorage.Count);
+                List<BlockDiskDataSourcePoint> blockStatStorage = 
+                    new List<BlockDiskDataSourcePoint>(BlockDiskDataSource.Instance.By_1_Seconds);
+
+                for (int i = 0; i < 100; i++)
+                {
+                    var blockStatView = BlockDiskDataSourceView.AsViewModel(blockStatStorage);
+                    total++;
+                }
+
+                var next = CpuUsage.CpuUsage.GetByThread().Value;
+                var cpuUsage = CpuUsage.CpuUsage.Substruct(next, atStart);
+                Console.WriteLine($"{blockStatStorage.Count}: {total}, {cpuUsage}");
+
+                // if (blockStatStorage.Count >= 20 && Debugger.IsAttached) Debugger.Break();
             }
             
         }

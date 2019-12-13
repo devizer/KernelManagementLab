@@ -15,11 +15,11 @@ namespace Universe.Dashboard.Agent
         public static void Process()
         {
             Stopwatch sw = Stopwatch.StartNew();
-            
+
             List<WithDeviceWithVolumes> prev = SysBlocksReader.GetSnapshot();
             var prevTicks = sw.ElapsedTicks;
             var prevPlain = AsPlainVolsAndDisks(prev);
-            
+
             PreciseTimer.AddListener("SysBlock::Timer", () =>
             {
                 List<WithDeviceWithVolumes> next = SysBlocksReader.GetSnapshot();
@@ -27,7 +27,7 @@ namespace Universe.Dashboard.Agent
                 var nextPlain = AsPlainVolsAndDisks(next);
                 var at = DateTime.UtcNow;
                 double duration = (nextTicks - prevTicks) * 1d / Stopwatch.Frequency;
-                
+
                 DebugDumper.Dump(next, "SysBlock.Timer.Tick.Next.json");
                 // Console.WriteLine("SysBlock::Timer --> Temp Tick1");
 
@@ -47,7 +47,7 @@ namespace Universe.Dashboard.Agent
                         DiskVolKey = diskOrVolumeKey,
                         Stat = delta,
                     });
-                    
+
                     totals.Add(new DiskVolStatModel()
                     {
                         Kind = "Not Implemented",
@@ -57,7 +57,7 @@ namespace Universe.Dashboard.Agent
                 }
 
                 nextDelta = nextDelta.OrderBy(x => x.DiskVolKey).ToList();
-                
+
                 BlockDiskDataSourcePoint point = new BlockDiskDataSourcePoint()
                 {
                     At = at,
@@ -67,7 +67,7 @@ namespace Universe.Dashboard.Agent
                 var logBy1Seconds = BlockDiskDataSource.Instance.By_1_Seconds;
                 while (logBy1Seconds.Count >= 60 + 1)
                     logBy1Seconds.RemoveAt(0);
-                
+
                 logBy1Seconds.Add(point);
                 BlockDiskDataSource.Instance.Totals = totals;
 
@@ -78,13 +78,13 @@ namespace Universe.Dashboard.Agent
                 var viewModel1s = BlockDiskDataSourceView.AsViewModel(logBy1Seconds);
                 DebugDumper.Dump(viewModel1s, "Block.View.1s.json");
                 DebugDumper.Dump(viewModel1s, "Block.View.1s.min.json", minify: true);
-                
+
                 prev = next;
                 prevTicks = nextTicks;
                 prevPlain = nextPlain;
             });
         }
-        
+
         // Key:
         //      .VolumeKey for volumes
         //      .DiskKey for disks
@@ -97,7 +97,7 @@ namespace Universe.Dashboard.Agent
                 var volumes = block.Volumes
                     .Where(volume => !volume.StatisticSnapshot.Statistics.IsDead && IsActive(volume.StatisticSnapshot))
                     .ToArray();
-                
+
                 if (volumes.Length == 1)
                 {
                     var singleVolume = volumes.First();
@@ -105,10 +105,10 @@ namespace Universe.Dashboard.Agent
                     ret[singleVolume.VolumeKey] = volStat;
                     continue;
                 }
-                
+
                 if (!diskStat.IsDead && IsActive(block.StatisticSnapshot))
                     ret[block.DiskKey] = diskStat;
-                
+
                 foreach (WithVolumeInfo volume in volumes)
                 {
                     ret[volume.VolumeKey] = volume.StatisticSnapshot.Statistics;
@@ -135,14 +135,14 @@ namespace Universe.Dashboard.Agent
                     {
                         if (IsActive(singleVolume.StatisticSnapshot))
                             ret[singleVolume.VolumeKey] = volStat;
-                        
+
                         continue;
                     }
                 }
-                
+
                 if (!diskStat.IsDead && IsActive(block.StatisticSnapshot))
                     ret[block.DiskKey] = diskStat;
-                
+
                 foreach (WithVolumeInfo volume in block.Volumes)
                 {
                     if (!volume.StatisticSnapshot.Statistics.IsDead && IsActive(volume.StatisticSnapshot))
@@ -166,7 +166,7 @@ namespace Universe.Dashboard.Agent
             private const string VisibilityThresholdEnvName = "BLOCK_DEVICE_VISIBILITY_THRESHOLD";
             private const long DefaultBlockDeviceVisibilityThreshold = 2048;
 
-            public static long BlockDeviceVisibilityThreshold => _BlockDeviceVisibilityThreshold.Value;  
+            public static long BlockDeviceVisibilityThreshold => _BlockDeviceVisibilityThreshold.Value;
 
             private static Lazy<long> _BlockDeviceVisibilityThreshold = new Lazy<long>(() =>
             {
@@ -176,7 +176,6 @@ namespace Universe.Dashboard.Agent
                 Console.WriteLine($"BLOCK_DEVICE_VISIBILITY_THRESHOLD: {ret} Kb");
                 return ret;
             });
-            
         }
     }
-}   
+}
