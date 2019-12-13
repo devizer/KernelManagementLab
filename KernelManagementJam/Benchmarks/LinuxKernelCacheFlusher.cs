@@ -26,6 +26,9 @@ namespace KernelManagementJam.Benchmarks
             try
             {
                 File.WriteAllText("/proc/sys/vm/drop_caches", "1");
+                // sudo on Linux: ok
+                // non-sudo on Linux: fail
+                // macOS - fail
                 isDropOk = true;
             }
             catch
@@ -34,7 +37,7 @@ namespace KernelManagementJam.Benchmarks
 
             if (!isDropOk)
             {
-                StartAndIgnore("sudo", "sh -c \"echo 1 > /proc/sys/vm/drop_caches\"");
+                StartAndIgnore("sudo", "sh -c \"echo 1 > /proc/sys/vm/drop_caches; purge;\"");
             }
         }
         
