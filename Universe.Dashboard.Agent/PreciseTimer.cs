@@ -78,11 +78,15 @@ namespace Universe.Dashboard.Agent
                         // TODO: All the timers should be executed in a separate thread.
                         List<Timer> copyOfTimers;
                         lock(SyncTimers) copyOfTimers = new List<Timer>(Timers);
-                        foreach (var timer in copyOfTimers)
+                        foreach (Timer timer in copyOfTimers)
                         {
                             try
                             {
+                                Stopwatch sw = Stopwatch.StartNew();
                                 timer.Tick();
+#if DEBUG
+                                Console.WriteLine($"Timer {timer.Name} took {sw.ElapsedMilliseconds} milliseconds");
+#endif
                             }
                             catch (Exception ex)
                             {
