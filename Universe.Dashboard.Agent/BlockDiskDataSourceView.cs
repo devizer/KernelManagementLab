@@ -39,6 +39,13 @@ namespace Universe.Dashboard.Agent
                 new {Field = "InFlightRequests", GetField = (Func<BlockStatistics, long>) (row => row.InFlightRequests)},
             };
 
+            /*
+             * WAS:
+             * 61: 51000, {1,104,817.299 = 1,101,895.193 [user] + 2,922.106 [kernel] milliseconds}
+             * NOW:
+             * 61: 51000, {649,414.066 = 647,727.807 [user] + 1,686.259 [kernel] milliseconds}
+             */
+            
             // blockName: PublicFastBlockMetrics
             Dictionary<string, PublicFastBlockMetrics> fastBlocksView = new Dictionary<string, PublicFastBlockMetrics>();
             foreach (BlockDiskDataSourcePoint atStat in dataSource) // over point in time
