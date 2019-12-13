@@ -1,9 +1,12 @@
-﻿namespace Universe.Dashboard.Agent.Profiling
+﻿using System;
+
+namespace Universe.Dashboard.Agent.Profiling
 {
-    internal class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
+            Console.WriteLine("Hello World!");
         }
     }
 }
