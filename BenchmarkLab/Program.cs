@@ -33,9 +33,9 @@ namespace Universe.DiskBench
             var p = new OptionSet(StringComparer.InvariantCultureIgnoreCase)
             {
                 {"p|Path=", "Path ot disk. Default is current", v => Disk = v},
-                {"s|Size=", "Working Size (Kb) default is 4096*1024", v => FileSize = int.Parse(v)},
-                {"b|Block=", "Random access block size, default is 4096", v => BlockSize = int.Parse(v)},
-                {"t|Time=", "Random access duration (milliseconds), default is 30000", v => RandomDuration = int.Parse(v)},
+                {"s|Size=", "Working Set size (Kb) default is 4096*1024", v => FileSize = ValidateAndParse("Working Set Size", v)},
+                {"b|Block=", "Random access block size, default is 4096", v => BlockSize = ValidateAndParse("Random Access Block Size", v)},
+                {"t|Time=", "Random access duration (milliseconds), default is 30000", v => RandomDuration = ValidateAndParse("Random Access Duration", v)},
                 {"f|Flavour=", "Data flavour as random|42|lorem-ipsum|code, default is random", v => Flavour = ParseFlavour(v)},
                 {"d|Disable-O-DIRECT", "Disable O_DIRECT, default is auto-detect", v => DisableODirect = !string.IsNullOrEmpty(v)},
                 {"v|version", "Display version", v => version = v != null},
@@ -251,6 +251,14 @@ If disk/volume supports compression it is important to specify a flavour of the 
                 n++;
                 if (n % 1000 == 0) Console.Write ($"{(n/1000)}K ");
             }
+        }
+
+        static int ValidateAndParse(string parameterName, string raw)
+        {
+            if (int.TryParse(raw, out var ret))
+                return ret;
+            
+            throw new ArgumentException($"Incorrect parameter '{parameterName}'. The value '{raw}' is not valid integer.");
         }
         
     }
