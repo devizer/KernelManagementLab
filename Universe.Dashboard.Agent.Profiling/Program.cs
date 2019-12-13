@@ -11,9 +11,12 @@ namespace Universe.Dashboard.Agent.Profiling
     {
         static void Main(string[] args)
         {
-            var p = Process.Start("pseudo-root-fs.7z.exe", "-y");
-            p.WaitForExit();
-            Console.WriteLine("Done!");
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                var p = Process.Start("pseudo-root-fs.7z.exe", "-y");
+                p.WaitForExit();
+                Console.WriteLine("Pseudo Root FS on Windows extracted!");
+            }
 
             RunBlockStat();
         }
