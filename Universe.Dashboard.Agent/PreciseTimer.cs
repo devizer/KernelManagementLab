@@ -188,6 +188,10 @@ namespace Universe.Dashboard.Agent
                     // Disk = new Dictionary<string,object>()
                 };
                 
+                #if DEBUG
+                Console.WriteLine($"Background broadcast took {sw.ElapsedMilliseconds:n0} milliseconds");
+                #endif
+                
                 hubContext.Clients.All.SendAsync("ReceiveDataSource", broadcastMessage);
                 DebugDumper.Dump(broadcastMessage, "BroadcastMessage.json");
                 DebugDumper.Dump(broadcastMessage, "BroadcastMessage.min.json", minify: true);
