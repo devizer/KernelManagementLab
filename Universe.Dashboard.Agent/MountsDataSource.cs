@@ -50,8 +50,7 @@ namespace Universe.Dashboard.Agent
 
         static void Iteration()
         {
-            bool isWin = Environment.OSVersion.Platform == PlatformID.Win32NT;
-            IList<MountEntry> mounts = ProcMountsParser.Parse(isWin ? "mounts" : "/proc/mounts").Entries;
+            IList<MountEntry> mounts = ProcMountsParser.Parse(FakeRootFs.Transform("/proc/mounts")).Entries;
 
             ProcMountsAnalyzer analyz = ProcMountsAnalyzer.Create(mounts, skipDetailsLog: true);
 
