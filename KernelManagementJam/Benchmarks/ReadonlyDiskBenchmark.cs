@@ -75,10 +75,14 @@ namespace Universe.Benchmark.DiskBench
             };
         }
         
-        private FileOptions GenericFileStreamOptions =>
+        private FileOptions GenericReadingFileStreamOptions =>
             Environment.OSVersion.Platform == PlatformID.Win32NT
                 ? FileOptions.WriteThrough | (FileOptions) 0x20000000
                 : FileOptions.WriteThrough;
+
+        private FileOptions GenericWritingFileStreamOptions =>
+            FileOptions.WriteThrough;
+
         
         public void Perform()
         {
@@ -123,7 +127,7 @@ namespace Universe.Benchmark.DiskBench
                 foreach (var fileInfo in WorkingSet)
                 {
                     fileInfo.Stream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.Read,
-                        Parameters.RandomAccessBlockSize, GenericFileStreamOptions);
+                        Parameters.RandomAccessBlockSize, GenericReadingFileStreamOptions);
                     
                     totalSize += fileInfo.Size;
                     if (totalSize > Parameters.WorkingSetSize) break;
@@ -271,7 +275,7 @@ namespace Universe.Benchmark.DiskBench
             foreach (var fileInfo in WorkingSet)
             {
                 CancelIfRequested();
-                using (FileStream fs = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length, GenericFileStreamOptions))
+                using (FileStream fs = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length, GenericReadingFileStreamOptions))
                 {
                     long len = 0;
                     long fileLen = fileInfo.Size;
@@ -483,7 +487,7 @@ namespace Universe.Benchmark.DiskBench
             try
             {
                 byte[] buffer = new byte[1];
-                using (FileStream fs = new FileStream(fullName, FileMode.Open, FileAccess.Read, FileShare.Read, 1, GenericFileStreamOptions))
+                using (FileStream fs = new FileStream(fullName, FileMode.Open, FileAccess.Read, FileShare.Read, 1, GenericReadingFileStreamOptions))
                 {
                     fs.Read(buffer, 0, 1);
                     return true;

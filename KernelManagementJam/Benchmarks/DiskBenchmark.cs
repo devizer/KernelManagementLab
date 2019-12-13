@@ -111,10 +111,13 @@ namespace Universe.Benchmark.DiskBench
             };
         }
 
-        private FileOptions GenericFileStreamOptions =>
+        private FileOptions GenericReadingFileStreamOptions =>
             Environment.OSVersion.Platform == PlatformID.Win32NT
                 ? FileOptions.WriteThrough | (FileOptions) 0x20000000
                 : FileOptions.WriteThrough;
+
+        private FileOptions GenericWritingFileStreamOptions =>
+            FileOptions.WriteThrough;
         
         public void Perform()
         {
@@ -135,7 +138,7 @@ namespace Universe.Benchmark.DiskBench
             Func<FileStream> getFileWriter = () =>
             {
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
-                    this.Parameters.RandomAccessBlockSize, GenericFileStreamOptions);
+                    this.Parameters.RandomAccessBlockSize, GenericWritingFileStreamOptions);
             };
 
             Func<Stream> getFileReader = () =>
@@ -147,7 +150,7 @@ namespace Universe.Benchmark.DiskBench
                     return new LinuxDirectReadonlyFileStreamV2(TempFile, this.Parameters.RandomAccessBlockSize);
 
                 return new FileStream(TempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite,
-                    this.Parameters.RandomAccessBlockSize, GenericFileStreamOptions);
+                    this.Parameters.RandomAccessBlockSize, GenericReadingFileStreamOptions);
             };
 
             Func<Stream, byte[], int> doRead = (fs, buffer) =>
@@ -253,7 +256,7 @@ namespace Universe.Benchmark.DiskBench
             byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.WorkingSetSize)];
             // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
-            using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, GenericFileStreamOptions))
+            using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, GenericWritingFileStreamOptions))
             {
                 fs.Position = Parameters.WorkingSetSize - 1;
                 fs.WriteByte(0);
@@ -281,7 +284,7 @@ namespace Universe.Benchmark.DiskBench
             byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.WorkingSetSize)];
             // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
-            using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, GenericFileStreamOptions))
+            using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, GenericReadingFileStreamOptions))
             {
                 _allocate.Start();
                 long len = 0;
@@ -302,7 +305,7 @@ namespace Universe.Benchmark.DiskBench
         {
             LinuxKernelCacheFlusher.Sync();
             byte[] buffer = new byte[Math.Min(1024 * 1024, this.Parameters.WorkingSetSize)];
-            using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length, GenericFileStreamOptions))
+            using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length, GenericReadingFileStreamOptions))
             // using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
             {
                 _seqRead.Start();
@@ -326,7 +329,7 @@ namespace Universe.Benchmark.DiskBench
             byte[] buffer = new byte[1024 * 1024];
             // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
-            using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite, buffer.Length, GenericFileStreamOptions))
+            using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite, buffer.Length, GenericWritingFileStreamOptions))
             {
                 _seqWrite.Start();
                 long len = 0;
