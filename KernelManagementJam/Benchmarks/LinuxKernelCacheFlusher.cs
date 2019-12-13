@@ -4,8 +4,13 @@ using System.IO;
 
 namespace KernelManagementJam.Benchmarks
 {
+    
     public class LinuxKernelCacheFlusher
     {
+        // 60 seconds is an acceptable timeout for a build server
+        private static readonly int WriteBuffersFlushingTimout = 60000;
+        private static readonly int ReadBuffersFlushTimeout = 60000;
+
         // skipping is used for integration tests only
         private static bool SkipFlushing => Environment.GetEnvironmentVariable("SKIP_FLUSHING") == "true";
         public static void Sync()
@@ -17,7 +22,7 @@ namespace KernelManagementJam.Benchmarks
 
         public static void SyncWriteBuffer()
         {
-            StartAndIgnore("sync", "");
+            StartAndIgnore("sync", "", WriteBuffersFlushingTimout);
         }
 
         public static void FlushReadBuffers()
@@ -37,26 +42,33 @@ namespace KernelManagementJam.Benchmarks
 
             if (!isDropOk)
             {
-                StartAndIgnore("sudo", "sh -c \"echo 1 > /proc/sys/vm/drop_caches; purge;\"");
+                StartAndIgnore("sudo", "sh -c \"echo 1 > /proc/sys/vm/drop_caches; purge;\"", ReadBuffersFlushTimeout);
             }
         }
         
-        static int StartAndIgnore(string fileName, string args)
+        static int StartAndIgnore(string executableName, string args, int timeoutMilliseconds)
         {
             Stopwatch sw = Stopwatch.StartNew(); 
-            string info = fileName == "sudo" ? args : fileName;
+            string info = executableName == "sudo" ? args : executableName;
                 
             try
             {
-                ProcessStartInfo si = new ProcessStartInfo(fileName, args);
+                ProcessStartInfo si = new ProcessStartInfo(executableName, args);
                 si.RedirectStandardError = true;
                 si.RedirectStandardOutput = true;
                 using (Process p = Process.Start(si))
                 {
                     p.Start();
-                    p.WaitForExit();
+                    bool isOk = p.WaitForExit(timeoutMilliseconds);
+                    if (!isOk)
+                    {
+                        Console.WriteLine($"Warning! Flush command [{info}] is not completed in {sw.ElapsedMilliseconds:n0} milliseconds");
+                    }
 #if DEBUG
-                    Console.WriteLine($"Info: Process [{info}] successfully finished in {sw.ElapsedMilliseconds:n0} milliseconds");
+                    if (isOk)
+                    {
+                        Console.WriteLine($"Info: Flush command [{info}] successfully finished in {sw.ElapsedMilliseconds:n0} milliseconds");
+                    }
 #endif
                     return p.ExitCode;
                 }
