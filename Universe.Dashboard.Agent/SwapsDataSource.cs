@@ -54,13 +54,10 @@ namespace Universe.Dashboard.Agent
             }
 
             var swaps = SwapsParser.Parse();
-
             Swaps = swaps;
             
             DebugDumper.Dump(swaps, "ProcSwaps.json");
             DebugDumper.Dump(swaps, "ProcSwaps.min.json", true);
-
         }
-
     }
 }

@@ -42,10 +42,10 @@ namespace Universe.Dashboard.Agent
             // blockName, FieldName, Y[]  
             Dictionary<string, Dictionary<string, List<long>>> blocksView = new Dictionary<string, Dictionary<string, List<long>>>();
             int atPosition = 0;
-            foreach (var atStat in dataSource)
+            foreach (BlockDiskDataSourcePoint atStat in dataSource)
             {
                 atPosition++;
-                foreach (var blockRow in atStat.BlockDiskStat)
+                foreach (DiskVolStatModel blockRow in atStat.BlockDiskStat)
                 {
                     var diskOrVolName = blockRow.DiskVolKey;
                     var byBlock = blocksView.GetOrAdd(diskOrVolName, _ => new Dictionary<string, List<long>>());

@@ -76,7 +76,6 @@ namespace KernelManagementJam.Tests
             while (sw.ElapsedMilliseconds < milliseconds)
                 new Random().Next();
         }
-
         
     }
 }
