@@ -11,6 +11,7 @@ namespace Universe.Dashboard.Agent
 
         public static List<string> GetInterfaceNames()
         {
+            
             var totals = NetStatDataSource.Instance.TotalsOfInterfaces;
             if (totals == null) return null;
             return totals
@@ -72,9 +73,6 @@ namespace Universe.Dashboard.Agent
                 new {Field = "TxCompressed", GetField = (Func<NetDevInterfaceRow,long>) (row => row.TxCompressed)},
             };
 
-            // InterfaceName, FieldName, Y[]  
-            Dictionary<string, Dictionary<string, List<long>>> interfacesView = new Dictionary<string, Dictionary<string, List<long>>>();
-            
             // interfaceName: PublicFastInterfaceMetrics
             Dictionary<string, PublicFastInterfaceMetrics> fastInterfacesView = new Dictionary<string, PublicFastInterfaceMetrics>();
 
@@ -115,6 +113,16 @@ namespace Universe.Dashboard.Agent
 */
                 }
             }
+            
+            // InterfaceName, FieldName, Y[]  
+            Dictionary<string, Dictionary<string, List<long>>> interfacesView = new Dictionary<string, Dictionary<string, List<long>>>();
+            foreach (var fastPairs in fastInterfacesView)
+            {
+                var interfaceName = fastPairs.Key;
+                var publicFastInterfaceMetrics = fastPairs.Value;
+                interfacesView[interfaceName] = publicFastInterfaceMetrics.AsPublicView();
+            }
+
             
             // Inject IsInactive
             var totals = NetStatDataSource.Instance.TotalsOfInterfaces;
