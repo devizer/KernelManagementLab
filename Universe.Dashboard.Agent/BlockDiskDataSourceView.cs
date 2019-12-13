@@ -38,38 +38,54 @@ namespace Universe.Dashboard.Agent
                 new {Field = "IoMilliseconds", GetField = (Func<BlockStatistics, long>) (row => row.IoMilliseconds)},
                 new {Field = "InFlightRequests", GetField = (Func<BlockStatistics, long>) (row => row.InFlightRequests)},
             };
-            
-            // blockName, FieldName, Y[]  
-            Dictionary<string, Dictionary<string, List<long>>> blocksView = new Dictionary<string, Dictionary<string, List<long>>>();
-            int atPosition = 0;
-            foreach (BlockDiskDataSourcePoint atStat in dataSource)
+
+            // blockName: PublicFastBlockMetrics
+            Dictionary<string, PublicFastBlockMetrics> fastBlocksView = new Dictionary<string, PublicFastBlockMetrics>();
+            foreach (BlockDiskDataSourcePoint atStat in dataSource) // over point in time
             {
-                atPosition++;
-                foreach (DiskVolStatModel blockRow in atStat.BlockDiskStat)
+                DateTime atDateTime = atStat.At;
+                foreach (DiskVolStatModel blockRow in atStat.BlockDiskStat) // over disks
                 {
                     var diskOrVolName = blockRow.DiskVolKey;
-                    var byBlock = blocksView.GetOrAdd(diskOrVolName, _ => new Dictionary<string, List<long>>());
-                    foreach (var fieldMetadata in fields)
-                    {
-                        string fieldName = fieldMetadata.Field;
-                        var byField = byBlock.GetOrAdd(fieldName, _ => new List<long>());
-                        long fieldValue = fieldMetadata.GetField(blockRow.Stat);
-                        byField.Add(fieldValue);
-                    }
+                    var publicFastBlockMetrics = fastBlocksView.GetOrAdd(diskOrVolName, _ => new PublicFastBlockMetrics());
+                    publicFastBlockMetrics.Append(blockRow);
+
+                    // var byBlock = blocksView.GetOrAdd(diskOrVolName, _ => new Dictionary<string, List<long>>());
+                    // foreach (var fieldMetadata in fields) // over fields
+                    // {
+                    //    string fieldName = fieldMetadata.Field;
+                    //    List<long> byField = byBlock.GetOrAdd(fieldName, _ => new List<long>());
+                    //    long fieldValue = fieldMetadata.GetField(blockRow.Stat);
+                    //    byField.Add(fieldValue);
+                    // }
                 }
 
                 var missedBlockNames = blockNames.Except(atStat.BlockDiskStat.Select(x => x.DiskVolKey));
                 foreach (var missedBlockName in missedBlockNames)
                 {
-                    var byBlock = blocksView.GetOrAdd(missedBlockName, _ => new Dictionary<string, List<long>>());
-                    foreach (var fieldMetadata in fields)
-                    {
-                        string fieldName = fieldMetadata.Field;
-                        var byField = byBlock.GetOrAdd(fieldName, _ => new List<long>());
-                        long fieldValue = byField.LastOrDefault();
-                        byField.Add(fieldValue);
-                    }
+                    var publicFastBlockMetrics = fastBlocksView.GetOrAdd(missedBlockName, _ => new PublicFastBlockMetrics());
+                    publicFastBlockMetrics.AppendMissed();
+
+                    // var byBlock = blocksView.GetOrAdd(missedBlockName, _ => new Dictionary<string, List<long>>());
+                    // foreach (var fieldMetadata in fields)
+                    // {
+                    //   string fieldName = fieldMetadata.Field;
+                    //   var byField = byBlock.GetOrAdd(fieldName, _ => new List<long>());
+                    //   long fieldValue = byField.LastOrDefault();
+                    //   byField.Add(fieldValue);
+                    // }
+
                 }
+            }
+
+            // blockName, FieldName, Y[]  
+            Dictionary<string, Dictionary<string, List<long>>> blocksView = new Dictionary<string, Dictionary<string, List<long>>>();
+
+            foreach (var fastPairs in fastBlocksView)
+            {
+                var blockOrVolName = fastPairs.Key;
+                var publicFastBlockMetrics = fastPairs.Value;
+                blocksView[blockOrVolName] = publicFastBlockMetrics.AsPublicView();
             }
 
             foreach (Dictionary<string,List<long>> byDisk in blocksView.Values)
@@ -94,6 +110,48 @@ namespace Universe.Dashboard.Agent
             ret.Blocks = blocksView;
             return ret;
 
+        }
+
+        class PublicFastBlockMetrics
+        {
+            public List<long> ReadSectors = new List<long>(62);
+            public List<long> ReadOperations = new List<long>(62);
+            public List<long> WriteSectors = new List<long>(62);
+            public List<long> WriteOperations = new List<long>(62);
+            public List<long> IoMilliseconds = new List<long>(62);
+            public List<long> InFlightRequests = new List<long>(62);
+
+            public void Append(DiskVolStatModel blockRow)
+            {
+                ReadSectors.Add(blockRow.Stat.ReadSectors);
+                ReadOperations.Add(blockRow.Stat.ReadOperations);
+                WriteSectors.Add(blockRow.Stat.WriteSectors);
+                WriteOperations.Add(blockRow.Stat.WriteOperations);
+                IoMilliseconds.Add(blockRow.Stat.IoMilliseconds);
+                InFlightRequests.Add(blockRow.Stat.InFlightRequests);
+            }
+
+            public void AppendMissed()
+            {
+                ReadSectors.Add(ReadSectors.LastOrDefault());
+                ReadOperations.Add(ReadOperations.LastOrDefault());
+                WriteSectors.Add(WriteSectors.LastOrDefault());
+                WriteOperations.Add(WriteOperations.LastOrDefault());
+                IoMilliseconds.Add(IoMilliseconds.LastOrDefault());
+                InFlightRequests.Add(InFlightRequests.LastOrDefault());
+            }
+
+            public Dictionary<string, List<long>> AsPublicView()
+            {
+                Dictionary<string, List<long>> ret = new Dictionary<string, List<long>>();
+                ret["ReadSectors"] = this.ReadSectors;
+                ret["ReadOperations"] = this.ReadOperations;
+                ret["WriteSectors"] = this.WriteSectors;
+                ret["WriteOperations"] = this.WriteOperations;
+                ret["IoMilliseconds"] = this.IoMilliseconds;
+                ret["InFlightRequests"] = this.InFlightRequests;
+                return ret;
+            }
         }
     }
 }
