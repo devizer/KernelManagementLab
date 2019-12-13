@@ -74,13 +74,18 @@ namespace Universe.Dashboard.Agent
 
             // InterfaceName, FieldName, Y[]  
             Dictionary<string, Dictionary<string, List<long>>> interfacesView = new Dictionary<string, Dictionary<string, List<long>>>();
-            int atPosition = 0;
+            
+            // interfaceName: PublicFastInterfaceMetrics
+            Dictionary<string, PublicFastInterfaceMetrics> fastInterfacesView = new Dictionary<string, PublicFastInterfaceMetrics>();
+
             foreach (var atStat in dataSource)
             {
-                atPosition++;
                 foreach (var interfaceRow in atStat.InterfacesStat)
                 {
                     var interfaceName = interfaceRow.Name;
+                    var publicFastInterfaceMetrics = fastInterfacesView.GetOrAdd(interfaceName, _ => new PublicFastInterfaceMetrics());
+                    publicFastInterfaceMetrics.Append(interfaceRow);
+/*
                     var byInterface = interfacesView.GetOrAdd(interfaceName, _ => new Dictionary<string, List<long>>());
                     foreach (var fieldMetadata in fields)
                     {
@@ -89,11 +94,16 @@ namespace Universe.Dashboard.Agent
                         long fieldValue = fieldMetadata.GetField(interfaceRow);
                         byField.Add(fieldValue);
                     }
+*/
                 }
 
                 var missedInterfaces = interfaceNameList.Except(atStat.InterfacesStat.Select(x => x.Name));
                 foreach (var missedInterface in missedInterfaces)
                 {
+                    var publicFastBlockMetrics = fastInterfacesView.GetOrAdd(missedInterface, _ => new PublicFastInterfaceMetrics());
+                    publicFastBlockMetrics.AppendMissed();
+
+/*
                     var byInterface = interfacesView.GetOrAdd(missedInterface, _ => new Dictionary<string, List<long>>());
                     foreach (var fieldMetadata in fields)
                     {
@@ -102,6 +112,7 @@ namespace Universe.Dashboard.Agent
                         long fieldValue = byField.LastOrDefault();
                         byField.Add(fieldValue);
                     }
+*/
                 }
             }
             
@@ -117,5 +128,95 @@ namespace Universe.Dashboard.Agent
             ret.InterfaceTotals = NetStatDataSource.Instance.TotalsOfInterfaces;
             return ret;
         }
+        
+        class PublicFastInterfaceMetrics
+        {
+            public List<long> RxBytes = new List<long>(61);
+            public List<long> RxPackets = new List<long>(61);
+            public List<long> RxErrors = new List<long>(61);
+            public List<long> RxDrops = new List<long>(61);
+            public List<long> RxFifoErrors = new List<long>(61);
+            public List<long> RxFrameErrors = new List<long>(61);
+            public List<long> RxCompressed = new List<long>(61);
+            public List<long> Multicast = new List<long>(61);
+
+            public List<long> TxBytes = new List<long>(61);
+            public List<long> TxPackets = new List<long>(61);
+            public List<long> TxErrors = new List<long>(61);
+            public List<long> TxDrops = new List<long>(61);
+            public List<long> TxFifoErrors = new List<long>(61);
+            public List<long> Collisions = new List<long>(61);
+            public List<long> TxHeartbeatErrors = new List<long>(61);
+            public List<long> TxCompressed = new List<long>(61);
+
+            public void Append(NetDevInterfaceRow blockRow)
+            {
+                RxBytes.Add(blockRow.RxBytes);
+                RxPackets.Add(blockRow.RxPackets);
+                RxErrors.Add(blockRow.RxErrors);
+                RxDrops.Add(blockRow.RxDrops);
+                RxFifoErrors.Add(blockRow.RxFifoErrors);
+                RxFrameErrors.Add(blockRow.RxFrameErrors);
+                RxCompressed.Add(blockRow.RxCompressed);
+                Multicast.Add(blockRow.Multicast);
+                
+                TxBytes.Add(blockRow.TxBytes);
+                TxPackets.Add(blockRow.TxPackets);
+                TxErrors.Add(blockRow.TxErrors);
+                TxDrops.Add(blockRow.TxDrops);
+                TxFifoErrors.Add(blockRow.TxFifoErrors);
+                Collisions.Add(blockRow.Collisions);
+                TxHeartbeatErrors.Add(blockRow.TxHeartbeatErrors);
+                TxCompressed.Add(blockRow.TxCompressed);
+
+            }
+
+            public void AppendMissed()
+            {
+                RxBytes.Add(RxBytes.LastOrDefault());
+                RxPackets.Add(RxPackets.LastOrDefault());
+                RxErrors.Add(RxErrors.LastOrDefault());
+                RxDrops.Add(RxDrops.LastOrDefault());
+                RxFifoErrors.Add(RxFifoErrors.LastOrDefault());
+                RxFrameErrors.Add(RxFrameErrors.LastOrDefault());
+                RxCompressed.Add(RxCompressed.LastOrDefault());
+                Multicast.Add(Multicast.LastOrDefault());
+                
+                TxBytes.Add(TxBytes.LastOrDefault());
+                TxPackets.Add(TxPackets.LastOrDefault());
+                TxErrors.Add(TxErrors.LastOrDefault());
+                TxDrops.Add(TxDrops.LastOrDefault());
+                TxFifoErrors.Add(TxFifoErrors.LastOrDefault());
+                Collisions.Add(Collisions.LastOrDefault());
+                TxHeartbeatErrors.Add(TxHeartbeatErrors.LastOrDefault());
+                TxCompressed.Add(TxCompressed.LastOrDefault());
+
+            }
+
+            public Dictionary<string, List<long>> AsPublicView()
+            {
+                Dictionary<string, List<long>> ret = new Dictionary<string, List<long>>();
+                ret["RxBytes"] = this.RxBytes;
+                ret["RxPackets"] = this.RxPackets;
+                ret["RxErrors"] = this.RxErrors;
+                ret["RxDrops"] = this.RxDrops;
+                ret["RxFifoErrors"] = this.RxFifoErrors;
+                ret["RxFrameErrors"] = this.RxFrameErrors;
+                ret["RxCompressed"] = this.RxCompressed;
+                ret["Multicast"] = this.Multicast;
+                
+                ret["TxBytes"] = this.TxBytes;
+                ret["TxPackets"] = this.TxPackets;
+                ret["TxErrors"] = this.TxErrors;
+                ret["TxDrops"] = this.TxDrops;
+                ret["TxFifoErrors"] = this.TxFifoErrors;
+                ret["Collisions"] = this.Collisions;
+                ret["TxHeartbeatErrors"] = this.TxHeartbeatErrors;
+                ret["TxCompressed"] = this.TxCompressed;
+
+                return ret;
+            }
+        }
+
     }
 }
