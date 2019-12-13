@@ -21,7 +21,6 @@ public class GlobalCleanUp
         // Parallel.ForEach(OnShutdown, x => x());
     }
     
-    private static bool Subscrined = false; 
     private static List<Action> OnShutdown = new List<Action>();
     private static readonly object Sync = new object();
     private static int Counter = 0;

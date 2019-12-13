@@ -4,7 +4,7 @@ namespace KernelManagementJam.Benchmarks
 {
     public static class XorShiftRandom
     {
-        public static unsafe void FillByteArray(byte[] bytes)
+        public static void FillByteArray(byte[] bytes)
         {
             var seed = (ulong) new Random().Next(int.MaxValue-1);
             FillByteArray(bytes, seed);
