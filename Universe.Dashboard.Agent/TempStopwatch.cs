@@ -18,7 +18,10 @@ namespace Universe.Dashboard.Agent
             var secs = _stopwatch.ElapsedTicks / (double) Stopwatch.Frequency;
             var next = CpuUsage.CpuUsage.GetByThread() ?? new CpuUsage.CpuUsage();
             var delta = CpuUsage.CpuUsage.Substruct(next, _cpuUsage);
-            return $"{secs*1000:n3} ({delta}) milliseconds";
+
+            var perCents = secs > 0 ? $", {(delta.TotalMicroSeconds / 10000d / secs):n1}%" : "";
+            
+            return $"{secs*1000:n3}{perCents} {delta}";
         }
     }
 }
