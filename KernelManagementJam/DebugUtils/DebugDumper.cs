@@ -21,11 +21,6 @@ namespace KernelManagementJam.DebugUtils
                 string[] yes = new[] {"On", "True", "1"};
                 var areDumpsEnabled = yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
                 return areDumpsEnabled;
-#if DUMPS
-                return true;
-#else
-                return false;
-#endif
             }
         }
         
