@@ -71,13 +71,15 @@ namespace Universe.Dashboard.Agent
                 logBy1Seconds.Add(point);
                 BlockDiskDataSource.Instance.Totals = totals;
 
+                if (DebugDumper.AreDumpsEnabled)
+                {
+                    DebugDumper.Dump(logBy1Seconds, "BlockDiskDataSource.1s.json");
+                    DebugDumper.Dump(logBy1Seconds, "BlockDiskDataSource.1s.min.json", minify: true);
 
-                DebugDumper.Dump(logBy1Seconds, "BlockDiskDataSource.1s.json");
-                DebugDumper.Dump(logBy1Seconds, "BlockDiskDataSource.1s.min.json", minify: true);
-
-                var viewModel1s = BlockDiskDataSourceView.AsViewModel(logBy1Seconds);
-                DebugDumper.Dump(viewModel1s, "Block.View.1s.json");
-                DebugDumper.Dump(viewModel1s, "Block.View.1s.min.json", minify: true);
+                    var viewModel1s = BlockDiskDataSourceView.AsViewModel(logBy1Seconds);
+                    DebugDumper.Dump(viewModel1s, "Block.View.1s.json");
+                    DebugDumper.Dump(viewModel1s, "Block.View.1s.min.json", minify: true);
+                }
 
                 prev = next;
                 prevTicks = nextTicks;
