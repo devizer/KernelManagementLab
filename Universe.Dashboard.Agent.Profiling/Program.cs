@@ -43,7 +43,7 @@ namespace Universe.Dashboard.Agent.Profiling
 
                 for (int i = 0; i < 100; i++)
                 {
-                    var blockStatView = BlockDiskDataSourceView.AsViewModel(blockStatStorage);
+                    // var blockStatView = BlockDiskDataSourceView.AsViewModel(blockStatStorage);
                     total++;
                 }
 
