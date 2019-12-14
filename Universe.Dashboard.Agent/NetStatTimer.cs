@@ -87,16 +87,18 @@ namespace Universe.Dashboard.Agent
             });
         }
 
-        [Conditional("DUMPS")]
         static void Dump_By_1_Seconds()
         {
-            var copy = NetStatDataSource.Instance.By_1_Seconds;
-            var viewModel = NetDataSourceView.AsViewModel(copy);
-            DebugDumper.Dump(NetStatDataSource.Instance.TotalsOfInterfaces, "NetStatDataSource.Totals.json");
-            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "NetStatDataSource.1s.json");
-            DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "NetStatDataSource.1s.min.json", true);
-            DebugDumper.Dump(viewModel, "NetStat.ViewModel.1s.json");
-            DebugDumper.Dump(viewModel, "NetStat.ViewModel.1s.min.json", true);
+            if (DebugDumper.AreDumpsEnabled)
+            {
+                var copy = NetStatDataSource.Instance.By_1_Seconds;
+                var viewModel = NetDataSourceView.AsViewModel(copy);
+                DebugDumper.Dump(NetStatDataSource.Instance.TotalsOfInterfaces, "NetStatDataSource.Totals.json");
+                DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "NetStatDataSource.1s.json");
+                DebugDumper.Dump(NetStatDataSource.Instance.By_1_Seconds, "NetStatDataSource.1s.min.json", true);
+                DebugDumper.Dump(viewModel, "NetStat.ViewModel.1s.json");
+                DebugDumper.Dump(viewModel, "NetStat.ViewModel.1s.min.json", true);
+            }
         }
         
         static string GetRawNetStat()
