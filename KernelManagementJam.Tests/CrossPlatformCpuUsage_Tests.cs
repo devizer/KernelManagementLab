@@ -31,7 +31,7 @@ namespace KernelManagementJam.Tests
 
         private static void GrowUsage_Impl(CpuUsageScope scope)
         {
-            if (false && CrossInfo.ThePlatform == CrossInfo.Platform.Windows && scope == CpuUsageScope.Process)
+            if (false && HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows && scope == CpuUsageScope.Process)
             {
                 Console.WriteLine("Ignored on Windows");
                 return;
@@ -45,7 +45,7 @@ namespace KernelManagementJam.Tests
             for (int i = 0; i < 10; i++)
             {
                 LoadThread(9);
-                CpuUsage? next = CpuUsageReader.Get(scope);
+                TempCpuUsage? next = CpuUsageReader.Get(scope);
                 Console.WriteLine($" {i} -> {next}");
                 Assert.GreaterOrEqual(next.Value.KernelUsage.TotalMicroSeconds, prev.Value.KernelUsage.TotalMicroSeconds);
                 Assert.GreaterOrEqual(next.Value.UserUsage.TotalMicroSeconds, prev.Value.UserUsage.TotalMicroSeconds);

@@ -5,7 +5,7 @@ namespace KernelManagementJam.ThreadInfo
 {
     // Supported by kernel 2.6.26+ and mac os 10.9+, Windows XP/2003 and above
     [StructLayout(LayoutKind.Sequential)]
-    public struct CpuUsage
+    public struct TempCpuUsage
     {
         public TimeValue UserUsage;
         public TimeValue KernelUsage;
@@ -15,12 +15,12 @@ namespace KernelManagementJam.ThreadInfo
             return $"User: {UserUsage}, Kernel: {KernelUsage}";
         }
 
-        public static CpuUsage Substruct(CpuUsage onEnd, CpuUsage onStart)
+        public static TempCpuUsage Substruct(TempCpuUsage onEnd, TempCpuUsage onStart)
         {
             var user = onEnd.UserUsage.TotalMicroSeconds - onStart.UserUsage.TotalMicroSeconds;
             var system = onEnd.KernelUsage.TotalMicroSeconds - onStart.KernelUsage.TotalMicroSeconds;
             const long _1M = 1000000L;
-            return new CpuUsage()
+            return new TempCpuUsage()
             {
                 UserUsage = new TimeValue() {Seconds = user / _1M, MicroSeconds = user % _1M},
                 KernelUsage = new TimeValue() {Seconds = system / _1M, MicroSeconds = system % _1M},

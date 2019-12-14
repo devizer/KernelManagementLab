@@ -54,7 +54,7 @@ namespace Universe.W3Top
 
         static void JitCrossInfo()
         {
-            var info = CrossInfo.HumanReadableEnvironment(4);
+            var info = HugeCrossInfo.HumanReadableEnvironment(4);
             Console.WriteLine($"System Environment:{Environment.NewLine}{info}");
         }
 

@@ -13,7 +13,7 @@
     using System.Threading;
     using SysGZip = System.IO.Compression;
 
-    public class CrossInfo
+    public class HugeCrossInfo
     {
 
         public static String HumanReadableEnvironment(int intend)
@@ -22,14 +22,14 @@
             long workingSet64 = Process.GetCurrentProcess().WorkingSet64;
             StringBuilder ret = new StringBuilder();
             var endianless = (BitConverter.IsLittleEndian ? "little-endian" : "big-endian");
-            // Try(ret, delegate { return pre + "Platform .......... " + CrossInfo.ThePlatform + ", " + endianless; });
-            // Try(ret, delegate { return pre + "Runtime ........... " + CrossInfo.RuntimeDisplayName; });
-            Try(ret, delegate { return pre + "OS ................ " + CrossInfo.OsDisplayName; });
-            Try(ret, delegate { return pre + "CPU ............... " + CrossInfo.ProcessorName; });
+            // Try(ret, delegate { return pre + "Platform .......... " + HugeCrossInfo.ThePlatform + ", " + endianless; });
+            // Try(ret, delegate { return pre + "Runtime ........... " + HugeCrossInfo.RuntimeDisplayName; });
+            Try(ret, delegate { return pre + "OS ................ " + HugeCrossInfo.OsDisplayName; });
+            Try(ret, delegate { return pre + "CPU ............... " + HugeCrossInfo.ProcessorName; });
             Try(ret, delegate
             {
                 var ws = workingSet64 == 0 ? "n/a" : ((workingSet64/1024L/1024).ToString("n0") + " Mb");
-                var totalMem = CrossInfo.TotalMemory == null ? "n/a" : string.Format("{0:n0} Mb", CrossInfo.TotalMemory/1024);
+                var totalMem = HugeCrossInfo.TotalMemory == null ? "n/a" : string.Format("{0:n0} Mb", HugeCrossInfo.TotalMemory/1024);
                 return pre + "Memory ............ " + totalMem + "; Working Set: " + ws;
             });
 
@@ -1795,7 +1795,7 @@ Get-WmiObject -Class Win32_OperatingSystem | Format-List Caption,CSDVersion,Vers
                     string l3Cache;
                     string l2Cache;
                     AsStringDictionary.TryGetValue("Processor.Name", out name);
-                    name = name == null ? null : CrossInfo.StripDoubleWhitespace(name);
+                    name = name == null ? null : HugeCrossInfo.StripDoubleWhitespace(name);
                     AsStringDictionary.TryGetValue("Processor.L2CacheSize", out l2Cache);
                     AsStringDictionary.TryGetValue("Processor.L3CacheSize", out l3Cache);
                     if (l2Cache == "0") l2Cache = "";
@@ -1811,7 +1811,7 @@ Get-WmiObject -Class Win32_OperatingSystem | Format-List Caption,CSDVersion,Vers
             {
                 string output;
                 int code;
-                CrossInfo.HiddenExec("powershell.exe", "-OutputFormat Text -Command -", Script, out output, out code);
+                HugeCrossInfo.HiddenExec("powershell.exe", "-OutputFormat Text -Command -", Script, out output, out code);
                 StringReader rdr = new StringReader(output);
                 string line;
                 string group = null;

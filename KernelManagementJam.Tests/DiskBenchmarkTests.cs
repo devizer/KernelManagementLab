@@ -40,7 +40,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void _2_O_Direct_Half()
         {
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows)
             {
                 Console.WriteLine("LinuxDirectReadonlyFileStreamV2 needs Linux or MacOS");
                 return;
@@ -89,7 +89,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void _3_O_Direct()
         {
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows)
             {
                 Console.WriteLine("LinuxDirectReadonlyFileStreamV2 needs Linux or MacOS");
                 return;

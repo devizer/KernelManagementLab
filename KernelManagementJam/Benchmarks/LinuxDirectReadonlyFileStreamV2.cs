@@ -24,7 +24,7 @@ namespace KernelManagementJam.Benchmarks
             FileName = fileName;
             BlockSize = blockSize;
 
-            bool isMacOs = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX;
+            bool isMacOs = HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.MacOSX;
             var openFlags = OpenFlags.O_SYNC | Mono.Unix.Native.OpenFlags.O_RDONLY;
             if (!isMacOs) openFlags |= Mono.Unix.Native.OpenFlags.O_DIRECT; 
             

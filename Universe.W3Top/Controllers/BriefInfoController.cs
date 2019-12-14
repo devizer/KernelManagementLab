@@ -15,11 +15,11 @@ namespace Universe.W3Top.Controllers
             var hostInfo = new
             {
                 Hostname = Environment.MachineName,
-                Os = CrossInfo.OsDisplayName,
-                Processor = CrossInfo.ProcessorName,
-                Memory = CrossInfo.TotalMemory == null
+                Os = HugeCrossInfo.OsDisplayName,
+                Processor = HugeCrossInfo.ProcessorName,
+                Memory = HugeCrossInfo.TotalMemory == null
                     ? "n/a"
-                    : string.Format("{0:n0} Mb", CrossInfo.TotalMemory / 1024),
+                    : string.Format("{0:n0} Mb", HugeCrossInfo.TotalMemory / 1024),
             };
 
             SystemBriefInfo ret = new SystemBriefInfo()

@@ -82,10 +82,10 @@ namespace Universe.Dashboard.Agent
                         {
                             try
                             {
-                                Stopwatch sw = Stopwatch.StartNew();
+                                var sw = new TempStopwatch();
                                 timer.Tick();
 #if DEBUG
-                                Console.WriteLine($"Timer {timer.Name} took {sw.ElapsedMilliseconds} milliseconds");
+                                Console.WriteLine($"Timer {timer.Name} took {sw}");
 #endif
                             }
                             catch (Exception ex)
@@ -134,7 +134,7 @@ namespace Universe.Dashboard.Agent
                 return;
             }
 
-            Stopwatch sw = Stopwatch.StartNew();
+            var sw = new TempStopwatch();
             using (var scope = Services.CreateScope())
             {
                 var hubContext = scope.ServiceProvider.GetService<IHubContext<DataSourceHub>>();
@@ -173,11 +173,11 @@ namespace Universe.Dashboard.Agent
                 var hostInfo = new
                 {
                     Hostname = Environment.MachineName,
-                    Os = CrossInfo.OsDisplayName,
-                    Processor = CrossInfo.ProcessorName,
-                    Memory = CrossInfo.TotalMemory == null
+                    Os = HugeCrossInfo.OsDisplayName,
+                    Processor = HugeCrossInfo.ProcessorName,
+                    Memory = HugeCrossInfo.TotalMemory == null
                         ? "n/a"
-                        : string.Format("{0:n0} Mb", CrossInfo.TotalMemory / 1024),
+                        : string.Format("{0:n0} Mb", HugeCrossInfo.TotalMemory / 1024),
                 };
                 
                 var broadcastMessage = new
@@ -192,9 +192,9 @@ namespace Universe.Dashboard.Agent
                     // Disk = new Dictionary<string,object>()
                 };
                 
-                #if DEBUG
-                Console.WriteLine($"Background broadcast took {sw.ElapsedMilliseconds:n0} milliseconds");
-                #endif
+#if DEBUG
+                Console.WriteLine($"Background broadcast took {sw}");
+#endif
                 
                 hubContext.Clients.All.SendAsync("ReceiveDataSource", broadcastMessage);
                 DebugDumper.Dump(broadcastMessage, "BroadcastMessage.json");

@@ -19,8 +19,8 @@ namespace KernelManagementJam.Tests
         {
             Console.WriteLine($"LinuxResourceUsage.IsSupported: {LinuxResourceUsage.IsSupported}");
 
-            bool expectedSupported = CrossInfo.ThePlatform == CrossInfo.Platform.Linux ||
-                                     CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX;
+            bool expectedSupported = HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Linux ||
+                                     HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.MacOSX;
             
             if (expectedSupported && !LinuxResourceUsage.IsSupported)
                 Assert.Fail("On Linux 2.6.26+ the value of LinuxResourceUsage.IsSupported should be true");
@@ -29,15 +29,15 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Grow_Usage()
         {
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows)
             {
-                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {HugeCrossInfo.ThePlatform}");
                 return;
             }
 
             
             CrossPlatformCpuUsage_Tests.LoadThread(1);
-            CpuUsageScope scope = CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX
+            CpuUsageScope scope = HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.MacOSX
                 ? CpuUsageScope.Process
                 : CpuUsageScope.Thread;
 
@@ -47,7 +47,7 @@ namespace KernelManagementJam.Tests
             for (int i = 0; i < 10; i++)
             {
                 CrossPlatformCpuUsage_Tests.LoadThread(9);
-                CpuUsage? next = LinuxResourceUsage.GetByScope(scope);
+                TempCpuUsage? next = LinuxResourceUsage.GetByScope(scope);
                 Console.WriteLine($" {i} -> {next}");
                 Assert.GreaterOrEqual(next.Value.KernelUsage.TotalMicroSeconds, prev.Value.KernelUsage.TotalMicroSeconds);
                 Assert.GreaterOrEqual(next.Value.UserUsage.TotalMicroSeconds, prev.Value.UserUsage.TotalMicroSeconds);
@@ -58,9 +58,9 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Get_Process_Usage()
         {
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows)
             {
-                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {HugeCrossInfo.ThePlatform}");
                 return;
             }
             
@@ -72,9 +72,9 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Get_Thread_Usage()
         {
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows)
             {
-                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {HugeCrossInfo.ThePlatform}");
                 return;
             }
             
@@ -85,9 +85,9 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Show_Raw_Thread_Usage()
         {
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows)
             {
-                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {HugeCrossInfo.ThePlatform}");
                 return;
             }
             
@@ -98,9 +98,9 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Show_Raw_Process_Usage()
         {
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows)
             {
-                Console.WriteLine($"LinuxResourceUsage is not supported on platform {CrossInfo.ThePlatform}");
+                Console.WriteLine($"LinuxResourceUsage is not supported on platform {HugeCrossInfo.ThePlatform}");
                 return;
             }
             
@@ -112,7 +112,7 @@ namespace KernelManagementJam.Tests
         {
             if (arr == null) return "<null>";
             
-            if (IntPtr.Size == 8 && CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX)
+            if (IntPtr.Size == 8 && HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.MacOSX)
             {
                 var copy = arr.OfType<object>().ToArray();
                 // microseconds on mac os are 4 bytes integers

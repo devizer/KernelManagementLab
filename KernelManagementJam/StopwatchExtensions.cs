@@ -13,7 +13,7 @@ namespace KernelManagementJam
         {
             internal string Caption = null;
             internal Stopwatch Stowatch = null;
-            internal CpuUsage? CpuUsageAtStart = null;
+            internal TempCpuUsage? CpuUsageAtStart = null;
             
             private long Id;
 
@@ -31,7 +31,7 @@ namespace KernelManagementJam
                     var onEnd = GetCpuUsage();
                     if (onEnd != null)
                     {
-                        var delta = CpuUsage.Substruct(onEnd.Value, CpuUsageAtStart.Value);
+                        var delta = TempCpuUsage.Substruct(onEnd.Value, CpuUsageAtStart.Value);
                         // milli seconds
                         double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                         double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
@@ -43,7 +43,7 @@ namespace KernelManagementJam
                 Console.WriteLine($"Stopwatch #{Id}: {Caption} in {msec:n3} msec{cpuUsage}");
             }
             
-            internal static CpuUsage? GetCpuUsage()
+            internal static TempCpuUsage? GetCpuUsage()
             {
                 try
                 {
@@ -61,7 +61,7 @@ namespace KernelManagementJam
         static Func<string> StartTimer()
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            CpuUsage? atStart = CpuUsageReader.SafeGet(CpuUsageScope.Thread);
+            TempCpuUsage? atStart = CpuUsageReader.SafeGet(CpuUsageScope.Thread);
             
             return () =>
             {
@@ -72,7 +72,7 @@ namespace KernelManagementJam
                     var onEnd = CpuUsageReader.SafeGet(CpuUsageScope.Thread);
                     if (onEnd != null)
                     {
-                        var delta = CpuUsage.Substruct(onEnd.Value, atStart.Value);
+                        var delta = TempCpuUsage.Substruct(onEnd.Value, atStart.Value);
                         // milli seconds
                         double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                         double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;

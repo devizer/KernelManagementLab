@@ -7,17 +7,17 @@ namespace KernelManagementJam.ThreadInfo
 {
     public class CpuUsageReader
     {
-        public static CpuUsage? GetByProcess()
+        public static TempCpuUsage? GetByProcess()
         {
             return Get(CpuUsageScope.Process);
         }
 
-        public static CpuUsage? GetByThread()
+        public static TempCpuUsage? GetByThread()
         {
             return Get(CpuUsageScope.Thread);
         }
 
-        public static CpuUsage? SafeGet(CpuUsageScope scope)
+        public static TempCpuUsage? SafeGet(CpuUsageScope scope)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace KernelManagementJam.ThreadInfo
             }
         }
         
-        public static CpuUsage? Get(CpuUsageScope scope)
+        public static TempCpuUsage? Get(CpuUsageScope scope)
         {
             if (scope == CpuUsageScope.Process)
             {
@@ -50,7 +50,7 @@ namespace KernelManagementJam.ThreadInfo
                 // throw new NotImplementedException("CPU Usage in the scope of the thread is not yet implemented for Windows");
                 return WindowsCpuUsage.Get(CpuUsageScope.Thread);
             
-            throw new InvalidOperationException($"CPU usage in the scope of {scope} is a kind of an unknown on the {CrossInfo.ThePlatform}");
+            throw new InvalidOperationException($"CPU usage in the scope of {scope} is a kind of an unknown on the {HugeCrossInfo.ThePlatform}");
         }
 
         static bool IsWindows()
@@ -58,7 +58,7 @@ namespace KernelManagementJam.ThreadInfo
 #if NETCORE || NETSTANDARD
             return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 #else
-            return CrossInfo.ThePlatform == CrossInfo.Platform.Windows;
+            return HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows;
 #endif
         }
         static bool IsLinux()
@@ -66,7 +66,7 @@ namespace KernelManagementJam.ThreadInfo
 #if NETCORE || NETSTANDARD
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 #else
-            return CrossInfo.ThePlatform == CrossInfo.Platform.Linux;
+            return HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Linux;
 #endif
         }
         static bool IsMacOs()
@@ -74,7 +74,7 @@ namespace KernelManagementJam.ThreadInfo
 #if NETCORE || NETSTANDARD
             return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #else
-            return CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX;
+            return HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.MacOSX;
 #endif
         }
     }

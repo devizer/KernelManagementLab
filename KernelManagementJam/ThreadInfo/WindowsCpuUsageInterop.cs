@@ -63,7 +63,7 @@ namespace KernelManagementJam.Tests
 
         }
 
-        public static CpuUsage? Get(CpuUsageScope scope)
+        public static TempCpuUsage? Get(CpuUsageScope scope)
         {
             long kernelMicroseconds;
             long userMicroseconds;
@@ -77,7 +77,7 @@ namespace KernelManagementJam.Tests
                 return null;
 
             const long m = 1000000L;
-            return new CpuUsage()
+            return new TempCpuUsage()
             {
                 KernelUsage = new TimeValue() { Seconds = kernelMicroseconds / m, MicroSeconds = kernelMicroseconds % m},
                 UserUsage = new TimeValue() { Seconds = userMicroseconds / m, MicroSeconds = userMicroseconds % m},

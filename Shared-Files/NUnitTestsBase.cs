@@ -15,7 +15,7 @@ namespace Tests
 
         protected static TextWriter OUT;
         private Stopwatch StartAt;
-        private CpuUsage? _CpuUsage_OnStart;
+        private TempCpuUsage? _CpuUsage_OnStart;
         private int TestCounter = 0;
 
         [SetUp]
@@ -32,7 +32,7 @@ namespace Tests
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} @ {testClassName} starting...");
         }
 
-        CpuUsage? GetCpuUsage()
+        TempCpuUsage? GetCpuUsage()
         {
             try
             {
@@ -56,7 +56,7 @@ namespace Tests
                 var onEnd = GetCpuUsage();
                 if (onEnd != null)
                 {
-                    var delta = CpuUsage.Substruct(onEnd.Value, _CpuUsage_OnStart.Value);
+                    var delta = TempCpuUsage.Substruct(onEnd.Value, _CpuUsage_OnStart.Value);
                     double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                     double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
                     double perCents = (user + kernel) / 1000d / elapsed.TotalSeconds; 

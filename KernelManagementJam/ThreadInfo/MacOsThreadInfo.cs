@@ -7,12 +7,12 @@ namespace KernelManagementJam.ThreadInfo
     {
         public static bool IsSupported => _IsSupported.Value;
 
-        public static CpuUsage? GetByThread()
+        public static TempCpuUsage? GetByThread()
         {
             return Get();
         }
 
-        static CpuUsage? Get()
+        static TempCpuUsage? Get()
         {
             int threadId = MacOsThreadInfoInterop.mach_thread_self();
             try
@@ -82,7 +82,7 @@ namespace KernelManagementJam.ThreadInfo
         [DllImport("libc", SetLastError = true, EntryPoint = "thread_info")]
         public static extern int thread_info_custom(int threadId, int flavor, IntPtr threadInfo, ref int count);
 
-        public static unsafe CpuUsage? GetThreadInfo(int threadId)
+        public static unsafe TempCpuUsage? GetThreadInfo(int threadId)
         {
 #if NETCORE || NETSTANDARD 
             int* ptr = stackalloc int[THREAD_BASIC_INFO_COUNT];
@@ -91,7 +91,7 @@ namespace KernelManagementJam.ThreadInfo
                 IntPtr threadInfo = new IntPtr(ptr);
                 int result = thread_info_custom(threadId, THREAD_BASIC_INFO, threadInfo, ref count);
                 if (result != 0) return null;
-                return new CpuUsage()
+                return new TempCpuUsage()
                 {
                     UserUsage = new TimeValue() {Seconds = *ptr, MicroSeconds = *(ptr+1)},
                     KernelUsage = new TimeValue() {Seconds = *(ptr+2), MicroSeconds = *(ptr+3)},
@@ -105,7 +105,7 @@ namespace KernelManagementJam.ThreadInfo
                 IntPtr threadInfo = new IntPtr(ptr);
                 int result = thread_info_custom(threadId, THREAD_BASIC_INFO, threadInfo, ref count);
                 if (result != 0) return null;
-                return new CpuUsage()
+                return new TempCpuUsage()
                 {
                     UserUsage = new TimeValue() {Seconds = raw[0], MicroSeconds = raw[1]},
                     KernelUsage = new TimeValue() {Seconds = raw[2], MicroSeconds = raw[3]},

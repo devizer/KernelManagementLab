@@ -8,19 +8,19 @@ namespace KernelManagementJam.ThreadInfo
     {
 
         public static bool IsSupported => _IsSupported.Value;
-        public static CpuUsage? GetByScope(CpuUsageScope scope)
+        public static TempCpuUsage? GetByScope(CpuUsageScope scope)
         {
             var s = scope == CpuUsageScope.Process ? LinuxResourceUsageInterop.RUSAGE_SELF : LinuxResourceUsageInterop.RUSAGE_THREAD; 
             return GetLinuxResourcesByScope(s);
         }
         
-        public static CpuUsage? GetByProcess()
+        public static TempCpuUsage? GetByProcess()
         {
             return GetLinuxResourcesByScope(LinuxResourceUsageInterop.RUSAGE_SELF);
         }
 
         // returns null on mac os x
-        public static CpuUsage? GetByThread()
+        public static TempCpuUsage? GetByThread()
         {
             return GetLinuxResourcesByScope(LinuxResourceUsageInterop.RUSAGE_THREAD);
         }
@@ -39,7 +39,7 @@ namespace KernelManagementJam.ThreadInfo
             }
         });
 
-        private static CpuUsage? GetLinuxResourcesByScope(int scope)
+        private static TempCpuUsage? GetLinuxResourcesByScope(int scope)
         {
             if (IntPtr.Size == 4)
             {
@@ -47,7 +47,7 @@ namespace KernelManagementJam.ThreadInfo
                 ret.Raw = new int[18];
                 int result = LinuxResourceUsageInterop.getrusage32(scope, ref ret);
                 if (result != 0) return null;
-                return new CpuUsage()
+                return new TempCpuUsage()
                 {
                     UserUsage = new TimeValue() {Seconds = ret.Raw[0], MicroSeconds = ret.Raw[1]},
                     KernelUsage = new TimeValue() {Seconds = ret.Raw[2], MicroSeconds = ret.Raw[3]},
@@ -60,7 +60,7 @@ namespace KernelManagementJam.ThreadInfo
                 int result = LinuxResourceUsageInterop.getrusage64(scope, ref ret);
                 if (result != 0) return null;
                 // microseconds are 4 bytes length on mac os and 8 bytes on linux
-                return new CpuUsage()
+                return new TempCpuUsage()
                 {
                     UserUsage = new TimeValue() {Seconds = ret.Raw[0], MicroSeconds = ret.Raw[1] & 0xFFFFFFFF},
                     KernelUsage = new TimeValue() {Seconds = ret.Raw[2], MicroSeconds = ret.Raw[3] & 0xFFFFFFFF},
