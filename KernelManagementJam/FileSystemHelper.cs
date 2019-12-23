@@ -40,7 +40,7 @@ namespace KernelManagementJam
             return path;
         }
 
-        public static bool IsBlockDevice_Slow(string path)
+        public static bool IsBlockDevice(string path)
         {
             bool isDirectory = Directory.Exists(path);
             bool isFile = isDirectory ? false : File.Exists(path);
@@ -56,7 +56,7 @@ namespace KernelManagementJam
             return false;
         }
 
-        public static bool IsBlockDevice(string path)
+        public static bool IsBlockDevice_Slow(string path)
         {
             try
             {

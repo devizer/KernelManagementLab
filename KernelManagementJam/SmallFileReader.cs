@@ -31,7 +31,7 @@ namespace KernelManagementJam
 
         public static string ReadFirstLine(string fileName)
         {
-            if (false && !File.Exists(fileName))
+            if (!File.Exists(fileName))
             {
                 AppendSingleLinerLog(() => string.Format("[{0}] single-line file not found", fileName));
                 return null;
