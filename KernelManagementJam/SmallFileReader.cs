@@ -49,8 +49,14 @@ namespace KernelManagementJam
                     return ret;
                 }
             }
+            catch (DirectoryNotFoundException)
+            {
+                AppendSingleLinerLog(() => string.Format("[{0}] single-line file not found", fileName));
+                return null;
+            }
             catch (FileNotFoundException)
             {
+                // a copypaste
                 AppendSingleLinerLog(() => string.Format("[{0}] single-line file not found", fileName));
                 return null;
             }
