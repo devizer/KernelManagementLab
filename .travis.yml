@@ -146,10 +146,10 @@ script:
   fi
 
 - pushd build; ./inject-git-info.ps1; popd; cat bintray.json || true
-- dotnet restore /v:m || dotnet restore /v:m || dotnet restore /v:m 
+- Say "dotnet restore"; dotnet restore /v:m || dotnet restore /v:m || dotnet restore /v:m 
 
 - |
-  echo "Sqlite tests only"
+  Say "Sqlite tests only"
   time dotnet test --no-restore -c Release | cat # Test only sqlite provider on linux and osx
 
 - pushd Universe.W3Top/ClientApp
@@ -183,7 +183,7 @@ script:
   
 - |
   if [[ "$TRAVIS_OS_NAME" == "linux" && "$(lsb_release -c -s)" == xenial ]]; then
-    echo "HEADLESS INTEGRATION TESTS"
+    Say "HEADLESS INTEGRATION TESTS"
     pushd Universe.W3Top.HeadlessTests
     yarn install
     export W3TOP_APP_URL="http://localhost:5050"
@@ -196,6 +196,7 @@ script:
 - |
   # MULTIPLY DBs tests
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    Say "TEST ALL the DB PROVIDERS"
     set -o pipefail
     pushd Universe.Dashboard.DAL.Tests \
       && bash -e local-tests.sh 2>&1 | tee ~/build-artifacts/backend-integration-tests.log \
@@ -216,7 +217,7 @@ script:
   
 - export SKIP_GIT_PUSH=true; sudo mkdir -p /transient-builds; sudo chown $(whoami) /transient-builds;
 - bash -e publish-public.sh
-- echo Current dir is $(pwd)
+- Say "FINISH. Current dir is $(pwd)"
 - ls -la /transient-builds/publish/KernelManagementLab/Universe.W3Top/bin || true
 - |
   verFile=./build/AppGitInfo.json; ver=$(cat $verFile | jq -r ".Version");
