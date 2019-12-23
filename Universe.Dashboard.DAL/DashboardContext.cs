@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using MySql.Data.EntityFrameworkCore.Extensions;
@@ -41,10 +42,32 @@ namespace Universe.Dashboard.DAL
 
         private static readonly LogLevel[] ReleaseLevels = new[] {LogLevel.Error, LogLevel.Warning, LogLevel.Critical};
         
-        public static readonly ILoggerFactory loggerFactory = new LoggerFactory(new[] {
-            new ConsoleLoggerProvider((_, level) => IsDebug || ReleaseLevels.Contains(level) || DashboardContextOptionsFactory.Family != EF.Family.Sqlite, true)
-        });
-        
+        public static readonly ILoggerFactory loggerFactory = CreateLoggerFactory();
+
+        private static ILoggerFactory CreateLoggerFactory()
+        {
+            Func<LogLevel, bool> filter = (LogLevel logLevel) => IsDebug || ReleaseLevels.Contains(logLevel) || DashboardContextOptionsFactory.Family != EF.Family.Sqlite;
+            // 2.2 only
+            // var consoleLoggerProvider = new ConsoleLoggerProvider((_,logLevel) => filter(logLevel), true);
+            // return new LoggerFactory(new[] { consoleLoggerProvider });
+            
+            // 3.1 also
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder => builder
+                .AddConsole()
+                .AddFilter(level => filter(level))
+            );
+            var loggerFactory = serviceCollection.BuildServiceProvider().GetService<ILoggerFactory>();
+            return loggerFactory;
+            
+            
+        }
+
+        private static bool Filter(string _, LogLevel level)
+        {
+            return IsDebug || ReleaseLevels.Contains(level) || DashboardContextOptionsFactory.Family != EF.Family.Sqlite;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Console.WriteLine($"{nameof(DashboardContext)}::CONFIGURING");

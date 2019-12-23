@@ -48,7 +48,11 @@ namespace Universe.W3Top
             services.AddScoped<DiskBenchmarkDataAccess>();
             
             services
-                .AddMvc(options => { options.Filters.Add(new KillerActionFilter()); })
+                .AddMvc(options =>
+                {
+                    options.Filters.Add(new KillerActionFilter());
+                    options.EnableEndpointRouting = false;
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             if (StartupOptions.NeedResponseCompression)

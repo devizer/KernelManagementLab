@@ -26,14 +26,14 @@ function run_debug() {
   export ASPNETCORE_ENVIRONMENT=Development
   rm -rf ClientApp/build 2>/dev/null
   cd ClientApp; time (yarn install); cd ..
-  dotnet run -c Debug
+  dotnet run -c Debug -f netcoreapp2.2
 }
 
 function run_prod() {
   cd $dir
   export ASPNETCORE_ENVIRONMENT=Production
   cd ClientApp; time (yarn install); cd ..
-  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/ --self-contained -r $rid
+  time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/ --self-contained -r $rid
   cd bin
   ./Universe.W3Top
 }
@@ -42,8 +42,8 @@ function reinstall_service() {
   cd $dir
   export ASPNETCORE_ENVIRONMENT=Production
   cd ClientApp; time (yarn install); cd ..
-  # time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service
-  time dotnet publish -c Release /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
+  # time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service
+  time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
   pushd ClientApp; yarn test; popd
   cd bin/service
   chmod 644 *.dll
