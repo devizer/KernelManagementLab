@@ -32,7 +32,7 @@ namespace KernelManagementJam
                 Exception error = null;
                 var sw = Stopwatch.StartNew();
                 DriveDetails details = null;
-                if (FileSystemHelper.Exists(mount.MountPath))
+                if (FileSystemHelper.FolderExists(mount.MountPath))
                 {
                     try
                     {
@@ -88,6 +88,7 @@ namespace KernelManagementJam
                 {
                     // Console.WriteLine($"Try {mount.StatisticSnapshot}");
                     details.BlockDeviceResolved = null;
+                    // make single method for .Resolve and .IsBlockDevice 
                     var resolved = FileSystemHelper.Resolve(mount.Device);
                     if (FileSystemHelper.IsBlockDevice(resolved))
                         details.BlockDeviceResolved = resolved;

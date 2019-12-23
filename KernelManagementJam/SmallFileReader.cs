@@ -31,21 +31,28 @@ namespace KernelManagementJam
 
         public static string ReadFirstLine(string fileName)
         {
-            if (!File.Exists(fileName))
+            if (false && !File.Exists(fileName))
             {
-                
                 AppendSingleLinerLog(() => string.Format("[{0}] single-line file not found", fileName));
                 return null;
             }
 
-            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (var rdr = new StreamReader(fs, FileEncoding))
+            try
             {
-                var ret = rdr.ReadLine();
+                using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var rdr = new StreamReader(fs, FileEncoding))
+                {
+                    var ret = rdr.ReadLine();
 
-                AppendSingleLinerLog(() => string.Format("[{0}] first line: '{1}'", fileName, ret));
+                    AppendSingleLinerLog(() => string.Format("[{0}] first line: '{1}'", fileName, ret));
 
-                return ret;
+                    return ret;
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                AppendSingleLinerLog(() => string.Format("[{0}] single-line file not found", fileName));
+                return null;
             }
         }
 

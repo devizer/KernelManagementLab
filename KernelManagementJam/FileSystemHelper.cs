@@ -9,8 +9,8 @@ namespace KernelManagementJam
     {
         public static string Resolve(string path)
         {
-            bool isFile = File.Exists(path);
             bool isDirectory = Directory.Exists(path);
+            bool isFile = isDirectory ? false : File.Exists(path);
             if (isFile || isDirectory)
             {
                 UnixFileSystemInfo info;
@@ -40,10 +40,10 @@ namespace KernelManagementJam
             return path;
         }
 
-        public static bool IsBlockDevice(string path)
+        public static bool IsBlockDevice_Slow(string path)
         {
-            bool isFile = File.Exists(path);
             bool isDirectory = Directory.Exists(path);
+            bool isFile = isDirectory ? false : File.Exists(path);
             if (isFile || isDirectory)
             {
                 UnixFileSystemInfo info;
@@ -56,9 +56,47 @@ namespace KernelManagementJam
             return false;
         }
 
-        public static bool Exists(string path)
+        public static bool IsBlockDevice(string path)
         {
-            return (File.Exists(path) || Directory.Exists(path));
+            try
+            {
+                UnixFileSystemInfo info;
+                if (UnixFileSystemInfo.TryGetFileSystemEntry(path, out info))
+                {
+                    return info.IsBlockDevice;
+                }
+
+                return false;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return false;
+            }
+            catch (FileNotFoundException)
+            {
+                return false;
+            }
+            // WTH: Why is not a FileNotFoundException?
+            catch (InvalidOperationException ex)
+            {
+                // Works for Mono.Posix 1.0
+                if (ex.Message?.IndexOf("Path", StringComparison.InvariantCultureIgnoreCase) >= 0
+                    && ex.Message?.IndexOf("exist", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    return false;
+
+                // throw;
+                return false;
+            }
+            catch (Exception)
+            {
+                // throw;
+                return false;
+            }
+        }
+
+        public static bool FolderExists(string path)
+        {
+            return Directory.Exists(path);
         }
 
         [Obsolete("TODO: /sys/block/.../ro (0|1) should be used, FreeSpace == 0 can be used", true)]
