@@ -28,7 +28,6 @@
         <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.0"/>
     </ItemGroup>
 
-
     <ItemGroup>
       <Compile Include="..\build\*.cs" />
       <Compile Remove="ClientApp\build\**" />
