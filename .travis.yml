@@ -34,6 +34,29 @@ matrix:
 
 before_script:
 - 'script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash'
+- |
+  DOTNET_Url=https://dot.net/v1/dotnet-install.sh; 
+  mkdir -p ~/.dotnet/tools;
+  sudo mkdir -p /opt/dotnet;
+  export PATH="/opt/dotnet:$HOME/.dotnet/tools:$PATH"
+  export DOTNET_ROOT="/opt/dotnet"
+  mkdir -p /etc/dotnet
+  echo '/opt/dotnet' > /etc/dotnet/install_location
+  # for arm it starts from 2.1
+  try-and-retry curl -o /tmp/_dotnet-install.sh -ksSL $DOTNET_Url
+
+  Say "Installing .NET Core 2.1 SDK"
+  time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -c 2.1 -i /opt/dotnet
+  Say "Installing .NET Core 2.2 SDK"
+  time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -c 2.2 -i /opt/dotnet
+  Say "Installing .NET Core 3.0 SDK"
+  time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -c 3.0 -i /opt/dotnet
+  Say "Installing BenchmarkDotNet.Tool (globally)"
+  try-and-retry dotnet tool install -g BenchmarkDotNet.Tool || true
+  Say "Installing .NET Core 3.1 SDK"
+  time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -c 3.1 -i /opt/dotnet
+  Say ".NET Core benchmark tool version: [$(dotnet benchmark --version 2>&1)]"
+  
 - lscpu || true
 - |
   mkdir -p ~/build-artifacts/screenshots
