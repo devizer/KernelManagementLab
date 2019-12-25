@@ -39,7 +39,7 @@
     "react-table": "^6.10.0",
     "reactstrap": "^7.1.0",
     "rimraf": "^2.6.3",
-    "source-map-explorer": "^1.8.0",
+    "source-map-explorer": "^2.1.2",
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
@@ -56,6 +56,7 @@
     "extends": "react-app"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "clean": "rimraf ./build && rimraf ./node_modules",
     "start": "rimraf ./build && react-scripts start",
     "build": "react-scripts build",
