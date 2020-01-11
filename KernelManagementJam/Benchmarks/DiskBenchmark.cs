@@ -461,6 +461,7 @@ namespace Universe.Benchmark.DiskBench
             started.Wait();
             finished.Wait();
             step.Complete();
+            
 
             foreach (var thread in threads)
                 thread.Join();

@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Db.MySQL" type="DotNetProject" factoryName=".NET Project">
-    <option name="EXE_PATH" value="$PROJECT_DIR$/Universe.Dashboard.DAL.MySQL/bin/Debug/netcoreapp2.2/Universe.Dashboard.DAL.MySQL.dll" />
+    <option name="EXE_PATH" value="$PROJECT_DIR$/Universe.Dashboard.DAL.MySQL/bin/Release/netcoreapp2.2/Universe.Dashboard.DAL.MySQL.dll" />
     <option name="PROGRAM_PARAMETERS" value="" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Universe.Dashboard.DAL.MySQL" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Universe.Dashboard.DAL.MySQL/bin/Release/netcoreapp2.2" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <envs>
       <env name="ASPNETCORE_ENVIRONMENT" value="Development" />

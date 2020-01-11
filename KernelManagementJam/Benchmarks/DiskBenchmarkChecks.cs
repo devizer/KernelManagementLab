@@ -56,7 +56,7 @@ namespace KernelManagementJam.Benchmarks
             {
                 int limit = Math.Min(buffer.Length, bytesCount - total);
                 int n = stream.Read(buffer, 0, limit);
-                if (n < 0) break;
+                if (n <= 0) break;
                 total += n;
                 mem.Write(buffer, 0, n);
             }
