@@ -340,3 +340,4 @@ ASALocalRun/
 /Universe.W3Top/ClientApp/yarn.lock
 /.idea/.idea.KernelManagementLab/.idea/projectSettingsUpdater.xml
 pseudo-root
+**/mono_crash.mem.*.blob
