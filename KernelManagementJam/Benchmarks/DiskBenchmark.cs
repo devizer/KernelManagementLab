@@ -432,13 +432,13 @@ namespace Universe.Benchmark.DiskBench
                                 bool isCpuUsageProgressUpdated = cpuUsageInProgress.AggregateCpuUsage(force:false);
                                 if (isCpuUsageProgressUpdated)
                                 {
-                                    Console.WriteLine($"updateTotalCpuUsage[{tIndex}] Current Thread: {cpuUsageInProgress.Result}");
+                                    // Console.WriteLine($"updateTotalCpuUsage[{tIndex}] Current Thread: {cpuUsageInProgress.Result}");
                                     var nextTotalCpuUsage = stopwatch.ElapsedMilliseconds;
                                     if (nextTotalCpuUsage > prevTotalCpuUsage + 111)
                                     {
                                         prevTotalCpuUsage = nextTotalCpuUsage;
                                         updateTotalCpuUsage();
-                                        Console.WriteLine($"updateTotalCpuUsage[{tIndex}] ALL THREADS: {step.CpuUsage}");
+                                        // Console.WriteLine($"updateTotalCpuUsage[{tIndex}] ALL THREADS: {step.CpuUsage}");
                                     }
                                 }
                             } while (stopwatch.ElapsedMilliseconds <= msecDuration);
