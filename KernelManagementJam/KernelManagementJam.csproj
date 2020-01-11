@@ -17,6 +17,7 @@
     <ItemGroup>
       <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+      <PackageReference Include="Universe.CpuUsage" Version="2.2.372.467" />
     </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

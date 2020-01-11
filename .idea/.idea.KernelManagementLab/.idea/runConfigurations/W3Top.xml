@@ -5,7 +5,7 @@
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Universe.W3Top" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <envs>
-      <env name="DUMPS_ARE_ENABLED" value="False" />
+      <env name="DUMPS_ARE_ENABLED" value="True" />
       <env name="MYSQL_DATABASE_Ignore" value="Server=localhost;Database=w3top;Port=3306;Uid=w3top;Pwd=w3top;Connect Timeout=5;Pooling=false;" />
       <env name="ASPNETCORE_ENVIRONMENT" value="Development" />
       <env name="ASPNETCORE_URLS" value="http://localhost:5010;https://0.0.0.0:5011" />

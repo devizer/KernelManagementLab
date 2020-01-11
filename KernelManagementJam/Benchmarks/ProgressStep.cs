@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using CpuUsage = Universe.CpuUsage.CpuUsage;
 
 namespace Universe.DiskBench
 {
@@ -21,6 +22,7 @@ namespace Universe.DiskBench
         public double? Seconds { get; set; }
         public double? PerCents { get; set; }
         public long Bytes { get; set; }
+        public CpuUsage.CpuUsage? CpuUsage { get; set; }
         
 
         public ProgressStep()
@@ -64,9 +66,6 @@ namespace Universe.DiskBench
             }
         }
         
-        
-
-
         public string Duration
         {
             get
@@ -110,6 +109,7 @@ namespace Universe.DiskBench
                 // ?
                 Value = Value,
                 Column = Column,
+                CpuUsage = CpuUsage,
             };
         }
     }

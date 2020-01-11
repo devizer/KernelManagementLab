@@ -254,8 +254,8 @@ namespace Universe.Benchmark.DiskBench
             _allocate.Start();
             LinuxKernelCacheFlusher.Sync();
             byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.WorkingSetSize)];
-            // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
+            CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, GenericWritingFileStreamOptions))
             {
                 fs.Position = Parameters.WorkingSetSize - 1;
@@ -271,8 +271,12 @@ namespace Universe.Benchmark.DiskBench
                     fs.Write(buffer, 0, count);
                     len += count;
                     _allocate.Progress(len / (double) Parameters.WorkingSetSize, len);
+                    if (cpuUsage.AggregateCpuUsage(force: false))
+                        _allocate.CpuUsage = cpuUsage.Result;
                 }
                 _allocate.Complete();
+                cpuUsage.AggregateCpuUsage(force: true);
+                _allocate.CpuUsage = cpuUsage.Result;
             }
             LinuxKernelCacheFlusher.Sync();
         }
@@ -305,11 +309,12 @@ namespace Universe.Benchmark.DiskBench
         {
             LinuxKernelCacheFlusher.Sync();
             byte[] buffer = new byte[Math.Min(1024 * 1024, this.Parameters.WorkingSetSize)];
+            CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length, GenericReadingFileStreamOptions))
             // using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
             {
                 _seqRead.Start();
-                long len = 0;
+                long len = 0, total = 0;
                 while (len < this.Parameters.WorkingSetSize)
                 {
                     CancelIfRequested();
@@ -317,9 +322,14 @@ namespace Universe.Benchmark.DiskBench
                     int n = fs.Read(buffer, 0, count);
                     len += n;
                     _seqRead.Progress(len / (double) Parameters.WorkingSetSize, len);
+                    if (cpuUsage.AggregateCpuUsage(force: false))
+                        _seqRead.CpuUsage = cpuUsage.Result;
+                    
                     if (len >= Parameters.WorkingSetSize) fs.Position = 0;
                 }
                 _seqRead.Complete();
+                cpuUsage.AggregateCpuUsage(force: true);
+                _seqRead.CpuUsage = cpuUsage.Result;
             }
         }
 
@@ -329,6 +339,7 @@ namespace Universe.Benchmark.DiskBench
             byte[] buffer = new byte[1024 * 1024];
             // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
+            CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite, buffer.Length, GenericWritingFileStreamOptions))
             {
                 _seqWrite.Start();
@@ -340,9 +351,13 @@ namespace Universe.Benchmark.DiskBench
                     fs.Write(buffer, 0, count);
                     len += count;
                     _seqWrite.Progress(len / (double) Parameters.WorkingSetSize, len);
+                    cpuUsage.AggregateCpuUsage(force: false);
+                    _seqWrite.CpuUsage = cpuUsage.Result;
                     if (len >= Parameters.WorkingSetSize) fs.Position = 0;
                 }
                 _seqWrite.Complete();
+                cpuUsage.AggregateCpuUsage(force: true);
+                _seqWrite.CpuUsage = cpuUsage.Result;
             }
         }
 
@@ -350,6 +365,7 @@ namespace Universe.Benchmark.DiskBench
         {
             LinuxKernelCacheFlusher.Sync();
             List<Thread> threads = new List<Thread>();
+            List<CpuUsageInProgress> cpuUsageProgresses = new List<CpuUsageInProgress>();
             CountdownEvent started = new CountdownEvent(numThreads);
             CountdownEvent finished = new CountdownEvent(numThreads);
             Stopwatch sw = null;
@@ -365,23 +381,46 @@ namespace Universe.Benchmark.DiskBench
             };
             long totalSize = 0;
             long prevNotification = 0;
+            // CpuUsage.CpuUsage? totalCpuUsage = null;
+            object syncTotalCpuUsage = new object();
             step.Start();
             ConcurrentBag<Exception> errors = new ConcurrentBag<Exception>();
             
             for (int t = 0; t < numThreads; t++)
             {
+                var tIndex = t;
+                cpuUsageProgresses.Add(CpuUsageInProgress.StartNew());
                 Thread thread = new Thread(_ =>
                 {
                     try
                     {
+                        Action updateTotalCpuUsage = () =>
+                        {
+                            lock (syncTotalCpuUsage)
+                            {
+                                bool any = cpuUsageProgresses.Any(x => x.Result.HasValue);
+                                if (any)
+                                {
+                                    CpuUsage.CpuUsage totalUsage = CpuUsage.CpuUsage.Sum(
+                                        from x in cpuUsageProgresses
+                                        where x.Result.HasValue
+                                        select x.Result.Value);
+
+                                    step.CpuUsage = totalUsage;
+                                }
+                            }
+                        };
+                        
                         using (Stream fs = getFileStream())
                         {
                             byte[] buffer = new byte[Parameters.RandomAccessBlockSize];
-                            // new Random().NextBytes(buffer);
                             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
                             started.Signal();
                             started.Wait();
+                            var cpuUsageInProgress = cpuUsageProgresses[tIndex];
+                            cpuUsageInProgress.Restart();
                             Stopwatch stopwatch = getStopwatch();
+                            var prevTotalCpuUsage = stopwatch.ElapsedMilliseconds;
                             do
                             {
                                 CancelIfRequested();
@@ -390,8 +429,21 @@ namespace Universe.Benchmark.DiskBench
 
                                 long currentStopwatch = stopwatch.ElapsedMilliseconds;
                                 step.Progress(currentStopwatch / (double) msecDuration, total);
-
+                                bool isCpuUsageProgressUpdated = cpuUsageInProgress.AggregateCpuUsage(force:false);
+                                if (isCpuUsageProgressUpdated)
+                                {
+                                    Console.WriteLine($"updateTotalCpuUsage[{tIndex}] Current Thread: {cpuUsageInProgress.Result}");
+                                    var nextTotalCpuUsage = stopwatch.ElapsedMilliseconds;
+                                    if (nextTotalCpuUsage > prevTotalCpuUsage + 111)
+                                    {
+                                        prevTotalCpuUsage = nextTotalCpuUsage;
+                                        updateTotalCpuUsage();
+                                        Console.WriteLine($"updateTotalCpuUsage[{tIndex}] ALL THREADS: {step.CpuUsage}");
+                                    }
+                                }
                             } while (stopwatch.ElapsedMilliseconds <= msecDuration);
+                            cpuUsageInProgress.AggregateCpuUsage(force:true);
+                            updateTotalCpuUsage();
                         }
                     }
                     catch (Exception ex)

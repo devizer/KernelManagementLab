@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using KernelManagementJam;
+using KernelManagementJam.DebugUtils;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 
@@ -140,6 +141,15 @@ namespace Universe.Dashboard.Agent
                             using (var db = GetDbContext())
                             {
                                 db.DiskBenchmark.Add(entity);
+
+                                if (DebugDumper.AreDumpsEnabled)
+                                {
+                                    DebugDumper.Dump(entity.Report, "DiskBenchmark.Latest.Report.json", minify: false);
+                                    DebugDumper.Dump(entity.Args, "DiskBenchmark.Latest.Args.json", minify: false);
+                                    DebugDumper.Dump(entity.Environment, "DiskBenchmark.Latest.Environment.json", minify: false);
+                                    DebugDumper.Dump(entity.ErrorInfo, "DiskBenchmark.Latest.ErrorInfo.json", minify: false);
+                                    DebugDumper.Dump(entity, "DiskBenchmark.Latest.json", minify: false);
+                                }
                                 
                                 // TODO: Process Crashes here
                                 DbResilience.ExecuteWriting(
