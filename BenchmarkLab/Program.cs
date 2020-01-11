@@ -210,12 +210,12 @@ If disk/volume supports compression it is important to specify a flavour of the 
                 var usage = step.CpuUsage.Value;
                 double pcUser = 100d * usage.UserUsage.TotalSeconds / step.Seconds.Value;
                 double pcKernel = 100d * usage.KernelUsage.TotalSeconds / step.Seconds.Value;
-                cpuUsage = $"{pcUser:0.0} + {pcKernel:#0.0}%".PadRight(13);
+                cpuUsage = $"  {pcUser:0.0} + {pcKernel:#0.0}%".PadRight(13);
                 // cpuUsage = $"{formatPerCents(usage.UserUsage.TotalSeconds)}% [user] + {formatPerCents(usage.KernelUsage.TotalSeconds)}% [kernel]";
 
             }
 
-            s += "  " + cpuUsage.PadRight(13);
+            s += cpuUsage;
             s += " " + step.Name;
             return s;
         }
