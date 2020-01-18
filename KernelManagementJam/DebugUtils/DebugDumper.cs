@@ -29,27 +29,34 @@ namespace KernelManagementJam.DebugUtils
         {
             if (!AreDumpsEnabled) return;
             
-            JsonSerializer ser = new JsonSerializer()
+            var profilerPath = new AdvancedMiniProfilerKeyPath("DUMPS", fileName, minify ? "minified": "intended");
+            using (AdvancedMiniProfiler.Step(profilerPath))
             {
-                Formatting = !minify ? Formatting.Indented : Formatting.None,
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            };
 
-            ser.ContractResolver = TheContractResolver;
+                JsonSerializer ser = new JsonSerializer()
+                {
+                    Formatting = !minify ? Formatting.Indented : Formatting.None,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                };
 
-            StringBuilder json = new StringBuilder();
-            StringWriter jwr = new StringWriter(json);
-            ser.Serialize(jwr, anObject);
-            jwr.Flush();
+                ser.ContractResolver = TheContractResolver;
 
-            var fullFileName = Path.Combine(DumpDir, fileName);
-            CheckDir(fullFileName);
+                StringBuilder json = new StringBuilder();
+                StringWriter jwr = new StringWriter(json);
+                ser.Serialize(jwr, anObject);
+                jwr.Flush();
 
-            // string json = JsonConvert.SerializeObject(anObject, Formatting.Indented, settings);
-            using (FileStream fs = new FileStream(fullFileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
-            using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
-            {
-                wr.Write(json);
+                var fullFileName = Path.Combine(DumpDir, fileName);
+                CheckDir(fullFileName);
+
+                // string json = JsonConvert.SerializeObject(anObject, Formatting.Indented, settings);
+                using (FileStream fs = new FileStream(fullFileName, FileMode.Create, FileAccess.Write,
+                    FileShare.ReadWrite))
+                    
+                using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
+                {
+                    wr.Write(json);
+                }
             }
         }
 

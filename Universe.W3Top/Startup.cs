@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -101,8 +102,9 @@ namespace Universe.W3Top
                 x.SupportedProtocols = new List<string>() {"longPolling"};
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
-            
-            
+
+            var miniProfilerReportFile = Path.Combine(DebugDumper.DumpDir, "Mini-Profiler.Report.txt");
+            AdvancedMiniProfilerReport.ReportToFile(miniProfilerReportFile);
         }
 
 

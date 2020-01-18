@@ -83,7 +83,11 @@ namespace Universe.Dashboard.Agent
                             try
                             {
                                 var sw = new TempStopwatch();
-                                timer.Tick();
+                                var path = new AdvancedMiniProfilerKeyPath("Kernel Stat", timer.Name);
+                                using (AdvancedMiniProfiler.Step(path))
+                                {
+                                    timer.Tick();
+                                }
 #if DEBUG
                                 Console.WriteLine($"Timer {timer.Name} took {sw}");
 #endif
