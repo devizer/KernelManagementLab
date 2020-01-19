@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -13,16 +14,15 @@ namespace KernelManagementJam.DebugUtils
     {
         public static string DumpDir => _GetDumpDir.Value;
 
-        public static bool AreDumpsEnabled
+        public static bool AreDumpsEnabled => _AreDumpsEnabled.Value;
+        
+        static Lazy<bool> _AreDumpsEnabled = new Lazy<bool>(() =>
         {
-            get
-            {
-                var raw = Environment.GetEnvironmentVariable("DUMPS_ARE_ENABLED");
-                string[] yes = new[] {"On", "True", "1"};
-                var areDumpsEnabled = yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
-                return areDumpsEnabled;
-            }
-        }
+            var raw = Environment.GetEnvironmentVariable("DUMPS_ARE_ENABLED");
+            string[] yes = new[] {"On", "True", "1"};
+            var areDumpsEnabled = yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
+            return areDumpsEnabled;
+        }, LazyThreadSafetyMode.ExecutionAndPublication);
         
         // [Conditional("DUMPS")]
         public static void Dump(object anObject, string fileName, bool minify = false)

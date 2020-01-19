@@ -66,7 +66,6 @@ namespace KernelManagementJam
                     DevFileType = devFileType
                 };
 
-                
                 using(getProfilerStep($"ParseSnapshot({sysBlockFolder.Name})"))
                     blockDevice.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
 
@@ -114,8 +113,6 @@ namespace KernelManagementJam
             ret.HwSectorSize = TryIntValue(basePath + "/queue/hw_sector_size");
             ret.LogicalBlockSize = TryIntValue(basePath + "/queue/logical_block_size");
             ret.PhysicalBlockSize = TryIntValue(basePath + "/queue/physical_block_size");
-
-
 
             ret.Statistics = ParseStatistic(basePath + "/stat");
             ret.LoopBackingFile = SmallFileReader.ReadFirstLine(basePath + "/loop/backing_file");
