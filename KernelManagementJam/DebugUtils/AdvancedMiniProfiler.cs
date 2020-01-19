@@ -96,22 +96,31 @@ namespace KernelManagementJam.DebugUtils
         {
             lock (Sync)
             {
-                if (FirstCall.ContainsKey(path))
+                // using (AdvancedMiniProfiler.Step("Advanced Profiler", "Increment Metrics"))
                 {
-                    AdvancedMiniProfilerMetrics prev = Report.GetOrAdd(path, key => new AdvancedMiniProfilerMetrics());
-                    prev.Duration += metrics.Duration;
-                    if (prev.CpuUsage.HasValue || metrics.CpuUsage.HasValue)
-                        prev.CpuUsage = CpuUsage.Add(
-                            prev.CpuUsage.GetValueOrDefault(),
-                            metrics.CpuUsage.GetValueOrDefault());
-
-                    prev.Count += 1;
+                    Add_Impl(path, metrics);
                 }
-                else
-                    FirstCall[path] = metrics;
-                
-                _Timestamp++;
             }
+        }
+
+        private void Add_Impl(AdvancedMiniProfilerKeyPath path, AdvancedMiniProfilerMetrics metrics)
+        {
+            if (FirstCall.ContainsKey(path))
+            {
+                AdvancedMiniProfilerMetrics prev = Report.GetOrAdd(path,
+                    key => new AdvancedMiniProfilerMetrics());
+                prev.Duration += metrics.Duration;
+                if (prev.CpuUsage.HasValue || metrics.CpuUsage.HasValue)
+                    prev.CpuUsage = CpuUsage.Add(
+                        prev.CpuUsage.GetValueOrDefault(),
+                        metrics.CpuUsage.GetValueOrDefault());
+
+                prev.Count += 1;
+            }
+            else
+                FirstCall[path] = metrics;
+
+            _Timestamp++;
         }
 
         public ConsoleTable AsConsoleTable()
@@ -165,22 +174,25 @@ namespace KernelManagementJam.DebugUtils
                     if (nextTimestamp != prevTimestamp)
                     {
                         prevTimestamp = nextTimestamp;
-                        var consoleTable = AdvancedMiniProfilerReport.Instance.AsConsoleTable();
-                        try
+                        using (AdvancedMiniProfiler.Step("Advanced Profiler", "Update this report"))
                         {
-                            using (FileStream fs = new FileStream(fullName, FileMode.Create, FileAccess.Write,
-                                FileShare.ReadWrite))
-                            using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
+                            var consoleTable = AdvancedMiniProfilerReport.Instance.AsConsoleTable();
+                            try
                             {
-                                wr.WriteLine(consoleTable.ToString());
+                                using (FileStream fs = new FileStream(fullName, FileMode.Create, FileAccess.Write,
+                                    FileShare.ReadWrite))
+                                using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
+                                {
+                                    wr.WriteLine(consoleTable.ToString());
+                                }
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            FirstRound.RunOnly(() =>
+                            catch (Exception ex)
                             {
-                                Console.WriteLine($"Unable to store mini profiler report as '{fullName}' file. {ex.GetExceptionDigest()}");
-                            }, 3, "Unable to store mini profiler report");
+                                var logMessage = $"Unable to store mini profiler report as '{fullName}' file. {ex.GetExceptionDigest()}";
+                                FirstRound.RunOnly(() => Console.WriteLine(logMessage),
+                                    3, "Unable to store mini profiler report"
+                                );
+                            }
                         }
 
                         toSleep = 2000;
@@ -194,6 +206,7 @@ namespace KernelManagementJam.DebugUtils
     
     public class AdvancedMiniProfiler
     {
+        /*
         private static Lazy<object> PreJit = new Lazy<object>(() =>
         {
             var path = new AdvancedMiniProfilerKeyPath("AdvancedMiniProfiler", "PreJit");
@@ -203,6 +216,7 @@ namespace KernelManagementJam.DebugUtils
 
             return new object();
         }, LazyThreadSafetyMode.ExecutionAndPublication);
+        */
 
         public static AdvancedMiniProfilerStep Step(params string[] keyPath)
         {
@@ -210,7 +224,7 @@ namespace KernelManagementJam.DebugUtils
         }
         public static AdvancedMiniProfilerStep Step(AdvancedMiniProfilerKeyPath keyPath)
         {
-            object preJitted = PreJit.Value;
+            // object preJitted = PreJit.Value;
             return new AdvancedMiniProfilerStep(keyPath);
         }
     }
