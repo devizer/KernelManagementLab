@@ -125,8 +125,8 @@ namespace KernelManagementJam.DebugUtils
 
             reportCopy = reportCopy.OrderBy(x => x.Key.ToString()).ToArray();
             ConsoleTable ret = new ConsoleTable("Path", "-N", 
-                "-Duration", "-CPU %", "-CPU \x3bcs", "-User", "-Kernel",
-                "-1st Duration", "-1st CPU %", "-1st CPU \x3bcs", "-1st User", "-1st Kernel");
+                "-Duration", "-CPU (%)", "-CPU (\x3bcs)", "-User", "-Kernel",
+                "-1st Duration", "-1st CPU (%)", "-1st CPU (\x3bcs)", "-1st User", "-1st Kernel");
 
             var zeroMetrics = new AdvancedMiniProfilerMetrics();
             foreach (var pair in reportCopy)
