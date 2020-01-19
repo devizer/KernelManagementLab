@@ -117,7 +117,6 @@ namespace KernelManagementJam
             ret.Statistics = ParseStatistic(basePath + "/stat");
             ret.LoopBackingFile = SmallFileReader.ReadFirstLine(basePath + "/loop/backing_file");
 
-
             return ret;
         }
 
