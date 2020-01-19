@@ -30,7 +30,6 @@ namespace Universe.Dashboard.Agent
             }
         }
 
-        
         static void LaunchListener()
         {
             ThreadPool.QueueUserWorkItem(state =>

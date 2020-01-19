@@ -12,10 +12,18 @@ namespace KernelManagementJam.DebugUtils
     public class AdvancedMiniProfilerKeyPath
     {
         private readonly Lazy<int> HashCode;
+        private readonly Lazy<string> _ToString;
         public string[] Path { get; }
 
         public AdvancedMiniProfilerKeyPath()
         {
+            _ToString = new Lazy<string>(() =>
+            {
+                // const string arrow = " \x27a1 ";
+                const string arrow = " \x2192 ";
+                return string.Join(arrow, Path ?? new string[0]);
+            }, LazyThreadSafetyMode.ExecutionAndPublication);
+            
             HashCode = new Lazy<int>(() =>
             {
                 if (Path == null) return 0;
@@ -41,12 +49,7 @@ namespace KernelManagementJam.DebugUtils
             return new AdvancedMiniProfilerKeyPath(Path.Concat(new[] {childName}).ToArray());
         }
 
-        public override string ToString()
-        {
-            // const string arrow = " \x27a1 ";
-            const string arrow = " \x2192 ";
-            return string.Join(arrow, Path ?? new string[0]);
-        }
+        public override string ToString() => _ToString.Value;
 
         protected bool Equals(AdvancedMiniProfilerKeyPath other)
         {
