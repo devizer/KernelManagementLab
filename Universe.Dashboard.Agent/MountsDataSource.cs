@@ -79,11 +79,15 @@ namespace Universe.Dashboard.Agent
                 new {Title = "Vols-Ram", Predicate = isRam},
             };
 
+            int stepCounter = 2;
             foreach (var volType in args)
             {
-                var filtered = analyz.Details.Where(volType.Predicate).ToList();
-                DebugDumper.Dump(filtered, volType.Title + ".json");
-                DebugDumper.Dump(filtered, volType.Title + ".min.json", minify: true);
+                using (AdvancedMiniProfiler.Step(BaseProfilerKey.Child($"{++stepCounter}. Filter {volType.Title}")))
+                {
+                    var filtered = analyz.Details.Where(volType.Predicate).ToList();
+                    DebugDumper.Dump(filtered, volType.Title + ".json");
+                    DebugDumper.Dump(filtered, volType.Title + ".min.json", minify: true);
+                }
             }
         }
         
