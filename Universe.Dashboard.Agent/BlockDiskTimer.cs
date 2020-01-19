@@ -86,7 +86,10 @@ namespace Universe.Dashboard.Agent
                     DebugDumper.Dump(logBy1Seconds, "BlockDiskDataSource.1s.json");
                     DebugDumper.Dump(logBy1Seconds, "BlockDiskDataSource.1s.min.json", minify: true);
 
-                    var viewModel1s = BlockDiskDataSourceView.AsViewModel(logBy1Seconds);
+                    object viewModel1s;
+                    using(AdvancedMiniProfiler.Step(baseReportKey.Child("5. AsViewModel()")))
+                        viewModel1s = BlockDiskDataSourceView.AsViewModel(logBy1Seconds);
+                    
                     DebugDumper.Dump(viewModel1s, "Block.View.1s.json");
                     DebugDumper.Dump(viewModel1s, "Block.View.1s.min.json", minify: true);
                 }

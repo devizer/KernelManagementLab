@@ -157,7 +157,7 @@ namespace KernelManagementJam.DebugUtils
                     (1000d * total.CpuUsage.GetValueOrDefault().KernelUsage.TotalSeconds / total.Count).ToString("n3"),
                     // first
                     (1000d * first.Duration).ToString("n3") ,
-                    100d * first.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000000d / total.Duration,
+                    100d * first.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000000d / first.Duration,
                     (first.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000d).ToString("n3"),
                     (1000d * first.CpuUsage.GetValueOrDefault().UserUsage.TotalSeconds).ToString("n3"),
                     (1000d * first.CpuUsage.GetValueOrDefault().KernelUsage.TotalSeconds).ToString("n3")
