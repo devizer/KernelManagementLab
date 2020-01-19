@@ -41,7 +41,9 @@ namespace Universe.Dashboard.Agent
             {
                 while (!PreciseTimer.Shutdown.WaitOne(0))
                 {
-                    Iteration();
+                    using(AdvancedMiniProfiler.Step("Kernel Stat", "MountsDataSource.Iteration()"))
+                        Iteration();
+                    
                     IsFirstIterationReady.Set();
                     PreciseTimer.Shutdown.WaitOne(1000);
                 }
