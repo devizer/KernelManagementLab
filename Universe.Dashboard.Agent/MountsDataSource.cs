@@ -11,7 +11,9 @@ namespace Universe.Dashboard.Agent
     // Iteration may be slow for offline disks
     public class MountsDataSource
     {
-
+        private static readonly AdvancedMiniProfilerKeyPath 
+            BaseProfilerKey = new AdvancedMiniProfilerKeyPath("Kernel Stat", "MountsDataSource.Iteration()");
+        
         static List<DriveDetails> _Mounts;
         static readonly object Sync = new object();
         public static ManualResetEvent IsFirstIterationReady = new ManualResetEvent(false);
@@ -34,14 +36,13 @@ namespace Universe.Dashboard.Agent
             }
         }
 
-
         private static void LaunchListener()
         {
             ThreadPool.QueueUserWorkItem(state =>
             {
                 while (!PreciseTimer.Shutdown.WaitOne(0))
                 {
-                    using(AdvancedMiniProfiler.Step("Kernel Stat", "MountsDataSource.Iteration()"))
+                    using(AdvancedMiniProfiler.Step(BaseProfilerKey))
                         Iteration();
                     
                     IsFirstIterationReady.Set();
@@ -52,12 +53,18 @@ namespace Universe.Dashboard.Agent
 
         static void Iteration()
         {
-            IList<MountEntry> mounts = ProcMountsParser.Parse(FakeRootFs.Transform("/proc/mounts")).Entries;
-
-            ProcMountsAnalyzer analyz = ProcMountsAnalyzer.Create(mounts, skipDetailsLog: true);
-
-            Mounts = analyz.Details;
             
+            IList<MountEntry> mounts;
+            using(AdvancedMiniProfiler.Step(BaseProfilerKey.Child("1. Parse /proc/mounts")))
+                mounts = ProcMountsParser.Parse(FakeRootFs.Transform("/proc/mounts")).Entries;
+
+            ProcMountsAnalyzer analyz;
+            using (AdvancedMiniProfiler.Step(BaseProfilerKey.Child("2. ProcMountsAnalyzer.Details")))
+            {
+                analyz = ProcMountsAnalyzer.Create(mounts, skipDetailsLog: true);
+                Mounts = analyz.Details;
+            }
+
             DebugDumper.Dump(analyz, "ProcMountsAnalyzer.json");
             DebugDumper.Dump(analyz, "ProcMountsAnalyzer.min.json", true);
 
