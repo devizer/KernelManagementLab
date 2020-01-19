@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -103,7 +104,8 @@ namespace Universe.W3Top
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
 
-            var miniProfilerReportFile = Path.Combine(DebugDumper.DumpDir, "Mini-Profiler.Report.txt");
+            var ver = Assembly.GetEntryAssembly().GetName().Version;
+            var miniProfilerReportFile = Path.Combine(DebugDumper.DumpDir, $"Mini-Profiler.Report-{ver}.txt");
             AdvancedMiniProfilerReport.ReportToFile(miniProfilerReportFile);
         }
 

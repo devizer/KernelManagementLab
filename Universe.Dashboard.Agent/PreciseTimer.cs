@@ -110,7 +110,10 @@ namespace Universe.Dashboard.Agent
                         // It is raised after finish of all the timers
                         // AllTheTimerFinished();
 
-                        FlushDataSource();
+                        using (AdvancedMiniProfiler.Step("Kernel Stat", "BroadCast"))
+                        {
+                            FlushDataSource();
+                        }
                     }
                     else
                     {

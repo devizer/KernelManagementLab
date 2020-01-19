@@ -125,8 +125,8 @@ namespace KernelManagementJam.DebugUtils
 
             reportCopy = reportCopy.OrderBy(x => x.Key.ToString()).ToArray();
             ConsoleTable ret = new ConsoleTable("Path", "-N", 
-                "-Duration", "-CPU", "-User", "-Kernel",
-                "-1st Duration", "-1st CPU", "-1st User", "-1st Kernel");
+                "-Duration", "-CPU %", "-CPU \x3bcs", "-User", "-Kernel",
+                "-1st Duration", "-1st CPU %", "-1st CPU \x3bcs", "-1st User", "-1st Kernel");
 
             var zeroMetrics = new AdvancedMiniProfilerMetrics();
             foreach (var pair in reportCopy)
@@ -136,11 +136,15 @@ namespace KernelManagementJam.DebugUtils
                 var first = firstCallCopy.FirstOrDefault(x => x.Key.Equals(path)).Value ?? zeroMetrics;
                 ret.AddRow(path.ToString(), total.Count,
                     (1000d * total.Duration / total.Count).ToString("n3"),
+                    // total
                     100d * total.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000000d / total.Duration,
+                    (total.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000d / total.Count).ToString("n3"),
                     (1000d * total.CpuUsage.GetValueOrDefault().UserUsage.TotalSeconds / total.Count).ToString("n3"),
                     (1000d * total.CpuUsage.GetValueOrDefault().KernelUsage.TotalSeconds / total.Count).ToString("n3"),
+                    // first
                     (1000d * first.Duration).ToString("n3") ,
                     100d * first.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000000d / total.Duration,
+                    (first.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000d).ToString("n3"),
                     (1000d * first.CpuUsage.GetValueOrDefault().UserUsage.TotalSeconds).ToString("n3"),
                     (1000d * first.CpuUsage.GetValueOrDefault().KernelUsage.TotalSeconds).ToString("n3")
                 );
@@ -199,7 +203,11 @@ namespace KernelManagementJam.DebugUtils
 
             return new object();
         }, LazyThreadSafetyMode.ExecutionAndPublication);
-        
+
+        public static AdvancedMiniProfilerStep Step(params string[] keyPath)
+        {
+            return Step(new AdvancedMiniProfilerKeyPath(keyPath));
+        }
         public static AdvancedMiniProfilerStep Step(AdvancedMiniProfilerKeyPath keyPath)
         {
             object preJitted = PreJit.Value;
