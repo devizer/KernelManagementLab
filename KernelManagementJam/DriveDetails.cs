@@ -8,7 +8,7 @@ namespace KernelManagementJam
 {
     public class DriveDetails
     {
-        private const StringComparison CMP = System.StringComparison.CurrentCultureIgnoreCase;
+        private const StringComparison CMP = System.StringComparison.InvariantCultureIgnoreCase;
         public MountEntry MountEntry { get; set; }
         // Same as MountEntry.Device, but resolved and only if it is a block device
         public string BlockDeviceResolved { get; set; }
@@ -79,9 +79,11 @@ namespace KernelManagementJam
         {
             get
             {
+                var urlCandidate = MountEntry?.Device ?? "";
+                if (string.IsNullOrEmpty(urlCandidate)) return false;
                 try
                 {
-                    Uri u = new Uri(MountEntry?.Device ?? "");
+                    Uri u = new Uri(urlCandidate);
                     return !string.IsNullOrEmpty(u.Host) && 
                            ("http".Equals(u.Scheme, CMP) || "https".Equals(u.Scheme, CMP));
                 }
