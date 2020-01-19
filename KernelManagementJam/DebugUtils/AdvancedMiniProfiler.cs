@@ -175,7 +175,7 @@ namespace KernelManagementJam.DebugUtils
                 while (true)
                 {
                     var nextTimestamp = AdvancedMiniProfilerReport.Instance.Timestamp;
-                    var toSleep = 666;
+                    var toSleep = 222;
                     if (nextTimestamp != prevTimestamp)
                     {
                         prevTimestamp = nextTimestamp;
@@ -200,7 +200,7 @@ namespace KernelManagementJam.DebugUtils
                             }
                         }
 
-                        toSleep = 2000;
+                        toSleep = 4000;
                     }
                     Thread.Sleep(toSleep);
                 }

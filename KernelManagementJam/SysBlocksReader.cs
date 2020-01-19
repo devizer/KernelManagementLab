@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using KernelManagementJam.DebugUtils;
 using Mono.Unix;
 
 namespace KernelManagementJam
@@ -28,14 +29,21 @@ namespace KernelManagementJam
             }
         } 
 
-        public static List<WithDeviceWithVolumes> GetSnapshot()
+        public static List<WithDeviceWithVolumes> GetSnapshot(AdvancedMiniProfilerKeyPath baseProfilerPath = null)
         {
+            int stepCounter = 0;
+            Func<string, IDisposable> getProfilerStep = stepName =>
+                baseProfilerPath == null
+                    ? new EmptyDisposable()
+                    : (IDisposable) AdvancedMiniProfiler.Step(baseProfilerPath.Child($"{(++stepCounter):00}. {stepName}"));
+            
             var ret = new List<WithDeviceWithVolumes>();
             DirectoryInfo[] sysBlockFolders;
             try
             {
                 var di = new DirectoryInfo(SysBlockPath);
-                sysBlockFolders = di.GetDirectories();
+                using(getProfilerStep($"GetDirectories at {SysBlockPath}"))
+                    sysBlockFolders = di.GetDirectories();
             }
             catch (Exception e)
             {
@@ -45,7 +53,10 @@ namespace KernelManagementJam
             foreach (var sysBlockFolder in sysBlockFolders)
             {
                 var devCandidatePath = "/dev/" + sysBlockFolder.Name;
-                var devFileType = IsFakeLinux || /* temp as docker */  !File.Exists(devCandidatePath)
+                string devFileType;
+                
+                using(getProfilerStep($"Check Is '{sysBlockFolder.Name}' Block Device"))
+                devFileType = IsFakeLinux || /* temp as docker */  !File.Exists(devCandidatePath)
                     ? "BlockDevice"
                     : new UnixSymbolicLinkInfo(devCandidatePath).FileType.ToString();
 
@@ -55,8 +66,11 @@ namespace KernelManagementJam
                     DevFileType = devFileType
                 };
 
-                blockDevice.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
+                
+                using(getProfilerStep($"ParseSnapshot({sysBlockFolder.Name})"))
+                    blockDevice.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
 
+                using(getProfilerStep($"Volumes({sysBlockFolder.Name})"))
                 if ((blockDevice.StatisticSnapshot.Size ?? 0) > 0)
                 {
                     var di = new DirectoryInfo(SysBlockPath + "/" + sysBlockFolder.Name);
@@ -69,7 +83,9 @@ namespace KernelManagementJam
                             VolumeKey = volumesFolder.Name
                         };
 
-                        blockVolumeInfo.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey + "/" + blockVolumeInfo.VolumeKey);
+                        var volumeSnapshotPath = SysBlockPath + "/" + blockDevice.DiskKey + "/" + blockVolumeInfo.VolumeKey;
+                        using(getProfilerStep($"ParseSnapshot({volumeSnapshotPath})"))
+                        blockVolumeInfo.StatisticSnapshot = ParseSnapshot(volumeSnapshotPath);
                         blockDevice.Volumes.Add(blockVolumeInfo);
                     }
 
@@ -78,6 +94,13 @@ namespace KernelManagementJam
             }
 
             return ret;
+        }
+
+        class EmptyDisposable : IDisposable
+        {
+            public void Dispose()
+            {
+            }
         }
 
         private static BlockSnapshot ParseSnapshot(string basePath)

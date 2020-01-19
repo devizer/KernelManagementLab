@@ -25,8 +25,9 @@ namespace Universe.Dashboard.Agent
             PreciseTimer.AddListener("SysBlock::Timer", () =>
             {
                 List<WithDeviceWithVolumes> next;
-                using(AdvancedMiniProfiler.Step(baseReportKey.Child("1. SysBlocksReader.GetSnapshot()")))
-                    next = SysBlocksReader.GetSnapshot();
+                var getSnapshotProfilerKey = baseReportKey.Child("1. SysBlocksReader.GetSnapshot()");
+                using(AdvancedMiniProfiler.Step(getSnapshotProfilerKey))
+                    next = SysBlocksReader.GetSnapshot(baseProfilerPath: getSnapshotProfilerKey);
                 
                 var nextTicks = sw.ElapsedTicks;
                 Dictionary<string, BlockStatistics> nextPlain;
