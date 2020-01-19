@@ -36,6 +36,11 @@ namespace KernelManagementJam.DebugUtils
             Path = path;
         }
 
+        public AdvancedMiniProfilerKeyPath Child(string childName)
+        {
+            return new AdvancedMiniProfilerKeyPath(Path.Concat(new[] {childName}).ToArray());
+        }
+
         public override string ToString()
         {
             // const string arrow = " \x27a1 ";

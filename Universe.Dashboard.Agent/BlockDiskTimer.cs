@@ -20,11 +20,19 @@ namespace Universe.Dashboard.Agent
             var prevTicks = sw.ElapsedTicks;
             var prevPlain = AsPlainVolsAndDisks(prev);
 
+            var baseReportKey = new AdvancedMiniProfilerKeyPath("Kernel Stat", "SysBlock::Timer");
+
             PreciseTimer.AddListener("SysBlock::Timer", () =>
             {
-                List<WithDeviceWithVolumes> next = SysBlocksReader.GetSnapshot();
+                List<WithDeviceWithVolumes> next;
+                using(AdvancedMiniProfiler.Step(baseReportKey.Child("1. SysBlocksReader.GetSnapshot()")))
+                    next = SysBlocksReader.GetSnapshot();
+                
                 var nextTicks = sw.ElapsedTicks;
-                var nextPlain = AsPlainVolsAndDisks(next);
+                Dictionary<string, BlockStatistics> nextPlain;
+                using(AdvancedMiniProfiler.Step(baseReportKey.Child("2. AsPlainVolsAndDisks(next)")))
+                    nextPlain = AsPlainVolsAndDisks(next);
+                
                 var at = DateTime.UtcNow;
                 double duration = (nextTicks - prevTicks) * 1d / Stopwatch.Frequency;
 
@@ -33,6 +41,7 @@ namespace Universe.Dashboard.Agent
 
                 List<DiskVolStatModel> totals = new List<DiskVolStatModel>();
                 List<DiskVolStatModel> nextDelta = new List<DiskVolStatModel>();
+                using(AdvancedMiniProfiler.Step(baseReportKey.Child("3. Build nextDelta")))
                 foreach (var pair in nextPlain)
                 {
                     var nextStat = pair.Value;
@@ -56,6 +65,7 @@ namespace Universe.Dashboard.Agent
                     });
                 }
 
+                using(AdvancedMiniProfiler.Step(baseReportKey.Child("4. Sort nextDelta")))
                 nextDelta = nextDelta.OrderBy(x => x.DiskVolKey).ToList();
 
                 BlockDiskDataSourcePoint point = new BlockDiskDataSourcePoint()
