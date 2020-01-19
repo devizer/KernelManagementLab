@@ -81,6 +81,23 @@ namespace KernelManagementJam
             {
                 var urlCandidate = MountEntry?.Device ?? "";
                 if (string.IsNullOrEmpty(urlCandidate)) return false;
+                
+                Uri uriResult;
+                bool isHttpOrHttps = Uri.TryCreate(urlCandidate, UriKind.Absolute, out uriResult)
+                              && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
+                              && !string.IsNullOrEmpty(uriResult.Host);
+
+                return isHttpOrHttps;
+            }
+        }
+
+        [JsonIgnore]
+        public bool IsWebDav_Legacy
+        {
+            get
+            {
+                var urlCandidate = MountEntry?.Device ?? "";
+                if (string.IsNullOrEmpty(urlCandidate)) return false;
                 try
                 {
                     Uri u = new Uri(urlCandidate);
