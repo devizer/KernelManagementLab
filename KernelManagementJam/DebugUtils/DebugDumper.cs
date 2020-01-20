@@ -133,7 +133,6 @@ namespace KernelManagementJam.DebugUtils
             }
         }
 
-
         private static Lazy<string> _GetDumpDir = new Lazy<string>(() =>
         {
             var an = Path.GetFileName(Assembly.GetEntryAssembly().Location);
