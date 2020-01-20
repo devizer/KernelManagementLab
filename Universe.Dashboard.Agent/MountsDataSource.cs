@@ -74,15 +74,15 @@ namespace Universe.Dashboard.Agent
             Func<DriveDetails, bool> isBlock = x => x.MountEntry.Device.StartsWith("/dev/");
             var args = new[]
             {
-                new {Title = "Vols-Block", Predicate = isBlock},
-                new {Title = "Vols-Net", Predicate = isNetwork},
-                new {Title = "Vols-Ram", Predicate = isRam},
+                new {Title = "Block-Volumes", Predicate = isBlock},
+                new {Title = "Net-Volumes", Predicate = isNetwork},
+                new {Title = "Ram-Volumes", Predicate = isRam},
             };
 
             int stepCounter = 2;
             foreach (var volType in args)
             {
-                using (AdvancedMiniProfiler.Step(BaseProfilerKey.Child($"{++stepCounter}. Filter {volType.Title}")))
+                using (AdvancedMiniProfiler.Step(BaseProfilerKey.Child($"{++stepCounter}. Filter by {volType.Title}")))
                 {
                     var filtered = analyz.Details.Where(volType.Predicate).ToList();
                     DebugDumper.Dump(filtered, volType.Title + ".json");
