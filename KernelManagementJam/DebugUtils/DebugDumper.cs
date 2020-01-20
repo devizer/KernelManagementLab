@@ -14,14 +14,25 @@ namespace KernelManagementJam.DebugUtils
     {
         public static string DumpDir => _GetDumpDir.Value;
 
-        public static bool AreDumpsEnabled => _AreDumpsEnabled.Value;
-        
-        static Lazy<bool> _AreDumpsEnabled = new Lazy<bool>(() =>
+        public static bool AreDumpsEnabled => _DumpsMode.Value != DumpsMode.Off;
+
+        enum DumpsMode
+        {
+            On,
+            SideBySide,
+            Off
+        }
+
+        private static Lazy<DumpsMode> _DumpsMode = new Lazy<DumpsMode>(() =>
         {
             var raw = Environment.GetEnvironmentVariable("DUMPS_ARE_ENABLED");
             string[] yes = new[] {"On", "True", "1"};
-            var areDumpsEnabled = yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
-            return areDumpsEnabled;
+            var isProd = yes.Any(x => x.Equals(raw, StringComparison.InvariantCultureIgnoreCase));
+            if (isProd) return DumpsMode.On;
+            if ("SideBySide".Equals(raw, StringComparison.InvariantCultureIgnoreCase))
+                return DumpsMode.SideBySide;
+
+            return DumpsMode.Off;
         }, LazyThreadSafetyMode.ExecutionAndPublication);
         
         // [Conditional("DUMPS")]
@@ -126,6 +137,7 @@ namespace KernelManagementJam.DebugUtils
         private static Lazy<string> _GetDumpDir = new Lazy<string>(() =>
         {
             var an = Path.GetFileName(Assembly.GetEntryAssembly().Location);
+            if (_DumpsMode.Value == DumpsMode.SideBySide) an += $"({Assembly.GetEntryAssembly().GetName().Version})";
             var ret = "DUMPS-" + an;
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
             {

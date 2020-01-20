@@ -86,6 +86,7 @@ namespace KernelManagementJam.DebugUtils
 
     public class AdvancedMiniProfilerReport
     {
+        private const int REPORT_UPDATE_DELAY = 10000;
         private Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> Report = new Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>();
         private Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> FirstCall = new Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>();
         readonly object Sync = new object();
@@ -203,7 +204,7 @@ namespace KernelManagementJam.DebugUtils
                             }
                         }
 
-                        toSleep = 4000;
+                        toSleep = REPORT_UPDATE_DELAY;
                     }
                     Thread.Sleep(toSleep);
                 }
