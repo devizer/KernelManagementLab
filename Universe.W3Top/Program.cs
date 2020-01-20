@@ -59,6 +59,7 @@ namespace Universe.W3Top
         }
 
 
+        [Conditional(("Never"))]
         static void DebugPreciseTimer()
         {
             var name = "PreciseTimer::Debugger";
