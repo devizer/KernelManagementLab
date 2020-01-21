@@ -11,7 +11,7 @@ namespace KernelManagementJam.DebugUtils
 {
     public class AdvancedMiniProfilerKeyPath
     {
-        private readonly Lazy<int> HashCode;
+        private readonly Lazy<int> _HashCode;
         private readonly Lazy<string> _ToString;
         public string[] Path { get; }
 
@@ -24,14 +24,14 @@ namespace KernelManagementJam.DebugUtils
                 return string.Join(arrow, Path ?? new string[0]);
             }, LazyThreadSafetyMode.ExecutionAndPublication);
             
-            HashCode = new Lazy<int>(() =>
+            _HashCode = new Lazy<int>(() =>
             {
                 if (Path == null) return 0;
                 int ret = 0;
                 unchecked
                 {
                     foreach (var p in Path)
-                        ret = ret * 397 ^ p.GetHashCode();
+                        ret = ret * 397 ^ (p?.GetHashCode() ?? 0);
                 }
 
                 return ret;
@@ -41,11 +41,14 @@ namespace KernelManagementJam.DebugUtils
 
         public AdvancedMiniProfilerKeyPath(params string[] path) : this()
         {
-            Path = path;
+            Path = path ?? throw new ArgumentNullException(nameof(path));
+            for(int i=0, l=path.Length; i<l; i++)
+                if (path[i] == null) throw new ArgumentException($"path's element #{i} is null", nameof(path));
         }
 
         public AdvancedMiniProfilerKeyPath Child(string childName)
         {
+            if (childName == null) throw new ArgumentNullException(nameof(childName));
             return new AdvancedMiniProfilerKeyPath(Path.Concat(new[] {childName}).ToArray());
         }
 
@@ -53,6 +56,8 @@ namespace KernelManagementJam.DebugUtils
 
         protected bool Equals(AdvancedMiniProfilerKeyPath other)
         {
+            if (_HashCode.Value != other._HashCode.Value) return false;
+            
             var len = Path.Length;
             var lenOther = other.Path.Length;
             if (len != lenOther) return false;
@@ -73,7 +78,7 @@ namespace KernelManagementJam.DebugUtils
 
         public override int GetHashCode()
         {
-            return HashCode.Value;
+            return _HashCode.Value;
         }
     }
 
@@ -90,8 +95,13 @@ namespace KernelManagementJam.DebugUtils
         private Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> Report = new Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>();
         private Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> FirstCall = new Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>();
         readonly object Sync = new object();
-        public static readonly AdvancedMiniProfilerReport Instance = new AdvancedMiniProfilerReport();
+        static readonly  AdvancedMiniProfilerReport _Instance = new AdvancedMiniProfilerReport();
+        public static AdvancedMiniProfilerReport Instance => _Instance;
         long _Timestamp = 0;
+
+        static AdvancedMiniProfilerReport()
+        {
+        }
 
         public long Timestamp
         {
@@ -116,8 +126,7 @@ namespace KernelManagementJam.DebugUtils
         {
             if (FirstCall.ContainsKey(path))
             {
-                AdvancedMiniProfilerMetrics prev = Report.GetOrAdd(path,
-                    key => new AdvancedMiniProfilerMetrics());
+                AdvancedMiniProfilerMetrics prev = Report.GetOrAdd(path, key => new AdvancedMiniProfilerMetrics());
                 prev.Duration += metrics.Duration;
                 if (prev.CpuUsage.HasValue || metrics.CpuUsage.HasValue)
                     prev.CpuUsage = CpuUsage.Add(
@@ -134,14 +143,16 @@ namespace KernelManagementJam.DebugUtils
 
         public ConsoleTable AsConsoleTable()
         {
-            KeyValuePair<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>[] reportCopy, firstCallCopy; 
+            KeyValuePair<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>[] reportCopy, firstCallCopyRaw; 
             lock (Sync)
             {
                 reportCopy = this.Report.ToArray();
-                firstCallCopy = this.FirstCall.ToArray();
+                firstCallCopyRaw = this.FirstCall.ToArray();
             }
 
             reportCopy = reportCopy.OrderBy(x => x.Key.ToString()).ToArray();
+            var firstCallCopy = firstCallCopyRaw.ToDictionary(x => x.Key, x => x.Value);
+            
             ConsoleTable ret = new ConsoleTable("Path", "-N", 
                 "-Duration", "-CPU (%)", "-CPU (\x3bcs)", "-User", "-Kernel",
                 "-1st Duration", "-1st CPU (%)", "-1st CPU (\x3bcs)", "-1st User", "-1st Kernel");
@@ -151,7 +162,10 @@ namespace KernelManagementJam.DebugUtils
             {
                 var path = pair.Key;
                 var total = pair.Value;
-                var first = firstCallCopy.FirstOrDefault(x => x.Key.Equals(path)).Value ?? zeroMetrics;
+                // var first = firstCallCopy.FirstOrDefault(x => x.Key.Equals(path)).Value ?? zeroMetrics;
+                if (!firstCallCopy.TryGetValue(path, out var first))
+                    first = zeroMetrics;
+                
                 ret.AddRow(path.ToString(), total.Count,
                     (1000d * total.Duration / total.Count).ToString("n3"),
                     // total
