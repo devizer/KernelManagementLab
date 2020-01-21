@@ -58,7 +58,6 @@ namespace Universe.W3Top
             Console.WriteLine($"System Environment:{Environment.NewLine}{info}");
         }
 
-
         [Conditional(("Never"))]
         static void DebugPreciseTimer()
         {

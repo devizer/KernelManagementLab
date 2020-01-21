@@ -9,10 +9,9 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
-// import suggestions_v1 from "./net-benchmark-suggestions";
-import * as Helper from "../../Helper";
+import suggestions_v1 from "./net-benchmark-suggestions";
 
-let suggestions = [];
+const suggestions = suggestions_v1;
 
 function renderInputComponent(inputProps) {
     const { classes, inputRef = () => {}, ref, ...other } = inputProps;
@@ -120,30 +119,6 @@ class IntegrationAutosuggest extends React.Component {
         popper: '',
         suggestions: [],
     };
-    
-    componentDidMount() {
-        try {
-            let apiUrl = 'assets/proof-of-concept-net-benchmark-suggestions.json';
-            fetch(apiUrl)
-                .then(response => {
-                    Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                    Helper.log(response);
-                    return response.ok ? response.json() : {error: response.status, details: response.json()}
-                })
-                .then(suggestionsRecieved => {
-                    suggestions = suggestionsRecieved;
-                    Helper.toConsole("suggestionsDataSource", suggestions);
-                    this.setState({suggestionsDataSource: suggestions});
-                    // Helper.toConsole("DISKS for benchmark", disks);
-                })
-                .catch(error => Helper.log(error));
-        }
-        catch(err)
-        {
-            console.error('FETCH failed. ' + err);
-        }
-
-    }
 
     handleSuggestionsFetchRequested = ({ value }) => {
         this.setState({

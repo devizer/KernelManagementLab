@@ -23,6 +23,6 @@ function run_prod() {
 }
 
 
-export DUMPS_ARE_ENABLED=On
+export DUMPS_ARE_ENABLED=SideBySide
 export ASPNETCORE_URLS="http://0.0.0.0:5055;https://0.0.0.0:5056"
 run_prod
