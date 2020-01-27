@@ -7,7 +7,7 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.App" />
       <PackageReference Include="Universe.CpuUsage">
-        <Version>2.2.385.482</Version>
+        <Version>2.2.402.498</Version>
       </PackageReference>
       <!--PackageReference Include="Microsoft.Extensions.Logging"  / -->
     </ItemGroup>

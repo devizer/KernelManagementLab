@@ -80,6 +80,58 @@ namespace KernelManagementJam.DebugUtils
         {
             return _HashCode.Value;
         }
+
+        class TempTree : Dictionary<AdvancedMiniProfilerKeyPath, TempTree>
+        {
+            // null for sub tree
+            public AdvancedMiniProfilerKeyPath Leaf;
+        }
+        
+        public static List<Node<AdvancedMiniProfilerKeyPath>> AsTree(IEnumerable<AdvancedMiniProfilerKeyPath> plainList)
+        {
+            TempTree root = new TempTree();
+            foreach (var plainItem in plainList)
+            {
+                var parent = root;
+                for (int i = 0, l=plainItem.Path.Length; i < l; i++)
+                {
+                    AdvancedMiniProfilerKeyPath partialPath = new AdvancedMiniProfilerKeyPath(plainItem.Path.Take(i+1).ToArray());
+                    TempTree current = parent.GetOrAdd(partialPath, key => new TempTree());
+                    parent = current;
+                }
+            }
+            
+            if (plainList.Count() >= 33)
+            {
+                var breakHere = "ok";
+            }
+
+            
+            List<Node<AdvancedMiniProfilerKeyPath>> ret = new List<Node<AdvancedMiniProfilerKeyPath>>();
+            EnumSubTree(root, ret);
+            return ret;
+        }
+
+        private static void EnumSubTree(TempTree treeNode, List<Node<AdvancedMiniProfilerKeyPath>> nodes)
+        {
+            
+            foreach (var pair in treeNode)
+            {
+                AdvancedMiniProfilerKeyPath keyPath = pair.Key;
+                TempTree subTree = pair.Value;
+                Node<AdvancedMiniProfilerKeyPath> subNode = new Node<AdvancedMiniProfilerKeyPath>()
+                {
+                    State = keyPath,
+                    Name = keyPath.Path.Last(),
+                };
+                nodes.Add(subNode);
+                EnumSubTree(subTree, subNode.Children);
+            }
+
+            var sorted = nodes.OrderBy(x => x.Name).ToList();
+            nodes.Clear();
+            nodes.AddRange(sorted);
+        }
     }
 
     public class AdvancedMiniProfilerMetrics
@@ -128,17 +180,83 @@ namespace KernelManagementJam.DebugUtils
             {
                 AdvancedMiniProfilerMetrics prev = Report.GetOrAdd(path, key => new AdvancedMiniProfilerMetrics());
                 prev.Duration += metrics.Duration;
-                if (prev.CpuUsage.HasValue || metrics.CpuUsage.HasValue)
-                    prev.CpuUsage = CpuUsage.Add(
-                        prev.CpuUsage.GetValueOrDefault(),
-                        metrics.CpuUsage.GetValueOrDefault());
-
+                prev.CpuUsage += metrics.CpuUsage; 
                 prev.Count += 1;
             }
             else
                 FirstCall[path] = metrics;
 
             _Timestamp++;
+        }
+
+        public ConsoleTable AsTreeTable()
+        {
+            KeyValuePair<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>[] reportCopyRaw, firstCallCopyRaw; 
+            lock (Sync)
+            {
+                reportCopyRaw = this.Report.ToArray();
+                firstCallCopyRaw = this.FirstCall.ToArray();
+            }
+
+            reportCopyRaw = reportCopyRaw.OrderBy(x => x.Key.ToString()).ToArray();
+            var reportCopy = reportCopyRaw.ToDictionary(x => x.Key, x => x.Value);
+            var firstCallCopy = firstCallCopyRaw.ToDictionary(x => x.Key, x => x.Value);
+
+            List<Node<AdvancedMiniProfilerKeyPath>> rootKeys = AdvancedMiniProfilerKeyPath.AsTree(reportCopyRaw.Select(x => x.Key));
+            List<KeyValuePair<AdvancedMiniProfilerKeyPath, string>> orderedKeys = new List<KeyValuePair<AdvancedMiniProfilerKeyPath, string>>();
+
+            void Enum1(List<Node<AdvancedMiniProfilerKeyPath>> nodes)
+            {
+                foreach (var node in nodes)
+                {
+                    orderedKeys.Add(new KeyValuePair<AdvancedMiniProfilerKeyPath, string>(node.State, node.AscII));
+                    Enum1(node.Children);
+                }
+            }
+            AscIITreeDiagram<AdvancedMiniProfilerKeyPath>.PopulateAscII(rootKeys);
+            Enum1(rootKeys);
+            
+            if (reportCopyRaw.Length >= 33)
+            {
+                var breakHere = "ok";
+            }
+
+            
+            ConsoleTable ret = new ConsoleTable("Path", "-N", 
+                "-Duration", "-CPU (%)", "-CPU (\x3bcs)", "-User", "-Kernel",
+                "-1st Duration", "-1st CPU (%)", "-1st CPU (\x3bcs)", "-1st User", "-1st Kernel");
+
+            var zeroMetrics = new AdvancedMiniProfilerMetrics();
+            foreach (var pair in orderedKeys)
+            {
+                var path = pair.Key;
+                var pathAsString = pair.Value;
+                // var total = reportCopyRaw.FirstOrDefault(x => x.Key.Equals(path)).Value ?? zeroMetrics;
+                reportCopy.TryGetValue(path, out var total);
+                
+                // var first = firstCallCopy.FirstOrDefault(x => x.Key.Equals(path)).Value ?? zeroMetrics;
+                if (!firstCallCopy.TryGetValue(path, out var first))
+                    first = zeroMetrics;
+                
+                if (total == null) ret.AddRow(pathAsString);
+                else
+                ret.AddRow(pathAsString, total.Count,
+                    (1000d * total.Duration / total.Count).ToString("n3"),
+                    // total
+                    100d * total.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000000d / total.Duration,
+                    (total.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000d / total.Count).ToString("n3"),
+                    (1000d * total.CpuUsage.GetValueOrDefault().UserUsage.TotalSeconds / total.Count).ToString("n3"),
+                    (1000d * total.CpuUsage.GetValueOrDefault().KernelUsage.TotalSeconds / total.Count).ToString("n3"),
+                    // first
+                    (1000d * first.Duration).ToString("n3") ,
+                    100d * first.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000000d / first.Duration,
+                    (first.CpuUsage.GetValueOrDefault().TotalMicroSeconds / 1000d).ToString("n3"),
+                    (1000d * first.CpuUsage.GetValueOrDefault().UserUsage.TotalSeconds).ToString("n3"),
+                    (1000d * first.CpuUsage.GetValueOrDefault().KernelUsage.TotalSeconds).ToString("n3")
+                );
+            }
+
+            return ret;
         }
 
         public ConsoleTable AsConsoleTable()
@@ -197,15 +315,18 @@ namespace KernelManagementJam.DebugUtils
                     if (nextTimestamp != prevTimestamp)
                     {
                         prevTimestamp = nextTimestamp;
-                        using (AdvancedMiniProfiler.Step("Advanced Profiler", "Update this report"))
+                        using (AdvancedMiniProfiler.Step("Advanced Profiler (update this report)"))
                         {
                             var consoleTable = AdvancedMiniProfilerReport.Instance.AsConsoleTable();
+                            var treeTable = AdvancedMiniProfilerReport.Instance.AsTreeTable();
                             try
                             {
                                 using (FileStream fs = new FileStream(fullName, FileMode.Create, FileAccess.Write,
                                     FileShare.ReadWrite))
                                 using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
                                 {
+                                    wr.WriteLine(treeTable.ToString());
+                                    wr.WriteLine();
                                     wr.WriteLine(consoleTable.ToString());
                                 }
                             }

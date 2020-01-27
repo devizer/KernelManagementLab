@@ -39,8 +39,8 @@ namespace KernelManagementJam.DebugUtils
         public static void Dump(object anObject, string fileName, bool minify = false)
         {
             if (!AreDumpsEnabled) return;
-            
-            var profilerPath = new AdvancedMiniProfilerKeyPath("DUMPS", fileName, minify ? "minified": "intended");
+
+            var profilerPath = new AdvancedMiniProfilerKeyPath("DUMPS", $"{fileName} {(minify ? "minified" : "intended")}");
             using (AdvancedMiniProfiler.Step(profilerPath))
             {
 

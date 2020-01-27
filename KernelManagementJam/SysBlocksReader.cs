@@ -32,17 +32,20 @@ namespace KernelManagementJam
         public static List<WithDeviceWithVolumes> GetSnapshot(AdvancedMiniProfilerKeyPath baseProfilerPath = null)
         {
             int stepCounter = 0;
-            Func<string, IDisposable> getProfilerStep = stepName =>
-                baseProfilerPath == null
-                    ? new EmptyDisposable()
-                    : (IDisposable) AdvancedMiniProfiler.Step(baseProfilerPath.Child($"{(++stepCounter):00}. {stepName}"));
+            string GetProfilerStepName(string stepName) => $"{(++stepCounter):00}. {stepName}";
+            IDisposable GetProfilerStep(string stepName)
+            {
+                if (baseProfilerPath == null) return EmptyDisposable.Instance;
+                return AdvancedMiniProfiler.Step(baseProfilerPath.Child(stepName));
+            }
+            IDisposable GetNextProfilerStep(string stepName) => GetProfilerStep(GetProfilerStepName(stepName));
             
             var ret = new List<WithDeviceWithVolumes>();
             DirectoryInfo[] sysBlockFolders;
             try
             {
                 var di = new DirectoryInfo(SysBlockPath);
-                using(getProfilerStep($"GetDirectories at {SysBlockPath}"))
+                using(GetNextProfilerStep($"GetDirectories at {SysBlockPath}"))
                     sysBlockFolders = di.GetDirectories();
             }
             catch (Exception e)
@@ -55,7 +58,7 @@ namespace KernelManagementJam
                 var devCandidatePath = "/dev/" + sysBlockFolder.Name;
                 string devFileType;
                 
-                using(getProfilerStep($"Check Is '{sysBlockFolder.Name}' Block Device"))
+                using(GetNextProfilerStep($"Check Is '{sysBlockFolder.Name}' Block Device"))
                 devFileType = IsFakeLinux || /* temp as docker */  !File.Exists(devCandidatePath)
                     ? "BlockDevice"
                     : new UnixSymbolicLinkInfo(devCandidatePath).FileType.ToString();
@@ -66,10 +69,11 @@ namespace KernelManagementJam
                     DevFileType = devFileType
                 };
 
-                using(getProfilerStep($"ParseSnapshot({sysBlockFolder.Name})"))
+                using(GetNextProfilerStep($"ParseSnapshot({sysBlockFolder.Name})"))
                     blockDevice.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
 
-                using(getProfilerStep($"Volumes({sysBlockFolder.Name})"))
+                var volumesStepName = GetProfilerStepName($"Volumes({sysBlockFolder.Name})");
+                using(var volumesStep = GetProfilerStep(volumesStepName))
                 if ((blockDevice.StatisticSnapshot.Size ?? 0) > 0)
                 {
                     var di = new DirectoryInfo(SysBlockPath + "/" + sysBlockFolder.Name);
@@ -83,7 +87,12 @@ namespace KernelManagementJam
                         };
 
                         var volumeSnapshotPath = SysBlockPath + "/" + blockDevice.DiskKey + "/" + blockVolumeInfo.VolumeKey;
-                        using(getProfilerStep($"ParseSnapshot({volumeSnapshotPath})"))
+                        var volSnapshotStep =
+                            baseProfilerPath == null
+                                ? (IDisposable) EmptyDisposable.Instance
+                                : AdvancedMiniProfiler.Step(baseProfilerPath.Child(volumesStepName).Child($"ParseSnapshot({volumeSnapshotPath})"));
+                        
+                        using(volSnapshotStep)
                         blockVolumeInfo.StatisticSnapshot = ParseSnapshot(volumeSnapshotPath);
                         blockDevice.Volumes.Add(blockVolumeInfo);
                     }
@@ -97,9 +106,11 @@ namespace KernelManagementJam
 
         class EmptyDisposable : IDisposable
         {
-            public void Dispose()
+            public static readonly EmptyDisposable Instance = new EmptyDisposable();   
+            void IDisposable.Dispose()
             {
             }
+            
         }
 
         private static BlockSnapshot ParseSnapshot(string basePath)

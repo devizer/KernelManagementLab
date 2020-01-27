@@ -41,6 +41,7 @@ namespace KernelManagementJam.Benchmarks
 
             if (count > 0)
             {
+                // Never goes here for disk benchmark
                 byte* ptrByte = (byte*) ptr;
                 Random rnd = new Random(seed.GetHashCode());
                 while (count-- > 0)
