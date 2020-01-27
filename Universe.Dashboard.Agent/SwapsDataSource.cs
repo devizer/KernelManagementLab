@@ -36,7 +36,7 @@ namespace Universe.Dashboard.Agent
             {
                 while (!PreciseTimer.Shutdown.WaitOne(0))
                 {
-                    using(AdvancedMiniProfiler.Step("Kernel Stat", "SwapsDataSource.Iteration()"))
+                    using(AdvancedMiniProfiler.Step(SharedDefinitions.RootKernelMetricsObserverKey, "SwapsDataSource.Iteration()"))
                         Iteration();
                     
                     IsFirstIterationReady.Set();

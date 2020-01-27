@@ -40,7 +40,7 @@ namespace KernelManagementJam.DebugUtils
         {
             if (!AreDumpsEnabled) return;
 
-            var profilerPath = new AdvancedMiniProfilerKeyPath("DUMPS", $"{fileName} {(minify ? "minified" : "intended")}");
+            var profilerPath = new AdvancedMiniProfilerKeyPath("DUMPS", $"{fileName} ({(minify ? "mini" : "intended")})");
             using (AdvancedMiniProfiler.Step(profilerPath))
             {
 

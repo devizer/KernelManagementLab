@@ -20,7 +20,7 @@ namespace Universe.Dashboard.Agent
             var prevTicks = sw.ElapsedTicks;
             var prevPlain = AsPlainVolsAndDisks(prev);
 
-            var baseReportKey = new AdvancedMiniProfilerKeyPath("Kernel Stat", "SysBlock::Timer");
+            var baseReportKey = new AdvancedMiniProfilerKeyPath(SharedDefinitions.RootKernelMetricsObserverKey, "SysBlock::Timer");
 
             PreciseTimer.AddListener("SysBlock::Timer", () =>
             {

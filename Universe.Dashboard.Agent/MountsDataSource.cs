@@ -12,7 +12,7 @@ namespace Universe.Dashboard.Agent
     public class MountsDataSource
     {
         private static readonly AdvancedMiniProfilerKeyPath 
-            BaseProfilerKey = new AdvancedMiniProfilerKeyPath("Kernel Stat", "MountsDataSource.Iteration()");
+            BaseProfilerKey = new AdvancedMiniProfilerKeyPath(SharedDefinitions.RootKernelMetricsObserverKey, "MountsDataSource.Iteration()");
         
         static List<DriveDetails> _Mounts;
         static readonly object Sync = new object();

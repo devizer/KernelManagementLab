@@ -78,6 +78,7 @@ namespace KernelManagementJam
                 {
                     var di = new DirectoryInfo(SysBlockPath + "/" + sysBlockFolder.Name);
                     var volumesFolders = di.GetDirectories(sysBlockFolder.Name + "*");
+                    int volumeCounter = 0, volumeCount = volumesFolders.Length;
                     foreach (var volumesFolder in volumesFolders)
                     {
                         var blockVolumeInfo = new WithVolumeInfo
@@ -87,10 +88,14 @@ namespace KernelManagementJam
                         };
 
                         var volumeSnapshotPath = SysBlockPath + "/" + blockDevice.DiskKey + "/" + blockVolumeInfo.VolumeKey;
+                        var volumeBulletText = volumeCount <= 26
+                            ? $"{(char) (97 + volumeCounter)}) "
+                            : $"{(char) (97 + volumeCounter / 10)}{(char) (volumeCounter % 10)}) ";
+                            
                         var volSnapshotStep =
                             baseProfilerPath == null
                                 ? (IDisposable) EmptyDisposable.Instance
-                                : AdvancedMiniProfiler.Step(baseProfilerPath.Child(volumesStepName).Child($"ParseSnapshot({volumeSnapshotPath})"));
+                                : AdvancedMiniProfiler.Step(baseProfilerPath.Child(volumesStepName).Child($"{volumeBulletText}ParseSnapshot({volumeSnapshotPath})"));
                         
                         using(volSnapshotStep)
                         blockVolumeInfo.StatisticSnapshot = ParseSnapshot(volumeSnapshotPath);

@@ -83,7 +83,7 @@ namespace Universe.Dashboard.Agent
                             try
                             {
                                 var sw = new TempStopwatch();
-                                var path = new AdvancedMiniProfilerKeyPath("Kernel Stat", timer.Name);
+                                var path = new AdvancedMiniProfilerKeyPath(SharedDefinitions.RootKernelMetricsObserverKey, timer.Name);
                                 using (AdvancedMiniProfiler.Step(path))
                                 {
                                     timer.Tick();
@@ -110,7 +110,7 @@ namespace Universe.Dashboard.Agent
                         // It is raised after finish of all the timers
                         // AllTheTimerFinished();
 
-                        using (AdvancedMiniProfiler.Step("Kernel Stat", "BroadCast"))
+                        using (AdvancedMiniProfiler.Step(SharedDefinitions.RootKernelMetricsObserverKey, "BroadCast"))
                         {
                             FlushDataSource();
                         }

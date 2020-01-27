@@ -2,16 +2,15 @@ using System.Text;
 
 namespace KernelManagementJam.DebugUtils
 {
-    using System;
     using System.Collections.Generic;
 
     public class AscIITreeDiagram<T>
     {
         // Constants for drawing lines and spaces
-        private const string _cross = " ├─";
-        private const string _corner = " └─";
-        private const string _vertical = " │ ";
-        private const string _space = "   ";
+        private const string _cross = " ├──";
+        private const string _corner = " └──";
+        private const string _vertical = " │  ";
+        private const string _space = "    ";
 
         public static void PopulateAscII(IEnumerable<Node<T>> topLevelNodes)
         {
@@ -29,6 +28,7 @@ namespace KernelManagementJam.DebugUtils
         static void PrintNode(Node<T> node, string indent)
         {
             // Console.WriteLine(node.Name);
+            if (indent.Length > 0) node.AscIIBuilder.Append(' ');
             node.AscIIBuilder.Append(node.Name);
 
             // Loop through the children recursively, passing in the
