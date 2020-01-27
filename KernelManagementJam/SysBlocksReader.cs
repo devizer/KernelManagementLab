@@ -90,7 +90,9 @@ namespace KernelManagementJam
                         var volumeSnapshotPath = SysBlockPath + "/" + blockDevice.DiskKey + "/" + blockVolumeInfo.VolumeKey;
                         var volumeBulletText = volumeCount <= 26
                             ? $"{(char) (97 + volumeCounter)}) "
-                            : $"{(char) (97 + volumeCounter / 10)}{(char) (volumeCounter % 10)}) ";
+                            : $"{(char) (97 + volumeCounter / 9)}{(char) (49 + volumeCounter % 9)}) ";
+
+                        volumeCounter++;
                             
                         var volSnapshotStep =
                             baseProfilerPath == null
