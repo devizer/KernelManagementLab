@@ -69,7 +69,7 @@ namespace KernelManagementJam.DebugUtils
     }
     public class Node<T>
     {
-        public T State;
+        public T State { get; set; }
         public string Name { get; set; }
         public List<Node<T>> Children { get; } = new List<Node<T>>();
         
