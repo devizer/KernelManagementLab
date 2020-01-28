@@ -317,7 +317,7 @@ namespace KernelManagementJam.DebugUtils
                         prevTimestamp = nextTimestamp;
                         using (AdvancedMiniProfiler.Step("Advanced Profiler (update this report)"))
                         {
-                            var consoleTable = AdvancedMiniProfilerReport.Instance.AsConsoleTable();
+                            // var consoleTable = AdvancedMiniProfilerReport.Instance.AsConsoleTable();
                             var treeTable = AdvancedMiniProfilerReport.Instance.AsTreeTable();
                             try
                             {
@@ -326,8 +326,8 @@ namespace KernelManagementJam.DebugUtils
                                 using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
                                 {
                                     wr.WriteLine(treeTable.ToString());
-                                    wr.WriteLine();
-                                    wr.WriteLine(consoleTable.ToString());
+                                    // wr.WriteLine();
+                                    // wr.WriteLine(consoleTable.ToString());
                                 }
                             }
                             catch (Exception ex)
