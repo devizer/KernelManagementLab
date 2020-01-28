@@ -70,7 +70,7 @@ CREATE TABLE ""{0}"" (
         {
             var sqlSelect = string.Format(SqlSelectHistoryTable_PgSQL, migrationsHistoryTable);
             var existingHistoryTable = connection.ExecuteScalar<string>(sqlSelect);
-            Console.WriteLine($@"existingHistoryTable: [{existingHistoryTable}], Query
+            Console.WriteLine($@"Existing History Table: [{existingHistoryTable}], Query
 {sqlSelect}");
             if (existingHistoryTable == null)
             {

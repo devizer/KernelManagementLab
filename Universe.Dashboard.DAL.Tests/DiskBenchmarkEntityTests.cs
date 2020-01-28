@@ -1,18 +1,10 @@
 using System;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Threading;
-using Dapper;
-using KernelManagementJam;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
 using NUnit.Framework;
-using SQLitePCL;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 using Universe.Dashboard.DAL.Tests;
-using EF = Universe.Dashboard.DAL.MultiProvider.EF;
 
 namespace Tests
 {
