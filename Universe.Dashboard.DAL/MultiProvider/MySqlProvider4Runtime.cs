@@ -41,7 +41,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
             });
         }
 
-        public string GetServerName(string connectionString)
+        public string GetServerTitle(string connectionString)
         {
             var b = new MySqlConnectionStringBuilder(connectionString);
             return $"MySQL server {b.Server}:{b.Port}";

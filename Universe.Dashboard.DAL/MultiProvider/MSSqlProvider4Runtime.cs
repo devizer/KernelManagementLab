@@ -70,7 +70,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
             return b.ConnectionString;
         }
 
-        public string GetServerName(string connectionString)
+        public string GetServerTitle(string connectionString)
         {
             SqlConnectionStringBuilder b = new SqlConnectionStringBuilder(connectionString);
             return $"MS SQL server {b.DataSource}";

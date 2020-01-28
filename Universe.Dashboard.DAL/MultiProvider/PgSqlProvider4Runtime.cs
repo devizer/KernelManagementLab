@@ -42,7 +42,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
             });
         }
         
-        public string GetServerName(string connectionString)
+        public string GetServerTitle(string connectionString)
         {
             NpgsqlConnectionStringBuilder b = new NpgsqlConnectionStringBuilder(connectionString);
             return $"PostgresSQL server {b.Host}:{b.Port}";

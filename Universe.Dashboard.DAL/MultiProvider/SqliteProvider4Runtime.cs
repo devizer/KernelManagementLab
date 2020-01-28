@@ -55,7 +55,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
             }
         }
 
-        public string GetServerName(string connectionString)
+        public string GetServerTitle(string connectionString)
         {
             SqliteConnectionStringBuilder b = new SqliteConnectionStringBuilder(connectionString);
             return $"Sqlite DB {b.DataSource}";

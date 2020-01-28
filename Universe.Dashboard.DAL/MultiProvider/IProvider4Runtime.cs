@@ -22,7 +22,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
         string SetPooling(string connectionString, bool pooling);
         string SetConnectionTimeout(string connectionString, int connectionTimeout);
 
-        string GetServerName(string connectionString);
+        string GetServerTitle(string connectionString);
         
         // for compatibility, but sqlite provider do nothing
         void CreateMigrationHistoryTableIfAbsent(IDbConnection connection, string migrationsHistoryTable);
@@ -75,7 +75,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
             var tunedConnectionString = provider.SetConnectionTimeout(provider.SetPooling(connectionString, false), 5);
             Exception ret = null;
             // string artifact = $"{provider.Family} server {provider.get}"
-            var debugMsgHeader = $"Check health of {provider.GetServerName(tunedConnectionString)}: ";
+            var debugMsgHeader = $"Check health of {provider.GetServerTitle(tunedConnectionString)}: ";
             StringBuilder debugProgress = new StringBuilder(debugMsgHeader);
             string GetMSec() => ((double) sw.ElapsedTicks / Stopwatch.Frequency).ToString("n2");
                 

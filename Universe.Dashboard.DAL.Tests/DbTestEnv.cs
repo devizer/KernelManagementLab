@@ -43,7 +43,7 @@ namespace Universe.Dashboard.DAL.Tests
                             shortVer = provider4Tests.Provider4Runtime.GetShortVersion(con);
 
                         var artifact =
-                            $"DB `{dbName}` on {provider4Tests.Provider4Runtime.GetServerName(serverConnectionString)} ver {shortVer}";
+                            $"DB `{dbName}` on {provider4Tests.Provider4Runtime.GetServerTitle(serverConnectionString)} ver {shortVer}";
 
                         var dbConnectionString = provider4Tests.CreateDatabase(serverConnectionString, dbName);
 
