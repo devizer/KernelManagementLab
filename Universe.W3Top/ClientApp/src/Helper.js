@@ -171,7 +171,6 @@ export class Disks
         let [hasMounts, mounts] = Common.tryGetProperty(globalDataSource, "mounts");
         return hasMounts ? mounts : null;
     }
-    
 }
 
 export class NetDev
