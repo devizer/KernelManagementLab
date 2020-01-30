@@ -139,7 +139,7 @@ export class Common {
     static formatInfoHeader(text) {
         if (text === undefined || text === null) return null;
         
-        // TODO: CHECK IT FOR Android 5, Safari 9.1.3 and Chrome 41 
+        // OK for Android 5, Safari 9.1.3 and Chrome 41 
         var arr = text.split(/[,]/g);
         var ret = arr
             .map(x => `<span style='white-space: nowrap'>${x.trim()}</span>`)
