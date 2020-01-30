@@ -106,3 +106,40 @@ table.benchmark-progress td.step-status  {
 .Aligner-item {
     max-width: 99%;
 }
+
+#NetCharts {
+    /* display: flex; */
+}
+
+.CHART {
+    /*border: 1px solid gray;*/
+    /*flex: 1;*/
+    /*width: 500px;*/
+    display: inline-block;
+    width: 576px;
+    margin-bottom: 12px;
+    
+}
+.CHART:last-child {
+    /*border: 1px solid gray;*/
+    /*flex: 1;*/
+    /*width: 500px;*/
+    display: inline-block;
+    width: 500px;
+    margin-bottom: 12px;
+}
+
+#BlockCharts {
+    
+}
+
+.TheDiskLiveChart {
+    display: inline-block;
+    width: 576px;
+    margin-bottom: 12px;
+}
+.TheDiskLiveChart:last-child {
+     display: inline-block;
+     width: 500px;
+     margin-bottom: 12px;
+ }

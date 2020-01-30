@@ -93,7 +93,7 @@ export class BlockChartContainer_V2 extends Component {
         return (
             <div id="BlockCharts">
                 {this.state.blockChartList.map(netChart =>
-                    <div key={netChart.name}>
+                    <div className="TheDiskLiveChart" key={netChart.name}>
                         <BlockStatDevChartHeader name={netChart.name}/>
                         <BlockStatChart name={netChart.name} />
                         <BlockStatSecondChart name={netChart.name} />
