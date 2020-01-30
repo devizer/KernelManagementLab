@@ -28,8 +28,8 @@
             Try(ret, delegate { return pre + "CPU ............... " + HugeCrossInfo.ProcessorName; });
             Try(ret, delegate
             {
-                var ws = workingSet64 == 0 ? "n/a" : ((workingSet64/1024L/1024).ToString("n0") + " Mb");
-                var totalMem = HugeCrossInfo.TotalMemory == null ? "n/a" : string.Format("{0:n0} Mb", HugeCrossInfo.TotalMemory/1024);
+                var ws = workingSet64 == 0 ? "n/a" : ((workingSet64/1024L/1024).ToString("n0") + " MB");
+                var totalMem = HugeCrossInfo.TotalMemory == null ? "n/a" : string.Format("{0:n0} MB", HugeCrossInfo.TotalMemory/1024);
                 return pre + "Memory ............ " + totalMem + "; Working Set: " + ws;
             });
 
@@ -1801,7 +1801,7 @@ Get-WmiObject -Class Win32_OperatingSystem | Format-List Caption,CSDVersion,Vers
                     if (l2Cache == "0") l2Cache = "";
                     if (l3Cache == "0") l3Cache = "";
                     string cache = l2Cache + (!string.IsNullOrEmpty(l3Cache) && !string.IsNullOrEmpty(l2Cache) ? "+" : "") + l3Cache;
-                    var ret = name + (cache.Length > 0 ? ", Cache " + cache + " Mb" : "");
+                    var ret = name + (cache.Length > 0 ? ", Cache " + cache + " MB" : "");
                     return ret;
                 }
             }

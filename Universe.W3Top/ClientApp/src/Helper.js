@@ -125,15 +125,15 @@ export class Common {
             return format(number) + " B";
 
         if (number < 1499999)
-            return format((number / 1024.0)) + " Kb";
+            return format((number / 1024.0)) + " KB";
 
         if (number < 1499999999)
-            return format((number / 1024.00 / 1024.00)) + " Mb";
+            return format((number / 1024.00 / 1024.00)) + " MB";
 
         if (number < 1499999999999)
-            return format((number / 1024 / 1024 / 1024)) + " Gb";
+            return format((number / 1024 / 1024 / 1024)) + " GB";
 
-        return format((number / 1024 / 1024 / 1024 / 1024)) + " Tb";
+        return format((number / 1024 / 1024 / 1024 / 1024)) + " TB";
     }
     
     static formatInfoHeader(text) {

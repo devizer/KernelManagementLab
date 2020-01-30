@@ -219,7 +219,7 @@ function DiskBenchmarkDialog(props) {
 
                 <TextField
                     id="benchmark-options-working-set"
-                    label="Working Set (Mb)"
+                    label="Working Set (MB)"
                     style={optionStyles.textField}
                     value={options.workingSet}
                     onChange={handleChangeOption('workingSet')}
