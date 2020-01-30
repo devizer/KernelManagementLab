@@ -426,16 +426,19 @@ namespace Universe.Benchmark.DiskBench
 
                                 long currentStopwatch = stopwatch.ElapsedMilliseconds;
                                 step.Progress(currentStopwatch / (double) msecDuration, total);
-                                bool isCpuUsageProgressUpdated = cpuUsageInProgress.AggregateCpuUsage(force:false);
-                                if (isCpuUsageProgressUpdated)
+                                if (false || true)
                                 {
-                                    // Console.WriteLine($"updateTotalCpuUsage[{tIndex}] Current Thread: {cpuUsageInProgress.Result}");
-                                    var nextTotalCpuUsage = stopwatch.ElapsedMilliseconds;
-                                    if (nextTotalCpuUsage > prevTotalCpuUsage + 111)
+                                    bool isCpuUsageProgressUpdated = cpuUsageInProgress.AggregateCpuUsage(force: false);
+                                    if (isCpuUsageProgressUpdated)
                                     {
-                                        prevTotalCpuUsage = nextTotalCpuUsage;
-                                        updateTotalCpuUsage();
-                                        // Console.WriteLine($"updateTotalCpuUsage[{tIndex}] ALL THREADS: {step.CpuUsage}");
+                                        // Console.WriteLine($"updateTotalCpuUsage[{tIndex}] Current Thread: {cpuUsageInProgress.Result}");
+                                        var nextTotalCpuUsage = stopwatch.ElapsedMilliseconds;
+                                        if (nextTotalCpuUsage > prevTotalCpuUsage + 111)
+                                        {
+                                            prevTotalCpuUsage = nextTotalCpuUsage;
+                                            updateTotalCpuUsage();
+                                            // Console.WriteLine($"updateTotalCpuUsage[{tIndex}] ALL THREADS: {step.CpuUsage}");
+                                        }
                                     }
                                 }
                             } while (stopwatch.ElapsedMilliseconds <= msecDuration);
