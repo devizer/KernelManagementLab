@@ -307,7 +307,7 @@ namespace Universe.Benchmark.DiskBench
             CancelIfRequested();
             LinuxKernelCacheFlusher.Sync();
             
-            byte[] buffer = new byte[1024 * 1024];
+            byte[] buffer = new byte[10 * 1024 * 1024];
             long sumBytes = 0;
             _seqRead.Start();
             CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
@@ -329,8 +329,8 @@ namespace Universe.Benchmark.DiskBench
                         len += n;
                         sumBytes += n;
                         _seqRead.Progress(sumBytes / (double) Parameters.WorkingSetSize, sumBytes);
-                        cpuUsage.AggregateCpuUsage(force: false);
-                        _seqRead.CpuUsage = cpuUsage.Result;
+                        if (cpuUsage.AggregateCpuUsage(force: false))
+                            _seqRead.CpuUsage = cpuUsage.Result;
                     }
                 }
                 
