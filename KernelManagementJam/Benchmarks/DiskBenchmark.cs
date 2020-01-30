@@ -253,7 +253,7 @@ namespace Universe.Benchmark.DiskBench
         {
             _allocate.Start();
             LinuxKernelCacheFlusher.Sync();
-            byte[] buffer = new byte[Math.Min(128 * 1024, this.Parameters.WorkingSetSize)];
+            byte[] buffer = new byte[Math.Min(10 * 1024 * 1024, this.Parameters.WorkingSetSize)];
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
             CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, GenericWritingFileStreamOptions))
@@ -308,7 +308,7 @@ namespace Universe.Benchmark.DiskBench
         private void SeqRead()
         {
             LinuxKernelCacheFlusher.Sync();
-            byte[] buffer = new byte[Math.Min(1024 * 1024, this.Parameters.WorkingSetSize)];
+            byte[] buffer = new byte[Math.Min(10 * 1024 * 1024, this.Parameters.WorkingSetSize)];
             CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
             using (FileStream fs = new FileStream(TempFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, buffer.Length, GenericReadingFileStreamOptions))
             // using (FileStream fs = OpenFileStreamWithoutCacheOnLinux(buffer.Length))
@@ -336,7 +336,7 @@ namespace Universe.Benchmark.DiskBench
         private void SeqWrite()
         {
             LinuxKernelCacheFlusher.Sync();
-            byte[] buffer = new byte[1024 * 1024];
+            byte[] buffer = new byte[10 * 1024 * 1024];
             // new Random().NextBytes(buffer);
             new DataGenerator(Parameters.Flavour).NextBytes(buffer);
             CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
@@ -351,8 +351,9 @@ namespace Universe.Benchmark.DiskBench
                     fs.Write(buffer, 0, count);
                     len += count;
                     _seqWrite.Progress(len / (double) Parameters.WorkingSetSize, len);
-                    cpuUsage.AggregateCpuUsage(force: false);
-                    _seqWrite.CpuUsage = cpuUsage.Result;
+                    if (cpuUsage.AggregateCpuUsage(force: false))
+                        _seqWrite.CpuUsage = cpuUsage.Result;
+                    
                     if (len >= Parameters.WorkingSetSize) fs.Position = 0;
                 }
                 _seqWrite.Complete();
@@ -398,16 +399,12 @@ namespace Universe.Benchmark.DiskBench
                         {
                             lock (syncTotalCpuUsage)
                             {
-                                bool any = cpuUsageProgresses.Any(x => x.Result.HasValue);
-                                if (any)
-                                {
-                                    CpuUsage.CpuUsage totalUsage = CpuUsage.CpuUsage.Sum(
-                                        from x in cpuUsageProgresses
-                                        where x.Result.HasValue
-                                        select x.Result.Value);
-
-                                    step.CpuUsage = totalUsage;
-                                }
+                                CpuUsage.CpuUsage? sum = null;
+                                foreach (var cpuUsage in cpuUsageProgresses)
+                                    if (cpuUsage.Result.HasValue)
+                                        sum = sum + cpuUsage.Result;
+                                
+                                step.CpuUsage = sum;
                             }
                         };
                         
