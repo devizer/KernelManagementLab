@@ -280,12 +280,21 @@ class PersistentDrawerLeft extends React.Component {
                         
                         {MainMenuLink(<InsertChartOutlinedIcon/>,"Disks Live Chart", "/disks")}
                         {MainMenuLink(<ScoreIcon/>,"Disk Benchmark", "/disk-benchmark")}
-                        <Divider />
-                        <ListSubheader disableSticky={true} style={{paddingTop:32, paddingBottom:16, textAlign: "center", lineHeight: "1rem"}}>SAND-BOX<br/>please ignore</ListSubheader>
-                        {MainMenuLink(<FlareIcon/>,"Missed network", "/net-v1")}
-                        <Divider />
-                        {MainMenuLink(<FlareIcon/>,"Single Y-axis chart", "/1-axis")}
-                        {MainMenuLink(<FlareIcon/>,"Double Y-axis one", "/2-axis")}
+                        {(false) &&
+                            <>
+                            <Divider />
+                            <ListSubheader disableSticky={true} style={{
+                            paddingTop: 32,
+                            paddingBottom: 16,
+                            textAlign: "center",
+                            lineHeight: "1rem"
+                        }}>SAND-BOX<br/>please ignore</ListSubheader>
+                            {MainMenuLink(<FlareIcon/>, "Missed network", "/net-v1")}
+                            <Divider />
+                            {MainMenuLink(<FlareIcon/>, "Single Y-axis chart", "/1-axis")}
+                            {MainMenuLink(<FlareIcon/>, "Double Y-axis one", "/2-axis")}
+                            </>
+                        }
                     </List>
                     <Divider />
                 </Drawer>
