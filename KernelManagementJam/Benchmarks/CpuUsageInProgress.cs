@@ -16,6 +16,7 @@ namespace Universe.Benchmark.DiskBench
             var cpuUsageHelper = new CpuUsageInProgress();
             cpuUsageHelper.Stopwatch = Stopwatch.StartNew();
             cpuUsageHelper.Restart();
+            cpuUsageHelper.PrevElapsed = 0;
             return cpuUsageHelper;
         }
 

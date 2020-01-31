@@ -198,7 +198,7 @@ export class NetDevChart extends Component {
                     max: limitBytes,
                     padding: 0,
                     label: {
-                        text: 'Transfer, Kb / s',
+                        text: 'Transfer, KB / s',
                         position: 'outer-middle'
                     },
                     tick: {

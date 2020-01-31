@@ -214,7 +214,7 @@ export class BlockStatChart extends React.Component {
                     max: limitBytes,
                     padding: 0,
                     label: {
-                        text: 'Transfer, Kb / s',
+                        text: 'Transfer, KB / s',
                         position: 'outer-middle'
                     },
                     tick: {
