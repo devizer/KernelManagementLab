@@ -1,8 +1,14 @@
 .inactive-chart { opacity: 0.5}
 
-text.c3-axis-x-label { 
+text.c3-axis-x-label {
     color: gray !important;
     fill: gray !important;
+}
+
+text.c3-axis-y-label, text.c3-axis-y2-label {
+    color: #111 !important;
+    fill: #111 !important;
+    font-size: 11px !important;
 }
 
 .c3-line { 
