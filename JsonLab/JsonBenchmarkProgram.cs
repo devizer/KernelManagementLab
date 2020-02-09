@@ -8,7 +8,7 @@ using BenchmarkDotNet.Running;
 
 namespace MyBenchmarks
 {
-    public class Program
+    public class JsonBenchmarkProgram
     {
         public static void Main(string[] args)
         {

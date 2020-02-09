@@ -94,6 +94,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
 
         public static class Implementation
         {
+            // stateless design, can be transformed to functions
             public interface ICrossProviderTypes
             {
                 string String { get; } 

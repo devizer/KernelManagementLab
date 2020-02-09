@@ -80,7 +80,6 @@ namespace Tests
             if (optionalConverter != null)
                 ser.Converters.Add(optionalConverter);
 
-
             StringBuilder json = new StringBuilder();
             StringWriter jwr = new StringWriter(json);
             ser.Serialize(jwr, data);
