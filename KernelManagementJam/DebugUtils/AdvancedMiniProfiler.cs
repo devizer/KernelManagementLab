@@ -303,6 +303,44 @@ namespace KernelManagementJam.DebugUtils
             return ret;
         }
 
+        public static void InstantSaveReport(string fullName)
+        {
+            try
+            {
+                var directoryName = Path.GetDirectoryName(fullName);
+                if (Directory.Exists(directoryName)) Directory.CreateDirectory(directoryName);
+            }
+            catch
+            {
+            }
+
+            SaveReportImpl(fullName);
+        }
+
+        private static void SaveReportImpl(string fullName)
+        {
+            var consoleTable = AdvancedMiniProfilerReport.Instance.AsConsoleTable();
+            var treeTable = AdvancedMiniProfilerReport.Instance.AsTreeTable();
+            try
+            {
+                using (FileStream fs = new FileStream(fullName, FileMode.Create, FileAccess.Write,
+                    FileShare.ReadWrite))
+                using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
+                {
+                    wr.WriteLine(treeTable.ToString());
+                    wr.WriteLine();
+                    wr.WriteLine(consoleTable.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                var logMessage = $"Unable to store mini profiler report as '{fullName}' file. {ex.GetExceptionDigest()}";
+                FirstRound.RunOnly(() => Console.WriteLine(logMessage),
+                    3, "Unable to store mini profiler report"
+                );
+            }
+        }
+
         public static void ReportToFile(string fullName)
         {
             Thread t = new Thread(() =>
@@ -317,26 +355,7 @@ namespace KernelManagementJam.DebugUtils
                         prevTimestamp = nextTimestamp;
                         using (AdvancedMiniProfiler.Step("Advanced Profiler (update this report)"))
                         {
-                            var consoleTable = AdvancedMiniProfilerReport.Instance.AsConsoleTable();
-                            var treeTable = AdvancedMiniProfilerReport.Instance.AsTreeTable();
-                            try
-                            {
-                                using (FileStream fs = new FileStream(fullName, FileMode.Create, FileAccess.Write,
-                                    FileShare.ReadWrite))
-                                using (StreamWriter wr = new StreamWriter(fs, new UTF8Encoding(false)))
-                                {
-                                    wr.WriteLine(treeTable.ToString());
-                                    wr.WriteLine();
-                                    wr.WriteLine(consoleTable.ToString());
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                var logMessage = $"Unable to store mini profiler report as '{fullName}' file. {ex.GetExceptionDigest()}";
-                                FirstRound.RunOnly(() => Console.WriteLine(logMessage),
-                                    3, "Unable to store mini profiler report"
-                                );
-                            }
+                            SaveReportImpl(fullName);
                         }
 
                         toSleep = REPORT_UPDATE_DELAY;

@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using KernelManagementJam.DebugUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -47,10 +48,10 @@ namespace Universe.Dashboard.Agent
 
         void FlushHistory()
         {
+            Stopwatch sw = Stopwatch.StartNew();
             using (var scope = Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<DashboardContext>();
-                Stopwatch sw = Stopwatch.StartNew();
                 HistoryLogic history = new HistoryLogic(db);
                 // It is NOT thread safe
                 history.Save("NetStatDataSource.By_1_Seconds", NetStatDataSource.Instance.By_1_Seconds);
