@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace Universe.W3Top.Controllers
         }
 
         [HttpGet("[action]")]
+        [Obsolete("Implementation is for sqlite only", error:false)]
         public DbHealpthStatus PingDb()
         {
             Stopwatch sw = Stopwatch.StartNew();
