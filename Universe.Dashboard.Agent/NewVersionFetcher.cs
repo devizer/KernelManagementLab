@@ -9,9 +9,12 @@ namespace Universe.Dashboard.Agent
 {
     public class NewVersionFetcher
     {
+        private const int FETCH_INTERVAL_IN_SECONDS = 5*60;
         public static readonly string Url = "https://raw.githubusercontent.com/devizer/w3top-bin/master/public/version.json";
         
         static ManualResetEvent FirstRoundDone = new ManualResetEvent(false);
+
+        public static bool IsFirstRoundReady => FirstRoundDone.WaitOne(0);
 
         // Startup|test must fail if NewVersionDataSource.InitialValue is malformed
         public static void Configure()
@@ -24,8 +27,8 @@ namespace Universe.Dashboard.Agent
                 {
                     bool isOk = Iteration();
                     FirstRoundDone.Set();
-                    waitDurationOnFail = isOk ? 1 : Math.Min(60, waitDurationOnFail * 2);
-                    var sleepDuration = isOk ? 5*60 : waitDurationOnFail;
+                    waitDurationOnFail = isOk ? 1 : Math.Min(2*60, waitDurationOnFail * 2);
+                    var sleepDuration = isOk ? FETCH_INTERVAL_IN_SECONDS : waitDurationOnFail;
                     PreciseTimer.Shutdown.WaitOne(sleepDuration * 1000);
                 }
             }) { IsBackground = true, Name = "New Version Fetcher"};
@@ -55,7 +58,6 @@ namespace Universe.Dashboard.Agent
                         var newVer = JObject.Parse(jsonString);
                         // Console.WriteLine($"New Ver: {newVer["Version"]}");
                         NewVersionDataSource.NewVersion = newVer;
-                        
                     }
 
                     return true;

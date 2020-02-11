@@ -5,7 +5,7 @@ namespace Universe.Dashboard.Agent
     class TempStopwatch
     {
         private Stopwatch _stopwatch;
-        private CpuUsage.CpuUsage _cpuUsage;
+        private CpuUsage.CpuUsage _cpuUsageOnStart;
 
 #if DEBUG        
         private const bool IsDebug = true;
@@ -18,7 +18,7 @@ namespace Universe.Dashboard.Agent
             if (IsDebug)
             {
                 _stopwatch = Stopwatch.StartNew();
-                _cpuUsage = CpuUsage.CpuUsage.GetByThread() ?? new CpuUsage.CpuUsage();
+                _cpuUsageOnStart = CpuUsage.CpuUsage.GetByThread().GetValueOrDefault();
             }
         }
 
@@ -26,9 +26,9 @@ namespace Universe.Dashboard.Agent
         {
             if (IsDebug)
             {
-                var secs = _stopwatch.ElapsedTicks / (double) Stopwatch.Frequency;
-                var next = CpuUsage.CpuUsage.GetByThread() ?? new CpuUsage.CpuUsage();
-                var delta = CpuUsage.CpuUsage.Substruct(next, _cpuUsage);
+                double secs = _stopwatch.ElapsedTicks / (double) Stopwatch.Frequency;
+                CpuUsage.CpuUsage next = CpuUsage.CpuUsage.GetByThread().GetValueOrDefault();
+                CpuUsage.CpuUsage delta = CpuUsage.CpuUsage.Substruct(next, _cpuUsageOnStart);
 
                 var perCents = secs > 0 ? $", {(delta.TotalMicroSeconds / 10000d / secs):n1}%" : "";
 
