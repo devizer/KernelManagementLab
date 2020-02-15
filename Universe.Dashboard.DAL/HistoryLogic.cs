@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace Universe.Dashboard.DAL
@@ -13,6 +14,8 @@ namespace Universe.Dashboard.DAL
 
         public bool TryLoad<T>(string key, out T value)
         {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+            
             var entity = _DbContext.HistoryCopy.FirstOrDefault(x => x.Key == key);
             if (entity == null || entity.JsonBlob == null)
             {
@@ -27,6 +30,7 @@ namespace Universe.Dashboard.DAL
         // Metrics are usually saved in single threaded mode 
         public void Save<T>(string key, T value) where T: class
         {
+            if (key == null) throw new ArgumentNullException(nameof(key));
             
             var entity = _DbContext.HistoryCopy.FirstOrDefault(x => x.Key == key);
             if (value == default(T))
