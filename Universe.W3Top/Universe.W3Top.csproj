@@ -9,6 +9,7 @@
         <SpaRoot>ClientApp\</SpaRoot>
         <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <NoWarn>CS0162,NU1701</NoWarn>
 
         <ServerGarbageCollection>false</ServerGarbageCollection>
         <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
