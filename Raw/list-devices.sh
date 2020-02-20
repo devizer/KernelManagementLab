@@ -4,6 +4,10 @@ pushd /sys/devices >/dev/null
 
 popd >/dev/null
 
+# root is not required
+cat /sys/devices/virtual/dmi/id/board_{vendor,name,version}
+
+
 echo '
 ./virtual/dmi/id/chassis_vendor: [ASUSTeK Computer Inc.        ]
 ./virtual/dmi/id/sys_vendor: [ASUSTeK Computer Inc.        ]
