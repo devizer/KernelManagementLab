@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 pushd /sys/devices >/dev/null
 # sudo find . | grep -E 'name$' | xargs -d $'\n' sh -c 'for arg do echo "$arg: [$(sudo cat $arg)]"; done'
 # sudo find . -type f | xargs -d $'\n' sh -c 'for arg do echo "$arg: [$(sudo cat $arg 2>/dev/null)]"  | grep ASUS; done'
