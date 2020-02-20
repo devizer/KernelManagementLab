@@ -59,5 +59,15 @@ ARMv8
 /sys/devices/virtual/dmi/id/board_name: [FALCON     ]
 /sys/firmware/devicetree/base/model: []
 
+Debian 7
+/sys/devices/virtual/dmi/id/chassis_vendor: [No Enclosure]
+/sys/devices/virtual/dmi/id/sys_vendor: [VMware, Inc.]
+/sys/devices/virtual/dmi/id/board_vendor: [Intel Corporation]
+/sys/devices/virtual/dmi/id/product_name: [VMware Virtual Platform]
+/sys/devices/virtual/dmi/id/board_name: [440BX Desktop Reference Platform]
+/sys/firmware/devicetree/base/model: []
+/proc/device-tree/model: []
+
+
 
 '
