@@ -1,9 +1,14 @@
+#!/usr/bin/env bash
 pushd /sys/devices >/dev/null
 # sudo find . | grep -E 'name$' | xargs -d $'\n' sh -c 'for arg do echo "$arg: [$(sudo cat $arg)]"; done'
 # sudo find . -type f | xargs -d $'\n' sh -c 'for arg do echo "$arg: [$(sudo cat $arg 2>/dev/null)]"  | grep ASUS; done'
 sudo find . -type f | xargs -d $'\n' sh -c 'for arg do echo "$arg: [$(sudo cat $arg 2>/dev/null)]"; done'
 
 popd >/dev/null
+
+# root is not required
+cat /sys/devices/virtual/dmi/id/board_{vendor,name,version}
+
 
 echo '
 ./virtual/dmi/id/chassis_vendor: [ASUSTeK Computer Inc.        ]
