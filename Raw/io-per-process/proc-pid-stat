@@ -1,0 +1,57 @@
+http://man7.org/linux/man-pages/man5/proc.5.html
+
+42: delayacct_blkio_ticks  %llu  (since Linux 2.6.18)
+        Aggregated block I/O delays, measured in clock ticks
+        (centiseconds).
+
+(36) nswap  %lu
+        Number of pages swapped (not maintained).
+
+
+(24) rss  %ld
+        Resident Set Size: number of pages the process has
+        in real memory.  This is just the pages which count
+        toward text, data, or stack space.  This does not
+        include pages which have not been demand-loaded in,
+        or which are swapped out.
+
+
+(22) starttime  %llu
+        The time the process started after system boot.  In
+        kernels before Linux 2.6, this value was expressed
+        in jiffies.  Since Linux 2.6, the value is expressed
+        in clock ticks (divide by sysconf(_SC_CLK_TCK)).
+
+
+(19) nice  %ld
+   The nice value (see setpriority(2)), a value in the
+   range 19 (low priority) to -20 (high priority).
+
+(20) num_threads  %ld
+        Number of threads in this process (since Linux 2.6).
+        Before kernel 2.6, this field was hard coded to 0 as
+        a placeholder for an earlier removed field.
+
+
+(14) utime  %lu
+        Amount of time that this process has been scheduled
+        in user mode, measured in clock ticks (divide by
+        sysconf(_SC_CLK_TCK)).  This includes guest time,
+        guest_time (time spent running a virtual CPU, see
+        below), so that applications that are not aware of
+        the guest time field do not lose that time from
+        their calculations.
+
+(15) stime  %lu
+        Amount of time that this process has been scheduled
+        in kernel mode, measured in clock ticks (divide by
+        sysconf(_SC_CLK_TCK)).
+
+(10) minflt  %lu
+        The number of minor faults the process has made
+        which have not required loading a memory page from
+        disk.
+
+(12) majflt  %lu
+        The number of major faults the process has made
+        which have required loading a memory page from disk.
