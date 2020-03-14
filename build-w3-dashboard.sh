@@ -14,7 +14,9 @@ mkdir -p "$(dirname $work)"
 cd $(dirname $work);
 rm -rf $work;
 git clone https://github.com/devizer/KernelManagementLab;
-cd KernelManagementLab/Universe.W3Top
+cd KernelManagementLab
+dotnet restore --disable-parallel
+cd Universe.W3Top
 dir=$(pwd)
 
 pushd ../build >/dev/null
