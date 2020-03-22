@@ -153,7 +153,7 @@ export class BlockStatDevChartHeader extends Component {
         );
 
         let componentTotalSize = !totalSize ? null : (
-            <span>,&nbsp;&nbsp;<small>{Helper.Common.formatBytes(totalSize,3)}</small></span>
+            <span>,&nbsp;&nbsp;<small>{Helper.Common.formatBytes(totalSize,0)}</small></span>
         );
 
         let componentReadOnly = (<>, <small>R/O</small></>);
