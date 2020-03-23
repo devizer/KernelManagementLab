@@ -109,6 +109,50 @@ export class BlockStatDevChartHeader extends Component {
             paddingRight: NetDevChart.Padding - 4,
         },
     };
+    
+/*  EXAMPLES:
+    --------
+    / (the root),       9 GB    (btrfs)
+    /apps/rider,        554 MB  (squashfs, R/O)
+    /transient-builds,  97 GB   (ext4)
+*/
+    renderMountPathHeader()
+    {
+        // mounted volume
+        let globalDataSource = dataSourceStore.getDataSource();
+        let mounts = Helper.Disks.getOptionalMountsProperty(globalDataSource);
+        mounts = mounts == null ? [] : mounts;
+
+        let deviceCopy = "/dev/" + this.props.name;
+        let mountInfo = mounts.find(x => x && x.mountEntry && x.mountEntry.device === deviceCopy);
+        if (mountInfo === undefined) mountInfo = null;
+        let mountPath = mountInfo && mountInfo.mountEntry ? mountInfo.mountEntry.mountPath : null;
+        let fileSystem = mountInfo && mountInfo.mountEntry ? mountInfo.mountEntry.fileSystem : null;
+        let totalSize = mountInfo && mountInfo.totalSize && mountInfo.totalSize > 0 ? mountInfo.totalSize : null;
+        let isReadonly = mountInfo && (mountInfo.freeSpace === 0);
+        if (fileSystem === "swap") {
+            mountPath="swap";
+            fileSystem = null;
+        }
+
+        let componentMountPath = mountPath === null ? null : (
+            <span><b>{mountPath}</b>{mountPath === "/" ? " (the root)" : ""}</span>
+        );
+
+        let componentTotalSize = !totalSize ? null : (
+            <span>,&nbsp;&nbsp;<small>{Helper.Common.formatBytes(totalSize,0)}</small></span>
+        );
+
+        let componentReadOnly = (<>, <small>R/O</small></>);
+        let componentFileSystem = fileSystem === null ? null : (
+            <span style={{color:"grey"}}>({fileSystem}{isReadonly ? componentReadOnly:null})</span>
+        );
+        
+        return (
+            <div style={this.dd.top}>{componentMountPath}{componentTotalSize}&nbsp;&nbsp;{componentFileSystem}</div>
+        );
+        
+    }
 
     render() {
 
@@ -130,41 +174,11 @@ export class BlockStatDevChartHeader extends Component {
 
         let format = x => x > 0 ? Helper.Common.formatBytes(x) : "";
         // totals = {rxBytes: 0, txBytes: 0};
-        
-        // mounted volume
-        let globalDataSource = dataSourceStore.getDataSource();
-        let mounts = Helper.Disks.getOptionalMountsProperty(globalDataSource);
-        mounts = mounts == null ? [] : mounts;
-        
-        let deviceCopy = "/dev/" + this.props.name;
-        let mountInfo = mounts.find(x => x && x.mountEntry && x.mountEntry.device === deviceCopy);
-        if (mountInfo === undefined) mountInfo = null;
-        let mountPath = mountInfo && mountInfo.mountEntry ? mountInfo.mountEntry.mountPath : null;
-        let fileSystem = mountInfo && mountInfo.mountEntry ? mountInfo.mountEntry.fileSystem : null;
-        let totalSize = mountInfo && mountInfo.totalSize && mountInfo.totalSize > 0 ? mountInfo.totalSize : null;
-        let isReadonly = mountInfo && (mountInfo.freeSpace === 0);
-        if (fileSystem === "swap") {
-            mountPath="swap";
-            fileSystem = null;
-        } 
-        
-        let componentMountPath = mountPath === null ? null : (
-            <span><b>{mountPath}</b>{mountPath === "/" ? " (the root)" : ""}</span>
-        );
-
-        let componentTotalSize = !totalSize ? null : (
-            <span>,&nbsp;&nbsp;<small>{Helper.Common.formatBytes(totalSize,0)}</small></span>
-        );
-
-        let componentReadOnly = (<>, <small>R/O</small></>);
-        let componentFileSystem = fileSystem === null ? null : (
-            <span style={{color:"grey"}}>({fileSystem}{isReadonly ? componentReadOnly:null})</span>
-        );
 
         return (<React.Fragment>
             
             <div style={this.dd.container}>&nbsp;<br/>&nbsp;
-                <div style={this.dd.top}>{componentMountPath}{componentTotalSize}&nbsp;&nbsp;{componentFileSystem}</div>
+                {this.renderMountPathHeader()}
                 <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={iconSent} /> {format(totals.rxBytes)}</span></div>
                 <div style={this.dd.center}>{this.props.name.toUpperCase()}</div>
                 <div style={this.dd.right}><span title={"TOTAL SENT"}>{format(totals.txBytes)} <FontAwesomeIcon icon={iconReceived} /></span></div>
