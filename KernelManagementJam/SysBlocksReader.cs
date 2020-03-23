@@ -69,8 +69,12 @@ namespace KernelManagementJam
                     DevFileType = devFileType
                 };
 
-                using(GetNextProfilerStep($"ParseSnapshot({sysBlockFolder.Name})"))
-                    blockDevice.StatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
+                using (GetNextProfilerStep($"ParseSnapshot({sysBlockFolder.Name})"))
+                {
+                    var blockDeviceStatisticSnapshot = ParseSnapshot(SysBlockPath + "/" + blockDevice.DiskKey);
+                    if (!blockDeviceStatisticSnapshot.HasValue) continue;
+                    blockDevice.StatisticSnapshot = blockDeviceStatisticSnapshot.Value;
+                }
 
                 var volumesStepName = GetProfilerStepName($"Volumes({sysBlockFolder.Name})");
                 using(var volumesStep = GetProfilerStep(volumesStepName))
@@ -100,8 +104,15 @@ namespace KernelManagementJam
                                 : AdvancedMiniProfiler.Step(baseProfilerPath.Child(volumesStepName).Child($"{volumeBulletText}ParseSnapshot({volumeSnapshotPath})"));
                         
                         using(volSnapshotStep)
-                        blockVolumeInfo.StatisticSnapshot = ParseSnapshot(volumeSnapshotPath);
-                        blockDevice.Volumes.Add(blockVolumeInfo);
+                        {
+                            var volumeStatisticSnapshot = ParseSnapshot(volumeSnapshotPath);
+                            if (volumeStatisticSnapshot.HasValue)
+                            {
+                                blockVolumeInfo.StatisticSnapshot = volumeStatisticSnapshot.Value;
+                                blockDevice.Volumes.Add(blockVolumeInfo);
+                            }
+                        }
+
                     }
 
                     ret.Add(blockDevice);
@@ -120,11 +131,19 @@ namespace KernelManagementJam
             
         }
 
-        private static BlockSnapshot ParseSnapshot(string basePath)
+        // prev: always returns NON NULL
+        // next: may return NULL for unused loop-device 
+        private static BlockSnapshot? ParseSnapshot(string basePath)
         {
             var ret = new BlockSnapshot();
 
             ret.Size = TryLongValue(basePath + "/size");
+            bool isLoopDevice = Path
+                .GetFileName(basePath)
+                .StartsWith("loop", StringComparison.InvariantCultureIgnoreCase);
+            
+            if (ret.Size == 0 && isLoopDevice) return null;
+            
             ret.IsReadonly = TryBooleanValue(basePath + "/ro");
             ret.IsRemovable = TryBooleanValue(basePath + "/removable");
 
