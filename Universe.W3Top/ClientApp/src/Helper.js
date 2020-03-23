@@ -96,7 +96,7 @@ export class Common {
 
     // object has at least one property
     static objectIsNotEmpty(obj) {
-        return typeof obj == "object" && Object.keys(obj).length > 0;
+        return typeof obj === "object" && Object.keys(obj).length > 0;
     }
 
     static htmlEncode(str) {
