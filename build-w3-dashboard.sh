@@ -9,7 +9,6 @@ work=$HOME/transient-builds
 if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
 if [[ -d "/ssd" ]]; then work=/ssd/transient-builds; fi
 work=$work/KernelManagementLab;
-# work=/mnt/ftp-client/KernelManagementLab;
 mkdir -p "$(dirname $work)"
 cd $(dirname $work);
 rm -rf $work;
