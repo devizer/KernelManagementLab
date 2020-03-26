@@ -45,7 +45,7 @@ function reinstall_service() {
   export ASPNETCORE_ENVIRONMENT=Production
   cd ClientApp; time (yarn install); cd ..
   # time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service
-  time dotnet publish -maxcpucount "$MAX_CPU_COUNT" -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
+  time dotnet publish -maxcpucount "${MAX_CPU_COUNT:-}" -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
   pushd ClientApp; yarn test; popd
   cd bin/service
   chmod 644 *.dll
