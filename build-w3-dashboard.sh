@@ -42,9 +42,13 @@ function run_prod() {
 function reinstall_service() {
   cd $dir
   export ASPNETCORE_ENVIRONMENT=Production
-  cd ClientApp; time (yarn install); cd ..
+  cd ClientApp; 
+    time yarn install;
+    time yarn test;
+    time yarn build 
+    cd ..
   # time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service
-  time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
+  time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
   pushd ClientApp; yarn test; popd
   cd bin/service
   chmod 644 *.dll
