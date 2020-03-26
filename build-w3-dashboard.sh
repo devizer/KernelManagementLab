@@ -14,7 +14,7 @@ cd $(dirname $work);
 rm -rf $work;
 git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
-dotnet restore --disable-parallel
+# dotnet restore --disable-parallel
 cd Universe.W3Top
 dir=$(pwd)
 
@@ -34,6 +34,7 @@ function run_prod() {
   cd $dir
   export ASPNETCORE_ENVIRONMENT=Production
   cd ClientApp; time (yarn install); cd ..
+  dotnet restore --disable-parallel
   time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/ --self-contained -r $rid
   cd bin
   ./Universe.W3Top
@@ -46,10 +47,10 @@ function reinstall_service() {
     time yarn install;
     time yarn test;
     time yarn build 
-    cd ..
+  cd ..
   # time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service
+  dotnet restore --disable-parallel
   time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
-  pushd ClientApp; yarn test; popd
   cd bin/service
   chmod 644 *.dll
   chmod 755 Universe.W3Top
