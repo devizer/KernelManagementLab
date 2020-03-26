@@ -14,7 +14,7 @@ cd $(dirname $work);
 rm -rf $work;
 git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
-dotnet restore -maxcpucount "${MAX_CPU_COUNT:-}" --disable-parallel
+dotnet restore --disable-parallel
 cd Universe.W3Top
 dir=$(pwd)
 
