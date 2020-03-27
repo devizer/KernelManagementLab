@@ -36,7 +36,9 @@ namespace KernelManagementJam
         {
             get
             {
-                return (MountEntry?.FileSystem ?? "").EndsWith("tmpfs", CMP);
+                return
+                    (MountEntry?.FileSystem ?? "").EndsWith("tmpfs", CMP)
+                    || (MountEntry.Device ?? "").StartsWith("/dev/zram", CMP);
             }
         }
 
