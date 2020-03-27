@@ -13,8 +13,7 @@ namespace Universe.Dashboard.Agent
             List<DiskVolStatModel> totals = BlockDiskDataSource.Instance.Totals;
             if (totals == null) return null;
 
-            // need another sort with mounts.
-            // 1st: root, then ordered by Size descending.
+            // UI friendly sort order is BlockDevicesUI.GetOrderedBlockNames()
             return totals
                 .Select(x => x.DiskVolKey)
                 .OrderBy(x => x)
