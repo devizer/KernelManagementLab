@@ -13,6 +13,8 @@ namespace Universe.Dashboard.Agent
             List<DiskVolStatModel> totals = BlockDiskDataSource.Instance.Totals;
             if (totals == null) return null;
 
+            // need another sort with mounts.
+            // 1st: root, then ordered by Size descending.
             return totals
                 .Select(x => x.DiskVolKey)
                 .OrderBy(x => x)
@@ -21,7 +23,7 @@ namespace Universe.Dashboard.Agent
         
         public static object AsViewModel(List<BlockDiskDataSourcePoint> dataSource)
         {
-            var blockNames = dataSource
+            List<string> blockNames = dataSource
                 .SelectMany(x => x.BlockDiskStat)
                 .Select(x => x.DiskVolKey)
                 .Distinct()
@@ -110,9 +112,12 @@ namespace Universe.Dashboard.Agent
                     }
                 }
             }
+            
+            
 
             dynamic ret = new ExpandoObject();
-            ret.BlockNames = blockNames;
+            // ret.BlockNames = blockNames;
+            ret.BlockNames = BlockDevicesUI.GetOrderedBlockNames(blockNames);
             ret.BlockTotals = BlockDiskDataSource.Instance.Totals;
             ret.Blocks = blocksView;
             return ret;

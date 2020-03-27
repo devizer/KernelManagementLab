@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Universe.Dashboard.Agent;
@@ -26,11 +27,17 @@ namespace Universe.W3Top.Controllers
             {
                 System = hostInfo,
                 InterfaceNames = NetDataSourceView.GetInterfaceNames(),
-                BlockNames = BlockDiskDataSourceView.GetDiskOrVolNames(),
+                BlockNames = GetOrderedBlockNames(),
                 NewVer = NewVersionDataSource.NewVersion,
             };
 
             return ret;
+        }
+
+
+        private static List<string> GetOrderedBlockNames()
+        {
+            return BlockDevicesUI.GetOrderedBlockNames(BlockDiskDataSourceView.GetDiskOrVolNames());
         }
     }
     
