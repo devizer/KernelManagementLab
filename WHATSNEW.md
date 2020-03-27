@@ -1,3 +1,7 @@
+##### 1.19
+- Friendly disk live chart
+- Reduced CPU usage for background flow
+  
 ##### 1.18
 - Added Disk Benchmark History 
 
