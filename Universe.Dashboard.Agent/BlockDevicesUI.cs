@@ -27,6 +27,7 @@ namespace Universe.Dashboard.Agent
                 .ThenByDescending(x => x.totalSize ?? 0)
                 .ThenBy(x => x.block)
                 .Select(x => x.block)
+                .Distinct()
                 .ToList();
             
  #if DEBUG
