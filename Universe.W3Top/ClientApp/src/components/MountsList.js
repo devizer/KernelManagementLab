@@ -83,7 +83,9 @@ export class MountsList extends React.Component {
         // row.original - fields from data (dataSource)
         let suffix = "";
         if (rowInfo !== undefined && rowInfo.original !== undefined) {
-            if (rowInfo.original.isBlockDevice) {
+            if (rowInfo.original.isTmpFs) {
+                suffix = "ram";
+            } else if (rowInfo.original.isBlockDevice) {
                 suffix = "block";
             } else if (rowInfo.original.isTmpFs) {
                 suffix = "ram";
