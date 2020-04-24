@@ -38,7 +38,7 @@ namespace KernelManagementJam
             {
                 return
                     (MountEntry?.FileSystem ?? "").EndsWith("tmpfs", CMP)
-                    || (MountEntry.Device ?? "").StartsWith("/dev/zram", CMP);
+                    || (MountEntry?.Device ?? "").StartsWith("/dev/zram", CMP);
             }
         }
 
@@ -54,7 +54,7 @@ namespace KernelManagementJam
         {
             get
             {
-                var device = (MountEntry?.Device ?? "");
+                var device = MountEntry?.Device ?? "";
                 return device.IndexOf("ftpfs#", CMP) >= 0 
                        || device.IndexOf("ftp://", CMP) >= 0 
                        || device.IndexOf("ftps://", CMP) >= 0;
@@ -140,8 +140,6 @@ namespace KernelManagementJam
                     .ToArray();
 
             return filtered;
-
-
         }
     }
 }
