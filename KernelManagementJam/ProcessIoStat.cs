@@ -1,0 +1,137 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Text;
+
+namespace KernelManagementJam
+{
+    public struct ProcessIoStat
+    {
+        public int Pid { get; set; } // 1, first
+        public long StartAt { get; set; } // 22
+
+        public long IoTime { get; set; } // 42
+        public long UserCpuUsage { get; set; } // 14
+        public long KernelCpuUsage { get; set; } // 15
+        public long RealTimePriority { get; set; } // 18
+        public long Priority { get; set; } // 19
+        public long MinorPageFaults { get; set; } // 10
+        public long MajorPageFaults { get; set; } // 12
+        public long NumThreads { get; set; } // 20
+
+        // VmRSS, RssFile, RssShmem, VmSwap 
+        public long RssMem { get; set; } // VmRSS in /proc/[pid]/status
+        public long SharedMem { get; set; } // RssFile+RssShmem in /proc/[pid]/status
+        public long SwappedMem { get; set; } // VmSwap@.../status
+        public string Command { get; set; }
+        
+        // .../io
+        public long ReadBytes { get; set; }
+        public long WriteBytes { get; set; }
+        public long ReadSysCalls { get; set; }
+        public long WriteSysCalls { get; set; }
+        public long ReadBlockBackedBytes { get; set; }
+        public long WriteBlockBackedBytes { get; set; }
+
+
+        public static List<ProcessIoStat> GetProcesses()
+        {
+            List<ProcessIoStat> ret = new List<ProcessIoStat>();
+            var builtIn = Process.GetProcesses();
+            foreach (var process in builtIn)
+            {
+                var ioInfo = new ProcessIoStat()
+                {
+                    Pid = process.Id,
+                    Command = process.ProcessName,
+                };
+                
+                ParseStat(ioInfo);
+                ParseStatus(ioInfo);
+                ret.Add(ioInfo);
+            }
+
+            return ret;
+        }
+
+        private static void ParseStatus(ProcessIoStat ioStat)
+        {
+            var statusName = $"/proc/{ioStat.Pid}/status";
+            using (FileStream fs = new FileStream(statusName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
+            {
+                int lookingFor = 4;
+                long? VmRSS = null, RssFile = null, RssShmem = null, VmSwap = null;
+                string line;
+                while (lookingFor > 0 && (line = rdr.ReadLine()) != null)
+                {
+                    if (line.StartsWith("VmRSS:", StringComparison.OrdinalIgnoreCase)) { VmRSS = GetStatusValue(line); lookingFor--; }
+                    if (line.StartsWith("RssFile:", StringComparison.OrdinalIgnoreCase)) {RssFile = GetStatusValue(line); lookingFor--;}
+                    if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) {RssShmem = GetStatusValue(line); lookingFor--;}
+                    if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) {VmSwap = GetStatusValue(line); lookingFor--;}
+                }
+
+                if (VmRSS.HasValue) ioStat.RssMem = VmRSS.Value;
+                if (VmSwap.HasValue) ioStat.SwappedMem = VmSwap.Value;
+                if (RssFile.HasValue && RssShmem.HasValue) ioStat.SharedMem = RssFile.GetValueOrDefault() + RssShmem.GetValueOrDefault(); 
+            }
+        }
+
+        private static long? GetStatusValue(string line)
+        {
+            // TODO: Make Faster
+            var sub = line.Substring(line.IndexOf(':') + 1).ToLower().Replace(" kb", "").Trim();
+            return GetOptionalLong(sub);
+        }
+
+        static readonly CultureInfo EnUS = new CultureInfo("en-US");
+        private static readonly UTF8Encoding Utf8Encoding = new UTF8Encoding(false);
+
+        static void ParseStat(ProcessIoStat ioStat)
+        {
+            var statName = $"/proc/{ioStat.Pid}/stat";
+            if (!File.Exists(statName)) return;
+            using (FileStream fs = new FileStream(statName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
+            {
+                var line = rdr.ReadLine();
+                if (!string.IsNullOrEmpty(line))
+                {
+                    var arr = line.Split(' ');
+                    ioStat.IoTime = GetLong(arr[42 - 1]);
+                    ioStat.StartAt = GetLong(arr[22 - 1]);
+                    ioStat.UserCpuUsage = GetLong(arr[14 - 1]);
+                    ioStat.KernelCpuUsage = GetLong(arr[15 - 1]);
+                    ioStat.RealTimePriority = GetLong(arr[18 - 1]);
+                    ioStat.Priority = GetLong(arr[19 - 1]);
+                    ioStat.MinorPageFaults = GetLong(arr[10 - 1]);
+                    ioStat.MajorPageFaults = GetLong(arr[11 - 1]);
+                    ioStat.NumThreads = GetLong(arr[20 - 1]);
+                }
+            }
+        }
+
+        static long? GetOptionalLong(string raw)
+        {
+            if (long.TryParse(raw, NumberStyles.Number, EnUS, out long ret))
+                return ret;
+
+            return null;
+        }
+
+        static long GetLong(string raw)
+        {
+            if (long.TryParse(raw, NumberStyles.Number, EnUS, out long ret))
+                return ret;
+
+            throw new Exception($"Invalid long '{raw}'");
+        }
+
+        
+        
+        
+        
+    }
+}
