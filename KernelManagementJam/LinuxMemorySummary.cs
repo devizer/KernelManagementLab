@@ -18,7 +18,7 @@ namespace KernelManagementJam
 
         public override string ToString()
         {
-            return $@"{nameof(Total)}: {Total}, {nameof(Free)}: {Free}, {nameof(Available)}: {Available}, {nameof(Buffers)}: {Buffers}, {nameof(Cached)}: {Cached}, {nameof(SwapTotal)}: {SwapTotal}, {nameof(SwapFree)}: {SwapFree}";
+            return $@"{nameof(Total)}: {Total:n0} KB, {nameof(Free)}: {Free:n0} KB, {nameof(Available)}: {Available:n0} KB, {nameof(Buffers)}: {Buffers:n0} KB, {nameof(Cached)}: {Cached:n0} KB, {nameof(SwapTotal)}: {SwapTotal:n0} KB, {nameof(SwapFree)}: {SwapFree:n0} KB";
         }
 
         public static bool TryParse(out LinuxMemorySummary info)
