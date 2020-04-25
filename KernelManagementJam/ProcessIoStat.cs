@@ -50,15 +50,37 @@ namespace KernelManagementJam
                 
                 ParseStat(ioInfo);
                 ParseStatus(ioInfo);
+                ParseIo(ioInfo);
                 ret.Add(ioInfo);
             }
 
             return ret;
         }
 
+        private static void ParseIo(ProcessIoStat ioStat)
+        {
+            var statusName = $"/proc/{ioStat.Pid}/io";
+            using (FileStream fs = new FileStream(statusName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
+            {
+                int lookingFor = 6;
+                string line;
+                while (lookingFor > 0 && (line = rdr.ReadLine()) != null)
+                {
+                    if (line.StartsWith("rchar:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadBytes = GetIoValue(line); lookingFor--; }
+                    if (line.StartsWith("wchar:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBytes = GetIoValue(line); lookingFor--;}
+                    if (line.StartsWith("syscr:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadSysCalls = GetIoValue(line); lookingFor--;}
+                    if (line.StartsWith("syscw:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteSysCalls = GetIoValue(line); lookingFor--;}
+                    if (line.StartsWith("read_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadBlockBackedBytes = GetIoValue(line); lookingFor--;}
+                    if (line.StartsWith("write_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBlockBackedBytes = GetIoValue(line); lookingFor--;}
+                }
+            }
+        }
+
         private static void ParseStatus(ProcessIoStat ioStat)
         {
             var statusName = $"/proc/{ioStat.Pid}/status";
+            if (!File.Exists(statusName)) return;
             using (FileStream fs = new FileStream(statusName, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
             {
@@ -77,6 +99,11 @@ namespace KernelManagementJam
                 if (VmSwap.HasValue) ioStat.SwappedMem = VmSwap.Value;
                 if (RssFile.HasValue && RssShmem.HasValue) ioStat.SharedMem = RssFile.GetValueOrDefault() + RssShmem.GetValueOrDefault(); 
             }
+        }
+
+        private static long GetIoValue(string line)
+        {
+            return GetLong(line.Substring(line.IndexOf(':') + 1));
         }
 
         private static long? GetStatusValue(string line)
