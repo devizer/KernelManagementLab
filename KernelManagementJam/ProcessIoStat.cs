@@ -10,6 +10,7 @@ namespace KernelManagementJam
     public struct ProcessIoStat
     {
         public int Pid { get; set; } // 1, first
+        public bool IsAccessDenied { get; set; }
         public long StartAt { get; set; } // 22
 
         public long IoTime { get; set; } // 42
@@ -35,6 +36,10 @@ namespace KernelManagementJam
         public long ReadBlockBackedBytes { get; set; }
         public long WriteBlockBackedBytes { get; set; }
 
+        public override string ToString()
+        {
+            return $"{nameof(Pid)}: {Pid}, {nameof(IsAccessDenied)}: {IsAccessDenied}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+        }
 
         public static List<ProcessIoStat> GetProcesses()
         {
@@ -47,10 +52,18 @@ namespace KernelManagementJam
                     Pid = process.Id,
                     Command = process.ProcessName,
                 };
-                
-                ParseStat(ioInfo);
-                ParseStatus(ioInfo);
-                ParseIo(ioInfo);
+
+                try
+                {
+                    ParseStat(ioInfo);
+                    ParseStatus(ioInfo);
+                    ParseIo(ioInfo);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    ioInfo.IsAccessDenied = true;
+                }
+
                 ret.Add(ioInfo);
             }
 
@@ -156,9 +169,5 @@ namespace KernelManagementJam
             throw new Exception($"Invalid long '{raw}'");
         }
 
-        
-        
-        
-        
     }
 }

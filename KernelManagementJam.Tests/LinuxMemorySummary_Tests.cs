@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class LinuxMemorySummaryTests
+    public class LinuxMemorySummary_Tests
     {
 
         [Test]
@@ -16,7 +16,5 @@ namespace KernelManagementJam.Tests
             Console.WriteLine($"LinuxMemorySummary: {info}");
 
         }
-
-
     }
 }
