@@ -56,6 +56,11 @@ namespace Universe.Dashboard.Agent
                 // It is NOT thread safe
                 history.Save("NetStatDataSource.By_1_Seconds", NetStatDataSource.Instance.By_1_Seconds);
                 history.Save("NetStatDataSource", NetStatDataSource.Instance);
+
+                history.Save("BlockDiskDataSource.By_1_Seconds", BlockDiskDataSource.Instance.By_1_Seconds);
+                history.Save("BlockDiskDataSource", BlockDiskDataSource.Instance);
+                
+                
                 double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 Console.WriteLine($"History flushed in {msec:n1} milliseconds");
             }
