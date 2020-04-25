@@ -47,6 +47,7 @@ namespace Universe.W3Top
             PreciseTimer.Services = webHost.Services;
             NetStatTimer.Process();
             BlockDiskTimer.Process();
+            MemorySummaryTimer.Process();
             DebugPreciseTimer();
             
             webHost.Run();
@@ -97,6 +98,15 @@ namespace Universe.W3Top
                     "ProcMountsParser(/proc/mounts) successfully pre-jitted",
                     "ProcMountsParser(/proc/mounts) fails. Mounts page may not work properly.",
                     () => { ProcMountsSandbox.DumpProcMounts(); });
+
+                StopwatchLog.SafeToConsole(
+                    "LinuxMemorySummary.TryParse(/proc/meminfo) successfully pre-jitted",
+                    "LinuxMemorySummary.TryParse(/proc/meminfo) fails. Memory usage page may not work properly.",
+                    () =>
+                    {
+                        if (!LinuxMemorySummary.TryParse(out var info))
+                            throw new NotSupportedException("LinuxMemorySummary.TryParse is not supported");
+                    });
 
                 StopwatchLog.SafeToConsole(
                     "SysBlocksReader(/sys/block) successfully pre-jitted",

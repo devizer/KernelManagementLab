@@ -53,13 +53,15 @@ namespace Universe.Dashboard.Agent
             {
                 var db = scope.ServiceProvider.GetRequiredService<DashboardContext>();
                 HistoryLogic history = new HistoryLogic(db);
-                // It is NOT thread safe
+                // TODO: It is NOT thread safe. Need to implement clone?
                 history.Save("NetStatDataSource.By_1_Seconds", NetStatDataSource.Instance.By_1_Seconds);
                 history.Save("NetStatDataSource", NetStatDataSource.Instance);
 
                 history.Save("BlockDiskDataSource.By_1_Seconds", BlockDiskDataSource.Instance.By_1_Seconds);
                 history.Save("BlockDiskDataSource", BlockDiskDataSource.Instance);
-                
+
+                history.Save("MemorySummaryDataSource.By_1_Seconds", MemorySummaryDataSource.Instance.By_1_Seconds);
+                history.Save("MemorySummaryDataSource", MemorySummaryDataSource.Instance);
                 
                 double msec = sw.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 Console.WriteLine($"History flushed in {msec:n1} milliseconds");

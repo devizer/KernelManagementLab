@@ -31,6 +31,7 @@ namespace Universe.Dashboard.Agent.Profiling
             var webHost = CreateWebHostBuilder(new string[0]).Build();
             PreciseTimer.Services = webHost.Services;
             BlockDiskTimer.Process();
+            MemorySummaryTimer.Process();
 
             var atStart = CpuUsage.CpuUsage.GetByThread().Value;
             int total = 0;
