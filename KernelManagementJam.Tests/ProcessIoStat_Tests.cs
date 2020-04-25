@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using NUnit.Framework;
 
 namespace KernelManagementJam.Tests
@@ -17,5 +19,25 @@ namespace KernelManagementJam.Tests
                 Console.WriteLine(process);
             }
         }
+        
+        [Test]
+        public void Express_Bebchmark()
+        {
+            ProcessIoStat.GetProcesses();
+            Stopwatch sw = Stopwatch.StartNew();
+            int n = 0;
+            int nProcs;
+            long msecs;
+            do
+            {
+                n++;
+                List<ProcessIoStat> processes = ProcessIoStat.GetProcesses();
+                nProcs = processes.Count;
+                msecs = sw.ElapsedMilliseconds;
+            } while (msecs <= 1000);
+            
+            Console.WriteLine($"Processes: {nProcs}, Benchmark: {(1000d*n/(double)msecs):n2}");
+        }
+
     }
 }
