@@ -7,7 +7,7 @@ using System.Text;
 
 namespace KernelManagementJam
 {
-    public struct ProcessIoStat
+    public class ProcessIoStat
     {
         public int Pid { get; set; } // 1, first
         public bool IsAccessDenied { get; set; }
@@ -27,6 +27,7 @@ namespace KernelManagementJam
         public long SharedMem { get; set; } // RssFile+RssShmem in /proc/[pid]/status
         public long SwappedMem { get; set; } // VmSwap@.../status
         public string Command { get; set; }
+        public string Name { get; set; }
         
         // .../io
         public long ReadBytes { get; set; }
@@ -38,7 +39,8 @@ namespace KernelManagementJam
 
         public override string ToString()
         {
-            return $"{nameof(Pid)}: {Pid}, {nameof(IsAccessDenied)}: {IsAccessDenied}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            string header = $"#{Pid} '{Name}'{(IsAccessDenied ? ", access denied" : "")}";
+            return $"{header}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static List<ProcessIoStat> GetProcesses()
@@ -50,7 +52,7 @@ namespace KernelManagementJam
                 var ioInfo = new ProcessIoStat()
                 {
                     Pid = process.Id,
-                    Command = process.ProcessName,
+                    Name = process.ProcessName,
                 };
 
                 try
@@ -102,10 +104,11 @@ namespace KernelManagementJam
                 string line;
                 while (lookingFor > 0 && (line = rdr.ReadLine()) != null)
                 {
+                    // Console.WriteLine($"{statusName}: {line}");
                     if (line.StartsWith("VmRSS:", StringComparison.OrdinalIgnoreCase)) { VmRSS = GetStatusValue(line); lookingFor--; }
-                    if (line.StartsWith("RssFile:", StringComparison.OrdinalIgnoreCase)) {RssFile = GetStatusValue(line); lookingFor--;}
-                    if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) {RssShmem = GetStatusValue(line); lookingFor--;}
-                    if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) {VmSwap = GetStatusValue(line); lookingFor--;}
+                    if (line.StartsWith("RssFile:", StringComparison.OrdinalIgnoreCase)) { RssFile = GetStatusValue(line); lookingFor--;}
+                    if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) { RssShmem = GetStatusValue(line); lookingFor--;}
+                    if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) { VmSwap = GetStatusValue(line); lookingFor--;}
                 }
 
                 if (VmRSS.HasValue) ioStat.RssMem = VmRSS.Value;
