@@ -73,7 +73,7 @@ namespace KernelManagementJam.Tests
         }
         
         [Test]
-        public void Express_Bebchmark()
+        public void Express_Benchmark()
         {
             ProcessIoStat.GetProcesses();
             Stopwatch sw = Stopwatch.StartNew();
