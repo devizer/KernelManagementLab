@@ -82,7 +82,7 @@ namespace KernelManagementJam
                     string userName;
                     if (!userNames.TryGetValue(ioStat.Uid.Value, out userName))
                     {
-                        userName = Mono.Posix.Syscall.getusername(ioStat.Uid.Value);
+                        userName = GetNameByUid(ioStat.Uid.Value);
                         userNames[ioStat.Uid.Value] = userName;
                     }
 
@@ -91,6 +91,17 @@ namespace KernelManagementJam
             }
 
             return ret;
+        }
+
+        static string GetNameByUid_Legacy(int uid)
+        {
+            return Mono.Posix.Syscall.getusername(uid);
+        }
+
+        static string GetNameByUid(int uid)
+        {
+            var user = Mono.Unix.Native.Syscall.getpwuid((uint) uid);
+            return user?.pw_name;
         }
 
         private static void ParseIo(ProcessIoStat ioStat)
