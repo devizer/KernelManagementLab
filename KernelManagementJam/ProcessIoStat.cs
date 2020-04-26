@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Mono.Unix.Native;
 
 namespace KernelManagementJam
 {
@@ -207,7 +206,7 @@ namespace KernelManagementJam
                     ioStat.RealTimePriority = GetLong(arr[18 - 1]);
                     ioStat.Priority = GetLong(arr[19 - 1]);
                     ioStat.MinorPageFaults = GetLong(arr[10 - 1]);
-                    ioStat.MajorPageFaults = GetLong(arr[11 - 1]);
+                    ioStat.MajorPageFaults = GetLong(arr[12 - 1]);
                     ioStat.NumThreads = GetLong(arr[20 - 1]);
                 }
             }
