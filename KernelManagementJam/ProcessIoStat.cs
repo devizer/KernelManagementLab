@@ -64,6 +64,33 @@ namespace KernelManagementJam
             return $"{header}, {priority}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
+        public static ProcessIoStat GetByProcessId(int pid)
+        {
+            var process = Process.GetProcessById(pid);
+            var ioInfo = new ProcessIoStat()
+            {
+                Pid = process.Id,
+                Name = process.ProcessName,
+                PeakWorkingSet = process.PeakWorkingSet64, // Does not work on Linux
+            };
+            
+            try
+            {
+                ParseStat(ref ioInfo);
+                ParseStatus(ref ioInfo);
+                ParseIo(ref ioInfo);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                ioInfo.IsAccessDenied = true;
+            }
+
+            if (ioInfo.Uid.HasValue)
+                ioInfo.UserName = GetNameByUid(ioInfo.Uid.Value);
+
+            return ioInfo;
+        }
+        
         public static ProcessIoStat[] GetProcesses()
         {
             Process[] builtIn = Process.GetProcesses();
