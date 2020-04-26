@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using NUnit.Framework;
 using Tests;
 
@@ -19,11 +20,57 @@ namespace KernelManagementJam.Tests
             {
                 Console.WriteLine(process);
             }
+            
+            Assert.IsTrue(processes.Any(x => x.UserName == Environment.UserName));
         }
+        
+        [Test]
+        public void Test_UserName()
+        {
+            var processes = ProcessIoStat.GetProcesses();
+            Assert.IsTrue(processes.Any(x => x.UserName == Environment.UserName));
+        }
+
+        [Test]
+        public void Test_ParentPid()
+        {
+            var processes = ProcessIoStat.GetProcesses();
+            Assert.IsTrue(processes.Any(x => x.ParentPid > 0));
+        }
+
+        [Test]
+        public void Test_FullAccess()
+        {
+            var processes = ProcessIoStat.GetProcesses();
+            Assert.IsTrue(processes.Any(x => !x.IsAccessDenied));
+        }
+
+        [Test]
+        public void Test_KernelCpuUsage()
+        {
+            var processes = ProcessIoStat.GetProcesses();
+            Assert.IsTrue(processes.Any(x => x.KernelCpuUsage > 0));
+        }
+
+        [Test]
+        public void Test_UserCpuUsage()
+        {
+            var processes = ProcessIoStat.GetProcesses();
+            Assert.IsTrue(processes.Any(x => x.UserCpuUsage > 0));
+        }
+
+        [Test]
+        public void Test_IoTime()
+        {
+            var processes = ProcessIoStat.GetProcesses();
+            Assert.IsTrue(processes.Any(x => x.IoTime > 0));
+        }
+
         
         [Test]
         public void Express_Bebchmark()
         {
+            
             ProcessIoStat.GetProcesses();
             Stopwatch sw = Stopwatch.StartNew();
             int n = 0;
