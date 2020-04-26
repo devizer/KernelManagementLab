@@ -20,8 +20,6 @@ namespace KernelManagementJam.Tests
             {
                 Console.WriteLine(process);
             }
-            
-            Assert.IsTrue(processes.Any(x => x.UserName == Environment.UserName));
         }
         
         [Test]
@@ -66,6 +64,13 @@ namespace KernelManagementJam.Tests
             Assert.IsTrue(processes.Any(x => x.IoTime > 0));
         }
 
+        [Test]
+        public void Test_ReadBytes()
+        {
+            var processes = ProcessIoStat.GetProcesses();
+            Assert.IsTrue(processes.Any(x => x.ReadBytes > 0), "At least one process has ReadBytes");
+            Assert.IsTrue(processes.Where(x => x.IsAccessDenied).All(x => x.ReadBytes == 0), "All the processes without access has empty ReadBytes");
+        }
         
         [Test]
         public void Express_Bebchmark()
