@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
+using Tests;
 
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class ProcessIoStat_Tests
+    public class ProcessIoStat_Tests : NUnitTestsBase
     {
 
         [Test]

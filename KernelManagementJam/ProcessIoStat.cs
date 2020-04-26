@@ -11,6 +11,7 @@ namespace KernelManagementJam
     public class ProcessIoStat
     {
         public int Pid { get; set; } // 1, first
+        public int ParentPid { get; set; } // 1, first
         public bool IsAccessDenied { get; set; }
         public long StartAt { get; set; } // 22
 
@@ -45,7 +46,8 @@ namespace KernelManagementJam
         {
             string header = $"#{Pid} '{Name}'{(IsAccessDenied ? ", access denied" : "")}";
             string user = Uid.HasValue ? ($", Uid: {Uid}{(string.IsNullOrEmpty(UserName) ? "" : $" '{UserName}'")}") : "";
-            return $"{header}{user}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            string parentPid = ParentPid == 0 ? "" : $", {nameof(ParentPid)}: {ParentPid}";
+            return $"{header}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static List<ProcessIoStat> GetProcesses()
@@ -106,8 +108,8 @@ namespace KernelManagementJam
 
         private static void ParseIo(ProcessIoStat ioStat)
         {
-            var statusName = $"/proc/{ioStat.Pid}/io";
-            using (FileStream fs = new FileStream(statusName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            var isFileName = $"/proc/{ioStat.Pid}/io";
+            using (FileStream fs = new FileStream(isFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
             {
                 int lookingFor = 6;
@@ -131,7 +133,7 @@ namespace KernelManagementJam
             using (FileStream fs = new FileStream(statusName, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
             {
-                int lookingFor = 5;
+                int lookingFor = 6;
                 long? VmRSS = null, RssFile = null, RssShmem = null, VmSwap = null;
                 string line;
                 while (lookingFor > 0 && (line = rdr.ReadLine()) != null)
@@ -142,6 +144,7 @@ namespace KernelManagementJam
                     if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) { RssShmem = GetStatusValue(line); lookingFor--;}
                     if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) { VmSwap = GetStatusValue(line); lookingFor--;}
                     if (line.StartsWith("Uid:", StringComparison.OrdinalIgnoreCase)) { ioStat.Uid = GetRealUid(line); lookingFor--;}
+                    if (line.StartsWith("PPid:", StringComparison.OrdinalIgnoreCase)) { ioStat.ParentPid = (int) GetStatusValue(line).GetValueOrDefault(); lookingFor--;}
                 }
 
                 if (VmRSS.HasValue) ioStat.RssMem = VmRSS.Value;
