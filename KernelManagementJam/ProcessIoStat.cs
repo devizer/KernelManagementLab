@@ -8,7 +8,7 @@ using Mono.Unix.Native;
 
 namespace KernelManagementJam
 {
-    public class ProcessIoStat
+    public struct ProcessIoStat
     {
         public int Pid { get; set; } // 1, first
         public int ParentPid { get; set; } // 1, first
@@ -29,6 +29,7 @@ namespace KernelManagementJam
 
         // VmRSS, RssFile, RssShmem, VmSwap 
         public long RssMem { get; set; } // VmRSS in /proc/[pid]/status
+        public long PeakWorkingSet { get; set; } // built-in implementation does not work on linux
         public long SharedMem { get; set; } // RssFile+RssShmem in /proc/[pid]/status
         public long SwappedMem { get; set; } // VmSwap@.../status
         public string Command { get; set; }
@@ -47,48 +48,51 @@ namespace KernelManagementJam
             string header = $"#{Pid} '{Name}'{(IsAccessDenied ? ", access denied" : "")}";
             string user = Uid.HasValue ? ($", Uid: {Uid}{(string.IsNullOrEmpty(UserName) ? "" : $" '{UserName}'")}") : "";
             string parentPid = ParentPid == 0 ? "" : $", {nameof(ParentPid)}: {ParentPid}";
-            return $"{header}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            return $"{header}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
-        public static List<ProcessIoStat> GetProcesses()
+        public static ProcessIoStat[] GetProcesses()
         {
-            List<ProcessIoStat> ret = new List<ProcessIoStat>();
-            var builtIn = Process.GetProcesses();
+            Process[] builtIn = Process.GetProcesses();
+            ProcessIoStat[] ret = new ProcessIoStat[builtIn.Length];
+            int index = 0;
             foreach (var process in builtIn)
             {
                 var ioInfo = new ProcessIoStat()
                 {
                     Pid = process.Id,
                     Name = process.ProcessName,
+                    PeakWorkingSet = process.PeakWorkingSet64, // Does not work on Linux
                 };
 
                 try
                 {
-                    ParseStat(ioInfo);
-                    ParseStatus(ioInfo);
-                    ParseIo(ioInfo);
+                    ParseStat(ref ioInfo);
+                    ParseStatus(ref ioInfo);
+                    ParseIo(ref ioInfo);
                 }
                 catch (UnauthorizedAccessException)
                 {
                     ioInfo.IsAccessDenied = true;
                 }
 
-                ret.Add(ioInfo);
+                ret[index++] = ioInfo;
             }
             
             Dictionary<int,string> userNames = new Dictionary<int, string>();
-            foreach (var ioStat in ret)
+            for(int i=0; i<ret.Length; i++)
             {
-                if (ioStat.Uid.HasValue)
+                var uid = ret[i].Uid;
+                if (uid.HasValue)
                 {
                     string userName;
-                    if (!userNames.TryGetValue(ioStat.Uid.Value, out userName))
+                    if (!userNames.TryGetValue(uid.Value, out userName))
                     {
-                        userName = GetNameByUid(ioStat.Uid.Value);
-                        userNames[ioStat.Uid.Value] = userName;
+                        userName = GetNameByUid(uid.Value);
+                        userNames[uid.Value] = userName;
                     }
 
-                    ioStat.UserName = userName;
+                    ret[i].UserName = userName;
                 }
             }
 
@@ -106,7 +110,7 @@ namespace KernelManagementJam
             return user?.pw_name;
         }
 
-        private static void ParseIo(ProcessIoStat ioStat)
+        private static void ParseIo(ref ProcessIoStat ioStat)
         {
             var isFileName = $"/proc/{ioStat.Pid}/io";
             using (FileStream fs = new FileStream(isFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -126,7 +130,7 @@ namespace KernelManagementJam
             }
         }
 
-        private static void ParseStatus(ProcessIoStat ioStat)
+        private static void ParseStatus(ref ProcessIoStat ioStat)
         {
             var statusName = $"/proc/{ioStat.Pid}/status";
             if (!File.Exists(statusName)) return;
@@ -185,7 +189,7 @@ namespace KernelManagementJam
         static readonly CultureInfo EnUS = new CultureInfo("en-US");
         private static readonly UTF8Encoding Utf8Encoding = new UTF8Encoding(false);
 
-        static void ParseStat(ProcessIoStat ioStat)
+        static void ParseStat(ref ProcessIoStat ioStat)
         {
             var statName = $"/proc/{ioStat.Pid}/stat";
             if (!File.Exists(statName)) return;

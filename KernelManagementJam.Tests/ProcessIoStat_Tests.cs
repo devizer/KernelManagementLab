@@ -8,14 +8,14 @@ using Tests;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class ProcessIoStat_Tests : NUnitTestsBase
+    public class ProcessIoStat_Tests /*: NUnitTestsBase*/
     {
 
         [Test]
         public void Does_Work()
         {
             var processes = ProcessIoStat.GetProcesses();
-            Assert.Greater(processes.Count, 0);
+            Assert.Greater(processes.Length, 0);
             foreach (var process in processes)
             {
                 Console.WriteLine(process);
@@ -75,7 +75,6 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Express_Bebchmark()
         {
-            
             ProcessIoStat.GetProcesses();
             Stopwatch sw = Stopwatch.StartNew();
             int n = 0;
@@ -84,8 +83,8 @@ namespace KernelManagementJam.Tests
             do
             {
                 n++;
-                List<ProcessIoStat> processes = ProcessIoStat.GetProcesses();
-                nProcs = processes.Count;
+                var processes = ProcessIoStat.GetProcesses();
+                nProcs = processes.Length;
                 msecs = sw.ElapsedMilliseconds;
             } while (msecs <= 1000);
             
