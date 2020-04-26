@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Mono.Unix.Native;
 
 namespace KernelManagementJam
 {
@@ -12,6 +13,9 @@ namespace KernelManagementJam
         public int Pid { get; set; } // 1, first
         public bool IsAccessDenied { get; set; }
         public long StartAt { get; set; } // 22
+
+        public int? Uid { get; set; }
+        public string UserName { get; set; }
 
         public long IoTime { get; set; } // 42
         public long UserCpuUsage { get; set; } // 14
@@ -40,7 +44,8 @@ namespace KernelManagementJam
         public override string ToString()
         {
             string header = $"#{Pid} '{Name}'{(IsAccessDenied ? ", access denied" : "")}";
-            return $"{header}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            string user = Uid.HasValue ? ($", Uid: {Uid}{(string.IsNullOrEmpty(UserName) ? "" : $" '{UserName}'")}") : "";
+            return $"{header}{user}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static List<ProcessIoStat> GetProcesses()
@@ -67,6 +72,22 @@ namespace KernelManagementJam
                 }
 
                 ret.Add(ioInfo);
+            }
+            
+            Dictionary<int,string> userNames = new Dictionary<int, string>();
+            foreach (var ioStat in ret)
+            {
+                if (ioStat.Uid.HasValue)
+                {
+                    string userName;
+                    if (!userNames.TryGetValue(ioStat.Uid.Value, out userName))
+                    {
+                        userName = Mono.Posix.Syscall.getusername(ioStat.Uid.Value);
+                        userNames[ioStat.Uid.Value] = userName;
+                    }
+
+                    ioStat.UserName = userName;
+                }
             }
 
             return ret;
@@ -99,7 +120,7 @@ namespace KernelManagementJam
             using (FileStream fs = new FileStream(statusName, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
             {
-                int lookingFor = 4;
+                int lookingFor = 5;
                 long? VmRSS = null, RssFile = null, RssShmem = null, VmSwap = null;
                 string line;
                 while (lookingFor > 0 && (line = rdr.ReadLine()) != null)
@@ -109,12 +130,14 @@ namespace KernelManagementJam
                     if (line.StartsWith("RssFile:", StringComparison.OrdinalIgnoreCase)) { RssFile = GetStatusValue(line); lookingFor--;}
                     if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) { RssShmem = GetStatusValue(line); lookingFor--;}
                     if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) { VmSwap = GetStatusValue(line); lookingFor--;}
+                    if (line.StartsWith("Uid:", StringComparison.OrdinalIgnoreCase)) { ioStat.Uid = GetRealUid(line); lookingFor--;}
                 }
 
                 if (VmRSS.HasValue) ioStat.RssMem = VmRSS.Value;
                 if (VmSwap.HasValue) ioStat.SwappedMem = VmSwap.Value;
                 if (RssFile.HasValue && RssShmem.HasValue) ioStat.SharedMem = RssFile.GetValueOrDefault() + RssShmem.GetValueOrDefault(); 
             }
+
         }
 
         private static long GetIoValue(string line)
@@ -127,6 +150,22 @@ namespace KernelManagementJam
             // TODO: Make Faster
             var sub = line.Substring(line.IndexOf(':') + 1).ToLower().Replace(" kb", "").Trim();
             return GetOptionalLong(sub);
+        }
+
+        private static int? GetRealUid(string line)
+        {
+            
+            var sub = line.Substring(line.IndexOf(':') + 1);
+            var uidsAsArr = sub.TrimStart().Split(' ', '\t');
+            if (uidsAsArr.Length >= 4)
+            {
+                if (int.TryParse(uidsAsArr[0], out var realUid))
+                {
+                    return realUid;
+                }
+            }
+            
+            return null;
         }
 
         static readonly CultureInfo EnUS = new CultureInfo("en-US");
