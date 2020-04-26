@@ -55,7 +55,13 @@ namespace KernelManagementJam
             string header = $"#{Pid} '{Name}'{(IsAccessDenied ? ", access denied" : "")}";
             string user = Uid.HasValue ? ($", Uid: {Uid}{(string.IsNullOrEmpty(UserName) ? "" : $" '{UserName}'")}") : "";
             string parentPid = ParentPid == 0 ? "" : $", {nameof(ParentPid)}: {ParentPid}";
-            return $"{header}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            string priority = MixedPriority >= 0 && MixedPriority <= 39
+                ? $"Nice {(MixedPriority - 20)}"
+                : MixedPriority >= -100 && MixedPriority <= -2
+                    ? $"RT {(-MixedPriority - 1)}"
+                    : $"{MixedPriority}";
+            
+            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static ProcessIoStat[] GetProcesses()
