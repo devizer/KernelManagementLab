@@ -20,8 +20,16 @@ namespace KernelManagementJam
         public long IoTime { get; set; } // 42
         public long UserCpuUsage { get; set; } // 14
         public long KernelCpuUsage { get; set; } // 15
-        public long RealTimePriority { get; set; } // 18
-        public long Priority { get; set; } // 19
+        public long SchedulingPolicy { get; set; } // 41
+        
+        // Nice: 0...39 is -20..19
+        // Realtime: -2 ==> 1, -3 ==> 2, ... -100 ==> 99 
+        public long MixedPriority { get; set; } // 18
+        
+        // 0 - non-realtime, otherwise 1..99
+        public long RealtimePriority { get; set; } // 40
+        
+        public long Nice { get; set; } // 19 (nice)
         public long MinorPageFaults { get; set; } // 10
         public long MajorPageFaults { get; set; } // 12
         public long NumThreads { get; set; } // 20
@@ -47,7 +55,7 @@ namespace KernelManagementJam
             string header = $"#{Pid} '{Name}'{(IsAccessDenied ? ", access denied" : "")}";
             string user = Uid.HasValue ? ($", Uid: {Uid}{(string.IsNullOrEmpty(UserName) ? "" : $" '{UserName}'")}") : "";
             string parentPid = ParentPid == 0 ? "" : $", {nameof(ParentPid)}: {ParentPid}";
-            return $"{header}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            return $"{header}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static ProcessIoStat[] GetProcesses()
@@ -203,8 +211,12 @@ namespace KernelManagementJam
                     ioStat.StartAt = GetLong(arr[22 - 1]);
                     ioStat.UserCpuUsage = GetLong(arr[14 - 1]);
                     ioStat.KernelCpuUsage = GetLong(arr[15 - 1]);
-                    ioStat.RealTimePriority = GetLong(arr[18 - 1]);
-                    ioStat.Priority = GetLong(arr[19 - 1]);
+
+                    ioStat.SchedulingPolicy = GetLong(arr[41 - 1]);
+                    ioStat.MixedPriority = GetLong(arr[18 - 1]);
+                    ioStat.RealtimePriority = GetLong(arr[40 - 1]);
+                    ioStat.Nice = GetLong(arr[19 - 1]);
+                    
                     ioStat.MinorPageFaults = GetLong(arr[10 - 1]);
                     ioStat.MajorPageFaults = GetLong(arr[12 - 1]);
                     ioStat.NumThreads = GetLong(arr[20 - 1]);
