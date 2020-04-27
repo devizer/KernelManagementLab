@@ -161,11 +161,11 @@ namespace KernelManagementJam
                 while (lookingFor > 0 && (line = rdr.ReadLine()) != null)
                 {
                     if (line.StartsWith("rchar:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadBytes = GetIoValue(line); lookingFor--; }
-                    if (line.StartsWith("wchar:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBytes = GetIoValue(line); lookingFor--;}
-                    if (line.StartsWith("syscr:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadSysCalls = GetIoValue(line); lookingFor--;}
-                    if (line.StartsWith("syscw:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteSysCalls = GetIoValue(line); lookingFor--;}
-                    if (line.StartsWith("read_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadBlockBackedBytes = GetIoValue(line); lookingFor--;}
-                    if (line.StartsWith("write_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBlockBackedBytes = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("wchar:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBytes = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("syscr:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadSysCalls = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("syscw:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteSysCalls = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("read_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadBlockBackedBytes = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("write_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBlockBackedBytes = GetIoValue(line); lookingFor--;}
                 }
             }
         }
@@ -184,11 +184,11 @@ namespace KernelManagementJam
                 {
                     // Console.WriteLine($"{statusName}: {line}");
                     if (line.StartsWith("VmRSS:", StringComparison.OrdinalIgnoreCase)) { VmRSS = GetStatusValue(line); lookingFor--; }
-                    if (line.StartsWith("RssFile:", StringComparison.OrdinalIgnoreCase)) { RssFile = GetStatusValue(line); lookingFor--;}
-                    if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) { RssShmem = GetStatusValue(line); lookingFor--;}
-                    if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) { VmSwap = GetStatusValue(line); lookingFor--;}
-                    if (line.StartsWith("Uid:", StringComparison.OrdinalIgnoreCase)) { ioStat.Uid = GetRealUid(line); lookingFor--;}
-                    if (line.StartsWith("PPid:", StringComparison.OrdinalIgnoreCase)) { ioStat.ParentPid = (int) GetStatusValue(line).GetValueOrDefault(); lookingFor--;}
+                    else if (line.StartsWith("RssFile:", StringComparison.OrdinalIgnoreCase)) { RssFile = GetStatusValue(line); lookingFor--;}
+                    else if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) { RssShmem = GetStatusValue(line); lookingFor--;}
+                    else if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) { VmSwap = GetStatusValue(line); lookingFor--;}
+                    else if (line.StartsWith("Uid:", StringComparison.OrdinalIgnoreCase)) { ioStat.Uid = GetRealUid(line); lookingFor--;}
+                    else if (line.StartsWith("PPid:", StringComparison.OrdinalIgnoreCase)) { ioStat.ParentPid = (int) GetStatusValue(line).GetValueOrDefault(); lookingFor--;}
                 }
 
                 if (VmRSS.HasValue) ioStat.RssMem = VmRSS.Value;
