@@ -7,7 +7,7 @@ using Tests;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class XorShiftRandomTests /*: NUnitTestsBase*/
+    public class XorShiftRandomTests : NUnitTestsBase
     {
         [Test]
         public void SmokeTest1()
