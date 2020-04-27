@@ -66,6 +66,11 @@ namespace KernelManagementJam
                 }
             }
 
+            if (!memAvailable.HasValue)
+            {
+                memAvailable = memTotal.GetValueOrDefault() - memFree.GetValueOrDefault()
+                               + buffers.GetValueOrDefault() + cached.GetValueOrDefault();
+            }
             var all = new long?[] {memTotal, memFree, memAvailable, buffers, cached, swapTotal, swapFree};
             // Console.WriteLine("ALL: " + string.Join(", ", all.Select(x => Convert.ToString(x))));
             if (!all.All(x => x.HasValue))
