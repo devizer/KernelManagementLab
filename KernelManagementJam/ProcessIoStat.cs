@@ -12,6 +12,7 @@ namespace KernelManagementJam
         public int Pid { get; set; } // 1, first
         public int ParentPid { get; set; } // 1, first
         public bool IsAccessDenied { get; set; }
+        public bool IsZombie { get; set; }
         public long StartAt { get; set; } // 22
 
         public int? Uid { get; set; }
@@ -73,12 +74,16 @@ namespace KernelManagementJam
                 Name = process.ProcessName,
                 PeakWorkingSet = process.PeakWorkingSet64, // Does not work on Linux
             };
-            
+
             try
             {
                 ParseStat(ref ioInfo);
                 ParseStatus(ref ioInfo);
                 ParseIo(ref ioInfo);
+            }
+            catch (System.IO.DirectoryNotFoundException)
+            {
+                ioInfo.IsZombie = true;
             }
             catch (UnauthorizedAccessException)
             {
@@ -110,6 +115,10 @@ namespace KernelManagementJam
                     ParseStat(ref ioInfo);
                     ParseStatus(ref ioInfo);
                     ParseIo(ref ioInfo);
+                }
+                catch (System.IO.DirectoryNotFoundException)
+                {
+                    ioInfo.IsZombie = true;
                 }
                 catch (UnauthorizedAccessException)
                 {
