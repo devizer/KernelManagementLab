@@ -70,7 +70,8 @@ namespace KernelManagementJam
             {
                 // very old kernel
                 memAvailable = memFree.GetValueOrDefault()
-                               + buffers.GetValueOrDefault() + cached.GetValueOrDefault();
+                               + buffers.GetValueOrDefault() 
+                               + cached.GetValueOrDefault();
             }
             
             var all = new long?[] {memTotal, memFree, memAvailable, buffers, cached, swapTotal, swapFree};
