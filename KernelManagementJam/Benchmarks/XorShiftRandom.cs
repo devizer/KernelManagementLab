@@ -43,10 +43,15 @@ namespace KernelManagementJam.Benchmarks
             {
                 // Never goes here for disk benchmark
                 byte* ptrByte = (byte*) ptr;
-                Random rnd = new Random(seed.GetHashCode());
+                
+                x_ ^= x_ << 23;
+                temp_y = x_ ^ y_ ^ (x_ >> 17) ^ (y_ >> 26);
+                next = (int) (temp_y + y_);
+                
                 while (count-- > 0)
                 {
-                    *ptrByte++ = (byte) rnd.Next(255);
+                    *ptrByte++ = (byte) (next & 0xFF);
+                    next = next >> 8;
                 }
             }
         }
