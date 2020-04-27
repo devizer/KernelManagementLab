@@ -174,7 +174,11 @@ namespace Universe.Dashboard.Agent
                 });
                 
                 mounts.AddRange(swaps);
-                
+
+                // Next line is not thread safe
+                var memSummary = MemorySummaryDataSource.Instance.By_1_Seconds.LastOrDefault();
+                var memAvailable = memSummary?.Summary.Available;
+                var memFree = memSummary?.Summary.Free;
                 var hostInfo = new
                 {
                     Hostname = Environment.MachineName,
@@ -182,7 +186,8 @@ namespace Universe.Dashboard.Agent
                     Processor = HugeCrossInfo.ProcessorName,
                     Memory = HugeCrossInfo.TotalMemory == null
                         ? "n/a"
-                        : string.Format("{0:n0} Mb", HugeCrossInfo.TotalMemory / 1024),
+                        : string.Format("{0:n0} Mb", HugeCrossInfo.TotalMemory / 1024)
+                          + (memAvailable.HasValue && memFree.HasValue ? $" ({(memAvailable.Value / 1024):n0} available, {(memFree.Value/1024):n0} free)" : ""),
                 };
                 
                 var broadcastMessage = new
