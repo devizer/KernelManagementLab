@@ -129,8 +129,6 @@ namespace Universe.Dashboard.Agent
             waiter.Start();
             waiterStarted.WaitOne();
         }
-        
-        
 
         private static long MessageId = 0;
         private static void FlushDataSource()
