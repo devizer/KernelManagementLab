@@ -68,6 +68,7 @@ namespace KernelManagementJam
 
             if (!memAvailable.HasValue)
             {
+                // very old kernel
                 memAvailable = memFree.GetValueOrDefault()
                                + buffers.GetValueOrDefault() + cached.GetValueOrDefault();
             }
