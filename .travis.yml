@@ -103,7 +103,8 @@ before_script:
     node --version
 
   else
-    sudo smart-apt-install jq pv mysql-client postgresql-client pigz 
+    # sudo smart-apt-install jq pv mysql-client postgresql-client pigz 
+    sudo smart-apt-install jq pv mysql-client pigz; bash build-postgresql-client.sh
     ruby --version || true; gem --version || true
     mysql --version
     pg_dump --version; pg_dump --help
