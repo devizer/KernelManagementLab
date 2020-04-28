@@ -85,7 +85,7 @@ before_script:
   echo "Docker server AFTER [$(docker version --format '{{.Server.Version}}')]" || true
   
 - |
-  # install pv
+  # install pv, jq, postgres and mysql clients
   echo "A. ruby is $(ruby --version)" || true; echo "gem is $(gem --version)" || true
   if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     time try-and-retry brew install jq mysql-client pv pigz coreutils | grep 'jq\|mysql-client\|pv\|pigz\|coreutils'
