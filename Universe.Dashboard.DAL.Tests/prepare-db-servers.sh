@@ -21,7 +21,7 @@ run_sql_server 'sql-2019-for-tests' 'mcr.microsoft.com/mssql/server:2019-latest'
 export MYSQL_TEST_DB=W3Top MYSQL_ROOT_PASSWORD=pass
 url=https://raw.githubusercontent.com/devizer/glist/master/install-5-mysqls-for-tests-V2.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
 
-export POSTGRESQL_DB=W3Top POSTGRESQL_PASS=pass POSTGRESQL_USER=postgres WAIT_TIMEOUT=30
+export POSTGRESQL_DB=W3Top POSTGRESQL_PASS=passw0rd POSTGRESQL_USER=postgres WAIT_TIMEOUT=30
 url=https://raw.githubusercontent.com/devizer/glist/master/install-7-postres-for-tests.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -skSL $url) | bash
 
 file=prepare-db-servers.generated.sh
@@ -49,7 +49,7 @@ echo '
 # postgres' >> $file
 for p in {54321..54328}; do
   name="PGSQL_TEST_SERVER_$p"
-  line="$name=\"Host=localhost;Port=$p;Database=postgres;Username=postgres;Password=pass;Timeout=15;Pooling=false;\""
+  line="$name=\"Host=localhost;Port=$p;Database=postgres;Username=postgres;Password=$POSTGRESQL_PASS;Timeout=15;Pooling=false;\""
   if [[ $p -ne 54328 ]] || [[ -n "$has_avx" ]]; then
     echo "$line" >> $file
     echo "export $name" >> $file

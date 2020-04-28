@@ -4,15 +4,15 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Mono.Unix.Native;
 
 namespace KernelManagementJam
 {
-    public class ProcessIoStat
+    public struct ProcessIoStat
     {
         public int Pid { get; set; } // 1, first
         public int ParentPid { get; set; } // 1, first
         public bool IsAccessDenied { get; set; }
+        public bool IsZombie { get; set; }
         public long StartAt { get; set; } // 22
 
         public int? Uid { get; set; }
@@ -21,14 +21,23 @@ namespace KernelManagementJam
         public long IoTime { get; set; } // 42
         public long UserCpuUsage { get; set; } // 14
         public long KernelCpuUsage { get; set; } // 15
-        public long RealTimePriority { get; set; } // 18
-        public long Priority { get; set; } // 19
+        public long SchedulingPolicy { get; set; } // 41
+        
+        // Nice: 0...39 is -20..19
+        // Realtime: -2 ==> 1, -3 ==> 2, ... -100 ==> 99 
+        public long MixedPriority { get; set; } // 18
+        
+        // 0 - non-realtime, otherwise 1..99
+        public long RealtimePriority { get; set; } // 40
+        
+        public long Nice { get; set; } // 19 (nice)
         public long MinorPageFaults { get; set; } // 10
         public long MajorPageFaults { get; set; } // 12
         public long NumThreads { get; set; } // 20
 
         // VmRSS, RssFile, RssShmem, VmSwap 
         public long RssMem { get; set; } // VmRSS in /proc/[pid]/status
+        public long PeakWorkingSet { get; set; } // built-in implementation does not work on linux
         public long SharedMem { get; set; } // RssFile+RssShmem in /proc/[pid]/status
         public long SwappedMem { get; set; } // VmSwap@.../status
         public string Command { get; set; }
@@ -47,48 +56,95 @@ namespace KernelManagementJam
             string header = $"#{Pid} '{Name}'{(IsAccessDenied ? ", access denied" : "")}";
             string user = Uid.HasValue ? ($", Uid: {Uid}{(string.IsNullOrEmpty(UserName) ? "" : $" '{UserName}'")}") : "";
             string parentPid = ParentPid == 0 ? "" : $", {nameof(ParentPid)}: {ParentPid}";
-            return $"{header}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(RealTimePriority)}: {RealTimePriority}, {nameof(Priority)}: {Priority}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            string priority = MixedPriority >= 0 && MixedPriority <= 39
+                ? $"Nice {(MixedPriority - 20)}"
+                : MixedPriority >= -100 && MixedPriority <= -2
+                    ? $"RT {(-MixedPriority - 1)}"
+                    : $"{MixedPriority}";
+
+            if (IsZombie)
+                return $"{header}, {priority}{user}{parentPid}, zombie";
+            
+            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
-        public static List<ProcessIoStat> GetProcesses()
+        public static ProcessIoStat GetByProcessId(int pid)
         {
-            List<ProcessIoStat> ret = new List<ProcessIoStat>();
-            var builtIn = Process.GetProcesses();
+            var process = Process.GetProcessById(pid);
+            var ioInfo = new ProcessIoStat()
+            {
+                Pid = process.Id,
+                Name = process.ProcessName,
+                PeakWorkingSet = process.PeakWorkingSet64, // Does not work on Linux
+            };
+
+            try
+            {
+                ParseStat(ref ioInfo);
+                ParseStatus(ref ioInfo);
+                ParseIo(ref ioInfo);
+            }
+            catch (System.IO.DirectoryNotFoundException)
+            {
+                ioInfo.IsZombie = true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                ioInfo.IsAccessDenied = true;
+            }
+
+            if (ioInfo.Uid.HasValue)
+                ioInfo.UserName = GetNameByUid(ioInfo.Uid.Value);
+
+            return ioInfo;
+        }
+        
+        public static ProcessIoStat[] GetProcesses()
+        {
+            Process[] builtIn = Process.GetProcesses();
+            ProcessIoStat[] ret = new ProcessIoStat[builtIn.Length];
+            int index = 0;
             foreach (var process in builtIn)
             {
                 var ioInfo = new ProcessIoStat()
                 {
                     Pid = process.Id,
                     Name = process.ProcessName,
+                    PeakWorkingSet = process.PeakWorkingSet64, // Does not work on Linux
                 };
 
                 try
                 {
-                    ParseStat(ioInfo);
-                    ParseStatus(ioInfo);
-                    ParseIo(ioInfo);
+                    ParseStat(ref ioInfo);
+                    ParseStatus(ref ioInfo);
+                    ParseIo(ref ioInfo);
+                }
+                catch (System.IO.DirectoryNotFoundException)
+                {
+                    ioInfo.IsZombie = true;
                 }
                 catch (UnauthorizedAccessException)
                 {
                     ioInfo.IsAccessDenied = true;
                 }
 
-                ret.Add(ioInfo);
+                ret[index++] = ioInfo;
             }
             
             Dictionary<int,string> userNames = new Dictionary<int, string>();
-            foreach (var ioStat in ret)
+            for(int i=0; i<ret.Length; i++)
             {
-                if (ioStat.Uid.HasValue)
+                var uid = ret[i].Uid;
+                if (uid.HasValue)
                 {
                     string userName;
-                    if (!userNames.TryGetValue(ioStat.Uid.Value, out userName))
+                    if (!userNames.TryGetValue(uid.Value, out userName))
                     {
-                        userName = GetNameByUid(ioStat.Uid.Value);
-                        userNames[ioStat.Uid.Value] = userName;
+                        userName = GetNameByUid(uid.Value);
+                        userNames[uid.Value] = userName;
                     }
 
-                    ioStat.UserName = userName;
+                    ret[i].UserName = userName;
                 }
             }
 
@@ -106,7 +162,7 @@ namespace KernelManagementJam
             return user?.pw_name;
         }
 
-        private static void ParseIo(ProcessIoStat ioStat)
+        private static void ParseIo(ref ProcessIoStat ioStat)
         {
             var isFileName = $"/proc/{ioStat.Pid}/io";
             using (FileStream fs = new FileStream(isFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -117,16 +173,16 @@ namespace KernelManagementJam
                 while (lookingFor > 0 && (line = rdr.ReadLine()) != null)
                 {
                     if (line.StartsWith("rchar:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadBytes = GetIoValue(line); lookingFor--; }
-                    if (line.StartsWith("wchar:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBytes = GetIoValue(line); lookingFor--;}
-                    if (line.StartsWith("syscr:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadSysCalls = GetIoValue(line); lookingFor--;}
-                    if (line.StartsWith("syscw:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteSysCalls = GetIoValue(line); lookingFor--;}
-                    if (line.StartsWith("read_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadBlockBackedBytes = GetIoValue(line); lookingFor--;}
-                    if (line.StartsWith("write_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBlockBackedBytes = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("wchar:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBytes = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("syscr:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadSysCalls = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("syscw:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteSysCalls = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("read_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.ReadBlockBackedBytes = GetIoValue(line); lookingFor--;}
+                    else if (line.StartsWith("write_bytes:", StringComparison.OrdinalIgnoreCase)) { ioStat.WriteBlockBackedBytes = GetIoValue(line); lookingFor--;}
                 }
             }
         }
 
-        private static void ParseStatus(ProcessIoStat ioStat)
+        private static void ParseStatus(ref ProcessIoStat ioStat)
         {
             var statusName = $"/proc/{ioStat.Pid}/status";
             if (!File.Exists(statusName)) return;
@@ -140,11 +196,11 @@ namespace KernelManagementJam
                 {
                     // Console.WriteLine($"{statusName}: {line}");
                     if (line.StartsWith("VmRSS:", StringComparison.OrdinalIgnoreCase)) { VmRSS = GetStatusValue(line); lookingFor--; }
-                    if (line.StartsWith("RssFile:", StringComparison.OrdinalIgnoreCase)) { RssFile = GetStatusValue(line); lookingFor--;}
-                    if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) { RssShmem = GetStatusValue(line); lookingFor--;}
-                    if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) { VmSwap = GetStatusValue(line); lookingFor--;}
-                    if (line.StartsWith("Uid:", StringComparison.OrdinalIgnoreCase)) { ioStat.Uid = GetRealUid(line); lookingFor--;}
-                    if (line.StartsWith("PPid:", StringComparison.OrdinalIgnoreCase)) { ioStat.ParentPid = (int) GetStatusValue(line).GetValueOrDefault(); lookingFor--;}
+                    else if (line.StartsWith("RssFile:", StringComparison.OrdinalIgnoreCase)) { RssFile = GetStatusValue(line); lookingFor--;}
+                    else if (line.StartsWith("RssShmem:", StringComparison.OrdinalIgnoreCase)) { RssShmem = GetStatusValue(line); lookingFor--;}
+                    else if (line.StartsWith("VmSwap:", StringComparison.OrdinalIgnoreCase)) { VmSwap = GetStatusValue(line); lookingFor--;}
+                    else if (line.StartsWith("Uid:", StringComparison.OrdinalIgnoreCase)) { ioStat.Uid = GetRealUid(line); lookingFor--;}
+                    else if (line.StartsWith("PPid:", StringComparison.OrdinalIgnoreCase)) { ioStat.ParentPid = (int) GetStatusValue(line).GetValueOrDefault(); lookingFor--;}
                 }
 
                 if (VmRSS.HasValue) ioStat.RssMem = VmRSS.Value;
@@ -185,7 +241,7 @@ namespace KernelManagementJam
         static readonly CultureInfo EnUS = new CultureInfo("en-US");
         private static readonly UTF8Encoding Utf8Encoding = new UTF8Encoding(false);
 
-        static void ParseStat(ProcessIoStat ioStat)
+        static void ParseStat(ref ProcessIoStat ioStat)
         {
             var statName = $"/proc/{ioStat.Pid}/stat";
             if (!File.Exists(statName)) return;
@@ -200,10 +256,14 @@ namespace KernelManagementJam
                     ioStat.StartAt = GetLong(arr[22 - 1]);
                     ioStat.UserCpuUsage = GetLong(arr[14 - 1]);
                     ioStat.KernelCpuUsage = GetLong(arr[15 - 1]);
-                    ioStat.RealTimePriority = GetLong(arr[18 - 1]);
-                    ioStat.Priority = GetLong(arr[19 - 1]);
+
+                    ioStat.SchedulingPolicy = GetLong(arr[41 - 1]);
+                    ioStat.MixedPriority = GetLong(arr[18 - 1]);
+                    ioStat.RealtimePriority = GetLong(arr[40 - 1]);
+                    ioStat.Nice = GetLong(arr[19 - 1]);
+                    
                     ioStat.MinorPageFaults = GetLong(arr[10 - 1]);
-                    ioStat.MajorPageFaults = GetLong(arr[11 - 1]);
+                    ioStat.MajorPageFaults = GetLong(arr[12 - 1]);
                     ioStat.NumThreads = GetLong(arr[20 - 1]);
                 }
             }
