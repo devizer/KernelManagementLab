@@ -135,7 +135,7 @@ namespace KernelManagementJam.DebugUtils
 
         private static Lazy<string> _GetDumpDir = new Lazy<string>(() =>
         {
-            var an = Path.GetFileName(Assembly.GetEntryAssembly().Location);
+            var an = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
             if (_DumpsMode.Value == DumpsMode.SideBySide) an += $"({Assembly.GetEntryAssembly().GetName().Version})";
             var ret = "DUMPS-" + an;
             if (Environment.OSVersion.Platform != PlatformID.Win32NT)
