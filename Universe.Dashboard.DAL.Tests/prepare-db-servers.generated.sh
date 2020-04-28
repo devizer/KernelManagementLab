@@ -22,6 +22,8 @@ PGSQL_TEST_SERVER_54326="Host=localhost;Port=54326;Database=postgres;Username=po
 export PGSQL_TEST_SERVER_54326
 PGSQL_TEST_SERVER_54327="Host=localhost;Port=54327;Database=postgres;Username=postgres;Password=pass;Timeout=15;Pooling=false;"
 export PGSQL_TEST_SERVER_54327
+PGSQL_TEST_SERVER_54328="Host=localhost;Port=54328;Database=postgres;Username=postgres;Password=pass;Timeout=15;Pooling=false;"
+export PGSQL_TEST_SERVER_54328
 
 # mysql
 MYSQL_TEST_SERVER_3307="Server=localhost;Database=mysql;Port=3307;Uid=root;Pwd=pass;Connect Timeout=15;Pooling=false;"
