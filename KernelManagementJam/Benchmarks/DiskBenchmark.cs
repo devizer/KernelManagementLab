@@ -258,9 +258,13 @@ namespace Universe.Benchmark.DiskBench
             CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
             using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, GenericWritingFileStreamOptions))
             {
-                fs.Position = Parameters.WorkingSetSize - 1;
-                fs.WriteByte(0);
-                fs.Position = 0;
+                if (false) 
+                {
+                    // for ext/btrfs has no essect, for fat/fat32 - too slow 
+                    fs.Position = Parameters.WorkingSetSize - 1;
+                    fs.WriteByte(0);
+                    fs.Position = 0;
+                }
                 _allocate.Start();
                 
                 long len = 0;
