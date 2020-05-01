@@ -260,7 +260,8 @@ namespace Universe.Benchmark.DiskBench
             {
                 if (false) 
                 {
-                    // for ext/btrfs has no essect, for fat/fat32 - too slow 
+                    // For ext/btrfs has no essect
+                    // For fat/fat32 - too slow , inappropriate 
                     fs.Position = Parameters.WorkingSetSize - 1;
                     fs.WriteByte(0);
                     fs.Position = 0;
