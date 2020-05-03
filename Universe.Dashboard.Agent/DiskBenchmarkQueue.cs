@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using KernelManagementJam;
+using KernelManagementJam.Benchmarks;
 using KernelManagementJam.DebugUtils;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
@@ -122,6 +123,17 @@ namespace Universe.Dashboard.Agent
                         {
                             benchmarkException = ex;
                             Console.WriteLine($"Disk Benchmark Job failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
+                        }
+                        finally
+                        {
+                            try
+                            {
+                                LinuxKernelCacheFlusher.Sync();
+                            }
+                            catch
+                            {
+                            }
+
                         }
 
                         if (!benchmark.IsCanceled)
