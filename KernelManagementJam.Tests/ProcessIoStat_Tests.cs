@@ -87,8 +87,11 @@ namespace KernelManagementJam.Tests
                 nProcs = processes.Length;
                 msecs = sw.ElapsedMilliseconds;
             } while (msecs <= 1000);
-            
-            Console.WriteLine($"Processes: {nProcs}, Benchmark: {(1000d*n/(double)msecs):n2}");
+
+            double msecPerAllProcesses = (1000d*n/(double)msecs);
+            double msecPerProcess = 1000000d / msecPerAllProcesses / nProcs;
+            Console.WriteLine($"Processes: {nProcs}, Benchmark: {msecPerAllProcesses:n2} rounds per seconds (a round is all the processes)");
+            Console.WriteLine($"Benchmark per 1 process: {(msecPerProcess):n2} microseconds");
         }
 
     }

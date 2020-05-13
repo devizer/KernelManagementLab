@@ -21,8 +21,11 @@ namespace KernelManagementJam
         public long IoTime { get; set; } // 42
         public long UserCpuUsage { get; set; } // 14
         public long KernelCpuUsage { get; set; } // 15
+        public long GuestTime { get; set; }         // 43
+        
         public long ChildrenUserCpuUsage { get; set; } // 16
         public long ChildrenKernelCpuUsage { get; set; } // 17
+        public long ChildrenGuestTime { get; set; } // 44
         public long SchedulingPolicy { get; set; } // 41
         
         // Nice: 0...39 is -20..19
@@ -69,7 +72,7 @@ namespace KernelManagementJam
             if (IsZombie)
                 return $"{header}, {priority}{user}{parentPid}, zombie";
             
-            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, CpuUsage: {UserCpuUsage} (user) + {KernelCpuUsage} (kernel), Children CpuUsage: {ChildrenUserCpuUsage} (user) + {ChildrenKernelCpuUsage} (kernel), {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, PageFaults: {MinorPageFaults} (minor) + {MajorPageFaults} (major), Children PageFaults: {ChildrenMinorPageFaults} (minor) + {ChildrenMajorPageFaults} (major), {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, CpuUsage: {UserCpuUsage} (user) + {KernelCpuUsage} (kernel), Children CpuUsage: {ChildrenUserCpuUsage} (user) + {ChildrenKernelCpuUsage} (kernel), GuestTime: {GuestTime} (own) + {ChildrenGuestTime} (Children) {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, PageFaults: {MinorPageFaults} (minor) + {MajorPageFaults} (major), Children PageFaults: {ChildrenMinorPageFaults} (minor) + {ChildrenMajorPageFaults} (major), {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static ProcessIoStat GetByProcessId(int pid)
@@ -199,6 +202,9 @@ namespace KernelManagementJam
                     ioStat.ChildrenMinorPageFaults = GetLong(arr[11 - 1]);
                     // 13 - Major faults for children
                     ioStat.ChildrenMajorPageFaults = GetLong(arr[13 - 1]);
+                    
+                    ioStat.GuestTime = GetLong(arr[43 - 1]);
+                    ioStat.ChildrenGuestTime = GetLong(arr[44 - 1]);
                     
                     
                     
