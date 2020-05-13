@@ -9,7 +9,7 @@ using Tests;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class MountsTests : NUnitTestsBase
+    public class ProcMountsParser_Tests : NUnitTestsBase
     {
         [Test]
         public void Root_FileSystem_Exists()
@@ -45,4 +45,5 @@ namespace KernelManagementJam.Tests
         }
         
     }
+
 }
