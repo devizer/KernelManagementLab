@@ -4,6 +4,7 @@ steps:
 
   - bash: |
       echo "AGENT_OS: '${AGENT_OS}'"
+      if [[ "$(uname -m)" == Darwin ]]; then brew install coreutils; fi
       echo "uname -s: '$(uname -s)'"
       echo "uname -m: '$(uname -m)'"
       echo "PATH    : '$PATH'"
@@ -47,7 +48,7 @@ steps:
       cat /etc/environment
       Say "env"
       printenv | sort
-    condition: eq(variables['OS'], 'Linux')
+    condition: or(eq(variables['OS'], 'Linux'), eq(variables['OS'], 'OSX')) 
     displayName: 'system info (bash)'
 
   - script: |
