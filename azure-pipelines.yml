@@ -1,0 +1,86 @@
+variables:
+    buildConfiguration: "Release"
+    solution: "KernelManagementLab.sln"
+
+jobs:
+
+  - job: Arm32
+    variables:
+      OS: Linux
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      name: 'armv7-pool'
+    steps:
+      - template: azure-steps-nix.yml
+
+  - job: Arm64
+    variables:
+      OS: Linux
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      name: 'arm64-pool'
+    steps:
+      - template: azure-steps-nix.yml
+
+  - job: Ubuntu_16_04
+    variables:
+      OS: Linux
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - template: azure-steps-nix.yml
+
+  - job: Ubuntu_18_04
+    variables:
+      OS: Linux
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'ubuntu-18.04'
+    steps:
+      - template: azure-steps-nix.yml
+
+  # needs explicit dotnet core installation
+  - job: MacOS_Latest
+    variables:
+      OS: OSX
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'macOS-latest'
+    steps:
+      - template: azure-steps-nix.yml
+
+  - job: WIN2016_VS2017
+    variables:
+      OS: Windows
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: azure-steps-nix.yml
+
+  - job: WIN2019_VS2019
+    variables:
+      OS: Windows
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+      - template: azure-steps-nix.yml
+
+trigger:
+  - master
+
+pr:
+  branches:
+    exclude:
+      - '*'
+
+

@@ -1,0 +1,99 @@
+# AGENT_OS=Linux|Darwin|Windows_NT
+
+steps:
+
+  - bash: |
+      echo "AGENT_OS: '${AGENT_OS}'"
+      echo "uname -s: '$(uname -s)'"
+      echo "uname -m: '$(uname -m)'"
+      echo "PATH    : '$PATH'"
+      dotnet --info
+      export TMPDIR=$HOME/.tmp-dotnet; mkdir -p $TMPDIR
+      DOTNET_TARGET_DIR=/usr/share/dotnet
+      if [[ "$(uname -s)" != "Linux" ]]; then DOTNET_TARGET_DIR=$HOME/.dotnet; fi
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+      
+      sudo ln -s $DOTNET_TARGET_DIR/dotnet /usr/local/bin/dotnet || true
+      dotnet --info
+    displayName: 'Install dotnet sdk 3.1 on linux/osx'
+
+  - powershell: |
+       $ErrorActionPreference = "SilentlyContinue"
+       & uname -a
+       & dotnet --info
+       & mono --version
+       & nvm --version
+       & node --version
+       & npm --version
+       & yarn --version
+       "PATH: [" + [Environment]::GetEnvironmentVariable("PATH") + "]"
+    displayName: 'system info (pwsh)'
+
+  - script: |
+      uname -a
+      if [[ -s /etc/debian_version ]]; then
+        . /etc/os-release
+        Say "OS: $PRETTY_NAME v$(cat /etc/debian_version)"
+      fi;
+      dotnet --info
+      Say "mono: $(mono --version)"
+      Say "nvm: $(nvm --version)"
+      Say "node: $(node --version)"
+      Say "npm: $(npm --version)"
+      Say "yarn: $(yarn --version)"
+      echo "PATH: [$PATH]"
+      Say "/etc/environment"
+      cat /etc/environment
+      Say "env"
+      printenv | sort
+    condition: eq(variables['OS'], 'Linux')
+    displayName: 'system info (bash)'
+
+  - script: |
+      time list-packages
+      time list-packages
+      true
+    condition: eq(variables['OS'], 'Linux')
+    displayName: 'List Packages'
+
+  - script: |
+      dotnet restore || dotnet restore --disable-parallel
+      echo 
+    displayName: 'dotnet restore'
+
+  - script: |
+      dotnet test -c Release -f netcoreapp2.2
+    displayName: 'dotnet test'
+
+  - script: |
+      printenv | sort
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+      Show-System-Stat || true
+      echo ""
+    displayName: 'System Stat'
+
+
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'
+      testRunTitle: 'All the tests for $(Agent.JobName)'
+      
+  - task: PublishCodeCoverageResults@1
+    condition: succeededOrFailed()
+    inputs:
+      codeCoverageTool: cobertura
+      failIfCoverageEmpty: false 
+      summaryFileLocation: '**/In/**/coverage.cobertura.xml'
+      #pathToSources: # Optional
+      #reportDirectory: # Optional
+      #additionalCodeCoverageFiles: # Optional
+      
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.Repository.LocalPath)'
+      artifactName: '$(Agent.JobName)-$(Build.BuildNumber)'
+      
