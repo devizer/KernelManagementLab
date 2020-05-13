@@ -75,6 +75,11 @@ namespace KernelManagementJam
         
         // bigger - more 
         public long? Priority { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(FileName)}: {FileName}, {nameof(Type)}: {Type}, {nameof(TypeRaw)}: {TypeRaw}, {nameof(Size)}: {Size}, {nameof(Used)}: {Used}, {nameof(Priority)}: {Priority}";
+        }
     }
 
     public enum SwapType

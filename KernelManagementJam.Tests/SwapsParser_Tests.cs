@@ -13,7 +13,7 @@ namespace KernelManagementJam.Tests
         {
             if (CrossInfo.ThePlatform != CrossInfo.Platform.Linux) return;
             var swaps = SwapsParser.Parse();
-            foreach (var swapInfo in swaps)
+            foreach (SwapInfo swapInfo in swaps)
             {
                 Assert.Greater(swapInfo.Size, 0, $"A Swap Size of {swapInfo.Type} {swapInfo.FileName} should be above zero");
             }
