@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
 using Tests;
+using Universe;
 
 namespace KernelManagementJam.Tests
 {
@@ -21,10 +22,21 @@ namespace KernelManagementJam.Tests
                 Console.WriteLine(process);
             }
         }
-        
+
+        private bool IsSupported
+        {
+            get
+            {
+                var ret = CrossInfo.ThePlatform == CrossInfo.Platform.Linux;
+                if (!ret) Console.WriteLine($"The platform [{CrossInfo.ThePlatform}] is not supported for ProcessIoStat tests");
+                return ret;
+            }
+        }
+
         [Test]
         public void Test_UserName()
         {
+            if (!IsSupported) return;
             var processes = ProcessIoStat.GetProcesses();
             Assert.IsTrue(processes.Any(x => x.UserName == Environment.UserName));
         }
@@ -32,6 +44,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Test_ParentPid()
         {
+            if (!IsSupported) return;
             var processes = ProcessIoStat.GetProcesses();
             Assert.IsTrue(processes.Any(x => x.ParentPid > 0));
         }
@@ -39,6 +52,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Test_FullAccess()
         {
+            if (!IsSupported) return;
             var processes = ProcessIoStat.GetProcesses();
             Assert.IsTrue(processes.Any(x => !x.IsAccessDenied));
         }
@@ -46,6 +60,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Test_KernelCpuUsage()
         {
+            if (!IsSupported) return;
             var processes = ProcessIoStat.GetProcesses();
             Assert.IsTrue(processes.Any(x => x.KernelCpuUsage > 0));
         }
@@ -53,6 +68,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Test_UserCpuUsage()
         {
+            if (!IsSupported) return;
             var processes = ProcessIoStat.GetProcesses();
             Assert.IsTrue(processes.Any(x => x.UserCpuUsage > 0));
         }
@@ -60,6 +76,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Test_IoTime()
         {
+            if (!IsSupported) return;
             var processes = ProcessIoStat.GetProcesses();
             Assert.IsTrue(processes.Any(x => x.IoTime > 0));
         }
@@ -67,6 +84,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Test_ReadBytes()
         {
+            if (!IsSupported) return;
             var processes = ProcessIoStat.GetProcesses();
             Assert.IsTrue(processes.Any(x => x.ReadBytes > 0), "At least one process has ReadBytes");
             Assert.IsTrue(processes.Where(x => x.IsAccessDenied).All(x => x.ReadBytes == 0), "All the processes without access has empty ReadBytes");
@@ -75,6 +93,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Express_Benchmark()
         {
+            if (!IsSupported) return;
             ProcessIoStat.GetProcesses();
             Stopwatch sw = Stopwatch.StartNew();
             int n = 0;
