@@ -4,7 +4,7 @@ steps:
 
   - bash: |
       echo "AGENT_OS: '${AGENT_OS}'"
-      if [[ "$(uname -m)" == Darwin ]]; then brew install coreutils; fi
+      if [[ "$(uname -s)" == Darwin ]]; then brew install coreutils; fi
       echo "uname -s: '$(uname -s)'"
       echo "uname -m: '$(uname -m)'"
       echo "PATH    : '$PATH'"
