@@ -21,6 +21,8 @@ namespace KernelManagementJam
         public long IoTime { get; set; } // 42
         public long UserCpuUsage { get; set; } // 14
         public long KernelCpuUsage { get; set; } // 15
+        public long ChildrenUserCpuUsage { get; set; } // 16
+        public long ChildrenKernelCpuUsage { get; set; } // 17
         public long SchedulingPolicy { get; set; } // 41
         
         // Nice: 0...39 is -20..19
@@ -33,6 +35,8 @@ namespace KernelManagementJam
         public long Nice { get; set; } // 19 (nice)
         public long MinorPageFaults { get; set; } // 10
         public long MajorPageFaults { get; set; } // 12
+        public long ChildrenMinorPageFaults { get; set; } // 11
+        public long ChildrenMajorPageFaults { get; set; } // 13
         public long NumThreads { get; set; } // 20
 
         // VmRSS, RssFile, RssShmem, VmSwap 
@@ -65,7 +69,7 @@ namespace KernelManagementJam
             if (IsZombie)
                 return $"{header}, {priority}{user}{parentPid}, zombie";
             
-            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, {nameof(UserCpuUsage)}: {UserCpuUsage}, {nameof(KernelCpuUsage)}: {KernelCpuUsage}, {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, {nameof(MinorPageFaults)}: {MinorPageFaults}, {nameof(MajorPageFaults)}: {MajorPageFaults}, {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, CpuUsage: {UserCpuUsage} (user) + {KernelCpuUsage} (kernel), Children CpuUsage: {ChildrenUserCpuUsage} (user) + {ChildrenKernelCpuUsage} (kernel), {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, PageFaults: {MinorPageFaults} (minor) + {MajorPageFaults} (major), Children PageFaults: {ChildrenMinorPageFaults} (minor) + {ChildrenMajorPageFaults} (major), {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static ProcessIoStat GetByProcessId(int pid)
@@ -162,6 +166,45 @@ namespace KernelManagementJam
             return user?.pw_name;
         }
 
+        static void ParseStat(ref ProcessIoStat ioStat)
+        {
+            var statName = $"/proc/{ioStat.Pid}/stat";
+            if (!File.Exists(statName)) return;
+            using (FileStream fs = new FileStream(statName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
+            {
+                var line = rdr.ReadLine();
+                if (!string.IsNullOrEmpty(line))
+                {
+                    var arr = line.Split(' ');
+                    ioStat.IoTime = GetLong(arr[42 - 1]);
+                    ioStat.StartAt = GetLong(arr[22 - 1]);
+                    ioStat.UserCpuUsage = GetLong(arr[14 - 1]);
+                    ioStat.KernelCpuUsage = GetLong(arr[15 - 1]);
+
+                    ioStat.SchedulingPolicy = GetLong(arr[41 - 1]);
+                    ioStat.MixedPriority = GetLong(arr[18 - 1]);
+                    ioStat.RealtimePriority = GetLong(arr[40 - 1]);
+                    ioStat.Nice = GetLong(arr[19 - 1]);
+                    
+                    ioStat.MinorPageFaults = GetLong(arr[10 - 1]);
+                    ioStat.MajorPageFaults = GetLong(arr[12 - 1]);
+                    ioStat.NumThreads = GetLong(arr[20 - 1]);
+                    
+                    // 16 - children user mode time
+                    ioStat.ChildrenUserCpuUsage = GetLong(arr[16 - 1]);
+                    // 17 - children kernel mode time
+                    ioStat.ChildrenKernelCpuUsage = GetLong(arr[17 - 1]);
+                    // 11 - Minor page faults for children
+                    ioStat.ChildrenMinorPageFaults = GetLong(arr[11 - 1]);
+                    // 13 - Major faults for children
+                    ioStat.ChildrenMajorPageFaults = GetLong(arr[13 - 1]);
+                    
+                    
+                    
+                }
+            }
+        }
         private static void ParseIo(ref ProcessIoStat ioStat)
         {
             var isFileName = $"/proc/{ioStat.Pid}/io";
@@ -241,33 +284,6 @@ namespace KernelManagementJam
         static readonly CultureInfo EnUS = new CultureInfo("en-US");
         private static readonly UTF8Encoding Utf8Encoding = new UTF8Encoding(false);
 
-        static void ParseStat(ref ProcessIoStat ioStat)
-        {
-            var statName = $"/proc/{ioStat.Pid}/stat";
-            if (!File.Exists(statName)) return;
-            using (FileStream fs = new FileStream(statName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (StreamReader rdr = new StreamReader(fs, Utf8Encoding))
-            {
-                var line = rdr.ReadLine();
-                if (!string.IsNullOrEmpty(line))
-                {
-                    var arr = line.Split(' ');
-                    ioStat.IoTime = GetLong(arr[42 - 1]);
-                    ioStat.StartAt = GetLong(arr[22 - 1]);
-                    ioStat.UserCpuUsage = GetLong(arr[14 - 1]);
-                    ioStat.KernelCpuUsage = GetLong(arr[15 - 1]);
-
-                    ioStat.SchedulingPolicy = GetLong(arr[41 - 1]);
-                    ioStat.MixedPriority = GetLong(arr[18 - 1]);
-                    ioStat.RealtimePriority = GetLong(arr[40 - 1]);
-                    ioStat.Nice = GetLong(arr[19 - 1]);
-                    
-                    ioStat.MinorPageFaults = GetLong(arr[10 - 1]);
-                    ioStat.MajorPageFaults = GetLong(arr[12 - 1]);
-                    ioStat.NumThreads = GetLong(arr[20 - 1]);
-                }
-            }
-        }
 
         static long? GetOptionalLong(string raw)
         {
