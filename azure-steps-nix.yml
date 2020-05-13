@@ -3,8 +3,12 @@
 steps:
 
   - bash: |
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
       echo "AGENT_OS: '${AGENT_OS}'"
-      if [[ "$(uname -s)" == Darwin ]]; then brew install coreutils; fi
+      if [[ "$(uname -s)" == Darwin ]]; then
+        Say "Installing coreutils on OSX"
+        time brew install coreutils; 
+      fi
       echo "uname -s: '$(uname -s)'"
       echo "uname -m: '$(uname -m)'"
       echo "PATH    : '$PATH'"
@@ -12,7 +16,7 @@ steps:
       export TMPDIR=$HOME/.tmp-dotnet; mkdir -p $TMPDIR
       DOTNET_TARGET_DIR=/usr/share/dotnet
       if [[ "$(uname -s)" != "Linux" ]]; then DOTNET_TARGET_DIR=$HOME/.dotnet; fi
-      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+      export DOTNET_TARGET_DIR
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
       
       sudo ln -s $DOTNET_TARGET_DIR/dotnet /usr/local/bin/dotnet || true
