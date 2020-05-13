@@ -68,7 +68,7 @@ steps:
     displayName: 'dotnet restore'
 
   - script: |
-      dotnet test -c Release -f netcoreapp2.2
+      time dotnet test  -f netcoreapp2.2 -c Release --collect:"XPlat Code Coverage" --logger trx
     displayName: 'dotnet test'
 
   - script: |
