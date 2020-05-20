@@ -1,0 +1,42 @@
+# https://www.kernel.org/doc/Documentation/thermal/sysfs-api.txt
+/sys/class/thermal is a link to /sys/devices/virtual/thermal
+./thermal_zone0:
+	mode: "enabled"/"disabled"
+	temp: tempreture*1000
+	type: acpitz (M50), cpu-thermal (armbian), 
+
+
+https://www.kernel.org/doc/Documentation/hwmon/sysfs-interface
+H67
+/sys/class/hwmon/hwmon[0...]/
+2:
+   name: coretemp
+   temp1_label: 'Package id 0'
+   temp1_max: 85000
+   temp1_input: 46000
+
+   temp2_label: 'Core 0'
+   temp5_label: 'Core 3'
+
+
+1:
+   name: asus
+   fan1_label: cpu_fan
+   fan1_input: 0
+
+0:
+   name: nouveau
+   fan1_input: 848
+   temp1_max: 95000
+   temp1_input: 45000
+
+M50
+0:
+  name: acpitz
+  temp1_input: 48000
+1:
+  name: coretemp
+  temp2_label: Core 0
+  temp2_input: 41000
+  temp3_label: Core 1
+  temp2_input: 40000
