@@ -46,7 +46,7 @@ ________________________
 - CPU Usage               6 [User | User, %% | Kernel | Kernel, %% | Total | Total, %% ]
 - CPU Usage (children)    6 [User | User, %% | Kernel | Kernel, %% | Total | Total, %% ]
 - IO Time                 2 [ Total | Current ]
-- IO Transfer (own)       12  [ Read (logical) | Read (logical), B/s | Write (logical) | Write (logical), B/s | Read (block level) | Read (block level), B/s | Write (block level) | Write (block level), B/s | Calls Read | Calls Read, N/s | Calls Write | Calls Write, N/s ]
+- IO Transfer            12 [ Read (logical) | Read (logical), B/s | Write (logical) | Write (logical), B/s | Read (block level) | Read (block level), B/s | Write (block level) | Write (block level), B/s | Calls Read | Calls Read, N/s | Calls Write | Calls Write, N/s ]
 - Page Faults             4 [ 4 columns ]
 - Page Faults (children)  4 [ 4 columns ]
 - Command line            1 [Command line]
