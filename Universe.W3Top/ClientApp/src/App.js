@@ -20,6 +20,10 @@ import "./components/MyC3.css"
 import DiskBenchmarkDialog from "./components/DiskBenchmark/DiskBenchmarkDialog";
 import PopperLab from "./components/Popper-Lab"
 
+// next 2 lines for temp test:
+import processListStore from "./components/ProcessList/Store/ProcessListStore"
+let _ = processListStore.selectedColumns.length;
+
 
 require('typeface-roboto')
 

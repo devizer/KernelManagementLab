@@ -1,0 +1,52 @@
+FIELDS CHOOSER (42)
+_______
+
+PID, name, Priority, uptime | 4
+
+IO time (total hh:mm:ss + dyna %%) | 2
+CPU Usage (total hh:mm:ss + dyno %%) kernel+user=total | 6
+Child CPU Usage (total + dyno) + DYNO | 6
+Page faults (min + major) + DYNO (N/sec) | 4
+Children Page faults (min+maj) + DYNO | 4
+Rss, Shared, Swapped Memory | 3
+RW bytes 6 columns + DYNO (B/s) | 6 + 6
+command 1   
+
+36 columns chooser
+
+COLUMNS (42)
+_______
+
+* Process                                       (all) (none)
+[X] PID, [X] Name, [X] Priority, [X] Uptime, [X] Command line
+
+* IO Time
+[X] Total, [X] Current
+
+* IO Transfer                                      (all)(none)
+Logical Read: [X] Total, [X] Current. Logical Write [X] Total, [X] Current
+Calls Read: [X] Total, [X] Current. Calls Write: [X] Total, [X] Current
+Block Level Read: [X] Total, [X] Current. Block Level Write: [X] Total, [X] Current
+ 
+* Memory:
+[X] RSS, [X] Shared, [X] Swapped
+
+* Page Faults
+Minor: [X] Total, [X] Current. Swapin: [X] Total, [X] Current
+Children Minor: [X] Total, [X] Current. Children Swapins: [X] Total, [X] Current
+
+CPU Usage:
+User: [X] Total, [X] Current. Kernel: [X] Total, [X] Current. Total: [X] Total, [X] Current
+Children User: [X] Total, [X] Current. Children Kernel: [X] Total, [X] Current. Children Total: [X] Total, [X] Current
+
+TABLE HEADER GROUPS (42)
+________________________
+- Process                 4
+- Memory                  3 [RSS, Shared, Swapped]
+- CPU Usage               6 [User | User, %% | Kernel | Kernel, %% | Total | Total, %% ]
+- CPU Usage (children)    6 [User | User, %% | Kernel | Kernel, %% | Total | Total, %% ]
+- IO Time                 2 [ Total | Current ]
+- IO Transfer (own)       12  [ Read (logical) | Read (logical), B/s | Write (logical) | Write (logical), B/s | Read (block level) | Read (block level), B/s | Write (block level) | Write (block level), B/s | Calls Read | Calls Read, N/s | Calls Write | Calls Write, N/s ]
+- Page Faults             4 [ 4 columns ]
+- Page Faults (children)  4 [ 4 columns ]
+- Command line            1 [Command line]

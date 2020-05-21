@@ -63,6 +63,12 @@
         <Content Include="ClientApp\src\components\NetDevChartHeader.js" />
         <Content Include="ClientApp\src\components\Poc2Chart.js" />
         <Content Include="ClientApp\src\components\Popper-Lab.js" />
+        <Content Include="ClientApp\src\components\ProcessList\ColumnChooserComponent.js" />
+        <Content Include="ClientApp\src\components\ProcessList\ProcessColumnsDefinition.js" />
+        <Content Include="ClientApp\src\components\ProcessList\Design.txt" />
+        <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListActions.js" />
+        <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListDispatcher.js" />
+        <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListStore.js" />
         <Content Include="ClientApp\src\components\SingleAxisChart.js" />
         <Content Include="ClientApp\src\Helper.js" />
         <Content Include="ClientApp\src\icons\Disks-Icon.svg" />
