@@ -564,7 +564,7 @@ function DiskBenchmarkDialog(props) {
                             >
                                 {nextButtonNames[activeStep]}
                             </Button>
-
+                            
                             <Button id={"BTN_DISK_BENCHMARK_CLOSE"}
                                     variant="contained"
                                     disabled={activeStep === 0 && false}

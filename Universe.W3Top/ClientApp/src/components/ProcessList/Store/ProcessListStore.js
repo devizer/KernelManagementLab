@@ -9,6 +9,7 @@ class ProcessListStore extends EventEmitter {
         super();
         // local copy per message
         this.selectedColumns = ProcessColumnsDefinition.DefaultColumnKeys;
+        this.processList = [];
     }
 
     // single handler for the app for each kind of message
@@ -20,6 +21,11 @@ class ProcessListStore extends EventEmitter {
                 this.emit("storeUpdated");
                 break;
             }
+            case ProcessListActions.PROCESS_LIST_UPDATED_ACTION: {
+                    this.processList = action.value;
+                    this.emit("storeUpdated");
+                    break;
+            }
             default: {
             }
         }
@@ -29,7 +35,10 @@ class ProcessListStore extends EventEmitter {
     getSelectedColumns() {
         return this.selectedColumns;
     }
-
+    
+    getProcessList() {
+        return this.processList;
+    }
 }
 
 const processListStore = new ProcessListStore();

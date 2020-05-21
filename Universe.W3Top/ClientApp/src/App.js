@@ -20,9 +20,8 @@ import "./components/MyC3.css"
 import DiskBenchmarkDialog from "./components/DiskBenchmark/DiskBenchmarkDialog";
 import PopperLab from "./components/Popper-Lab"
 
-// next 2 lines for temp test:
-import processListStore from "./components/ProcessList/Store/ProcessListStore"
-let _ = processListStore.selectedColumns.length;
+import { ProcessListContainerV1 } from "./components/ProcessList/ProcessListContainerV1"
+
 
 
 require('typeface-roboto')
@@ -81,6 +80,7 @@ export default class App extends Component {
             NetBenchmarkV1,
             PopperLab,
             App._404,
+            ProcessListContainerV1,
         ];
     };
     
@@ -90,6 +90,7 @@ export default class App extends Component {
                     <Switch>
                         <Route exact path='/' component={NetChartContainer_V2} />
                         <Route exact path='/disks' component={BlockChartContainer_V2} />
+                        <Route exact path='/processes' component={ProcessListContainerV1} />
                         <Route exact path='/material-nav' component={MNav} />
                         <Route exact path='/1-axis' component={Poc1Chart} />
                         <Route exact path='/2-axis' component={Poc2Chart} />

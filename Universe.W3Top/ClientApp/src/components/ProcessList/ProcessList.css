@@ -1,0 +1,13 @@
+#columns-chooser-content .cs-group {
+    margin: 4px 2px 3px 2px;
+    font-size: 110%;
+    font-weight: bold;
+}
+
+#columns-chooser-title {
+    padding: 20px 20px 2px 20px
+}
+
+#columns-chooser-content .cs-line {
+    margin: 1px 1px 1px 1px;
+}
