@@ -1,3 +1,6 @@
+import * as Enumerable from "linq-es2015"
+import * as Helper from "../../Helper";
+
 class ProcessColumnsDefinition {
 
     static Headers = [
@@ -84,22 +87,51 @@ class ProcessColumnsDefinition {
             ]
         },
         {
-            caption: "", id: "CommandLine",
+            caption: "Command Line", id: "CommandLine",
             columns: [
-                { caption:"Command Line", field: "CommandLine" },
+                { caption:"", field: "CommandLine" },
             ]
         }
 
-    ]
+    ];
     
-    static DefaultColumns = [
+    static DefaultColumnKeys = [
         "Process.Pid",
         "Process.Name",
         "Process.Priority",
         "Process.Uptime",
+        "Memory.RSS",
+        "Memory.Shared",
+        "Memory.Swapped",
+        "IoTime.IoTime",
+        "IoTime.IoTime_PerCents",
         "CommandLine.CommandLine"
-    ]
+    ];
+    
+    static getAllColumnKeys() {
+        let ret = [];
+        ProcessColumnsDefinition.Headers.forEach(header => {
+            header.columns.forEach(column => {
+                ret.push(`${header.id}.${column.field}`);
+            });
+        });
+        
+        return ret;
+    }
 }
 
+function validateDefaultColumnKeys() {
+    let all = ProcessColumnsDefinition.getAllColumnKeys();
+    Helper.log(`ProcessColumnsDefinition.getAllColumnKeys(): ${all}`);
+    let errors = [];
+    ProcessColumnsDefinition.DefaultColumnKeys.forEach(columnKey => {
+        if (!Enumerable.AsEnumerable(all).Any(x => x === columnKey))
+            errors.push(columnKey);
+    });
+    
+    if (errors.length > 0)
+        throw `Wrong keys in ProcessColumnsDefinition.DefaultColumnKeys: ${errors}`;
+}
 
+validateDefaultColumnKeys();
 export default ProcessColumnsDefinition;

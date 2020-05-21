@@ -8,7 +8,7 @@ class ProcessListStore extends EventEmitter {
     constructor() {
         super();
         // local copy per message
-        this.selectedColumns = ProcessColumnsDefinition.DefaultColumns;
+        this.selectedColumns = ProcessColumnsDefinition.DefaultColumnKeys;
     }
 
     // single handler for the app for each kind of message
