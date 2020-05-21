@@ -79,7 +79,7 @@ export class BlockStatDevChartHeader extends Component {
         // },
         // small
         center: {
-            paddingTop: 8+16,
+            paddingTop: 2+16,
             fontSize: 12,
             position: "absolute",
             left: 0, top: 0+16,
@@ -87,7 +87,7 @@ export class BlockStatDevChartHeader extends Component {
             width: "100%",
         },
         left: {
-            paddingTop: 8+16,
+            paddingTop: 2+16,
             fontSize: 12,
             verticalAlign: "bottom",
             position: "absolute",
@@ -98,7 +98,7 @@ export class BlockStatDevChartHeader extends Component {
             paddingRight: NetDevChart.Padding,
         },
         right: {
-            paddingTop: 8+16,
+            paddingTop: 2+16,
             fontSize: 12,
             verticalAlign: "bottom",
             position: "absolute",
@@ -175,8 +175,8 @@ export class BlockStatDevChartHeader extends Component {
         let format = x => x > 0 ? Helper.Common.formatBytes(x) : "";
         // totals = {rxBytes: 0, txBytes: 0};
 
+        // <.container><.top><.left><.center><.right></.container>
         return (<React.Fragment>
-            
             <div style={this.dd.container}>&nbsp;<br/>&nbsp;
                 {this.renderMountPathHeader()}
                 <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={iconSent} /> {format(totals.rxBytes)}</span></div>
@@ -187,6 +187,7 @@ export class BlockStatDevChartHeader extends Component {
     };
 
 }
+
 
 BlockStatDevChartHeader.propTypes = {
     name: PropTypes.string.isRequired,
