@@ -1,6 +1,6 @@
 #columns-chooser-content .cs-group {
     margin: 4px 2px 3px 2px;
-    font-size: 110%;
+    font-size: 100%;
     font-weight: bold;
 }
 
@@ -10,4 +10,5 @@
 
 #columns-chooser-content .cs-line {
     margin: 1px 1px 1px 1px;
+    font-size: 90%
 }

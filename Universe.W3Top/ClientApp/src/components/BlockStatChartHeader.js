@@ -51,6 +51,14 @@ export class BlockStatDevChartHeader extends Component {
             marginTop: "20px",
             // border: "1px solid green",
         },
+        container2: {
+            position: "relative",
+            width: NetDevChart.ChartSize.width,
+            // width: "100%",
+            marginBottom: 4,
+            marginTop: "16px",
+            // border: "1px solid green",
+        },
         top: {
             paddingTop: 3,
             fontSize: 16,
@@ -65,8 +73,6 @@ export class BlockStatDevChartHeader extends Component {
             borderBottom: "1px solid #DDD",
             marginLeft: NetDevChart.Padding,
             marginRight: 0,
-
-            // display: "none"
         },
         // BIG
         // center: {
@@ -79,34 +85,34 @@ export class BlockStatDevChartHeader extends Component {
         // },
         // small
         center: {
-            paddingTop: 2+16,
-            fontSize: 12,
+            paddingTop: 0,
+            fontSize: 14,
             position: "absolute",
-            left: 0, top: 0+16,
+            left: 0, top: 0,
             textAlign: "center",
             width: "100%",
         },
         left: {
-            paddingTop: 2+16,
-            fontSize: 12,
+            paddingTop: 0,
+            fontSize: 14,
             verticalAlign: "bottom",
             position: "absolute",
-            left: 0, top: 0+16,
+            left: 0, top: 0,
             textAlign: "left",
             width: "100%",
-            paddingLeft: NetDevChart.Padding - 4,
+            paddingLeft: NetDevChart.Padding - 6, // depends on font size
             paddingRight: NetDevChart.Padding,
         },
         right: {
-            paddingTop: 2+16,
-            fontSize: 12,
+            paddingTop: 0,
+            fontSize: 14,
             verticalAlign: "bottom",
             position: "absolute",
-            left: 0, top: 0+16,
+            left: 0, top: 0,
             textAlign: "right",
             width: "100%",
             paddingLeft: NetDevChart.Padding,
-            paddingRight: NetDevChart.Padding - 4,
+            paddingRight: NetDevChart.Padding - 6, // depends on font size
         },
     };
     
@@ -177,8 +183,10 @@ export class BlockStatDevChartHeader extends Component {
 
         // <.container><.top><.left><.center><.right></.container>
         return (<React.Fragment>
-            <div style={this.dd.container}>&nbsp;<br/>&nbsp;
+            <div style={this.dd.container}>&nbsp;
                 {this.renderMountPathHeader()}
+            </div>
+            <div style={this.dd.container2}>&nbsp;
                 <div style={this.dd.left}><span title={"TOTAL RECEIVED"}><FontAwesomeIcon icon={iconSent} /> {format(totals.rxBytes)}</span></div>
                 <div style={this.dd.center}>{this.props.name.toUpperCase()}</div>
                 <div style={this.dd.right}><span title={"TOTAL SENT"}>{format(totals.txBytes)} <FontAwesomeIcon icon={iconReceived} /></span></div>
