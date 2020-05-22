@@ -21,7 +21,7 @@ class Welcome extends React.Component {
 
 class FixedSpan extends React.Component {
     render() {
-        return (<span style={{display: "inline-block", width: this.props.width, minWidth: this.props.width}}>{this.props.children}</span>);
+        return (<span style={{whiteSpace: "nowrap", display: "inline-block", width: this.props.width, minWidth: this.props.width}}>{this.props.children}</span>);
     }
 }
 
@@ -29,9 +29,9 @@ class IoTransferLayout extends React.Component {
     render() {
         let x = this.props.x, y = this.props.y
         let widths = [115, 95, 115, 45, 120, 95, 115];
-        let height = 40;
+        let height = 28;
         let left = 0; for (let c = 0; c < x; c++) left += widths[c];
-        let top = y * height - 7;
+        let top = y * height - 2;
         return (
             <div style={{position: "absolute", left, top, whiteSpace:"nowrap"}}>
                 {this.props.children}
@@ -44,9 +44,9 @@ class CpUsageLayout extends React.Component {
     render() {
         let x = this.props.x, y = this.props.y;
         let widths = [302, 302, 302];
-        let height = 40;
+        let height = 28;
         let left = 0; for (let c = 0; c < x; c++) left += widths[c];
-        let top = y * height - 7;
+        let top = y * height - 2;
         return (
             <div style={{position: "absolute", left, top, whiteSpace:"nowrap"}}>
                 {this.props.children}
@@ -78,10 +78,20 @@ export class ColumnChooserComponent extends Component {
             <><span style={nowrap}><CustomCheckbox color="primary" onChange={() => {}} value={"PID"} />{caption}</span>{space}</>
         );
         
+        let tmpOnChange = (key) => {
+            return (event) => {
+                console.log(`${key} CHANGED: ${event.target.checked}`);
+            };
+        };
+        
+        chbox = (caption) => (
+            <>&nbsp;<input type="checkbox" onChange={tmpOnChange(caption)} />&nbsp;{caption}&nbsp;&nbsp;&nbsp;</>
+        );
+        
         let tdSpace=(<><td style={{borderRight:"1px solid grey", width:8}}>&nbsp;</td><td style={{width: 16}}>&nbsp;</td></>)
-        
-        
-        
+
+        let colMemory=88, colProcess=88;
+        let colA1=128, colA2=132;
         
         return (
             <>
@@ -90,11 +100,12 @@ export class ColumnChooserComponent extends Component {
                     Process
                 </div>
                 <div className="cs-line">
-                    {chbox("PID")}
-                    {chbox("Name")}
-                    {chbox("User")}
-                    {chbox("Priority")}
-                    {chbox("Uptime")}
+                    <FixedSpan width={colProcess}>{chbox("PID")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Name")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("User")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Priority")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Threads")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Uptime")}</FixedSpan>
                     {chbox("Command line")}
                 </div>
 
@@ -102,8 +113,8 @@ export class ColumnChooserComponent extends Component {
                     Memory
                 </div>
                 <div className="cs-line">
-                    {chbox("RSS")}
-                    {chbox("Shared")}
+                    <FixedSpan width={colMemory}>{chbox("RSS")}</FixedSpan>
+                    <FixedSpan width={colMemory}>{chbox("Shared")}</FixedSpan>
                     {chbox("Swapped")}
                 </div>
 
@@ -111,44 +122,44 @@ export class ColumnChooserComponent extends Component {
                     IO Time
                 </div>
                 <div className="cs-line">
-                    {chbox("Total, hh:mm:ss;")}
+                    {chbox("Total, hh:mm:ss")}&nbsp;&nbsp;&nbsp;
                     {chbox("Current, %%")}
                 </div>
 
                 <div className="cs-group">
                     IO Transfer
                 </div>
-                <div style={{position:"relative", height: 118, border: ""}}>
+                <div style={{position:"relative", height: 83, border: ""}}>
 
                     <ABS x={0} y={0}>
-                        <FixedSpan width={120}>Logical Read:</FixedSpan> 
+                        <FixedSpan width={colA1}>Logical Read:</FixedSpan> 
                         {chbox("Total")} 
                         {chbox("Current")}
                     </ABS>
                     <ABS x={4} y={0}>
-                        <FixedSpan width={128}>Logical Write:</FixedSpan>
+                        <FixedSpan width={colA2}>Logical Write:</FixedSpan>
                         {chbox("Total")} 
                         {chbox("Current")}
                     </ABS>
 
                     <ABS x={0} y={1}>
-                        <FixedSpan width={120}>Block-level Read:</FixedSpan>
+                        <FixedSpan width={colA1}>Block-level Read:</FixedSpan>
                         {chbox("Total")} 
                         {chbox("Current")}
                     </ABS>
                     <ABS x={4} y={1}>
-                        <FixedSpan width={128}>Block-level Write:</FixedSpan>
+                        <FixedSpan width={colA2}>Block-level Write:</FixedSpan>
                         {chbox("Total")} 
                         {chbox("Current")}
                     </ABS>
 
                     <ABS x={0} y={2}>
-                        <FixedSpan width={120}>Read Calls:</FixedSpan>
+                        <FixedSpan width={colA1}>Read Calls:</FixedSpan>
                         {chbox("Total")} 
                         {chbox("Current")}
                     </ABS>
                     <ABS x={4} y={2}>
-                        <FixedSpan width={128}>Write Calls:</FixedSpan> 
+                        <FixedSpan width={colA2}>Write Calls:</FixedSpan> 
                         {chbox("Total")} 
                         {chbox("Current")}
                     </ABS>
@@ -159,26 +170,26 @@ export class ColumnChooserComponent extends Component {
                 <div className="cs-group">
                     Page Faults
                 </div>
-                <div style={{position:"relative", height: 78, border: ""}}>
+                <div style={{position:"relative", height: 58, border: ""}}>
 
                     <ABS x={0} y={0}>
-                        <FixedSpan width={120}>Minor:</FixedSpan>
+                        <FixedSpan width={colA1}>Minor:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS>
                     <ABS x={4} y={0}>
-                        <FixedSpan width={128}>Swap-in:</FixedSpan>
+                        <FixedSpan width={colA2}>Swap-in:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS>
 
                     <ABS x={0} y={1}>
-                        <FixedSpan width={120}>Children Minor:</FixedSpan>
+                        <FixedSpan width={colA1}>Children Minor:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS>
                     <ABS x={4} y={1}>
-                        <FixedSpan width={128}>Children Swap-in:</FixedSpan>
+                        <FixedSpan width={colA2}>Children Swap-in:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS>
@@ -188,43 +199,36 @@ export class ColumnChooserComponent extends Component {
                 <div className="cs-group">
                     CPU Usage
                 </div>
-                <div style={{position:"relative", height: 45, border: ""}}>
+                <div style={{position:"relative", height: 55, border: ""}}>
 
                     <ABS3 x={0} y={0}>
-                        <FixedSpan width={40}>User:</FixedSpan>
+                        <FixedSpan width={110}><u>Own</u> User:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS3>
                     <ABS3 x={1} y={0}>
-                        <FixedSpan width={52}>Kernel:</FixedSpan>
+                        <FixedSpan width={56}>Kernel:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS3>
                     <ABS3 x={2} y={0}>
-                        <FixedSpan width={38}>Sum:</FixedSpan>
+                        <FixedSpan width={43}>Sum:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS3>
 
-                </div>
-
-                <div className="cs-group">
-                    Children CPU Usage
-                </div>
-                <div style={{position:"relative", height: 40, border: ""}}>
-
-                    <ABS3 x={0} y={0}>
-                        <FixedSpan width={40}>User:</FixedSpan>
+                    <ABS3 x={0} y={1}>
+                        <FixedSpan width={110}><u>Children</u> User:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS3>
-                    <ABS3 x={1} y={0}>
-                        <FixedSpan width={52}>Kernel:</FixedSpan>
+                    <ABS3 x={1} y={1}>
+                        <FixedSpan width={56}>Kernel:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS3>
-                    <ABS3 x={2} y={0}>
-                        <FixedSpan width={38}>Sum:</FixedSpan>
+                    <ABS3 x={2} y={1}>
+                        <FixedSpan width={43}>Sum:</FixedSpan>
                         {chbox("Total")}
                         {chbox("Current")}
                     </ABS3>

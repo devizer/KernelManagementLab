@@ -1,11 +1,9 @@
 #columns-chooser-title {
-    padding: 20px 20px 2px 20px
+    padding: 12px 20px 2px 20px
 }
 
 #columns-chooser-content .cs-group {
-    /*
-    margin: 4px 2px 3px 2px;
-    */
+    margin: 9px 2px 2px 0px;
     font-size: 100%;
     font-weight: bold;
     /*border: 1px solid #A0FFFF*/
@@ -18,9 +16,9 @@
     margin: 1px 1px 1px 1px;
     */
     font-size: 90%;
-    margin-left: -15px; /* depends on <Checkbox/> styles */
-    margin-top: -10px;
-    margin-bottom: -2px;
+    margin-left: -3px; /* depends on <Checkbox/> styles */
+    margin-top: 0px;
+    margin-bottom: 0px;
     /*border: 1px solid #FFA0FF*/
 
 }
