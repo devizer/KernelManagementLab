@@ -56,20 +56,23 @@ export class ProcessListContainerV1 extends Component {
     
     render() {
         // TODO: columns chooser button and list of processes
-        let numberOfColumns = processListStore.getSelectedColumns().length;
         let handleOpenColumnsChooser = _ => this.setState({openedColumnsChooser: true});
         let handleCloseColumnsChooser = _ => this.setState({openedColumnsChooser: false});
-        
-        let columnsCounter = null;
-        if (numberOfColumns > 1) columnsCounter = () => (<>{numberOfColumns} columns</>);
-        else if (numberOfColumns === 1) columnsCounter = () => (<>One column</>);
-        else columnsCounter = () => (<>No columns?</>);
+
+        function ColumnChooserButtonText() {
+            let numberOfColumns = processListStore.getSelectedColumns().length;
+            let columnsCounter = null;
+            if (numberOfColumns > 1) columnsCounter = (<>{numberOfColumns} columns</>);
+            else if (numberOfColumns === 1) columnsCounter = (<>One column</>);
+            else columnsCounter = (<>No columns?</>);
+            return columnsCounter;
+        }
 
         return (
             <div>
                 <div style={{textAlign: "right"}}>
                     <Button variant="text" color="default" onClick={handleOpenColumnsChooser}>
-                        {columnsCounter()} &nbsp;<FontAwesomeIcon style={{}} icon={faCog}/>
+                        <ColumnChooserButtonText/>&nbsp;&nbsp;<FontAwesomeIcon style={{}} icon={faCog}/>
                     </Button>
                 </div>
 

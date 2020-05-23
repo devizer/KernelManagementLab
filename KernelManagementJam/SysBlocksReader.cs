@@ -32,7 +32,7 @@ namespace KernelManagementJam
         public static List<WithDeviceWithVolumes> GetSnapshot(AdvancedMiniProfilerKeyPath baseProfilerPath = null)
         {
             int stepCounter = 0;
-            string GetProfilerStepName(string stepName) => $"{(++stepCounter):00}. {stepName}";
+            string GetProfilerStepName(string stepName) => $"{(++stepCounter):000}. {stepName}";
             IDisposable GetProfilerStep(string stepName)
             {
                 if (baseProfilerPath == null) return EmptyDisposable.Instance;
