@@ -89,6 +89,7 @@ export class ColumnChooserComponent extends Component {
                 }
                 this.setState({selectedColumns:copy});
                 ProcessListActions.SelectedColumnsUpdated(copy);
+                console.log(`NEW SELECTED Columns: ${copy}`);
             };
         };
         
@@ -246,8 +247,8 @@ export class ColumnChooserComponent extends Component {
                     </ABS3>
                     <ABS3 x={2} y={1}>
                         <FixedSpan width={43}>Sum:</FixedSpan>
-                        {chbox("Total", "ChildrenCpuUsage.ChildrenKernelCpuUsage")}
-                        {chbox("Current", "ChildrenCpuUsage.ChildrenKernelCpuUsage_PerCents")}
+                        {chbox("Total", "ChildrenCpuUsage.ChildrenTotalCpuUsage")}
+                        {chbox("Current", "ChildrenCpuUsage.ChildrenTotalCpuUsage_PerCents")}
                     </ABS3>
 
                 </div>

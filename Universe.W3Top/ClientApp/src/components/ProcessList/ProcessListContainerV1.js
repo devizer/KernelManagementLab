@@ -13,6 +13,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 
 import "./ProcessList.css"
 import {ColumnChooserComponent} from "./ColumnChooserComponent";
+import DataSourceStore from "../../stores/DataSourceStore";
 
 export class ProcessListContainerV1 extends Component {
     static displayName = ProcessListContainerV1.name;
@@ -21,10 +22,14 @@ export class ProcessListContainerV1 extends Component {
 
     constructor(props) {
         super(props);
+
+        this.updatedSelectedColumns = this.updatedSelectedColumns.bind(this);
         
         this.state = {
             openedColumnsChooser: false,
-        }
+        };
+
+        processListStore.on('storeUpdated', this.updatedSelectedColumns);
     }
     
     componentDidMount() {
@@ -34,6 +39,11 @@ export class ProcessListContainerV1 extends Component {
 
     componentWillUnmount() {
         if (this.timerId !== null) clearInterval(this.timerId);
+        processListStore.removeListener('storeUpdated', this.updatedSelectedColumns);
+    }
+    
+    updatedSelectedColumns() {
+        this.setState({selectedColumns: processListStore.getSelectedColumns()})
     }
 
     waiterTick()
@@ -52,12 +62,17 @@ export class ProcessListContainerV1 extends Component {
         let numberOfColumns = processListStore.getSelectedColumns().length;
         let handleOpenColumnsChooser = _ => this.setState({openedColumnsChooser: true});
         let handleCloseColumnsChooser = _ => this.setState({openedColumnsChooser: false});
+        
+        let columnsCounter = null;
+        if (numberOfColumns > 1) columnsCounter = () => (<>{numberOfColumns} columns</>);
+        else if (numberOfColumns === 1) columnsCounter = () => (<>Just one column?</>);
+        else columnsCounter = () => (<>No columns?</>);
 
         return (
             <div>
                 <div style={{textAlign: "right"}}>
                     <Button variant="text" color="default" onClick={handleOpenColumnsChooser}>
-                        {numberOfColumns} column(s) choosen &nbsp;&nbsp;<FontAwesomeIcon style={{}} icon={faCog}/>
+                        {columnsCounter()} &nbsp;<FontAwesomeIcon style={{}} icon={faCog}/>
                     </Button>
                 </div>
 
