@@ -1,19 +1,16 @@
 import React, {Component} from "react";
-import ProcessColumnsDefinition from "./ProcessColumnsDefinition";
 import processListStore from "./Store/ProcessListStore";
 import * as ProcessListActions from "./Store/ProcessListActions"
-import {ProcessColumnChooserDialog} from "./ProcessColumnChooserDialog"
 import Button from "@material-ui/core/Button";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCog} from '@fortawesome/free-solid-svg-icons'
 import {Dialog} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCog} from '@fortawesome/free-solid-svg-icons'
 
 import "./ProcessList.css"
 import {ColumnChooserComponent} from "./ColumnChooserComponent";
-import DataSourceStore from "../../stores/DataSourceStore";
 
 export class ProcessListContainerV1 extends Component {
     static displayName = ProcessListContainerV1.name;

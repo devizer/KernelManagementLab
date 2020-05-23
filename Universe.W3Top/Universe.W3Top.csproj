@@ -64,7 +64,6 @@
         <Content Include="ClientApp\src\components\Poc2Chart.js" />
         <Content Include="ClientApp\src\components\Popper-Lab.js" />
         <Content Include="ClientApp\src\components\ProcessList\ColumnChooserComponent.js" />
-        <Content Include="ClientApp\src\components\ProcessList\ProcessColumnChooserDialog.js" />
         <Content Include="ClientApp\src\components\ProcessList\ProcessColumnsDefinition.js" />
         <Content Include="ClientApp\src\components\ProcessList\Design.txt" />
         <Content Include="ClientApp\src\components\ProcessList\ProcessList.css" />
