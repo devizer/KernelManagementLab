@@ -28,8 +28,8 @@ class ProcessColumnsDefinition {
                 { caption: "User, %%",  field: "UserCpuUsage_PerCents" },
                 { caption: "Kernel",        field: "KernelCpuUsage" },
                 { caption: "Kernel, %%",    field: "KernelCpuUsage_PerCents" },
-                { caption: "User+Kernel",       field: "TotalCpuUsage" }, // calculated
-                { caption: "User+Kernel, %%",   field: "TotalCpuUsage_PerCents" },
+                { caption: "∑ = User+Kernel",       field: "TotalCpuUsage" }, // calculated
+                { caption: "∑ = User+Kernel, %%",   field: "TotalCpuUsage_PerCents" },
             ]
         },
         {
@@ -39,8 +39,8 @@ class ProcessColumnsDefinition {
                 { caption: "User, %%",  field: "ChildrenUserCpuUsage_PerCents" },
                 { caption: "Kernel",        field: "ChildrenKernelCpuUsage" },
                 { caption: "Kernel, %%",    field: "ChildrenKernelCpuUsage_PerCents" },
-                { caption: "User+Kernel",       field: "ChildrenTotalCpuUsage" }, // calculated
-                { caption: "User+Kernel, %%",   field: "ChildrenTotalCpuUsage_PerCents" },
+                { caption: "∑ = User+Kernel",       field: "ChildrenTotalCpuUsage" }, // calculated
+                { caption: "∑ = User+Kernel, %%",   field: "ChildrenTotalCpuUsage_PerCents" },
             ]
         },
         {
