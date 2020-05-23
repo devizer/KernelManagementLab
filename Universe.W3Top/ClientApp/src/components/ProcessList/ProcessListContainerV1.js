@@ -62,7 +62,7 @@ export class ProcessListContainerV1 extends Component {
         
         let columnsCounter = null;
         if (numberOfColumns > 1) columnsCounter = () => (<>{numberOfColumns} columns</>);
-        else if (numberOfColumns === 1) columnsCounter = () => (<>Just one column?</>);
+        else if (numberOfColumns === 1) columnsCounter = () => (<>One column</>);
         else columnsCounter = () => (<>No columns?</>);
 
         return (
