@@ -6,8 +6,8 @@ namespace Universe.Dashboard.Agent
 {
     public class ProcessListTimer
     {
-        private const int SLOW_PC_UPDATE_INTERVAL = 8000;
-        private const int FAST_PC_UPDATE_INTERVAL = 4000;
+        private const int SLOW_PC_UPDATE_INTERVAL = 15000;
+        private const int FAST_PC_UPDATE_INTERVAL = 5000;
 
         public static void Process()
         {
