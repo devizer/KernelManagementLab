@@ -70,6 +70,7 @@
         <Content Include="ClientApp\src\components\ProcessList\ProcessListContainerV1.js" />
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListActions.js" />
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListDispatcher.js" />
+        <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListLocalStore.js" />
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListStore.js" />
         <Content Include="ClientApp\src\components\SingleAxisChart.js" />
         <Content Include="ClientApp\src\Helper.js" />

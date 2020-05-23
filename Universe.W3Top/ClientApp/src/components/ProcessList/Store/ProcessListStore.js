@@ -1,6 +1,7 @@
 import dispatcher from "./ProcessListDispatcher";
 import {EventEmitter} from "events";
 import * as ProcessListActions from "./ProcessListActions";
+import * as ProcessListLocalStore from "./ProcessListLocalStore";
 import ProcessColumnsDefinition from "../ProcessColumnsDefinition";
 
 class ProcessListStore extends EventEmitter {
@@ -8,8 +9,14 @@ class ProcessListStore extends EventEmitter {
     constructor() {
         super();
         // local copy per message
-        this.selectedColumns = ProcessColumnsDefinition.DefaultColumnKeys;
+        // this.selectedColumns = ProcessColumnsDefinition.DefaultColumnKeys;
+        this.selectedColumns = ProcessListLocalStore.getSelectedColumns();
         this.processList = [];
+    }
+    
+    preloadSelectedColumns()
+    {
+        
     }
 
     // single handler for the app for each kind of message

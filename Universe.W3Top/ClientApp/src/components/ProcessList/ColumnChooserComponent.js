@@ -22,7 +22,7 @@ class FixedSpan extends React.Component {
 
 class IoTransferLayout extends React.Component {
     render() {
-        let x = this.props.x, y = this.props.y
+        let x = this.props.x, y = this.props.y;
         let widths = [115, 95, 115, 45, 120, 95, 115];
         let height = 28;
         let left = 0; for (let c = 0; c < x; c++) left += widths[c];
@@ -38,7 +38,7 @@ class IoTransferLayout extends React.Component {
 class CpUsageLayout extends React.Component {
     render() {
         let x = this.props.x, y = this.props.y;
-        let widths = [302, 302, 302];
+        let widths = [328, 276, 302];
         let height = 28;
         let left = 0; for (let c = 0; c < x; c++) left += widths[c];
         let top = y * height - 2;
@@ -115,7 +115,7 @@ export class ColumnChooserComponent extends Component {
             <>
 
                 <div className="cs-group">
-                    Process
+                    Process in general
                 </div>
                 <div className="cs-line">
                     <FixedSpan width={colProcess}>{chbox("PID", "Process.Pid")}</FixedSpan>
@@ -124,7 +124,7 @@ export class ColumnChooserComponent extends Component {
                     <FixedSpan width={colProcess}>{chbox("Priority", "Process.Priority")}</FixedSpan>
                     <FixedSpan width={colProcess}>{chbox("Threads", "Process.NumThreads")}</FixedSpan>
                     <FixedSpan width={colProcess}>{chbox("Uptime", "Process.Uptime")}</FixedSpan>
-                    {chbox("Command line", "CommandLine.CommandLine")}
+                    <FixedSpan width={colProcess+11}>{chbox("Command line", "CommandLine.CommandLine")}</FixedSpan>
                 </div>
 
                 <div className="cs-group">
@@ -133,15 +133,54 @@ export class ColumnChooserComponent extends Component {
                 <div className="cs-line">
                     <FixedSpan width={colMemory}>{chbox("RSS", "Memory.RSS")}</FixedSpan>
                     <FixedSpan width={colMemory}>{chbox("Shared", "Memory.Shared")}</FixedSpan>
-                    {chbox("Swapped", "Memory.Swapped")}
+                    <FixedSpan width={colProcess+11}>{chbox("Swapped", "Memory.Swapped")}</FixedSpan>
                 </div>
 
                 <div className="cs-group">
                     IO Time
                 </div>
                 <div className="cs-line">
-                    {chbox("Total, hh:mm:ss", "IoTime.IoTime")}&nbsp;&nbsp;&nbsp;
-                    {chbox("Current, %%", "IoTime.IoTime_PerCents")}
+                    <FixedSpan width={colMemory}>{chbox("Total", "IoTime.IoTime")}</FixedSpan>
+                    {chbox("Current", "IoTime.IoTime_PerCents")}
+                </div>
+
+                <div className="cs-group">
+                    CPU Usage
+                </div>
+                <div style={{position:"relative", height: 55, border: ""}}>
+
+                    <ABS3 x={0} y={0}>
+                        <FixedSpan width={110}>User:</FixedSpan>
+                        {chbox("Total", "CpuUsage.UserCpuUsage")}
+                        {chbox("Current", "CpuUsage.UserCpuUsage_PerCents")}
+                    </ABS3>
+                    <ABS3 x={1} y={0}>
+                        <FixedSpan width={56}>Kernel:</FixedSpan>
+                        {chbox("Total", "CpuUsage.KernelCpuUsage")}
+                        {chbox("Current", "CpuUsage.KernelCpuUsage_PerCents")}
+                    </ABS3>
+                    <ABS3 x={2} y={0}>
+                        <FixedSpan width={43}>Sum:</FixedSpan>
+                        {chbox("Total", "CpuUsage.TotalCpuUsage")}
+                        {chbox("Current", "CpuUsage.TotalCpuUsage_PerCents")}
+                    </ABS3>
+
+                    <ABS3 x={0} y={1}>
+                        <FixedSpan width={110}>Children User:</FixedSpan>
+                        {chbox("Total", "ChildrenCpuUsage.ChildrenUserCpuUsage")}
+                        {chbox("Current", "ChildrenCpuUsage.ChildrenUserCpuUsage_PerCents")}
+                    </ABS3>
+                    <ABS3 x={1} y={1}>
+                        <FixedSpan width={56}>Kernel:</FixedSpan>
+                        {chbox("Total", "ChildrenCpuUsage.ChildrenKernelCpuUsage")}
+                        {chbox("Current", "ChildrenCpuUsage.ChildrenKernelCpuUsage_PerCents")}
+                    </ABS3>
+                    <ABS3 x={2} y={1}>
+                        <FixedSpan width={43}>Sum:</FixedSpan>
+                        {chbox("Total", "ChildrenCpuUsage.ChildrenTotalCpuUsage")}
+                        {chbox("Current", "ChildrenCpuUsage.ChildrenTotalCpuUsage_PerCents")}
+                    </ABS3>
+
                 </div>
 
                 <div className="cs-group">
@@ -214,44 +253,6 @@ export class ColumnChooserComponent extends Component {
 
                 </div>
 
-                <div className="cs-group">
-                    CPU Usage
-                </div>
-                <div style={{position:"relative", height: 55, border: ""}}>
-
-                    <ABS3 x={0} y={0}>
-                        <FixedSpan width={110}>Own User:</FixedSpan>
-                        {chbox("Total", "CpuUsage.UserCpuUsage")}
-                        {chbox("Current", "CpuUsage.UserCpuUsage_PerCents")}
-                    </ABS3>
-                    <ABS3 x={1} y={0}>
-                        <FixedSpan width={56}>Kernel:</FixedSpan>
-                        {chbox("Total", "CpuUsage.KernelCpuUsage")}
-                        {chbox("Current", "CpuUsage.KernelCpuUsage_PerCents")}
-                    </ABS3>
-                    <ABS3 x={2} y={0}>
-                        <FixedSpan width={43}>Sum:</FixedSpan>
-                        {chbox("Total", "CpuUsage.TotalCpuUsage")}
-                        {chbox("Current", "CpuUsage.TotalCpuUsage_PerCents")}
-                    </ABS3>
-
-                    <ABS3 x={0} y={1}>
-                        <FixedSpan width={110}>Children User:</FixedSpan>
-                        {chbox("Total", "ChildrenCpuUsage.ChildrenUserCpuUsage")}
-                        {chbox("Current", "ChildrenCpuUsage.ChildrenUserCpuUsage_PerCents")}
-                    </ABS3>
-                    <ABS3 x={1} y={1}>
-                        <FixedSpan width={56}>Kernel:</FixedSpan>
-                        {chbox("Total", "ChildrenCpuUsage.ChildrenKernelCpuUsage")}
-                        {chbox("Current", "ChildrenCpuUsage.ChildrenKernelCpuUsage_PerCents")}
-                    </ABS3>
-                    <ABS3 x={2} y={1}>
-                        <FixedSpan width={43}>Sum:</FixedSpan>
-                        {chbox("Total", "ChildrenCpuUsage.ChildrenTotalCpuUsage")}
-                        {chbox("Current", "ChildrenCpuUsage.ChildrenTotalCpuUsage_PerCents")}
-                    </ABS3>
-
-                </div>
 
             </>
         );
