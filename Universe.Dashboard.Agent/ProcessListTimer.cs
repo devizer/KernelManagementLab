@@ -9,6 +9,8 @@ namespace Universe.Dashboard.Agent
         private const int SLOW_PC_UPDATE_INTERVAL = 15000;
         private const int FAST_PC_UPDATE_INTERVAL = 5000;
 
+        // TODO: activity should be muted if no users needs process list
+        
         public static void Process()
         {
             var intervalMilliseconds = InternalMilliseconds.Value;
@@ -16,6 +18,8 @@ namespace Universe.Dashboard.Agent
             ProcessListDataSource.ProcessListUpdateInterval = intervalMilliseconds;
             
             var prev = ProcessIoStat.GetProcesses();
+            
+            
 
             var skipOn = (intervalMilliseconds + 999) / 1000;
             var iteration = 0;
@@ -61,7 +65,7 @@ namespace Universe.Dashboard.Agent
                 benchmark++;
             }
 #if DEBUG || true
-            Console.WriteLine($"Synthetic BENCHMARK: {benchmark} (ivy bridge 3.7 GHz is 80000");
+            Console.WriteLine($"Synthetic BENCHMARK: {benchmark} (ivy bridge 3.7 GHz is about 80000)");
 #endif
             return benchmark;
         }

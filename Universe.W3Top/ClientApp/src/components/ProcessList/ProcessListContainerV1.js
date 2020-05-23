@@ -29,6 +29,7 @@ export class ProcessListContainerV1 extends Component {
     
     componentDidMount() {
         this.timerId = setInterval(this.waiterTick.bind(this), 1000);
+        
     }
 
     componentWillUnmount() {

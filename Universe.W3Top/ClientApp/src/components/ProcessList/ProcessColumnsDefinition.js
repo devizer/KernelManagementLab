@@ -8,8 +8,10 @@ class ProcessColumnsDefinition {
             caption: "Process", id: "Process",
             columns: [
                 { caption: "Pid", field: "Pid" },
-                { caption: "Name", field: "Name" },
-                { caption: "Priority", field: "Priority" },
+                { caption: "Name", field: "Name" }, // calculated
+                { caption: "User", field: "User" }, // calculated: UID + Name
+                { caption: "Priority", field: "Priority" }, // calculated
+                { caption: "Threads", field: "NumThreads" },
                 { caption: "Uptime", field: "Uptime" }
             ]
         },
@@ -33,7 +35,7 @@ class ProcessColumnsDefinition {
             ]
         },
         {
-            caption: "Children CPU Usage", id: "CpuUsage",
+            caption: "Children CPU Usage", id: "ChildrenCpuUsage",
             columns: [
                 { caption: "User",      field: "ChildrenUserCpuUsage" }, // double in seconds
                 { caption: "User, %%",  field: "ChildrenUserCpuUsage_PerCents" },
@@ -74,7 +76,7 @@ class ProcessColumnsDefinition {
                 { caption: "Minor",             field: "MinorPageFaults" },
                 { caption: "Minor, current",    field: "MinorPageFaults_Current" },
                 { caption: "Swapins",           field: "MajorPageFaults" },
-                { caption: "Swapins, current",  field: "MajorPageFaults" },
+                { caption: "Swapins, current",  field: "MajorPageFaults_Current" },
             ]
         },
         {
@@ -85,6 +87,7 @@ class ProcessColumnsDefinition {
                 { caption: "Swapins",           field: "ChildrenMajorPageFaults" },
                 { caption: "Swapins, current",  field: "ChildrenMajorPageFaults_Current" },
             ]
+            // ChildrenMinorPageFaults
         },
         {
             caption: "Command Line", id: "CommandLine",
@@ -105,23 +108,36 @@ class ProcessColumnsDefinition {
         "Memory.Swapped",
         "IoTime.IoTime",
         "IoTime.IoTime_PerCents",
+        "IoTransfer.ReadBytes",
+        "IoTransfer.ReadBytes_Current",
+        "IoTransfer.WriteBytes",
+        "IoTransfer.WriteBytes_Current",
+        "PageFaults.MajorPageFaults_Current",
+        "CpuUsage.TotalCpuUsage_PerCents",
+        "ChildrenCpuUsage.ChildrenTotalCpuUsage_PerCents",
         "CommandLine.CommandLine"
     ];
     
-    static getAllColumnKeys() {
-        let ret = [];
-        ProcessColumnsDefinition.Headers.forEach(header => {
-            header.columns.forEach(column => {
-                ret.push(`${header.id}.${column.field}`);
-            });
-        });
-        
-        return ret;
+    static AllColumnKeys = []; // array of group.field
+    
+    static isValidColumnKey(columnKey) {
+        return ProcessColumnsDefinition.AllColumnKeys.indexOf(columnKey) >= 0;
     }
+    
 }
 
+function fillAllColumnKeys() {
+    ProcessColumnsDefinition.Headers.forEach(header => {
+        header.columns.forEach(column => {
+            ProcessColumnsDefinition.AllColumnKeys.push(`${header.id}.${column.field}`);
+        });
+    });
+}
+
+fillAllColumnKeys();
+
 function validateDefaultColumnKeys() {
-    let all = ProcessColumnsDefinition.getAllColumnKeys();
+    let all = ProcessColumnsDefinition.AllColumnKeys;
     Helper.log(`ProcessColumnsDefinition.getAllColumnKeys(): ${all}`);
     let errors = [];
     ProcessColumnsDefinition.DefaultColumnKeys.forEach(columnKey => {
