@@ -6,6 +6,9 @@ namespace Universe.Dashboard.Agent
 {
     public class ProcessListTimer
     {
+        private const int SLOW_PC_UPDATE_INTERVAL = 8000;
+        private const int FAST_PC_UPDATE_INTERVAL = 4000;
+
         public static void Process()
         {
             var intervalMilliseconds = InternalMilliseconds.Value;
@@ -22,7 +25,7 @@ namespace Universe.Dashboard.Agent
 
         private static Lazy<int> InternalMilliseconds = new Lazy<int>(() =>
         {
-            int ret = 8000;
+            int ret = SLOW_PC_UPDATE_INTERVAL;
             const string EnvKey = "PROCESS_LIST_UPFATE_INTERVAL";
             var raw = Environment.GetEnvironmentVariable(EnvKey);
             if (raw != null && int.TryParse(raw, out var interval))
@@ -33,7 +36,7 @@ namespace Universe.Dashboard.Agent
             {
                 var benchmark = GetBenchmark();
                 // ivy bridge 3.7 GHz is 80000
-                if (benchmark >= 40000) ret = 4000; // interval 1 sec for core 2 duo and above
+                if (benchmark >= 40000) ret = FAST_PC_UPDATE_INTERVAL; // interval 1 sec for core 2 duo and above
             }
 
             return ret;
