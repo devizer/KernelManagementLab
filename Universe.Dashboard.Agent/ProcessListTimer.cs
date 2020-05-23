@@ -17,9 +17,16 @@ namespace Universe.Dashboard.Agent
             
             var prev = ProcessIoStat.GetProcesses();
 
+            var skipOn = (intervalMilliseconds + 999) / 1000;
+            var iteration = 0;
             PreciseTimer.AddListener("Processes::Timer", () =>
             {
-                var next = ProcessIoStat.GetProcesses();
+                if (iteration == 0)
+                {
+                    var next = ProcessIoStat.GetProcesses();
+                }
+
+                iteration = (iteration + 1) % skipOn;
             });
         }
 
