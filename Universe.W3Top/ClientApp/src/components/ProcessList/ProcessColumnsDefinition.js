@@ -7,7 +7,7 @@ class ProcessColumnsDefinition {
         {
             caption: "Process", id: "Process",
             columns: [
-                { caption: "Pid", field: "Pid" },
+                { caption: "PID", field: "Pid" },
                 { caption: "Name", field: "Name" }, // calculated
                 { caption: "User", field: "User" }, // calculated: UID + Name
                 { caption: "Priority", field: "Priority" }, // calculated

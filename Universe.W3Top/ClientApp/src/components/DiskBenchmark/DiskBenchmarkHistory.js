@@ -1,7 +1,6 @@
 import React from 'react';
 import MomentFormat from 'moment';
 
-
 import {faCheck, faCheckDouble} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -17,6 +16,7 @@ const renderODirectIcon = o_Direct => {
 };
 
 export class DiskBenchmarkHistory extends React.Component {
+    static displayName =  DiskBenchmarkHistory.name;
 
     prevTrigger = null;
     
@@ -28,6 +28,7 @@ export class DiskBenchmarkHistory extends React.Component {
         this.state = {
             history: this.tryBuildDiskHistorySource(),
         };
+
     }
     
     componentDidMount() {

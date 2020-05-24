@@ -11,6 +11,7 @@ import {faCog} from '@fortawesome/free-solid-svg-icons'
 
 import "./ProcessList.css"
 import {ColumnChooserComponent} from "./ColumnChooserComponent";
+import {ProcessListTable} from "./ProcessListTable";
 
 export class ProcessListContainerV1 extends Component {
     static displayName = ProcessListContainerV1.name;
@@ -75,8 +76,10 @@ export class ProcessListContainerV1 extends Component {
                         <ColumnChooserButtonText/>&nbsp;&nbsp;<FontAwesomeIcon style={{}} icon={faCog}/>
                     </Button>
                 </div>
+                
+                <div style={{height: 8, fontSize: 8}}>&nbsp;</div>
 
-                <p>.... list of processes</p>
+                <ProcessListTable/>
                 
                 <Dialog open={this.state.openedColumnsChooser} onClose={handleCloseColumnsChooser}
                         aria-labelledby="columns-chooser-title" fullWidth={true} maxWidth={"md"}>

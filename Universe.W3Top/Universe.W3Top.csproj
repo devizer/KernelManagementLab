@@ -68,6 +68,7 @@
         <Content Include="ClientApp\src\components\ProcessList\Design.txt" />
         <Content Include="ClientApp\src\components\ProcessList\ProcessList.css" />
         <Content Include="ClientApp\src\components\ProcessList\ProcessListContainerV1.js" />
+        <Content Include="ClientApp\src\components\ProcessList\ProcessListTable.js" />
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListActions.js" />
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListDispatcher.js" />
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListLocalStore.js" />
