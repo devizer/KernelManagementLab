@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Mono.Unix.Native;
 
 namespace KernelManagementJam
 {
@@ -13,7 +14,8 @@ namespace KernelManagementJam
         public int ParentPid { get; set; } // 1, first
         public bool IsAccessDenied { get; set; }
         public bool IsZombie { get; set; }
-        public long StartAt { get; set; } // 22
+        public long StartAtRaw { get; set; } // 22
+        public double StartAt => StartAtRaw / _Sc_Clk_Tck.Value;
 
         public int? Uid { get; set; }
         public string UserName { get; set; }
@@ -72,7 +74,7 @@ namespace KernelManagementJam
             if (IsZombie)
                 return $"{header}, {priority}{user}{parentPid}, zombie";
             
-            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAt)}: {StartAt}, {nameof(IoTime)}: {IoTime}, CpuUsage: {UserCpuUsage} (user) + {KernelCpuUsage} (kernel), Children CpuUsage: {ChildrenUserCpuUsage} (user) + {ChildrenKernelCpuUsage} (kernel), GuestTime: {GuestTime} (own) + {ChildrenGuestTime} (Children) {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, PageFaults: {MinorPageFaults} (minor) + {MajorPageFaults} (major), Children PageFaults: {ChildrenMinorPageFaults} (minor) + {ChildrenMajorPageFaults} (major), {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAtRaw)}: {StartAtRaw}, {nameof(IoTime)}: {IoTime}, CpuUsage: {UserCpuUsage} (user) + {KernelCpuUsage} (kernel), Children CpuUsage: {ChildrenUserCpuUsage} (user) + {ChildrenKernelCpuUsage} (kernel), GuestTime: {GuestTime} (own) + {ChildrenGuestTime} (Children) {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, PageFaults: {MinorPageFaults} (minor) + {MajorPageFaults} (major), Children PageFaults: {ChildrenMinorPageFaults} (minor) + {ChildrenMajorPageFaults} (major), {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static ProcessIoStat GetByProcessId(int pid)
@@ -182,7 +184,7 @@ namespace KernelManagementJam
                     var arr = line.Split(' ');
                     if (string.IsNullOrEmpty(ioStat.Name)) ioStat.Name = arr[2 - 1];
                     ioStat.IoTime = GetLong(arr[42 - 1]);
-                    ioStat.StartAt = GetLong(arr[22 - 1]);
+                    ioStat.StartAtRaw = GetLong(arr[22 - 1]); // divide by sysconf(_SC_CLK_TCK)
                     ioStat.UserCpuUsage = GetLong(arr[14 - 1]);
                     ioStat.KernelCpuUsage = GetLong(arr[15 - 1]);
 
@@ -307,6 +309,13 @@ namespace KernelManagementJam
 
             throw new Exception($"Invalid long '{raw}'");
         }
+
+
+        private static Lazy<long> _Sc_Clk_Tck = new Lazy<long>(() =>
+        {
+            // TODO: check errors
+            return Syscall.sysconf(SysconfName._SC_CLK_TCK);
+        });
 
     }
 }

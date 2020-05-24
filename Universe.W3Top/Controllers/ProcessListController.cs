@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using KernelManagementJam;
@@ -13,10 +14,12 @@ namespace Universe.W3Top.Controllers
         [HttpGet, Route("")]
         public List<AdvancedProcessStatPoint> GetProcesses()
         {
+            var uptime = UptimeParser.ParseUptime();
+            
             var snapshot = ProcessIoStat.GetProcesses();
             var ret = snapshot
                 .Where(x => !x.IsZombie)
-                .Select(x => new AdvancedProcessStatPoint(x))
+                .Select(x => new AdvancedProcessStatPoint(x) { Uptime = Math.Round(uptime.Value - x.StartAt,2)})
                 .ToList();
             
             DebugDumper.Dump(ret, "AdvancedProcessStatPoint[].json", minify: false);
