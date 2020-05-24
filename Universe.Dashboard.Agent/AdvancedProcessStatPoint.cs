@@ -12,8 +12,9 @@ namespace Universe.Dashboard.Agent
         public int Pid => Totals.Pid;
         public int ParentPid => Totals.ParentPid;
         public string User => string.IsNullOrEmpty(Totals.UserName) ? $"{Totals.Uid}" : $"{Totals.Uid} '{Totals.UserName}'";
+        public string Name => Totals.Name;
         public int MixedPriority => (int) Totals.MixedPriority; // Nice: 0...39 is -20..19. Realtime: -2 ==> 1, -3 ==> 2, ... -100 ==> 99
-        public long Uptime => throw new NotImplementedException(); // in seconds
+        public long Uptime => 42; // in seconds
         public int NumThreads => (int) Totals.NumThreads;
         public string CommandLine => Totals.Command;
 

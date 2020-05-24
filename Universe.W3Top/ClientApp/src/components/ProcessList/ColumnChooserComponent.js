@@ -118,30 +118,30 @@ export class ColumnChooserComponent extends Component {
                     Process in general
                 </div>
                 <div className="cs-line">
-                    <FixedSpan width={colProcess}>{chbox("PID", "Process.Pid")}</FixedSpan>
-                    <FixedSpan width={colProcess}>{chbox("Name", "Process.Name")}</FixedSpan>
-                    <FixedSpan width={colProcess}>{chbox("User", "Process.User")}</FixedSpan>
-                    <FixedSpan width={colProcess}>{chbox("Priority", "Process.Priority")}</FixedSpan>
-                    <FixedSpan width={colProcess}>{chbox("Threads", "Process.NumThreads")}</FixedSpan>
-                    <FixedSpan width={colProcess}>{chbox("Uptime", "Process.Uptime")}</FixedSpan>
-                    <FixedSpan width={colProcess+11}>{chbox("Command line", "CommandLine.CommandLine")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("PID", "Process.pid")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Name", "Process.name")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("User", "Process.user")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Priority", "Process.priority")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Threads", "Process.numThreads")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Uptime", "Process.uptime")}</FixedSpan>
+                    <FixedSpan width={colProcess+11}>{chbox("Command line", "CommandLine.commandLine")}</FixedSpan>
                 </div>
 
                 <div className="cs-group">
                     Memory
                 </div>
                 <div className="cs-line">
-                    <FixedSpan width={colMemory}>{chbox("RSS", "Memory.RSS")}</FixedSpan>
-                    <FixedSpan width={colMemory}>{chbox("Shared", "Memory.Shared")}</FixedSpan>
-                    <FixedSpan width={colProcess+11}>{chbox("Swapped", "Memory.Swapped")}</FixedSpan>
+                    <FixedSpan width={colMemory}>{chbox("RSS", "Memory.rss")}</FixedSpan>
+                    <FixedSpan width={colMemory}>{chbox("Shared", "Memory.shared")}</FixedSpan>
+                    <FixedSpan width={colProcess+11}>{chbox("Swapped", "Memory.swapped")}</FixedSpan>
                 </div>
 
                 <div className="cs-group">
                     IO Time
                 </div>
                 <div className="cs-line">
-                    <FixedSpan width={colMemory}>{chbox("Total", "IoTime.IoTime")}</FixedSpan>
-                    {chbox("Current", "IoTime.IoTime_PerCents")}
+                    <FixedSpan width={colMemory}>{chbox("Total", "IoTime.ioTime")}</FixedSpan>
+                    {chbox("Current", "IoTime.ioTime_PerCents")}
                 </div>
 
                 <div className="cs-group">
@@ -151,34 +151,34 @@ export class ColumnChooserComponent extends Component {
 
                     <ABS3 x={0} y={0}>
                         <FixedSpan width={110}>User:</FixedSpan>
-                        {chbox("Total", "CpuUsage.UserCpuUsage")}
-                        {chbox("Current", "CpuUsage.UserCpuUsage_PerCents")}
+                        {chbox("Total", "CpuUsage.userCpuUsage")}
+                        {chbox("Current", "CpuUsage.userCpuUsage_PerCents")}
                     </ABS3>
                     <ABS3 x={1} y={0}>
                         <FixedSpan width={56}>Kernel:</FixedSpan>
-                        {chbox("Total", "CpuUsage.KernelCpuUsage")}
-                        {chbox("Current", "CpuUsage.KernelCpuUsage_PerCents")}
+                        {chbox("Total", "CpuUsage.kernelCpuUsage")}
+                        {chbox("Current", "CpuUsage.kernelCpuUsage_PerCents")}
                     </ABS3>
                     <ABS3 x={2} y={0}>
                         <FixedSpan width={43}>Sum:</FixedSpan>
-                        {chbox("Total", "CpuUsage.TotalCpuUsage")}
-                        {chbox("Current", "CpuUsage.TotalCpuUsage_PerCents")}
+                        {chbox("Total", "CpuUsage.totalCpuUsage")}
+                        {chbox("Current", "CpuUsage.totalCpuUsage_PerCents")}
                     </ABS3>
 
                     <ABS3 x={0} y={1}>
                         <FixedSpan width={110}>Children User:</FixedSpan>
-                        {chbox("Total", "ChildrenCpuUsage.ChildrenUserCpuUsage")}
-                        {chbox("Current", "ChildrenCpuUsage.ChildrenUserCpuUsage_PerCents")}
+                        {chbox("Total", "ChildrenCpuUsage.childrenUserCpuUsage")}
+                        {chbox("Current", "ChildrenCpuUsage.childrenUserCpuUsage_PerCents")}
                     </ABS3>
                     <ABS3 x={1} y={1}>
                         <FixedSpan width={56}>Kernel:</FixedSpan>
-                        {chbox("Total", "ChildrenCpuUsage.ChildrenKernelCpuUsage")}
-                        {chbox("Current", "ChildrenCpuUsage.ChildrenKernelCpuUsage_PerCents")}
+                        {chbox("Total", "ChildrenCpuUsage.childrenKernelCpuUsage")}
+                        {chbox("Current", "ChildrenCpuUsage.childrenKernelCpuUsage_PerCents")}
                     </ABS3>
                     <ABS3 x={2} y={1}>
                         <FixedSpan width={43}>Sum:</FixedSpan>
-                        {chbox("Total", "ChildrenCpuUsage.ChildrenTotalCpuUsage")}
-                        {chbox("Current", "ChildrenCpuUsage.ChildrenTotalCpuUsage_PerCents")}
+                        {chbox("Total", "ChildrenCpuUsage.childrenTotalCpuUsage")}
+                        {chbox("Current", "ChildrenCpuUsage.childrenTotalCpuUsage_PerCents")}
                     </ABS3>
 
                 </div>
@@ -190,35 +190,35 @@ export class ColumnChooserComponent extends Component {
 
                     <ABS x={0} y={0}>
                         <FixedSpan width={colA1}>Logical Read:</FixedSpan> 
-                        {chbox("Total", "IoTransfer.ReadBytes")} 
-                        {chbox("Current", "IoTransfer.ReadBytes_Current")}
+                        {chbox("Total", "IoTransfer.readBytes")} 
+                        {chbox("Current", "IoTransfer.readBytes_Current")}
                     </ABS>
                     <ABS x={4} y={0}>
                         <FixedSpan width={colA2}>Logical Write:</FixedSpan>
-                        {chbox("Total", "IoTransfer.WriteBytes")} 
-                        {chbox("Current", "IoTransfer.WriteBytes_Current")}
+                        {chbox("Total", "IoTransfer.writeBytes")} 
+                        {chbox("Current", "IoTransfer.writeBytes_Current")}
                     </ABS>
 
                     <ABS x={0} y={1}>
                         <FixedSpan width={colA1}>Block-level Read:</FixedSpan>
-                        {chbox("Total", "IoTransfer.ReadBlockBackedBytes")} 
-                        {chbox("Current", "IoTransfer.ReadBlockBackedBytes_Current")}
+                        {chbox("Total", "IoTransfer.readBlockBackedBytes")} 
+                        {chbox("Current", "IoTransfer.readBlockBackedBytes_Current")}
                     </ABS>
                     <ABS x={4} y={1}>
                         <FixedSpan width={colA2}>Block-level Write:</FixedSpan>
-                        {chbox("Total", "IoTransfer.WriteBlockBackedBytes")} 
-                        {chbox("Current", "IoTransfer.WriteBlockBackedBytes_Current")}
+                        {chbox("Total", "IoTransfer.writeBlockBackedBytes")} 
+                        {chbox("Current", "IoTransfer.writeBlockBackedBytes_Current")}
                     </ABS>
 
                     <ABS x={0} y={2}>
                         <FixedSpan width={colA1}>Read Calls:</FixedSpan>
-                        {chbox("Total", "IoTransfer.ReadSysCalls")} 
-                        {chbox("Current", "IoTransfer.ReadSysCalls_Current")}
+                        {chbox("Total", "IoTransfer.readSysCalls")} 
+                        {chbox("Current", "IoTransfer.readSysCalls_Current")}
                     </ABS>
                     <ABS x={4} y={2}>
                         <FixedSpan width={colA2}>Write Calls:</FixedSpan> 
-                        {chbox("Total", "IoTransfer.WriteSysCalls")} 
-                        {chbox("Current", "IoTransfer.WriteSysCalls_Current")}
+                        {chbox("Total", "IoTransfer.writeSysCalls")} 
+                        {chbox("Current", "IoTransfer.writeSysCalls_Current")}
                     </ABS>
 
                 </div>
@@ -231,24 +231,24 @@ export class ColumnChooserComponent extends Component {
 
                     <ABS x={0} y={0}>
                         <FixedSpan width={colA1}>Minor:</FixedSpan>
-                        {chbox("Total", "PageFaults.MinorPageFaults")}
-                        {chbox("Current", "PageFaults.MinorPageFaults_Current")}
+                        {chbox("Total", "PageFaults.minorPageFaults")}
+                        {chbox("Current", "PageFaults.minorPageFaults_Current")}
                     </ABS>
                     <ABS x={4} y={0}>
                         <FixedSpan width={colA2}>Swap-in:</FixedSpan>
-                        {chbox("Total", "PageFaults.MajorPageFaults")}
-                        {chbox("Current", "PageFaults.MajorPageFaults_Current")}
+                        {chbox("Total", "PageFaults.majorPageFaults")}
+                        {chbox("Current", "PageFaults.majorPageFaults_Current")}
                     </ABS>
 
                     <ABS x={0} y={1}>
                         <FixedSpan width={colA1}>Children Minor:</FixedSpan>
-                        {chbox("Total", "ChildrenPageFaults.ChildrenMinorPageFaults")}
-                        {chbox("Current", "ChildrenPageFaults.ChildrenMinorPageFaults_Current")}
+                        {chbox("Total", "ChildrenPageFaults.childrenMinorPageFaults")}
+                        {chbox("Current", "ChildrenPageFaults.childrenMinorPageFaults_Current")}
                     </ABS>
                     <ABS x={4} y={1}>
                         <FixedSpan width={colA2}>Children Swap-in:</FixedSpan>
-                        {chbox("Total", "ChildrenPageFaults.ChildrenMajorPageFaults")}
-                        {chbox("Current", "ChildrenPageFaults.ChildrenMajorPageFaults_Current")}
+                        {chbox("Total", "ChildrenPageFaults.childrenMajorPageFaults")}
+                        {chbox("Current", "ChildrenPageFaults.childrenMajorPageFaults_Current")}
                     </ABS>
 
                 </div>

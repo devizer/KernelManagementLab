@@ -65,7 +65,7 @@ export class ProcessListTable extends React.Component {
                         minWidth: 55,
                         Cell: undefined,
                         aggregate: noop,
-                    }
+                    };
                     tableHeader.columns.push(tableColumn);
                 }
             });
@@ -78,7 +78,7 @@ export class ProcessListTable extends React.Component {
         return (
 
             <ReactTable
-                data={this.state.history}
+                data={this.state.processList}
                 showPagination={false}
                 defaultPageSize={pageSize}
                 pageSizeOptions={[pageSize]}

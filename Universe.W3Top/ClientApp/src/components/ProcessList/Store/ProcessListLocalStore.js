@@ -15,7 +15,7 @@ const storages = [localStorage, sessionStorage, cookieStorage, ];
 const plugins = [defaultPlugin, expiredPlugin, eventsPlugin];
 const store = engine.createStore(storages, plugins);
 
-export const StoreVersion = "1.0";
+export const StoreVersion = "1.2";
 
 export const setSelectedColumns = (selectedColumns) => {
     store.set("selectedColumns", {ver: StoreVersion, selectedColumns});

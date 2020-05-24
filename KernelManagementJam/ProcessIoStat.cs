@@ -180,6 +180,7 @@ namespace KernelManagementJam
                 if (!string.IsNullOrEmpty(line))
                 {
                     var arr = line.Split(' ');
+                    if (string.IsNullOrEmpty(ioStat.Name)) ioStat.Name = arr[2 - 1];
                     ioStat.IoTime = GetLong(arr[42 - 1]);
                     ioStat.StartAt = GetLong(arr[22 - 1]);
                     ioStat.UserCpuUsage = GetLong(arr[14 - 1]);

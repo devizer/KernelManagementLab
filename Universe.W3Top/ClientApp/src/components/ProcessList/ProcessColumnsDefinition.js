@@ -7,114 +7,114 @@ class ProcessColumnsDefinition {
         {
             caption: "Process", id: "Process",
             columns: [
-                { caption: "PID", field: "Pid" },
-                { caption: "Name", field: "Name" }, // calculated
-                { caption: "User", field: "User" }, // calculated: UID + Name
-                { caption: "Priority", field: "Priority" }, // calculated
-                { caption: "Threads", field: "NumThreads" },
-                { caption: "Uptime", field: "Uptime" }
+                { caption: "PID", field: "pid" },
+                { caption: "Name", field: "name" }, // calculated
+                { caption: "User", field: "user" }, // calculated: UID + Name
+                { caption: "Priority", field: "priority" }, // calculated
+                { caption: "Threads", field: "numThreads" },
+                { caption: "Uptime", field: "uptime" }
             ]
         },
         {
             caption: "Memory", id: "Memory",
             columns: [
-                { caption: "RSS", field: "RSS" },
-                { caption: "Shared", field: "Shared" },
-                { caption: "Swapped", field: "Swapped" }
+                { caption: "RSS", field: "rss" },
+                { caption: "Shared", field: "shared" },
+                { caption: "Swapped", field: "swapped" }
             ]
         },
         {
             caption: "CPU Usage", id: "CpuUsage",
             columns: [
-                { caption: "User",      field: "UserCpuUsage" }, // double in seconds
-                { caption: "User, %%",  field: "UserCpuUsage_PerCents" },
-                { caption: "Kernel",        field: "KernelCpuUsage" },
-                { caption: "Kernel, %%",    field: "KernelCpuUsage_PerCents" },
-                { caption: "∑ = User+Kernel",       field: "TotalCpuUsage" }, // calculated
-                { caption: "∑ = User+Kernel, %%",   field: "TotalCpuUsage_PerCents" },
+                { caption: "User",      field: "userCpuUsage" }, // double in seconds
+                { caption: "User, %%",  field: "userCpuUsage_PerCents" },
+                { caption: "Kernel",        field: "kernelCpuUsage" },
+                { caption: "Kernel, %%",    field: "kernelCpuUsage_PerCents" },
+                { caption: "∑ = User+Kernel",       field: "totalCpuUsage" }, // calculated
+                { caption: "∑ = User+Kernel, %%",   field: "totalCpuUsage_PerCents" },
             ]
         },
         {
             caption: "Children CPU Usage", id: "ChildrenCpuUsage",
             columns: [
-                { caption: "User",      field: "ChildrenUserCpuUsage" }, // double in seconds
-                { caption: "User, %%",  field: "ChildrenUserCpuUsage_PerCents" },
-                { caption: "Kernel",        field: "ChildrenKernelCpuUsage" },
-                { caption: "Kernel, %%",    field: "ChildrenKernelCpuUsage_PerCents" },
-                { caption: "∑ = User+Kernel",       field: "ChildrenTotalCpuUsage" }, // calculated
-                { caption: "∑ = User+Kernel, %%",   field: "ChildrenTotalCpuUsage_PerCents" },
+                { caption: "User",      field: "childrenUserCpuUsage" }, // double in seconds
+                { caption: "User, %%",  field: "childrenUserCpuUsage_PerCents" },
+                { caption: "Kernel",        field: "childrenKernelCpuUsage" },
+                { caption: "Kernel, %%",    field: "childrenKernelCpuUsage_PerCents" },
+                { caption: "∑ = User+Kernel",       field: "childrenTotalCpuUsage" }, // calculated
+                { caption: "∑ = User+Kernel, %%",   field: "childrenTotalCpuUsage_PerCents" },
             ]
         },
         {
             caption: "IO Time", id: "IoTime",
             columns: [
-                { caption: "Total", field: "IoTime" }, // hh:mm:ss, double in seconds
-                { caption: "Current, %%", field: "IoTime_PerCents" },
+                { caption: "Total", field: "ioTime" }, // hh:mm:ss, double in seconds
+                { caption: "Current, %%", field: "ioTime_PerCents" },
             ]
         },
         {
             // total: GB/s, current: MB/s
             caption: "IO Transfer", id: "IoTransfer",
             columns: [
-                { caption: "Read (logical), total",     field: "ReadBytes" },
-                { caption: "Read (logical), current",   field: "ReadBytes_Current" }, // todo
-                { caption: "Write (logical), total",    field: "WriteBytes" },
-                { caption: "Write (logical), current",  field: "WriteBytes_Current" }, // todo
-                { caption: "Read (block level)",            field: "ReadBlockBackedBytes" },
-                { caption: "Read (block level), current",   field: "ReadBlockBackedBytes_Current" },
-                { caption: "Write (block level)",           field: "WriteBlockBackedBytes" },
-                { caption: "Write (block level), current",  field: "WriteBlockBackedBytes_Current" },
-                { caption: "Read Calls",            field: "ReadSysCalls" },
-                { caption: "Read Calls, current",   field: "ReadSysCalls_Current" },
-                { caption: "Write Calls",           field: "WriteSysCalls" },
-                { caption: "Write Calls, current",  field: "WriteSysCalls_Current" },
+                { caption: "Read (logical), total",     field: "readBytes" },
+                { caption: "Read (logical), current",   field: "readBytes_Current" }, // todo
+                { caption: "Write (logical), total",    field: "writeBytes" },
+                { caption: "Write (logical), current",  field: "writeBytes_Current" }, // todo
+                { caption: "Read (block level)",            field: "readBlockBackedBytes" },
+                { caption: "Read (block level), current",   field: "readBlockBackedBytes_Current" },
+                { caption: "Write (block level)",           field: "writeBlockBackedBytes" },
+                { caption: "Write (block level), current",  field: "writeBlockBackedBytes_Current" },
+                { caption: "Read Calls",            field: "readSysCalls" },
+                { caption: "Read Calls, current",   field: "readSysCalls_Current" },
+                { caption: "Write Calls",           field: "writeSysCalls" },
+                { caption: "Write Calls, current",  field: "writeSysCalls_Current" },
             ]
         },
         {
             caption: "Page Faults", id: "PageFaults",
             columns: [
-                { caption: "Minor",             field: "MinorPageFaults" },
-                { caption: "Minor, current",    field: "MinorPageFaults_Current" },
-                { caption: "Swapins",           field: "MajorPageFaults" },
-                { caption: "Swapins, current",  field: "MajorPageFaults_Current" },
+                { caption: "Minor",             field: "minorPageFaults" },
+                { caption: "Minor, current",    field: "minorPageFaults_Current" },
+                { caption: "Swapins",           field: "majorPageFaults" },
+                { caption: "Swapins, current",  field: "majorPageFaults_Current" },
             ]
         },
         {
             caption: "Children Page Faults", id: "ChildrenPageFaults",
             columns: [
-                { caption: "Minor",             field: "ChildrenMinorPageFaults" },
-                { caption: "Minor, current",    field: "ChildrenMinorPageFaults_Current" },
-                { caption: "Swapins",           field: "ChildrenMajorPageFaults" },
-                { caption: "Swapins, current",  field: "ChildrenMajorPageFaults_Current" },
+                { caption: "Minor",             field: "childrenMinorPageFaults" },
+                { caption: "Minor, current",    field: "childrenMinorPageFaults_Current" },
+                { caption: "Swapins",           field: "childrenMajorPageFaults" },
+                { caption: "Swapins, current",  field: "childrenMajorPageFaults_Current" },
             ]
             // ChildrenMinorPageFaults
         },
         {
             caption: "Command Line", id: "CommandLine",
             columns: [
-                { caption:"", field: "CommandLine" },
+                { caption:"", field: "commandLine" },
             ]
         }
 
     ];
     
     static DefaultColumnKeys = [
-        "Process.Pid",
-        "Process.Name",
-        "Process.Priority",
-        "Process.Uptime",
-        "Memory.RSS",
-        "Memory.Shared",
-        "Memory.Swapped",
-        "IoTime.IoTime",
-        "IoTime.IoTime_PerCents",
-        "IoTransfer.ReadBytes",
-        "IoTransfer.ReadBytes_Current",
-        "IoTransfer.WriteBytes",
-        "IoTransfer.WriteBytes_Current",
-        "PageFaults.MajorPageFaults_Current",
-        "CpuUsage.TotalCpuUsage_PerCents",
-        "ChildrenCpuUsage.ChildrenTotalCpuUsage_PerCents",
+        "Process.pid",
+        "Process.name",
+        "Process.priority",
+        "Process.uptime",
+        "Memory.rss",
+        "Memory.shared",
+        "Memory.swapped",
+        "IoTime.ioTime",
+        "IoTime.ioTime_PerCents",
+        "IoTransfer.readBytes",
+        "IoTransfer.readBytes_Current",
+        "IoTransfer.writeBytes",
+        "IoTransfer.writeBytes_Current",
+        "PageFaults.majorPageFaults_Current",
+        "CpuUsage.totalCpuUsage_PerCents",
+        "ChildrenCpuUsage.childrenTotalCpuUsage_PerCents",
         // "CommandLine.CommandLine",
     ];
     

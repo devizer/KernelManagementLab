@@ -12,6 +12,8 @@ import {faCog} from '@fortawesome/free-solid-svg-icons'
 import "./ProcessList.css"
 import {ColumnChooserComponent} from "./ColumnChooserComponent";
 import {ProcessListTable} from "./ProcessListTable";
+import * as DataSourceActions from "../../stores/DataSourceActions";
+import * as Helper from "../../Helper";
 
 export class ProcessListContainerV1 extends Component {
     static displayName = ProcessListContainerV1.name;
@@ -50,9 +52,28 @@ export class ProcessListContainerV1 extends Component {
     }
 
     refreshProcessList() {
-        // TODO: call API
-        let processes = [{},{},{},{}];
-        ProcessListActions.ProcessListUpdated(processes);
+
+        try {
+            let apiUrl = 'api/ProcessList';
+            fetch(apiUrl)
+                .then(response => {
+                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    console.log(response);
+                    console.log(response.body);
+                    return response.ok ? response.json() : {error: response.status, details: response.json()}
+                })
+                .then(processes => {
+                    ProcessListActions.ProcessListUpdated(processes);
+                    Helper.notifyTrigger("ProcessListArrived", "wow!");
+                    Helper.toConsole("ProcessList", processes);
+                })
+                .catch(error => console.log(error));
+        }
+        catch(err)
+        {
+            console.warn('FETCH failed. ' + err);
+        }
+
     }
     
     render() {
