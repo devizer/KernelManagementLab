@@ -56,7 +56,7 @@ export class ProcessListTable extends React.Component {
         ProcessColumnsDefinition.Headers.forEach(header => {
             let tableHeader = {
                 Header: header.caption,
-                getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader1}},
+                // getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader1}},
                 columns: []
             };
             
@@ -64,7 +64,7 @@ export class ProcessListTable extends React.Component {
                 if (isColumnVisible(`${header.id}.${column.field}`)) {
                     let tableColumn = {
                         Header: column.caption,
-                        getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader2}},
+                        // getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader2}},
                         accessor: column.field,
                         minWidth: 55,
                         // Cell: undefined,
