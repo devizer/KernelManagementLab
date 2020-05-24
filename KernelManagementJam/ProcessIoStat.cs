@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Mono.Unix.Native;
 
@@ -11,6 +12,7 @@ namespace KernelManagementJam
     public struct ProcessIoStat
     {
         public int Pid { get; set; } // 1, first
+        public ProcessKind Kind { get; set; }
         public int ParentPid { get; set; } // 1, first
         public bool IsAccessDenied { get; set; }
         public bool IsZombie { get; set; }
@@ -74,7 +76,7 @@ namespace KernelManagementJam
             if (IsZombie)
                 return $"{header}, {priority}{user}{parentPid}, zombie";
             
-            return $"{header}, {priority}{user}{parentPid}, {nameof(StartAtRaw)}: {StartAtRaw}, {nameof(IoTime)}: {IoTime}, CpuUsage: {UserCpuUsage} (user) + {KernelCpuUsage} (kernel), Children CpuUsage: {ChildrenUserCpuUsage} (user) + {ChildrenKernelCpuUsage} (kernel), GuestTime: {GuestTime} (own) + {ChildrenGuestTime} (Children) {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, PageFaults: {MinorPageFaults} (minor) + {MajorPageFaults} (major), Children PageFaults: {ChildrenMinorPageFaults} (minor) + {ChildrenMajorPageFaults} (major), {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
+            return $"{header}, {priority}{user}{parentPid}, {nameof(Kind)}: {Kind}, {nameof(StartAtRaw)}: {StartAtRaw}, {nameof(IoTime)}: {IoTime}, CpuUsage: {UserCpuUsage} (user) + {KernelCpuUsage} (kernel), Children CpuUsage: {ChildrenUserCpuUsage} (user) + {ChildrenKernelCpuUsage} (kernel), GuestTime: {GuestTime} (own) + {ChildrenGuestTime} (Children) {nameof(SchedulingPolicy)}: {SchedulingPolicy}, {nameof(MixedPriority)}: {MixedPriority}, {nameof(RealtimePriority)}: {RealtimePriority}, {nameof(Nice)}: {Nice}, PageFaults: {MinorPageFaults} (minor) + {MajorPageFaults} (major), Children PageFaults: {ChildrenMinorPageFaults} (minor) + {ChildrenMajorPageFaults} (major), {nameof(NumThreads)}: {NumThreads}, {nameof(RssMem)}: {RssMem}, {nameof(PeakWorkingSet)}: {PeakWorkingSet}, {nameof(SharedMem)}: {SharedMem}, {nameof(SwappedMem)}: {SwappedMem}, {nameof(Command)}: {Command}, {nameof(ReadBytes)}: {ReadBytes}, {nameof(WriteBytes)}: {WriteBytes}, {nameof(ReadSysCalls)}: {ReadSysCalls}, {nameof(WriteSysCalls)}: {WriteSysCalls}, {nameof(ReadBlockBackedBytes)}: {ReadBlockBackedBytes}, {nameof(WriteBlockBackedBytes)}: {WriteBlockBackedBytes}";
         }
 
         public static ProcessIoStat GetByProcessId(int pid)
@@ -157,7 +159,38 @@ namespace KernelManagementJam
                 }
             }
 
+            FullFillKind(ret);
+
             return ret;
+        }
+
+        private static void FullFillKind(ProcessIoStat[] ret)
+        {
+            const string containerd_shim = "containerd-shim", containerd = "containerd"; 
+            var byId = ret.ToDictionary(x => x.Pid);
+            for(int i=0, n=ret.Length; i<n; i++)
+            {
+                if (ret[i].IsZombie) continue;
+                else if (ret[i].Pid == 1) ret[i].Kind = ProcessKind.Init;
+                else if (ret[i].ParentPid == 1) ret[i].Kind = ProcessKind.Service;
+                else
+                {
+                    if (byId.TryGetValue(ret[i].ParentPid, out var parent1))
+                    {
+                        if (parent1.Name == containerd_shim)
+                        {
+                            if (byId.TryGetValue(parent1.ParentPid, out var parent2))
+                            {
+                                if (parent2.ParentPid == 1 && parent2.Name == containerd)
+                                {
+                                    ret[i].Kind = ProcessKind.Container;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
         }
 
         static string GetNameByUid_Legacy(int uid)
@@ -317,5 +350,12 @@ namespace KernelManagementJam
             return Syscall.sysconf(SysconfName._SC_CLK_TCK);
         });
 
+        public enum ProcessKind
+        {
+            Undefined,
+            Init,
+            Service,
+            Container,
+        }
     }
 }
