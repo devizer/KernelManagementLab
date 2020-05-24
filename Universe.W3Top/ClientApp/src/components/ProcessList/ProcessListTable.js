@@ -44,8 +44,12 @@ export class ProcessListTable extends React.Component {
 
         // fontFamily: "Noto Sans"
         const tableFontSize = 14
-        const styleHeader1 = { fontSize: tableFontSize };
-        const styleHeader2 = { fontSize: tableFontSize };
+        let styleHeader1 = { fontSize: tableFontSize };
+        let styleHeader2 = { fontSize: tableFontSize };
+
+        styleHeader1 = {};
+        styleHeader2 = {};
+        
         
         // should be cached by 
         let tableHeaders = [];
@@ -60,7 +64,7 @@ export class ProcessListTable extends React.Component {
                 if (isColumnVisible(`${header.id}.${column.field}`)) {
                     let tableColumn = {
                         Header: column.caption,
-                        getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader1}},
+                        getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader2}},
                         accessor: column.field,
                         minWidth: 55,
                         // Cell: undefined,
