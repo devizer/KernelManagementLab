@@ -40,14 +40,18 @@ export class ProcessListTable extends React.Component {
         let selectedColumns = processListStore.getSelectedColumns();
         let pageSize = Math.max(processList.length, 6);
         const noop = () => null;
-        const isColumnVisible = (columnKey) => selectedColumns.indexOf(columnKey) >= 0; 
+        const isColumnVisible = (columnKey) => selectedColumns.indexOf(columnKey) >= 0;
+
+        // fontFamily: "Noto Sans"
+        const styleHeader1 = { fontSize: 14 };
+        const styleHeader2 = { fontSize: 14 };
         
         // should be cached by 
         let tableHeaders = [];
         ProcessColumnsDefinition.Headers.forEach(header => {
             let tableHeader = {
                 Header: header.caption,
-                // getHeaderProps: (state, rowInfo, column) => {return {style:{fontSize: 15, fontFamily: "Noto Sans"}}},
+                getHeaderProps: (state, rowInfo, column) => {return {style:styleHeader1}},
                 columns: []
             };
             
@@ -55,7 +59,7 @@ export class ProcessListTable extends React.Component {
                 if (isColumnVisible(`${header.id}.${column.field}`)) {
                     let tableColumn = {
                         Header: column.caption,
-                        // getHeaderProps: (state, rowInfo, column) => {return {style:{fontSize: 15, fontFamily: "Noto Sans"}}},
+                        getHeaderProps: (state, rowInfo, column) => {return {style:styleHeader2}},
                         accessor: column.field,
                         minWidth: 55,
                         Cell: undefined,
@@ -79,7 +83,7 @@ export class ProcessListTable extends React.Component {
                 pageSizeOptions={[pageSize]}
                 pageSize={pageSize}
                 noDataText="waiting for ..."
-                getNoDataProps={() => {return {style:{width: 200,textAlign: "center", color:"gray", marginTop:30, border: "1px solid #CCC"}}}}
+                getNoDataProps={() => {return {style:{fontSize: 15,width: 200,textAlign: "center", color:"gray", marginTop:30, border: "1px solid #CCC"}}}}
                 className="-striped -highlight"
                 columns={tableHeaders}
             />

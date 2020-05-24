@@ -115,7 +115,7 @@ class ProcessColumnsDefinition {
         "PageFaults.MajorPageFaults_Current",
         "CpuUsage.TotalCpuUsage_PerCents",
         "ChildrenCpuUsage.ChildrenTotalCpuUsage_PerCents",
-        "CommandLine.CommandLine"
+        // "CommandLine.CommandLine",
     ];
     
     static AllColumnKeys = []; // array of group.field
