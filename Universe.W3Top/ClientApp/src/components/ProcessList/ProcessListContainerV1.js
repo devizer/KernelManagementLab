@@ -24,6 +24,7 @@ export class ProcessListContainerV1 extends Component {
         super(props);
 
         this.updatedSelectedColumns = this.updatedSelectedColumns.bind(this);
+        this.refreshProcessList = this.refreshProcessList.bind(this);
         
         this.state = {
             openedColumnsChooser: false,
@@ -33,8 +34,10 @@ export class ProcessListContainerV1 extends Component {
     }
     
     componentDidMount() {
+        // do nothing
         this.timerId = setInterval(this.waiterTick.bind(this), 1000);
-        
+        // it works well on slow connections
+        setTimeout(this.refreshProcessList, 1000);
     }
 
     componentWillUnmount() {
@@ -48,7 +51,8 @@ export class ProcessListContainerV1 extends Component {
 
     waiterTick()
     {
-        this.refreshProcessList();
+        // setTimeout
+        // this.refreshProcessList();
     }
 
     refreshProcessList() {
@@ -57,21 +61,26 @@ export class ProcessListContainerV1 extends Component {
             let apiUrl = 'api/ProcessList';
             fetch(apiUrl)
                 .then(response => {
-                    console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
-                    console.log(response);
-                    console.log(response.body);
+                    Helper.toConsole(`Response.Status for ${apiUrl} obtained: ${response.status}`);
+                    // Helper.toConsole(response);
+                    // Helper.toConsole(response.body);
                     return response.ok ? response.json() : {error: response.status, details: response.json()}
                 })
                 .then(processes => {
                     ProcessListActions.ProcessListUpdated(processes);
                     Helper.notifyTrigger("ProcessListArrived", "wow!");
                     Helper.toConsole("ProcessList", processes);
+                    setTimeout(this.refreshProcessList, 1000);
                 })
-                .catch(error => console.log(error));
+                .catch(error => { 
+                    console.log(error);
+                    setTimeout(this.refreshProcessList, 1000);
+                });
         }
         catch(err)
         {
             console.warn('FETCH failed. ' + err);
+            setTimeout(this.refreshProcessList, 1000);
         }
 
     }
