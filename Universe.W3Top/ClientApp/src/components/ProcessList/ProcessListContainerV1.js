@@ -19,12 +19,14 @@ export class ProcessListContainerV1 extends Component {
     static displayName = ProcessListContainerV1.name;
 
     timerId = null;
+    isRunning = false;
 
     constructor(props) {
         super(props);
 
         this.updatedSelectedColumns = this.updatedSelectedColumns.bind(this);
         this.refreshProcessList = this.refreshProcessList.bind(this);
+        this.requestProcessListUpdate = this.requestProcessListUpdate.bind(this);
         
         this.state = {
             openedColumnsChooser: false,
@@ -37,10 +39,12 @@ export class ProcessListContainerV1 extends Component {
         // do nothing
         this.timerId = setInterval(this.waiterTick.bind(this), 1000);
         // it works well on slow connections
-        setTimeout(this.refreshProcessList, 1000);
+        this.isRunning = true;
+        this.requestProcessListUpdate();
     }
 
     componentWillUnmount() {
+        this.isRunning = false;
         if (this.timerId !== null) clearInterval(this.timerId);
         processListStore.removeListener('storeUpdated', this.updatedSelectedColumns);
     }
@@ -70,19 +74,23 @@ export class ProcessListContainerV1 extends Component {
                     ProcessListActions.ProcessListUpdated(processes);
                     Helper.notifyTrigger("ProcessListArrived", "wow!");
                     Helper.toConsole("ProcessList", processes);
-                    setTimeout(this.refreshProcessList, 1000);
+                    this.requestProcessListUpdate();
                 })
                 .catch(error => { 
                     console.log(error);
-                    setTimeout(this.refreshProcessList, 1000);
+                    this.requestProcessListUpdate();
                 });
         }
         catch(err)
         {
             console.warn('FETCH failed. ' + err);
-            setTimeout(this.refreshProcessList, 1000);
+            this.requestProcessListUpdate();
         }
-
+    }
+    
+    requestProcessListUpdate() {
+        if (this.isRunning)
+            setTimeout(this.refreshProcessList, 1000);
     }
     
     render() {
