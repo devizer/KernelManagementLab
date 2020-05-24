@@ -127,6 +127,7 @@ export class ColumnChooserComponent extends Component {
                     <FixedSpan width={colProcess}>{chbox("PID", "Process.pid")}</FixedSpan>
                     <FixedSpan width={colProcess}>{chbox("Name", "Process.name")}</FixedSpan>
                     <FixedSpan width={colProcess}>{chbox("User", "Process.user")}</FixedSpan>
+                    <FixedSpan width={colProcess}>{chbox("Kind", "Process.kind")}</FixedSpan>
                     <FixedSpan width={colProcess}>{chbox("Priority", "Process.priority")}</FixedSpan>
                     <FixedSpan width={colProcess}>{chbox("Threads", "Process.numThreads")}</FixedSpan>
                     <FixedSpan width={colProcess}>{chbox("Uptime", "Process.uptime")}</FixedSpan>

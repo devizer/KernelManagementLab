@@ -10,6 +10,7 @@ class ProcessColumnsDefinition {
                 { caption: "PID", field: "pid" },
                 { caption: "Name", field: "name" }, // calculated
                 { caption: "User", field: "user" }, // calculated: UID + Name
+                { caption: "Kind", field: "kind"}, // Undefined -> ""
                 { caption: "Priority", field: "priority" }, // priority // calculated
                 { caption: "Threads", field: "numThreads" },
                 { caption: "Uptime", field: "uptime" }
@@ -101,6 +102,7 @@ class ProcessColumnsDefinition {
     static DefaultColumnKeys = [
         "Process.pid",
         "Process.name",
+        "Process.kind",
         "Process.priority",
         "Process.uptime",
         "Memory.rss",

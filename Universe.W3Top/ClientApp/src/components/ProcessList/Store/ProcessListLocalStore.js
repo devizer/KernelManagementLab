@@ -15,7 +15,7 @@ const storages = [localStorage, sessionStorage, cookieStorage, ];
 const plugins = [defaultPlugin, expiredPlugin, eventsPlugin];
 const store = engine.createStore(storages, plugins);
 
-export const StoreVersion = "1.2";
+export const StoreVersion = "1.4";
 
 export const setSelectedColumns = (selectedColumns) => {
     store.set("selectedColumns", {ver: StoreVersion, selectedColumns});
@@ -28,12 +28,17 @@ export const getSelectedColumns = () => {
         ret = stored.selectedColumns;
     }
     
-    return ret;
+    return [...ret];
 };
 
 export const fillCalculatedFields = (processList) =>
 {
+    const kinds = ["", "Init", "Service", "Container"];
     processList.forEach(process => {
-        process.priority = process.mixedPriority; 
+        process.priority = process.mixedPriority;
+        if (process.kind && process.kind >= 1 && process.kind <=3)
+            process.kind = kinds[process.kind];
+        else
+            process.kind = "";
     });
 }
