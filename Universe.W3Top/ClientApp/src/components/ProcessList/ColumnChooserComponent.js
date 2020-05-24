@@ -8,6 +8,8 @@ import Switch from '@material-ui/core/Switch';
 import {Checkbox,FormControlLabel,FormControl} from '@material-ui/core';
 import ProcessColumnsDefinition from "./ProcessColumnsDefinition";
 
+import * as Helper from "../../Helper";
+
 function CustomCheckbox(props) {
     return (
         <Checkbox {...props}/>
@@ -88,8 +90,12 @@ export class ColumnChooserComponent extends Component {
                     copy = filtered;
                 }
                 this.setState({selectedColumns:copy});
-                ProcessListActions.SelectedColumnsUpdated(copy);
                 console.log(`NEW SELECTED Columns: ${copy}`);
+                Helper.runInBackground(() => {
+                    ProcessListActions.SelectedColumnsUpdated(copy);
+                });
+                
+
             };
         };
         
