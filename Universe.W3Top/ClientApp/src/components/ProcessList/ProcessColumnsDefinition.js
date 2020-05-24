@@ -10,7 +10,7 @@ class ProcessColumnsDefinition {
                 { caption: "PID", field: "pid" },
                 { caption: "Name", field: "name" }, // calculated
                 { caption: "User", field: "user" }, // calculated: UID + Name
-                { caption: "Priority", field: "priority" }, // calculated
+                { caption: "Priority", field: "priority" }, // priority // calculated
                 { caption: "Threads", field: "numThreads" },
                 { caption: "Uptime", field: "uptime" }
             ]

@@ -50,6 +50,16 @@ export class ProcessListTable extends React.Component {
         styleHeader1 = {};
         styleHeader2 = {};
         
+        function cellPriority(row) {
+            const priority = row.value;
+            if (priority == 20) return (<><span className="default-priority">0 (default)</span></>);
+            if (priority >= 0 && priority <= 19) return (<><span className="bad-priority">{(priority-20)} (nice)</span></>);
+            if (priority >= 21 && priority <= 39) return (<><span className="nice-priority">{(priority-20)} (nice)</span></>);
+            if (priority >= -100 && priority <= -2) return (<><span className="rt-priority">RT {(-priority-1)}</span></>);
+            return priority;
+        }
+        
+        const cells = {priority: cellPriority};
         
         // should be cached by 
         let tableHeaders = [];
@@ -62,12 +72,13 @@ export class ProcessListTable extends React.Component {
             
             header.columns.forEach(column => {
                 if (isColumnVisible(`${header.id}.${column.field}`)) {
+                    const cell = cells[column.field];
                     let tableColumn = {
                         Header: column.caption,
                         // getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader2}},
                         accessor: column.field,
                         minWidth: 55,
-                        // Cell: undefined,
+                        Cell: cell,
                         // aggregate: noop,
                     };
                     tableHeader.columns.push(tableColumn);

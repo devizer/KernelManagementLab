@@ -52,3 +52,9 @@
 
 
 
+.default-priority {color: gray}
+.nice-priority { color: #3e7327}
+.bad-priority { color: #4d3534}
+
+.rt-priority { color: brown}
+.nice-word {color: #111}

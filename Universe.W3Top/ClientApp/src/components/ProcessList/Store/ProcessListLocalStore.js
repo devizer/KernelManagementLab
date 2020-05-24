@@ -31,3 +31,9 @@ export const getSelectedColumns = () => {
     return ret;
 };
 
+export const fillCalculatedFields = (processList) =>
+{
+    processList.forEach(process => {
+        process.priority = process.mixedPriority; 
+    });
+}

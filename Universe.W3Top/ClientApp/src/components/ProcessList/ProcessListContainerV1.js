@@ -12,6 +12,7 @@ import {faCog} from '@fortawesome/free-solid-svg-icons'
 import "./ProcessList.css"
 import {ColumnChooserComponent} from "./ColumnChooserComponent";
 import {ProcessListTable} from "./ProcessListTable";
+import * as ProcessListLocalStorage from "./Store/ProcessListLocalStore";
 import * as DataSourceActions from "../../stores/DataSourceActions";
 import * as Helper from "../../Helper";
 
@@ -71,6 +72,7 @@ export class ProcessListContainerV1 extends Component {
                     return response.ok ? response.json() : {error: response.status, details: response.json()}
                 })
                 .then(processes => {
+                    ProcessListLocalStorage.fillCalculatedFields(processes);
                     ProcessListActions.ProcessListUpdated(processes);
                     Helper.notifyTrigger("ProcessListArrived", "wow!");
                     Helper.toConsole("ProcessList", processes);
