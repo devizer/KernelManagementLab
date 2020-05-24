@@ -43,8 +43,9 @@ export class ProcessListTable extends React.Component {
         const isColumnVisible = (columnKey) => selectedColumns.indexOf(columnKey) >= 0;
 
         // fontFamily: "Noto Sans"
-        const styleHeader1 = { fontSize: 14 };
-        const styleHeader2 = { fontSize: 14 };
+        const tableFontSize = 14
+        const styleHeader1 = { fontSize: tableFontSize };
+        const styleHeader2 = { fontSize: tableFontSize };
         
         // should be cached by 
         let tableHeaders = [];
@@ -83,7 +84,7 @@ export class ProcessListTable extends React.Component {
                 pageSizeOptions={[pageSize]}
                 pageSize={pageSize}
                 noDataText="waiting for ..."
-                getNoDataProps={() => {return {style:{fontSize: 15,width: 200,textAlign: "center", color:"gray", marginTop:30, border: "1px solid #CCC"}}}}
+                getNoDataProps={() => {return {style:{fontSize: tableFontSize,width: 200,textAlign: "center", color:"gray", marginTop:30, border: "1px solid #CCC"}}}}
                 className="-striped -highlight"
                 columns={tableHeaders}
             />
