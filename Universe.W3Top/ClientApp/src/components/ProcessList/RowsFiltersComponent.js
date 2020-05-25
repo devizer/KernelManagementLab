@@ -42,9 +42,10 @@ export class RowsFiltersComponent extends Component {
     
     render() {
         // validate only custom top 
-        const getCustomTopError = (rawCustomTop) => {
+        const getCustomTopError = (topValue, rawCustomTop) => {
             let customTopError = null;
-            if (`${this.state.topValue}` === "-1")
+            if (topValue === undefined) topValue = this.state.topValue; 
+            if (`${topValue}` === "-1")
             {
                 if (rawCustomTop === undefined) rawCustomTop = this.state.customTop;
                 const isPositiveNumber = Helper.Numbers.isInt(rawCustomTop) && Helper.Numbers.greaterOrEqual(rawCustomTop,1);
@@ -79,7 +80,7 @@ export class RowsFiltersComponent extends Component {
                 ProcessListActions.RowsFiltersUpdated(st);
             }
             else {
-                if (getCustomTopError() === null) {
+                if (getCustomTopError(newTopValue, this.state.customTop) === null) {
                     st.TopFilter = parseInt(this.state.customTop);
                     this.setState({rowsFilters: st, topValue: newTopValue});
                     ProcessListActions.RowsFiltersUpdated(st);
@@ -95,7 +96,7 @@ export class RowsFiltersComponent extends Component {
 
         const onChangeCustomTop = (event) => {
             const newCustomTop = event.target.value;
-            if (getCustomTopError(newCustomTop) === null)
+            if (getCustomTopError(-1, newCustomTop) === null)
             {
                 const newTopValue = parseInt(newCustomTop);
                 const st = this.state.rowsFilters;
@@ -158,7 +159,7 @@ export class RowsFiltersComponent extends Component {
                     <NoWrap><Radio color="primary" value={100} onChange={onChangeTop} checked={isTopChecked(100)} /> Top 100</NoWrap>
                     <br/>
                     <NoWrap><Radio color="primary" value={-1} onChange={onChangeTop} checked={isTopChecked(-1)} style={{paddingTop:15}}/>
-                    <TextField variant="outlined" label="Custom" style={{width: 120}}
+                    <TextField variant="outlined" label="Custom N" style={{width: 120}}
                                value={this.state.customTop}
                                onChange={onChangeCustomTop}
                                error={customTopError}
