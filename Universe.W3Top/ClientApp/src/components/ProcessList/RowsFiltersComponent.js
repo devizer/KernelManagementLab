@@ -29,22 +29,19 @@ export class RowsFiltersComponent extends Component {
         }
         this.state = {
             rowsFilters,
-            topValue,
-            customTop,
-            NeedNoFilter: rowsFilters.NeedNoFilter === true,
-            NeedKernelThreads: rowsFilters.NeedKernelThreads === true,
-            NeedServices: rowsFilters.NeedServices === true,
-            NeedContainers: rowsFilters.NeedContainers === true,
+            topValue,  // only for custom (-1). rest options is the copy of rowsFilters.TopFilter 
+            customTop, // only for custom
         };
     }
     
     render() {
         // validate only custom top 
-        const getCustomTopError = () => {
+        const getCustomTopError = (rawCustomTop) => {
             let customTopError = null;
             if (`${this.state.topValue}` === "-1")
             {
-                const isPositiveNumber = Helper.Numbers.isInt(this.state.customTop) && Helper.Numbers.greaterOrEqual(this.state.customTop,1);
+                if (rawCustomTop === undefined) rawCustomTop = this.state.customTop;
+                const isPositiveNumber = Helper.Numbers.isInt(rawCustomTop) && Helper.Numbers.greaterOrEqual(rawCustomTop,1);
                 if (!isPositiveNumber) customTopError = "Should be a positive number";
             }
             return customTopError;
@@ -52,6 +49,7 @@ export class RowsFiltersComponent extends Component {
 
         // should be called on each onChange
         const tryApplyRowsFilters = () => {
+            return;
             if (getCustomTopError() == null)
             {
                 const filters = new ProcessRowsFilters();
@@ -67,16 +65,42 @@ export class RowsFiltersComponent extends Component {
 
         const onChangeTop = (event) => {
             const newTopValue = event.target.value;
-            this.setState({topValue: newTopValue});
+            const st = this.state.rowsFilters;
+            if (`${newTopValue}` != "-1") // fuzzy comparision
+            {
+                st.TopFilter = newTopValue;
+                this.setState({rowsFilters: st, topValue: newTopValue});
+                ProcessListActions.RowsFiltersUpdated(st);
+            }
+            else {
+                if (getCustomTopError() === null) {
+                    st.TopFilter = parseInt(this.state.customTop);
+                    this.setState({rowsFilters: st, topValue: newTopValue});
+                    ProcessListActions.RowsFiltersUpdated(st);
+                }
+                else {
+                    this.setState({topValue: newTopValue});
+                }
+            }
             Helper.log(`NEW TOP for RowsFilters: ${newTopValue}`);
-            tryApplyRowsFilters();
         };
         
         let customTopError = getCustomTopError();
 
         const onChangeCustomTop = (event) => {
-            this.setState({customTop: event.target.value});
-            tryApplyRowsFilters();
+            const newCustomTop = event.target.value;
+            if (getCustomTopError(newCustomTop) === null)
+            {
+                const newTopValue = parseInt(newCustomTop);
+                const st = this.state.rowsFilters;
+                
+                st.TopFilter = newTopValue;
+                this.setState({rowsFilters: st, topValue: -1, customTop: newCustomTop});
+                ProcessListActions.RowsFiltersUpdated(st);
+            }
+            else {
+                this.setState({customTop: newCustomTop});
+            }
         }
         
         const onCustomTopFocus = (event) => {
@@ -84,12 +108,13 @@ export class RowsFiltersComponent extends Component {
         }
         
         const isTopChecked = (val) => {
+            // does not work properly for custom
             return `${this.state.topValue}` === `${val}`;
         };
         
         const onChangedKind = (property) => (event) => {
             const checked = event.target.checked;
-            const st = {...this.state};
+            const st = this.state.rowsFilters;
             st[property] = checked;
             if (property === "NeedNoFilter")
             {
@@ -112,8 +137,8 @@ export class RowsFiltersComponent extends Component {
                         st.NeedNoFilter = true;
                 }
             }
-            this.setState(st);
-            tryApplyRowsFilters();
+            this.setState({rowsFilters: st});
+            ProcessListActions.RowsFiltersUpdated(st);
         };
         
         return (
@@ -137,13 +162,13 @@ export class RowsFiltersComponent extends Component {
                 </div>
                 <div className="column-2">
                     <div className="column-header">BY KIND</div>
-                    <Checkbox color="primary" checked={this.state.NeedNoFilter} onChange={onChangedKind("NeedNoFilter")}/> Any Kind
+                    <Checkbox color="primary" checked={this.state.rowsFilters.NeedNoFilter} onChange={onChangedKind("NeedNoFilter")}/> Any Kind
                     <br/>
-                    <Checkbox color="primary" checked={this.state.NeedServices} onChange={onChangedKind("NeedServices")} /> Services
+                    <Checkbox color="primary" checked={this.state.rowsFilters.NeedServices} onChange={onChangedKind("NeedServices")} /> Services
                     <br/>
-                    <Checkbox color="primary" checked={this.state.NeedContainers} onChange={onChangedKind("NeedContainers")} /> Containers
+                    <Checkbox color="primary" checked={this.state.rowsFilters.NeedContainers} onChange={onChangedKind("NeedContainers")} /> Containers
                     <br/>
-                    <Checkbox color="primary" checked={this.state.NeedKernelThreads} onChange={onChangedKind("NeedKernelThreads")} /> Kernel Threads
+                    <Checkbox color="primary" checked={this.state.rowsFilters.NeedKernelThreads} onChange={onChangedKind("NeedKernelThreads")} /> Kernel Threads
                 </div>
             </div>
 
