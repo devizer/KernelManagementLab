@@ -122,8 +122,8 @@ class IntegrationAutosuggest extends React.Component {
     };
     
     componentDidMount() {
+        let apiUrl = 'assets/proof-of-concept-net-benchmark-suggestions.json';
         try {
-            let apiUrl = 'assets/proof-of-concept-net-benchmark-suggestions.json';
             fetch(apiUrl)
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -140,7 +140,7 @@ class IntegrationAutosuggest extends React.Component {
         }
         catch(err)
         {
-            console.error('FETCH failed. ' + err);
+            console.error(`FETCH failed for ${apiUrl}. ${err}`);
         }
 
     }

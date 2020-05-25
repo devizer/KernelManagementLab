@@ -21,6 +21,8 @@ import DiskBenchmarkDialog from "./components/DiskBenchmark/DiskBenchmarkDialog"
 import PopperLab from "./components/Popper-Lab"
 
 import { ProcessListContainerV1 } from "./components/ProcessList/ProcessListContainerV1"
+import {RowsFiltersComponent} from "./components/ProcessList/RowsFiltersComponent";
+import {ColumnChooserComponent} from "./components/ProcessList/ColumnChooserComponent";
 
 
 
@@ -81,6 +83,8 @@ export default class App extends Component {
             PopperLab,
             App._404,
             ProcessListContainerV1,
+            RowsFiltersComponent,
+            ColumnChooserComponent,
         ];
     };
     

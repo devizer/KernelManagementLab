@@ -72,8 +72,8 @@ export class ProcessListContainerV1 extends Component {
 
     refreshProcessList() {
 
+        let apiUrl = 'api/ProcessList';
         try {
-            let apiUrl = 'api/ProcessList';
             fetch(apiUrl)
                 .then(response => {
                     Helper.toConsole(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -98,8 +98,8 @@ export class ProcessListContainerV1 extends Component {
         }
         catch(err)
         {
-            console.warn('FETCH failed. ' + err);
             this.requestProcessListUpdate();
+            console.error(`FETCH failed for ${apiUrl}. ${err}`);
         }
     }
     

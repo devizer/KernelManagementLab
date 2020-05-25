@@ -98,8 +98,8 @@ export class RowsFiltersComponent extends Component {
                     <br/>
                     <Radio color="primary" value={100} onChange={onChangeTop} checked={isTopChecked(100)} /> Top 100
                     <br/>
-                    <Radio color="secondary" value={-1} onChange={onChangeTop} checked={isTopChecked(-1)}/>
-                    <TextField variant="outlined" label="Custom" style={{width: 120, paddingTop:-10}}
+                    <Radio color="primary" value={-1} onChange={onChangeTop} checked={isTopChecked(-1)} style={{paddingTop:15}}/>
+                    <TextField variant="outlined" label="Custom" style={{width: 120}}
                                value={this.state.customTop}
                                onChange={onChangeCustomTop}
                                error={customTopError}

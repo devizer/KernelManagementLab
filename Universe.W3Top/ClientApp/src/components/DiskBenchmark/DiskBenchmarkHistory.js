@@ -43,8 +43,8 @@ export class DiskBenchmarkHistory extends React.Component {
     }
     
     fetchDiskHistorySource() {
+        let apiUrl = 'api/benchmark/disk/get-disk-benchmark-history';
         try {
-            let apiUrl = 'api/benchmark/disk/get-disk-benchmark-history';
             fetch(apiUrl, {method: "POST"})
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -60,7 +60,7 @@ export class DiskBenchmarkHistory extends React.Component {
         }
         catch(err)
         {
-            console.error('FETCH failed. ' + err);
+            console.error(`FETCH failed for ${apiUrl}. ${err}`);
         }
     }
 

@@ -268,8 +268,8 @@ function DiskBenchmarkDialog(props) {
     function initDisksSource() {
         setSelectedDisk(null);
         setDisks(null);
+        let apiUrl = 'api/benchmark/disk/get-disks';
         try {
-            let apiUrl = 'api/benchmark/disk/get-disks';
             fetch(apiUrl)
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -284,7 +284,7 @@ function DiskBenchmarkDialog(props) {
         }
         catch(err)
         {
-            console.error('FETCH failed. ' + err);
+            console.error(`FETCH failed for ${apiUrl}. ${err}`);
         }
     }
     
@@ -345,8 +345,8 @@ function DiskBenchmarkDialog(props) {
     
     function notifyCancelDiskBenchmark()
     {
+        let apiUrl = `api/benchmark/disk/cancel-disk-benchmark-${token}`;
         try {
-            let apiUrl = `api/benchmark/disk/cancel-disk-benchmark-${token}`;
             fetch(apiUrl, {method: "POST"})
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -357,7 +357,7 @@ function DiskBenchmarkDialog(props) {
                 })
                 .catch(error => Helper.log(error));
         } catch (err) {
-            console.error('FETCH failed. ' + err);
+            console.error(`FETCH failed for ${apiUrl}. ${err}`);
         }
     }
 
@@ -368,8 +368,8 @@ function DiskBenchmarkDialog(props) {
 
 
     const progressTick = () => {
+        const apiUrl = `api/benchmark/disk/get-disk-benchmark-progress-${token}`;
         try {
-            const apiUrl = `api/benchmark/disk/get-disk-benchmark-progress-${token}`;
             fetch(apiUrl, {method: "POST"})
                 .then(response => {
                     Helper.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -395,13 +395,13 @@ function DiskBenchmarkDialog(props) {
         }
         catch(err)
         {
-            console.error('FETCH failed. ' + err);
+            console.error(`FETCH failed for ${apiUrl}. ${err}`);
         }
     };
 
     const startBenchmark = () => {
+        const apiUrl = 'api/benchmark/disk/start-disk-benchmark';
         try {
-            const apiUrl = 'api/benchmark/disk/start-disk-benchmark';
             const payload = {...options, mountPath: selectedDisk.mountEntry.mountPath};
             const post={
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
@@ -424,7 +424,7 @@ function DiskBenchmarkDialog(props) {
         }
         catch(err)
         {
-            console.error('FETCH failed. ' + err);
+            console.error(`FETCH failed for ${apiUrl}. ${err}`);
         }
     };
     

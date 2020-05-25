@@ -45,8 +45,8 @@ class DataSourceListener {
 
         this.timerId = setInterval(this.watchdogTick, 1000);
 
+        let apiUrl = 'api/BriefInfo';
         try {
-            let apiUrl = 'api/BriefInfo';
             fetch(apiUrl)
                 .then(response => {
                     console.log(`Response.Status for ${apiUrl} obtained: ${response.status}`);
@@ -64,7 +64,7 @@ class DataSourceListener {
         }
         catch(err)
         {
-            console.log('FETCH failed. ' + err);
+            console.error(`FETCH failed for ${apiUrl}. ${err}`);
         }
 
 
