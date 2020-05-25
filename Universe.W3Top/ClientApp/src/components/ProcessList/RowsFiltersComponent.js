@@ -14,6 +14,12 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import {ProcessRowsFilters} from "./ProcessRowsFilters";
 
+class NoWrap extends React.Component {
+    render() {
+        return (<span style={{whiteSpace: "nowrap", display: "inline-block"}}>{this.props.children}</span>);
+    }
+}
+
 export class RowsFiltersComponent extends Component {
     static displayName = RowsFiltersComponent.name;
 
@@ -142,33 +148,33 @@ export class RowsFiltersComponent extends Component {
         };
         
         return (
-            <div className="row-2">
+            <div className="row-2" style={{minWidth: 333}}>
                 <div className="column-2">
-                    <div className="column-header">BY COUNT</div>
-                    <Radio color="primary" value={0} onClick={onChangeTop} checked={isTopChecked(0)}/> ALL
+                    <div className="column-header"><NoWrap>BY COUNT</NoWrap></div>
+                    <NoWrap><Radio color="primary" value={0} onClick={onChangeTop} checked={isTopChecked(0)}/> ALL</NoWrap>
                     <br/>
-                    <Radio color="primary" value={30} onClick={onChangeTop}  checked={isTopChecked(30)}/> Top 30
+                    <NoWrap><Radio color="primary" value={30} onClick={onChangeTop}  checked={isTopChecked(30)}/> Top 30</NoWrap>
                     <br/>
-                    <Radio color="primary" value={100} onChange={onChangeTop} checked={isTopChecked(100)} /> Top 100
+                    <NoWrap><Radio color="primary" value={100} onChange={onChangeTop} checked={isTopChecked(100)} /> Top 100</NoWrap>
                     <br/>
-                    <Radio color="primary" value={-1} onChange={onChangeTop} checked={isTopChecked(-1)} style={{paddingTop:15}}/>
+                    <NoWrap><Radio color="primary" value={-1} onChange={onChangeTop} checked={isTopChecked(-1)} style={{paddingTop:15}}/>
                     <TextField variant="outlined" label="Custom" style={{width: 120}}
                                value={this.state.customTop}
                                onChange={onChangeCustomTop}
                                error={customTopError}
                                helperText={customTopError}
                                onFocus={onCustomTopFocus}
-                    />
+                    /></NoWrap>
                 </div>
                 <div className="column-2">
-                    <div className="column-header">BY KIND</div>
-                    <Checkbox color="primary" checked={this.state.rowsFilters.NeedNoFilter} onChange={onChangedKind("NeedNoFilter")}/> Any Kind
+                    <div className="column-header"><NoWrap>BY KIND</NoWrap></div>
+                    <NoWrap><Checkbox color="primary" checked={this.state.rowsFilters.NeedNoFilter} onChange={onChangedKind("NeedNoFilter")}/> Any Kind</NoWrap>
                     <br/>
-                    <Checkbox color="primary" checked={this.state.rowsFilters.NeedServices} onChange={onChangedKind("NeedServices")} /> Services
+                    <NoWrap><Checkbox color="primary" checked={this.state.rowsFilters.NeedServices} onChange={onChangedKind("NeedServices")} /> Services</NoWrap>
                     <br/>
-                    <Checkbox color="primary" checked={this.state.rowsFilters.NeedContainers} onChange={onChangedKind("NeedContainers")} /> Containers
+                    <NoWrap><Checkbox color="primary" checked={this.state.rowsFilters.NeedContainers} onChange={onChangedKind("NeedContainers")} /> Containers</NoWrap>
                     <br/>
-                    <Checkbox color="primary" checked={this.state.rowsFilters.NeedKernelThreads} onChange={onChangedKind("NeedKernelThreads")} /> Kernel Threads
+                    <NoWrap><Checkbox color="primary" checked={this.state.rowsFilters.NeedKernelThreads} onChange={onChangedKind("NeedKernelThreads")} /> Kernel Threads</NoWrap>
                 </div>
             </div>
 
