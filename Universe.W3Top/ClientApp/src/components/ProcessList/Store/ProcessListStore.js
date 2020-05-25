@@ -11,13 +11,16 @@ class ProcessListStore extends EventEmitter {
         // local copy per message
         // this.selectedColumns = ProcessColumnsDefinition.DefaultColumnKeys;
         this.selectedColumns = ProcessListLocalStore.getSelectedColumns();
+        this.rowsFilters = ProcessListLocalStore.getProcessRowsFilters();
         this.processList = [];
     }
     
+/*
     preloadSelectedColumns()
     {
         
     }
+*/
 
     // single handler for the app for each kind of message
     handleActions(action) {
@@ -29,9 +32,14 @@ class ProcessListStore extends EventEmitter {
                 break;
             }
             case ProcessListActions.PROCESS_LIST_UPDATED_ACTION: {
-                    this.processList = action.value;
-                    this.emit("storeUpdated");
-                    break;
+                this.processList = action.value;
+                this.emit("storeUpdated");
+                break;
+            }
+            case ProcessListActions.ROWS_FILTERS_UPDATED_ACTION: {
+                this.rowsFilters = action.value;
+                this.emit("storeUpdated");
+                break;
             }
             default: {
             }
@@ -45,6 +53,10 @@ class ProcessListStore extends EventEmitter {
     
     getProcessList() {
         return this.processList;
+    }
+    
+    getRowsFilters() {
+        return this.rowsFilters;
     }
 }
 

@@ -1,5 +1,6 @@
 // import {store} from "store"
 import ProcessColumnsDefinition from "../ProcessColumnsDefinition";
+import {ProcessRowsFilters} from "../ProcessRowsFilters";
 
 // session store with watch
 import engine from 'store/src/store-engine';
@@ -21,14 +22,28 @@ export const setSelectedColumns = (selectedColumns) => {
     store.set("selectedColumns", {ver: StoreVersion, selectedColumns});
 };
 
+export const setProcessRowsFilters = (processRowsFilters) => {
+    store.set("processRowsFilters", {ver: StoreVersion, processRowsFilters});
+};
+
 export const getSelectedColumns = () => {
     let ret = ProcessColumnsDefinition.DefaultColumnKeys;
     let stored = store.get("selectedColumns");
     if (stored && stored.ver === StoreVersion && typeof stored.selectedColumns === "object") {
         ret = stored.selectedColumns;
     }
-    
+
     return [...ret];
+};
+
+export const getProcessRowsFilters = () => {
+    let ret = ProcessRowsFilters.getDefault();
+    let stored = store.get("processRowsFilters");
+    if (stored && stored.ver === StoreVersion && typeof stored.processRowsFilters === "object") {
+        ret = stored.processRowsFilters;
+    }
+
+    return ret;
 };
 
 export const fillCalculatedFields = (processList) =>
@@ -41,4 +56,5 @@ export const fillCalculatedFields = (processList) =>
         else
             process.kind = "";
     });
+    
 }

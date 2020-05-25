@@ -1,0 +1,13 @@
+
+Top 
+  (x) 10, 
+  ( ) 30, 
+  ( ) 100, 
+  ( ) custom [42]
+
+Filter 
+  [X] All (no filter)
+  [ ] Kernel Threads,
+  [ ] Services,
+  [ ] Containers
+  
