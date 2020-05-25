@@ -50,11 +50,18 @@ export const fillCalculatedFields = (processList) =>
 {
     const kinds = ["", "Init", "Service", "Container"];
     processList.forEach(process => {
+        
+        // rename mixedPriority --> priority? 
         process.priority = process.mixedPriority;
-        if (process.kind && process.kind >= 1 && process.kind <=3)
+        
+        // convert numeric enum ProcessKind to string
+        if (process.rss === 0)
+            process.kind = "Kernel";
+        else if (process.kind && process.kind >= 1 && process.kind <=3)
             process.kind = kinds[process.kind];
         else
             process.kind = "";
+        
     });
     
 }
