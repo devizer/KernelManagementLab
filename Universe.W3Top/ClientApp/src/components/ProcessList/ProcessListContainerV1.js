@@ -82,7 +82,7 @@ export class ProcessListContainerV1 extends Component {
                     return response.ok ? response.json() : {error: response.status, details: response.json()}
                 })
                 .then(processes => {
-                    if (processes.length > 42 && process.env.NODE_ENV !== 'production')
+                    if (processes.length > 42 && process.env.NODE_ENV !== 'production' && processListStore.getRowsFilters().NeedNoFilter && processListStore.getRowsFilters().TopFilter === 0)
                         processes = processes.slice(0,42);
 
                     ProcessListLocalStorage.fillCalculatedFields(processes);

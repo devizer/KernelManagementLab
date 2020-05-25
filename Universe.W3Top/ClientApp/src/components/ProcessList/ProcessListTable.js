@@ -33,12 +33,32 @@ export class ProcessListTable extends React.Component {
         });
     }
     
+    static FilterProcessesByKind = (processList, rowsFilters) => {
+        if (rowsFilters.NeedNoFilter) return processList;
+        let ret = [];
+        processList.forEach(process => {
+            let isIt = false;
+            if (rowsFilters.NeedKernelThreads && process.kind === "Kernel") isIt = true;
+            else if (rowsFilters.NeedServices && process.kind === "Service") isIt = true;
+            else if (rowsFilters.NeedContainers && process.kind === "Container") isIt = true;
+            else if (process.kind === "Init") isIt = true;
+            if (isIt) ret.push(process);
+        });
+        
+        return ret;
+    }
+    
     render() {
 
         
-        let processList = this.state.processList;
+        let processListRaw = this.state.processList;
+        let rowsFilters = processListStore.getRowsFilters();
         let selectedColumns = processListStore.getSelectedColumns();
+        let processList = ProcessListTable.FilterProcessesByKind(processListRaw, rowsFilters); 
         let pageSize = Math.max(processList.length, 6);
+        if (rowsFilters.TopFilter > 0) {
+            pageSize = Math.max(rowsFilters.TopFilter, processList.length);
+        }
         const noop = () => null;
         const isColumnVisible = (columnKey) => selectedColumns.indexOf(columnKey) >= 0;
 
@@ -52,7 +72,7 @@ export class ProcessListTable extends React.Component {
         
         function cellPriority(row) {
             const priority = row.value;
-            if (priority == 20) return (<><span className="default-priority">0 (default)</span></>);
+            if (priority == 20) return (<span className="default-priority">0 (default)</span>);
             if (priority >= 0 && priority <= 19) return (<span className="bad-priority">{(priority-20)} (nasty)</span>);
             if (priority >= 21 && priority <= 39) return (<span className="nice-priority">{(priority-20)} (nice)</span>);
             if (priority >= -100 && priority <= -2) return (<span className="rt-priority">RT {(-priority-1)}</span>);
@@ -93,7 +113,7 @@ export class ProcessListTable extends React.Component {
         return (
 
             <ReactTable
-                data={this.state.processList}
+                data={processList}
                 showPagination={false}
                 defaultPageSize={pageSize}
                 pageSizeOptions={[pageSize]}
