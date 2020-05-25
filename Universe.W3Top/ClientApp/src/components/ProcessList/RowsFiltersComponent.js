@@ -20,11 +20,16 @@ export class RowsFiltersComponent extends Component {
         super(props);
 
         let rowsFilters = processListStore.getRowsFilters();
-        let topValue = rowsFilters.TopFilter;
+        let topValue = rowsFilters.TopFilter, customTop = "";
+        if (topValue != 0 && topValue != 30 && topValue != 100)
+        {
+            customTop = topValue;
+            topValue = -1;
+        }
         this.state = {
             rowsFilters,
             topValue,
-            customTop: "",
+            customTop,
             NeedNoFilter: rowsFilters.NeedNoFilter === true,
             NeedKernelThreads: rowsFilters.NeedKernelThreads === true,
             NeedServices: rowsFilters.NeedServices === true,
