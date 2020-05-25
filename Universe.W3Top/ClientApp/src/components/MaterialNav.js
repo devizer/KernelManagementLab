@@ -36,8 +36,14 @@ import AppGitInfo from "../AppGitInfo"
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
 
+// ICONS
 import { ReactComponent as DisksIconSvg } from '../icons/Disks-Icon.svg';
+import { ReactComponent as MainIconSvg } from '../icons/w3top-3.svg';
 const DisksIcon = (size=24,color='#333') => (<DisksIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
+// const MainIcon = (size=24,color='#FFF') => (<MainIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
+const MainIcon = ({size=40,color='#FFF'}) => (<MainIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
+
+
 
 
 
@@ -234,8 +240,9 @@ class PersistentDrawerLeft extends React.Component {
                             aria-label="Show menu"
                             onClick={this.handleDrawerOpen}
                             className={classNames(classes.menuButton, open && classes.hide)}
+                                    
                         >
-                            <MenuIcon />
+                            <MainIcon />
                         </IconButton>
                         <Typography variant="h6" color="inherit" noWrap>
                             W3 Top

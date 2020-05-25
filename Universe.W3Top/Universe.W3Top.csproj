@@ -80,6 +80,8 @@
         <Content Include="ClientApp\src\Helper.js" />
         <Content Include="ClientApp\src\icons\Disks-Icon.svg" />
         <Content Include="ClientApp\src\icons\hard-disk.svg" />
+        <Content Include="ClientApp\src\icons\w3top-2.svg" />
+        <Content Include="ClientApp\src\icons\w3top-3.svg" />
         <Content Include="ClientApp\src\icons\Wizard-Icon.svg" />
         <Content Include="ClientApp\src\NextUniqueId.js" />
         <Content Include="ClientApp\src\stores\DataModel.ts.txt" />
