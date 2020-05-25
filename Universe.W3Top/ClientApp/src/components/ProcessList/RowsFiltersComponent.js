@@ -12,6 +12,7 @@ import * as Helper from "../../Helper";
 import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
+import {ProcessRowsFilters} from "./ProcessRowsFilters";
 
 export class RowsFiltersComponent extends Component {
     static displayName = RowsFiltersComponent.name;
@@ -38,14 +39,44 @@ export class RowsFiltersComponent extends Component {
     }
     
     render() {
+        // validate only custom top 
+        const getCustomTopError = () => {
+            let customTopError = null;
+            if (`${this.state.topValue}` === "-1")
+            {
+                const isPositiveNumber = Helper.Numbers.isInt(this.state.customTop) && Helper.Numbers.greaterOrEqual(this.state.customTop,1);
+                if (!isPositiveNumber) customTopError = "Should be a positive number";
+            }
+            return customTopError;
+        };
+
+        // should be called on each onChange
+        const tryApplyRowsFilters = () => {
+            if (getCustomTopError() == null)
+            {
+                const filters = new ProcessRowsFilters();
+                filters.TopFilter = parseInt(this.state.topValue);
+                if (filters.TopFilter === -1) filters.TopFilter = parseInt(this.state.customTop);
+                filters.NeedContainers = this.state.NeedContainers;
+                filters.NeedKernelThreads = this.state.NeedKernelThreads;
+                filters.NeedNoFilter = this.state.NeedNoFilter;
+                filters.NeedServices = this.state.NeedServices;
+                ProcessListActions.RowsFiltersUpdated(filters);
+            }
+        };
+
         const onChangeTop = (event) => {
             const newTopValue = event.target.value;
             this.setState({topValue: newTopValue});
             Helper.log(`NEW TOP for RowsFilters: ${newTopValue}`);
+            tryApplyRowsFilters();
         };
         
+        let customTopError = getCustomTopError();
+
         const onChangeCustomTop = (event) => {
             this.setState({customTop: event.target.value});
+            tryApplyRowsFilters();
         }
         
         const onCustomTopFocus = (event) => {
@@ -55,13 +86,6 @@ export class RowsFiltersComponent extends Component {
         const isTopChecked = (val) => {
             return `${this.state.topValue}` === `${val}`;
         };
-        
-        let customTopError = "";
-        if (`${this.state.topValue}` === "-1")
-        {
-            const isPositiveNumber = Helper.Numbers.isInt(this.state.customTop) && Helper.Numbers.greaterOrEqual(this.state.customTop,1);
-            if (!isPositiveNumber) customTopError = "Should be a positive number";
-        }
         
         const onChangedKind = (property) => (event) => {
             const checked = event.target.checked;
@@ -89,8 +113,7 @@ export class RowsFiltersComponent extends Component {
                 }
             }
             this.setState(st);
-            
-            
+            tryApplyRowsFilters();
         };
         
         return (
