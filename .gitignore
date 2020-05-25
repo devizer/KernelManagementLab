@@ -341,3 +341,5 @@ ASALocalRun/
 /.idea/.idea.KernelManagementLab/.idea/projectSettingsUpdater.xml
 pseudo-root
 **/mono_crash.mem.*.blob
+*.bak
+*.bak/
