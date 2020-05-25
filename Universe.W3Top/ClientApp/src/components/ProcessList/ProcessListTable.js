@@ -53,9 +53,9 @@ export class ProcessListTable extends React.Component {
         function cellPriority(row) {
             const priority = row.value;
             if (priority == 20) return (<><span className="default-priority">0 (default)</span></>);
-            if (priority >= 0 && priority <= 19) return (<><span className="bad-priority">{(priority-20)} (nice)</span></>);
-            if (priority >= 21 && priority <= 39) return (<><span className="nice-priority">{(priority-20)} (nice)</span></>);
-            if (priority >= -100 && priority <= -2) return (<><span className="rt-priority">RT {(-priority-1)}</span></>);
+            if (priority >= 0 && priority <= 19) return (<span className="bad-priority">{(priority-20)} (nasty)</span>);
+            if (priority >= 21 && priority <= 39) return (<span className="nice-priority">{(priority-20)} (nice)</span>);
+            if (priority >= -100 && priority <= -2) return (<span className="rt-priority">RT {(-priority-1)}</span>);
             return priority;
         }
         
