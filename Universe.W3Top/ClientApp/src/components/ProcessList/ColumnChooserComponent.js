@@ -94,8 +94,6 @@ export class ColumnChooserComponent extends Component {
                 Helper.runInBackground(() => {
                     ProcessListActions.SelectedColumnsUpdated(copy);
                 });
-                
-
             };
         };
         

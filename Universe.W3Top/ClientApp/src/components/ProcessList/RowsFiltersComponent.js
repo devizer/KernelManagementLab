@@ -53,6 +53,12 @@ export class RowsFiltersComponent extends Component {
             }
             return customTopError;
         };
+        
+        const asyncRaiseUpdate = (rowsFilters) => {
+            Helper.runInBackground(() => {
+                ProcessListActions.RowsFiltersUpdated(rowsFilters);
+            });
+        } 
 
         // should be called on each onChange
         const tryApplyRowsFilters = () => {
@@ -66,7 +72,7 @@ export class RowsFiltersComponent extends Component {
                 filters.NeedKernelThreads = this.state.NeedKernelThreads;
                 filters.NeedNoFilter = this.state.NeedNoFilter;
                 filters.NeedServices = this.state.NeedServices;
-                ProcessListActions.RowsFiltersUpdated(filters);
+                asyncRaiseUpdate(filters);
             }
         };
 
@@ -77,13 +83,13 @@ export class RowsFiltersComponent extends Component {
             {
                 st.TopFilter = newTopValue;
                 this.setState({rowsFilters: st, topValue: newTopValue});
-                ProcessListActions.RowsFiltersUpdated(st);
+                asyncRaiseUpdate(st);
             }
             else {
                 if (getCustomTopError(newTopValue, this.state.customTop) === null) {
                     st.TopFilter = parseInt(this.state.customTop);
                     this.setState({rowsFilters: st, topValue: newTopValue});
-                    ProcessListActions.RowsFiltersUpdated(st);
+                    asyncRaiseUpdate(st);
                 }
                 else {
                     this.setState({topValue: newTopValue});
@@ -103,7 +109,7 @@ export class RowsFiltersComponent extends Component {
                 
                 st.TopFilter = newTopValue;
                 this.setState({rowsFilters: st, topValue: -1, customTop: newCustomTop});
-                ProcessListActions.RowsFiltersUpdated(st);
+                asyncRaiseUpdate(st);
             }
             else {
                 this.setState({customTop: newCustomTop});
@@ -145,7 +151,7 @@ export class RowsFiltersComponent extends Component {
                 }
             }
             this.setState({rowsFilters: st});
-            ProcessListActions.RowsFiltersUpdated(st);
+            asyncRaiseUpdate(st);
         };
         
         return (

@@ -103,11 +103,20 @@ export class ProcessListContainerV1 extends Component {
         }
     }
     
+    active = true;
     requestProcessListUpdate() {
-        if (this.isRunning)
-            setTimeout(this.refreshProcessList, 1000);
+        if (this.isRunning) {
+            if (Helper.isDocumentHidden()) {
+                const needUpdate = this.active === true;
+                this.active = false;
+                setTimeout(this.requestProcessListUpdate, 100);
+                if (needUpdate) this.setState({active: false});
+            } else {
+                this.active = true;
+                setTimeout(this.refreshProcessList, 1000);
+            }
+        }
     }
-    
     
     render() {
         // TODO: columns chooser button and list of processes
@@ -126,10 +135,11 @@ export class ProcessListContainerV1 extends Component {
             else columnsCounter = (<>No columns?</>);
             return columnsCounter;
         }
-
+        
         return (
             <div>
                 <div style={{textAlign: "right"}}>
+                    {this.active}
                     <Button variant="text" color="default" onClick={handleOpenRowsFilters}>
                         Filter rows&nbsp;&nbsp;<FontAwesomeIcon style={{}} icon={faCog}/>
                     </Button>
@@ -141,7 +151,9 @@ export class ProcessListContainerV1 extends Component {
                 
                 <div style={{height: 8, fontSize: 8}}>&nbsp;</div>
 
-                <ProcessListTable/>
+                <div style={{padding: 0, margin: 0, opacity: (this.active ? 1.0 : 0.5)}}>
+                    <ProcessListTable />
+                </div>
 
                 <Dialog open={this.state.openedColumnsChooser} onClose={handleCloseColumnsChooser}
                         aria-labelledby="columns-chooser-title" fullWidth={true} maxWidth={"md"}>
