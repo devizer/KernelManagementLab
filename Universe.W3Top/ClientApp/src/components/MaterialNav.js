@@ -290,7 +290,7 @@ class PersistentDrawerLeft extends React.Component {
                         {MainMenuLink(<InsertChartOutlinedIcon/>, "/disks", "Disks Live Chart")}
                         {MainMenuLink(<ScoreIcon/>,"/disk-benchmark", "Disk Benchmark")}
                         <Divider />
-                        {MainMenuLink(<ProcessListIcon/>,"/processes", "Top Processes","work in progress")}
+                        {MainMenuLink(<ProcessListIcon/>,"/processes", "Processes","work in progress")}
 
                         {(false) &&
                             <>
