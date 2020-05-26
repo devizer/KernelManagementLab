@@ -1,3 +1,6 @@
+##### 1.20
+- Top Processes (work in progress)
+
 ##### 1.19
 - Friendly disk live chart
 - Reduced CPU usage for background flow

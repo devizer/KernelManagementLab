@@ -39,9 +39,11 @@ import * as Helper from "../Helper";
 // ICONS
 import { ReactComponent as DisksIconSvg } from '../icons/Disks-Icon.svg';
 import { ReactComponent as MainIconSvg } from '../icons/w3top-3.svg';
+import { ReactComponent as ProcessListIconSvg } from '../icons/process-list.svg';
 const DisksIcon = (size=24,color='#333') => (<DisksIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
 // const MainIcon = (size=24,color='#FFF') => (<MainIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
 const MainIcon = ({size=40,color='#FFF'}) => (<MainIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
+const ProcessListIcon = ({size=24,color='#333'}) => (<ProcessListIconSvg style={{width: size,height:size,fill:color,strokeWidth:'2px',stroke:color }} />);
 
 
 
@@ -209,11 +211,11 @@ class PersistentDrawerLeft extends React.Component {
         )};
 
         let idMainLink = 0;
-        const MainMenuLink = (icon, text, routeTo) => {
+        const MainMenuLink = (icon, routeTo, text, subText) => {
             return (
                 <ListItem id={`THE_MENU_${++idMainLink}`} button component={NavLink} tag={Link} to={routeTo} key={`${text}@MainMenu`} onClick={() => this.handleDrawerClose()}>
                     <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText id={`THE_MENU_LINK_${idMainLink}`} primary={text} />
+                    <ListItemText id={`THE_MENU_LINK_${idMainLink}`} primary={text} secondary={subText} />
                 </ListItem>
             );
         };
@@ -278,15 +280,18 @@ class PersistentDrawerLeft extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        {MainMenuLink(<InsertChartOutlinedIcon/>,"Network Live Chart", "/net-v2")}
+                        {MainMenuLink(<InsertChartOutlinedIcon/>,"/net-v2", "Network Live Chart")}
                         <Divider />
                         {/*{MainMenuLink(<FontAwesomeIcon icon={faServer} style={{marginLeft:4, marginRight:5}}/>,"Live Mounts", "/mounts")}*/}
                         {/*{MainMenuLink(<HardDiskIcon style={{width:20,height:20,marginLeft:2,marginRight:2,opacity:0.6}}/>,"Live Mounts", "/mounts")}*/}
-                        {MainMenuLink(DisksIcon(24,'#333'),"Live Mounts", "/mounts")}
+                        {MainMenuLink(DisksIcon(24,'#333'),"/mounts", "Live Mounts")}
                         
                         
-                        {MainMenuLink(<InsertChartOutlinedIcon/>,"Disks Live Chart", "/disks")}
-                        {MainMenuLink(<ScoreIcon/>,"Disk Benchmark", "/disk-benchmark")}
+                        {MainMenuLink(<InsertChartOutlinedIcon/>, "/disks", "Disks Live Chart")}
+                        {MainMenuLink(<ScoreIcon/>,"/disk-benchmark", "Disk Benchmark")}
+                        <Divider />
+                        {MainMenuLink(<ProcessListIcon/>,"/processes", "Top Processes","work in progress")}
+
                         {(false) &&
                             <>
                             <Divider />
@@ -296,10 +301,10 @@ class PersistentDrawerLeft extends React.Component {
                             textAlign: "center",
                             lineHeight: "1rem"
                         }}>SAND-BOX<br/>please ignore</ListSubheader>
-                            {MainMenuLink(<FlareIcon/>, "Missed network", "/net-v1")}
+                            {MainMenuLink(<FlareIcon/>, "/net-v1", "Missed network")}
                             <Divider />
-                            {MainMenuLink(<FlareIcon/>, "Single Y-axis chart", "/1-axis")}
-                            {MainMenuLink(<FlareIcon/>, "Double Y-axis one", "/2-axis")}
+                            {MainMenuLink(<FlareIcon/>, "/1-axis", "Single Y-axis chart")}
+                            {MainMenuLink(<FlareIcon/>, "/2-axis", "Double Y-axis one")}
                             </>
                         }
                     </List>

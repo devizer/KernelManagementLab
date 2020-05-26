@@ -80,6 +80,7 @@
         <Content Include="ClientApp\src\Helper.js" />
         <Content Include="ClientApp\src\icons\Disks-Icon.svg" />
         <Content Include="ClientApp\src\icons\hard-disk.svg" />
+        <Content Include="ClientApp\src\icons\process-list.svg" />
         <Content Include="ClientApp\src\icons\w3top-2.svg" />
         <Content Include="ClientApp\src\icons\w3top-3.svg" />
         <Content Include="ClientApp\src\icons\Wizard-Icon.svg" />
