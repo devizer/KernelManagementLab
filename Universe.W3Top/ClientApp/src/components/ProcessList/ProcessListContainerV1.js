@@ -112,8 +112,9 @@ export class ProcessListContainerV1 extends Component {
                 setTimeout(this.requestProcessListUpdate, 100);
                 if (needUpdate) this.setState({active: false});
             } else {
+                const needForce = this.active === false; 
                 this.active = true;
-                setTimeout(this.refreshProcessList, 1000);
+                setTimeout(this.refreshProcessList, needForce ? 1 : 1000);
             }
         }
     }
