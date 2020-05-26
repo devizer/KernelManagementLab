@@ -90,7 +90,7 @@ export class ProcessListTable extends React.Component {
         function cellPercents(row) {
             const perCents = row.value * 100;
             if (perCents < 0.0001) return null;
-            return (<>{Math.round(perCents*10)/10}<small>&nbsp;%</small></>);
+            return (<>{Math.round(perCents*10)/10}<small>%</small></>);
         }
         
         const cells = {
