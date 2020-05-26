@@ -13,6 +13,7 @@ namespace Universe.Dashboard.Agent
         
         public static void Process()
         {
+            return; // NotImplemented
             var intervalMilliseconds = InternalMilliseconds.Value;
             Console.WriteLine($"Process List Update INTERVAL is {intervalMilliseconds}");
             ProcessListDataSource.ProcessListUpdateInterval = intervalMilliseconds;
