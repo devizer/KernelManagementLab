@@ -43,6 +43,11 @@ namespace Universe.W3Top
                 Console.WriteLine($"Oops. Unable to obtain actual addresses for http[s]-server. {ex.GetExceptionDigest()}");
             }
 
+            if (!UptimeParser.ParseUptime().HasValue)
+            {
+                Console.WriteLine($"Warning! /proc/uptime is not available on the system. The ProcessList page may not work properly");
+            }
+
 
             PreciseTimer.Services = webHost.Services;
             NetStatTimer.Process();

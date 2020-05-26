@@ -105,12 +105,16 @@ namespace Universe.Dashboard.Agent
                     {
                        next = BuildCurrentState(processes);
                     }
-                    
+
+                    if (Next != null)
+                    {
+                        // Console.WriteLine($"next.At - Next.At = {next.At - Next.At} milliseconds");
+                    }
                     bool isRecently = Next != null && next.At - Next.At < 1000d;
                     bool atLeastHalfSeconds = Next != null && next.At - Next.At >= 500d;
-                    if (Next != null && isRecently && atLeastHalfSeconds)
+                    if (Next != null && isRecently /*&& atLeastHalfSeconds*/)
                     {
-                        using (GetProfilerSubStep("3. Compute Delta (build ActualList"))
+                        using (GetProfilerSubStep("3. Compute Delta (build ActualList)"))
                         {
                             List<AdvancedProcessStatPoint> newList = new List<AdvancedProcessStatPoint>();
                             foreach (var process in next.Snapshot)
