@@ -11,7 +11,7 @@ namespace Universe.W3Top.Controllers
     [Route("api/[controller]")]
     public class ProcessListController
     {
-        [HttpGet, Route("")]
+        [HttpGet, HttpPost, Route("")]
         public List<AdvancedProcessStatPoint> GetProcesses()
         {
             var uptime = UptimeParser.ParseUptime();

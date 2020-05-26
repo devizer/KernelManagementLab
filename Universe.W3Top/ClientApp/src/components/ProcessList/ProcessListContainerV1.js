@@ -74,7 +74,7 @@ export class ProcessListContainerV1 extends Component {
 
         let apiUrl = 'api/ProcessList';
         try {
-            fetch(apiUrl)
+            fetch(apiUrl, {method: "POST"})
                 .then(response => {
                     Helper.toConsole(`Response.Status for ${apiUrl} obtained: ${response.status}`);
                     // Helper.toConsole(response);
