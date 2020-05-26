@@ -50,21 +50,26 @@ namespace Universe.Dashboard.Agent
         object ActualListSync = new object();
         private long ActualListRequestTime = 0;
         
-        ManualResetEvent NotifyActualList = new ManualResetEvent(false);
-        
         AutoResetEvent NotifyRequest = new AutoResetEvent(false);
-        
 
         public List<AdvancedProcessStatPoint> GetProcesses()
         {
             NotifyRequest.Set();
+            ActualListRequestTime = WholeTime.ElapsedMilliseconds;
             int step = 100, count = 90, n = 0;
             while (n++ < count)
             {
+                double? uptime = UptimeParser.ParseUptime();
                 lock (ActualListSync)
                 {
                     long now = WholeTime.ElapsedMilliseconds;
-                    if (now - ActualListBuildTime < 1001) return ActualList;
+                    if (now - ActualListBuildTime < 1001)
+                    {
+                        foreach (var proc in ActualList)
+                            proc.Uptime = Math.Round(uptime.Value - proc.Totals.StartAt, 2);
+                        
+                        return ActualList;
+                    }
                 }
                 Thread.Sleep(step);
             }
@@ -122,11 +127,32 @@ namespace Universe.Dashboard.Agent
                                 ProcessIoStatKey key = new ProcessIoStatKey() {Pid = process.Pid, StartAtRaw = process.StartAtRaw};
                                 if (Next.ByKeys.TryGetValue(key, out var prevProcess))
                                 {
+                                    double dur = (next.At - Next.At) / 1000;
                                     // nice. TODO: calc delta and add row to ActualList
                                     AdvancedProcessStatPoint actualProcess = new AdvancedProcessStatPoint(process);
-                                    actualProcess.ReadBytes_Current = process.ReadBytes - prevProcess.ReadBytes;
-                                    actualProcess.WriteBytes_Current = process.WriteBytes - prevProcess.WriteBytes;
-                                    // ...
+                                    // IO Transfer
+                                    actualProcess.ReadBytes_Current = (process.ReadBytes - prevProcess.ReadBytes) / dur;
+                                    actualProcess.WriteBytes_Current = (process.WriteBytes - prevProcess.WriteBytes) / dur;
+                                    actualProcess.ReadSysCalls_Current = (process.ReadSysCalls - prevProcess.ReadSysCalls) / dur;
+                                    actualProcess.WriteSysCalls_Current = (process.WriteSysCalls - prevProcess.WriteSysCalls) / dur;
+                                    actualProcess.ReadBlockBackedBytes_Current = (process.ReadBlockBackedBytes - prevProcess.ReadBlockBackedBytes) / dur;
+                                    actualProcess.WriteBlockBackedBytes_Current = (process.WriteBlockBackedBytes - prevProcess.WriteBlockBackedBytes) / dur;
+                                    // IO Time
+                                    actualProcess.IoTime_PerCents = (process.IoTime - prevProcess.IoTime) / dur;
+                                    // Page Faults
+                                    actualProcess.MinorPageFaults_Current = (process.MinorPageFaults - prevProcess.MinorPageFaults) / dur;
+                                    actualProcess.MajorPageFaults_Current = (process.MajorPageFaults - prevProcess.MajorPageFaults) / dur;
+                                    actualProcess.ChildrenMinorPageFaults_Current = (process.ChildrenMinorPageFaults - prevProcess.ChildrenMinorPageFaults) / dur;
+                                    actualProcess.ChildrenMajorPageFaults_Current = (process.ChildrenMajorPageFaults - prevProcess.ChildrenMajorPageFaults) / dur;
+                                    // CPU Usage
+                                    actualProcess.UserCpuUsage_PerCents = (process.UserCpuUsage - prevProcess.UserCpuUsage) / dur;
+                                    actualProcess.KernelCpuUsage_PerCents = (process.KernelCpuUsage - prevProcess.KernelCpuUsage) / dur;
+                                    actualProcess.TotalCpuUsage_PerCents = (process.UserCpuUsage + process.KernelCpuUsage - (prevProcess.UserCpuUsage + prevProcess.KernelCpuUsage)) / dur;
+                                    actualProcess.ChildrenUserCpuUsage_PerCents = (process.ChildrenUserCpuUsage - prevProcess.ChildrenUserCpuUsage) / dur;
+                                    actualProcess.ChildrenKernelCpuUsage_PerCents = (process.ChildrenKernelCpuUsage - prevProcess.ChildrenKernelCpuUsage) / dur;
+                                    actualProcess.ChildrenTotalCpuUsage_PerCents = (process.ChildrenUserCpuUsage + process.ChildrenKernelCpuUsage - (prevProcess.ChildrenUserCpuUsage + prevProcess.ChildrenKernelCpuUsage)) / dur;
+                                    // Whatever more?
+                                    // actualProcess. = (process. - prevProcess.) / dur;
                                     newList.Add(actualProcess);
                                 }
                                 else
@@ -135,6 +161,12 @@ namespace Universe.Dashboard.Agent
                                     // AdvancedProcessStatPoint actualProcess = new AdvancedProcessStatPoint(process);
                                     // newList.Add(actualProcess);
                                 }
+                            }
+
+                            lock (ActualListSync)
+                            {
+                                this.ActualList = newList;
+                                this.ActualListBuildTime = now;
                             }
                         }
                     }

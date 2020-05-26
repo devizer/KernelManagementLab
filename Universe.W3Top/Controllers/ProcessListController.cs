@@ -14,6 +14,7 @@ namespace Universe.W3Top.Controllers
         [HttpGet, HttpPost, Route("")]
         public List<AdvancedProcessStatPoint> GetProcesses()
         {
+            /*
             var uptime = UptimeParser.ParseUptime();
             
             var snapshot = ProcessIoStat.GetProcesses();
@@ -21,6 +22,9 @@ namespace Universe.W3Top.Controllers
                 .Where(x => !x.IsZombie)
                 .Select(x => new AdvancedProcessStatPoint(x) { Uptime = Math.Round(uptime.Value - x.StartAt,2)})
                 .ToList();
+                */
+
+            var ret = ProcessListTimer_Smarty.Instance.GetProcesses();
             
             DebugDumper.Dump(ret, "AdvancedProcessStatPoint[].json", minify: false);
             return ret;

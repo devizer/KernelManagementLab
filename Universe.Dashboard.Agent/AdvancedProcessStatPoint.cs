@@ -1,12 +1,15 @@
 using System;
 using KernelManagementJam;
+using Newtonsoft.Json;
 
 namespace Universe.Dashboard.Agent
 {
     // 
     public class AdvancedProcessStatPoint
     {
-        private ProcessIoStat Totals { get; set; }
+        
+        [JsonIgnore]
+        public ProcessIoStat Totals { get; private set; }
 
         // Process
         public int Pid => Totals.Pid;
