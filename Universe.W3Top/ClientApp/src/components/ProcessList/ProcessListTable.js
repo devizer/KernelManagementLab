@@ -54,11 +54,20 @@ export class ProcessListTable extends React.Component {
         let processListRaw = this.state.processList;
         let rowsFilters = processListStore.getRowsFilters();
         let selectedColumns = processListStore.getSelectedColumns();
-        let processList = ProcessListTable.FilterProcessesByKind(processListRaw, rowsFilters); 
-        let pageSize = Math.max(processList.length, 6);
+        let processList = ProcessListTable.FilterProcessesByKind(processListRaw, rowsFilters);
+        // page size
+        let maxRows = processList.length;
+        let pageSize;
         if (rowsFilters.TopFilter > 0) {
-            pageSize = Math.max(rowsFilters.TopFilter, processList.length);
+            maxRows = Math.min(rowsFilters.TopFilter, processList.length);
+            pageSize = maxRows;
+            if (processListRaw.length === 0)
+                pageSize = 6;
         }
+        else {
+            pageSize = Math.max(processList.length, 6);
+        }
+            
         const noop = () => null;
         const isColumnVisible = (columnKey) => selectedColumns.indexOf(columnKey) >= 0;
 
@@ -120,7 +129,7 @@ export class ProcessListTable extends React.Component {
                 pageSize={pageSize}
                 noDataText="waiting for ..."
                 getNoDataProps={() => {return {style:{fontSize: tableFontSize,width: 200,textAlign: "center", color:"gray", marginTop:30, border: "1px solid #CCC"}}}}
-                className="-striped -highlight"
+                className={"-striped -highlight"}
                 columns={tableHeaders}
             />
 
