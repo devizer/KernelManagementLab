@@ -22,14 +22,14 @@ namespace KernelManagementJam
         public int? Uid { get; set; }
         public string UserName { get; set; }
 
-        public long IoTime { get; set; } // 42
-        public long UserCpuUsage { get; set; } // 14
-        public long KernelCpuUsage { get; set; } // 15
-        public long GuestTime { get; set; }         // 43
+        public double IoTime { get; set; } // 42
+        public double UserCpuUsage { get; set; }   // 14
+        public double KernelCpuUsage { get; set; } // 15
+        public double GuestTime { get; set; }        // 43
         
-        public long ChildrenUserCpuUsage { get; set; } // 16
-        public long ChildrenKernelCpuUsage { get; set; } // 17
-        public long ChildrenGuestTime { get; set; } // 44
+        public double ChildrenUserCpuUsage { get; set; } // 16
+        public double ChildrenKernelCpuUsage { get; set; } // 17
+        public double ChildrenGuestTime { get; set; } // 44
         public long SchedulingPolicy { get; set; } // 41
         
         // Nice: 0...39 is -20..19
@@ -214,12 +214,13 @@ namespace KernelManagementJam
                 var line = rdr.ReadLine();
                 if (!string.IsNullOrEmpty(line))
                 {
+                    var ticksPerSecond = (double) _Sc_Clk_Tck.Value;
                     var arr = line.Split(' ');
                     if (string.IsNullOrEmpty(ioStat.Name)) ioStat.Name = arr[2 - 1];
-                    ioStat.IoTime = GetLong(arr[42 - 1]);
+                    ioStat.IoTime = GetLong(arr[42 - 1]) / ticksPerSecond;
                     ioStat.StartAtRaw = GetLong(arr[22 - 1]); // divide by sysconf(_SC_CLK_TCK)
-                    ioStat.UserCpuUsage = GetLong(arr[14 - 1]);
-                    ioStat.KernelCpuUsage = GetLong(arr[15 - 1]);
+                    ioStat.UserCpuUsage = GetLong(arr[14 - 1]) / ticksPerSecond;
+                    ioStat.KernelCpuUsage = GetLong(arr[15 - 1]) / ticksPerSecond;
 
                     ioStat.SchedulingPolicy = GetLong(arr[41 - 1]);
                     ioStat.MixedPriority = GetLong(arr[18 - 1]);
@@ -231,18 +232,16 @@ namespace KernelManagementJam
                     ioStat.NumThreads = GetLong(arr[20 - 1]);
                     
                     // 16 - children user mode time
-                    ioStat.ChildrenUserCpuUsage = GetLong(arr[16 - 1]);
+                    ioStat.ChildrenUserCpuUsage = GetLong(arr[16 - 1]) / ticksPerSecond;
                     // 17 - children kernel mode time
-                    ioStat.ChildrenKernelCpuUsage = GetLong(arr[17 - 1]);
+                    ioStat.ChildrenKernelCpuUsage = GetLong(arr[17 - 1]) / ticksPerSecond;
                     // 11 - Minor page faults for children
                     ioStat.ChildrenMinorPageFaults = GetLong(arr[11 - 1]);
                     // 13 - Major faults for children
                     ioStat.ChildrenMajorPageFaults = GetLong(arr[13 - 1]);
                     
-                    ioStat.GuestTime = GetLong(arr[43 - 1]);
-                    ioStat.ChildrenGuestTime = GetLong(arr[44 - 1]);
-                    
-                    
+                    ioStat.GuestTime = GetLong(arr[43 - 1]) / ticksPerSecond;
+                    ioStat.ChildrenGuestTime = GetLong(arr[44 - 1]) / ticksPerSecond;
                     
                 }
             }

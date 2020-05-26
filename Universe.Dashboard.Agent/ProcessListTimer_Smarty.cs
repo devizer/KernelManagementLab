@@ -87,7 +87,7 @@ namespace Universe.Dashboard.Agent
         {
             while (true)
             {
-                bool forceUpdate = NotifyRequest.WaitOne(100);
+                bool forceUpdate = NotifyRequest.WaitOne(111);
                 long now = WholeTime.ElapsedMilliseconds;
                 bool continueUpdate = now - ActualListRequestTime < 5000;
                 bool needUpdate = now - ActualListBuildTime < 5000;

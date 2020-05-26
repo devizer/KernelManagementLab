@@ -87,8 +87,22 @@ export class ProcessListTable extends React.Component {
             if (priority >= -100 && priority <= -2) return (<span className="rt-priority">RT {(-priority-1)}</span>);
             return priority;
         }
+        function cellPercents(row) {
+            const perCents = row.value * 100;
+            if (perCents < 0.0001) return null;
+            return (<span style={{textAlign:"right"}}>{Math.round(perCents*10)/10}&nbsp;%</span>);
+        }
         
-        const cells = {priority: cellPriority};
+        const cells = {
+            priority: cellPriority,
+            userCpuUsage_PerCents: cellPercents,
+            kernelCpuUsage_PerCents: cellPercents,
+            totalCpuUsage_PerCents: cellPercents,
+            childrenUserCpuUsage_PerCents: cellPercents,
+            childrenKernelCpuUsage_PerCents: cellPercents,
+            childrenTotalCpuUsage_PerCents: cellPercents,
+            ioTime_PerCents: cellPercents
+        };
         
         // should be cached by 
         let tableHeaders = [];

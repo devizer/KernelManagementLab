@@ -28,23 +28,23 @@ namespace Universe.Dashboard.Agent
         public long Swapped => Totals.SwappedMem;
 
         // CPU Usage
-        public double UserCpuUsage => Totals.UserCpuUsage / 100; // seconds
+        public double UserCpuUsage => Totals.UserCpuUsage; // seconds
         public double UserCpuUsage_PerCents { get; set; }
-        public double KernelCpuUsage => Totals.KernelCpuUsage / 100; // seconds
+        public double KernelCpuUsage => Totals.KernelCpuUsage; // seconds
         public double KernelCpuUsage_PerCents { get; set; }
-        public double TotalCpuUsage => (Totals.UserCpuUsage + Totals.KernelCpuUsage) / 100; // seconds
+        public double TotalCpuUsage => (Totals.UserCpuUsage + Totals.KernelCpuUsage); // seconds
         public double TotalCpuUsage_PerCents { get; set; }
 
         // Children CPU Usage
-        public double ChildrenUserCpuUsage => Totals.ChildrenUserCpuUsage / 100; // seconds
+        public double ChildrenUserCpuUsage => Totals.ChildrenUserCpuUsage; // seconds
         public double ChildrenUserCpuUsage_PerCents { get; set; }
-        public double ChildrenKernelCpuUsage => Totals.ChildrenKernelCpuUsage / 100; // seconds
+        public double ChildrenKernelCpuUsage => Totals.ChildrenKernelCpuUsage; // seconds
         public double ChildrenKernelCpuUsage_PerCents { get; set; }
-        public double ChildrenTotalCpuUsage => (Totals.ChildrenUserCpuUsage + Totals.ChildrenKernelCpuUsage) / 100; // seconds
+        public double ChildrenTotalCpuUsage => (Totals.ChildrenUserCpuUsage + Totals.ChildrenKernelCpuUsage); // seconds
         public double ChildrenTotalCpuUsage_PerCents { get; set; }
         
         // IO Time
-        public long IoTime => Totals.IoTime / 100;
+        public double IoTime => Totals.IoTime;
         public double IoTime_PerCents { get; set; }
         
         // IO Transfer
