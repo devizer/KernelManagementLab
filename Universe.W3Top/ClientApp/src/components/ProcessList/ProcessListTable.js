@@ -90,7 +90,7 @@ export class ProcessListTable extends React.Component {
         function cellPercents(row) {
             const perCents = row.value * 100;
             if (perCents < 0.0001) return null;
-            return (<span style={{textAlign:"right"}}>{Math.round(perCents*10)/10}&nbsp;%</span>);
+            return (<>{Math.round(perCents*10)/10}<small>&nbsp;%</small></>);
         }
         
         const cells = {
@@ -104,6 +104,17 @@ export class ProcessListTable extends React.Component {
             ioTime_PerCents: cellPercents
         };
         
+        const stylePercents = {textAlign:"right"};
+        const cellStyles = {
+            userCpuUsage_PerCents: stylePercents,
+            kernelCpuUsage_PerCents: stylePercents,
+            totalCpuUsage_PerCents: stylePercents,
+            childrenUserCpuUsage_PerCents: stylePercents,
+            childrenKernelCpuUsage_PerCents: stylePercents,
+            childrenTotalCpuUsage_PerCents: stylePercents,
+            ioTime_PerCents: stylePercents
+        }
+        
         // should be cached by 
         let tableHeaders = [];
         ProcessColumnsDefinition.Headers.forEach(header => {
@@ -116,11 +127,14 @@ export class ProcessListTable extends React.Component {
             header.columns.forEach(column => {
                 if (isColumnVisible(`${header.id}.${column.field}`)) {
                     const cell = cells[column.field];
+                    const cellStyle = cellStyles[column.field];
+                    const minWidth = column.field.endsWith("_PerCents") ? 40 : 55;
                     let tableColumn = {
                         Header: column.caption,
                         // getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader2}},
                         accessor: column.field,
-                        minWidth: 55,
+                        getProps: () => { return {style:cellStyle}},
+                        minWidth: minWidth,
                         Cell: cell,
                         // aggregate: noop,
                     };
