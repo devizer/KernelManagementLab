@@ -4,7 +4,7 @@ using KernelManagementJam;
 
 namespace Universe.Dashboard.Agent
 {
-    public class ProcessListTimer
+    public class ProcessListTimer_Legacy
     {
         private const int SLOW_PC_UPDATE_INTERVAL = 15000;
         private const int FAST_PC_UPDATE_INTERVAL = 5000;

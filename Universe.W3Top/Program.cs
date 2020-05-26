@@ -48,7 +48,7 @@ namespace Universe.W3Top
             NetStatTimer.Process();
             BlockDiskTimer.Process();
             MemorySummaryTimer.Process();
-            ProcessListTimer.Process();
+            ProcessListTimer_Smarty.Instance.Process();
             DebugPreciseTimer();
             
             webHost.Run();
