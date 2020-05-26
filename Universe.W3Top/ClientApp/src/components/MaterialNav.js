@@ -285,15 +285,11 @@ class PersistentDrawerLeft extends React.Component {
                         {/*{MainMenuLink(<FontAwesomeIcon icon={faServer} style={{marginLeft:4, marginRight:5}}/>,"Live Mounts", "/mounts")}*/}
                         {/*{MainMenuLink(<HardDiskIcon style={{width:20,height:20,marginLeft:2,marginRight:2,opacity:0.6}}/>,"Live Mounts", "/mounts")}*/}
                         {MainMenuLink(DisksIcon(24,'#333'),"/mounts", "Live Mounts")}
-                        
-                        
                         {MainMenuLink(<InsertChartOutlinedIcon/>, "/disks", "Disks Live Chart")}
                         {MainMenuLink(<ScoreIcon/>,"/disk-benchmark", "Disk Benchmark")}
                         
-{/*
                         <Divider />
                         {MainMenuLink(<ProcessListIcon/>,"/processes", "Processes","work in progress")}
-*/}
 
                         {(false) &&
                             <>
