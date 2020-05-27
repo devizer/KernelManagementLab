@@ -2,9 +2,9 @@
   "name": "W3 Top",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "fullscreen",
-  "Scope": ".",
-  "start_url": "/",
+  "display": "standalone",
+  "Scope": "/",
+  "start_url": "./?utm_source=web_app_manifest",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
