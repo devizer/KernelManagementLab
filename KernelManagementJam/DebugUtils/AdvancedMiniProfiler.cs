@@ -143,7 +143,7 @@ namespace KernelManagementJam.DebugUtils
 
     public class AdvancedMiniProfilerReport
     {
-        private const int REPORT_UPDATE_DELAY = 10000;
+        private const int REPORT_UPDATE_DELAY = 30000;
         private Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> Report = new Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>();
         private Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> FirstCall = new Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>();
         readonly object Sync = new object();
@@ -345,6 +345,7 @@ namespace KernelManagementJam.DebugUtils
         {
             Thread t = new Thread(() =>
             {
+                Thread.Sleep(5000);
                 long prevTimestamp = long.MinValue;
                 while (true)
                 {
