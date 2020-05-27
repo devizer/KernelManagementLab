@@ -20,6 +20,7 @@ import "./ProcessList.css"
 import {ColumnChooserComponent} from "./ColumnChooserComponent";
 import {RowsFiltersComponent} from "./RowsFiltersComponent"
 import {ProcessListTable} from "./ProcessListTable";
+import * as ProcessListTransformations from "./Store/ProcessListTransformations"
 import * as ProcessListLocalStorage from "./Store/ProcessListLocalStore";
 import * as DataSourceActions from "../../stores/DataSourceActions";
 import * as Helper from "../../Helper";
@@ -85,7 +86,7 @@ export class ProcessListContainerV1 extends Component {
                     if (processes.length > 42 && process.env.NODE_ENV !== 'production' && processListStore.getRowsFilters().NeedNoFilter && processListStore.getRowsFilters().TopFilter === 0)
                         processes = processes.slice(0,42);
 
-                    ProcessListLocalStorage.fillCalculatedFields(processes);
+                    ProcessListTransformations.fillCalculatedFields(processes);
                     ProcessListActions.ProcessListUpdated(processes);
                     Helper.notifyTrigger("ProcessListArrived", "wow!");
                     Helper.toConsole("ProcessList", processes);

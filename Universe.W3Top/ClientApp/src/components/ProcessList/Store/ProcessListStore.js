@@ -10,8 +10,8 @@ class ProcessListStore extends EventEmitter {
         super();
         // local copy per message
         // this.selectedColumns = ProcessColumnsDefinition.DefaultColumnKeys;
-        this.selectedColumns = ProcessListLocalStore.getSelectedColumns();
-        this.rowsFilters = ProcessListLocalStore.getProcessRowsFilters();
+        this.selectedColumns = ProcessListLocalStore.SelectedColumns.get();
+        this.rowsFilters = ProcessListLocalStore.RowsFilters.get();
         this.processList = [];
     }
     

@@ -76,6 +76,7 @@
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListDispatcher.js" />
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListLocalStore.js" />
         <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListStore.js" />
+        <Content Include="ClientApp\src\components\ProcessList\Store\ProcessListTransformations.js" />
         <Content Include="ClientApp\src\components\SingleAxisChart.js" />
         <Content Include="ClientApp\src\Helper.js" />
         <Content Include="ClientApp\src\icons\Disks-Icon.svg" />

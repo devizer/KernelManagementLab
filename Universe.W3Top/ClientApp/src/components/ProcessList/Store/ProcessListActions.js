@@ -11,7 +11,7 @@ export function SelectedColumnsUpdated(selectedColumns) {
         value: selectedColumns
     });
     
-    ProcessListLocalStore.setSelectedColumns(selectedColumns);
+    ProcessListLocalStore.SelectedColumns.set(selectedColumns);
 }
 
 export function ProcessListUpdated(processes) {
@@ -27,5 +27,5 @@ export function RowsFiltersUpdated(rowsFilters) {
         value: rowsFilters
     });
 
-    ProcessListLocalStore.setProcessRowsFilters(rowsFilters);
+    ProcessListLocalStore.RowsFilters.set(rowsFilters);
 }

@@ -11,10 +11,11 @@ import "react-table/react-table.css";
 import processListStore from "./Store/ProcessListStore";
 import * as ProcessListLocalStore from "./Store/ProcessListLocalStore"
 import ProcessColumnsDefinition from "./ProcessColumnsDefinition";
+import * as ProcessListTransformations from "./Store/ProcessListTransformations"
 
 // require('typeface-noto-sans');
 
-let defaultSorting = ProcessListLocalStore.getSorting();
+let defaultSorting = ProcessListLocalStore.Sorting.get();
 
 export class ProcessListTable extends React.Component {
     static displayName = ProcessListTable.name;
@@ -37,28 +38,12 @@ export class ProcessListTable extends React.Component {
         });
     }
     
-    static FilterProcessesByKind = (processList, rowsFilters) => {
-        if (rowsFilters.NeedNoFilter) return processList;
-        let ret = [];
-        processList.forEach(process => {
-            let isIt = false;
-            if (rowsFilters.NeedKernelThreads && process.kind === "Kernel") isIt = true;
-            else if (rowsFilters.NeedServices && process.kind === "Service") isIt = true;
-            else if (rowsFilters.NeedContainers && process.kind === "Container") isIt = true;
-            else if (process.kind === "Init") isIt = true;
-            if (isIt) ret.push(process);
-        });
-        
-        return ret;
-    }
-    
     render() {
-
         
         let processListRaw = this.state.processList;
         let rowsFilters = processListStore.getRowsFilters();
         let selectedColumns = processListStore.getSelectedColumns();
-        let processList = ProcessListTable.FilterProcessesByKind(processListRaw, rowsFilters);
+        let processList = ProcessListTransformations.filterByKind(processListRaw, rowsFilters);
         // page size
         let maxRows = processList.length;
         let pageSize;
@@ -222,6 +207,7 @@ export class ProcessListTable extends React.Component {
                 }
             });
             
+            // skip Empty Groups
             if (tableHeader.columns.length > 0)
                 tableHeaders.push(tableHeader);
         });
@@ -231,7 +217,7 @@ export class ProcessListTable extends React.Component {
             const id = newSorted[0].id;
             const descDirection = id === "name" || id === "pid" ? false : true;
             const newSorting = [{ id: id, desc: descDirection }];
-            ProcessListLocalStore.setSorting(newSorting);
+            ProcessListLocalStore.Sorting.set(newSorting);
             this.setState({sorting:newSorting});
         }; 
         

@@ -16,7 +16,7 @@ const storages = [localStorage, sessionStorage, cookieStorage, ];
 const plugins = [defaultPlugin, expiredPlugin, eventsPlugin];
 const store = engine.createStore(storages, plugins);
 
-export const StoreVersion = "1.4";
+export const StoreVersion = "1.5";
 
 const GenericStore = (key, getDefault) => {
     return {
@@ -24,7 +24,6 @@ const GenericStore = (key, getDefault) => {
             store.set(key, {ver: StoreVersion, properties});
         },
         get: () => {
-            let ret = getDefault();
             const stored = store.get(key);
             if (stored && stored.ver === StoreVersion && typeof stored.properties === "object") 
                 return stored.properties;
@@ -38,72 +37,7 @@ const GenericStore = (key, getDefault) => {
 // ┌───────────────────────────────────┐
 // │  --===## SelectedColumns ##===--  │
 // └───────────────────────────────────┘
-export const setSelectedColumns = (selectedColumns) => {
-    store.set("selectedColumns", {ver: StoreVersion, selectedColumns});
-};
-
-export const getSelectedColumns = () => {
-    let ret = ProcessColumnsDefinition.DefaultColumnKeys;
-    let stored = store.get("selectedColumns");
-    if (stored && stored.ver === StoreVersion && typeof stored.selectedColumns === "object") {
-        ret = stored.selectedColumns;
-    }
-
-    return [...ret];
-};
-
-// ┌──────────────────────────────────────┐
-// │  --===## ProcessRowsFilters ##===--  │
-// └──────────────────────────────────────┘
-export const setProcessRowsFilters = (processRowsFilters) => {
-    store.set("processRowsFilters", {ver: StoreVersion, processRowsFilters});
-};
-
-export const getProcessRowsFilters = () => {
-    let ret = ProcessRowsFilters.getDefault();
-    let stored = store.get("processRowsFilters");
-    if (stored && stored.ver === StoreVersion && typeof stored.processRowsFilters === "object") {
-        ret = stored.processRowsFilters;
-    }
-
-    return ret;
-};
-
-// ┌───────────────────────────┐
-// │  --===## Sorting ##===--  │
-// └───────────────────────────┘
+export const SelectedColumns = GenericStore("processSelectedColumns", () => ProcessColumnsDefinition.DefaultColumnKeys);
+export const RowsFilters = GenericStore("processRowsFilters", () => ProcessRowsFilters.getDefault());
 const defaultSorting = [{ id: 'totalCpuUsage_PerCents', desc: true }]
-
-export const setSorting = (sorting) => {
-    store.set("processSorting", {ver: StoreVersion, sorting});
-};
-
-export const getSorting = () => {
-    let ret = defaultSorting;
-    let stored = store.get("processSorting");
-    if (stored && stored.ver === StoreVersion && typeof stored.sorting === "object") {
-        ret = stored.sorting;
-    }
-
-    return ret;
-};
-
-// _________________________________________________
-export const fillCalculatedFields = (processList) =>
-{
-    const kinds = ["", "Init", "Service", "Container"];
-    processList.forEach(process => {
-        
-        // rename mixedPriority --> priority? 
-        process.priority = process.mixedPriority;
-        
-        // convert numeric enum ProcessKind to string
-        if (process.rss === 0)
-            process.kind = "Kernel";
-        else if (process.kind && process.kind >= 1 && process.kind <=3)
-            process.kind = kinds[process.kind];
-        else
-            process.kind = "";
-        
-    });
-}
+export const Sorting = GenericStore("processSorting", () => defaultSorting);
