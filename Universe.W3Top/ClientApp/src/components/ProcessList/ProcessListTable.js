@@ -147,22 +147,21 @@ export class ProcessListTable extends React.Component {
             childrenKernelCpuUsage: cellDuration,
             childrenTotalCpuUsage: cellDuration,
             
-
             ioTime: cellDuration,
             ioTime_PerCents: cellPercents,
-            
-            readBytes_Current: cellCurrent,
-            writeBytes_Current: cellCurrent,
+
+            readBytes: cellKbTotal,
+            writeBytes: cellKbTotal,
+            readBlockBackedBytes: cellKbTotal,
+            writeBlockBackedBytes: cellKbTotal,
             readBlockBackedBytes_Current: cellCurrent,
             writeBlockBackedBytes_Current: cellCurrent,
             readSysCalls_Current: cellCurrent,
             writeSysCalls_Current: cellCurrent,
             readSysCalls: cellCounter,
             writeSysCalls: cellCounter,
-            readBytes: cellKbTotal,
-            writeBytes: cellKbTotal,
-            readBlockBackedBytes: cellKbTotal,
-            writeBlockBackedBytes: cellKbTotal,
+            readBytes_Current: cellCurrent,
+            writeBytes_Current: cellCurrent,
 
             minorPageFaults_Current: cellCurrent,
             majorPageFaults_Current: cellCurrent,
