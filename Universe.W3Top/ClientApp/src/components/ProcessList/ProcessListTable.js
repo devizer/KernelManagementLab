@@ -13,6 +13,8 @@ import ProcessColumnsDefinition from "./ProcessColumnsDefinition";
 
 // require('typeface-noto-sans');
 
+const defaultSorting = [{ id: 'totalCpuUsage_PerCents', desc: true }]
+
 export class ProcessListTable extends React.Component {
     static displayName = ProcessListTable.name;
 
@@ -21,7 +23,8 @@ export class ProcessListTable extends React.Component {
 
         this.updatedProcessList = this.updatedProcessList.bind(this);
         this.state = {
-            processList: []
+            processList: [],
+            sorting: defaultSorting,
         };
 
         processListStore.on('storeUpdated', this.updatedProcessList);
@@ -219,6 +222,11 @@ export class ProcessListTable extends React.Component {
                 tableHeaders.push(tableHeader);
         });
         
+        const onSortedChange = (newSorted, column, shiftKey) => {
+            // const defaultSorting = [{ id: 'totalCpuUsage_PerCents', desc: true }]
+            this.setState({sorting:[{ id: newSorted[0].id, desc: true }]});
+        }; 
+        
         
         return (
 
@@ -232,6 +240,8 @@ export class ProcessListTable extends React.Component {
                 getNoDataProps={() => {return {style:{fontSize: tableFontSize,width: 200,textAlign: "center", color:"gray", marginTop:30, border: "1px solid #CCC"}}}}
                 className={"-striped -highlight"}
                 columns={tableHeaders}
+                sorted={this.state.sorting}
+                onSortedChange={onSortedChange} // Called when a sortable column header is clicked with the column itself and if the shiftkey was held. If the column is a pivoted column, `column` will be an array of columns
             />
 
         );
