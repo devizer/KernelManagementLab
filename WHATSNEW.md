@@ -1,5 +1,6 @@
 ##### 1.20
 - Top Processes (work in progress)
+- Fixed full screen web app mode for iOS and Android
 
 ##### 1.19
 - Friendly disk live chart
