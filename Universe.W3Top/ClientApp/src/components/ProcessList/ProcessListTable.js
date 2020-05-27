@@ -168,6 +168,10 @@ export class ProcessListTable extends React.Component {
             majorPageFaults_Current: cellCurrent,
             childrenMinorPageFaults_Current: cellCurrent,
             childrenMajorPageFaults_Current: cellCurrent,
+            minorPageFaults: cellCounter,
+            majorPageFaults: cellCounter,
+            childrenMinorPageFaults: cellCounter,
+            childrenMajorPageFaults: cellCounter,
         };
         
         
