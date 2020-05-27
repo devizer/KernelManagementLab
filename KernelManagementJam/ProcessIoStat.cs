@@ -217,7 +217,7 @@ namespace KernelManagementJam
                     var ticksPerSecond = (double) _Sc_Clk_Tck.Value;
                     var arr = line.Split(' ');
                     if (string.IsNullOrEmpty(ioStat.Name)) ioStat.Name = arr[2 - 1];
-                    ioStat.IoTime = GetLong(arr[42 - 1]) / ticksPerSecond;
+                    ioStat.IoTime = GetLong(arr[42 - 1]) / 100d;
                     ioStat.StartAtRaw = GetLong(arr[22 - 1]); // divide by sysconf(_SC_CLK_TCK)
                     ioStat.UserCpuUsage = GetLong(arr[14 - 1]) / ticksPerSecond;
                     ioStat.KernelCpuUsage = GetLong(arr[15 - 1]) / ticksPerSecond;

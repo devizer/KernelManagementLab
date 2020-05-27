@@ -1,3 +1,4 @@
+import React from 'react';
 import * as Enumerable from "linq-es2015"
 import MomentFormat from 'moment';
 
@@ -136,6 +137,24 @@ export class Common {
     static formatBytes(number, fractionCount) {
         if (typeof fractionCount !== "number") fractionCount = 2; 
             return Common.formatAnything(number, fractionCount, ' ', "B");
+    }
+    
+    static formatDuration(totalSeconds, styleNormal, styleZero) {
+        const seconds = totalSeconds % 60;
+        const minutes = Math.floor(totalSeconds / 60) % 60;
+        const hours = Math.floor(totalSeconds / 3600);
+        // return (<>{hours}<span style={styleZero}>:</span>{minutes}<span style={styleZero}>:</span>{seconds}</>)
+
+        const sSeconds = seconds > 9 ? seconds : ("0" + seconds);
+        const sMinutes = minutes > 9 ? minutes : ("0" + minutes);
+
+        let comHours;
+        if (hours > 0) 
+            comHours = (<span style={styleNormal}>{hours}</span>);
+        else
+            comHours = (<span style={styleZero}>0</span>);
+        
+        return (<>{comHours}<span style={styleZero}>:</span>{sMinutes}<span style={styleZero}>:</span>{sSeconds}</>)
     }
     
     static formatInfoHeader(text) {

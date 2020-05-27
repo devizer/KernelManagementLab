@@ -111,6 +111,12 @@ export class ProcessListTable extends React.Component {
             if (value < 0.0001) return null;
             return Helper.Common.formatAnything(value*1024, 1, " ","B");
         }
+        
+        function cellDuration(row) {
+            const value = row.value;
+            if (value < 0.0001) return null;
+            return Helper.Common.formatDuration(Math.round(value,1), {}, {color:"grey"});
+        }
 
 
         const cells = {
@@ -119,13 +125,24 @@ export class ProcessListTable extends React.Component {
             rss: cellMemory,
             shared: cellMemory,
             swapped: cellMemory,
-            
+
             userCpuUsage_PerCents: cellPercents,
             kernelCpuUsage_PerCents: cellPercents,
             totalCpuUsage_PerCents: cellPercents,
             childrenUserCpuUsage_PerCents: cellPercents,
             childrenKernelCpuUsage_PerCents: cellPercents,
             childrenTotalCpuUsage_PerCents: cellPercents,
+
+            uptime: cellDuration,
+            userCpuUsage: cellDuration,
+            kernelCpuUsage: cellDuration,
+            totalCpuUsage: cellDuration,
+            childrenUserCpuUsage: cellDuration,
+            childrenKernelCpuUsage: cellDuration,
+            childrenTotalCpuUsage: cellDuration,
+            
+
+            ioTime: cellDuration,
             ioTime_PerCents: cellPercents,
             
             readBytes_Current: cellCurrent,
