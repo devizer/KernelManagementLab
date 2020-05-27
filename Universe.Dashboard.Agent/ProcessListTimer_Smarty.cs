@@ -40,7 +40,6 @@ namespace Universe.Dashboard.Agent
         }
         
         
-        private State Prev;
         private State Next;
         Stopwatch WholeTime = Stopwatch.StartNew();
         
@@ -59,15 +58,17 @@ namespace Universe.Dashboard.Agent
             int step = 100, count = 90, n = 0;
             while (n++ < count)
             {
-                double? uptime = UptimeParser.ParseUptime();
-                lock (ActualListSync)
+                long now = WholeTime.ElapsedMilliseconds;
+                // lock (ActualListSync)
                 {
-                    long now = WholeTime.ElapsedMilliseconds;
-                    if (now - ActualListBuildTime < 1001)
+                    if (now - ActualListBuildTime < 2000)
                     {
+                        double uptime = UptimeParser.ParseUptime().Value;
                         foreach (var proc in ActualList)
-                            proc.Uptime = Math.Round(uptime.Value - proc.Totals.StartAt, 2);
-                        
+                        {
+                            proc.Uptime = uptime - proc.Totals.StartAt;
+                        }
+
                         return ActualList;
                     }
                 }
@@ -87,11 +88,12 @@ namespace Universe.Dashboard.Agent
         {
             while (true)
             {
-                bool forceUpdate = NotifyRequest.WaitOne(999);
+                bool forceUpdate = NotifyRequest.WaitOne(50);
                 long now = WholeTime.ElapsedMilliseconds;
                 bool continueUpdate = now - ActualListRequestTime < 5000;
-                bool needUpdate = now - ActualListBuildTime < 5000;
-                if (forceUpdate || continueUpdate || needUpdate)
+                bool needUpdate = now - ActualListBuildTime > 999;
+                var msg = $"Now: {now:n0}  RequestTime: {ActualListRequestTime} BuildTime: {ActualListBuildTime}";
+                if (continueUpdate && needUpdate)
                 {
 
                     AdvancedMiniProfilerStep GetProfilerSubStep(string subStepName)
@@ -117,7 +119,7 @@ namespace Universe.Dashboard.Agent
                     }
                     bool isRecently = Next != null && next.At - Next.At < 1000d;
                     bool atLeastHalfSeconds = Next != null && next.At - Next.At >= 500d;
-                    if (Next != null && isRecently /*&& atLeastHalfSeconds*/)
+                    if (Next != null /*&& isRecently */ /*&& atLeastHalfSeconds*/)
                     {
                         using (GetProfilerSubStep("3. Compute Delta (build ActualList)"))
                         {
@@ -163,15 +165,15 @@ namespace Universe.Dashboard.Agent
                                 }
                             }
 
+                            var buildAt = WholeTime.ElapsedMilliseconds;
                             lock (ActualListSync)
                             {
                                 this.ActualList = newList;
-                                this.ActualListBuildTime = now;
+                                this.ActualListBuildTime = buildAt;
                             }
                         }
                     }
 
-                    Prev = Next;
                     Next = next;
                 }
             }
