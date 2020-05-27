@@ -188,7 +188,9 @@ export class ProcessListTable extends React.Component {
                     const cell = cells[column.field];
                     let cellStyle = cellStyles[column.field];
                     if (header.caption !== "Process") cellStyle=stylePercents;
-                    const minWidth = column.field.endsWith("_PerCents") || column.field.endsWith("_Current") ? 40 : 55;
+                    let minWidth = column.field.endsWith("_PerCents") || column.field.endsWith("_Current") ? 41 : 55;
+                    if (column.field === "pid") minWidth = 45;
+                    else if (column.field === "name") minWidth = 70;
                     let tableColumn = {
                         Header: column.caption,
                         // getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader2}},
