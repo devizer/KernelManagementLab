@@ -88,7 +88,7 @@ namespace Universe.Dashboard.Agent
         {
             while (true)
             {
-                bool forceUpdate = NotifyRequest.WaitOne(300); // 50 works wrong - reports for self too much CPU USage
+                bool forceUpdate = NotifyRequest.WaitOne(600); // 50 works wrong - reports for self too much CPU USage
                 long now = WholeTime.ElapsedMilliseconds;
                 bool continueUpdate = now - ActualListRequestTime < 5000;
                 bool needUpdate = now - ActualListBuildTime > 999;
