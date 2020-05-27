@@ -88,12 +88,12 @@ namespace Universe.Dashboard.Agent
         {
             while (true)
             {
-                bool forceUpdate = NotifyRequest.WaitOne(50);
+                bool forceUpdate = NotifyRequest.WaitOne(300); // 50 works wrong - reports for self too much CPU USage
                 long now = WholeTime.ElapsedMilliseconds;
                 bool continueUpdate = now - ActualListRequestTime < 5000;
                 bool needUpdate = now - ActualListBuildTime > 999;
-                // var msg = $"Now: {now:n0}  RequestTime: {ActualListRequestTime} BuildTime: {ActualListBuildTime}";
-                if (continueUpdate && needUpdate)
+                var msg = $"Now: {now:n0}  RequestTime: {ActualListRequestTime} BuildTime: {ActualListBuildTime}";
+                if (continueUpdate && needUpdate || Next == null)
                 {
 
                     AdvancedMiniProfilerStep GetProfilerSubStep(string subStepName)
