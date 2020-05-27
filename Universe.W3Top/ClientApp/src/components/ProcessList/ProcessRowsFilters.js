@@ -11,6 +11,7 @@ export class ProcessRowsFilters {
     
     static getDefault() {
         const ret = new ProcessRowsFilters();
+        ret.TopFilter = 12;
         return ret;
     }
 }

@@ -39,5 +39,6 @@ const GenericStore = (key, getDefault) => {
 // └───────────────────────────────────┘
 export const SelectedColumns = GenericStore("processSelectedColumns", () => ProcessColumnsDefinition.DefaultColumnKeys);
 export const RowsFilters = GenericStore("processRowsFilters", () => ProcessRowsFilters.getDefault());
-const defaultSorting = [{ id: 'totalCpuUsage_PerCents', desc: true }]
+// const defaultSorting = [{ id: 'totalCpuUsage_PerCents', desc: true }]
+const defaultSorting = [{ id: 'rss', desc: true }]
 export const Sorting = GenericStore("processSorting", () => defaultSorting);
