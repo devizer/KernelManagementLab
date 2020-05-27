@@ -111,11 +111,17 @@ export class ProcessListTable extends React.Component {
             if (value < 0.0001) return null;
             return Helper.Common.formatAnything(value*1024, 1, " ","B");
         }
-        
+
         function cellDuration(row) {
             const value = row.value;
             if (value < 0.0001) return null;
             return Helper.Common.formatDuration(Math.round(value,1), {}, {color:"grey"});
+        }
+
+        function cellCounter(row) {
+            const value = row.value;
+            if (value < 0.0001) return null;
+            return Helper.Common.formatAnything(value, 0, " ","");
         }
 
 
@@ -151,6 +157,8 @@ export class ProcessListTable extends React.Component {
             writeBlockBackedBytes_Current: cellCurrent,
             readSysCalls_Current: cellCurrent,
             writeSysCalls_Current: cellCurrent,
+            readSysCalls: cellCounter,
+            writeSysCalls: cellCounter,
             readBytes: cellKbTotal,
             writeBytes: cellKbTotal,
             readBlockBackedBytes: cellKbTotal,
