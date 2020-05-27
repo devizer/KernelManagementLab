@@ -9,11 +9,12 @@ import * as Helper from "../../Helper";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import processListStore from "./Store/ProcessListStore";
+import * as ProcessListLocalStore from "./Store/ProcessListLocalStore"
 import ProcessColumnsDefinition from "./ProcessColumnsDefinition";
 
 // require('typeface-noto-sans');
 
-const defaultSorting = [{ id: 'totalCpuUsage_PerCents', desc: true }]
+let defaultSorting = ProcessListLocalStore.getSorting();
 
 export class ProcessListTable extends React.Component {
     static displayName = ProcessListTable.name;
@@ -201,10 +202,13 @@ export class ProcessListTable extends React.Component {
                 if (isColumnVisible(`${header.id}.${column.field}`)) {
                     const cell = cells[column.field];
                     let cellStyle = cellStyles[column.field];
-                    if (header.caption !== "Process") cellStyle=stylePercents;
+                    if (header.caption !== "Process" || column.field === "uptime") cellStyle=stylePercents;
+                    
+                    // Column WIDTH definitions
                     let minWidth = column.field.endsWith("_PerCents") || column.field.endsWith("_Current") ? 41 : 55;
                     if (column.field === "pid") minWidth = 45;
-                    else if (column.field === "name") minWidth = 70;
+                    else if (column.field === "name") minWidth = 80;
+                    
                     let tableColumn = {
                         Header: column.caption,
                         // getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader2}},
@@ -224,7 +228,11 @@ export class ProcessListTable extends React.Component {
         
         const onSortedChange = (newSorted, column, shiftKey) => {
             // const defaultSorting = [{ id: 'totalCpuUsage_PerCents', desc: true }]
-            this.setState({sorting:[{ id: newSorted[0].id, desc: true }]});
+            const id = newSorted[0].id;
+            const descDirection = id === "name" || id === "pid" ? false : true;
+            const newSorting = [{ id: id, desc: descDirection }];
+            ProcessListLocalStore.setSorting(newSorting);
+            this.setState({sorting:newSorting});
         }; 
         
         
@@ -243,7 +251,6 @@ export class ProcessListTable extends React.Component {
                 sorted={this.state.sorting}
                 onSortedChange={onSortedChange} // Called when a sortable column header is clicked with the column itself and if the shiftkey was held. If the column is a pivoted column, `column` will be an array of columns
             />
-
         );
         
     }

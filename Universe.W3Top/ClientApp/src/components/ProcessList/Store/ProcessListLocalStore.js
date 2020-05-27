@@ -18,12 +18,28 @@ const store = engine.createStore(storages, plugins);
 
 export const StoreVersion = "1.4";
 
-export const setSelectedColumns = (selectedColumns) => {
-    store.set("selectedColumns", {ver: StoreVersion, selectedColumns});
+const GenericStore = (key, getDefault) => {
+    return {
+        set: (properties) => {
+            store.set(key, {ver: StoreVersion, properties});
+        },
+        get: () => {
+            let ret = getDefault();
+            const stored = store.get(key);
+            if (stored && stored.ver === StoreVersion && typeof stored.properties === "object") 
+                return stored.properties;
+            else
+                return typeof getDefault === "function" ? getDefault() : getDefault; 
+        }
+    }
 };
 
-export const setProcessRowsFilters = (processRowsFilters) => {
-    store.set("processRowsFilters", {ver: StoreVersion, processRowsFilters});
+
+// ┌───────────────────────────────────┐
+// │  --===## SelectedColumns ##===--  │
+// └───────────────────────────────────┘
+export const setSelectedColumns = (selectedColumns) => {
+    store.set("selectedColumns", {ver: StoreVersion, selectedColumns});
 };
 
 export const getSelectedColumns = () => {
@@ -36,6 +52,13 @@ export const getSelectedColumns = () => {
     return [...ret];
 };
 
+// ┌──────────────────────────────────────┐
+// │  --===## ProcessRowsFilters ##===--  │
+// └──────────────────────────────────────┘
+export const setProcessRowsFilters = (processRowsFilters) => {
+    store.set("processRowsFilters", {ver: StoreVersion, processRowsFilters});
+};
+
 export const getProcessRowsFilters = () => {
     let ret = ProcessRowsFilters.getDefault();
     let stored = store.get("processRowsFilters");
@@ -46,6 +69,26 @@ export const getProcessRowsFilters = () => {
     return ret;
 };
 
+// ┌───────────────────────────┐
+// │  --===## Sorting ##===--  │
+// └───────────────────────────┘
+const defaultSorting = [{ id: 'totalCpuUsage_PerCents', desc: true }]
+
+export const setSorting = (sorting) => {
+    store.set("processSorting", {ver: StoreVersion, sorting});
+};
+
+export const getSorting = () => {
+    let ret = defaultSorting;
+    let stored = store.get("processSorting");
+    if (stored && stored.ver === StoreVersion && typeof stored.sorting === "object") {
+        ret = stored.sorting;
+    }
+
+    return ret;
+};
+
+// _________________________________________________
 export const fillCalculatedFields = (processList) =>
 {
     const kinds = ["", "Init", "Service", "Container"];
@@ -63,5 +106,4 @@ export const fillCalculatedFields = (processList) =>
             process.kind = "";
         
     });
-    
 }
