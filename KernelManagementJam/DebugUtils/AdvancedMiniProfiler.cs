@@ -147,7 +147,7 @@ namespace KernelManagementJam.DebugUtils
         private Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> Report = new Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>();
         private Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> FirstCall = new Dictionary<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>();
         readonly object Sync = new object();
-        static readonly  AdvancedMiniProfilerReport _Instance = new AdvancedMiniProfilerReport();
+        static readonly AdvancedMiniProfilerReport _Instance = new AdvancedMiniProfilerReport();
         public static AdvancedMiniProfilerReport Instance => _Instance;
         long _Timestamp = 0;
 

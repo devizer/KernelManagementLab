@@ -103,37 +103,39 @@ export class Common {
         return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    static formatBytes(number, fractionCount) {
+    static formatAnything(number, fractionCount = 2, spacer = ' ', unit = "B") {
 
-        if (typeof fractionCount !== "number")
-            fractionCount = 2;
-        
         let scale = 1;
         if (fractionCount === 1) scale = 10.0;
         else if (fractionCount === 2) scale = 100.0;
         else if (fractionCount === 3) scale = 1000.0;
         else if (fractionCount > 0) for(let i=0; i<fractionCount; i++) scale=scale*10.0;
-        
+
         let format = num => (Math.round(num * scale) / scale).toLocaleString(undefined, {useGrouping: true});
         if (number === null || number === undefined)
             return null;
-        
+
         if (number === 0)
             return "0";
 
         if (number < 1499)
-            return format(number) + " B";
+            return `${format(number)}${spacer}${unit}`;
 
         if (number < 1499999)
-            return format((number / 1024.0)) + " KB";
+            return `${format(number / 1024.0)}${spacer}K${unit}`;
 
         if (number < 1499999999)
-            return format((number / 1024.00 / 1024.00)) + " MB";
+            return `${format(number / 1024.0 / 1024.0)}${spacer}M${unit}`;
 
         if (number < 1499999999999)
-            return format((number / 1024 / 1024 / 1024)) + " GB";
+            return `${format(number / 1024.0 / 1024.0 / 1024.0)}${spacer}G${unit}`;
 
-        return format((number / 1024 / 1024 / 1024 / 1024)) + " TB";
+        return `${format(number / 1024.0 / 1024.0 / 1024.0 / 1024.0)}${spacer}T${unit}`;
+    }
+    
+    static formatBytes(number, fractionCount) {
+        if (typeof fractionCount !== "number") fractionCount = 2; 
+            return Common.formatAnything(number, fractionCount, ' ', "B");
     }
     
     static formatInfoHeader(text) {

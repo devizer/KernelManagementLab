@@ -87,22 +87,64 @@ export class ProcessListTable extends React.Component {
             if (priority >= -100 && priority <= -2) return (<span className="rt-priority">RT {(-priority-1)}</span>);
             return priority;
         }
+        
         function cellPercents(row) {
             const perCents = row.value * 100;
             if (perCents < 0.0001) return null;
             return (<>{Math.round(perCents*10)/10}<small>%</small></>);
         }
         
+        function cellCurrent(row) {
+            const value = row.value;
+            if (value < 0.0001) return null;
+            return (<>{Helper.Common.formatAnything(value, 0, "","")}<small><sup><b> -1</b></sup></small></>);
+        }
+
+        function cellKbTotal(row) {
+            const value = row.value;
+            if (value < 0.0001) return null;
+            return Helper.Common.formatAnything(value, 1, " ","B");
+        }
+
+        function cellMemory(row) {
+            const value = row.value;
+            if (value < 0.0001) return null;
+            return Helper.Common.formatAnything(value*1024, 1, " ","B");
+        }
+
+
         const cells = {
             priority: cellPriority,
+            
+            rss: cellMemory,
+            shared: cellMemory,
+            swapped: cellMemory,
+            
             userCpuUsage_PerCents: cellPercents,
             kernelCpuUsage_PerCents: cellPercents,
             totalCpuUsage_PerCents: cellPercents,
             childrenUserCpuUsage_PerCents: cellPercents,
             childrenKernelCpuUsage_PerCents: cellPercents,
             childrenTotalCpuUsage_PerCents: cellPercents,
-            ioTime_PerCents: cellPercents
+            ioTime_PerCents: cellPercents,
+            
+            readBytes_Current: cellCurrent,
+            writeBytes_Current: cellCurrent,
+            readBlockBackedBytes_Current: cellCurrent,
+            writeBlockBackedBytes_Current: cellCurrent,
+            readSysCalls_Current: cellCurrent,
+            writeSysCalls_Current: cellCurrent,
+            readBytes: cellKbTotal,
+            writeBytes: cellKbTotal,
+            readBlockBackedBytes: cellKbTotal,
+            writeBlockBackedBytes: cellKbTotal,
+
+            minorPageFaults_Current: cellCurrent,
+            majorPageFaults_Current: cellCurrent,
+            childrenMinorPageFaults_Current: cellCurrent,
+            childrenMajorPageFaults_Current: cellCurrent,
         };
+        
         
         const stylePercents = {textAlign:"right"};
         const cellStyles = {
@@ -127,13 +169,14 @@ export class ProcessListTable extends React.Component {
             header.columns.forEach(column => {
                 if (isColumnVisible(`${header.id}.${column.field}`)) {
                     const cell = cells[column.field];
-                    const cellStyle = cellStyles[column.field];
-                    const minWidth = column.field.endsWith("_PerCents") ? 40 : 55;
+                    let cellStyle = cellStyles[column.field];
+                    if (header.caption !== "Process") cellStyle=stylePercents;
+                    const minWidth = column.field.endsWith("_PerCents") || column.field.endsWith("_Current") ? 40 : 55;
                     let tableColumn = {
                         Header: column.caption,
                         // getHeaderProps: (state, rowInfo, column) => {return {style: styleHeader2}},
                         accessor: column.field,
-                        getProps: () => { return {style:cellStyle}},
+                        getProps: () => { return cellStyle ? {style:cellStyle} : {}},
                         minWidth: minWidth,
                         Cell: cell,
                         // aggregate: noop,
