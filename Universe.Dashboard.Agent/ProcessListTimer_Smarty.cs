@@ -92,7 +92,7 @@ namespace Universe.Dashboard.Agent
                 long now = WholeTime.ElapsedMilliseconds;
                 bool continueUpdate = now - ActualListRequestTime < 5000;
                 bool needUpdate = now - ActualListBuildTime > 999;
-                var msg = $"Now: {now:n0}  RequestTime: {ActualListRequestTime} BuildTime: {ActualListBuildTime}";
+                // var msg = $"Now: {now:n0}  RequestTime: {ActualListRequestTime} BuildTime: {ActualListBuildTime}";
                 if (continueUpdate && needUpdate)
                 {
 
