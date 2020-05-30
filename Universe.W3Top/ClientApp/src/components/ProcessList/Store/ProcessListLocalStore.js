@@ -35,7 +35,7 @@ const GenericStore = (key, getDefault) => {
 
 
 // ┌───────────────────────────────────┐
-// │  --===## SelectedColumns ##===--  │
+// │  --===## Three Storages ##===--   │
 // └───────────────────────────────────┘
 export const SelectedColumns = GenericStore("processSelectedColumns", () => ProcessColumnsDefinition.DefaultColumnKeys);
 export const RowsFilters = GenericStore("processRowsFilters", () => ProcessRowsFilters.getDefault());
