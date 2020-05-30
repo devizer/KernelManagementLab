@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using NUnit.Framework;
-using Universe.LinuxTaskstat;
+using Universe.LinuxTaskStats;
 
 namespace KernelManagementJam.Tests
 {
