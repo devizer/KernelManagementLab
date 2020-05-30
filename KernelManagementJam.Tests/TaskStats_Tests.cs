@@ -5,7 +5,7 @@ using Universe.LinuxTaskStats;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class TaskStat_Tests
+    public class TaskStats_Tests
     {
         [Test]
         public void Test_Pid()
