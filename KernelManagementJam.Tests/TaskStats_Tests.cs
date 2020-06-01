@@ -12,6 +12,5 @@ namespace KernelManagementJam.Tests
         {
             Assert.AreEqual(Process.GetCurrentProcess().Id, TaskStatInterop.get_pid());
         }
-        
     }
 }
