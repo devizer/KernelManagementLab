@@ -80,6 +80,7 @@ namespace Universe.Dashboard.Agent
         public AdvancedProcessStatPoint(ProcessIoStat totals, LinuxTaskStats.LinuxTaskStats taskStats = default(LinuxTaskStats.LinuxTaskStats))
         {
             Totals = totals;
+            TaskStats = taskStats;
         }
     }
 }
