@@ -10,6 +10,7 @@ namespace Universe.Dashboard.Agent
         
         [JsonIgnore]
         public ProcessIoStat Totals { get; private set; }
+        public LinuxTaskStats.LinuxTaskStats TaskStats { get; private set; }
 
         // Process
         public int Pid => Totals.Pid;
@@ -72,7 +73,7 @@ namespace Universe.Dashboard.Agent
         public long ChildrenMajorPageFaults => Totals.ChildrenMajorPageFaults;
         public double ChildrenMajorPageFaults_Current { get; set; }
 
-        public AdvancedProcessStatPoint(ProcessIoStat totals)
+        public AdvancedProcessStatPoint(ProcessIoStat totals, LinuxTaskStats.LinuxTaskStats taskStats = default(LinuxTaskStats.LinuxTaskStats))
         {
             Totals = totals;
         }
