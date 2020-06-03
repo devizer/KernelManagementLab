@@ -11,7 +11,7 @@ namespace Universe.Dashboard.Agent
         [JsonIgnore]
         public ProcessIoStat Totals { get; private set; }
         
-        // TODO: add [JsonIgnore]
+        [JsonIgnore]
         public LinuxTaskStats.LinuxTaskStats TaskStats { get; private set; }
 
         private bool IsTaskStatsActual => TaskStats.Version != 0;
