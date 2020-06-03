@@ -26,6 +26,7 @@ namespace Universe.Dashboard.Agent
 
             public List<LinuxTaskStats.LinuxTaskStats> TaskStatsSnapshot;
             public Dictionary<ProcessIoStatKey, LinuxTaskStats.LinuxTaskStats> TaskStatsByKeys;
+            public Dictionary<int, LinuxTaskStats.LinuxTaskStats> TaskStatsByPid;
             
         }
         
@@ -46,7 +47,10 @@ namespace Universe.Dashboard.Agent
             
             next.TaskStatsByKeys = new Dictionary<ProcessIoStatKey, LinuxTaskStats.LinuxTaskStats>(next.Snapshot.Count, ProcessIoStatKey.EqualityComparer);
             foreach (var taskStat in taskStats)
+            {
                 next.TaskStatsByKeys[new ProcessIoStatKey() {Pid = taskStat.Pid, StartAtRaw = taskStat.BeginTime32}] = taskStat;
+                next.TaskStatsByPid[taskStat.Pid] = taskStat;
+            }
 
             return next;
         }
@@ -161,8 +165,9 @@ namespace Universe.Dashboard.Agent
                                 ProcessIoStatKey key = new ProcessIoStatKey() {Pid = process.Pid, StartAtRaw = process.StartAtRaw};
                                 if (Next.ByKeys.TryGetValue(key, out var prevProcess))
                                 {
-                                    LinuxTaskStats.LinuxTaskStats taskStat = Next.TaskStatsSnapshot.FirstOrDefault(x => x.Pid == process.Pid);
                                     double dur = (next.At - Next.At) / 1000;
+                                    // taskStat is a structure with Version=0 in case of missed key below
+                                    Next.TaskStatsByPid.TryGetValue(process.Pid, out var taskStat);
                                     // nice. TODO: calc delta and add row to ActualList
                                     AdvancedProcessStatPoint actualProcess = new AdvancedProcessStatPoint(process, taskStat);
                                     // IO Transfer
