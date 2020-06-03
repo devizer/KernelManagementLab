@@ -192,7 +192,7 @@ export class ProcessListTable extends React.Component {
                     // Column WIDTH definitions
                     let minWidth = column.field.endsWith("_PerCents") || column.field.endsWith("_Current") ? 41 : 55;
                     if (column.field === "pid") minWidth = 45;
-                    else if (column.field === "name") minWidth = 80;
+                    else if (column.field === "name") minWidth = 90;
                     
                     let tableColumn = {
                         Header: column.caption,
