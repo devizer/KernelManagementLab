@@ -49,7 +49,7 @@ namespace Universe.Dashboard.Agent
         public double ChildrenTotalCpuUsage_PerCents { get; set; }
         
         // IO Time
-        public double IoTime => IsTaskStatsActual ? (TaskStats.BlockIoDelay + TaskStats.SwapinDelay) : Totals.IoTime;
+        public double IoTime => IsTaskStatsActual ? (TaskStats.BlockIoDelay + TaskStats.SwapinDelay)/1000000d : Totals.IoTime;
         public double IoTime_PerCents { get; set; }
         
         // IO Transfer
