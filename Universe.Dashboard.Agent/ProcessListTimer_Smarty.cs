@@ -46,6 +46,7 @@ namespace Universe.Dashboard.Agent
                 next.ByKeys[new ProcessIoStatKey() {Pid = process.Pid, StartAtRaw = process.StartAtRaw}] = process;
             
             next.TaskStatsByKeys = new Dictionary<ProcessIoStatKey, LinuxTaskStats.LinuxTaskStats>(next.Snapshot.Count, ProcessIoStatKey.EqualityComparer);
+            next.TaskStatsByPid = new Dictionary<int, LinuxTaskStats.LinuxTaskStats>();
             foreach (var taskStat in taskStats)
             {
                 next.TaskStatsByKeys[new ProcessIoStatKey() {Pid = taskStat.Pid, StartAtRaw = taskStat.BeginTime32}] = taskStat;
