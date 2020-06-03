@@ -1,5 +1,5 @@
 ##### 1.20
-- Top Processes (work in progress)
+- Top Processes
 - Fixed full screen web app mode for iOS and Android
 
 ##### 1.19
