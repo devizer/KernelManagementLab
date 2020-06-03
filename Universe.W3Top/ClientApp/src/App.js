@@ -92,7 +92,8 @@ export default class App extends Component {
         return (
             <Layout>
                     <Switch>
-                        <Route exact path='/' component={NetChartContainer_V2} />
+                        {/*<Route exact path='/' component={NetChartContainer_V2} />*/}
+                        <Route exact path='/' component={ProcessListContainerV1} />
                         <Route exact path='/disks' component={BlockChartContainer_V2} />
                         <Route exact path='/processes' component={ProcessListContainerV1} />
                         <Route exact path='/material-nav' component={MNav} />
