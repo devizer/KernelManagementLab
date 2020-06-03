@@ -63,6 +63,7 @@ namespace Universe.Dashboard.Agent
         
         AutoResetEvent NotifyRequest = new AutoResetEvent(false);
 
+        // For UI
         public List<AdvancedProcessStatPoint> GetProcesses()
         {
             NotifyRequest.Set();
@@ -160,9 +161,10 @@ namespace Universe.Dashboard.Agent
                                 ProcessIoStatKey key = new ProcessIoStatKey() {Pid = process.Pid, StartAtRaw = process.StartAtRaw};
                                 if (Next.ByKeys.TryGetValue(key, out var prevProcess))
                                 {
+                                    LinuxTaskStats.LinuxTaskStats taskStat = Next.TaskStatsSnapshot.FirstOrDefault(x => x.Pid == process.Pid);
                                     double dur = (next.At - Next.At) / 1000;
                                     // nice. TODO: calc delta and add row to ActualList
-                                    AdvancedProcessStatPoint actualProcess = new AdvancedProcessStatPoint(process);
+                                    AdvancedProcessStatPoint actualProcess = new AdvancedProcessStatPoint(process, taskStat);
                                     // IO Transfer
                                     actualProcess.ReadBytes_Current = (process.ReadBytes - prevProcess.ReadBytes) / dur;
                                     actualProcess.WriteBytes_Current = (process.WriteBytes - prevProcess.WriteBytes) / dur;
