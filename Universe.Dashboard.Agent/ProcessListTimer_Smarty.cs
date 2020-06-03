@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
+using Universe.LinuxTaskStats;
 
 namespace Universe.Dashboard.Agent
 {
@@ -18,23 +19,34 @@ namespace Universe.Dashboard.Agent
 
         class State // immutable
         {
-            public List<ProcessIoStat> Snapshot;
             public double At; // milliseconds
+
+            public List<ProcessIoStat> Snapshot;
             public Dictionary<ProcessIoStatKey, ProcessIoStat> ByKeys;
+
+            public List<LinuxTaskStats.LinuxTaskStats> TaskStatsSnapshot;
+            public Dictionary<ProcessIoStatKey, LinuxTaskStats.LinuxTaskStats> TaskStatsByKeys;
+            
         }
         
         // Depends on WholeTime only
-        State BuildCurrentState(ProcessIoStat[] processes)
+        State BuildCurrentState(ProcessIoStat[] processes, List<LinuxTaskStats.LinuxTaskStats> taskStats)
         {
             // 
             State next = new State()
             {
                 At = WholeTime.ElapsedTicks * 1000d / Stopwatch.Frequency,
-                Snapshot = processes.Where(x => !x.IsZombie).ToList()
+                Snapshot = processes.Where(x => !x.IsZombie).ToList(),
+                TaskStatsSnapshot = taskStats,
             };
+            
             next.ByKeys = new Dictionary<ProcessIoStatKey, ProcessIoStat>(next.Snapshot.Count, ProcessIoStatKey.EqualityComparer);
             foreach (var process in next.Snapshot)
                 next.ByKeys[new ProcessIoStatKey() {Pid = process.Pid, StartAtRaw = process.StartAtRaw}] = process;
+            
+            next.TaskStatsByKeys = new Dictionary<ProcessIoStatKey, LinuxTaskStats.LinuxTaskStats>(next.Snapshot.Count, ProcessIoStatKey.EqualityComparer);
+            foreach (var taskStat in taskStats)
+                next.TaskStatsByKeys[new ProcessIoStatKey() {Pid = taskStat.Pid, StartAtRaw = taskStat.BeginTime32}] = taskStat;
 
             return next;
         }
@@ -102,15 +114,32 @@ namespace Universe.Dashboard.Agent
                     }
 
                     ProcessIoStat[] processes;
-                    using (GetProfilerSubStep("1. GetSnapshot"))
+                    using (GetProfilerSubStep("1. Get ProcessIoStat Snapshot"))
                     {
-                        processes = ProcessIoStat.GetProcesses(); // may fail?
+                        // may fail?
+                        processes = ProcessIoStat.GetProcesses()
+                            .Where(x => !x.IsZombie)
+                            .ToArray(); 
+                    }
+
+                    List<LinuxTaskStats.LinuxTaskStats> taskStats = new List<LinuxTaskStats.LinuxTaskStats>(processes.Length);
+                    using (GetProfilerSubStep("2. Get LinuxTaskStats Snapshot"))
+                    {
+                        for (int i = 0; i < processes.Length; i++)
+                        {
+                            if (LinuxTaskStatsReader.IsGetTaskStatByProcessSupported)
+                            {
+                                // Permissions are required: in debugger it returns null
+                                LinuxTaskStats.LinuxTaskStats? taskStat = LinuxTaskStatsReader.GetByProcess(processes[i].Pid);
+                                if (taskStat.HasValue) taskStats.Add(taskStat.Value);
+                            }
+                        }
                     }
 
                     State next;
-                    using (GetProfilerSubStep("2. Build Immutable State"))
+                    using (GetProfilerSubStep("3. Build Immutable State"))
                     {
-                       next = BuildCurrentState(processes);
+                       next = BuildCurrentState(processes, taskStats);
                     }
 
                     if (Next != null)
@@ -121,7 +150,7 @@ namespace Universe.Dashboard.Agent
                     bool atLeastHalfSeconds = Next != null && next.At - Next.At >= 500d;
                     if (Next != null /*&& isRecently */ /*&& atLeastHalfSeconds*/)
                     {
-                        using (GetProfilerSubStep("3. Compute Delta (build ActualList)"))
+                        using (GetProfilerSubStep("4. Compute Delta (build ActualList)"))
                         {
                             List<AdvancedProcessStatPoint> newList = new List<AdvancedProcessStatPoint>();
                             foreach (var process in next.Snapshot)

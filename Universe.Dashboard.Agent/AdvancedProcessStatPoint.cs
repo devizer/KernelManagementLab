@@ -12,6 +12,8 @@ namespace Universe.Dashboard.Agent
         public ProcessIoStat Totals { get; private set; }
         public LinuxTaskStats.LinuxTaskStats TaskStats { get; private set; }
 
+        private bool IsTaskStatsActual => TaskStats.Version != 0;
+
         // Process
         public int Pid => Totals.Pid;
         public int ParentPid => Totals.ParentPid;
@@ -45,7 +47,7 @@ namespace Universe.Dashboard.Agent
         public double ChildrenTotalCpuUsage_PerCents { get; set; }
         
         // IO Time
-        public double IoTime => Totals.IoTime;
+        public double IoTime => IsTaskStatsActual ? (TaskStats.BlockIoDelay + TaskStats.SwapinDelay) : Totals.IoTime;
         public double IoTime_PerCents { get; set; }
         
         // IO Transfer
