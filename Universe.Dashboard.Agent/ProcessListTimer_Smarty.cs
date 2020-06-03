@@ -134,6 +134,11 @@ namespace Universe.Dashboard.Agent
                                 if (taskStat.HasValue) taskStats.Add(taskStat.Value);
                             }
                         }
+
+                        if (DebugDumper.AreDumpsEnabled)
+                        {
+                            DebugDumper.Dump(taskStats, "LinuxTaskStats.json");
+                        }
                     }
 
                     State next;
