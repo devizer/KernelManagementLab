@@ -2,7 +2,7 @@
 
 Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relies on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
-Supported architectures are restricted by dotnet-sdk: x86_64, arm and arm64.
+Supported CPU architectures are restricted by dotnet-sdk: x86_64, arm and arm64 are fully supported
 
 ### Install from source
 The easiest way to (re)install it as a SystemD service, namely w3top, is to build from source:
