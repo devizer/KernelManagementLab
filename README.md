@@ -21,7 +21,7 @@ Service's journal is available using traditional SystemD's journal:
 journalctl -fu w3top.service
 ```
 
-The build script above depends on dotnet sdk 2.2, nodejs 10.5+ (with yarn) and powershell. Official portable versions of them can be installed using one-liner below:
+The build script above depends on dotnet sdk 2.2, nodejs 10+ (with yarn) and powershell. Official portable versions of them can be installed using one-liner below:
 ```bash
 script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh
 wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
