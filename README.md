@@ -2,7 +2,7 @@
 
 Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relies on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
-Supported architectures are restricted by dotnet-sdk: x86_64, arm and arm64.
+Supported CPU architectures are restricted by dotnet-sdk: x86_64, arm and arm64 are fully supported
 
 ### Install from source
 The easiest way to (re)install it as a SystemD service, namely w3top, is to build from source:
@@ -21,7 +21,7 @@ Service's journal is available using traditional SystemD's journal:
 journalctl -fu w3top.service
 ```
 
-The build script above depends on dotnet sdk 2.2, nodejs 10.5+ (with yarn) and powershell. Official portable versions of them can be installed using one-liner below:
+The build script above depends on dotnet sdk 2.2, nodejs 10+ (with yarn) and powershell. Official portable versions of them can be installed using one-liner below:
 ```bash
 script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh
 wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
