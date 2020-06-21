@@ -11,7 +11,7 @@
         <Version>2.2.497.598</Version>
       </PackageReference>
       <PackageReference Include="Universe.LinuxTaskStats">
-        <Version>0.42.165-pre-1355</Version>
+        <Version>0.42.166-pre-1391</Version>
       </PackageReference>
       <!--PackageReference Include="Microsoft.Extensions.Logging"  / -->
     </ItemGroup>
