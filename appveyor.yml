@@ -132,8 +132,9 @@ after_test:
     Say "Store project folder as 'AppVeyor Build Folder.7z' artifact"
     & "7z" a -t7z -mx=3 -ms=on "-xr!.git" "AppVeyor Build Folder.7z" .
 
-cache:
-- '%USERPROFILE%\.nuget\packages -> appveyor.yml'
+# cache:
+# - '%USERPROFILE%\.nuget\packages -> appveyor.yml'
+
 on_finish: # Run the demo to show that it works
 
 artifacts:
