@@ -16,7 +16,7 @@
       <PackageReference Include="NUnit" Version="3.12.0" />
       <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
       <PackageReference Include="coverlet.collector" Version="1.2.1" />
-      <PackageReference Include="Universe.LinuxTaskStats" Version="0.42.166-pre-1391" />
+      <PackageReference Include="Universe.LinuxTaskStats" Version="0.42.174-pre-1439" />
     </ItemGroup>
 
     <ItemGroup>
