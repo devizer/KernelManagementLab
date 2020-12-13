@@ -13,6 +13,11 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Test_Pid()
         {
+            Test_Pid_Impl();
+        }
+
+        private static void Test_Pid_Impl()
+        {
             try
             {
                 if (CrossInfo.ThePlatform == CrossInfo.Platform.Linux)
@@ -22,7 +27,6 @@ namespace KernelManagementJam.Tests
             {
                 Console.WriteLine("Warning! " + Environment.NewLine + fnf);
             }
-
         }
     }
 }
