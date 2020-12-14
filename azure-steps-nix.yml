@@ -3,7 +3,7 @@
 steps:
 
   - bash: |
-      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
       echo "AGENT_OS: '${AGENT_OS}'"
       if [[ "$(uname -s)" == Darwin ]]; then
         Say "Installing coreutils on OSX"
