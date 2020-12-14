@@ -22,6 +22,21 @@ steps:
       sudo ln -f -s $DOTNET_TARGET_DIR/dotnet /usr/local/bin/dotnet || true
       dotnet --info
     displayName: 'Install dotnet sdk 3.1 on linux/osx'
+    
+  - powershell: |
+        pushd "$($Env:UserProfile)"
+        Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
+      
+        $targetDir = "$($Env:ProgramFiles)\dotnet"; if (-not $targetDir) { "C:\Program Files\dotnet"; }
+        foreach ($v in @("2.1", "2.2", "3.0", "3.1", "5.0")) {
+          Write-Host "Installing .NET Core $v to [$targetDir]" -ForegroundColor Magenta
+          ./dotnet-install.ps1 -InstallDir "$($targetDir)" -Channel $v;
+        }
+        popd
+    condition: eq(variables['AGENT_OS'], 'Windows_NT')
+    displayName: '[WIN] Install dotnet sdk 2.1 - 5.0'
+
+
 
   - powershell: |
        $ErrorActionPreference = "SilentlyContinue"
