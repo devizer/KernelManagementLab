@@ -19,7 +19,7 @@ steps:
       export DOTNET_TARGET_DIR
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
       
-      sudo ln -s $DOTNET_TARGET_DIR/dotnet /usr/local/bin/dotnet || true
+      sudo ln -f -s $DOTNET_TARGET_DIR/dotnet /usr/local/bin/dotnet || true
       dotnet --info
     displayName: 'Install dotnet sdk 3.1 on linux/osx'
 
