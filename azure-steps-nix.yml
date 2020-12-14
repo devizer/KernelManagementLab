@@ -33,7 +33,7 @@ steps:
           ./dotnet-install.ps1 -InstallDir "$($targetDir)" -Channel $v;
         }
         popd
-    condition: eq(variables['AGENT_OS'], 'Windows_NT')
+    condition: eq(variables['Agent.OS'], 'Windows_NT')
     displayName: '[WIN] Install dotnet sdk 2.1 - 5.0'
 
 
