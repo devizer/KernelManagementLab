@@ -27,7 +27,7 @@ function build() {
   do
      fio_name=$(basename $url)
      echo "Downloading [$url]"
-     try-and-retry curl -ksSL -o fio_current.tar.gz "$url"
+     try-and-retry curl -kSL -o fio_current.tar.gz "$url"
      mkdir -p fio-src
      rm -rf fio-src/*
      cd fio-src; 
