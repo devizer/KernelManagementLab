@@ -35,13 +35,17 @@ function build() {
      cd ..
      name="temp-builder-${tag}"
      echo ""
-     echo "${counter} NAME: $name, [$fio_name]"
+     Say "NAME: $name, [$fio_name]"
      docker rm -f $name >/dev/null 2>&1 || true
      cmd="docker pull ${image}:${tag} >/dev/null 2>&1"
+     Say "Pull image [${image}:${tag}]"
      try-and-retry eval "$cmd"
+     Say "Start container [$name]"
      docker run -d --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
+     Say "Copy files to container"
      docker cp ./. "$name:/build/"
-     docker exec -t $name "ls -la /build; bash /build/in-container.sh"
+     Say "Exec ls"
+     docker exec -t $name ls -la /build
   done
 
 }
