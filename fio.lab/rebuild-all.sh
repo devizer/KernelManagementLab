@@ -45,7 +45,7 @@ function build() {
      Say "Copy files to container"
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
-     docker exec -t $name bash -c "cd /build; bash in-container.sh"
+     docker exec -t $name bash -c "cd /build; ls -la; bash in-container.sh"
   done
 
 }
