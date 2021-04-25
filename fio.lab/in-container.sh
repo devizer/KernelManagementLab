@@ -88,7 +88,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 enabled=0
 metadata_expire=never
 EOF
-    yum makecache >/dev/null 2>&1 || yum makecache >/dev/null 2>&1 || yum makecache
+    yum makecache || yum makecache >/dev/null 2>&1 || yum makecache
     yum install gcc make gettext -y || yum install gcc gettext -y || yum install gcc gettext -y;
 fi
 
@@ -100,3 +100,6 @@ ls -la
 cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
 make -j${cpus}
 make install
+pushd /usr/local/fio
+tar czf fio.tar.gz
+popd
