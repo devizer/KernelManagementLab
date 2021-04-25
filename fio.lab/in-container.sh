@@ -91,10 +91,7 @@ EOF
     yum install gcc gettext -y || yum install gcc gettext -y || yum install gcc gettext -y;
 fi
 
-# set -e
-# BUILD
-gcc -O2 -o show-taskstat-info show-taskstat-info.c;
-ls -la /get_taskstats.c;
-
-gcc -O2 -shared -fPIC -o libNativeLinuxInterop.so get_taskstats.c;
-ls -la libNativeLinuxInterop.so
+./configure --prefix=/usr/local/fio
+cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
+make -j${cpus}
+make install
