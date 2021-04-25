@@ -44,7 +44,7 @@ function build() {
      docker run -d --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
      Say "Copy files to container"
      docker cp ./. "$name:/build/"
-     Say "Exec ls"
+     Say "Exec BUILDING"
      docker exec -t $name bash -c "cd /build; bash in-container.sh"
   done
 
