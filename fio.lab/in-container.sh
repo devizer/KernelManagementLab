@@ -42,7 +42,8 @@ export DEBIAN_FRONTEND=noninteractive
 if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
     apt-get update -qq || apt-get update -qq || apt-get update
     # build-essential
-    apt-get install --no-install-recommends libc6-dev gcc gettext -y -q || apt-get install --no-install-recommends libc6-dev gcc gettext -y -q || apt-get install --no-install-recommends libc6-dev gcc gettext -y
+    cmd="apt-get install --no-install-recommends build-essential fio libc6-dev gcc gettext build-essential autoconf autoconf curl ca-certificates zlib1g zlib1g-dev make pv libncurses5-dev libncurses5 libncursesw5-dev libncursesw5 -y -q"
+    eval $cmd || eval $cmd || eval $cmd
 fi
 
 if [[ $(command -v yum 2>/dev/null) != "" ]]; then
