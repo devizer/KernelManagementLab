@@ -1,0 +1,92 @@
+﻿> INFO > IO Engine: [posixaio]. Direct IO: [Present]
+-----------------------------------------------------
+
+> OSX: Sequential read (/Users/admin)
+--------------------------------------
+Benchmark '/Users/admin' folder using 'read' test during 30 seconds and heating 0 secs, size is 1G
+RUN_read: (g=0): rw=read, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-2.21
+Starting 1 process
+RUN_read: Laying out IO file (1 file / 1024MiB)
+Jobs: 1 (f=1): [R(1)][100.0%][r=2494MiB/s,w=0KiB/s][r=2493,w=0 IOPS][eta 00m:00s]
+RUN_read: (groupid=0, jobs=1): err= 0: pid=46760: Sun Apr 25 22:04:34 2021
+   read: IOPS=2253, BW=2253MiB/s (2363MB/s)(66.1GiB/30022msec)
+   bw (  MiB/s): min= 1835, max= 2664, per=0.10%, avg=2258.03, stdev=175.71
+  cpu          : usr=1.34%, sys=4.41%, ctx=67969, majf=0, minf=32
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwt: total=67646,0,0, short=0,0,0, dropped=0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=2253MiB/s (2363MB/s), 2253MiB/s-2253MiB/s (2363MB/s-2363MB/s), io=66.1GiB (70.9GB), run=30022-30022msec
+
+
+> OSX: Sequential write (/Users/admin)
+---------------------------------------
+Benchmark '/Users/admin' folder using 'write' test during 30 seconds and heating 0 secs, size is 1G
+RUN_write: (g=0): rw=write, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=posixaio, iodepth=1
+fio-2.21
+Starting 1 process
+Jobs: 1 (f=1): [W(1)][100.0%][r=0KiB/s,w=919MiB/s][r=0,w=919 IOPS][eta 00m:00s] 
+RUN_write: (groupid=0, jobs=1): err= 0: pid=46766: Sun Apr 25 22:05:04 2021
+  write: IOPS=1016, BW=1016MiB/s (1065MB/s)(29.8GiB/30042msec)
+   bw (  KiB/s): min=271967, max=1203864, per=0.10%, avg=1040436.62, stdev=133389.94
+  cpu          : usr=5.01%, sys=3.27%, ctx=30588, majf=0, minf=30
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwt: total=0,30526,0, short=0,0,0, dropped=0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=1016MiB/s (1065MB/s), 1016MiB/s-1016MiB/s (1065MB/s-1065MB/s), io=29.8GiB (32.0GB), run=30042-30042msec
+
+
+> OSX: Random read (/Users/admin)
+----------------------------------
+Benchmark '/Users/admin' folder using 'randread' test during 30 seconds and heating 0 secs, size is 1G
+RUN_randread: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=64
+fio-2.21
+Starting 1 process
+Jobs: 1 (f=1): [r(1)][100.0%][r=50.9MiB/s,w=0KiB/s][r=13.0k,w=0 IOPS][eta 00m:00s]
+RUN_randread: (groupid=0, jobs=1): err= 0: pid=46772: Sun Apr 25 22:05:34 2021
+   read: IOPS=12.8k, BW=49.9MiB/s (52.3MB/s)(1496MiB/30005msec)
+   bw (  KiB/s): min=46656, max=53540, per=0.10%, avg=51068.32, stdev=1686.74
+  cpu          : usr=6.24%, sys=16.07%, ctx=190909, majf=0, minf=32
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=61.9%, 16=38.1%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=98.2%, 8=1.8%, 16=0.1%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwt: total=383064,0,0, short=0,0,0, dropped=0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+   READ: bw=49.9MiB/s (52.3MB/s), 49.9MiB/s-49.9MiB/s (52.3MB/s-52.3MB/s), io=1496MiB (1569MB), run=30005-30005msec
+
+
+> OSX: Random write (/Users/admin)
+-----------------------------------
+Benchmark '/Users/admin' folder using 'randwrite' test during 30 seconds and heating 0 secs, size is 1G
+RUN_randwrite: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=posixaio, iodepth=64
+fio-2.21
+Starting 1 process
+Jobs: 1 (f=1): [w(1)][100.0%][r=0KiB/s,w=42.9MiB/s][r=0,w=10.0k IOPS][eta 00m:00s]
+RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=46778: Sun Apr 25 22:06:04 2021
+  write: IOPS=10.9k, BW=42.6MiB/s (44.7MB/s)(1278MiB/30004msec)
+   bw (  KiB/s): min=33482, max=48548, per=0.10%, avg=43672.13, stdev=2484.99
+  cpu          : usr=6.73%, sys=17.17%, ctx=305938, majf=0, minf=29
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=46.2%, 16=53.7%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=98.9%, 8=1.1%, 16=0.1%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwt: total=0,327277,0, short=0,0,0, dropped=0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+  WRITE: bw=42.6MiB/s (44.7MB/s), 42.6MiB/s-42.6MiB/s (44.7MB/s-44.7MB/s), io=1278MiB (1341MB), run=30004-30004msec
+
+
+real	2m2.520s
+user	0m6.571s
+sys	0m13.927s
+admin@Mac-Admin ~/src/fio-2.21 $ 

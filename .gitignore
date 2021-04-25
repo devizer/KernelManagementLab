@@ -343,3 +343,4 @@ pseudo-root
 **/mono_crash.mem.*.blob
 *.bak
 *.bak/
+.idea/.idea.KernelManagementLab/.idea/riderModule.iml
