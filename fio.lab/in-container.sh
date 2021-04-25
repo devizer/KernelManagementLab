@@ -92,6 +92,7 @@ EOF
     yum install gcc gettext -y || yum install gcc gettext -y || yum install gcc gettext -y;
 fi
 
+cd fio* || true
 echo ""
 echo "CURRENT DIRECTORY: $(pwd)"
 ls -la
