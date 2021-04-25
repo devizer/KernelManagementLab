@@ -101,5 +101,5 @@ cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
 make -j${cpus}
 make install
 pushd /usr/local/fio
-tar czf fio.tar.gz
+tar czf ../fio.tar.gz .
 popd

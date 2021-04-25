@@ -47,8 +47,8 @@ function build() {
      Say "Exec BUILDING"
      docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh"
      Say "Grab binaries /usr/local/fio/fio.tar.gz"
-     mkdir -p result/$fio_name
-     docker cp "$name:/usr/local/fio/fio.tar.gz" result/$fio_name/fio.tar.gz
+     mkdir -p result/$fio_name/$public_name
+     docker cp "$name:/usr/local/fio.tar.gz" result/$fio_name/$public_name/fio.tar.gz
   done
 
 }
