@@ -26,7 +26,8 @@ function build() {
   cat fio-current.csv | while read url
   do
      fio_name=$(basename $url)
-     try-and-retry curl -ksSL -o fio_current.tar.gz $url
+     echo "Downloading [$url]"
+     try-and-retry curl -ksSL -o fio_current.tar.gz "$url"
      mkdir -p fio-src
      rm -rf fio-src/*
      cd fio-src; 
