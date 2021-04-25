@@ -92,6 +92,9 @@ EOF
     yum install gcc gettext -y || yum install gcc gettext -y || yum install gcc gettext -y;
 fi
 
+echo ""
+echo "CURRENT DIRECTORY: $(pwd)"
+ls -la
 ./configure --prefix=/usr/local/fio
 cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
 make -j${cpus}
