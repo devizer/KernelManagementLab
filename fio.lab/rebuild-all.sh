@@ -50,8 +50,8 @@ function build() {
 
 }
 
-build multiarch/ubuntu-debootstrap amd64-precise      amd64
 build centos 6 linux-rhel.6                           rhel6
+build multiarch/ubuntu-debootstrap amd64-precise      amd64
 build multiarch/ubuntu-debootstrap armhf-precise      armhf
 build multiarch/ubuntu-debootstrap i386-precise       i386
 build multiarch/ubuntu-debootstrap arm64-trusty       arm64

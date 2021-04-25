@@ -89,7 +89,7 @@ enabled=0
 metadata_expire=never
 EOF
     yum makecache >/dev/null 2>&1 || yum makecache >/dev/null 2>&1 || yum makecache
-    yum install gcc gettext -y || yum install gcc gettext -y || yum install gcc gettext -y;
+    yum install gcc make gettext -y || yum install gcc gettext -y || yum install gcc gettext -y;
 fi
 
 cd fio* || true
