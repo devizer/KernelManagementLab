@@ -49,6 +49,7 @@ if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
     echo "AIO support packages"
     apt-cache search "(fio|libaio)" 
     echo "";
+    apt-get install libaio-dev -y -qq
     # build-essential
     cmd="apt-get install --no-install-recommends build-essential libc6-dev gcc gettext build-essential autoconf autoconf zlib1g zlib1g-dev make libncurses5-dev libncurses5 libncursesw5-dev libncursesw5 -y -q"
     eval $cmd || eval $cmd || eval $cmd
