@@ -48,19 +48,21 @@ function build() {
      docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh"
      Say "Grab binaries /usr/local/fio/fio.tar.gz"
      mkdir -p result/$fio_name/$public_name
-     docker cp "$name:/usr/local/fio.tar.gz" result/$fio_name/$public_name/fio.tar.gz
+     docker cp "$name:/usr/local/fio.*.gz" result/$fio_name/$public_name/
   done
 
 }
 
-build centos 6 linux-rhel.6                           rhel6
-build multiarch/ubuntu-debootstrap amd64-precise      amd64
-build multiarch/ubuntu-debootstrap armhf-precise      armhf
-build multiarch/ubuntu-debootstrap i386-precise       i386
-build multiarch/ubuntu-debootstrap arm64-trusty       arm64
-build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el
-build multiarch/debian-debootstrap powerpc-wheezy     powerpc
-build multiarch/debian-debootstrap armel-wheezy       armel
-build multiarch/debian-debootstrap mips64el-stretch   mips64el
+build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
+build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
+build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
+build centos 6                                        rhel6
+build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise
+build multiarch/ubuntu-debootstrap i386-precise       i386-precise
+build multiarch/ubuntu-debootstrap arm64-trusty       arm64-trusty
+build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el-trusty
+build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy
+build multiarch/debian-debootstrap armel-wheezy       armel-wheezy
+build multiarch/debian-debootstrap mips64el-stretch   mips64el-stretch
 
 exit; 

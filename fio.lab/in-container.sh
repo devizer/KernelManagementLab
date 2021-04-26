@@ -101,5 +101,12 @@ cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
 make -j${cpus}
 make install
 pushd /usr/local/fio
-tar czf ../fio.tar.gz .
+tar czf ../fio-distribution.tar.gz .
+tar czf ../fio.tar.gz bin/fio
+echo "STRIPPING"
+pushd bin
+strip *
+popd
+tar czf ../fio-distribution-stripped.tar.gz .
+tar czf ../fio-stripped.tar.gz bin/fio
 popd
