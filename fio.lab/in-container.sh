@@ -107,7 +107,7 @@ EOF
     yum install libaio -y || yum install libaio -y || yum install libaio -y
     echo ""
     echo "Installing libaio-dev"
-    yum install libaio-dev -y || yum install libaio-dev -y || yum install libaio-dev -y
+    yum install libaio-devel -y || yum install libaio-devel -y || yum install libaio-devel -y
 fi
 
 cd fio* || true
