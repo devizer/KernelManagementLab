@@ -121,6 +121,9 @@ if [[ -d /usr/local/fio ]]; then
     echo "About *sync* engine"
     bin/fio --enghelp=sync
     echo ""
+    echo "About *posixaio* engine"
+    bin/fio --enghelp=posixaio
+    echo ""
     echo "About *libaio* engine"
     bin/fio --enghelp=libaio
     popd
