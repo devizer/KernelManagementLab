@@ -49,10 +49,10 @@ function build() {
      Say "Copy files to container"
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
-     mkdir -p result/$fio_name-$public_name
-     docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh" | tee result/$fio_name-$public_name/build.log
-     Say "Grab binaries from /out to [result/$fio_name-$public_name]"
-     docker cp "$name:/out/." result/$fio_name-$public_name/
+     mkdir -p result/$vname-$public_name
+     docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh" | tee result/$vname-$public_name/build.log
+     Say "Grab binaries from /out to [result/$vname-$public_name]"
+     docker cp "$name:/out/." result/$vname-$public_name/
      docker rm -f $name
   done
 
