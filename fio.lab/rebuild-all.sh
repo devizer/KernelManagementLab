@@ -65,7 +65,7 @@ build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
 build centos 6                                        amd64-rhel6
 build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise
-build multiarch/ubuntu-debootstrap armhf-xenail       armhf-xenial
+build multiarch/ubuntu-debootstrap armhf-xenial       armhf-xenial
 
 build multiarch/ubuntu-debootstrap i386-precise       i386-precise
 build multiarch/ubuntu-debootstrap i386-xenial        i386-xenial
