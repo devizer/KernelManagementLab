@@ -103,13 +103,15 @@ export CFLAGS="-O2" CXXFLAGS="-O2" CPPFLAGS="-O2"
 cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
 make -j${cpus}
 make install
-pushd /usr/local/fio
 mkdir -p /out
 rm -rf /out/*
-tar czf /out/fio-distribution.tar.gz .
-tar czf /out/fio.tar.gz bin/fio
-echo "STRIPPING"
-strip bin/*
-tar czf /out/fio-distribution-stripped.tar.gz .
-tar czf /out/fio-stripped.tar.gz bin/fio
-popd
+if [[ -d /usr/local/fio ]]; then
+    pushd /usr/local/fio
+    tar czf /out/fio-distribution.tar.gz .
+    tar czf /out/fio.tar.gz bin/fio
+    echo "STRIPPING"
+    strip bin/*
+    tar czf /out/fio-distribution-stripped.tar.gz .
+    tar czf /out/fio-stripped.tar.gz bin/fio
+    popd
+fi
