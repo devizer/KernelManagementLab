@@ -99,8 +99,7 @@ fi
 
 cd fio* || true
 echo ""
-echo "CURRENT DIRECTORY: $(pwd)"
-ls -la
+echo "CURRENT DIRECTORY: [$(pwd)]. Building"
 export CFLAGS="-O2" CXXFLAGS="-O2" CPPFLAGS="-O2"
 ./configure --prefix=/usr/local/fio
 cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)

@@ -50,7 +50,7 @@ function build() {
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
      mkdir -p result/$vname-$public_name
-     docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh" | tee result/$vname-$public_name/build.log
+     docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname-$public_name/build.log
      Say "Grab binaries from /out to [result/$vname-$public_name]"
      docker cp "$name:/out/." result/$vname-$public_name/
      docker rm -f $name
