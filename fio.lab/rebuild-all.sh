@@ -45,13 +45,17 @@ function build() {
      Say "Copy files to container"
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
-     docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh"
-     Say "Grab binaries /usr/local/fio/fio.tar.gz"
      mkdir -p result/$fio_name/$public_name
+     docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh" | tee result/$fio_name/$public_name/build.log
+     Say "Grab binaries /usr/local/fio/fio.tar.gz"
      docker cp "$name:/usr/local/fio.*.gz" result/$fio_name/$public_name/
   done
 
 }
+
+build multiarch/debian-debootstrap amd64-jessie       amd64-jessie
+build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy
+build multiarch/debian-debootstrap amd64-wheezy       amd64-stretch
 
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
