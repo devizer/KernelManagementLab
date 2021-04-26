@@ -49,6 +49,7 @@ function build() {
      docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh" | tee result/$fio_name/$public_name/build.log
      Say "Grab binaries /usr/local/fio/fio.tar.gz"
      docker cp "$name:/out/." result/$fio_name/$public_name/
+     docker rm -f $name
   done
 
 }
@@ -62,13 +63,20 @@ build multiarch/debian-debootstrap amd64-wheezy       amd64-stretch
 
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
-build centos 6                                        rhel6
+build centos 6                                        amd64-rhel6
 build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise
+build multiarch/ubuntu-debootstrap armhf-xenail       armhf-xenial
+
 build multiarch/ubuntu-debootstrap i386-precise       i386-precise
+build multiarch/ubuntu-debootstrap i386-xenial        i386-xenial
 build multiarch/ubuntu-debootstrap arm64-trusty       arm64-trusty
+build multiarch/ubuntu-debootstrap arm64-xenial       arm64-xenial
 build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el-trusty
+build multiarch/ubuntu-debootstrap ppc64el-xenial     ppc64el-xenial
 build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy
+build multiarch/debian-debootstrap powerpc-sid        powerpc-sid
 build multiarch/debian-debootstrap armel-wheezy       armel-wheezy
+build multiarch/debian-debootstrap armel-stretch      armel-stretch
 build multiarch/debian-debootstrap mips64el-stretch   mips64el-stretch
 
 exit; 
