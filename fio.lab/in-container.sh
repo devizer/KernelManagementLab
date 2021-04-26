@@ -117,5 +117,11 @@ if [[ -d /usr/local/fio ]]; then
     strip bin/*
     tar czf /out/fio-distribution-stripped.tar.gz .
     cd bin; tar czf /out/fio-stripped.tar.gz fio; cd ..
+    echo ""
+    echo "About *sync* engine"
+    bin/fio --enghelp=sync
+    echo ""
+    echo "About *libaio* engine"
+    bin/fio --enghelp=libaio
     popd
 fi
