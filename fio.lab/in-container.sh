@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 echo "LIBC: $(ldd --version)"
+echo ""
 
 source /etc/os-release
   if [[ $ID == debian ]] && [[ $VERSION_ID == 8 ]]; then
@@ -43,6 +44,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
     apt-get update -qq || apt-get update -qq || apt-get update
+    echo fio $(apt-cache policy fio | grep "andidate")
+    echo "";
     # build-essential
     cmd="apt-get install --no-install-recommends build-essential libc6-dev gcc gettext build-essential autoconf autoconf zlib1g zlib1g-dev make libncurses5-dev libncurses5 libncursesw5-dev libncursesw5 -y -q"
     eval $cmd || eval $cmd || eval $cmd
