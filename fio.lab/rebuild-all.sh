@@ -28,7 +28,9 @@ function build() {
   cat fio-current.csv | while read url
   do
      fio_name=$(basename $url)
-     echo "Downloading [$url]"
+     vname="${fio_name%.*}"
+     vname="${name%.*}"
+     echo "Downloading [$vname] from [$url]"
      try-and-retry curl -kSL -o fio_current.tar.gz "$url"
      mkdir -p fio-src
      rm -rf fio-src/*
@@ -47,10 +49,10 @@ function build() {
      Say "Copy files to container"
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
-     mkdir -p result/$fio_name/$public_name
+     mkdir -p result/$fio_name-$public_name
      docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh" | tee result/$fio_name/$public_name/build.log
-     Say "Grab binaries /usr/local/fio/fio.tar.gz"
-     docker cp "$name:/out/." result/$fio_name/$public_name/
+     Say "Grab binaries from /out to [result/$fio_name-$public_name]"
+     docker cp "$name:/out/." result/$fio_name-$public_name/
      docker rm -f $name
   done
 
