@@ -101,8 +101,7 @@ ls -la
 export CFLAGS="-O2" CXXFLAGS="-O2" CPPFLAGS="-O2"
 ./configure --prefix=/usr/local/fio
 cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
-make -j${cpus}
-make install
+make -j${cpus} && make install
 mkdir -p /out
 rm -rf /out/*
 if [[ -d /usr/local/fio ]]; then
