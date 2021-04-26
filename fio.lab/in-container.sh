@@ -126,5 +126,8 @@ if [[ -d /usr/local/fio ]]; then
     echo ""
     echo "About *libaio* engine"
     bin/fio --enghelp=libaio
+    echo ""
+    echo "fio dependencies"
+    ldd bin/fio
     popd
 fi
