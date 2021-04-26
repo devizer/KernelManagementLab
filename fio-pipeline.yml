@@ -6,20 +6,22 @@
 trigger:
 - master
 
-pool:
-  vmImage: ubuntu-latest
+jobs:
+  - job: Build
+    timeoutInMinutes: 599
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'ubuntu-latest'
+    
+    steps:
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+      - script: |
+          pushd fio.lab
+          bash rebuild-all.sh
+          popd
+        displayName: 'rebuild all'
 
-- script: |
-    pushd fio.lab
-    bash rebuild-all.sh
-    popd
-  displayName: 'rebuild all'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/fio.lab/result'
-    artifactName: fio
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(Build.ArtifactStagingDirectory)/fio.lab/result'
+          artifactName: fio
