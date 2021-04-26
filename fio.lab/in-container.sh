@@ -104,6 +104,7 @@ make -j${cpus}
 make install
 pushd /usr/local/fio
 mkdir -p /out
+rm -rf /out/*
 tar czf /out/fio-distribution.tar.gz .
 tar czf /out/fio.tar.gz bin/fio
 echo "STRIPPING"
