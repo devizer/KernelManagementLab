@@ -29,7 +29,7 @@ function build() {
   do
      fio_name=$(basename $url)
      vname="${fio_name%.*}"
-     vname="${name%.*}"
+     vname="${vname%.*}"
      echo "Downloading [$vname] from [$url]"
      try-and-retry curl -kSL -o fio_current.tar.gz "$url"
      mkdir -p fio-src
@@ -50,7 +50,7 @@ function build() {
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
      mkdir -p result/$fio_name-$public_name
-     docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh" | tee result/$fio_name/$public_name/build.log
+     docker exec -t $name bash -c "cd /build; ls -la; cd fio-src; bash ../in-container.sh" | tee result/$fio_name-$public_name/build.log
      Say "Grab binaries from /out to [result/$fio_name-$public_name]"
      docker cp "$name:/out/." result/$fio_name-$public_name/
      docker rm -f $name
