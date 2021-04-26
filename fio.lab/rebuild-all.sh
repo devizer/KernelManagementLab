@@ -45,7 +45,7 @@ function build() {
      Say "Pull image [${image}:${tag}]"
      try-and-retry eval "$cmd"
      Say "Start container [$name]"
-     docker run -d --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
+     docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
      Say "Copy files to container"
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
