@@ -53,7 +53,12 @@ function build() {
      docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname-$public_name/build.log
      Say "Grab binaries from /out to [result/$vname-$public_name]"
      docker cp "$name:/out/." result/$vname-$public_name/
+     ls result/$vname-$public_name/*.tar.gz >/dev/null 2>&1
+     if [[ $? != 0 ]]; then
+        mv result/$vname-$public_name "result/$vname-$public_name (not available)"
+     fi
      docker rm -f $name
+     
   done
 
 }
@@ -78,7 +83,6 @@ build multiarch/ubuntu-debootstrap arm64-xenial       arm64-xenial
 build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el-trusty
 build multiarch/ubuntu-debootstrap ppc64el-xenial     ppc64el-xenial
 build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy
-build multiarch/debian-debootstrap powerpc-sid        powerpc-sid
 build multiarch/debian-debootstrap armel-wheezy       armel-wheezy
 build multiarch/debian-debootstrap armel-stretch      armel-stretch
 build multiarch/debian-debootstrap mips64el-stretch   mips64el-stretch
