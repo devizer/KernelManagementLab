@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+echo "LIBC: $(ldd --version)"
+
 source /etc/os-release
   if [[ $ID == debian ]] && [[ $VERSION_ID == 8 ]]; then
     rm -f /etc/apt/sources.list.d/backports* || true
@@ -101,12 +103,11 @@ cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
 make -j${cpus}
 make install
 pushd /usr/local/fio
-tar czf ../fio-distribution.tar.gz .
-tar czf ../fio.tar.gz bin/fio
+mkdir -p /out
+tar czf /out/fio-distribution.tar.gz .
+tar czf /out/fio.tar.gz bin/fio
 echo "STRIPPING"
-pushd bin
-strip *
-popd
-tar czf ../fio-distribution-stripped.tar.gz .
-tar czf ../fio-stripped.tar.gz bin/fio
+strip bin/*
+tar czf /out/fio-distribution-stripped.tar.gz .
+tar czf /out/fio-stripped.tar.gz bin/fio
 popd

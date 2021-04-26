@@ -1,3 +1,4 @@
 ﻿3.26: gcc 4.9
 ubuntu 14 xenial: 5.4
 ubuntu 12 trusty: 4.8
+debian 8 jessie: 4.9, but ...
