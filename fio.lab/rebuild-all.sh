@@ -9,7 +9,9 @@ fi
 try-and-retry docker pull multiarch/qemu-user-static:register
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
-rm -f runtimes/missed.log
+if [[ -n "$TF_BUILD" ]]; then
+  rm -rf result/* || true
+fi
 counter=0
 errors=0;
 
