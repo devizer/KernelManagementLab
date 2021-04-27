@@ -9,7 +9,7 @@ trigger:
 jobs:
   - job: Build
     timeoutInMinutes: 599
-    cancelTimeoutInMinutes: 1
+    cancelTimeoutInMinutes: 3
     pool:
       vmImage: 'ubuntu-latest'
     
@@ -23,6 +23,7 @@ jobs:
         displayName: 'rebuild all'
 
       - task: PublishBuildArtifacts@1
+        condition: succeededOrFailed()
         inputs:
           pathToPublish: 'fio.lab/result'
           artifactName: fio
