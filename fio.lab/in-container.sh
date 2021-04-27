@@ -56,7 +56,8 @@ if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
     apt-get install libaio-dev -y -qq
     # build-essential
     # also depends on []zlib1g zlib1g-dev] but not included
-    cmd="apt-get install --no-install-recommends build-essential libc6-dev gcc gettext build-essential autoconf autoconf make libncurses5-dev libncurses5 libncursesw5-dev libncursesw5 -y -q"
+    # removed: libncurses5-dev libncurses5 libncursesw5-dev libncursesw5
+    cmd="apt-get install --no-install-recommends libc6-dev gcc gettext build-essential autoconf autoconf make -y -q"
     eval $cmd || eval $cmd || eval $cmd
 fi
 

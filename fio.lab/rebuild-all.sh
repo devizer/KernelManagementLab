@@ -62,8 +62,8 @@ function build() {
 
 }
 
-build multiarch/ubuntu-debootstrap amd64-bionic       amd64-bionic
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
+build multiarch/ubuntu-debootstrap amd64-bionic       amd64-bionic
 build multiarch/debian-debootstrap amd64-buster       amd64-buster
 build multiarch/debian-debootstrap amd64-bullseye     amd64-bullseye
 
