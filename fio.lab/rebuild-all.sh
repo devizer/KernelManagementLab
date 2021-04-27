@@ -72,10 +72,8 @@ function build() {
      if [[ $? != 0 ]]; then
         mv result/$vname-$public_name "result/$vname-$public_name (not available)"
      fi
-     docker rm -f $name
-     
   done
-
+  docker rm -f $name
 }
 
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
