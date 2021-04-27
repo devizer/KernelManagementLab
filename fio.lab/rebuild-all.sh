@@ -46,10 +46,12 @@ function build() {
      try-and-retry eval "$cmd"
      Say "Start container [$name]"
      docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
+     ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
      Say "Copy files to container"
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
      mkdir -p result/$vname-$public_name
+     echo "$public_name: $ldd_version" >> result/versions.txt 
      docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname-$public_name/build.log
      Say "Grab binaries from /out to [result/$vname-$public_name]"
      docker cp "$name:/out/." result/$vname-$public_name/
