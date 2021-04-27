@@ -15,6 +15,10 @@ errors=0;
 # set -e
 # nuget build will fail later in case of error
 
+function set_title() {
+  echo -e '\033k'$*'\033\\'
+}
+
 function build() {
   image=$1
   tag=$2
@@ -27,6 +31,7 @@ function build() {
      fio_name=$(basename $url)
      vname="${fio_name%.*}"
      vname="${vname%.*}"
+     set_title "$counter: $vname-$public_name"
      echo "Downloading [$vname] from [$url]"
      try-and-retry curl -kSL -o fio_current.tar.gz "$url"
      mkdir -p fio-src
