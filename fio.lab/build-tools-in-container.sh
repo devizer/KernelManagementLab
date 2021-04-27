@@ -1,4 +1,4 @@
-﻿source /etc/os-release
+source /etc/os-release
   if [[ $ID == debian ]] && [[ $VERSION_ID == 8 ]]; then
     rm -f /etc/apt/sources.list.d/backports* || true
     echo '
