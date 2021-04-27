@@ -26,19 +26,7 @@ function build() {
   counter=$((counter+1))
   err=0;
 
-  cat fio-current.csv | while read url
-  do
-     fio_name=$(basename $url)
-     vname="${fio_name%.*}"
-     vname="${vname%.*}"
-     set_title "$counter: $vname-$public_name"
-     echo "Downloading [$vname] from [$url]"
-     try-and-retry curl -kSL -o fio_current.tar.gz "$url"
-     mkdir -p fio-src
-     rm -rf fio-src/*
-     cd fio-src; 
-     tar xzf ../fio_current.tar.gz; 
-     cd ..
+     # creating container
      name="temp-builder-${tag}"
      echo ""
      Say "NAME: $name, [$fio_name]"
@@ -50,6 +38,28 @@ function build() {
      docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
      docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
      ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
+     Say "Installing build tools for container [$name]"
+     docker cp build-tools-in-container.sh "$name:/"
+     docker exec -t $name bash /build-tools-in-container.sh
+     Say "Container ready"
+
+  cat fio-current.csv | while read url
+  do
+     # download fio-src
+     fio_name=$(basename $url)
+     vname="${fio_name%.*}"
+     vname="${vname%.*}"
+     set_title "$counter: $vname-$public_name"
+     echo "Downloading [$vname] from [$url]"
+     try-and-retry curl -kSL -o fio_current.tar.gz "$url"
+     mkdir -p fio-src
+     rm -rf fio-src/*
+     cd fio-src; 
+     tar xzf ../fio_current.tar.gz; 
+     cd ..
+     Say "Clean up container"
+     docker exec -t $name bash -c "rm -rf /build; rm -rf /out; rm -rf /usr/local/fio"
+     # building
      Say "Copy files to container"
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
