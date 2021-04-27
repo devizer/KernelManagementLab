@@ -48,6 +48,7 @@ function build() {
      try-and-retry eval "$cmd"
      Say "Start container [$name]"
      docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
+     docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
      ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
      Say "Copy files to container"
      docker cp ./. "$name:/build/"

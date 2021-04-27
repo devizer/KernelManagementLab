@@ -142,5 +142,10 @@ if [[ -d /usr/local/fio ]]; then
     echo ""
     echo "fio dependencies"
     ldd bin/fio
+    echo ""
+    echo "Testing fio ..."
+    export PATH="$(pwd)/bin:$PATH"
+    File-IO-Benchmark "CURRENT" $(pwd) 1M 1 0;
+    echo "EXIT CODE of File-IO-Benchmark: $?"
     popd
 fi
