@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+export CFLAGS="-O2"
+export CXXFLAGS="-O2"
 echo "LIBC: $(ldd --version)"
 echo ""
 

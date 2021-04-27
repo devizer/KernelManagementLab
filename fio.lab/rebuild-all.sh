@@ -9,9 +9,6 @@ fi
 try-and-retry docker pull multiarch/qemu-user-static:register
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
-if [[ -n "$TF_BUILD" ]]; then
-  rm -rf result/* || true
-fi
 counter=0
 errors=0;
 
@@ -51,7 +48,7 @@ function build() {
      docker cp ./. "$name:/build/"
      Say "Exec BUILDING"
      mkdir -p result/$vname-$public_name
-     echo "$public_name: $ldd_version" >> result/versions.txt 
+     echo "$public_name: libc $ldd_version" >> result/versions.txt 
      docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname-$public_name/build.log
      Say "Grab binaries from /out to [result/$vname-$public_name]"
      docker cp "$name:/out/." result/$vname-$public_name/

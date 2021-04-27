@@ -17,9 +17,8 @@ jobs:
 
       - script: |
           pushd fio.lab
-          export CFLAGS="-O2"
-          export CXXFLAGS="-O2"
-          bash rebuild-all.sh
+          mkdir -p result; rm -rf result/* || true
+          bash rebuild-all.sh | tee result/detailed.log
           popd
         displayName: 'rebuild all'
 
