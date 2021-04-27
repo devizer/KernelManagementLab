@@ -76,16 +76,16 @@ function build() {
      Say "Configure options for [$options_key]: [$options_cmd]"
      docker exec -t $name bash -c "$options_cmd"
      # building
-     Say "Copy files to container for [$vname${options_cmd}-$public_name]"
+     Say "Copy files to container for [$vname${options_key}-$public_name]"
      docker cp ./. "$name:/build/"
-     Say "Exec BUILDING for [$vname${options_cmd}-$public_name]"
-     mkdir -p result/$vname${options_cmd}-$public_name
-     docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname${options_cmd}-$public_name/build.log
-     Say "Grab binaries from /out to [result/$vname${options_cmd}-$public_name]"
-     docker cp "$name:/out/." result/$vname${options_cmd}-$public_name/
-     ls result/$vname${options_cmd}-$public_name/*.tar.gz >/dev/null 2>&1
+     Say "Exec BUILDING for [$vname${options_key}-$public_name]"
+     mkdir -p result/$vname${options_key}-$public_name
+     docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname${options_key}-$public_name/build.log
+     Say "Grab binaries from /out to [result/$vname${options_key}-$public_name]"
+     docker cp "$name:/out/." result/$vname${options_key}-$public_name/
+     ls result/$vname${options_key}-$public_name/*.tar.gz >/dev/null 2>&1
      if [[ $? != 0 ]]; then
-        mv result/$vname${options_cmd}-$public_name "result/$vname${options_cmd}-$public_name (not available)"
+        mv result/$vname${options_key}-$public_name "result/$vname${options_key}-$public_name (not available)"
      fi
   done # versions
   done # options
