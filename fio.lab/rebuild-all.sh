@@ -45,6 +45,18 @@ function build() {
      docker exec -t $name bash /build-tools-in-container.sh
      Say "Container ready"
 
+  # 1: libaio, 2: zlib
+  cmd_i1="echo 'INSTALLING [libaio]'; test -d /etc/yum.repos.d && yum install libaio-devel -y; test -d /etc/apt && apt-get install -y libaio-dev"
+  cmd_i2="echo 'INSTALLING [zlib]'; test -d /etc/yum.repos.d && yum install zlib-devel -y; test -d /etc/apt && apt-get install -y zlib1g-dev"
+  cmd_r1="echo 'REMOVE [libaio]'; test -d /etc/yum.repos.d && yum remove libaio-devel -y; test -d /etc/apt && apt-get remove -y libaio-dev"
+  cmd_r2="echo 'REMOVE [zlib]'; test -d /etc/yum.repos.d && yum remove zlib-devel -y; test -d /etc/apt && apt-get remove -y zlib1g-dev"
+  options_commands=("${cmd_i1};${cmd_i2}" "${cmd_i1};${cmd_r2}" "${cmd_r1};${cmd_i2}" "${cmd_r1};${cmd_r2}")
+  options_keys=("-libaio-zlib" "-libaio" "-zlib" "")
+
+  for (( i=0; i < ${#options_keys[@]}; i++ )); do 
+  options_cmd="${options_commands[$i]}"; 
+  options_key="${options_keys[$i]}"; 
+  echo "[$options_key]: [$options_cmd]"
   cat fio-current.csv | while read url
   do
      # download fio-src
@@ -59,21 +71,24 @@ function build() {
      cd fio-src; 
      tar xzf ../fio_current.tar.gz; 
      cd ..
-     Say "Clean up container for [$vname-$public_name]"
+     Say "Clean up container for [$vname${options_cmd}-$public_name]"
      docker exec -t $name bash -c "rm -rf /build; rm -rf /out; rm -rf /usr/local/fio"
+     Say "Configure options for [$options_key]: [$options_cmd]"
+     docker exec -t $name bash -c "$options_cmd"
      # building
-     Say "Copy files to container for [$vname-$public_name]"
+     Say "Copy files to container for [$vname${options_cmd}-$public_name]"
      docker cp ./. "$name:/build/"
-     Say "Exec BUILDING for [$vname-$public_name]"
-     mkdir -p result/$vname-$public_name
-     docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname-$public_name/build.log
-     Say "Grab binaries from /out to [result/$vname-$public_name]"
-     docker cp "$name:/out/." result/$vname-$public_name/
-     ls result/$vname-$public_name/*.tar.gz >/dev/null 2>&1
+     Say "Exec BUILDING for [$vname${options_cmd}-$public_name]"
+     mkdir -p result/$vname${options_cmd}-$public_name
+     docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname${options_cmd}-$public_name/build.log
+     Say "Grab binaries from /out to [result/$vname${options_cmd}-$public_name]"
+     docker cp "$name:/out/." result/$vname${options_cmd}-$public_name/
+     ls result/$vname${options_cmd}-$public_name/*.tar.gz >/dev/null 2>&1
      if [[ $? != 0 ]]; then
-        mv result/$vname-$public_name "result/$vname-$public_name (not available)"
+        mv result/$vname${options_cmd}-$public_name "result/$vname${options_cmd}-$public_name (not available)"
      fi
-  done
+  done # versions
+  done # options
   docker rm -f $name
 }
 
