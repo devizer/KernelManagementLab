@@ -11,6 +11,7 @@ docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
 counter=0
 errors=0;
+mkdir -p result
 
 # set -e
 # nuget build will fail later in case of error
@@ -29,7 +30,7 @@ function build() {
      # creating container
      name="temp-builder-${tag}"
      echo ""
-     Say "NAME: $name, [$fio_name]"
+     Say "Container NAME: $name"
      docker rm -f $name >/dev/null 2>&1 || true
      cmd="docker pull ${image}:${tag} >/dev/null 2>&1"
      Say "Pull image [${image}:${tag}]"
@@ -38,6 +39,7 @@ function build() {
      docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
      docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
      ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
+     echo "$public_name: libc $ldd_version" >> result/versions.txt
      Say "Installing build tools for container [$name]"
      docker cp build-tools-in-container.sh "$name:/"
      docker exec -t $name bash /build-tools-in-container.sh
@@ -50,21 +52,20 @@ function build() {
      vname="${fio_name%.*}"
      vname="${vname%.*}"
      set_title "$counter: $vname-$public_name"
-     echo "Downloading [$vname] from [$url]"
+     echo "Downloading [$vname] for [$vname-$public_name] from [$url]"
      try-and-retry curl -kSL -o fio_current.tar.gz "$url"
      mkdir -p fio-src
      rm -rf fio-src/*
      cd fio-src; 
      tar xzf ../fio_current.tar.gz; 
      cd ..
-     Say "Clean up container"
+     Say "Clean up container for [$vname-$public_name]"
      docker exec -t $name bash -c "rm -rf /build; rm -rf /out; rm -rf /usr/local/fio"
      # building
-     Say "Copy files to container"
+     Say "Copy files to container for [$vname-$public_name]"
      docker cp ./. "$name:/build/"
-     Say "Exec BUILDING"
+     Say "Exec BUILDING for [$vname-$public_name]"
      mkdir -p result/$vname-$public_name
-     echo "$public_name: libc $ldd_version" >> result/versions.txt 
      docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname-$public_name/build.log
      Say "Grab binaries from /out to [result/$vname-$public_name]"
      docker cp "$name:/out/." result/$vname-$public_name/
