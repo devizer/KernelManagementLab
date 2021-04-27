@@ -146,7 +146,7 @@ if [[ -d /usr/local/fio ]]; then
     echo "Testing fio ..."
     export PATH="$(pwd)/bin:$PATH"
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
-    File-IO-Benchmark "CURRENT" $(pwd) 1M 1 0;
+    File-IO-Benchmark "CONTAINER" $(pwd) 1M 1 0;
     echo "EXIT CODE of File-IO-Benchmark: $?"
-    popd
+    popd >/dev/null
 fi
