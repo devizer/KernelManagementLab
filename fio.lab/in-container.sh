@@ -18,6 +18,7 @@ make -j${cpus} && make install
 mkdir -p /out
 rm -rf /out/*
 if [[ -d /usr/local/fio ]]; then
+    export GZIP=-9
     pushd /usr/local/fio
     tar czf /out/fio-distribution.tar.gz .
     cd bin; tar czf /out/fio.tar.gz fio; cd ..
