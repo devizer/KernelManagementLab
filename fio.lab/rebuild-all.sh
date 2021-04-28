@@ -49,8 +49,14 @@ function build() {
   cmd_i2="echo 'INSTALLING [zlib]'; test -d /etc/yum.repos.d && yum install zlib-devel -y; test -d /etc/apt && apt-get install -y zlib1g-dev"
   cmd_r1="echo 'REMOVE [libaio]'; test -d /etc/yum.repos.d && yum remove libaio-devel -y; test -d /etc/apt && apt-get remove -y libaio-dev"
   cmd_r2="echo 'REMOVE [zlib]'; test -d /etc/yum.repos.d && yum remove zlib-devel -y; test -d /etc/apt && apt-get remove -y zlib1g-dev"
+  
+  # libaio & zlib vars
   options_commands=("${cmd_i1};${cmd_i2}" "${cmd_i1};${cmd_r2}" "${cmd_r1};${cmd_i2}" "${cmd_r1};${cmd_r2}")
   options_keys=("-libaio-zlib" "-libaio" "-zlib" "")
+  
+  # libaio varies only
+  options_commands=("${cmd_i1};" "${cmd_r1};")
+  options_keys=("-libaio" "")
   
   # cut next two lines
   # options_commands=("${cmd_i1};${cmd_i2}")
