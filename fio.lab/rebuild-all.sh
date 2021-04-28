@@ -104,9 +104,9 @@ function build() {
 }
 
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
+build centos 6                                        amd64-rhel6
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
-build centos 6                                        amd64-rhel6
 
 build multiarch/debian-debootstrap amd64-stretch      amd64-stretch
 build multiarch/debian-debootstrap amd64-jessie       amd64-jessie
