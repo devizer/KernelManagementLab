@@ -20,11 +20,13 @@ rm -rf /out/*
 if [[ -d /usr/local/fio ]]; then
     export GZIP=-9
     pushd /usr/local/fio
-    tar czf /out/fio-distribution.tar.gz .
+    # tar czf /out/fio-distribution.tar.gz .
+    tar cf - . | pigz -9 > /out/fio-distribution.tar.gz
     cd bin; tar czf /out/fio.tar.gz fio; cd ..
     echo "STRIPPING"
     strip bin/*
     tar czf /out/fio-distribution-stripped.tar.gz .
+    tar cf - . | pigz -9 > /out/fio-distribution-stripped.tar.gz
     cd bin; tar czf /out/fio-stripped.tar.gz fio; cd ..
     echo ""
     echo "About *sync* engine"
