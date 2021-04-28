@@ -27,23 +27,23 @@ function build() {
   counter=$((counter+1))
   err=0;
 
-     # creating container
-     name="temp-builder-${tag}"
-     echo ""
-     Say "Container NAME: $name"
-     docker rm -f $name >/dev/null 2>&1 || true
-     cmd="docker pull ${image}:${tag} >/dev/null 2>&1"
-     Say "Pull image [${image}:${tag}]"
-     try-and-retry eval "$cmd"
-     Say "Start container [$name]"
-     docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
-     docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
-     ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
-     echo "$public_name: libc $ldd_version" >> result/versions.txt
-     Say "Installing build tools for container [$name]"
-     docker cp build-tools-in-container.sh "$name:/"
-     docker exec -t $name bash /build-tools-in-container.sh
-     Say "Container ready"
+  # creating container, it will reused 4 times for all versions
+  name="temp-builder-${tag}"
+  echo ""
+  Say "Container NAME: $name"
+  docker rm -f $name >/dev/null 2>&1 || true
+  cmd="docker pull ${image}:${tag} >/dev/null 2>&1"
+  Say "Pull image [${image}:${tag}]"
+  try-and-retry eval "$cmd"
+  Say "Start container [$name]"
+  docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
+  docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
+  ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
+  echo "$public_name: libc $ldd_version" >> result/versions.txt
+  Say "Installing build tools for container [$name]"
+  docker cp build-tools-in-container.sh "$name:/"
+  docker exec -t $name bash /build-tools-in-container.sh
+  Say "Container ready"
 
   # 1: libaio, 2: zlib
   cmd_i1="echo 'INSTALLING [libaio]'; test -d /etc/yum.repos.d && yum install libaio-devel -y; test -d /etc/apt && apt-get install -y libaio-dev"
@@ -52,6 +52,11 @@ function build() {
   cmd_r2="echo 'REMOVE [zlib]'; test -d /etc/yum.repos.d && yum remove zlib-devel -y; test -d /etc/apt && apt-get remove -y zlib1g-dev"
   options_commands=("${cmd_i1};${cmd_i2}" "${cmd_i1};${cmd_r2}" "${cmd_r1};${cmd_i2}" "${cmd_r1};${cmd_r2}")
   options_keys=("-libaio-zlib" "-libaio" "-zlib" "")
+  
+  # cut next two lines
+  options_commands=("echo skip")
+  options_keys=("-skip")
+  
 
   for (( i=0; i < ${#options_keys[@]}; i++ )); do 
   options_cmd="${options_commands[$i]}"; 
@@ -71,9 +76,10 @@ function build() {
      cd fio-src; 
      tar xzf ../fio_current.tar.gz; 
      cd ..
-     Say "Clean up container for [$vname${options_cmd}-$public_name]"
+     Say "Clean up container for [$vname${options_key}-$public_name]"
      docker exec -t $name bash -c "rm -rf /build; rm -rf /out; rm -rf /usr/local/fio"
-     Say "Configure options for [$options_key]: [$options_cmd]"
+     Say "Configure options for [$options_key]"
+     echo $options_cmd
      docker exec -t $name bash -c "$options_cmd"
      # building
      Say "Copy files to container for [$vname${options_key}-$public_name]"
@@ -92,18 +98,16 @@ function build() {
   docker rm -f $name
 }
 
-build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
-build multiarch/debian-debootstrap amd64-buster       amd64-buster
-build multiarch/debian-debootstrap amd64-bullseye     amd64-bullseye
-build multiarch/ubuntu-debootstrap amd64-bionic       amd64-bionic
+build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
 build centos 6                                        amd64-rhel6
-build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
 build multiarch/debian-debootstrap amd64-stretch      amd64-stretch
 build multiarch/debian-debootstrap amd64-jessie       amd64-jessie
 build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy
-build multiarch/debian-debootstrap amd64-wheezy       amd64-stretch
+
+# amd64-stretch is fake
+# build multiarch/debian-debootstrap amd64-wheezy       amd64-stretch
 
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
@@ -120,5 +124,10 @@ build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy
 build multiarch/debian-debootstrap armel-wheezy       armel-wheezy
 build multiarch/debian-debootstrap armel-stretch      armel-stretch
 build multiarch/debian-debootstrap mips64el-stretch   mips64el-stretch
+
+build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
+build multiarch/debian-debootstrap amd64-buster       amd64-buster
+build multiarch/debian-debootstrap amd64-bullseye     amd64-bullseye
+build multiarch/ubuntu-debootstrap amd64-bionic       amd64-bionic
 
 exit; 
