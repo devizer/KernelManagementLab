@@ -48,7 +48,7 @@ if [[ -d /usr/local/fio ]]; then
     export PATH="$(pwd)/bin:$PATH"
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
     File-IO-Benchmark "CONTAINER" $(pwd) 1M 3 3 | tee /out/Benchmark.log
-    gzip < /out/Benchmark.log > /out/Benchmark.log.gz
+    gzip /out/Benchmark.log.gz
     echo "EXIT CODE of File-IO-Benchmark: $?"
     popd >/dev/null
 fi
