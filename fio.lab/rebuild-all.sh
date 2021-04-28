@@ -56,7 +56,6 @@ function build() {
   # cut next two lines
   options_commands=("${cmd_i1};${cmd_i2}")
   options_keys=("-skip")
-  
 
   for (( i=0; i < ${#options_keys[@]}; i++ )); do 
   options_cmd="${options_commands[$i]}"; 
