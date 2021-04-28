@@ -57,6 +57,9 @@ function build() {
   # libaio varies only
   options_commands=("${cmd_i1};" "${cmd_r1};")
   options_keys=("-libaio" "")
+
+  options_commands=("${cmd_i1};")
+  options_keys=("-testlog")
   
   # cut next two lines
   # options_commands=("${cmd_i1};${cmd_i2}")
