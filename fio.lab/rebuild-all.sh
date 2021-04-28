@@ -103,7 +103,6 @@ function build() {
   docker rm -f $name
 }
 
-function _already_done_ {
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
@@ -122,7 +121,6 @@ build multiarch/ubuntu-debootstrap armhf-xenial       armhf-xenial
 build multiarch/ubuntu-debootstrap i386-precise       i386-precise
 build multiarch/ubuntu-debootstrap i386-xenial        i386-xenial
 
-}
 
 build multiarch/ubuntu-debootstrap arm64-trusty       arm64-trusty
 build multiarch/ubuntu-debootstrap arm64-xenial       arm64-xenial

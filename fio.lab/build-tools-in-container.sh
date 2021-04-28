@@ -53,6 +53,8 @@ if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
     # removed: libncurses5-dev libncurses5 libncursesw5-dev libncursesw5
     cmd="apt-get install --no-install-recommends libc6-dev gcc build-essential autoconf autoconf make -y -q"
     eval $cmd || eval $cmd || eval $cmd
+    cmd="apt-get install --no-install-recommends pigz -y -q"
+    eval $cmd || eval $cmd || eval $cmd
 fi
 
 if [[ $(command -v yum 2>/dev/null) != "" ]]; then
