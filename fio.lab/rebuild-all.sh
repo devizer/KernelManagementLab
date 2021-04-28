@@ -24,7 +24,6 @@ function build() {
   image=$1
   tag=$2
   public_name=$3
-  counter=$((counter+1))
   err=0;
 
   # creating container, it will reused 4 times for all versions
@@ -63,30 +62,31 @@ function build() {
   echo "[$options_key]: [$options_cmd]"
   cat fio-current.csv | while read url
   do
+     counter=$((counter+1))
      # download fio-src
      fio_name=$(basename $url)
      vname="${fio_name%.*}"
      vname="${vname%.*}"
      set_title "$counter: $vname-$public_name"
-     echo "Downloading [$vname] for [$vname-$public_name] from [$url]"
+     echo "($counter) Downloading [$vname] for [$vname-$public_name] from [$url]"
      try-and-retry curl -kSL -o fio_current.tar.gz "$url"
      mkdir -p fio-src
      rm -rf fio-src/*
      cd fio-src; 
      tar xzf ../fio_current.tar.gz; 
      cd ..
-     Say "Clean up container for [$vname${options_key}-$public_name]"
+     Say "($counter) Clean up container for [$vname${options_key}-$public_name]"
      docker exec -t $name bash -c "rm -rf /build; rm -rf /out; rm -rf /usr/local/fio"
-     Say "Configure options for [$options_key]"
+     Say "($counter) Configure options for [$options_key]"
      echo $options_cmd
      docker exec -t $name bash -c "$options_cmd"
      # building
-     Say "Copy files to container for [$vname${options_key}-$public_name]"
+     Say "($counter) Copy files to container for [$vname${options_key}-$public_name]"
      docker cp ./. "$name:/build/"
-     Say "Exec BUILDING for [$vname${options_key}-$public_name]"
+     Say "($counter) Exec BUILDING for [$vname${options_key}-$public_name]"
      mkdir -p result/$vname${options_key}-$public_name
      docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname${options_key}-$public_name/build.log
-     Say "Grab binaries from /out to [result/$vname${options_key}-$public_name]"
+     Say "($counter) Grab binaries from /out to [result/$vname${options_key}-$public_name]"
      docker cp "$name:/out/." result/$vname${options_key}-$public_name/
      ls result/$vname${options_key}-$public_name/*.tar.gz >/dev/null 2>&1
      if [[ $? != 0 ]]; then
@@ -97,6 +97,7 @@ function build() {
   docker rm -f $name
 }
 
+build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
 build centos 6                                        amd64-rhel6
@@ -109,7 +110,6 @@ build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy
 # build multiarch/debian-debootstrap amd64-wheezy       amd64-stretch
 
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
-build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
 build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise
 build multiarch/ubuntu-debootstrap armhf-xenial       armhf-xenial
 
