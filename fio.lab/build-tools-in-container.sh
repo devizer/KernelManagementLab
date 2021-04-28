@@ -51,7 +51,7 @@ if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
     # build-essential
     # also depends on []zlib1g zlib1g-dev] but not included
     # removed: libncurses5-dev libncurses5 libncursesw5-dev libncursesw5
-    cmd="apt-get install --no-install-recommends libc6-dev gcc gettext build-essential autoconf autoconf make -y -q"
+    cmd="apt-get install --no-install-recommends libc6-dev gcc build-essential autoconf autoconf make -y -q"
     eval $cmd || eval $cmd || eval $cmd
 fi
 
@@ -98,7 +98,7 @@ enabled=0
 metadata_expire=never
 EOF
     yum makecache || yum makecache >/dev/null 2>&1 || yum makecache
-    yum install gcc make gettext -y || yum install gcc gettext -y || yum install gcc gettext -y;
+    yum install gcc make -y || yum install gcc make -y || yum install gcc make -y;
     # echo ""; echo "Installing libaio-dev"
     # yum install libaio-devel -y || yum install libaio-devel -y || yum install libaio-devel -y
 fi
