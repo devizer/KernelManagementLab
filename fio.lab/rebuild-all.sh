@@ -104,8 +104,8 @@ function build() {
 }
 
 
-function _already_built_ {
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
+build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
 build centos 6                                        amd64-rhel6
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
@@ -120,7 +120,6 @@ build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
 build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise
 
-}
 
 build multiarch/ubuntu-debootstrap armhf-xenial       armhf-xenial
 build multiarch/ubuntu-debootstrap i386-precise       i386-precise
