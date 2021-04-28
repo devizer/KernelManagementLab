@@ -98,7 +98,7 @@ function build() {
      Say "($counter) Grab binaries from /out to [result/$vname${options_key}-$public_name]"
      docker cp "$name:/out/." result/$vname${options_key}-$public_name/
      mkdir -p result/_benchmarks
-     cp $vname${options_key}-$public_name/Benchmark.log.gz result/_benchmarks/$vname${options_key}-$public_name.benchmark.log.gz 
+     cp result/$vname${options_key}-$public_name/Benchmark.log.gz result/_benchmarks/$vname${options_key}-$public_name.benchmark.log.gz 
      ls result/$vname${options_key}-$public_name/*.tar.gz >/dev/null 2>&1
      if [[ $? != 0 ]]; then
         mv result/$vname${options_key}-$public_name "result/$vname${options_key}-$public_name (not available)"
