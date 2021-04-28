@@ -54,7 +54,7 @@ function build() {
   options_keys=("-libaio-zlib" "-libaio" "-zlib" "")
   
   # cut next two lines
-  options_commands=("echo skip")
+  options_commands=("${cmd_i1};${cmd_i2}")
   options_keys=("-skip")
   
 
