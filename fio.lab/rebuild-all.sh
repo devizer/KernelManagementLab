@@ -110,9 +110,9 @@ function build() {
   docker rm -f $name
 }
 
+build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
 build centos 7                                        amd64-rhel7
 build centos 6                                        amd64-rhel6
-build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
