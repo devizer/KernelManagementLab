@@ -9,7 +9,7 @@ trigger:
 jobs:
   - job: Build
     timeoutInMinutes: 599
-    cancelTimeoutInMinutes: 3
+    cancelTimeoutInMinutes: 33
     pool:
       vmImage: 'ubuntu-latest'
     
