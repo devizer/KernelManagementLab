@@ -43,6 +43,7 @@ function build() {
   docker cp build-tools-in-container.sh "$name:/"
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
   docker exec -t $name bash /build-tools-in-container.sh
+  # yum info libaio-devel | grep Version | head -1
   libaio_version="$(docker exec -t $name apt-cache policy libaio-dev | grep andidate | awk '{print $NF}')" 
   echo "$public_name: libc $ldd_version, libaio: $libaio_version" | tee -a result/versions.txt
   Say "Container ready"
