@@ -19,7 +19,6 @@ make -j${cpus} && make install
 mkdir -p /out
 rm -rf /out/*
 if [[ -d /usr/local/fio ]]; then
-    export GZIP=-9
     pushd /usr/local/fio
     tar czf /out/fio-distribution.tar.gz .
     cd bin; 
@@ -48,8 +47,8 @@ if [[ -d /usr/local/fio ]]; then
     echo "Testing fio ..."
     export PATH="$(pwd)/bin:$PATH"
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
-    File-IO-Benchmark "CONTAINER" $(pwd) 1M 3 3 | tee /out/Benchmark.log
-    gzip /out/Benchmark.log
+    File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
+    gzip -9 /out/Benchmark.log
     echo "EXIT CODE of File-IO-Benchmark: $?"
     popd >/dev/null
 fi
