@@ -1,4 +1,16 @@
-﻿amd64-precise: libc 2.15
+﻿uname -m: [ppc64le], uname -p: [ppc64le]
+uname -m: [mips64], uname -p: [unknown]                                                                                                                                                                      
+both i386 & amd64
+uname -m: [x86_64], uname -p: [x86_64]
+! armel & armhf & aarch64
+uname -m: [aarch64], uname -p: [aarch64]                                                                                                                                                                     
+uname -m: [armv7l], uname -p: [unknown]
+
+uname -m: [s390x], uname -p: [unknown] (64 bit)
+                                                                                                                                                                      
+                                                                                                                                                                       
+
+amd64-precise: libc 2.15
 amd64-rhel6: libc 2.12
 amd64-xenial: libc 2.23
 amd64-stretch: libc 2.24

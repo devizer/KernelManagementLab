@@ -38,9 +38,11 @@ function build() {
   docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
   docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
   ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
-  echo "$public_name: libc $ldd_version" >> result/versions.txt
   Say "Installing build tools for container [$name]"
   docker cp build-tools-in-container.sh "$name:/"
+  libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
+  libaio_version=$(docker exec -t $name "$libaio_version_cmd") 
+  echo "$public_name: libc $ldd_version, libaio: $libaio_version" >> result/versions.txt
   docker exec -t $name bash /build-tools-in-container.sh
   Say "Container ready"
 
@@ -117,21 +119,29 @@ build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 build multiarch/debian-debootstrap amd64-stretch      amd64-stretch
 build multiarch/debian-debootstrap amd64-jessie       amd64-jessie
 build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy
-
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
-build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise
 
+build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise
 build multiarch/ubuntu-debootstrap armhf-xenial       armhf-xenial
+build multiarch/ubuntu-debootstrap armhf-bionic       armhf-bionic
+
 build multiarch/ubuntu-debootstrap i386-precise       i386-precise
 build multiarch/ubuntu-debootstrap i386-xenial        i386-xenial
 
 build multiarch/ubuntu-debootstrap arm64-trusty       arm64-trusty
 build multiarch/ubuntu-debootstrap arm64-xenial       arm64-xenial
+build multiarch/ubuntu-debootstrap arm64-bionic       arm64-bionic
+
 build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el-trusty
 build multiarch/ubuntu-debootstrap ppc64el-xenial     ppc64el-xenial
+build multiarch/ubuntu-debootstrap ppc64el-bionic     ppc64el-bionic
+
 build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy
+
 build multiarch/debian-debootstrap armel-wheezy       armel-wheezy
 build multiarch/debian-debootstrap armel-stretch      armel-stretch
+build multiarch/debian-debootstrap armel-buster       armel-buster
+
 build multiarch/debian-debootstrap mips64el-stretch   mips64el-stretch
 build multiarch/debian-debootstrap mipsel-stretch     mipsel-stretch
 build multiarch/debian-debootstrap mipsel-jessie      mipsel-jessie
