@@ -26,7 +26,7 @@ function build() {
   public_name=$3
   err=0;
 
-  # creating container, it will reused 4 times for all versions
+  # creating container, it will reused 4 times * all versions
   name="temp-builder-${tag}"
   echo ""
   Say "Container NAME: $name"
@@ -111,6 +111,7 @@ function build() {
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
 build centos 6                                        amd64-rhel6
+build centos 7                                        amd64-rhel7
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
 build multiarch/debian-debootstrap amd64-stretch      amd64-stretch
@@ -132,6 +133,10 @@ build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy
 build multiarch/debian-debootstrap armel-wheezy       armel-wheezy
 build multiarch/debian-debootstrap armel-stretch      armel-stretch
 build multiarch/debian-debootstrap mips64el-stretch   mips64el-stretch
+build multiarch/debian-debootstrap mipsel-stretch     mipsel-stretch
+build multiarch/debian-debootstrap mipsel-jessie      mipsel-jessie
+build multiarch/debian-debootstrap mips-stretch       mips-stretch
+build multiarch/debian-debootstrap mips-jessie        mips-jessie
 
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
 build multiarch/debian-debootstrap amd64-buster       amd64-buster

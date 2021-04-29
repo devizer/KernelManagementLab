@@ -4,6 +4,9 @@ export CXXFLAGS="-O2"
 echo "LIBC: $(ldd --version)"
 echo ""
 
+echo "uname -m: [$(uname -m)], uname -p: [$(uname -p)]"
+echo ""
+
 source /etc/os-release
 
 export DEBIAN_FRONTEND=noninteractive
