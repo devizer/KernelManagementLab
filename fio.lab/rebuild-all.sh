@@ -38,12 +38,13 @@ function build() {
   docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
   docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
   ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
+  ldd_version="${ldd_version//[$'\t\r\n']}"
   Say "Installing build tools for container [$name]"
   docker cp build-tools-in-container.sh "$name:/"
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
   docker exec -t $name bash /build-tools-in-container.sh
   libaio_version="$(docker exec -t $name apt-cache policy libaio-dev | grep andidate | awk '{print $NF}')" 
-  echo "$public_name: libc $ldd_version, libaio: $libaio_version" >> result/versions.txt
+  echo "$public_name: libc $ldd_version, libaio: $libaio_version" | tee -a result/versions.txt
   Say "Container ready"
 
   # 1: libaio, 2: zlib
