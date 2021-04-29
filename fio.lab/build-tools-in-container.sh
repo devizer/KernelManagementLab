@@ -1,4 +1,5 @@
-source /etc/os-release
+test -s /etc/os-release && source /etc/os-release
+
   if [[ $ID == debian ]] && [[ $VERSION_ID == 8 ]]; then
     rm -f /etc/apt/sources.list.d/backports* || true
     echo '
@@ -55,7 +56,8 @@ if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
     eval $cmd || eval $cmd || eval $cmd
 fi
 
-if [[ $(command -v yum 2>/dev/null) != "" ]]; then
+if [[ $(command -v yum 2>/dev/null) != "" && ]]; then
+if [[ ! -s /etc/os-release ]]; then
 cat <<-'EOF' > /etc/yum.repos.d/CentOS-Base.repo
 [C6.10-base]
 name=CentOS-6.10 - Base
@@ -97,6 +99,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 enabled=0
 metadata_expire=never
 EOF
+fi
     yum makecache || yum makecache >/dev/null 2>&1 || yum makecache
     yum install gcc make -y || yum install gcc make -y || yum install gcc make -y;
     # echo ""; echo "Installing libaio-dev"
