@@ -56,7 +56,7 @@ if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
     eval $cmd || eval $cmd || eval $cmd
 fi
 
-if [[ $(command -v yum 2>/dev/null) != "" && ]]; then
+if [[ $(command -v yum 2>/dev/null) != "" ]]; then
 if [[ ! -s /etc/os-release ]]; then
 cat <<-'EOF' > /etc/yum.repos.d/CentOS-Base.repo
 [C6.10-base]
