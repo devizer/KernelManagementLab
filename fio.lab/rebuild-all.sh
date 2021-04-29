@@ -41,9 +41,9 @@ function build() {
   Say "Installing build tools for container [$name]"
   docker cp build-tools-in-container.sh "$name:/"
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
+  docker exec -t $name bash /build-tools-in-container.sh
   libaio_version="$(docker exec -t $name apt-cache policy libaio-dev | grep andidate | awk '{print $NF}')" 
   echo "$public_name: libc $ldd_version, libaio: $libaio_version" >> result/versions.txt
-  docker exec -t $name bash /build-tools-in-container.sh
   Say "Container ready"
 
   # 1: libaio, 2: zlib
