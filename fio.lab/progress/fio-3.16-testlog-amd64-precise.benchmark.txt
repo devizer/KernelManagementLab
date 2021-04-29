@@ -1,0 +1,92 @@
+Installing fio and toilet using apt-get
+> INFO > IO Engine: [libaio]. Direct IO: [Present]
+---------------------------------------------------
+
+> CONTAINER: Sequential read (/usr/local/fio)
+----------------------------------------------
+Benchmark '/usr/local/fio' folder using 'read' test during 3 seconds and heating 3 secs, size is 1M
+RUN_read: (g=0): rw=read, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=libaio, iodepth=1
+fio-3.16
+Starting 1 process
+RUN_read: Laying out IO file (1 file / 1MiB)
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=1): [R(1)][57.1%][eta 00m:03s]Jobs: 1 (f=1): [R(1)][66.7%][r=8148KiB/s][r=7 IOPS][eta 00m:02s]Jobs: 1 (f=1): [R(1)][83.3%][r=109MiB/s][r=109 IOPS][eta 00m:01s]Jobs: 1 (f=1): [R(1)][100.0%][r=124MiB/s][r=124 IOPS][eta 00m:00s]
+RUN_read: (groupid=0, jobs=1): err= 0: pid=25750: Wed Apr 28 21:05:50 2021
+  read: IOPS=137, BW=138MiB/s (144MB/s)(414MiB/3009msec)
+   bw (  KiB/s): min=110371, max=214610, per=99.68%, avg=140440.33, stdev=40233.74, samples=6
+   iops        : min=  107, max=  209, avg=136.67, stdev=39.35, samples=6
+  cpu          : usr=0.00%, sys=97.47%, ctx=431, majf=0, minf=16
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=414,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=138MiB/s (144MB/s), 138MiB/s-138MiB/s (144MB/s-144MB/s), io=414MiB (434MB), run=3009-3009msec
+
+
+> CONTAINER: Sequential write (/usr/local/fio)
+-----------------------------------------------
+Benchmark '/usr/local/fio' folder using 'write' test during 3 seconds and heating 3 secs, size is 1M
+RUN_write: (g=0): rw=write, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=libaio, iodepth=1
+fio-3.16
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:04s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=1): [W(1)][57.1%][eta 00m:03s]Jobs: 1 (f=1): [W(1)][66.7%][w=8470KiB/s][w=8 IOPS][eta 00m:02s]Jobs: 1 (f=1): [W(1)][83.3%][w=115MiB/s][w=115 IOPS][eta 00m:01s]Jobs: 1 (f=1): [W(1)][100.0%][w=116MiB/s][w=116 IOPS][eta 00m:00s]
+RUN_write: (groupid=0, jobs=1): err= 0: pid=25761: Wed Apr 28 21:05:57 2021
+  write: IOPS=114, BW=115MiB/s (120MB/s)(353MiB/3073msec)
+   bw (  KiB/s): min=116502, max=118784, per=99.95%, avg=117563.67, stdev=1166.24, samples=6
+   iops        : min=  113, max=  116, avg=114.17, stdev= 1.33, samples=6
+  cpu          : usr=0.20%, sys=97.66%, ctx=366, majf=0, minf=15
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,353,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=115MiB/s (120MB/s), 115MiB/s-115MiB/s (120MB/s-120MB/s), io=353MiB (370MB), run=3073-3073msec
+
+
+> CONTAINER: Random read (/usr/local/fio)
+------------------------------------------
+Benchmark '/usr/local/fio' folder using 'randread' test during 3 seconds and heating 3 secs, size is 1M
+RUN_randread: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=64
+fio-3.16
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=1): [r(1)][66.7%][r=7146KiB/s][r=1786 IOPS][eta 00m:02s]Jobs: 1 (f=1): [r(1)][83.3%][r=97.3MiB/s][r=24.9k IOPS][eta 00m:01s]Jobs: 1 (f=1): [r(1)][100.0%][r=95.3MiB/s][r=24.4k IOPS][eta 00m:00s]
+RUN_randread: (groupid=0, jobs=1): err= 0: pid=25772: Wed Apr 28 21:06:03 2021
+  read: IOPS=24.6k, BW=96.3MiB/s (101MB/s)(289MiB/3002msec)
+   bw (  KiB/s): min=97181, max=99776, per=99.79%, avg=98409.33, stdev=1131.66, samples=6
+   iops        : min=24295, max=24944, avg=24602.00, stdev=283.07, samples=6
+  cpu          : usr=0.93%, sys=99.10%, ctx=14, majf=0, minf=15
+  IO depths    : 1=0.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=100.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued rwts: total=73946,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+   READ: bw=96.3MiB/s (101MB/s), 96.3MiB/s-96.3MiB/s (101MB/s-101MB/s), io=289MiB (303MB), run=3002-3002msec
+
+
+> CONTAINER: Random write (/usr/local/fio)
+-------------------------------------------
+Benchmark '/usr/local/fio' folder using 'randwrite' test during 3 seconds and heating 3 secs, size is 1M
+RUN_randwrite: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=64
+fio-3.16
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:04s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=0): [/(1)][-.-%][eta 00m:03s]Jobs: 1 (f=1): [w(1)][66.7%][w=6699KiB/s][w=1674 IOPS][eta 00m:02s]Jobs: 1 (f=1): [w(1)][83.3%][w=91.9MiB/s][w=23.5k IOPS][eta 00m:01s]Jobs: 1 (f=1): [w(1)][100.0%][w=91.5MiB/s][w=23.4k IOPS][eta 00m:00s]
+RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=25783: Wed Apr 28 21:06:10 2021
+  write: IOPS=23.5k, BW=91.8MiB/s (96.2MB/s)(276MiB/3002msec)
+   bw (  KiB/s): min=92183, max=95153, per=99.44%, avg=93449.40, stdev=1108.47, samples=5
+   iops        : min=23045, max=23788, avg=23362.00, stdev=277.30, samples=5
+  cpu          : usr=0.63%, sys=99.13%, ctx=32, majf=0, minf=15
+  IO depths    : 1=0.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=100.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued rwts: total=0,70466,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+  WRITE: bw=91.8MiB/s (96.2MB/s), 91.8MiB/s-91.8MiB/s (96.2MB/s-96.2MB/s), io=276MiB (289MB), run=3002-3002msec
+
