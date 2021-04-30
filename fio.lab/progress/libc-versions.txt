@@ -8,29 +8,41 @@ uname -m: [armv7l], uname -p: [unknown]
 
 uname -m: [s390x], uname -p: [unknown] (64 bit)
 
+uname -m: [armv5tejl], uname -p: [unknown] (32 bit)
+uname -m: [armv6l], uname -p: [unknown] (32 bit)
+
 libaio-devel - centos:7 0.3.109, centos:6 0.3.107
 
-amd64-precise: libc 2.15
-amd64-rhel6: libc 2.12
-amd64-xenial: libc 2.23
-amd64-stretch: libc 2.24
-amd64-jessie: libc 2.19
-amd64-wheezy: libc 2.13
-amd64-trusty: libc 2.19
-armhf-precise: libc 2.15
-armhf-xenial: libc 2.23
-armhf-xenial: libc 2.23
-i386-precise: libc 2.15
-i386-xenial: libc 2.23
-arm64-trusty: libc 2.19
-arm64-xenial: libc 2.23
-ppc64el-trusty: libc 2.19
-ppc64el-xenial: libc 2.23
-powerpc-wheezy: libc 2.13
-armel-wheezy: libc 2.13
-armel-stretch: libc 2.24
-mips64el-stretch: libc 2.24
-amd64-focal: libc 2.31
-amd64-buster: libc 2.28
-amd64-bullseye: libc 2.31
-amd64-bionic: libc 2.27
+amd64-precise: libc 2.15, libaio: 0.3.109-2ubuntu1
+amd64-rhel7: libc 2.17, libaio: 0.3.109
+amd64-rhel6: libc 2.12, libaio: 0.3.107
+amd64-focal: libc 2.31, libaio: 0.3.112-5
+amd64-xenial: libc 2.23, libaio: 0.3.110-2
+amd64-stretch: libc 2.24, libaio: 0.3.110-3
+amd64-jessie: libc 2.19, libaio: 0.3.110-1
+amd64-wheezy: libc 2.13, libaio: 0.3.109-3
+amd64-trusty: libc 2.19, libaio: 0.3.109-4
+armhf-precise: libc 2.15, libaio: 0.3.109-2ubuntu1
+armhf-xenial: libc 2.23, libaio: 0.3.110-2
+armhf-bionic: libc 2.27, libaio: 0.3.110-5ubuntu0.1
+i386-precise: libc 2.15, libaio: 0.3.109-2ubuntu1
+i386-xenial: libc 2.23, libaio: 0.3.110-2
+arm64-trusty: libc 2.19, libaio: 0.3.109-4
+arm64-xenial: libc 2.23, libaio: 0.3.110-2
+arm64-bionic: libc 2.27, libaio: 0.3.110-5ubuntu0.1
+ppc64el-trusty: libc 2.19, libaio: 0.3.109-4
+ppc64el-xenial: libc 2.23, libaio: 0.3.110-2
+ppc64el-bionic: libc 2.27, libaio: 0.3.110-5ubuntu0.1
+powerpc-wheezy: libc 2.13, libaio: 0.3.109-3
+armel-wheezy: libc 2.13, libaio: 0.3.109-3
+armel-stretch: libc 2.24, libaio: 0.3.110-3
+armel-buster: libc 2.28, libaio: 0.3.112-3
+mips64el-stretch: libc 2.24, libaio: 0.3.110-3
+mipsel-stretch: libc , libaio:
+mipsel-jessie: libc , libaio:
+mips-stretch: libc , libaio:
+mips-jessie: libc , libaio:
+amd64-focal: libc 2.31, libaio: 0.3.112-5
+amd64-buster: libc 2.28, libaio: 0.3.112-3
+amd64-bullseye: libc 2.31, libaio: 0.3.112-9
+amd64-bionic: libc 2.27, libaio: 0.3.110-5ubuntu0.1
