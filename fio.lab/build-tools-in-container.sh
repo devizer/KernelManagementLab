@@ -1,8 +1,13 @@
 test -s /etc/os-release && source /etc/os-release
 
-function try_and_retry () {
-  eval "$*" || eval "$*" || eval "$*"
-}
+if [[ -s /tmp/image-id ]]; then
+  image=$(cat /tmp/image-id)
+elif [[ -n "$ID" ]]; then 
+  image="$ID $VERSION_ID";
+else
+  image=rhel6
+fi
+
 
 function prepare_debian() {
   if [[ $ID == debian ]] && [[ $VERSION_ID == 8 ]]; then
@@ -44,7 +49,8 @@ APT::Compressor::lzma::CompressArg:: "-1";
 
 export DEBIAN_FRONTEND=noninteractive
 
-try_and_retry apt-get update -q;
+Say "Update apt cache for [$image]"
+try-and-retry apt-get update -qq;
 apt-cache policy fio
 echo ""
 apt-cache policy libaio-dev
@@ -56,8 +62,8 @@ echo "";
 # build-essential
 # also depends on []zlib1g zlib1g-dev] but not included
 # removed: libncurses5-dev libncurses5 libncursesw5-dev libncursesw5
-cmd="apt-get install --no-install-recommends libc6-dev gcc build-essential autoconf autoconf make -y -q"
-eval $cmd || eval $cmd || eval $cmd
+Say "Installing build tools for [$image]"
+try-and-retry apt-get install --no-install-recommends libc6-dev gcc build-essential autoconf autoconf make -y -q
 
 }
 
@@ -106,15 +112,21 @@ metadata_expire=never
 EOF
 fi
 
-try_and_retry yum makecache
-try_and_retry yum install gcc make -y;
+Say "Updating YUM repo cache for [$image]"
+try-and-retry yum makecache
+Say "Installing build tools for [$image]"
+try-and-retry yum install gcc make -y;
 # echo ""; echo "Installing libaio-dev"
 # yum install libaio-devel -y || yum install libaio-devel -y || yum install libaio-devel -y
 } # centos
 
 function prepare_centos_stream() {
+  Say "Updating YUM repo cache for [$image]"
   try_and_retry yum makecache
+  Say "Installing centos-release-stream for [$image]"
   try_and_retry yum install centos-release-stream -y; 
+  Say "Upgrading stream for [$image]"
   try_and_retry yum distro-sync -y;
+  Say "Installing build tools for [$image]"
   try_and_retry yum install gcc make -y;
 }

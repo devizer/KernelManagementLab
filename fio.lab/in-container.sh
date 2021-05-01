@@ -35,23 +35,23 @@ if [[ -d /usr/local/fio ]]; then
         tar czf /out/fio-stripped.tar.gz fio; 
     cd ..
     echo ""
-    echo "About *sync* engine"
+    Say "About *sync* engine"
     bin/fio --enghelp=sync
     echo ""
-    echo "About *posixaio* engine"
+    Say "About *posixaio* engine"
     bin/fio --enghelp=posixaio
     echo ""
-    echo "About *libaio* engine"
+    Say "About *libaio* engine"
     bin/fio --enghelp=libaio
     echo ""
-    echo "fio dependencies"
+    Say "fio dependencies are below"
     ldd bin/fio
     echo ""
-    echo "Testing fio ..."
+    Say "Testing fio ..."
     export PATH="$(pwd)/bin:$PATH"
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
     File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
     gzip -9 /out/Benchmark.log
-    echo "EXIT CODE of File-IO-Benchmark: $?"
+    Say "EXIT CODE of File-IO-Benchmark: $?"
     popd >/dev/null
 fi

@@ -37,7 +37,10 @@ function build() {
   try-and-retry eval "$cmd"
   Say "Start container [$name]"
   docker run -d --privileged --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
-  docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
+  docker exec exec -t $name bash -c "echo $image:$tag > /tmp/image-id"
+  for script in File-IO-Benchmark Say try-and-retry; do
+    docker cp /usr/local/bin/$script "$name:/usr/local/bin/"
+  done
   ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
   ldd_version="${ldd_version//[$'\t\r\n']}"
   Say "Installing build tools for container [$name]: $prepare_script"
