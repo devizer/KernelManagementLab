@@ -1,5 +1,10 @@
 test -s /etc/os-release && source /etc/os-release
 
+function try_and_retry () {
+  eval "$*" || eval "$*" || eval "$*"
+}
+
+function prepare_debian() {
   if [[ $ID == debian ]] && [[ $VERSION_ID == 8 ]]; then
     rm -f /etc/apt/sources.list.d/backports* || true
     echo '
@@ -39,24 +44,24 @@ APT::Compressor::lzma::CompressArg:: "-1";
 
 export DEBIAN_FRONTEND=noninteractive
 
-if [[ $(command -v apt-get 2>/dev/null) != "" ]]; then
-    apt-get update -qq || apt-get update -qq || apt-get update
-    apt-cache policy fio
-    echo ""
-    apt-cache policy libaio-dev
-    echo ""
-    echo "AIO support packages"
-    apt-cache search "(fio|libaio)" 
-    echo "";
-    # apt-get install libaio-dev -y -qq
-    # build-essential
-    # also depends on []zlib1g zlib1g-dev] but not included
-    # removed: libncurses5-dev libncurses5 libncursesw5-dev libncursesw5
-    cmd="apt-get install --no-install-recommends libc6-dev gcc build-essential autoconf autoconf make -y -q"
-    eval $cmd || eval $cmd || eval $cmd
-fi
+try_and_retry apt-get update -q;
+apt-cache policy fio
+echo ""
+apt-cache policy libaio-dev
+echo ""
+echo "AIO support packages"
+apt-cache search "(fio|libaio)" 
+echo "";
+# apt-get install libaio-dev -y -qq
+# build-essential
+# also depends on []zlib1g zlib1g-dev] but not included
+# removed: libncurses5-dev libncurses5 libncursesw5-dev libncursesw5
+cmd="apt-get install --no-install-recommends libc6-dev gcc build-essential autoconf autoconf make -y -q"
+eval $cmd || eval $cmd || eval $cmd
 
-if [[ $(command -v yum 2>/dev/null) != "" ]]; then
+}
+
+function prepare_centos() {
 if [[ ! -s /etc/os-release ]]; then
 cat <<-'EOF' > /etc/yum.repos.d/CentOS-Base.repo
 [C6.10-base]
@@ -100,8 +105,16 @@ enabled=0
 metadata_expire=never
 EOF
 fi
-    yum makecache || yum makecache >/dev/null 2>&1 || yum makecache
-    yum install gcc make -y || yum install gcc make -y || yum install gcc make -y;
-    # echo ""; echo "Installing libaio-dev"
-    # yum install libaio-devel -y || yum install libaio-devel -y || yum install libaio-devel -y
-fi
+
+try_and_retry yum makecache
+try_and_retry yum install gcc make -y;
+# echo ""; echo "Installing libaio-dev"
+# yum install libaio-devel -y || yum install libaio-devel -y || yum install libaio-devel -y
+} # centos
+
+function prepare_centos_stream() {
+  try_and_retry yum makecache
+  try_and_retry yum install centos-release-stream -y; 
+  try_and_retry yum distro-sync -y;
+  try_and_retry yum install gcc make -y;
+}

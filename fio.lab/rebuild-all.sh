@@ -24,6 +24,7 @@ function build() {
   image=$1
   tag=$2
   public_name=$3
+  prepare_script=$4
   err=0;
 
   # creating container, it will reused 4 times * all versions
@@ -39,10 +40,10 @@ function build() {
   docker cp /usr/local/bin/File-IO-Benchmark "$name:/usr/local/bin/"
   ldd_version="$(docker exec -t $name ldd --version | head -1 |  awk '{print $NF}')"
   ldd_version="${ldd_version//[$'\t\r\n']}"
-  Say "Installing build tools for container [$name]"
+  Say "Installing build tools for container [$name]: $prepare_script"
   docker cp build-tools-in-container.sh "$name:/"
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
-  docker exec -t $name bash /build-tools-in-container.sh
+  docker exec -t $name bash -c "source /build-tools-in-container.sh; $prepare_script"
   # yum info libaio-devel | grep Version | head -1
   libaio_version="$(docker exec -t $name apt-cache policy libaio-dev | grep andidate | awk '{print $NF}')" 
   echo "$public_name: libc $ldd_version, libaio: $libaio_version" | tee -a result/versions.txt
@@ -112,50 +113,54 @@ function build() {
   docker rm -f $name
 }
 
-build ubuntu groovy                                   amd64-groovy
-build ubuntu hirsute                                  amd64-hirsute
+build ubuntu groovy                                   amd64-groovy        prepare_debian
+build quay.io/centos/centos stream                    amd64-centosstream  prepare_centos_stream
+build centos 7                                        amd64-rhel7         prepare_centos
+build centos 6                                        amd64-rhel6         prepare_centos
 exit;
-build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise
-build centos 7                                        amd64-rhel7
-build centos 6                                        amd64-rhel6
-build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
-build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial
 
-build multiarch/debian-debootstrap amd64-stretch      amd64-stretch
-build multiarch/debian-debootstrap amd64-jessie       amd64-jessie
-build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy
-build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty
+build ubuntu hirsute                                  amd64-hirsute       prepare_debian
 
-build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise
-build multiarch/ubuntu-debootstrap armhf-xenial       armhf-xenial
-build multiarch/ubuntu-debootstrap armhf-bionic       armhf-bionic
 
-build multiarch/ubuntu-debootstrap i386-precise       i386-precise
-build multiarch/ubuntu-debootstrap i386-xenial        i386-xenial
+build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
+build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
+build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial        prepare_debian
 
-build multiarch/ubuntu-debootstrap arm64-trusty       arm64-trusty
-build multiarch/ubuntu-debootstrap arm64-xenial       arm64-xenial
-build multiarch/ubuntu-debootstrap arm64-bionic       arm64-bionic
+build multiarch/debian-debootstrap amd64-stretch      amd64-stretch       prepare_debian
+build multiarch/debian-debootstrap amd64-jessie       amd64-jessie        prepare_debian
+build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy        prepare_debian
+build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty        prepare_debian
 
-build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el-trusty
-build multiarch/ubuntu-debootstrap ppc64el-xenial     ppc64el-xenial
-build multiarch/ubuntu-debootstrap ppc64el-bionic     ppc64el-bionic
+build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise       prepare_debian
+build multiarch/ubuntu-debootstrap armhf-xenial       armhf-xenial        prepare_debian
+build multiarch/ubuntu-debootstrap armhf-bionic       armhf-bionic        prepare_debian
 
-build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy
+build multiarch/ubuntu-debootstrap i386-precise       i386-precise        prepare_debian
+build multiarch/ubuntu-debootstrap i386-xenial        i386-xenial         prepare_debian
 
-build multiarch/debian-debootstrap armel-wheezy       armel-wheezy
-build multiarch/debian-debootstrap armel-stretch      armel-stretch
-build multiarch/debian-debootstrap armel-buster       armel-buster
+build multiarch/ubuntu-debootstrap arm64-trusty       arm64-trusty        prepare_debian
+build multiarch/ubuntu-debootstrap arm64-xenial       arm64-xenial        prepare_debian
+build multiarch/ubuntu-debootstrap arm64-bionic       arm64-bionic        prepare_debian
 
-build multiarch/debian-debootstrap mips64el-stretch   mips64el-stretch
-build multiarch/debian-debootstrap mipsel-stretch     mipsel-stretch
-build multiarch/debian-debootstrap mipsel-jessie      mipsel-jessie
-build multiarch/debian-debootstrap mips-stretch       mips-stretch
-build multiarch/debian-debootstrap mips-jessie        mips-jessie
+build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el-trusty      prepare_debian
+build multiarch/ubuntu-debootstrap ppc64el-xenial     ppc64el-xenial      prepare_debian
+build multiarch/ubuntu-debootstrap ppc64el-bionic     ppc64el-bionic      prepare_debian
 
-build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal
-build multiarch/debian-debootstrap amd64-buster       amd64-buster
-build multiarch/debian-debootstrap amd64-bullseye     amd64-bullseye
-build multiarch/ubuntu-debootstrap amd64-bionic       amd64-bionic
+build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy      prepare_debian
+
+build multiarch/debian-debootstrap armel-wheezy       armel-wheezy        prepare_debian
+build multiarch/debian-debootstrap armel-stretch      armel-stretch       prepare_debian
+build multiarch/debian-debootstrap armel-buster       armel-buster        prepare_debian
+
+build multiarch/debian-debootstrap mips64el-stretch   mips64el-stretch    prepare_debian
+build multiarch/debian-debootstrap mipsel-stretch     mipsel-stretch      prepare_debian
+build multiarch/debian-debootstrap mipsel-jessie      mipsel-jessie       prepare_debian
+build multiarch/debian-debootstrap mips-stretch       mips-stretch        prepare_debian
+build multiarch/debian-debootstrap mips-jessie        mips-jessie         prepare_debian
+
+build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
+build multiarch/debian-debootstrap amd64-buster       amd64-buster        prepare_debian
+build multiarch/debian-debootstrap amd64-bullseye     amd64-bullseye      prepare_debian
+build multiarch/ubuntu-debootstrap amd64-bionic       amd64-bionic        prepare_debian
 
 exit; 
