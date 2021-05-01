@@ -116,8 +116,8 @@ function build() {
   docker rm -f $name
 }
 
-build ubuntu groovy                                   amd64-groovy        prepare_debian
 build quay.io/centos/centos stream                    amd64-centosstream  prepare_centos_stream
+build ubuntu groovy                                   amd64-groovy        prepare_debian
 build centos 7                                        amd64-rhel7         prepare_centos
 build centos 6                                        amd64-rhel6         prepare_centos
 exit;

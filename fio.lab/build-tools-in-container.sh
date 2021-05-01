@@ -122,11 +122,11 @@ try-and-retry yum install gcc make -y;
 
 function prepare_centos_stream() {
   Say "Updating YUM repo cache for [$image]"
-  try_and_retry yum makecache
+  try-and-retry yum makecache
   Say "Installing centos-release-stream for [$image]"
-  try_and_retry yum install centos-release-stream -y; 
+  try-and-retry yum install centos-release-stream -y; 
   Say "Upgrading stream for [$image]"
-  try_and_retry yum distro-sync -y;
+  try-and-retry yum distro-sync -y;
   Say "Installing build tools for [$image]"
-  try_and_retry yum install gcc make -y;
+  try-and-retry yum install gcc make -y;
 }
