@@ -120,7 +120,6 @@ build quay.io/centos/centos stream                    amd64-centosstream  prepar
 build ubuntu groovy                                   amd64-groovy        prepare_debian
 build centos 7                                        amd64-rhel7         prepare_centos
 build centos 6                                        amd64-rhel6         prepare_centos
-exit;
 
 build ubuntu hirsute                                  amd64-hirsute       prepare_debian
 
