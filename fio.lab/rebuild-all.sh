@@ -37,7 +37,7 @@ function build() {
   try-and-retry eval "$cmd"
   Say "Start container [$name]"
   docker run -d --privileged --hostname $name --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
-  docker exec exec -t $name bash -c "echo $image:$tag > /tmp/image-id"
+  docker exec -t $name bash -c "echo $image:$tag > /tmp/image-id"
   for script in File-IO-Benchmark Say try-and-retry; do
     docker cp /usr/local/bin/$script "$name:/usr/local/bin/"
   done
