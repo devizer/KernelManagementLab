@@ -28,7 +28,7 @@ function build() {
   err=0;
 
   # creating container, it will reused 4 times * all versions
-  name="temp-builder-${tag}"
+  name="fio-builder-${public_name}"
   echo ""
   Say "Container NAME: $name"
   docker rm -f $name >/dev/null 2>&1 || true
