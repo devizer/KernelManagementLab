@@ -3,7 +3,7 @@ script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-b
 
 export DEBIAN_FRONTEND=noninteractive
 if [[ "$(command -v qemu-arm-static)" == "" || "$(command -v toilet)" == "" ]]; then 
-  try-and-retry sudo apt-get update
+  try-and-retry sudo apt-get update -q
   smart-apt-install -qq qemu-user-static toilet 
 fi
 try-and-retry docker pull multiarch/qemu-user-static:register
