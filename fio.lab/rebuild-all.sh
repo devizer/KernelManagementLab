@@ -116,6 +116,7 @@ function build() {
   docker rm -f $name
 }
 
+build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
 build quay.io/centos/centos stream                    amd64-centosstream  prepare_centos_stream
 build ubuntu groovy                                   amd64-groovy        prepare_debian
 build centos 7                                        amd64-rhel7         prepare_centos
@@ -124,7 +125,6 @@ build centos 6                                        amd64-rhel6         prepar
 build ubuntu hirsute                                  amd64-hirsute       prepare_debian
 
 
-build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial        prepare_debian
 
