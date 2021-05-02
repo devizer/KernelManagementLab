@@ -31,6 +31,7 @@ namespace Universe.FioStream.Tests
             };
             foreach (var method in methods)
             {
+                Console.WriteLine($"v{testCase.Version}: {method.Name}");
                 FioStreamReader reader = new FioStreamReader();
                 foreach (var line in method.Lines)
                 {
