@@ -56,7 +56,8 @@ if [[ -d /usr/local/fio ]]; then
     popd >/dev/null
 elif [[ -s /usr/local/bin/fio ]]; then
   # 2.0 & 2.1
-  mkdir -p /tmp/fio
+  mkdir -p /tmp/fio; 
+  rm -rf /tmp/fio/*
   for f in /usr/local/bin/fio /usr/local/man/man1/fio.1; do
     cp $f /tmp/fio
     rm -f $f
@@ -67,7 +68,7 @@ elif [[ -s /usr/local/bin/fio ]]; then
     echo ""
     Say "Testing fio ..."
     export PATH="$(pwd):$PATH"
-    export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
+    export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based --output=output"
     File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
     gzip -9 /out/Benchmark.log
     Say "EXIT CODE of File-IO-Benchmark: $?"
