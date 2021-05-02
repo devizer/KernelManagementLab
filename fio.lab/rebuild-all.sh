@@ -116,6 +116,7 @@ function build() {
   docker rm -f $name
 }
 
+build centos 8                                        amd64-rhel8         prepare_centos
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
 build quay.io/centos/centos stream                    amd64-centosstream  prepare_centos_stream
 build ubuntu groovy                                   amd64-groovy        prepare_debian
@@ -123,7 +124,6 @@ build centos 7                                        amd64-rhel7         prepar
 build centos 6                                        amd64-rhel6         prepare_centos
 
 build ubuntu hirsute                                  amd64-hirsute       prepare_debian
-
 
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
 build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial        prepare_debian
@@ -136,19 +136,24 @@ build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty        prepar
 build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise       prepare_debian
 build multiarch/ubuntu-debootstrap armhf-xenial       armhf-xenial        prepare_debian
 build multiarch/ubuntu-debootstrap armhf-bionic       armhf-bionic        prepare_debian
+build multiarch/ubuntu-debootstrap armhf-focal        armhf-focal         prepare_debian
 
 build multiarch/ubuntu-debootstrap i386-precise       i386-precise        prepare_debian
 build multiarch/ubuntu-debootstrap i386-xenial        i386-xenial         prepare_debian
+build multiarch/ubuntu-debootstrap i386-bionic        i386-bionic         prepare_debian
 
 build multiarch/ubuntu-debootstrap arm64-trusty       arm64-trusty        prepare_debian
 build multiarch/ubuntu-debootstrap arm64-xenial       arm64-xenial        prepare_debian
 build multiarch/ubuntu-debootstrap arm64-bionic       arm64-bionic        prepare_debian
+build multiarch/ubuntu-debootstrap arm64-focal        arm64-focal         prepare_debian
 
 build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el-trusty      prepare_debian
 build multiarch/ubuntu-debootstrap ppc64el-xenial     ppc64el-xenial      prepare_debian
 build multiarch/ubuntu-debootstrap ppc64el-bionic     ppc64el-bionic      prepare_debian
+build multiarch/ubuntu-debootstrap ppc64el-focal      ppc64el-focal      prepare_debian
 
 build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy      prepare_debian
+build multiarch/ubuntu-debootstrap powerpc-yakkety    powerpc-yakkety     prepare_debian
 
 build multiarch/debian-debootstrap armel-wheezy       armel-wheezy        prepare_debian
 build multiarch/debian-debootstrap armel-stretch      armel-stretch       prepare_debian
