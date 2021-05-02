@@ -1,0 +1,80 @@
+Installing fio and toilet using apt-get
+> INFO > IO Engine: [libaio]. Direct IO: [Present]
+---------------------------------------------------
+
+> CONTAINER: Sequential read (/tmp/fio)
+----------------------------------------
+Benchmark '/tmp/fio' folder using 'read' test during 3 seconds and heating 3 secs, size is 1G
+RUN_read: (g=0): rw=read, bs=1M-1M/1M-1M, ioengine=libaio, iodepth=1
+fio 2.0.5
+Starting 1 process
+RUN_read: Laying out IO file(s) (1 file(s) / 1024MB)
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=1): [R] [66.7% done] [42812K/0K /s] [40 /0  iops] [eta 00m:02s]Jobs: 1 (f=1): [R] [83.3% done] [1448M/0K /s] [1380 /0  iops] [eta 00m:01s]Jobs: 1 (f=1): [R] [100.0% done] [1424M/0K /s] [1357 /0  iops] [eta 00m:00s]
+RUN_read: (groupid=0, jobs=1): err= 0: pid=1284
+  read : io=4101.0MB, bw=1357.1MB/s, iops=1357 , runt=  3020msec
+  cpu          : usr=0.00%, sys=156.38%, ctx=8139, majf=0, minf=261
+  IO depths    : 1=198.1%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=4101/w=0/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+   READ: io=4101.0MB, aggrb=1357.1MB/s, minb=1390.6MB/s, maxb=1390.6MB/s, mint=3020msec, maxt=3020msec
+
+
+> CONTAINER: Sequential write (/tmp/fio)
+-----------------------------------------
+Benchmark '/tmp/fio' folder using 'write' test during 3 seconds and heating 3 secs, size is 1G
+RUN_write: (g=0): rw=write, bs=1M-1M/1M-1M, ioengine=libaio, iodepth=1
+fio 2.0.5
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=1): [W] [66.7% done] [0K/27146K /s] [0 /25  iops] [eta 00m:02s]Jobs: 1 (f=1): [W] [83.3% done] [0K/1213M /s] [0 /1156  iops] [eta 00m:01s]Jobs: 1 (f=1): [W] [100.0% done] [0K/1235M /s] [0 /1177  iops] [eta 00m:00s]Jobs: 1 (f=0): [W] [100.0% done] [0K/1181M /s] [0 /1125  iops] [eta 00m:00s]
+RUN_write: (groupid=0, jobs=1): err= 0: pid=1291
+  write: io=3547.0MB, bw=1163.4MB/s, iops=1163 , runt=  3049msec
+  cpu          : usr=0.49%, sys=165.32%, ctx=6173, majf=0, minf=5
+  IO depths    : 1=176.7%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=3547/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+  WRITE: io=3547.0MB, aggrb=1163.4MB/s, minb=1191.3MB/s, maxb=1191.3MB/s, mint=3049msec, maxt=3049msec
+
+
+> CONTAINER: Random read (/tmp/fio)
+------------------------------------
+Benchmark '/tmp/fio' folder using 'randread' test during 3 seconds and heating 3 secs, size is 1G
+RUN_randread: (g=0): rw=randread, bs=4K-4K/4K-4K, ioengine=libaio, iodepth=64
+fio 2.0.5
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:04s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=1): [r] [66.7% done] [3452K/0K /s] [842 /0  iops] [eta 00m:02s]Jobs: 1 (f=1): [r] [83.3% done] [95801K/0K /s] [23.4K/0  iops] [eta 00m:01s]Jobs: 1 (f=1): [r] [100.0% done] [96432K/0K /s] [23.6K/0  iops] [eta 00m:00s]
+RUN_randread: (groupid=0, jobs=1): err= 0: pid=1298
+  read : io=281928KB, bw=93913KB/s, iops=23457 , runt=  3002msec
+  cpu          : usr=0.63%, sys=199.30%, ctx=31, majf=0, minf=68
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, >=64=198.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued    : total=r=70419/w=0/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+   READ: io=281928KB, aggrb=93913KB/s, minb=96167KB/s, maxb=96167KB/s, mint=3002msec, maxt=3002msec
+
+
+> CONTAINER: Random write (/tmp/fio)
+-------------------------------------
+Benchmark '/tmp/fio' folder using 'randwrite' test during 3 seconds and heating 3 secs, size is 1G
+RUN_randwrite: (g=0): rw=randwrite, bs=4K-4K/4K-4K, ioengine=libaio, iodepth=64
+fio 2.0.5
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:04s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=1): [w] [66.7% done] [0K/3440K /s] [0 /839  iops] [eta 00m:02s]Jobs: 1 (f=1): [w] [83.3% done] [0K/91900K /s] [0 /22.5K iops] [eta 00m:01s]Jobs: 1 (f=1): [w] [100.0% done] [0K/91309K /s] [0 /22.3K iops] [eta 00m:00s]
+RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=1305
+  write: io=269100KB, bw=89670KB/s, iops=22396 , runt=  3001msec
+  cpu          : usr=0.23%, sys=199.70%, ctx=52, majf=0, minf=4
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, >=64=200.6%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued    : total=r=0/w=67212/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+  WRITE: io=269100KB, aggrb=89670KB/s, minb=91822KB/s, maxb=91822KB/s, mint=3001msec, maxt=3001msec
+
