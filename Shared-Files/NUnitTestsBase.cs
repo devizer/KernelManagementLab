@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
+using Universe.CpuUsage;
 
 namespace Tests
 {
@@ -15,7 +15,7 @@ namespace Tests
 
         protected static TextWriter OUT;
         private Stopwatch StartAt;
-        private TempCpuUsage? _CpuUsage_OnStart;
+        private CpuUsage? _CpuUsage_OnStart;
         private int TestCounter = 0;
 
         [SetUp]
@@ -32,12 +32,12 @@ namespace Tests
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} @ {testClassName} starting...");
         }
 
-        TempCpuUsage? GetCpuUsage()
+        CpuUsage? GetCpuUsage()
         {
             try
             {
                 // return LinuxResourceUsage.GetByThread();
-                return CpuUsageReader.Get(CpuUsageScope.Thread);
+                return CpuUsage.Get(CpuUsageScope.Thread);
             }
             catch
             {
@@ -56,7 +56,7 @@ namespace Tests
                 var onEnd = GetCpuUsage();
                 if (onEnd != null)
                 {
-                    var delta = TempCpuUsage.Substruct(onEnd.Value, _CpuUsage_OnStart.Value);
+                    var delta = CpuUsage.Substruct(onEnd.Value, _CpuUsage_OnStart.Value);
                     double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                     double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
                     double perCents = (user + kernel) / 1000d / elapsed.TotalSeconds; 
