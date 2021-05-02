@@ -114,6 +114,7 @@ function build() {
   done # versions
   done # options
   docker rm -f $name
+  docker rmi -f "${image}:${tag}"
 }
 
 build centos 8                                        amd64-rhel8         prepare_centos
