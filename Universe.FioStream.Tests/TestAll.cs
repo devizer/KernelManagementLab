@@ -18,26 +18,26 @@ namespace Universe.FioStream.Tests
             Console.WriteLine($"FioParserTestCase.All.Length: {FioParserTestCase.All.Length}");
             Assert.Pass();
         }
-        
-        [Test, TestCaseSource(typeof(FioParserTestCase), nameof(FioParserTestCase.All))]
-        public void _1_All(FioParserTestCase testCase)
+
+        [Test, TestCaseSource(typeof(FioParserTestCase2), nameof(FioParserTestCase2.GetAll))]
+        public void _1_All(FioParserTestCase2 testCase)
         {
-            var methods = new[]
+            FioStreamReader.JobSummaryResult jobSummaryResult = null;
+            FioStreamReader reader = new FioStreamReader();
+            reader.NotifyJobSummary += result =>
             {
-                new {Name = "SeqRead", Lines = testCase.SeqRead},
-                new {Name = "SeqWrite", Lines = testCase.SeqWrite},
-                new {Name = "RandRead", Lines = testCase.RandRead},
-                new {Name = "RandRead", Lines = testCase.RandWrite},
+                Console.WriteLine($"JobSummaryResult: {result}");
+                jobSummaryResult = result;
             };
-            foreach (var method in methods)
+            
+            foreach (var line in testCase.Lines)
             {
-                Console.WriteLine($"v{testCase.Version}: {method.Name}");
-                FioStreamReader reader = new FioStreamReader();
-                foreach (var line in method.Lines)
-                {
-                    reader.ReadNextLine(line);
-                }
+                reader.ReadNextLine(line);
             }
+            
+            Assert.NotNull(jobSummaryResult, "FioStreamReader should provide JobSummaryResult");
+            Assert.True(jobSummaryResult.Iops > 0, "JobSummaryResult.Iops should be greater then zero");
+            Assert.True(jobSummaryResult.Bandwidth > 0, "JobSummaryResult.Bandwidth should be greater then zero");
         }
 
     }
