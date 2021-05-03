@@ -29,6 +29,11 @@ namespace Universe.FioStream.Tests
                 Console.WriteLine($"JobSummaryResult: {result}");
                 jobSummaryResult = result;
             };
+
+            reader.NotifyEta += eta =>
+            {
+                Console.WriteLine($"ETA: {eta}");
+            };
             
             foreach (var line in testCase.Lines)
             {
