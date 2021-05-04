@@ -51,7 +51,7 @@ if [[ -d /usr/local/fio ]]; then
     Say "Testing fio ..."
     export PATH="$(pwd)/bin:$PATH"
     # ? --status-interval=1
-    export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
+    export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based --status-interval=1"
     export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps
     File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
     exit_code=$?
@@ -73,7 +73,7 @@ elif [[ -s /usr/local/bin/fio ]]; then
     echo ""
     Say "Testing fio ..."
     export PATH="$(pwd):$PATH"
-    export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
+    export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based --status-interval=1"
     export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps
     File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
     exit_code=$?
