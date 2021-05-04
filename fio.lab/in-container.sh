@@ -52,9 +52,12 @@ if [[ -d /usr/local/fio ]]; then
     # ? --status-interval=1
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
     export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps
+    cat $(command -v File-IO-Benchmark)
+    set -o pipefail
     File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
+    exit_code=$?
     gzip -9 /out/Benchmark.log
-    Say "EXIT CODE of File-IO-Benchmark: $?"
+    Say "EXIT CODE of File-IO-Benchmark: $exit_code"
     ls -la $FILE_IO_BENCHMARK_DUMP_FOLDER
     ls -la $FILE_IO_BENCHMARK_DUMP_FOLDER/*
     popd >/dev/null
