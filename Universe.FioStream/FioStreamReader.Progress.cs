@@ -51,6 +51,10 @@ namespace Universe.FioStream
             if (isSlashedKind)
             {
                 iopsRead = iopsWrite = null;
+                iopsRead = TryParseHumanDouble(slashArray[0].Trim(' '));
+                iopsWrite = TryParseHumanDouble(slashArray[1].Trim(' '));
+                if (iopsRead.HasValue && iopsWrite.HasValue && (iopsRead.Value > 0 || iopsWrite.Value > 0))
+                    return true;
             }
 
             iopsRead = iopsWrite = null;
