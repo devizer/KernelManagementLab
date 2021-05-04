@@ -14,7 +14,7 @@
         <TargetFrameworks>$(CommonTargetFrameworks)</TargetFrameworks>
     </PropertyGroup>
 
-    <PropertyGroup Condition= " (! '$(PROCESSOR_IDENTIFIER.ToUpper().StartsWith(`ARM`))') and (! '$(PROCESSOR_ARCHITECTURE.ToUpper().StartsWith(`ARM`))') ">
+    <PropertyGroup Condition=" (! '$(PROCESSOR_IDENTIFIER.ToUpper().StartsWith(`ARM`))') and (! '$(PROCESSOR_ARCHITECTURE.ToUpper().StartsWith(`ARM`))') ">
         <DebugType>Full</DebugType>
     </PropertyGroup>
 

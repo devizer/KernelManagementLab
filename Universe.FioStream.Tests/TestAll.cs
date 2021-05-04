@@ -22,7 +22,7 @@ namespace Universe.FioStream.Tests
         [Test, TestCaseSource(typeof(FioParserTestCase2), nameof(FioParserTestCase2.GetAll))]
         public void _1_All(FioParserTestCase2 testCase)
         {
-            FioStreamReader.JobSummaryResult jobSummaryResult = null;
+            JobSummaryResult jobSummaryResult = null;
             FioStreamReader reader = new FioStreamReader();
             reader.NotifyJobSummary += result =>
             {
@@ -33,6 +33,11 @@ namespace Universe.FioStream.Tests
             reader.NotifyEta += eta =>
             {
                 Console.WriteLine($"ETA: {eta}");
+            };
+
+            reader.NotifyJobProgress += jobProgress =>
+            {
+                Console.WriteLine($"JobProgress: {jobProgress}");
             };
             
             foreach (var line in testCase.Lines)
