@@ -5,7 +5,7 @@ using Tests;
 
 namespace Universe.FioStream.Tests
 {
-    public class TestAll : NUnitTestsBase
+    public class FioStreamReaderTests : NUnitTestsBase
     {
         [SetUp]
         public void Setup()
@@ -20,7 +20,7 @@ namespace Universe.FioStream.Tests
         }
 
         [Test, TestCaseSource(typeof(FioParserTestCase2), nameof(FioParserTestCase2.GetAll))]
-        public void _1_All(FioParserTestCase2 testCase)
+        public void FullFio(FioParserTestCase2 testCase)
         {
             JobSummaryResult jobSummaryResult = null;
             FioStreamReader reader = new FioStreamReader();
