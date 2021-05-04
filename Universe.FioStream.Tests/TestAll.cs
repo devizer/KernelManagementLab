@@ -35,9 +35,21 @@ namespace Universe.FioStream.Tests
                 Console.WriteLine($"ETA: {eta}");
             };
 
+            bool isFirst = true;
             reader.NotifyJobProgress += jobProgress =>
             {
                 Console.WriteLine($"JobProgress: {jobProgress}");
+                Assert.IsTrue(jobProgress.Eta.HasValue, "ETA is not null");
+                Assert.IsTrue(jobProgress.PerCents.HasValue, "PerCents is not null");
+                Assert.IsTrue(jobProgress.PerCents.Value > 0, "PerCents bigger then zero");
+                if (!isFirst)
+                {
+                    Assert.IsTrue(
+                        jobProgress.ReadIops.GetValueOrDefault() > 0 || jobProgress.WriteIops.GetValueOrDefault() > 0,
+                        "Either Read IOPS or Write IOPS bigger then zero");
+                }
+
+                isFirst = false;
             };
             
             foreach (var line in testCase.Lines)
