@@ -55,6 +55,8 @@ if [[ -d /usr/local/fio ]]; then
     File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
     gzip -9 /out/Benchmark.log
     Say "EXIT CODE of File-IO-Benchmark: $?"
+    ls -la $FILE_IO_BENCHMARK_DUMP_FOLDER
+    ls -la $FILE_IO_BENCHMARK_DUMP_FOLDER/*
     popd >/dev/null
 elif [[ -s /usr/local/bin/fio ]]; then
   # 2.0 & 2.1
