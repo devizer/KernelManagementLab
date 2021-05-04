@@ -44,7 +44,8 @@ namespace Universe.FioStream
                 // PROGRESS
                 var brakets = ReadBracketSections(value1).ToArray();
 #if DEBUG
-                Console.WriteLine($"PROGRESS ({brakets.Length} brakets): {string.Join("; ",brakets.Select(x => $"{{{x}}}").ToArray())}");
+                if (brakets.Length > 0)
+                    Console.WriteLine($"PROGRESS ({brakets.Length} brakets): {string.Join("; ",brakets.Select(x => $"{{{x}}}").ToArray())}");
 #endif
                 if (brakets.Length >= 3)
                 {
@@ -70,8 +71,11 @@ namespace Universe.FioStream
                             jobProgressInfo.ReadIops = iopsRead;
                             jobProgressInfo.WriteIops = iopsWrite;
                         }
+
+                        bool hasIops = jobProgressInfo.ReadIops.GetValueOrDefault() > 0 ||
+                                       jobProgressInfo.WriteIops.GetValueOrDefault() > 0;
                         
-                        if (jobProgressInfo.Stage.HasValue && jobProgressInfo.Stage != ProgressStage.Heating)
+                        if (hasIops && jobProgressInfo.Stage.HasValue && jobProgressInfo.Stage != ProgressStage.Heating)
                             NotifyJobProgress?.Invoke(jobProgressInfo);
                     }
                 }

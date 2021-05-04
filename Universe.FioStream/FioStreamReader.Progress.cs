@@ -138,6 +138,8 @@ namespace Universe.FioStream
         // Converts to seconds from: [eta 01d:03h:46m:34s] [eta 115d:17h:46m:42s]
         static long? ParseEta(string arg)
         {
+            if (arg == "eta --") return 0;
+            
             if (arg.StartsWith("eta ", IgnoreCaseComparision) && arg.Length > 4)
                 arg = arg.Substring(4);
 
@@ -185,6 +187,7 @@ namespace Universe.FioStream
                 }
             }
 
+            if (totalSeconds > 5 * 365 * 24 * 3600) return null;
             return totalSeconds;
         }
 
