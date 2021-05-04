@@ -1,0 +1,15 @@
+RUN_read: (g=0): rw=read, bs=1M-1M/1M-1M, ioengine=libaio, iodepth=1
+fio 2.0.7
+Starting 1 process
+RUN_read: Laying out IO file(s) (1 file(s) / 1024MB)
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:04s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:03s]Jobs: 1 (f=1): [R] [66.7% done] [1252K/0K /s] [1 /0  iops] [eta 00m:02s]Jobs: 1 (f=1): [R] [83.3% done] [25165K/0K /s] [24 /0  iops] [eta 00m:01s]Jobs: 1 (f=1): [R] [100.0% done] [25165K/0K /s] [24 /0  iops] [eta 00m:00s]Jobs: 1 (f=1): [R] [12.5% done] [25165K/0K /s] [24 /0  iops] [eta 00m:49s] Jobs: 1 (f=1): [R] [14.8% done] [25165K/0K /s] [24 /0  iops] [eta 00m:46s]
+RUN_read: (groupid=0, jobs=1): err= 0: pid=3680
+  read : io=103424KB, bw=24572KB/s, iops=23 , runt=  4209msec
+  cpu          : usr=0.12%, sys=1.31%, ctx=767, majf=0, minf=260
+  IO depths    : 1=758.4%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=101/w=0/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+   READ: io=103424KB, aggrb=24572KB/s, minb=24572KB/s, maxb=24572KB/s, mint=4209msec, maxt=4209msec
