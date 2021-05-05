@@ -8,11 +8,6 @@ namespace Universe.FioStream.Tests
 {
     public class FioStreamReaderTests : NUnitTestsBase
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void _0_Info()
         {
@@ -84,10 +79,12 @@ namespace Universe.FioStream.Tests
                 reader.ReadNextLine(line);
             }
             
+            // Summary
             Assert.NotNull(jobSummaryResult, "FioStreamReader should provide JobSummaryResult");
             Assert.True(jobSummaryResult.Iops > 0, "JobSummaryResult.Iops should be greater then zero");
             Assert.True(jobSummaryResult.Bandwidth > 0, "JobSummaryResult.Bandwidth should be greater then zero");
 
+            // Progress
             if (testCase.Version != "2.11" && testCase.Version != "3.0")
             {
                 Assert.IsTrue(prevPerCents.HasValue, "PerCents arrived on progress");
