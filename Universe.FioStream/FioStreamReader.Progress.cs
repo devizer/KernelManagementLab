@@ -7,6 +7,43 @@ namespace Universe.FioStream
 {
     public partial class FioStreamReader
     {
+        bool TryParseProgressBandwidth(string raw, out double? bandwidthRead, out double? bandwidthWrite)
+        {
+            bool hasComma = raw.IndexOf(",", IgnoreCaseComparision) >= 0;
+            bool endsWithSpacePerSecond = raw.EndsWith(" /s", IgnoreCaseComparision) && raw.Length >= 4;
+            if (endsWithSpacePerSecond && !hasComma)
+            {
+                raw = raw.Substring(0, raw.Length - 3);
+                
+                var slashArray = raw.Split('/');
+                bool isSlashedKind = slashArray.Length == 2 || slashArray.Length == 3;
+                if (isSlashedKind)
+                {
+                    bandwidthRead = bandwidthWrite = null;
+                    bandwidthRead = TryParseHumanDouble(slashArray[0].Trim(' '));
+                    bandwidthWrite = TryParseHumanDouble(slashArray[1].Trim(' '));
+                    if (bandwidthWrite.HasValue && bandwidthRead.HasValue && (bandwidthRead.Value > 0 || bandwidthWrite.Value > 0))
+                        return true;
+                }
+            }
+            
+            else
+            {
+                bandwidthRead = bandwidthWrite = null;
+                
+                var commaArray = raw.Split(',');
+                bool isCommaKind = commaArray.Length == 1 || commaArray.Length == 2;
+                var d = ParseCommaSeparatedDictionary(commaArray, true);
+                double val;
+                if (d.TryGetValue("r", out val)) bandwidthRead = val;
+                if (d.TryGetValue("w", out val)) bandwidthWrite = val;
+                if (bandwidthWrite.HasValue || bandwidthRead.HasValue) 
+                    return true;
+            }
+            
+            bandwidthRead = bandwidthWrite = null;
+            return false;
+        }
         
         // LENGTH - 1
         // [95252K/0K /s] [23.3K/0  iops] [eta 00m:01s]", /* 2.0 */
@@ -138,7 +175,7 @@ namespace Universe.FioStream
         // Converts to seconds from: [eta 01d:03h:46m:34s] [eta 115d:17h:46m:42s]
         static long? ParseEta(string arg)
         {
-            if (arg == "eta --") return 0;
+            if (arg.Equals("eta --", IgnoreCaseComparision)) return null;
             
             if (arg.StartsWith("eta ", IgnoreCaseComparision) && arg.Length > 4)
                 arg = arg.Substring(4);

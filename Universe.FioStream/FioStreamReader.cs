@@ -7,6 +7,8 @@ using System.Text;
 
 namespace Universe.FioStream
 {
+
+    
     public partial class FioStreamReader
     {
         public Action<TimeSpan> NotifyEta { get; set; }
@@ -65,17 +67,31 @@ namespace Universe.FioStream
                             Stage = TryParseProgressStage(brakets[brakets.Length - 5]),
                             Eta = eta.HasValue ? TimeSpan.FromSeconds(eta.Value) : (TimeSpan?) null,
                         };
-                        bool isIopsOk = TryParseProgressIops(brakets[brakets.Length - 2], out var iopsRead, out var iopsWrite);
+                        
+                        // IOPS
+                        bool isIopsOk = TryParseProgressIops(brakets[brakets.Length - 2],out var iopsRead,out var iopsWrite); 
                         if (isIopsOk)
                         {
                             jobProgressInfo.ReadIops = iopsRead;
                             jobProgressInfo.WriteIops = iopsWrite;
                         }
+                        
+                        // Bandwidth
+                        bool isBandwidthOk = TryParseProgressBandwidth(brakets[brakets.Length - 3], out var bandwidthRead, out var bandwidthWrite);
+                        if (isBandwidthOk)
+                        {
+                            jobProgressInfo.ReadBandwidth = bandwidthRead;
+                            jobProgressInfo.WriteBandwidth = bandwidthWrite;
+                        }
 
                         bool hasIops = jobProgressInfo.ReadIops.GetValueOrDefault() > 0 ||
                                        jobProgressInfo.WriteIops.GetValueOrDefault() > 0;
                         
-                        if (hasIops && jobProgressInfo.Stage.HasValue && jobProgressInfo.Stage != ProgressStage.Heating)
+                        bool hasBandwidth = jobProgressInfo.ReadBandwidth.GetValueOrDefault() > 0 ||
+                                            jobProgressInfo.WriteBandwidth.GetValueOrDefault() > 0;
+                        
+                        bool isWorkingStage = jobProgressInfo.Stage.HasValue && jobProgressInfo.Stage != ProgressStage.Heating;
+                        if (/*hasBandwidth &&*/ hasIops && isWorkingStage)
                             NotifyJobProgress?.Invoke(jobProgressInfo);
                     }
                 }

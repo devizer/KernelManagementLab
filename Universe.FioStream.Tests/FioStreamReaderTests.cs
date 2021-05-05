@@ -69,6 +69,9 @@ namespace Universe.FioStream.Tests
                     Assert.IsTrue(
                         jobProgress.ReadIops.GetValueOrDefault() > 0 || jobProgress.WriteIops.GetValueOrDefault() > 0,
                         "Either Read IOPS or Write IOPS bigger then zero");
+                    Assert.IsTrue(
+                        jobProgress.ReadBandwidth.GetValueOrDefault() > 0 || jobProgress.WriteBandwidth.GetValueOrDefault() > 0,
+                        "Either Read Bandwidth or Write Bandwidth bigger then zero");
                 }
 
                 isFirst = false;
