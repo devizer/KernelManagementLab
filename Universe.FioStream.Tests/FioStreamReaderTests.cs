@@ -45,6 +45,7 @@ namespace Universe.FioStream.Tests
 
             bool isFirst = true;
             double? prevPerCents = null;
+            bool? hasIops = null, hasBandwidth = null;
             reader.NotifyJobProgress += jobProgress =>
             {
                 Console.WriteLine($"JobProgress: {jobProgress}");
@@ -64,15 +65,16 @@ namespace Universe.FioStream.Tests
                 }
                 // Assert.IsTrue(jobProgress.PerCents.HasValue, "PerCents is not null");
                 // Assert.IsTrue(jobProgress.PerCents.Value > 0, "PerCents bigger then zero");
+                var currentHasIops = jobProgress.ReadIops.GetValueOrDefault() > 0 || jobProgress.WriteIops.GetValueOrDefault() > 0;
+                var currentHasBandwidth = jobProgress.ReadBandwidth.GetValueOrDefault() > 0 || jobProgress.WriteBandwidth.GetValueOrDefault() > 0;
                 if (!isFirst)
                 {
-                    Assert.IsTrue(
-                        jobProgress.ReadIops.GetValueOrDefault() > 0 || jobProgress.WriteIops.GetValueOrDefault() > 0,
-                        "Either Read IOPS or Write IOPS bigger then zero");
-                    Assert.IsTrue(
-                        jobProgress.ReadBandwidth.GetValueOrDefault() > 0 || jobProgress.WriteBandwidth.GetValueOrDefault() > 0,
-                        "Either Read Bandwidth or Write Bandwidth bigger then zero");
+                    Assert.IsTrue(currentHasIops, "Either Read IOPS or Write IOPS bigger then zero for progress"); 
+                    Assert.IsTrue(currentHasBandwidth, "Either Read Bandwidth or Write Bandwidth bigger then zero for progress"); 
                 }
+
+                if (currentHasIops) hasIops = true;
+                if (currentHasBandwidth) hasBandwidth = true;
 
                 isFirst = false;
             };
@@ -85,9 +87,18 @@ namespace Universe.FioStream.Tests
             Assert.NotNull(jobSummaryResult, "FioStreamReader should provide JobSummaryResult");
             Assert.True(jobSummaryResult.Iops > 0, "JobSummaryResult.Iops should be greater then zero");
             Assert.True(jobSummaryResult.Bandwidth > 0, "JobSummaryResult.Bandwidth should be greater then zero");
-            
+
             if (testCase.Version != "2.11" && testCase.Version != "3.0")
-                Assert.IsTrue(prevPerCents.HasValue, "PerCents arrived");
+            {
+                Assert.IsTrue(prevPerCents.HasValue, "PerCents arrived on progress");
+            }
+
+            if (testCase.Version != "3.0")
+            {
+                Assert.IsTrue(hasIops.GetValueOrDefault(), "IOPS Arrived on progress");
+                Assert.IsTrue(hasBandwidth.GetValueOrDefault(), "Bandwidth Arrived");
+            }
+
         }
 
     }
