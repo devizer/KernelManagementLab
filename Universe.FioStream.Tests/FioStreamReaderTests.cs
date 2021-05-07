@@ -85,7 +85,7 @@ namespace Universe.FioStream.Tests
             Assert.True(jobSummaryResult.Bandwidth > 0, "JobSummaryResult.Bandwidth should be greater then zero");
 
             // Progress
-            if (testCase.Version != "2.11" && testCase.Version != "3.0")
+            if (/*testCase.Version != "2.11" && */testCase.Version != "3.0")
             {
                 Assert.IsTrue(prevPerCents.HasValue, "PerCents arrived on progress");
             }
