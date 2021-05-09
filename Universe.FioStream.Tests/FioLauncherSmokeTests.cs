@@ -14,8 +14,8 @@ namespace Universe.FioStream.Tests
         private const string DefaultFio = "fio";
 
         [Test]
-        [TestCase(TestName = "1. First")]
-        [TestCase(TestName = "2. Next")]
+        [TestCase(TestName = "A. First")]
+        [TestCase(TestName = "B. Next")]
         public void GetTextVersion()
         {
             FioVersionReader verReader = new FioVersionReader(DefaultFio);
