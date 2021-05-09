@@ -7,7 +7,7 @@ namespace Universe.FioStream
 
         public override string ToString()
         {
-            return $"{nameof(Iops)}: {Iops}, {nameof(Bandwidth)}: {Bandwidth}";
+            return $"{nameof(Iops)}: {Iops:n0}, {nameof(Bandwidth)}: {Bandwidth:n0}";
         }
     }
 }

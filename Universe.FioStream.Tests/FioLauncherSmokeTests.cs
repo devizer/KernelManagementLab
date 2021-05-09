@@ -8,6 +8,9 @@ namespace Universe.FioStream.Tests
     [TestFixture]
     public class FioLauncherSmokeTests : NUnitTestsBase
     {
+        [SetUp]
+        public void SetUp() => FioStreamReader.ConsolasDebug = false;
+        
         private const string DefaultFio = "fio";
 
         [Test]
@@ -27,10 +30,13 @@ namespace Universe.FioStream.Tests
         }
 
         [Test]
-        public void SmokeLaunch()
+        [TestCase("--bs=4k --size=4k ", TestName = "1. First")]
+        [TestCase("--bs=4k --size=4k ", TestName = "1. Next")]
+        [TestCase("--time_based --bs=4k --size=128M --runtime=2 --ramp_time=2", TestName = "3. Big")]
+        public void SmokeLaunch(string additionalArgs)
         {
             var args =
-                "--ioengine=sync --name=aaa --eta=always --time_based --filename=fiotest.tmp --bs=4k --iodepth=64 --size=64k --runtime=2 --ramp_time=2 --readwrite=randread"
+                $"--ioengine=sync --name=my --eta=always --filename=fiotest.tmp --iodepth=1 --readwrite=read {additionalArgs}"
                     .Split(' ');
             
             Action<StreamReader> handler = streamReader =>

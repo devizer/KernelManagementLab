@@ -11,6 +11,7 @@ namespace Universe.FioStream
     
     public partial class FioStreamReader
     {
+        public static bool ConsolasDebug = false;
         public Action<TimeSpan> NotifyEta { get; set; }
         public Action<JobSummaryResult> NotifyJobSummary { get; set; }
         public Action<JobProgressInfo> NotifyJobProgress { get; set; }
@@ -45,10 +46,10 @@ namespace Universe.FioStream
             {
                 // PROGRESS
                 var brakets = ReadBracketSections(value1).ToArray();
-#if DEBUG
-                if (brakets.Length > 0)
-                    Console.WriteLine($"PROGRESS ({brakets.Length} brakets): {string.Join("; ",brakets.Select(x => $"{{{x}}}").ToArray())}");
-#endif
+                if (ConsolasDebug)
+                    if (brakets.Length > 0)
+                        Console.WriteLine($"PROGRESS ({brakets.Length} brakets): {string.Join("; ",brakets.Select(x => $"{{{x}}}").ToArray())}");
+                
                 if (brakets.Length >= 3)
                 {
                     long? eta = ParseEta(brakets[brakets.Length - 1]);
@@ -100,9 +101,9 @@ namespace Universe.FioStream
             else if (key1.Equals("read", IgnoreCaseComparision) || key1.Equals("write", IgnoreCaseComparision))
             {
                 // SUMMARY only if contains both 'iops' and 'bw'
-#if DEBUG
-                Console.WriteLine($"SUMMARY: {value1}");
-#endif
+                if (ConsolasDebug)
+                    Console.WriteLine($"SUMMARY: {value1}");
+                
                 var jobSummaryResult = ParseJobSummary(value1);
                 if (jobSummaryResult != null)
                 {

@@ -8,6 +8,9 @@ namespace Universe.FioStream.Tests
 {
     public class FioStreamReaderTests : NUnitTestsBase
     {
+        [SetUp]
+        public void SetUp() => FioStreamReader.ConsolasDebug = true;
+
         [Test]
         public void _0_Info()
         {
