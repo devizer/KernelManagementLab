@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Tests;
+using Universe.FioStream.Binaries;
 
 namespace Universe.FioStream.Tests
 {
@@ -10,8 +11,23 @@ namespace Universe.FioStream.Tests
     {
         [SetUp]
         public void SetUp() => FioStreamReader.ConsolasDebug = false;
-        
-        private const string DefaultFio = "fio";
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+        }
+
+
+        string _DefaultFio = null;
+
+        string DefaultFio
+        {
+            get
+            {
+                if (_DefaultFio == null) _DefaultFio = FindFirstWorkingCandidate() ?? "fio";
+                return _DefaultFio;
+            }
+        }
 
         [Test]
         [TestCase(TestName = "A. First")]
@@ -63,6 +79,31 @@ namespace Universe.FioStream.Tests
             }
             
             Assert.IsTrue(hasSummary, "Has Summary");
+        }
+
+        static string FindFirstWorkingCandidate()
+        {
+            var candidates = Candidates.GetCandidates();
+            foreach (var bin in candidates)
+            {
+                Console.WriteLine($"Checking: {bin.Name}");
+                GZipCachedDownloader d = new GZipCachedDownloader();
+                var cached = d.CacheGZip(bin.Name, bin.Url);
+                FioChecker checker = new FioChecker(cached);
+                var ver = checker.CheckVersion();
+                if (ver != null)
+                {
+                    var summary = checker.CheckBenchmark("--name=my", "--bs=1k", "--size=1k");
+                    if (summary != null)
+                    {
+                        Console.WriteLine($"Selected: {cached}");
+                        return cached;
+                    }
+                }
+
+            }
+
+            return null;
         }
     }
 }
