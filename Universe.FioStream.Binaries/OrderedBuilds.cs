@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Universe.FioStream.Binaries
 {
@@ -12,8 +14,51 @@ namespace Universe.FioStream.Binaries
             public string Codename { get; set; }
             public bool HasLibAio { get; set; }
             public string Url { get; set; }
-            public Version LibCVersion { get; set; } 
+            public Version LibCVersion { get; set; }
+
+            public override string ToString()
+            {
+                return $"{nameof(Arch)}: {Arch,-10}, {nameof(FioVersion)}: {FioVersion,-7}, {nameof(Codename)}: {Codename,-11}, {nameof(HasLibAio)}: {HasLibAio,-5}, {nameof(LibCVersion)}: {LibCVersion,-6}, {nameof(Url)}: {Url}";
+            }
         }
+
+        public static List<LinuxCandidate> GetLinuxCandidates()
+        {
+            var rawArray = RawList
+                .Split(new[] {'\r', '\n'})
+                .Select(x => x.Trim())
+                .Where(x => x.Length > 0)
+                .ToArray();
+
+            List<LinuxCandidate> ret = new List<LinuxCandidate>();
+            foreach (var rawName in rawArray)
+            {
+                bool hasLibAio = rawName.IndexOf("libaio-", StringComparison.OrdinalIgnoreCase) >= 0;
+                var parts = rawName.Replace("libaio-", "").Split('-');
+                var codename = parts[parts.Length - 1];
+                var codeInfo = Codenames.FirstOrDefault(x => x.Name.Equals(codename));
+                ret.Add(new LinuxCandidate()
+                {
+                    Arch = parts[parts.Length - 2],
+                    Codename = codename,
+                    Url = $"https://master.dl.sourceforge.net/project/fio/{rawName}?viasf=1",
+                    FioVersion = new Version(parts[parts.Length - 3]),
+                    HasLibAio = hasLibAio,
+                    LibCVersion = codeInfo?.LibCVersion 
+                });
+            }
+
+            ret = ret
+                .OrderByDescending(x => x.HasLibAio ? 1 : 0)
+                .ThenByDescending(x => x.LibCVersion)
+                .ThenByDescending(x => x.FioVersion)
+                .ThenBy(x => x.Url)
+                .ToList();
+
+            return ret;
+        }
+        
+        
 
         class Codename
         {
