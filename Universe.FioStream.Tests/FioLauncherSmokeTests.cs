@@ -87,7 +87,7 @@ namespace Universe.FioStream.Tests
         {
             Stopwatch sw = Stopwatch.StartNew();
             var candidates = Candidates.GetCandidates();
-            Console.WriteLine($"Checking [{candidates.Count}] candidates for {Candidates.PosixMachine} ");
+            Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
             {
                 Console.WriteLine($"Checking: {bin.Name}");

@@ -77,17 +77,20 @@ namespace Universe.FioStream.Binaries
 
         static string GetPosixMachine()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows) return IntPtr.Size == 8 ? "64-bit" : "32-bit";
             return LinuxSimpleLaunch("uname", "-m");
         }
 
         static string GetPosixSystem()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows) return "Windows";
             return LinuxSimpleLaunch("uname", "-s");
         }
         
         // 32|64
         static int GetPosixBits()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows) return IntPtr.Size * 8;
             try
             {
                 var raw = LinuxSimpleLaunch("getconf", "LONG_BIT");
