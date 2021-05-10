@@ -19,11 +19,10 @@ namespace Universe.FioStream.Binaries
             if (File.Exists(cacheStamp) && File.Exists(ret))
                 return ret;
 
-            var tempGZip = Path.Combine(CacheFolder.Value, $"{name}.gzipped");
-            var wd = new WebDownloader();
             var guid = Guid.NewGuid().ToString("N");
-            wd.Download(url, tempGZip + "." + guid);
-            File.Move(tempGZip + "." + guid, tempGZip);
+            var tempGZip = Path.Combine(CacheFolder.Value, $"{name}.{guid}.gzipped");
+            var wd = new WebDownloader();
+            wd.Download(url, tempGZip);
             
             using(FileStream from = new FileStream(tempGZip, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using(GZipStream unpack = new GZipStream(from, CompressionMode.Decompress))
@@ -49,7 +48,7 @@ namespace Universe.FioStream.Binaries
             using(FileStream cs = new FileStream(cacheStamp, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             using(StreamWriter wr = new StreamWriter(cs, new UTF8Encoding(false)))
             {
-                wr.Write("{ok:true}");
+                wr.Write("{\"ok\":true}");
             }
 
             return ret;

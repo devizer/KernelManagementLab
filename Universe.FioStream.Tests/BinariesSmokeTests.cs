@@ -18,7 +18,7 @@ namespace Universe.FioStream.Tests
         [Test]
         public void Test_Linux_Candidates()
         {
-            var binaries = OrderedLinuxCandidates.GetLinuxCandidates();
+            var binaries = OrderedLinuxCandidates.AllGetLinuxCandidates;
                 
             foreach (var bin in binaries)
             {
@@ -34,9 +34,9 @@ namespace Universe.FioStream.Tests
         [TestCaseSource(typeof(BinariesSmokeTests), nameof(BinariesSmokeTests.Architectures))]
         public void Test_Download_Only_Linux(string arch)
         {
-            GZipCachedDownloader.IgnoreCacheForDebug = false;
+            GZipCachedDownloader.IgnoreCacheForDebug = true;
             Console.WriteLine(arch);
-            var candidates = OrderedLinuxCandidates.GetLinuxCandidates()
+            var candidates = OrderedLinuxCandidates.AllGetLinuxCandidates
                 .Where(x => arch.Equals(x.Arch, StringComparison.OrdinalIgnoreCase))
                 .Select(x => new Candidates.Info()
                 {

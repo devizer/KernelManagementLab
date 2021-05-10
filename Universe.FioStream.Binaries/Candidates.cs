@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Universe.FioStream.Binaries
 {
@@ -14,13 +15,16 @@ namespace Universe.FioStream.Binaries
             public string Name { get; set; }
         }
 
-        public static Lazy<string> PosixMachine = new Lazy<string>(GetPosixMachine);
-        public static Lazy<string> PosixSystem = new Lazy<string>(GetPosixSystem);
-        public static Lazy<int> PosixLongBits = new Lazy<int>(GetPosixBits);
+        static Lazy<string> _PosixMachine = new Lazy<string>(GetPosixMachine);
+        static Lazy<string> _PosixSystem = new Lazy<string>(GetPosixSystem);
+        static Lazy<int> _PosixLongBits = new Lazy<int>(GetPosixBits);
+
+        public static string PosixMachine = _PosixMachine.Value;
+        public static string PosixSystem = _PosixSystem.Value;
+        public static int PosixLongBits = _PosixLongBits.Value;
 
         public static List<Info> GetCandidates()
         {
-            List<string> urls = new List<string>();
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
             {
                 return AllWindowsCandidates();
@@ -31,28 +35,33 @@ namespace Universe.FioStream.Binaries
             }
             else
             {
-                
-            }
-            
+                var ret = OrderedLinuxCandidates.FindCandidateByLinuxMachine(PosixMachine);
 
-            return urls.Select(Url2Info).ToList();
+                return ret.Select(x => new Info()
+                {
+                    Name = x.Name,
+                    Url = x.Url
+                }).ToList();
+            }
         }
 
         public static List<Info> AllMacOsCandidates()
         {
-            List<string> urls = new List<string>();
-            urls.Add("https://master.dl.sourceforge.net/project/fio/fio-3.16-amd64-darwin_10_10_5.gz?viasf=1");
-            urls.Add("https://master.dl.sourceforge.net/project/fio/fio-2.21-amd64-darwin_10_10_5.gz?viasf=1");
+            List<string> urls = new List<string>()
+            {
+                "https://master.dl.sourceforge.net/project/fio/fio-3.16-amd64-darwin_10_10_5.gz?viasf=1",
+                "https://master.dl.sourceforge.net/project/fio/fio-2.21-amd64-darwin_10_10_5.gz?viasf=1"
+            };
             return urls.Select(Url2Info).ToList();
         }
         
         public static List<Info> AllWindowsCandidates()
         {
-            List<string> urls = new List<string>();
-            var url32 = "https://master.dl.sourceforge.net/project/fio/fio-3.25-x86-windows.exe.gz?viasf=1";
-            var url64 = "https://master.dl.sourceforge.net/project/fio/fio-3.25-x64-windows.exe.gz?viasf=1";
-            urls.Add(url64);
-            urls.Add(url32);
+            List<string> urls = new List<string>()
+            {
+                "https://master.dl.sourceforge.net/project/fio/fio-3.25-x64-windows.exe.gz?viasf=1",
+                "https://master.dl.sourceforge.net/project/fio/fio-3.25-x86-windows.exe.gz?viasf=1"
+            };
             if (IntPtr.Size == 32) urls.Reverse();
             return urls.Select(Url2Info).ToList();
         }
@@ -65,7 +74,6 @@ namespace Universe.FioStream.Binaries
                 Url = url
             };
         }
-        
 
         static string GetPosixMachine()
         {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Universe.FioStream.Binaries
 {
@@ -23,8 +24,74 @@ namespace Universe.FioStream.Binaries
                 return $"{Arch,-8}, {FioVersion,-5} LibAIO={HasLibAio,-5}, {nameof(Codename)}: {(Codename + ":" + LibCVersion),-18}, {nameof(Url)}: {Url}";
             }
         }
+        
+        private static Lazy<List<LinuxCandidate>> _AllGetLinuxCandidates = new Lazy<List<LinuxCandidate>>(GetLinuxCandidates);
+        public static List<LinuxCandidate> AllGetLinuxCandidates => _AllGetLinuxCandidates.Value;
 
-        public static List<LinuxCandidate> GetLinuxCandidates()
+        private static Regex RegExI386 = new Regex(@"^i[3-7]86$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        public static IEnumerable<LinuxCandidate> FindCandidateByLinuxMachine(string linuxMachine)
+        {
+            IEnumerable<LinuxCandidate> FindCandidates(string arch)
+            {
+                return AllGetLinuxCandidates
+                    .Where(x => x.Arch.Equals(arch, StringComparison.OrdinalIgnoreCase));
+            }
+
+            var ret = new List<OrderedLinuxCandidates.LinuxCandidate>();
+
+            // filter and sort by current libc ver, PosixMachine, PosixLongBit and PosixSystem
+            // i386 armel armhf arm64 amd64 powerpc mips64el ppc64el
+            var machine = linuxMachine?.ToLower() ?? "";
+            if (machine == "x86_64")
+            {
+                // amd64, i386
+                ret.AddRange(FindCandidates("amd64"));
+                ret.AddRange(FindCandidates("i386"));
+            }
+            else if (RegExI386.IsMatch(machine))
+            {
+                // i386, amd64 
+                ret.AddRange(FindCandidates("i386"));
+                ret.AddRange(FindCandidates("amd64"));
+            }
+            else if (machine.StartsWith("armv6") || machine.StartsWith("armv5"))
+            {
+                // armel
+                ret.AddRange(FindCandidates("armel"));
+            }
+            else if (machine.StartsWith("armv7") || machine.StartsWith("armv8"))
+            {
+                // armhf, arm64
+                ret.AddRange(FindCandidates("armhf"));
+                ret.AddRange(FindCandidates("arm64"));
+            }
+            else if (machine.StartsWith("aarch"))
+            {
+                // arm64, armhf
+                ret.AddRange(FindCandidates("arm64"));
+                ret.AddRange(FindCandidates("armhf"));
+            }
+            else if (machine == "ppc")
+            {
+                // powerpc
+                ret.AddRange(FindCandidates("powerpc"));
+            }
+            else if (machine == "ppc64le")
+            {
+                // ppc64el
+                ret.AddRange(FindCandidates("ppc64el"));
+            }
+            else if (machine.StartsWith("mips64"))
+            {
+                // mips64el
+                ret.AddRange(FindCandidates("mips64el"));
+            }
+
+            return ret;
+        }
+
+        private static List<LinuxCandidate> GetLinuxCandidates()
         {
             var rawArray = RawList
                 .Split(new[] {'\r', '\n'})
