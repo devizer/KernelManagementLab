@@ -35,7 +35,7 @@ namespace Universe.FioStream.Binaries
                 ProcessLauncher launcher = new ProcessLauncher("chmod", "+x", $"'{ret}'");
                 launcher.Start();
                 if (launcher.ExitCode != 0)
-                    throw new Exception($"Unable to set execution bit for '{ret}'");
+                    throw new Exception($"Unable to set execution bit for '{ret}'. Exit Code {launcher.ExitCode}");
             }
 
             try
