@@ -26,8 +26,11 @@ namespace Universe.FioStream
                 launcher.Start();
 
                 if (launcher.ExitCode != 0 || !string.IsNullOrEmpty(launcher.ErrorText))
-                    throw new Exception($"Version failed: Exit Code [{launcher.ExitCode}]. ERROR TEXT: [{launcher.ErrorText}]");
-                
+                {
+                    var err = launcher.ErrorText.TrimEnd('\r', '\n');
+                    throw new Exception($"Version failed: Exit Code [{launcher.ExitCode}]. ERROR TEXT: [{err}]");
+                }
+
                 return rawVersion;
 
             }, LazyThreadSafetyMode.ExecutionAndPublication);
