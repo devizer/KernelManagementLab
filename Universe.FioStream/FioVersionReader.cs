@@ -24,6 +24,10 @@ namespace Universe.FioStream
 
                 FioLauncher launcher = new FioLauncher(this.Executable, new[] {"--version"}, handler);
                 launcher.Start();
+
+                if (launcher.ExitCode != 0 || !string.IsNullOrEmpty(launcher.ErrorText))
+                    Console.WriteLine($"VERSION WARNING: Exit Code [{launcher.ExitCode}]. ERROR TEXT: [{launcher.ErrorText}]");
+                
                 return rawVersion;
 
             }, LazyThreadSafetyMode.ExecutionAndPublication);
