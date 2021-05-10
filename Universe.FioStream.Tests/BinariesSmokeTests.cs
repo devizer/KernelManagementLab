@@ -26,28 +26,52 @@ namespace Universe.FioStream.Tests
             }
         }
 
+        private static string[] Architectures => "i386 armel armhf arm64 amd64 powerpc mips64el ppc64el".Split();
+
         [Test]
-        [TestCase(true, TestName = "1. No Cache")]
-        [TestCase(false, TestName = "2. Allow Cache")]
-        public void Test_Download_Only(bool ignoreCache)
+        // [TestCase(true, TestName = "1. No Cache (Linux)")]
+        // [TestCase(false, TestName = "2. Allow (Linux)")]
+        [TestCaseSource(typeof(BinariesSmokeTests), nameof(BinariesSmokeTests.Architectures))]
+        public void Test_Download_Only_Linux(string arch)
+        {
+            GZipCachedDownloader.IgnoreCacheForDebug = false;
+            Console.WriteLine(arch);
+            var candidates = OrderedLinuxCandidates.GetLinuxCandidates()
+                .Where(x => arch.Equals(x.Arch, StringComparison.OrdinalIgnoreCase))
+                .Select(x => new Candidates.Info()
+                {
+                    Name = x.Name,
+                    Url = x.Url,
+                }).ToArray();
+            
+            
+            RunGetVersions(candidates);
+        }
+
+        [Test]
+        [TestCase(true, TestName = "1. No Cache (Non Linux)")]
+        [TestCase(false, TestName = "2. Allow Cache (Non Linux)")]
+        public void Test_Download_Only_Non_Linux(bool ignoreCache)
         {
             GZipCachedDownloader.IgnoreCacheForDebug = ignoreCache;
             var binaries = Candidates.AllWindowsCandidates()
                 .Concat(Candidates.AllMacOsCandidates())
-                .Concat(OrderedLinuxCandidates.GetLinuxCandidates().Select(x => new Candidates.Info()
-                {
-                    Name = x.Name,
-                    Url = x.Url,
-                })).ToArray();
+                .ToArray();
 
+            RunGetVersions(binaries);
+        }
+
+        private static void RunGetVersions(Candidates.Info[] binaries)
+        {
+            int n = 0;
             foreach (var bin in binaries)
             {
-                Console.WriteLine(bin.Name);
+                Console.WriteLine($"({++n}/{binaries.Length}) {bin.Name}");
                 Stopwatch sw = Stopwatch.StartNew();
                 GZipCachedDownloader d = new GZipCachedDownloader();
                 var cached = d.CacheGZip(bin.Name, bin.Url);
                 Console.WriteLine($"  --> '{cached}', {sw.Elapsed}");
-                
+
                 FioVersionReader vr = new FioVersionReader(cached);
                 sw.Reset();
                 try

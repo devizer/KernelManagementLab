@@ -21,7 +21,9 @@ namespace Universe.FioStream.Binaries
 
             var tempGZip = Path.Combine(CacheFolder.Value, $"{name}.gzipped");
             var wd = new WebDownloader();
-            wd.Download(url, tempGZip);
+            var guid = Guid.NewGuid().ToString("N");
+            wd.Download(url, tempGZip + "." + guid);
+            File.Move(tempGZip + "." + guid, tempGZip);
             
             using(FileStream from = new FileStream(tempGZip, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using(GZipStream unpack = new GZipStream(from, CompressionMode.Decompress))
