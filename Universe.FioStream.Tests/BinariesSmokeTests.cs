@@ -47,6 +47,18 @@ namespace Universe.FioStream.Tests
                 GZipCachedDownloader d = new GZipCachedDownloader();
                 var cached = d.CacheGZip(bin.Name, bin.Url);
                 Console.WriteLine($"  --> '{cached}', {sw.Elapsed}");
+                
+                FioVersionReader vr = new FioVersionReader(cached);
+                sw.Reset();
+                try
+                {
+                    var ver = vr.GetVersion();
+                    Console.WriteLine($"  --> Version {ver}, {sw.Elapsed}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"  --> Version {(ex.GetType().Name + " " + ex.Message)}, {sw.Elapsed}");
+                }
             }
         }
     }
