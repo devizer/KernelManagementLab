@@ -344,3 +344,4 @@ pseudo-root
 *.bak
 *.bak/
 .idea/.idea.KernelManagementLab/.idea/riderModule.iml
+/Universe.FioStream.Binaries/fio-distribution/

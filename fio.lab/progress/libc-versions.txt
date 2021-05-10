@@ -1,9 +1,9 @@
 ﻿uname -m: [ppc64le], uname -p: [ppc64le]
-uname -m: [mips64], uname -p: [unknown]                                                                                                                                                                      
+uname -m: [mips64], uname -p: [unknown]
 # both i386 & amd64 - see getconf LONG_BIT
 uname -m: [x86_64], uname -p: [x86_64]
 # armel & armhf & aarch64 - see getconf LONG_BIT
-uname -m: [aarch64], uname -p: [aarch64]                                                                                                                                                                     
+uname -m: [aarch64], uname -p: [aarch64]
 uname -m: [armv7l], uname -p: [unknown]
 
 uname -m: [s390x], uname -p: [unknown] (64 bit)
