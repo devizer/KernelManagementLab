@@ -85,7 +85,7 @@ namespace Universe.FioStream.Tests
         static string FindFirstWorkingCandidate()
         {
             var candidates = Candidates.GetCandidates();
-            Console.WriteLine($"Checking candidates: {candidates.Count}");
+            Console.WriteLine($"Checking [{candidates.Count}] candidates for {Candidates.PosixMachine} ");
             foreach (var bin in candidates)
             {
                 Console.WriteLine($"Checking: {bin.Name}");
