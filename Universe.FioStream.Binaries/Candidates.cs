@@ -124,7 +124,7 @@ namespace Universe.FioStream.Binaries
             if (pl.ExitCode != 0)
                 throw new Exception($"Fail: {proc}. Exit code {pl.ExitCode}");
 
-            return pl.OutputText;
+            return pl.OutputText.TrimEnd('\r', '\n');
         }
     }
 }
