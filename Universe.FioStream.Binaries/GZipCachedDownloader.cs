@@ -32,7 +32,7 @@ namespace Universe.FioStream.Binaries
 
             if (CrossInfo.ThePlatform != CrossInfo.Platform.Windows)
             {
-                ProcessLauncher launcher = new ProcessLauncher("chmod", "+x", $"'{ret}'");
+                ProcessLauncher launcher = new ProcessLauncher("chmod", "+x", $"\"{ret}\"");
                 launcher.Start();
                 if (launcher.ExitCode != 0)
                     throw new Exception($"Unable to set execution bit for '{ret}'. Exit Code {launcher.ExitCode}. Output: [{launcher.OutputText}]. Error: [{launcher.ErrorText}]");
