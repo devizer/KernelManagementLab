@@ -53,7 +53,7 @@ namespace Universe.FioStream.Tests
                 try
                 {
                     var ver = vr.GetTextVersion();
-                    Console.WriteLine($"  --> Version [{ver}], {sw.Elapsed}");
+                    Console.WriteLine($"  --> Version for {Path.GetFileName(cached)} [{ver}], {sw.Elapsed}");
                 }
                 catch (Exception ex)
                 {
