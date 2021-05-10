@@ -15,22 +15,21 @@ namespace Universe.FioStream.Tests
         public void SetUp() => FioStreamReader.ConsolasDebug = false;
 
         [Test]
-        public void Test_Download_Only()
+        [TestCase(true,  TestName = "1. No Cache")]
+        [TestCase(false, TestName = "2. Allow Cache")]
+        public void Test_Download_Only(bool ignoreCache)
         {
+            GZipCachedDownloader.IgnoreCacheForDebug = ignoreCache;
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
             {
-                var url32 = "https://master.dl.sourceforge.net/project/fio/fio-3.25-x86-windows.exe.gz?viasf=1";
-                var url64 = "https://master.dl.sourceforge.net/project/fio/fio-3.25-x64-windows.exe.gz?viasf=1";
-                List<string> urls = new List<string>();
-                urls.Add(url32);
-                if (IntPtr.Size == 8) urls.Add(url64);
-                foreach (var url in urls)
+                var binaries = Candidates.AllWindowsCandidates();
+                
+                foreach (var bin in binaries)
                 {
-                    var name = Path.GetFileNameWithoutExtension(new Uri(url).AbsolutePath);
-                    Console.WriteLine(name);
+                    Console.WriteLine(bin.Name);
                     Stopwatch sw = Stopwatch.StartNew();
                     GZipCachedDownloader d = new GZipCachedDownloader();
-                    var cached = d.CacheGZip(name, url);
+                    var cached = d.CacheGZip(bin.Name, bin.Url);
                     Console.WriteLine($"  --> '{cached}', {sw.Elapsed}");
                 }
                 

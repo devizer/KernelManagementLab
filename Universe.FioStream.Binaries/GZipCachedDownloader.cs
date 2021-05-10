@@ -9,9 +9,12 @@ namespace Universe.FioStream.Binaries
     public class GZipCachedDownloader
     {
 
+        public static bool IgnoreCacheForDebug = false;
+
         public string CacheGZip(string name, string url)
         {
             var cacheStamp = Path.Combine(CacheFolder.Value, $"{name}.state");
+            if (IgnoreCacheForDebug && File.Exists(cacheStamp)) File.Delete(cacheStamp);
             var ret = Path.Combine(BinFolder.Value, $"{name}");
             if (File.Exists(cacheStamp) && File.Exists(ret))
                 return ret;

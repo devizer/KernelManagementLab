@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Universe.FioStream.Binaries
@@ -12,8 +11,12 @@ namespace Universe.FioStream.Binaries
 #if NETCOREAPP1_0 || NETCOREAPP1_1 || NETSTANDARD1_3
             Download2(url, toFile).Wait();
 #else
+            
+            // System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            
             var wc = new System.Net.WebClient();
-            wc.Proxy = WebRequest.DefaultWebProxy;
+            wc.Headers["User-Agent"] = "w3-fio";
+            wc.Proxy = System.Net.WebRequest.DefaultWebProxy;
             wc.DownloadFile( new Uri(url), toFile);
 #endif
         }
