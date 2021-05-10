@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Universe.FioStream.Binaries
@@ -10,6 +11,7 @@ namespace Universe.FioStream.Binaries
         public class LinuxCandidate
         {
             public string Arch { get; set; }
+            public string Name { get; set; }
             public Version FioVersion { get; set; }
             public string Codename { get; set; }
             public bool HasLibAio { get; set; }
@@ -18,7 +20,7 @@ namespace Universe.FioStream.Binaries
 
             public override string ToString()
             {
-                return $"{nameof(Arch)}: {Arch,-10}, {nameof(FioVersion)}: {FioVersion,-7}, {nameof(Codename)}: {Codename,-11}, {nameof(HasLibAio)}: {HasLibAio,-5}, {nameof(LibCVersion)}: {LibCVersion,-6}, {nameof(Url)}: {Url}";
+                return $"{Arch,-8}, {FioVersion,-5} LibAIO={HasLibAio,-5}, {nameof(Codename)}: {(Codename + ":" + LibCVersion),-18}, {nameof(Url)}: {Url}";
             }
         }
 
@@ -33,13 +35,15 @@ namespace Universe.FioStream.Binaries
             List<LinuxCandidate> ret = new List<LinuxCandidate>();
             foreach (var rawName in rawArray)
             {
+                var name = Path.GetFileNameWithoutExtension(rawName);
                 bool hasLibAio = rawName.IndexOf("libaio-", StringComparison.OrdinalIgnoreCase) >= 0;
-                var parts = rawName.Replace("libaio-", "").Split('-');
+                var parts = name.Replace("libaio-", "").Split('-');
                 var codename = parts[parts.Length - 1];
                 var codeInfo = Codenames.FirstOrDefault(x => x.Name.Equals(codename));
                 ret.Add(new LinuxCandidate()
                 {
                     Arch = parts[parts.Length - 2],
+                    Name = name,
                     Codename = codename,
                     Url = $"https://master.dl.sourceforge.net/project/fio/{rawName}?viasf=1",
                     FioVersion = new Version(parts[parts.Length - 3]),
@@ -58,8 +62,6 @@ namespace Universe.FioStream.Binaries
             return ret;
         }
         
-        
-
         class Codename
         {
             public string Name { get; set; }
@@ -86,6 +88,7 @@ namespace Universe.FioStream.Binaries
             new Codename("buster", new Version("2.28")),
             new Codename("bionic", new Version("2.27")),
             new Codename("stretch", new Version("2.24")),
+            new Codename("xenial", new Version("2.23")),
             new Codename("jessie", new Version("2.19")),
             new Codename("trusty", new Version("2.19")),
             new Codename("precise", new Version("2.15")),
