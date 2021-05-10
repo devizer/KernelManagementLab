@@ -26,7 +26,7 @@ namespace Universe.FioStream
                 launcher.Start();
 
                 if (launcher.ExitCode != 0 || !string.IsNullOrEmpty(launcher.ErrorText))
-                    Console.WriteLine($"VERSION WARNING: Exit Code [{launcher.ExitCode}]. ERROR TEXT: [{launcher.ErrorText}]");
+                    throw new Exception($"Version failed: Exit Code [{launcher.ExitCode}]. ERROR TEXT: [{launcher.ErrorText}]");
                 
                 return rawVersion;
 
