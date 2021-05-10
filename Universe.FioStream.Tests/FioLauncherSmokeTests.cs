@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
@@ -84,6 +85,7 @@ namespace Universe.FioStream.Tests
 
         static string FindFirstWorkingCandidate()
         {
+            Stopwatch sw = Stopwatch.StartNew();
             var candidates = Candidates.GetCandidates();
             Console.WriteLine($"Checking [{candidates.Count}] candidates for {Candidates.PosixMachine} ");
             foreach (var bin in candidates)
@@ -98,14 +100,14 @@ namespace Universe.FioStream.Tests
                     var summary = checker.CheckBenchmark("--name=my", "--bs=1k", "--size=1k");
                     if (summary != null)
                     {
-                        Console.WriteLine($"Selected: {cached}");
+                        Console.WriteLine($"Selected: [{cached}], {sw.Elapsed}");
                         return cached;
                     }
                 }
 
             }
 
-            Console.WriteLine("Warning! All the candidates do not match");
+            Console.WriteLine($"Warning! All the candidates do not match, {sw.Elapsed}");
             return null;
         }
     }
