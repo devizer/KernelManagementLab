@@ -52,12 +52,12 @@ namespace Universe.FioStream.Tests
                 sw.Reset();
                 try
                 {
-                    var ver = vr.GetVersion();
-                    Console.WriteLine($"  --> Version {ver}, {sw.Elapsed}");
+                    var ver = vr.GetTextVersion();
+                    Console.WriteLine($"  --> Version [{ver}], {sw.Elapsed}");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"  --> Version {(ex.GetType().Name + " " + ex.Message)}, {sw.Elapsed}");
+                    Console.WriteLine($"  --> Version Error [{(ex.GetType().Name + " " + ex.Message)}], {sw.Elapsed}");
                 }
             }
         }
