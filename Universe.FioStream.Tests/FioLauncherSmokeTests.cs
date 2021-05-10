@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using Tests;
 using Universe.FioStream.Binaries;
@@ -84,7 +85,7 @@ namespace Universe.FioStream.Tests
         static string FindFirstWorkingCandidate()
         {
             var candidates = Candidates.GetCandidates();
-            Console.WriteLine($"Checking candidates: {candidates}");
+            Console.WriteLine($"Checking candidates: {candidates.Count}");
             foreach (var bin in candidates)
             {
                 Console.WriteLine($"Checking: {bin.Name}");
