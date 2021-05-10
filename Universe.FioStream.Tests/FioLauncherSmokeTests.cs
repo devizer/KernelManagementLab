@@ -84,6 +84,7 @@ namespace Universe.FioStream.Tests
         static string FindFirstWorkingCandidate()
         {
             var candidates = Candidates.GetCandidates();
+            Console.WriteLine($"Checking candidates: {candidates}");
             foreach (var bin in candidates)
             {
                 Console.WriteLine($"Checking: {bin.Name}");
@@ -103,6 +104,7 @@ namespace Universe.FioStream.Tests
 
             }
 
+            Console.WriteLine("Warning! All the candidates do not match");
             return null;
         }
     }
