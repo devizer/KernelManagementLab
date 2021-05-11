@@ -27,5 +27,4 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
   </PropertyGroup>
 
-
 </Project>

@@ -1,0 +1,208 @@
+using System;
+using System.IO;
+using Universe.Benchmark.DiskBench;
+using Universe.DiskBench;
+
+namespace KernelManagementJam.Benchmarks
+{
+    public class FioDiskBenchmark : IDiskBenchmark
+    {
+        public DiskBenchmarkOptions Parameters { get; }
+        public ProgressInfo Progress { get; private set; }
+        public static readonly string BenchmarkTempFile = DiskBenchmark.BenchmarkTempFile;
+        private string TempFile;
+        
+        private ProgressStep _allocate;
+        private ProgressStep _seqRead;
+        private ProgressStep _seqWrite;
+        private ProgressStep _rndRead1T;
+        private ProgressStep _rndWrite1T;
+        private ProgressStep _rndReadN;
+        private ProgressStep _rndWriteN;
+        private ProgressStep _cleanUp;
+        private ProgressStep _checkODirect;
+        private bool _isODirectSupported;
+
+        public FioDiskBenchmark(DiskBenchmarkOptions parameters)
+        {
+            Parameters = parameters;
+
+            // copy/pasta from another ctor
+            var workFolderFullName = new DirectoryInfo(Parameters.WorkFolder).FullName;
+            TempFile = Path.Combine(workFolderFullName, BenchmarkTempFile);
+            BuildProgress();
+        }
+        
+        void BuildProgress()
+        {
+            if (Parameters.DisableODirect)
+            {
+                _checkODirect = new ProgressStep("Direct Access is disabled") { Value = null};
+                _isODirectSupported = false;
+                _checkODirect.Start();
+                _checkODirect.Complete();
+            }
+            else
+            {
+                _checkODirect = new ProgressStep("Check capabilities");
+            }
+
+            _checkODirect.Column = ProgressStepHistoryColumn.CheckODirect;
+                
+            _allocate = new ProgressStep($"Allocate {Formatter.FormatBytes(Parameters.WorkingSetSize)}") {Column = ProgressStepHistoryColumn.Allocate};
+            _seqRead = new ProgressStep("Sequential read"){ CanHaveMetrics = true, Column = ProgressStepHistoryColumn.SeqRead};
+            _seqWrite = new ProgressStep("Sequential write"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.SeqWrite};
+            _rndRead1T = new ProgressStep("Random Read, 1 thread"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandRead1T};
+            _rndWrite1T = new ProgressStep("Random Write, 1 thread"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandWrite1T};
+            _rndReadN = new ProgressStep($"Random Read, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandReadNT};
+            _rndWriteN = new ProgressStep($"Random Write, {Parameters.ThreadsNumber} threads"){CanHaveMetrics = true, Column = ProgressStepHistoryColumn.RandWriteNT};
+            _cleanUp = new ProgressStep("Clean up");
+            
+            this.Progress = new ProgressInfo()
+            {
+                Steps =
+                {
+                    _checkODirect,
+                    _allocate,
+                    _seqRead,
+                    _seqWrite,
+                    _rndRead1T,
+                    _rndWrite1T,
+                    _rndReadN,
+                    _rndWriteN,
+                    _cleanUp
+                }
+            };
+        }
+
+        private FileOptions GenericWritingFileStreamOptions =>
+            FileOptions.WriteThrough;
+
+        public void Perform()
+        {
+            try
+            {
+                Perform_Impl();
+            }
+            finally
+            {
+                Progress.IsCompleted = true;
+            }
+        }
+
+        private void Perform_Impl()
+        {
+            Random random = new Random();
+            
+            Action<Exception> doCleanUp = (ex) =>
+            {
+                _cleanUp.Start();
+                if (File.Exists(TempFile))
+                    File.Delete(TempFile);
+
+                if (ex != null) _cleanUp.Name = $"Benchmark failed. {ex.GetExceptionDigest()}";
+                _cleanUp.Complete();
+            };
+
+            try
+            {
+                if (!Parameters.DisableODirect) CheckODirect();
+                Allocate();
+                throw new NotImplementedException();
+                doCleanUp(null);
+            }
+            catch(Exception ex)
+            {
+                doCleanUp(ex);
+                // In case of fail the first pending step is replaced by ERROR status and the rest are SKIPPED
+                bool first = true;
+                foreach (var step in Progress.Steps)
+                {
+                    if (step.State == ProgressStepState.InProgress || step.State == ProgressStepState.Pending)
+                    {
+                        step.State = first ? ProgressStepState.Error : ProgressStepState.Skipped;
+                        first = false;
+                    }
+                }
+
+                _cleanUp.State = ProgressStepState.Error;
+                Console.WriteLine($"Benchmark for [{Parameters.WorkFolder}] failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
+                throw;
+            }
+
+        }
+        
+        public bool IsCanceled { get; private set; }
+        public void RequestCancel()
+        {
+            IsCanceled = true;
+        }
+        
+        private void CancelIfRequested()
+        {
+            if (IsCanceled)
+                throw new BenchmarkCanceledException($"Disk benchmark for {Parameters.WorkFolder} canceled"); 
+        }
+        
+        private void CheckODirect()
+        {
+            _checkODirect.Start();
+
+            _isODirectSupported = false;
+            try
+            {
+                _isODirectSupported = DiskBenchmarkChecks.IsO_DirectSupported(Parameters.WorkFolder, 128 * 1024);
+            }
+            catch
+            {
+            }
+
+            _checkODirect.Value = _isODirectSupported; 
+
+            _checkODirect.Name = _isODirectSupported ? "Direct Access is detected" : "Direct Access is absent";
+            _checkODirect.Complete();
+        }
+        
+        private void Allocate()
+        {
+            _allocate.Start();
+            LinuxKernelCacheFlusher.Sync();
+            byte[] buffer = new byte[Math.Min(10 * 1024 * 1024, this.Parameters.WorkingSetSize)];
+            new DataGenerator(Parameters.Flavour).NextBytes(buffer);
+            CpuUsageInProgress cpuUsage = CpuUsageInProgress.StartNew();
+            using (FileStream fs = new FileStream(TempFile, FileMode.Create, FileAccess.Write, FileShare.None, buffer.Length, GenericWritingFileStreamOptions))
+            {
+                if (false) 
+                {
+                    // For ext/btrfs has no essect
+                    // For fat/fat32 - too slow , inappropriate 
+                    fs.Position = Parameters.WorkingSetSize - 1;
+                    fs.WriteByte(0);
+                    fs.Position = 0;
+                }
+                _allocate.Start();
+                
+                long len = 0;
+                while (len < this.Parameters.WorkingSetSize)
+                {
+                    CancelIfRequested();
+                    var count = (int) Math.Min(this.Parameters.WorkingSetSize - len, buffer.Length);
+                    fs.Write(buffer, 0, count);
+                    len += count;
+                    _allocate.Progress(len / (double) Parameters.WorkingSetSize, len);
+                    if (cpuUsage.AggregateCpuUsage(force: false))
+                        _allocate.CpuUsage = cpuUsage.Result;
+                }
+                _allocate.Complete();
+                cpuUsage.AggregateCpuUsage(force: true);
+                _allocate.CpuUsage = cpuUsage.Result;
+            }
+            LinuxKernelCacheFlusher.Sync();
+        }
+
+
+
+
+
+    }
+}
