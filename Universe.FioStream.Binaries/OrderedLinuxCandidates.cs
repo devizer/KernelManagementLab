@@ -38,7 +38,7 @@ namespace Universe.FioStream.Binaries
                     .Where(x => x.Arch.Equals(arch, StringComparison.OrdinalIgnoreCase));
             }
 
-            var ret = new List<OrderedLinuxCandidates.LinuxCandidate>();
+            var ret = new List<LinuxCandidate>();
 
             // filter and sort by current libc ver, PosixMachine, PosixLongBit and PosixSystem
             // i386 armel armhf arm64 amd64 powerpc mips64el ppc64el

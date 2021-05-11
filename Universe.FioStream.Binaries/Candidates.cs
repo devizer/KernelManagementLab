@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Universe.FioStream.Binaries
 {
     public class Candidates
     {
-
+        
         public class Info
         {
             public string Url { get; set; }

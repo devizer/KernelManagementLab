@@ -7,7 +7,6 @@ using System.Text;
 
 namespace Universe.FioStream
 {
-
     
     public partial class FioStreamReader
     {
