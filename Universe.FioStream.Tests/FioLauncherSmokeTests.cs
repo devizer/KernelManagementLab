@@ -93,7 +93,7 @@ namespace Universe.FioStream.Tests
                 Console.WriteLine($"Checking: {bin.Name}");
                 GZipCachedDownloader d = new GZipCachedDownloader();
                 var cached = d.CacheGZip(bin.Name, bin.Url);
-                FioChecker checker = new FioChecker(cached);
+                FioChecker checker = new FioChecker(cached) {Logger = new PicoLogger()};
                 var ver = checker.CheckVersion();
                 if (ver != null)
                 {

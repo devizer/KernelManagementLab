@@ -10,7 +10,7 @@ namespace Universe.FioStream.Tests
     public class LinuxCandidatesTests : NUnitTestsBase
     {
         
-        private static string[] Machines => "i386 i686 x86_64 armv7l armv5tejl armv6l armv7l aarch64 ppc ppc64le mips64".Split();
+        public static string[] Machines => "i386 i686 x86_64 armv7l armv5tejl armv6l armv7l aarch64 ppc ppc64le mips64".Split();
 
         [Test]
         [TestCaseSource(typeof(LinuxCandidatesTests), nameof(LinuxCandidatesTests.Machines))]
