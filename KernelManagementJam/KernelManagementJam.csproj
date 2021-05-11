@@ -20,6 +20,11 @@
       <PackageReference Include="Universe.CpuUsage" Version="2.2.497.598" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Universe.FioStream.Binaries\Universe.FioStream.Binaries.csproj" />
+      <ProjectReference Include="..\Universe.FioStream\Universe.FioStream.csproj" />
+    </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DUMPS</DefineConstants>
   </PropertyGroup>
