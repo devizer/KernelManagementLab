@@ -90,7 +90,6 @@ namespace Universe.FioStream.Tests
             Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
             {
-                Console.WriteLine($"Checking: {bin.Name}");
                 GZipCachedDownloader d = new GZipCachedDownloader();
                 var cached = d.CacheGZip(bin.Name, bin.Url);
                 FioChecker checker = new FioChecker(cached) {Logger = new PicoLogger()};

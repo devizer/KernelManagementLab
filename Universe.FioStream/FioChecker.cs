@@ -59,7 +59,7 @@ namespace Universe.FioStream
             catch (Exception ex)
             {
                 var msg = ex.GetExceptionDigest();
-                Logger?.LogInfo($"Warning. Fio version test failed for [{Executable}]: '{msg}'");
+                Logger?.LogWarning($"Fio version test failed for [{Executable}]: '{msg}'");
                 return null;
             }
         }
