@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using Tests;
 using Universe.FioStream.Binaries;
@@ -19,12 +20,20 @@ namespace Universe.FioStream.Tests
         [Test]
         [TestCase(false, TestName = "Bool=False")]
         [TestCase(true, TestName = "Bool=True")]
-        public void Test_Strings(bool expected)
+        public void Test_Bool(bool expected)
         {
             bool bool1 = PersistentState.GetOrStore($"test-bool/try-{expected}", () => expected);
             Assert.AreEqual(expected, bool1, $"bool1 is {expected}");
             bool bool2 = PersistentState.GetOrStore($"test-bool/try-{expected}", () => !expected);
             Assert.AreEqual(expected, bool1, $"bool1 is {expected}");
+        }
+
+        [Test]
+        [TestCase(3,new string[] {"one", "two", "three"}, TestName = "Array of 3 strings")]
+        [TestCase(33,new string[0], TestName = "Empty array")]
+        public void Test_Array_of_Strings(long _, string[] expected)
+        {
+            // string[] expected = ((object[])rawExpected).OfType<string>().ToArray();
         }
         
     }
