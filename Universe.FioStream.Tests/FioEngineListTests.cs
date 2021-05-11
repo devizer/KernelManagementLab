@@ -16,7 +16,8 @@ namespace Universe.FioStream.Tests
         [Test]
         public void ShowEngineList()
         {
-            FindAllWorkingEngineList();
+            var found = FindAllWorkingEngineList();
+            Console.WriteLine($"{Environment.NewLine}{string.Join(Environment.NewLine,found)}");
         }
         
         static string[] FindAllWorkingEngineList()
@@ -42,7 +43,7 @@ namespace Universe.FioStream.Tests
                         {
                             FioEngineListReader rdr = new FioEngineListReader(cached);
                             engines = rdr.GetEngileList();
-                            Console.WriteLine($" --> [{string.Join(", ", engines)}]");
+                            Console.WriteLine($"OK for [{cached}]: '{string.Join(", ", engines)}'");
                             ret.Add(cached);
                         }
                         catch (Exception ex)
@@ -55,7 +56,7 @@ namespace Universe.FioStream.Tests
             }
 
             Console.WriteLine($"Warning! All the candidates do not match, {sw.Elapsed}");
-            return null;
+            return ret.ToArray();
         }
 
     }
