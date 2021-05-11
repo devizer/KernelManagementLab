@@ -56,6 +56,7 @@ if [[ -d /usr/local/fio ]]; then
     File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
     exit_code=$?
     gzip -9 /out/Benchmark.log
+    fio --enghelp > /out/enghelp-show-engine-list.log
     Say "EXIT CODE of File-IO-Benchmark: $exit_code"
     # cd $FILE_IO_BENCHMARK_DUMP_FOLDER; cd *
     popd >/dev/null
@@ -78,6 +79,7 @@ elif [[ -s /usr/local/bin/fio ]]; then
     File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
     exit_code=$?
     gzip -9 /out/Benchmark.log
+    fio --enghelp > /out/enghelp-show-engine-list.log
     Say "EXIT CODE of File-IO-Benchmark: $exit_code"
   popd >/dev/null
   

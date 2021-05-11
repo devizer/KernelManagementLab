@@ -44,7 +44,6 @@ namespace Universe.FioStream.Tests
                     Url = x.Url,
                 }).ToArray();
             
-            
             RunGetVersions(candidates);
         }
 
