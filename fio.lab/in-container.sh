@@ -60,6 +60,7 @@ if [[ -d /usr/local/fio ]]; then
     exit_code=$?
     gzip -9 /out/Benchmark.log
     fio --enghelp > /out/enghelp-show-engine-list.log
+    fio --name=my --bs=1k --size=1k ioengine=io_uring 1>/out/uring.output 2>/out/uring.error 
     Say "EXIT CODE of File-IO-Benchmark: $exit_code"
     # cd $FILE_IO_BENCHMARK_DUMP_FOLDER; cd *
     popd >/dev/null
