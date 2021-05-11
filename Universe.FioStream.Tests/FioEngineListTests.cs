@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using NUnit.Framework;
+using Tests;
+using Universe.FioStream.Binaries;
+
+namespace Universe.FioStream.Tests
+{
+    [TestFixture]
+    public class FioEngineListTests : NUnitTestsBase
+    {
+        [SetUp]
+        public void SetUp() => FioStreamReader.ConsolasDebug = false;
+
+        [Test]
+        public void ShowEngineList()
+        {
+            FindAllWorkingEngineList();
+        }
+        
+        static string[] FindAllWorkingEngineList()
+        {
+            List<string> ret = new List<string>();
+            Stopwatch sw = Stopwatch.StartNew();
+            var candidates = Candidates.GetCandidates();
+            Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
+            foreach (var bin in candidates)
+            {
+                GZipCachedDownloader d = new GZipCachedDownloader();
+                var cached = d.CacheGZip(bin.Name, bin.Url);
+                var logger = new PicoLogger();
+                FioChecker checker = new FioChecker(cached) {Logger = logger};
+                var ver = checker.CheckVersion();
+                if (ver != null)
+                {
+                    var summary = checker.CheckBenchmark("--name=my", "--bs=1k", "--size=1k");
+                    if (summary != null)
+                    {
+                        string[] engines;
+                        try
+                        {
+                            FioEngineListReader rdr = new FioEngineListReader(cached);
+                            engines = rdr.GetEngileList();
+                            Console.WriteLine($" --> [{string.Join(", ", engines)}]");
+                            ret.Add(cached);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.LogWarning($"Can't obtain engine list for [{cached}]. {ex.Message}");
+                        }
+                    }
+                }
+
+            }
+
+            Console.WriteLine($"Warning! All the candidates do not match, {sw.Elapsed}");
+            return null;
+        }
+
+    }
+}
