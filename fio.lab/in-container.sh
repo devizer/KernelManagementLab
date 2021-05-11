@@ -22,6 +22,9 @@ make -j${cpus} && make install
 mkdir -p /out
 rm -rf /out/*
 set -o pipefail
+short="1M 1 0" long="1G 3 3"
+# ========== DURATIN ============
+duration="$short"
 if [[ -d /usr/local/fio ]]; then
     pushd /usr/local/fio
     tar czf /out/fio-distribution.tar.gz .
@@ -53,7 +56,7 @@ if [[ -d /usr/local/fio ]]; then
     # ? --status-interval=1
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
     export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps
-    File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
+    File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee /out/Benchmark.log
     exit_code=$?
     gzip -9 /out/Benchmark.log
     fio --enghelp > /out/enghelp-show-engine-list.log
@@ -76,7 +79,7 @@ elif [[ -s /usr/local/bin/fio ]]; then
     export PATH="$(pwd):$PATH"
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
     export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps
-    File-IO-Benchmark "CONTAINER" $(pwd) 1G 3 3 | tee /out/Benchmark.log
+    File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee /out/Benchmark.log
     exit_code=$?
     gzip -9 /out/Benchmark.log
     fio --enghelp > /out/enghelp-show-engine-list.log
