@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <TargetFrameworks>net5.0;net35</TargetFrameworks>
-
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
@@ -11,6 +10,7 @@
         <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
         <PackageReference Include="Universe.CpuUsage" Version="2.2.497.598" />
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     </ItemGroup>
 
   <ItemGroup>
