@@ -100,7 +100,7 @@ namespace Universe.FioStream.Tests
                     var summary = checker.CheckBenchmark("--name=my", "--bs=1k", "--size=1k");
                     if (summary != null)
                     {
-                        Console.WriteLine($"Selected: [{cached}], {sw.Elapsed}");
+                        Console.WriteLine($"Selected: [{cached}] {ver}, {sw.Elapsed}");
                         return cached;
                     }
                 }
