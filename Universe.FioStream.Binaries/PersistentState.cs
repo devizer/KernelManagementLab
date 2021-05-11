@@ -91,7 +91,7 @@ namespace Universe.FioStream.Binaries
 
             foreach (var candidate in candidates)
             {
-                if (Directory.Exists(candidate))
+                if (!string.IsNullOrEmpty(candidate) && Directory.Exists(candidate))
                 {
                     var fullPath = Path.Combine(candidate, subFolder);
                     try
