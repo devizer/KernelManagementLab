@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="W3Top" type="DotNetProject" factoryName=".NET Project" editBeforeRun="true" singleton="true">
-    <option name="EXE_PATH" value="$PROJECT_DIR$/Universe.W3Top/bin/Release/netcoreapp2.2/Universe.W3Top.dll" />
+    <option name="EXE_PATH" value="$PROJECT_DIR$/Universe.W3Top/bin/Debug/netcoreapp2.2/Universe.W3Top.dll" />
     <option name="PROGRAM_PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Universe.W3Top" />
     <option name="PASS_PARENT_ENVS" value="1" />
@@ -24,7 +24,7 @@
     <option name="PROJECT_TFM" value=".NETCoreApp,Version=v2.2" />
     <browser url="http://localhost:5010/processes" name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" start="true" />
     <method v="2">
-      <option name="Build" enabled="true" />
+      <option name="Build" />
     </method>
   </configuration>
 </component>
