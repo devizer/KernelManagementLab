@@ -11,10 +11,10 @@ namespace Universe.FioStream.Tests
         [Test]
         public void Test_Strings()
         {
-            var string1 = PersistentState.GetOrStore("key1-A/key2-B", () => "SS777");
-            Assert.AreEqual("SS777", string1, "string1 is SS777");
-            var string2 = PersistentState.GetOrStore("key1-A/key2-B", () => "Never Evaluated");
-            Assert.AreEqual("SS777", string2, "string2 is SS777");
+            var string1 = PersistentState.GetOrStore("test-string/key-Z", () => "42^^42");
+            Assert.AreEqual("42^^42", string1, "string1 is 42^^42");
+            var string2 = PersistentState.GetOrStore("test-string/key-Z", () => "Never Evaluated");
+            Assert.AreEqual("42^^42", string2, "string2 is 42^^42");
         }
 
         [Test]
@@ -30,10 +30,13 @@ namespace Universe.FioStream.Tests
 
         [Test]
         [TestCase(3,new string[] {"one", "two", "three"}, TestName = "Array of 3 strings")]
-        [TestCase(33,new string[0], TestName = "Empty array")]
-        public void Test_Array_of_Strings(long _, string[] expected)
+        [TestCase(0,new string[0], TestName = "Empty array")]
+        public void Test_Array_of_Strings(long info, string[] expected)
         {
-            // string[] expected = ((object[])rawExpected).OfType<string>().ToArray();
+            string[] arr1 = PersistentState.GetOrStore($"test-string[]/try-{info}", () => expected);
+            CollectionAssert.AreEqual(expected, arr1, $"arr1 is ok");
+            string[] arr2 = PersistentState.GetOrStore($"test-string[]/try-{info}", () => new[] {"never", "evaluated"});
+            CollectionAssert.AreEqual(expected, arr2, $"arr2 is ok");
         }
         
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Universe.FioStream.Binaries
@@ -8,10 +9,12 @@ namespace Universe.FioStream.Binaries
     public class PersistentState
     {
 
+        private static readonly string MigrationVersion = "v1"; 
+
         public static T GetOrStore<T>(string key, Func<T> getValue)
         {
             var nameOnly = key.Replace(Path.DirectorySeparatorChar.ToString(), "-").Replace(Path.AltDirectorySeparatorChar.ToString(), "-");
-            var file = Path.Combine(StateFolder, nameOnly);
+            var file = Path.Combine(StateFolder, MigrationVersion + "-" + nameOnly);
             string rawText = null;
             if (File.Exists(file))
             {
@@ -26,13 +29,13 @@ namespace Universe.FioStream.Binaries
             {
                 if (typeof(T) == typeof(bool)) return (T) (object) rawText.Equals("True", StringComparison.OrdinalIgnoreCase);
                 if (typeof(T) == typeof(string)) return (T) (object) rawText;
-                if (typeof(T) == typeof(string[])) return (T) (object) rawText.Split('\n');
+                if (typeof(T) == typeof(string[])) return (T) (object) ParseStrings(rawText);
                 throw new NotSupportedException($"Type {typeof(T)} is not supported");
             }
 
             T ret = getValue();
             rawText = (typeof(T) == typeof(string[]))
-                ? string.Join("\n", (string[]) (object) ret)
+                ? SerializeStrings((string[])(object)ret)
                 : Convert.ToString(ret);
 
             using(FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
@@ -42,6 +45,19 @@ namespace Universe.FioStream.Binaries
             }
 
             return ret;
+        }
+
+        static string SerializeStrings(string[] arg) => $"{arg.Length}{Environment.NewLine}{string.Join("\n", arg)}";
+
+        static string[] ParseStrings(string raw)
+        {
+            string[] arr = raw.Split('\n');
+            if (int.TryParse(arr[0], out var len))
+            {
+                return len == 0 ? new string[0] : arr.Skip(1).Take(len).ToArray();
+            }
+
+            throw new ArgumentException($"Wrong serialized array '{raw}'", nameof(raw));
         }
 
         
