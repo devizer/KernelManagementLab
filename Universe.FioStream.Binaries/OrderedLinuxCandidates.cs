@@ -120,9 +120,9 @@ namespace Universe.FioStream.Binaries
             }
 
             ret = ret
-                .OrderByDescending(x => x.HasLibAio ? 1 : 0)
-                .ThenByDescending(x => x.LibCVersion)
+                .OrderByDescending(x => x.LibCVersion)
                 .ThenByDescending(x => x.FioVersion)
+                .ThenByDescending(x => x.HasLibAio ? 1 : 0)
                 .ThenBy(x => x.Url)
                 .ToList();
 
