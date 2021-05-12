@@ -42,6 +42,11 @@ namespace Universe.FioStream.Binaries
             public string IdEngine { get; set; }
             public string Executable { get; set; }
             public Version Version { get; set; }
+
+            public override string ToString()
+            {
+                return $"{IdEngine}-v{Version}: {Executable}";
+            }
         }
 
         internal class EngineInternals
@@ -112,9 +117,13 @@ namespace Universe.FioStream.Binaries
             }
 
             var nl = Environment.NewLine;
+/*
             var joined = string.Join(nl, candidatesByEngines.Select(x => $"{x.Key}: {x.Value.Name}").ToArray());
             Logger?.LogInfo($"{nl}{nl}Found {candidatesByEngines.Count} supported engines: for engines{nl}{joined}");
-            var exit = "ok";
+*/
+            var enginesResult = this.GetEngines();
+            var joined = string.Join(nl, enginesResult.Select(x => $"{x}").ToArray());
+            Logger?.LogInfo($"Found {enginesResult.Count} supported engines: {nl}{joined}");
         }
 
     }
