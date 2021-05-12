@@ -32,7 +32,8 @@ namespace Universe.FioStream.Tests
             Dictionary<string, Candidates.Info> candidatesByEngines = new Dictionary<string, Candidates.Info>();
 
             Stopwatch sw = Stopwatch.StartNew();
-            var candidates = Candidates.GetCandidates();
+            List<Candidates.Info> candidates = Candidates.GetCandidates();
+            candidates.Insert(0, new Candidates.Info() { Name = "fio", Url = "skip://downloading"});
             Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
             {
