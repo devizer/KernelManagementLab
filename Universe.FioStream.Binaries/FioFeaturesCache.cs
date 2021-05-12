@@ -14,10 +14,16 @@ namespace Universe.FioStream.Binaries
             {
                 if (!Features.TryGetValue(candidate.Name, out var ret))
                 {
-                    // TODO: try and retry
-                    GZipCachedDownloader d = new GZipCachedDownloader();
-                    var cached = d.CacheGZip(candidate.Name, candidate.Url);
-                    ret = new FioFeatures(cached) {Logger = Logger};
+                    if (candidate.Url == "skip://downloading")
+                        ret = new FioFeatures(candidate.Name) {Logger = Logger};
+                    else
+                    {
+                        // TODO: try and retry
+                        GZipCachedDownloader d = new GZipCachedDownloader();
+                        var cached = d.CacheGZip(candidate.Name, candidate.Url);
+                        ret = new FioFeatures(cached) {Logger = Logger};
+                    }
+
                     Features[candidate.Name] = ret;
                 }
 
