@@ -16,6 +16,7 @@ namespace Universe.FioStream.Tests
         [TestCaseSource(typeof(LinuxCandidatesTests), nameof(LinuxCandidatesTests.Machines))]
         public void Show(string machine)
         {
+            Console.WriteLine($"System Linux GNU C Library {Candidates.LibCVersion}");
             var candidates = OrderedLinuxCandidates.FindCandidateByLinuxMachine(machine);
             Console.WriteLine($"Machine: {machine}, candidates: {candidates.Count()}");
             foreach (var candidate in candidates)
