@@ -18,11 +18,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Polly;
 using Polly.Timeout;
 using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
+using Universe.FioStream;
+using Universe.FioStream.Binaries;
 
 namespace Universe.W3Top
 {
@@ -46,6 +49,13 @@ namespace Universe.W3Top
                 DashboardContextOptionsFactory.ApplyOptions(options);
             });
 
+            services.AddSingleton<IPicoLogger,FioFeaturesLogger>();
+            services.AddSingleton<FioEnginesProvider>(serviceProvider =>
+            {
+                IPicoLogger picoLogger = serviceProvider.GetService<IPicoLogger>();
+                return new FioEnginesProvider(new FioFeaturesCache() {Logger = picoLogger}, picoLogger);
+            });
+            
             services.AddSingleton<DiskBenchmarkQueue>(new DiskBenchmarkQueue(() => new DashboardContext()));
             services.AddScoped<DiskBenchmarkDataAccess>();
             
@@ -113,6 +123,15 @@ namespace Universe.W3Top
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
+            lifetime.ApplicationStarted.Register(() =>
+            {
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var enginesProvider = scope.ServiceProvider.GetRequiredService<FioEnginesProvider>();
+                    enginesProvider.Discovery();
+                }
+            });
+            
             app.Use(async (context, next) =>
             {
                 Action dumpHeaders = () => DumpHeaders(context);

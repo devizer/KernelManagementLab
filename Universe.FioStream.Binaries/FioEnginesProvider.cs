@@ -63,14 +63,14 @@ namespace Universe.FioStream.Binaries
 
             var targetEngines = rawTargetEngines.Split(','); 
             
-            Logger.LogInfo($"Discovery Supported FIO Engines on {CrossInfo.ThePlatform}: {rawTargetEngines}");
+            Logger?.LogInfo($"Discovery Supported FIO Engines on {CrossInfo.ThePlatform}: {rawTargetEngines}");
 
             Dictionary<string, Candidates.Info> candidatesByEngines = new Dictionary<string, Candidates.Info>();
 
             Stopwatch sw = Stopwatch.StartNew();
             List<Candidates.Info> candidates = Candidates.GetCandidates();
             candidates.Insert(0, new Candidates.Info() { Name = "fio", Url = "skip://downloading"});
-            Logger.LogInfo($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
+            Logger?.LogInfo($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
             {
                 if (targetEngines.Length == candidatesByEngines.Count) break;
@@ -89,7 +89,7 @@ namespace Universe.FioStream.Binaries
 
                 foreach (var engine in toFind)
                 {
-                    Logger.LogInfo($"Checking engine [{engine}] for [{bin.Name}]");
+                    Logger?.LogInfo($"Checking engine [{engine}] for [{bin.Name}]");
                     bool isEngineSupported = features.IsEngineSupported(engine);
                     if (isEngineSupported)
                     {
