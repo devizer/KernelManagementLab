@@ -16,6 +16,20 @@ namespace Universe.FioStream.Tests
         [Test]
         [TestCase(TestName = "A. Discovery First")]
         [TestCase(TestName = "B. Discovery Next")]
+        public void Test_FioEnginesProvider()
+        {
+            var logger = new PicoLogger();
+            var featuresCache = new FioFeaturesCache() {Logger = logger};
+            FioEnginesProvider provider = new FioEnginesProvider(featuresCache, logger);
+            provider.Discovery();
+
+            var engines = provider.GetEngines();
+            Assert.IsTrue(engines.Count > 0, "engines.Count > 0");
+        }
+        
+        [Test, Explicit]
+        [TestCase(TestName = "A. Discovery-LAB First")]
+        [TestCase(TestName = "B. Discovery-LAB Next")]
         public void Discover()
         {
             string[] linuxEngines = "io_uring,libaio,posixaio,pvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
