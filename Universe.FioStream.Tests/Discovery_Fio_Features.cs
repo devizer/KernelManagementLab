@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
 using Tests;
@@ -30,6 +31,7 @@ namespace Universe.FioStream.Tests
 
             Dictionary<string, Candidates.Info> candidatesByEngines = new Dictionary<string, Candidates.Info>();
 
+            Stopwatch sw = Stopwatch.StartNew();
             var candidates = Candidates.GetCandidates();
             Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
@@ -55,6 +57,10 @@ namespace Universe.FioStream.Tests
                     if (isEngineSupported)
                     {
                         candidatesByEngines[engine] = bin;
+                        {
+                            var todo = $"{(targetEngines.Length - candidatesByEngines.Count)}";
+                            Console.WriteLine($"{candidatesByEngines}/{targetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
+                        }
                     }
                 }
             }
