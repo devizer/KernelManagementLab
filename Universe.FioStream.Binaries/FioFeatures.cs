@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace Universe.FioStream.Binaries
 {
@@ -52,12 +53,32 @@ namespace Universe.FioStream.Binaries
 
         public bool IsEngineSupported(string engine)
         {
-            var isSupported = PersistentState.GetOrStore($"{Executable}-Engine-{engine}", () => 
+            Random rand = new Random();
+            var dir = PersistentState.TempFolder;
+            string file = null, fileFull;
+            do
             {
-                FioChecker checker = new FioChecker(Executable) {Logger = Logger};
-                var summary = checker.CheckBenchmark("--name=my", "--bs=8k", "--size=8k", $"--ioengine={engine}");
-                return summary == null ? null : "Ok";
-            });
+                file = $"fiobench.{rand.Next(999):000}";
+                fileFull = Path.Combine(dir, file);
+                if (!File.Exists(fileFull)) break;
+            } while (true);
+
+            string isSupported;
+            try
+            {
+                isSupported = PersistentState.GetOrStore($"{Executable}-Engine-{engine}", () =>
+                {
+                    FioChecker checker = new FioChecker(Executable) {Logger = Logger};
+                    JobSummaryResult summary = checker.CheckBenchmark("--name=my", "--bs=8k", "--size=8k", $"--ioengine={engine}",
+                        $"\"--directory={dir}\"", $"--filename={file}");
+                    
+                    return summary == null ? null : "Ok";
+                });
+            }
+            finally
+            {
+                // if (File.Exists(fileFull)) File.Delete(fileFull);
+            }
 
             return isSupported != null;
         }
