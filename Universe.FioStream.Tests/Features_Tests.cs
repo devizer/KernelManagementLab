@@ -12,6 +12,8 @@ namespace Universe.FioStream.Tests
         private FioFeaturesCache FeaturesCache = new FioFeaturesCache() {Logger = new PicoLogger()};
 
         [Test]
+        [TestCase(TestName = "A. Features First")]
+        [TestCase(TestName = "B. Features Next")]
         public void Test_for_Current_Platform()
         {
             var candidates = Candidates.GetCandidates();
