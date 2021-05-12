@@ -129,7 +129,6 @@ namespace KernelManagementJam.Benchmarks
                 Console.WriteLine($"Benchmark for [{Parameters.WorkFolder}] failed. {ex.GetExceptionDigest()}{Environment.NewLine}{ex}");
                 throw;
             }
-
         }
         
         public bool IsCanceled { get; private set; }
