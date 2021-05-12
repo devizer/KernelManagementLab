@@ -22,11 +22,24 @@ namespace Universe.FioStream.Tests
             foreach (var bin in candidates)
             {
                 var features = FeaturesCache[bin];
+                var version = features.Version;
                 var engines = features.EngineList;
-                var enginesInfo = engines == null ? "null" : string.Join(",", engines);
-                var candidateInfo = $"{bin.Name}: [{features.Version}] [{enginesInfo}]";
+                string enginesInfo = engines == null ? "null" : string.Join(",", engines);
+                if (engines != null)
+                {
+                    List<string> enginesDetails = new List<string>();
+                    foreach (var engine in engines)
+                    {
+                        bool isEngineSupported = features.IsEngineSupported(engine);
+                        enginesDetails.Add($"{engine}{(isEngineSupported ? "+" : "-")}");
+                    }
+
+                    enginesInfo = string.Join(",", enginesDetails.ToArray());
+                }
+
+                var candidateInfo = $"{bin.Name}: [{version}] [{enginesInfo}]";
                 Console.WriteLine(candidateInfo);
-                if (engines != null && features.Version != null)
+                if (engines != null && version != null)
                     okList.Add(candidateInfo);
             }
 

@@ -49,5 +49,17 @@ namespace Universe.FioStream.Binaries
                 });
             }
         }
+
+        public bool IsEngineSupported(string engine)
+        {
+            var isSupported = PersistentState.GetOrStore($"{Executable}-Engine-{engine}", () => 
+            {
+                FioChecker checker = new FioChecker(Executable) {Logger = Logger};
+                var summary = checker.CheckBenchmark("--name=my", "--bs=8k", "--size=8k", $"--ioengine={engine}");
+                return summary == null ? null : "Ok";
+            });
+
+            return isSupported != null;
+        }
     }
 }
