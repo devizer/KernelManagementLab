@@ -76,9 +76,9 @@ namespace Universe.FioStream.Binaries
                 if (targetEngines.Length == candidatesByEngines.Count) break;
                 
                 FioFeatures features = FeaturesCache[bin];
-                var version = features.Version;
                 var engines = features.EngineList;
                 if (engines == null) continue;
+                var version = features.Version;
                 if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
                     if (!engines.Contains("windowsaio"))
                         engines = engines.Concat(new[] {"windowsaio"}).ToArray();

@@ -77,7 +77,13 @@ namespace Universe.FioStream.Binaries
             }
             finally
             {
-                // if (File.Exists(fileFull)) File.Delete(fileFull);
+                try
+                {
+                    if (File.Exists(fileFull)) File.Delete(fileFull);
+                }
+                catch
+                {
+                }
             }
 
             return isSupported != null;
