@@ -42,7 +42,7 @@ namespace Universe.FioStream.Tests
                         try
                         {
                             FioEngineListReader rdr = new FioEngineListReader(cached);
-                            engines = rdr.GetEngileList();
+                            engines = rdr.GetEngineList();
                             Console.WriteLine($"OK for [{cached}]: '{string.Join(", ", engines)}'");
                             ret.Add(cached);
                         }

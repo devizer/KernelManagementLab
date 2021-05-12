@@ -14,10 +14,14 @@ namespace Universe.FioStream
             Executable = executable;
         }
 
-        public string[] GetEngileList()
+        public string[] GetEngineList()
         {
+            // cpuio-,mmap+,sync+,psync+,vsync+,pvsync+,pvsync2+,null+,net-,netsplice-,ftruncate-,posixaio+,falloc+,e4defrag-,splice+,mtd-,sg-,binject-
+            // ,mmap+,sync+,psync+,vsync+,pvsync+,pvsync2+,null+,net-,netsplice-,ftruncate-,filecreate+,filestat+,posixaio+,falloc+,e4defrag-,splice+,mtd-,sg-,io_uring+
+            // io_uring, libaio, posixaio, pvsync2, pvsync, vsync, psync, sync, mmap
             List<string> ret = new List<string>();
-            Action<StreamReader> handler = streamReader =>
+
+            void Handler(StreamReader streamReader)
             {
                 var allRaw = streamReader.ReadToEnd();
                 allRaw = allRaw.Trim('\r', '\n');
@@ -28,12 +32,11 @@ namespace Universe.FioStream
 
                 foreach (var line in lines)
                 {
-                    if (line.IndexOf(' ') < 0)
-                        ret.Add(line);
+                    if (line.IndexOf(' ') < 0) ret.Add(line);
                 }
-            };
-            
-            FioLauncher launcher = new FioLauncher(this.Executable, new[] {"--enghelp"}, handler);
+            }
+
+            FioLauncher launcher = new FioLauncher(this.Executable, new[] {"--enghelp"}, Handler);
             launcher.Start();
 
             if (launcher.ExitCode != 0 || !string.IsNullOrEmpty(launcher.ErrorText))

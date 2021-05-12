@@ -16,6 +16,9 @@ namespace Universe.FioStream.Tests
         [TestCase(TestName = "B. Features Next")]
         public void Test_for_Current_Platform()
         {
+            string[] linuxEngines = "io_uring,libaio,posixaio,rpvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
+            string[] windowsEngines = "windowsaio,posixaio,pvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
+            
             var candidates = Candidates.GetCandidates();
             Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             List<string> okList = new List<string>(); 

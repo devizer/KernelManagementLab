@@ -37,7 +37,7 @@ namespace Universe.FioStream.Binaries
                     try
                     {
                         FioEngineListReader rdr = new FioEngineListReader(Executable);
-                        engines = rdr.GetEngileList();
+                        engines = rdr.GetEngineList();
                         return engines;
                     }
                     catch (Exception ex)
