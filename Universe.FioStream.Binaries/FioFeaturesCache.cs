@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace Universe.FioStream.Binaries
 {
@@ -6,7 +6,7 @@ namespace Universe.FioStream.Binaries
     {
         public IPicoLogger Logger { get; set; }
 
-        private Dictionary<string, FioFeatures> Features = new Dictionary<string, FioFeatures>();
+        private ConcurrentDictionary<string, FioFeatures> Features = new ConcurrentDictionary<string, FioFeatures>();
 
         public FioFeatures this[Candidates.Info candidate]
         {
@@ -16,6 +16,7 @@ namespace Universe.FioStream.Binaries
                 {
                     if (candidate.Url == "skip://downloading")
                         ret = new FioFeatures(candidate.Name) {Logger = Logger};
+                    
                     else
                     {
                         // TODO: try and retry
