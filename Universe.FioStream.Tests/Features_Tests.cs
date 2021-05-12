@@ -17,9 +17,6 @@ namespace Universe.FioStream.Tests
         [TestCase(TestName = "B. Features Next")]
         public void Test_for_Current_Platform()
         {
-
-
-
             var candidates = Candidates.GetCandidates();
             Console.WriteLine(
                 $"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");

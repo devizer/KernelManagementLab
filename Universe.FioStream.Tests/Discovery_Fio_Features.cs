@@ -31,11 +31,11 @@ namespace Universe.FioStream.Tests
             Dictionary<string, Candidates.Info> candidatesByEngines = new Dictionary<string, Candidates.Info>();
 
             var candidates = Candidates.GetCandidates();
-            Console.WriteLine(
-                $"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
-            List<string> okList = new List<string>();
+            Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
             {
+                if (targetEngines.Length == candidatesByEngines.Count) break;
+                
                 var features = FeaturesCache[bin];
                 var version = features.Version;
                 var engines = features.EngineList;
