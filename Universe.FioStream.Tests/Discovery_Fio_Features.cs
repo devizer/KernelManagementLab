@@ -21,10 +21,11 @@ namespace Universe.FioStream.Tests
             var logger = new PicoLogger();
             var featuresCache = new FioFeaturesCache() {Logger = logger};
             FioEnginesProvider provider = new FioEnginesProvider(featuresCache, logger);
+            Assert.IsTrue(provider.GetEngines().Count == 0, "engines.Count == 0 on start");
             provider.Discovery();
 
             var engines = provider.GetEngines();
-            Assert.IsTrue(engines.Count > 0, "engines.Count > 0");
+            Assert.IsTrue(engines.Count > 0, "engines.Count > 0 after");
         }
         
         [Test, Explicit]
