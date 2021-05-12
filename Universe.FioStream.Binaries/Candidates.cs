@@ -17,10 +17,12 @@ namespace Universe.FioStream.Binaries
         static Lazy<string> _PosixMachine = new Lazy<string>(GetPosixMachine);
         static Lazy<string> _PosixSystem = new Lazy<string>(GetPosixSystem);
         static Lazy<int> _PosixLongBits = new Lazy<int>(GetPosixBits);
+        static Lazy<Version> _LibCVersion = new Lazy<Version>(GetLibCVersion);
 
         public static string PosixMachine = _PosixMachine.Value;
         public static string PosixSystem = _PosixSystem.Value;
         public static int PosixLongBits = _PosixLongBits.Value;
+        public static Version LibCVersion = _LibCVersion.Value;
 
         public static List<Info> GetCandidates()
         {
@@ -107,6 +109,27 @@ namespace Universe.FioStream.Binaries
             }
 
             return IntPtr.Size * 8;
+        }
+
+        static Version GetLibCVersion()
+        {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows) return null;
+            try
+            {
+                var raw = LinuxSimpleLaunch("ldd", "--version");
+                string firstLine = raw.Split('\r', '\n').FirstOrDefault();
+                string lastWord = firstLine?.Split(' ').LastOrDefault(); 
+                if (!string.IsNullOrEmpty(lastWord))
+                {
+                    return new Version(lastWord);
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            return null;
         }
 
         static string LinuxSimpleLaunch(string proc, params string[] args)

@@ -119,7 +119,9 @@ namespace Universe.FioStream.Binaries
                 });
             }
 
+            var libCVersion = Candidates.LibCVersion;
             ret = ret
+                .Where(x => x.LibCVersion == null || libCVersion == null || libCVersion >= x.LibCVersion)
                 .OrderByDescending(x => x.LibCVersion)
                 .ThenByDescending(x => x.FioVersion)
                 .ThenByDescending(x => x.HasLibAio ? 1 : 0)
