@@ -34,6 +34,8 @@ namespace Universe.FioStream.Binaries
             }
 
             T ret = getValue();
+            if (ret == null) return ret;
+            
             rawText = (typeof(T) == typeof(string[]))
                 ? SerializeStrings((string[])(object)ret)
                 : Convert.ToString(ret);

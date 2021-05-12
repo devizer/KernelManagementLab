@@ -16,12 +16,14 @@ namespace Universe.FioStream.Binaries
         {
             get
             {
-                return PersistentState.GetOrStore($"{Executable}-Ver", () => 
+                var textVersion = PersistentState.GetOrStore($"{Executable}-Ver", () => 
                 {
                     FioChecker checker = new FioChecker(Executable) {Logger = Logger};
                     Version ver = checker.CheckVersion();
-                    return ver;
+                    return ver == null ? null : ver.ToString();
                 });
+
+                return textVersion == null ? null : new Version(textVersion);
             }
         }
 
