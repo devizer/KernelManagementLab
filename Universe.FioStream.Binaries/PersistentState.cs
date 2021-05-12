@@ -9,11 +9,14 @@ namespace Universe.FioStream.Binaries
     public class PersistentState
     {
 
-        private static readonly string MigrationVersion = "v1"; 
+        private static readonly string MigrationVersion = "v1";
+
+        private static HashSet<string> Nulls = new HashSet<string>();
 
         public static T GetOrStore<T>(string key, Func<T> getValue)
         {
             var nameOnly = key.Replace(Path.DirectorySeparatorChar.ToString(), "-").Replace(Path.AltDirectorySeparatorChar.ToString(), "-");
+            if (Nulls.Contains(key)) return default(T);
             var file = Path.Combine(StateFolder, MigrationVersion + "-" + nameOnly);
             string rawText = null;
             if (File.Exists(file))
@@ -34,7 +37,12 @@ namespace Universe.FioStream.Binaries
             }
 
             T ret = getValue();
-            if (ret == null) return ret;
+
+            if (ret == null)
+            {
+                Nulls.Add(key);
+                return ret;
+            }
             
             rawText = (typeof(T) == typeof(string[]))
                 ? SerializeStrings((string[])(object)ret)
