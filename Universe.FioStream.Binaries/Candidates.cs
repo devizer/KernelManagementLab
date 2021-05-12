@@ -108,8 +108,6 @@ namespace Universe.FioStream.Binaries
 
             return IntPtr.Size * 8;
         }
-        
-
 
         static string LinuxSimpleLaunch(string proc, params string[] args)
         {
