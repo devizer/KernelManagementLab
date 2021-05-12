@@ -32,8 +32,8 @@ namespace Universe.FioStream.Binaries
             return stateCopy.Select(pair => new Engine()
             {
                 IdEngine = pair.Key,
-                Executable = pair.Value.Features.Executable,
-                Version = pair.Value.Engine.Version,
+                Executable = pair.Value.Executable,
+                Version = pair.Value.Version,
             }).ToList();
         }
 
@@ -46,8 +46,8 @@ namespace Universe.FioStream.Binaries
 
         internal class EngineInternals
         {
-            public Engine Engine;
-            public Candidates.Info Candidate;
+            public string Executable;
+            public Version Version;
             public FioFeatures Features;
         }
 
@@ -94,6 +94,15 @@ namespace Universe.FioStream.Binaries
                     if (isEngineSupported)
                     {
                         candidatesByEngines[engine] = bin;
+                        lock (SyncState)
+                        {
+                            TheState[engine] = new EngineInternals()
+                            {
+                                Executable = features.Executable,
+                                Version = version,
+                                Features = features
+                            };
+                        }
                         {
                             var todo = $"{(targetEngines.Length - candidatesByEngines.Count)}";
                             Logger?.LogInfo($"{candidatesByEngines.Count}/{targetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
@@ -104,8 +113,7 @@ namespace Universe.FioStream.Binaries
 
             var nl = Environment.NewLine;
             var joined = string.Join(nl, candidatesByEngines.Select(x => $"{x.Key}: {x.Value.Name}").ToArray());
-            Logger?.LogInfo($"{nl}{nl}Found {candidatesByEngines.Count} candidates: for engines{nl}{joined}");
-
+            Logger?.LogInfo($"{nl}{nl}Found {candidatesByEngines.Count} supported engines: for engines{nl}{joined}");
         }
 
     }
