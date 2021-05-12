@@ -17,8 +17,12 @@ namespace Universe.FioStream.Binaries
         {
             if (Nulls.Contains(key)) return default(T);
 
-            var nameOnly = key.Replace(Path.DirectorySeparatorChar.ToString(), "-").Replace(Path.AltDirectorySeparatorChar.ToString(), "-");
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows) nameOnly = nameOnly.Replace(":", "-"); 
+            var nameOnly = key;
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows || CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX) 
+                nameOnly = nameOnly.Replace("\\:", "→").Replace(Path.DirectorySeparatorChar.ToString(), "→").Replace(Path.AltDirectorySeparatorChar.ToString(), "→");
+            else
+                nameOnly = nameOnly.Replace(Path.DirectorySeparatorChar.ToString(), "-").Replace(Path.AltDirectorySeparatorChar.ToString(), "-");
+            
             var file = Path.Combine(StateFolder, MigrationVersion + "." + nameOnly);
             string rawText = null;
             if (File.Exists(file))
