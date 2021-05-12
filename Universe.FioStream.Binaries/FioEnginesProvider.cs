@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Theraot.Collections;
 
 namespace Universe.FioStream.Binaries
 {
@@ -12,7 +13,8 @@ namespace Universe.FioStream.Binaries
 
         private Dictionary<string, EngineInternals> TheState = new Dictionary<string, EngineInternals>();
         private readonly object SyncState = new object();
-        
+        private string[] TargetEngines;
+
         private const string LinuxEngines = "io_uring,libaio,posixaio,pvsync2,pvsync,vsync,psync,sync,mmap";
         private const string WindowsEngines = "windowsaio,psync,sync,mmap";
         private const string OsxEngines = "posixaio,pvsync2,pvsync,vsync,psync,sync,mmap";
@@ -29,12 +31,19 @@ namespace Universe.FioStream.Binaries
             lock (SyncState)
                 stateCopy = TheState.ToArray();
 
+            int IndexOfEngine(string engine)
+            {
+                return TargetEngines?.IndexOf(engine) ?? int.MaxValue;
+            }
+
             return stateCopy.Select(pair => new Engine()
             {
                 IdEngine = pair.Key,
                 Executable = pair.Value.Executable,
                 Version = pair.Value.Version,
-            }).ToList();
+            })
+                .OrderBy(x => IndexOfEngine(x.IdEngine))
+                .ToList();
         }
 
         public class Engine
@@ -66,7 +75,7 @@ namespace Universe.FioStream.Binaries
             else
                 rawTargetEngines = LinuxEngines;
 
-            var targetEngines = rawTargetEngines.Split(','); 
+            TargetEngines = rawTargetEngines.Split(','); 
             
             Logger?.LogInfo($"Discovery Supported FIO Engines on {CrossInfo.ThePlatform}: {rawTargetEngines}");
 
@@ -78,7 +87,7 @@ namespace Universe.FioStream.Binaries
             Logger?.LogInfo($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
             {
-                if (targetEngines.Length == candidatesByEngines.Count) break;
+                if (TargetEngines.Length == candidatesByEngines.Count) break;
                 
                 FioFeatures features = FeaturesCache[bin];
                 var engines = features.EngineList;
@@ -88,7 +97,7 @@ namespace Universe.FioStream.Binaries
                     if (!engines.Contains("windowsaio"))
                         engines = engines.Concat(new[] {"windowsaio"}).ToArray();
 
-                var toFind = targetEngines
+                var toFind = TargetEngines
                     .Where(x => !candidatesByEngines.ContainsKey(x))
                     .Where(x => engines.Contains(x));
 
@@ -109,8 +118,8 @@ namespace Universe.FioStream.Binaries
                             };
                         }
                         {
-                            var todo = $"{(targetEngines.Length - candidatesByEngines.Count)}";
-                            Logger?.LogInfo($"{candidatesByEngines.Count}/{targetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
+                            var todo = $"{(TargetEngines.Length - candidatesByEngines.Count)}";
+                            Logger?.LogInfo($"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
                         }
                     }
                 }
