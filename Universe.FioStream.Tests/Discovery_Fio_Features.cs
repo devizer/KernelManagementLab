@@ -59,7 +59,7 @@ namespace Universe.FioStream.Tests
                         candidatesByEngines[engine] = bin;
                         {
                             var todo = $"{(targetEngines.Length - candidatesByEngines.Count)}";
-                            Console.WriteLine($"{candidatesByEngines}/{targetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
+                            Console.WriteLine($"{candidatesByEngines.Count}/{targetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
                         }
                     }
                 }
