@@ -114,6 +114,7 @@ namespace Universe.FioStream.Binaries
             var nl = Environment.NewLine;
             var joined = string.Join(nl, candidatesByEngines.Select(x => $"{x.Key}: {x.Value.Name}").ToArray());
             Logger?.LogInfo($"{nl}{nl}Found {candidatesByEngines.Count} supported engines: for engines{nl}{joined}");
+            var exit = "ok";
         }
 
     }

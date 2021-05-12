@@ -15,7 +15,7 @@ namespace Universe.W3Top
             _Logger = new Lazy<ILogger>(() => LoggerFactory.CreateLogger("fio-features"));
         }
 
-        public FioFeaturesLogger(ILoggerFactory loggerFactory)
+        public FioFeaturesLogger(ILoggerFactory loggerFactory) : this()
         {
             LoggerFactory = loggerFactory;
         }
