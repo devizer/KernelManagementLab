@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
+#if NET20 || NET35
 using Theraot.Collections;
+#endif
 
 namespace Universe.FioStream.Binaries
 {
@@ -33,7 +36,9 @@ namespace Universe.FioStream.Binaries
 
             int IndexOfEngine(string engine)
             {
-                return TargetEngines?.IndexOf(engine) ?? int.MaxValue;
+                if (TargetEngines == null) return int.MaxValue;
+                int ret = Array.IndexOf(TargetEngines, engine);
+                return ret >= 0 ? ret : int.MaxValue;
             }
 
             return stateCopy.Select(pair => new Engine()
