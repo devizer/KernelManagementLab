@@ -36,13 +36,13 @@ namespace Universe.FioStream
                 if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
                 {
                     var err = launcher.ErrorText.TrimEnd('\r', '\n');
-                    Logger?.LogWarning($"Fio benchmark test failed for [{Executable}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{(workingDirectory == null ? "<current>" : workingDirectory)}]");
+                    Logger?.LogWarning($"Fio benchmark test failed for [{Executable}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]");
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                Logger?.LogWarning($"Fio benchmark test failed for [{Executable}]. {ex.GetExceptionDigest()}");
+                Logger?.LogWarning($"Fio benchmark test failed for [{Executable}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}] {ex.GetExceptionDigest()}");
                 return null;
             }
 
