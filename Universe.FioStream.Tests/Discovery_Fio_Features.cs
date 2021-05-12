@@ -18,7 +18,7 @@ namespace Universe.FioStream.Tests
         [TestCase(TestName = "B. Discovery Next")]
         public void Discover()
         {
-            string[] linuxEngines = "io_uring,libaio,posixaio,rpvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
+            string[] linuxEngines = "io_uring,libaio,posixaio,pvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
             string[] windowsEngines = "windowsaio,psync,sync,mmap".Split(',');
             string[] osxEngines = "posixaio,pvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
             string[] targetEngines;
