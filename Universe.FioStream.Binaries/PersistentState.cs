@@ -15,8 +15,10 @@ namespace Universe.FioStream.Binaries
 
         public static T GetOrStore<T>(string key, Func<T> getValue)
         {
-            var nameOnly = key.Replace(Path.DirectorySeparatorChar.ToString(), "-").Replace(Path.AltDirectorySeparatorChar.ToString(), "-");
             if (Nulls.Contains(key)) return default(T);
+
+            var nameOnly = key.Replace(Path.DirectorySeparatorChar.ToString(), "-").Replace(Path.AltDirectorySeparatorChar.ToString(), "-");
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows) nameOnly = nameOnly.Replace(":", "-"); 
             var file = Path.Combine(StateFolder, MigrationVersion + "-" + nameOnly);
             string rawText = null;
             if (File.Exists(file))
@@ -128,7 +130,11 @@ namespace Universe.FioStream.Binaries
                     {
                     }
 
-                    if (Directory.Exists(fullPath)) return fullPath;
+                    if (Directory.Exists(fullPath))
+                    {
+                        // Console.WriteLine($"SUBFOLDER: {fullPath}");
+                        return fullPath;
+                    }
                 }
             }
 

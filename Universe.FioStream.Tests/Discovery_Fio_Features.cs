@@ -19,7 +19,7 @@ namespace Universe.FioStream.Tests
         public void Discover()
         {
             string[] linuxEngines = "io_uring,libaio,posixaio,rpvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
-            string[] windowsEngines = "windowsaio,posixaio,pvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
+            string[] windowsEngines = "windowsaio,psync,sync,mmap".Split(',');
             string[] osxEngines = "posixaio,pvsync2,pvsync,vsync,psync,sync,mmap".Split(',');
             string[] targetEngines;
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
