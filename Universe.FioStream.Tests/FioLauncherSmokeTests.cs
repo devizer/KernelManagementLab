@@ -55,9 +55,7 @@ namespace Universe.FioStream.Tests
         [TestCase("--time_based --bs=4k --size=128M --runtime=2 --ramp_time=2", TestName = "3. Big")]
         public void SmokeLaunch(string additionalArgs)
         {
-            var args =
-                $"--ioengine=sync --name=my --eta=always --filename=fiotest.tmp --iodepth=1 --readwrite=read {additionalArgs}"
-                    .Split(' ');
+            var args = $"--ioengine=sync --name=my --eta=always --filename=fiotest.tmp --iodepth=1 --readwrite=read {additionalArgs}";
 
             bool hasSummary = false;
             Action<StreamReader> handler = streamReader =>
@@ -96,7 +94,7 @@ namespace Universe.FioStream.Tests
                 var ver = checker.CheckVersion();
                 if (ver != null)
                 {
-                    var summary = checker.CheckBenchmark("--name=my", "--bs=1k", "--size=1k");
+                    var summary = checker.CheckBenchmark(null, "--name=my --bs=1k --size=1k");
                     if (summary != null)
                     {
                         Console.WriteLine($"Selected: [{cached}] {ver}, {sw.Elapsed}");

@@ -31,11 +31,11 @@ namespace Universe.FioStream.Tests
                 GZipCachedDownloader d = new GZipCachedDownloader();
                 var cached = d.CacheGZip(bin.Name, bin.Url);
                 var logger = new PicoLogger();
-                FioChecker checker = new FioChecker(cached) {Logger = logger};
+                FioChecker checker = new FioChecker(cached) { Logger = logger };
                 var ver = checker.CheckVersion();
                 if (ver != null)
                 {
-                    var summary = checker.CheckBenchmark("--name=my", "--bs=1k", "--size=1k");
+                    var summary = checker.CheckBenchmark(null, "--name=my --bs=1k --size=1k");
                     if (summary != null)
                     {
                         string[] engines;
@@ -52,12 +52,10 @@ namespace Universe.FioStream.Tests
                         }
                     }
                 }
-
             }
 
             Console.WriteLine($"Warning! All the candidates do not match, {sw.Elapsed}");
             return ret.ToArray();
         }
-
     }
 }

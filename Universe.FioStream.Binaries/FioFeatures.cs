@@ -69,9 +69,8 @@ namespace Universe.FioStream.Binaries
                 isSupported = PersistentState.GetOrStore($"{Executable}-Engine-{engine}", () =>
                 {
                     FioChecker checker = new FioChecker(Executable) {Logger = Logger};
-                    JobSummaryResult summary = checker.CheckBenchmark("--name=my", "--bs=8k", "--size=8k", $"--ioengine={engine}",
-                        $"\"--directory={dir}\"", $"--filename={file}");
-                    
+                    var args = $"--name=my --bs=8k --size=8k --ioengine={engine} --filename={file}"; 
+                    JobSummaryResult summary = checker.CheckBenchmark(dir, args);
                     return summary == null ? null : "Ok";
                 });
             }
@@ -79,7 +78,7 @@ namespace Universe.FioStream.Binaries
             {
                 try
                 {
-                    if (File.Exists(fileFull)) File.Delete(fileFull);
+                    // if (File.Exists(fileFull)) File.Delete(fileFull);
                 }
                 catch
                 {

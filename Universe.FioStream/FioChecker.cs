@@ -14,7 +14,7 @@ namespace Universe.FioStream
             Executable = executable;
         }
 
-        public JobSummaryResult CheckBenchmark(params string[] args)
+        public JobSummaryResult CheckBenchmark(string workingDirectory, string args)
         {
             Stopwatch sw = Stopwatch.StartNew();
             JobSummaryResult ret = null;
@@ -27,7 +27,11 @@ namespace Universe.FioStream
                     rdr.ReadStreamToEnd(streamReader);
                 }
 
-                FioLauncher launcher = new FioLauncher(Executable, args, Handler);
+                FioLauncher launcher = new FioLauncher(Executable, args, Handler)
+                {
+                    WorkingDirectory = workingDirectory
+                };
+                
                 launcher.Start();
                 if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
                 {

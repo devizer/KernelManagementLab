@@ -10,15 +10,16 @@ namespace Universe.FioStream
     public class FioLauncher
     {
         public string Executable { get; } 
-        public string[] Args { get; }
+        public string Args { get; }
         public Action<StreamReader> OutputHandler { get; }
+        public string WorkingDirectory { get; set; }
 
         public string ErrorText { get; private set; }
         public Exception OutputReaderException { get; private set; }
         public Exception ErrorReaderException { get; private set; }
         public int ExitCode { get; private set; }
 
-        public FioLauncher(string executable, string[] args, Action<StreamReader> outputHandler)
+        public FioLauncher(string executable, string args, Action<StreamReader> outputHandler)
         {
             Executable = executable;
             Args = args;
@@ -27,7 +28,7 @@ namespace Universe.FioStream
 
         public void Start()
         {
-            ProcessStartInfo si = new ProcessStartInfo(Executable, string.Join(" ", Args))
+            ProcessStartInfo si = new ProcessStartInfo(Executable, Args)
             {
                 CreateNoWindow = true,
                 RedirectStandardError = true,
@@ -37,6 +38,9 @@ namespace Universe.FioStream
                 // WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
             };
+
+            if (WorkingDirectory != null)
+                si.WorkingDirectory = this.WorkingDirectory;
             
             Process p = new Process() { StartInfo = si };
             

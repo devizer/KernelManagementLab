@@ -36,7 +36,7 @@ namespace Universe.FioStream
                 }
             }
 
-            FioLauncher launcher = new FioLauncher(this.Executable, new[] {"--enghelp"}, Handler);
+            FioLauncher launcher = new FioLauncher(this.Executable, "--enghelp", Handler);
             launcher.Start();
 
             if (launcher.ExitCode != 0 || !string.IsNullOrEmpty(launcher.ErrorText))

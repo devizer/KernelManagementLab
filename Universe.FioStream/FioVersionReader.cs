@@ -22,7 +22,7 @@ namespace Universe.FioStream
                     rawVersion = rawVersion.Trim('\r', '\n');
                 };
 
-                FioLauncher launcher = new FioLauncher(this.Executable, new[] {"--version"}, handler);
+                FioLauncher launcher = new FioLauncher(this.Executable, "--version", handler);
                 launcher.Start();
 
                 if (launcher.ExitCode != 0 || !string.IsNullOrEmpty(launcher.ErrorText))
