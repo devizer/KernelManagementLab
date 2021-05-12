@@ -17,7 +17,6 @@ namespace Universe.FioStream.Binaries
         {
             if (Nulls.Contains(key)) return default(T);
 
-            Console.WriteLine(key);
             var nameOnly = key;
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows || CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX) 
                 nameOnly = nameOnly.Replace(":\\", "→").Replace(":", "→").Replace(Path.DirectorySeparatorChar.ToString(), "→").Replace(Path.AltDirectorySeparatorChar.ToString(), "→");
