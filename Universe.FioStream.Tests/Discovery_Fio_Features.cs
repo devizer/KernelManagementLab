@@ -37,7 +37,7 @@ namespace Universe.FioStream.Tests
                 if (targetEngines.Length == candidatesByEngines.Count) break;
                 
                 var features = FeaturesCache[bin];
-                var version = features.Version;
+                // var version = features.Version;
                 var engines = features.EngineList;
                 if (engines == null) continue;
                 if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
