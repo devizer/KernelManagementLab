@@ -18,8 +18,9 @@ namespace Universe.FioStream.Tests
         [Test]
         public void Test_Linux_Candidates()
         {
-            var binaries = OrderedLinuxCandidates.AllGetLinuxCandidates;
+            List<OrderedLinuxCandidates.LinuxCandidate> binaries = OrderedLinuxCandidates.AllLinuxCandidates;
                 
+            Console.WriteLine($"ALL Linux Candidates: [{binaries.Count}]");
             foreach (var bin in binaries)
             {
                 Console.WriteLine(bin);
@@ -36,7 +37,7 @@ namespace Universe.FioStream.Tests
         {
             GZipCachedDownloader.IgnoreCacheForDebug = true;
             Console.WriteLine(arch);
-            var candidates = OrderedLinuxCandidates.AllGetLinuxCandidates
+            var candidates = OrderedLinuxCandidates.AllLinuxCandidates
                 .Where(x => arch.Equals(x.Arch, StringComparison.OrdinalIgnoreCase))
                 .Select(x => new Candidates.Info()
                 {

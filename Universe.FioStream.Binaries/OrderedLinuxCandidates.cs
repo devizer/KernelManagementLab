@@ -8,6 +8,11 @@ namespace Universe.FioStream.Binaries
 {
     public class OrderedLinuxCandidates
     {
+        public static List<LinuxCandidate> CurrentLinuxCandidates => _CurrentLinuxCandidates.Value;
+        private static Lazy<List<LinuxCandidate>> _CurrentLinuxCandidates = new Lazy<List<LinuxCandidate>>(GetCurrentLinuxCandidates);
+
+        public static List<LinuxCandidate> AllLinuxCandidates => _AllLinuxCandidates.Value;
+        private static Lazy<List<LinuxCandidate>> _AllLinuxCandidates = new Lazy<List<LinuxCandidate>>(GetAllLinuxCandidates);
 
         public class LinuxCandidate
         {
@@ -25,16 +30,15 @@ namespace Universe.FioStream.Binaries
             }
         }
         
-        private static Lazy<List<LinuxCandidate>> _AllGetLinuxCandidates = new Lazy<List<LinuxCandidate>>(GetLinuxCandidates);
-        public static List<LinuxCandidate> AllGetLinuxCandidates => _AllGetLinuxCandidates.Value;
 
         private static Regex RegExI386 = new Regex(@"^i[3-7]86$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+        // For Testing only
         public static IEnumerable<LinuxCandidate> FindCandidateByLinuxMachine(string linuxMachine)
         {
             IEnumerable<LinuxCandidate> FindCandidates(string arch)
             {
-                return AllGetLinuxCandidates
+                return CurrentLinuxCandidates
                     .Where(x => x.Arch.Equals(arch, StringComparison.OrdinalIgnoreCase));
             }
 
@@ -91,7 +95,7 @@ namespace Universe.FioStream.Binaries
             return ret;
         }
 
-        private static List<LinuxCandidate> GetLinuxCandidates()
+        private static List<LinuxCandidate> GetAllLinuxCandidates()
         {
             var rawArray = RawList
                 .Split(new[] {'\r', '\n'})
@@ -119,9 +123,7 @@ namespace Universe.FioStream.Binaries
                 });
             }
 
-            var libCVersion = Candidates.LibCVersion;
             ret = ret
-                .Where(x => x.LibCVersion == null || libCVersion == null || libCVersion >= x.LibCVersion)
                 .OrderByDescending(x => x.LibCVersion)
                 .ThenByDescending(x => x.FioVersion)
                 .ThenByDescending(x => x.HasLibAio ? 1 : 0)
@@ -129,6 +131,14 @@ namespace Universe.FioStream.Binaries
                 .ToList();
 
             return ret;
+            
+        }
+        private static List<LinuxCandidate> GetCurrentLinuxCandidates()
+        {
+            var libCVersion = Candidates.LibCVersion;
+            return GetAllLinuxCandidates()
+                .Where(x => x.LibCVersion == null || libCVersion == null || libCVersion >= x.LibCVersion)
+                .ToList();
         }
         
         class Codename
