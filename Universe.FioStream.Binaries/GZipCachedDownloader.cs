@@ -24,6 +24,7 @@ namespace Universe.FioStream.Binaries
             var wd = new WebDownloader();
             wd.Download(url, tempGZip);
             
+            
             using(FileStream from = new FileStream(tempGZip, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using(GZipStream unpack = new GZipStream(from, CompressionMode.Decompress))
             using(FileStream to = new FileStream(ret, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
