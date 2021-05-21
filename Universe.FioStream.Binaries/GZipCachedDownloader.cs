@@ -17,9 +17,11 @@ namespace Universe.FioStream.Binaries
         {
             try
             {
-                var cached = CacheGZip_Impl(name, url);
-                Logger?.LogInfo($"The '{url}' cached as [{cached}]");
-                return cached;
+                var isLoaded = CacheGZip_Impl(name, url, out var ret);
+                if (isLoaded)
+                    Logger?.LogInfo($"The '{url}' archive cached as [{ret}]");
+                
+                return ret;
 
             }
             catch (Exception ex)
@@ -29,13 +31,16 @@ namespace Universe.FioStream.Binaries
             }
         }
 
-        private string CacheGZip_Impl(string name, string url)
+        private bool CacheGZip_Impl(string name, string url, out string localFullName)
         {
             var cacheStamp = Path.Combine(PersistentState.StateFolder, $"{name}.state");
             if (IgnoreCacheForDebug && File.Exists(cacheStamp)) File.Delete(cacheStamp);
             var ret = Path.Combine(PersistentState.BinFolder, $"{name}");
             if (File.Exists(cacheStamp) && File.Exists(ret))
-                return ret;
+            {
+                localFullName = ret;
+                return false;
+            }
 
             var guid = Guid.NewGuid().ToString("N");
             var tempGZip = Path.Combine(PersistentState.TempFolder, $"{name}.{guid}.gzipped");
@@ -70,7 +75,8 @@ namespace Universe.FioStream.Binaries
                 wr.Write("{\"ok\":true}");
             }
 
-            return ret;
+            localFullName = ret;
+            return true;
         }
 
     }
