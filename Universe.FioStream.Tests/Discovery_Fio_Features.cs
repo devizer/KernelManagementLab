@@ -24,7 +24,7 @@ namespace Universe.FioStream.Tests
             Assert.IsTrue(provider.GetEngines().Count == 0, "engines.Count == 0 on start");
             provider.Discovery();
 
-            var engines = provider.GetEngines();
+            List<FioEnginesProvider.Engine> engines = provider.GetEngines();
             Assert.IsTrue(engines.Count > 0, "engines.Count > 0 after");
         }
         

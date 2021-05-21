@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading;
 
@@ -38,12 +39,14 @@ namespace Universe.FioStream.Binaries
             Process p = new Process() { StartInfo = si };
             
             // error is written to output xml
-            ManualResetEventSlim outputDone = new ManualResetEventSlim(false);
-            ManualResetEventSlim errorDone = new ManualResetEventSlim(false);
+            ManualResetEvent outputDone = new ManualResetEvent(false);
+            ManualResetEvent errorDone = new ManualResetEvent(false);
 
             string errorText = null, outputText = null;
             Exception my_outputException = null;
             Exception my_errorException = null;
+
+            var threadName = $"{Path.GetFileName(Executable)}";
 
             Thread threadErrorOutput = new Thread(() =>
                 {
@@ -60,10 +63,10 @@ namespace Universe.FioStream.Binaries
                         errorDone.Set();
                     }
                 }
-#if !NETSTANDARD1_3 && !NETCOREAPP1_0 && !NETCOREAPP1_1
+#if !NETSTANDARD1_3 && !NETCOREAPP1_0 && !NETCOREAPP1_1 && false
                 , 64 * 1024
 #endif
-            ) { IsBackground = true };
+            ) { IsBackground = true, Name = $"Error for '{threadName}'"};
 
             Thread threadStandardOutput = new Thread(() =>
                     {
@@ -80,19 +83,19 @@ namespace Universe.FioStream.Binaries
                             outputDone.Set();
                         }
                     }
-#if !NETSTANDARD1_3 && !NETCOREAPP1_0 && !NETCOREAPP1_1
+#if !NETSTANDARD1_3 && !NETCOREAPP1_0 && !NETCOREAPP1_1 && false
                 , 64 * 1024
 #endif
                 )
-                {IsBackground = true};
+                {IsBackground = true, Name = $"Output for '{threadName}'"};
             
             using (p)
             {
                 p.Start();
                 threadErrorOutput.Start();
                 threadStandardOutput.Start();
-                errorDone.Wait();
-                outputDone.Wait();
+                errorDone.WaitOne();
+                outputDone.WaitOne();
                 p.WaitForExit();
                 ExitCode = p.ExitCode;
             }
