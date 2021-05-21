@@ -10,8 +10,26 @@ namespace Universe.FioStream.Binaries
     {
 
         public static bool IgnoreCacheForDebug = false;
+        
+        public IPicoLogger Logger { get; set; }
 
         public string CacheGZip(string name, string url)
+        {
+            try
+            {
+                var cached = CacheGZip_Impl(name, url);
+                Logger?.LogInfo($"The '{url}' cached as [{cached}]");
+                return cached;
+
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogWarning($"The '{url}' can not be downloaded and extracted. {ex.GetType()}: {ex.Message}");
+                throw;
+            }
+        }
+
+        private string CacheGZip_Impl(string name, string url)
         {
             var cacheStamp = Path.Combine(PersistentState.StateFolder, $"{name}.state");
             if (IgnoreCacheForDebug && File.Exists(cacheStamp)) File.Delete(cacheStamp);
