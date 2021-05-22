@@ -177,14 +177,16 @@ namespace KernelManagementJam.Benchmarks
                     CancelIfRequested();
                     startAt = startAt ?? Stopwatch.StartNew();
                     var bandwidth = progress.ReadBandwidth.GetValueOrDefault() + progress.WriteBandwidth.GetValueOrDefault();
-                    var percents = 1000d * startAt.Elapsed.TotalSeconds / Parameters.StepDuration;
+                    double elapsedSeconds = startAt.Elapsed.TotalSeconds;
+                    double percents = 1000 * elapsedSeconds / Parameters.StepDuration;
+                    var totalBytes = bandwidth * elapsedSeconds; 
                     var seconds = step.Seconds;
                     
                     Console.WriteLine($"---=== PROGRESS [{progress}] ===---");
 
                     var @break = @"here";
 
-                    // step.Progress();
+                    step.Progress(percents, (long) totalBytes);
                 };
                 rdr.NotifyJobSummary += summary =>
                 {
