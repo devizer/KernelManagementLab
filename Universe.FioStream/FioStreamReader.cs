@@ -26,10 +26,18 @@ namespace Universe.FioStream
                     return;
             }
         }
-        
+
+        private bool IsFirstLine = true;
         public void ReadNextLine(string line)
         {
             var lineLength = line.Length;
+            if (lineLength == 0) return;
+            if (IsFirstLine)
+            {
+                
+            }
+
+            IsFirstLine = false;
             var colonCharIndex = line.IndexOf(':');
             if (colonCharIndex <= 0 || colonCharIndex == lineLength - 1) return;
             // Progress - Jobs: ...
@@ -44,7 +52,7 @@ namespace Universe.FioStream
             if (key1.Equals("Jobs", IgnoreCaseComparision))
             {
                 // PROGRESS
-                var brakets = ReadBracketSections(value1).ToArray();
+                string[] brakets = ReadBracketSections(value1).ToArray();
                 if (ConsolasDebug)
                     if (brakets.Length > 0)
                         Console.WriteLine($"PROGRESS ({brakets.Length} brakets): {string.Join("; ",brakets.Select(x => $"{{{x}}}").ToArray())}");

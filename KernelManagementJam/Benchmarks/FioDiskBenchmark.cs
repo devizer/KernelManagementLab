@@ -191,6 +191,10 @@ namespace KernelManagementJam.Benchmarks
                 rdr.NotifyJobSummary += summary =>
                 {
                     var bandwidth = summary.Bandwidth;
+                    double elapsedSeconds = startAt.Elapsed.TotalSeconds;
+                    double percents = 1000 * elapsedSeconds / Parameters.StepDuration;
+                    var totalBytes = bandwidth * elapsedSeconds; 
+                    step.Progress(percents, (long) totalBytes);
                 };
                 rdr.ReadStreamToEnd(streamReader);
             }
