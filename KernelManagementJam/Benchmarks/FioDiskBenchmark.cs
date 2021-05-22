@@ -1,13 +1,16 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using Universe.Benchmark.DiskBench;
 using Universe.DiskBench;
+using Universe.FioStream;
 
 namespace KernelManagementJam.Benchmarks
 {
     public class FioDiskBenchmark : IDiskBenchmark
     {
         public DiskBenchmarkOptions Parameters { get; }
+        public string Executable { get; set; }
         public ProgressInfo Progress { get; private set; }
         public static readonly string BenchmarkTempFile = DiskBenchmark.BenchmarkTempFile;
         private string TempFile;
@@ -130,7 +133,45 @@ namespace KernelManagementJam.Benchmarks
                 throw;
             }
         }
-        
+
+        private void DoFioBenchmark(string command)
+        {
+            string workingDirectory = Path.GetDirectoryName(this.TempFile);
+            string fileName = Path.GetFileName(this.TempFile);
+
+            string args = $"not implemented";
+            Stopwatch startAt = null;
+            void Handler(StreamReader streamReader)
+            {
+                FioStreamReader rdr = new FioStreamReader();
+                rdr.NotifyJobProgress += progress =>
+                {
+                    startAt = startAt ?? Stopwatch.StartNew();
+                    var bandwidth = progress.ReadBandwidth.GetValueOrDefault() + progress.WriteBandwidth.GetValueOrDefault();
+                };
+                rdr.NotifyJobSummary += summary =>
+                {
+                    var bandwidth = summary.Bandwidth;
+                };
+                rdr.ReadStreamToEnd(streamReader);
+            }
+
+            FioLauncher launcher = new FioLauncher(Executable, args, Handler);
+            launcher.Start();
+            if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
+            {
+                var err = launcher.ErrorText?.TrimEnd('\r', '\n');
+                var msg = $"Fio benchmark test failed for [{Executable}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]";
+                throw new Exception(msg);
+            }
+
+        }
+
+        private void OutputHandler(StreamReader obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsCanceled { get; private set; }
         public void RequestCancel()
         {
