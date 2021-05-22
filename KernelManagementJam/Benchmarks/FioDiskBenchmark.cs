@@ -134,7 +134,7 @@ namespace KernelManagementJam.Benchmarks
             }
         }
 
-        private void DoFioBenchmark(string command, bool needDirectIo, string blockSize, int ioDepth)
+        private void DoFioBenchmark(string command, bool needDirectIo, string blockSize, int ioDepth, string options = "--eta=always --time_based")
         {
             string workingDirectory = Path.GetDirectoryName(this.TempFile);
             string fileName = Path.GetFileName(this.TempFile);
@@ -142,13 +142,14 @@ namespace KernelManagementJam.Benchmarks
             bool hasBlockSize = !string.IsNullOrEmpty(blockSize);
             bool hasIoDepth = ioDepth > 0;
 
-            string args = $"--name=RUN_{command}" +
-                          $" --ioengine=posixaio" +
-                          $" --direct={(needDirectIo ? 1 : 0)}" +
+            string args = options + 
+                          $"--name=RUN_{command}" +
+                          // $" --ioengine=posixaio" +
+                          $" --direct={(needDirectIo ? "1" : "0")}" +
                           $" --gtod_reduce=1" +
                           $" --filename={fileName}" +
                           (hasBlockSize ? $" --bs={blockSize}" : "")  +
-                          $" --iodepth={ioDepth}" +
+                          (hasIoDepth ? $" --iodepth={ioDepth}" : "") +
                           $" --size={Parameters.WorkingSetSize:0}" +
                           $" --runtime={Parameters.StepDuration}" +
                           $" --ramp_time=0" +
