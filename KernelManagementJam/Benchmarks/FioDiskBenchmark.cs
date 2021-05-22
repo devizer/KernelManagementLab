@@ -170,6 +170,7 @@ namespace KernelManagementJam.Benchmarks
                 rdr.NotifyEta += eta =>
                 {
                     CancelIfRequested();
+                    Console.WriteLine($"---=== ETA {eta} ===---");
                 };
                 rdr.NotifyJobProgress += progress =>
                 {
@@ -179,7 +180,7 @@ namespace KernelManagementJam.Benchmarks
                     var percents = 1000d * startAt.Elapsed.TotalSeconds / Parameters.StepDuration;
                     var seconds = step.Seconds;
                     
-                    Console.WriteLine($"PROGRESS [{progress}]");
+                    Console.WriteLine($"---=== PROGRESS [{progress}] ===---");
 
                     var @break = @"here";
 
