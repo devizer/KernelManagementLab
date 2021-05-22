@@ -152,7 +152,7 @@ namespace KernelManagementJam.Benchmarks
 
             string args = options + 
                           $" --name=RUN_{command}" +
-                          // $" --ioengine=posixaio" +
+                          $" --ioengine=mmap" +
                           $" --direct={(needDirectIo ? "1" : "0")}" +
                           $" --gtod_reduce=1" +
                           $" --filename={fileName}" +
@@ -195,6 +195,7 @@ namespace KernelManagementJam.Benchmarks
                     double percents = 1000 * elapsedSeconds / Parameters.StepDuration;
                     var totalBytes = bandwidth * elapsedSeconds; 
                     step.Progress(percents, (long) totalBytes);
+                    Console.WriteLine($"---=== SUMMARY [{summary}] ===---");
                 };
                 rdr.ReadStreamToEnd(streamReader);
             }
