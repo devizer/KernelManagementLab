@@ -13,11 +13,13 @@ namespace Universe.FioStream.Binaries
 #else
             
             // System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            
-            var wc = new System.Net.WebClient();
-            wc.Headers["User-Agent"] = "w3-fio";
-            wc.Proxy = System.Net.WebRequest.DefaultWebProxy;
-            wc.DownloadFile( new Uri(url), toFile);
+
+            using (var wc = new System.Net.WebClient())
+            {
+                wc.Headers["User-Agent"] = "w3-fio";
+                wc.Proxy = System.Net.WebRequest.DefaultWebProxy;
+                wc.DownloadFile(new Uri(url), toFile);
+            }
 #endif
         }
 

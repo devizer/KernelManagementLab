@@ -10,19 +10,43 @@ namespace Universe.FioStream.Binaries
     {
 
         public static bool IgnoreCacheForDebug = false;
+        
+        public IPicoLogger Logger { get; set; }
 
         public string CacheGZip(string name, string url)
+        {
+            try
+            {
+                var isLoaded = CacheGZip_Impl(name, url, out var ret);
+                if (isLoaded)
+                    Logger?.LogInfo($"The '{url}' archive cached as [{ret}]");
+                
+                return ret;
+
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogWarning($"The '{url}' can not be downloaded and extracted. {ex.GetType()}: {ex.Message}");
+                throw;
+            }
+        }
+
+        private bool CacheGZip_Impl(string name, string url, out string localFullName)
         {
             var cacheStamp = Path.Combine(PersistentState.StateFolder, $"{name}.state");
             if (IgnoreCacheForDebug && File.Exists(cacheStamp)) File.Delete(cacheStamp);
             var ret = Path.Combine(PersistentState.BinFolder, $"{name}");
             if (File.Exists(cacheStamp) && File.Exists(ret))
-                return ret;
+            {
+                localFullName = ret;
+                return false;
+            }
 
             var guid = Guid.NewGuid().ToString("N");
             var tempGZip = Path.Combine(PersistentState.TempFolder, $"{name}.{guid}.gzipped");
             var wd = new WebDownloader();
             wd.Download(url, tempGZip);
+            
             
             using(FileStream from = new FileStream(tempGZip, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using(GZipStream unpack = new GZipStream(from, CompressionMode.Decompress))
@@ -51,7 +75,8 @@ namespace Universe.FioStream.Binaries
                 wr.Write("{\"ok\":true}");
             }
 
-            return ret;
+            localFullName = ret;
+            return true;
         }
 
     }

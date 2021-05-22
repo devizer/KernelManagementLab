@@ -20,7 +20,7 @@ namespace Universe.FioStream.Binaries
                     else
                     {
                         // TODO: try and retry
-                        GZipCachedDownloader d = new GZipCachedDownloader();
+                        GZipCachedDownloader d = new GZipCachedDownloader() { Logger = Logger};
                         var cached = d.CacheGZip(candidate.Name, candidate.Url);
                         ret = new FioFeatures(cached) {Logger = Logger};
                     }
