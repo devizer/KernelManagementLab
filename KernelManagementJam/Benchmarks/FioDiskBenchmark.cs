@@ -111,7 +111,14 @@ namespace KernelManagementJam.Benchmarks
             {
                 if (!Parameters.DisableODirect) CheckODirect();
                 Allocate();
-                throw new NotImplementedException();
+                
+                DoFioBenchmark(_seqRead, "read", _isODirectSupported, "1024k", 0);
+                DoFioBenchmark(_seqWrite, "write", _isODirectSupported, "1024k", 0);
+                DoFioBenchmark(_rndRead1T, "randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
+                DoFioBenchmark(_rndWrite1T, "randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
+                DoFioBenchmark(_rndReadN, "randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
+                DoFioBenchmark(_rndWriteN, "randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
+                
                 doCleanUp(null);
             }
             catch(Exception ex)
@@ -134,8 +141,9 @@ namespace KernelManagementJam.Benchmarks
             }
         }
 
-        private void DoFioBenchmark(string command, bool needDirectIo, string blockSize, int ioDepth, string options = "--eta=always --time_based")
+        private void DoFioBenchmark(ProgressStep step, string command, bool needDirectIo, string blockSize, int ioDepth, string options = "--eta=always --time_based ")
         {
+            CancelIfRequested();
             string workingDirectory = Path.GetDirectoryName(this.TempFile);
             string fileName = Path.GetFileName(this.TempFile);
 
@@ -143,7 +151,7 @@ namespace KernelManagementJam.Benchmarks
             bool hasIoDepth = ioDepth > 0;
 
             string args = options + 
-                          $"--name=RUN_{command}" +
+                          $" --name=RUN_{command}" +
                           // $" --ioengine=posixaio" +
                           $" --direct={(needDirectIo ? "1" : "0")}" +
                           $" --gtod_reduce=1" +
@@ -151,7 +159,7 @@ namespace KernelManagementJam.Benchmarks
                           (hasBlockSize ? $" --bs={blockSize}" : "")  +
                           (hasIoDepth ? $" --iodepth={ioDepth}" : "") +
                           $" --size={Parameters.WorkingSetSize:0}" +
-                          $" --runtime={Parameters.StepDuration}" +
+                          $" --runtime={(Parameters.StepDuration / 1000)}" +
                           $" --ramp_time=0" +
                           $" --readwrite={command}";
             
@@ -159,10 +167,23 @@ namespace KernelManagementJam.Benchmarks
             void Handler(StreamReader streamReader)
             {
                 FioStreamReader rdr = new FioStreamReader();
+                rdr.NotifyEta += eta =>
+                {
+                    CancelIfRequested();
+                };
                 rdr.NotifyJobProgress += progress =>
                 {
+                    CancelIfRequested();
                     startAt = startAt ?? Stopwatch.StartNew();
                     var bandwidth = progress.ReadBandwidth.GetValueOrDefault() + progress.WriteBandwidth.GetValueOrDefault();
+                    var percents = 1000d * startAt.Elapsed.TotalSeconds / Parameters.StepDuration;
+                    var seconds = step.Seconds;
+                    
+                    Console.WriteLine($"PROGRESS [{progress}]");
+
+                    var @break = @"here";
+
+                    // step.Progress();
                 };
                 rdr.NotifyJobSummary += summary =>
                 {
@@ -176,6 +197,9 @@ namespace KernelManagementJam.Benchmarks
                 WorkingDirectory = workingDirectory
             };
             
+            startAt = Stopwatch.StartNew();
+            step.Start();
+            CancelIfRequested();
             launcher.Start();
             if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
             {
@@ -183,6 +207,8 @@ namespace KernelManagementJam.Benchmarks
                 var msg = $"Fio benchmark test failed for [{Executable}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]";
                 throw new Exception(msg);
             }
+            
+            step.Complete();
 
         }
 

@@ -10,6 +10,7 @@ using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
 using Universe.DiskBench;
+using Universe.FioStream.Binaries;
 
 namespace Universe.W3Top.Controllers
 {
@@ -19,12 +20,22 @@ namespace Universe.W3Top.Controllers
     {
         private DiskBenchmarkQueue Queue;
         public DiskBenchmarkDataAccess DbAccess;
+        public readonly FioEnginesProvider FioEnginesProvider;
 
+        public DiskBenchmarkController(DiskBenchmarkQueue queue, DiskBenchmarkDataAccess dbAccess, FioEnginesProvider fioEnginesProvider)
+        {
+            Queue = queue;
+            DbAccess = dbAccess;
+            FioEnginesProvider = fioEnginesProvider;
+        }
+        
+        /*
         public DiskBenchmarkController(DiskBenchmarkQueue queue, DiskBenchmarkDataAccess dbAccess)
         {
             Queue = queue;
             DbAccess = dbAccess;
         }
+        */
 
         [HttpGet, Route("get-disks")]
         public List<DriveDetails> GetList()
@@ -60,7 +71,7 @@ namespace Universe.W3Top.Controllers
             bool hasWritePermission = DiskBenchmarkChecks.HasWritePermission(Parameters.WorkFolder);
             IDiskBenchmark diskBenchmark =
                 hasWritePermission
-                    ? (IDiskBenchmark) new DiskBenchmark(Parameters)
+                    ? (IDiskBenchmark) new FioDiskBenchmark(Parameters) { Executable = "fio" } // DiskBenchmark(Parameters)
                     : (IDiskBenchmark) new ReadonlyDiskBenchmark(Parameters, MountsDataSource.Mounts);
             
             Guid token = Guid.NewGuid();
