@@ -276,7 +276,7 @@ function DiskBenchmarkDialog(props) {
 
                 <TextField
                     id="benchmark-options-threads"
-                    label="Threads Number"
+                    label="Threads or IO Depth"
                     style={optionStyles.textField}
                     value={options.threads}
                     onChange={handleChangeOption('threads')}

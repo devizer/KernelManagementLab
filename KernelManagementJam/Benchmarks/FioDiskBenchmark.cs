@@ -112,13 +112,14 @@ namespace KernelManagementJam.Benchmarks
             {
                 if (!Parameters.DisableODirect) CheckODirect();
                 Allocate();
-                
-                DoFioBenchmark(_seqRead, Parameters.Engine, "read", _isODirectSupported, "1024k", 0);
-                DoFioBenchmark(_seqWrite, Parameters.Engine, "write", _isODirectSupported, "1024k", 0);
-                DoFioBenchmark(_rndRead1T, Parameters.Engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
-                DoFioBenchmark(_rndWrite1T, Parameters.Engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
-                DoFioBenchmark(_rndReadN, Parameters.Engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
-                DoFioBenchmark(_rndWriteN, Parameters.Engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
+                // var engine = Parameters.Engine;
+                var engine = Engine.IdEngine;
+                DoFioBenchmark(_seqRead, engine, "read", _isODirectSupported, "1024k", 0);
+                DoFioBenchmark(_seqWrite, engine, "write", _isODirectSupported, "1024k", 0);
+                DoFioBenchmark(_rndRead1T, engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
+                DoFioBenchmark(_rndWrite1T, engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
+                DoFioBenchmark(_rndReadN, engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
+                DoFioBenchmark(_rndWriteN, engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
                 
                 doCleanUp(null);
             }
