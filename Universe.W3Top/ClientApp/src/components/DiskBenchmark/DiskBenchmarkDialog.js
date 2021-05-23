@@ -238,14 +238,17 @@ function DiskBenchmarkDialog(props) {
                         onChange={handleChangeOption('engine')}
                         input={<Input name="engine" id="engine-helper" />}
                     >
-                        <MenuItem value="">
-                            <em>Auto</em>
-                        </MenuItem>
+                        <MenuItem value="auto"><em>Auto</em></MenuItem>
                         <MenuItem value="io_uring">io_uring</MenuItem>
                         <MenuItem value="libaio">libaio</MenuItem>
                         <MenuItem value="posixaio">posixaio</MenuItem>
+                        <MenuItem value="pvsync">pvsync</MenuItem>
+                        <MenuItem value="psync">psync</MenuItem>
+                        <MenuItem value="vsync">vsync</MenuItem>
+                        <MenuItem value="sync">sync</MenuItem>
+                        <MenuItem value="mmap">mmap</MenuItem>
                     </Select>
-                    <FormHelperText>libaio is preferred</FormHelperText>
+                    <FormHelperText>libaio|uring are preferred</FormHelperText>
                 </FormControl>
 
 
