@@ -4,13 +4,14 @@ using System.IO;
 using Universe.Benchmark.DiskBench;
 using Universe.DiskBench;
 using Universe.FioStream;
+using Universe.FioStream.Binaries;
 
 namespace KernelManagementJam.Benchmarks
 {
     public class FioDiskBenchmark : IDiskBenchmark
     {
         public DiskBenchmarkOptions Parameters { get; }
-        public string Executable { get; set; }
+        public FioEnginesProvider.Engine Engine { get; set; }
         public ProgressInfo Progress { get; private set; }
         public static readonly string BenchmarkTempFile = DiskBenchmark.BenchmarkTempFile;
         private string TempFile;
@@ -40,7 +41,7 @@ namespace KernelManagementJam.Benchmarks
         {
             if (Parameters.DisableODirect)
             {
-                _checkODirect = new ProgressStep("Direct Access is disabled") { Value = null};
+                _checkODirect = new ProgressStep($"Direct Access is disabled, {Engine.IdEngine} v{Engine.Version}") { Value = null};
                 _isODirectSupported = false;
                 _checkODirect.Start();
                 _checkODirect.Complete();
@@ -200,7 +201,7 @@ namespace KernelManagementJam.Benchmarks
                 rdr.ReadStreamToEnd(streamReader);
             }
 
-            FioLauncher launcher = new FioLauncher(Executable, args, Handler)
+            FioLauncher launcher = new FioLauncher(Engine.Executable, args, Handler)
             {
                 WorkingDirectory = workingDirectory
             };
@@ -212,17 +213,12 @@ namespace KernelManagementJam.Benchmarks
             if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
             {
                 var err = launcher.ErrorText?.TrimEnd('\r', '\n');
-                var msg = $"Fio benchmark test failed for [{Executable}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]";
+                var msg = $"Fio benchmark test failed for [{Engine}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]";
                 throw new Exception(msg);
             }
             
             step.Complete();
 
-        }
-
-        private void OutputHandler(StreamReader obj)
-        {
-            throw new NotImplementedException();
         }
 
         public bool IsCanceled { get; private set; }
@@ -252,7 +248,7 @@ namespace KernelManagementJam.Benchmarks
 
             _checkODirect.Value = _isODirectSupported; 
 
-            _checkODirect.Name = _isODirectSupported ? "Direct Access is detected" : "Direct Access is absent";
+            _checkODirect.Name = (_isODirectSupported ? "Direct Access is detected" : "Direct Access is absent") + $", {Engine.IdEngine} v{Engine.Version}";
             _checkODirect.Complete();
         }
         

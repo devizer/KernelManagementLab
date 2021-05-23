@@ -70,10 +70,22 @@ namespace Universe.W3Top.Controllers
             };
 
             bool hasWritePermission = DiskBenchmarkChecks.HasWritePermission(Parameters.WorkFolder);
-            IDiskBenchmark diskBenchmark =
-                hasWritePermission
-                    ? (IDiskBenchmark) new FioDiskBenchmark(Parameters) { Executable = "fio" } // DiskBenchmark(Parameters)
-                    : (IDiskBenchmark) new ReadonlyDiskBenchmark(Parameters, MountsDataSource.Mounts);
+            var engines = this.FioEnginesProvider.GetEngines();
+            FioEnginesProvider.Engine engine = engines.FirstOrDefault(x => x.IdEngine == Parameters.Engine);
+            if (engine == null) engine = engines.FirstOrDefault();
+            IDiskBenchmark diskBenchmark;
+            if (!hasWritePermission)
+            {
+                diskBenchmark = new ReadonlyDiskBenchmark(Parameters, MountsDataSource.Mounts);
+            }
+            else if (engine != null)
+            {
+                diskBenchmark = new FioDiskBenchmark(Parameters) {Engine = engine};
+            }
+            else
+            {
+                diskBenchmark = new DiskBenchmark(Parameters);
+            }
             
             Guid token = Guid.NewGuid();
             var fileSystem = FindDriveDetails(Parameters.WorkFolder)?.MountEntry.FileSystem;
