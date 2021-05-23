@@ -37,6 +37,12 @@ import {DiskBenchmarkHistory} from "./DiskBenchmarkHistory";
 // import Paper from "./Popper-Lab";
 
 import { ReactComponent as WizardIconSvg } from '../../icons/Wizard-Icon.svg';
+// import {IoEngineSelector} from "./IoEngineSelector";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
 const WizardIcon = (size=34,color='#333') => (<WizardIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
 
 var Color = require("color");
@@ -110,6 +116,13 @@ const optionStyles = {
         marginRight: 24,
         width: 201,
     },
+    engineField: {
+        marginTop: 16,
+        marginLeft: 0,
+        marginRight: 24,
+        width: 201,
+        textAlign: "left"
+    },
     dense: {
         marginTop: 19,
     },
@@ -124,6 +137,7 @@ const defaultOptions = {
     disableODirect: false,
     blockSize: 4096,
     threads: 16,
+    engine: "auto",
     errors: {isValid: true},
 };
 
@@ -216,6 +230,27 @@ function DiskBenchmarkDialog(props) {
         return (
             <form className={optionStyles.container} noValidate autoComplete="off">
                 <Typography>Benchmark options:</Typography>
+                
+                <FormControl className={classes.formControl} style={optionStyles.engineField}>
+                    <InputLabel htmlFor="engine-helper">Engine</InputLabel>
+                    <Select
+                        value={options.engine}
+                        onChange={handleChangeOption('engine')}
+                        input={<Input name="benchmark-options-engine" id="engine-helper" />}
+                    >
+                        <MenuItem value="auto">auto</MenuItem>
+                        <MenuItem value="io_uring">io_uring</MenuItem>
+                        <MenuItem value="libaio">libaio</MenuItem>
+                        <MenuItem value="posixaio">posixaio</MenuItem>
+                        <MenuItem value="pvsync">pvsync</MenuItem>
+                        <MenuItem value="psync">psync</MenuItem>
+                        <MenuItem value="vsync">vsync</MenuItem>
+                        <MenuItem value="sync">sync</MenuItem>
+                        <MenuItem value="mmap">mmap</MenuItem>
+                    </Select>
+                    <FormHelperText>libaio|uring are preferred</FormHelperText>
+                </FormControl>
+
 
                 <TextField
                     id="benchmark-options-working-set"
@@ -241,7 +276,7 @@ function DiskBenchmarkDialog(props) {
 
                 <TextField
                     id="benchmark-options-threads"
-                    label="Threads Number"
+                    label="Threads or IO Depth"
                     style={optionStyles.textField}
                     value={options.threads}
                     onChange={handleChangeOption('threads')}

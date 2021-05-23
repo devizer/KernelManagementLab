@@ -1,13 +1,17 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using Universe.Benchmark.DiskBench;
 using Universe.DiskBench;
+using Universe.FioStream;
+using Universe.FioStream.Binaries;
 
 namespace KernelManagementJam.Benchmarks
 {
     public class FioDiskBenchmark : IDiskBenchmark
     {
         public DiskBenchmarkOptions Parameters { get; }
+        public FioEnginesProvider.Engine Engine { get; set; }
         public ProgressInfo Progress { get; private set; }
         public static readonly string BenchmarkTempFile = DiskBenchmark.BenchmarkTempFile;
         private string TempFile;
@@ -37,7 +41,7 @@ namespace KernelManagementJam.Benchmarks
         {
             if (Parameters.DisableODirect)
             {
-                _checkODirect = new ProgressStep("Direct Access is disabled") { Value = null};
+                _checkODirect = new ProgressStep($"Direct Access is disabled, {Engine.IdEngine} v{Engine.Version}") { Value = null};
                 _isODirectSupported = false;
                 _checkODirect.Start();
                 _checkODirect.Complete();
@@ -108,7 +112,15 @@ namespace KernelManagementJam.Benchmarks
             {
                 if (!Parameters.DisableODirect) CheckODirect();
                 Allocate();
-                throw new NotImplementedException();
+                // var engine = Parameters.Engine;
+                var engine = Engine.IdEngine;
+                DoFioBenchmark(_seqRead, engine, "read", _isODirectSupported, "1024k", 0);
+                DoFioBenchmark(_seqWrite, engine, "write", _isODirectSupported, "1024k", 0);
+                DoFioBenchmark(_rndRead1T, engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
+                DoFioBenchmark(_rndWrite1T, engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
+                DoFioBenchmark(_rndReadN, engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
+                DoFioBenchmark(_rndWriteN, engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
+                
                 doCleanUp(null);
             }
             catch(Exception ex)
@@ -130,7 +142,88 @@ namespace KernelManagementJam.Benchmarks
                 throw;
             }
         }
-        
+
+        private void DoFioBenchmark(ProgressStep step, string engine, string command, bool needDirectIo, string blockSize, int ioDepth, string options = "--eta=always --time_based ")
+        {
+            CancelIfRequested();
+            string workingDirectory = Path.GetDirectoryName(this.TempFile);
+            string fileName = Path.GetFileName(this.TempFile);
+
+            bool hasBlockSize = !string.IsNullOrEmpty(blockSize);
+            bool hasIoDepth = ioDepth > 0;
+
+            string args = options + 
+                          $" --name=RUN_{command}" +
+                          $" --ioengine={engine}" +
+                          $" --direct={(needDirectIo ? "1" : "0")}" +
+                          $" --gtod_reduce=1" +
+                          $" --filename={fileName}" +
+                          (hasBlockSize ? $" --bs={blockSize}" : "")  +
+                          (hasIoDepth ? $" --iodepth={ioDepth}" : "") +
+                          $" --size={Parameters.WorkingSetSize:0}" +
+                          $" --runtime={(Parameters.StepDuration / 1000)}" +
+                          $" --ramp_time=0" +
+                          $" --readwrite={command}";
+            
+            Stopwatch startAt = null;
+            void Handler(StreamReader streamReader)
+            {
+                FioStreamReader rdr = new FioStreamReader();
+                rdr.NotifyEta += eta =>
+                {
+                    CancelIfRequested();
+                    Console.WriteLine($"---=== ETA {eta} ===---");
+                };
+                rdr.NotifyJobProgress += progress =>
+                {
+                    CancelIfRequested();
+                    startAt = startAt ?? Stopwatch.StartNew();
+                    var bandwidth = progress.ReadBandwidth.GetValueOrDefault() + progress.WriteBandwidth.GetValueOrDefault();
+                    double elapsedSeconds = startAt.Elapsed.TotalSeconds;
+                    double percents = 1000 * elapsedSeconds / Parameters.StepDuration;
+                    percents = Math.Min(1d, percents);
+                    var totalBytes = bandwidth * elapsedSeconds; 
+                    var seconds = step.Seconds;
+                    
+                    Console.WriteLine($"---=== FIO PROGRESS [{progress}] ===---");
+
+                    var @break = @"here";
+
+                    step.Progress(percents, (long) totalBytes);
+                };
+                rdr.NotifyJobSummary += summary =>
+                {
+                    var bandwidth = summary.Bandwidth;
+                    double elapsedSeconds = startAt.Elapsed.TotalSeconds;
+                    double percents = 1000 * elapsedSeconds / Parameters.StepDuration;
+                    percents = Math.Min(1d, percents);
+                    var totalBytes = bandwidth * elapsedSeconds; 
+                    step.Progress(percents, (long) totalBytes);
+                    Console.WriteLine($"---=== FIO SUMMARY [{summary}] ===---");
+                };
+                rdr.ReadStreamToEnd(streamReader);
+            }
+
+            FioLauncher launcher = new FioLauncher(Engine.Executable, args, Handler)
+            {
+                WorkingDirectory = workingDirectory
+            };
+            
+            startAt = Stopwatch.StartNew();
+            step.Start();
+            CancelIfRequested();
+            launcher.Start();
+            if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
+            {
+                var err = launcher.ErrorText?.TrimEnd('\r', '\n');
+                var msg = $"Fio benchmark test failed for [{Engine}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]";
+                throw new Exception(msg);
+            }
+            
+            step.Complete();
+
+        }
+
         public bool IsCanceled { get; private set; }
         public void RequestCancel()
         {
@@ -158,7 +251,7 @@ namespace KernelManagementJam.Benchmarks
 
             _checkODirect.Value = _isODirectSupported; 
 
-            _checkODirect.Name = _isODirectSupported ? "Direct Access is detected" : "Direct Access is absent";
+            _checkODirect.Name = (_isODirectSupported ? "Direct Access is detected" : "Direct Access is absent") + $", {Engine.IdEngine} v{Engine.Version}";
             _checkODirect.Complete();
         }
         

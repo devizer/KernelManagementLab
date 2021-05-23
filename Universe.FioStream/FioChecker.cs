@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 
 namespace Universe.FioStream
@@ -16,7 +15,6 @@ namespace Universe.FioStream
 
         public JobSummaryResult CheckBenchmark(string workingDirectory, string args)
         {
-            Stopwatch sw = Stopwatch.StartNew();
             JobSummaryResult ret = null;
             try
             {
@@ -35,7 +33,7 @@ namespace Universe.FioStream
                 launcher.Start();
                 if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
                 {
-                    var err = launcher.ErrorText.TrimEnd('\r', '\n');
+                    var err = launcher.ErrorText?.TrimEnd('\r', '\n');
                     Logger?.LogWarning($"Fio benchmark test failed for [{Executable}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]");
                     return null;
                 }
