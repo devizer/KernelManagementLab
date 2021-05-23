@@ -177,6 +177,7 @@ function DiskBenchmarkDialog(props) {
     const [open, setOpen] = React.useState(!getNeedHideDialog(props));
     const [activeStep, setActiveStep] = React.useState(0);
     const [disks, setDisks] = React.useState(null);
+    const [engines, setEngines] = React.useState(null);
     const [selectedDisk, setSelectedDisk] = React.useState(null);
     const [options, setOptions] = React.useState(defaultOptions);
     const [progress, setProgress] = React.useState(null);
@@ -227,6 +228,7 @@ function DiskBenchmarkDialog(props) {
     
     function renderStepTuneOptions() {
         const errorText = value => value ? value : " ";
+        const safeEngines = engines === null ? [] : engines;
         return (
             <form className={optionStyles.container} noValidate autoComplete="off">
                 <Typography>Benchmark options:</Typography>
@@ -239,6 +241,10 @@ function DiskBenchmarkDialog(props) {
                         input={<Input name="benchmark-options-engine" id="engine-helper" />}
                     >
                         <MenuItem value="auto">auto</MenuItem>
+                        {safeEngines.map((engine, engineIndex) => (
+                            <MenuItem value={engine.idEngine}>{engine.idEngine} {engine.version.major}.{engine.version.minor}</MenuItem>
+                        ))}
+{/*
                         <MenuItem value="io_uring">io_uring</MenuItem>
                         <MenuItem value="libaio">libaio</MenuItem>
                         <MenuItem value="posixaio">posixaio</MenuItem>
@@ -247,6 +253,7 @@ function DiskBenchmarkDialog(props) {
                         <MenuItem value="vsync">vsync</MenuItem>
                         <MenuItem value="sync">sync</MenuItem>
                         <MenuItem value="mmap">mmap</MenuItem>
+*/}
                     </Select>
                     <FormHelperText>libaio is preferred</FormHelperText>
                 </FormControl>
@@ -311,9 +318,11 @@ function DiskBenchmarkDialog(props) {
                     Helper.log(response);
                     return response.ok ? response.json() : {error: response.status, details: response.json()}
                 })
-                .then(disks => {
-                    setDisks(disks);
-                    Helper.toConsole("DISKS for benchmark", disks);
+                .then(disksAndEngines => {
+                    setDisks(disksAndEngines.disks);
+                    setEngines(disksAndEngines.engines);
+                    Helper.toConsole("DISKS for benchmark", disksAndEngines.disks);
+                    Helper.toConsole("Engines for benchmark", disksAndEngines.engines);
                 })
                 .catch(error => Helper.log(error));
         }

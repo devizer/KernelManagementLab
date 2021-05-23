@@ -38,9 +38,21 @@ namespace Universe.W3Top.Controllers
         */
 
         [HttpGet, Route("get-disks")]
-        public List<DriveDetails> GetList()
+        public DisksAndEngines GetList()
         {
-            return MountsDataSource.Mounts.FilterForHuman().OrderBy(x => x.MountEntry.MountPath).ToList();
+            var disks = MountsDataSource.Mounts.FilterForHuman().OrderBy(x => x.MountEntry.MountPath).ToList();
+            var engines = FioEnginesProvider.GetEngines();
+            return new DisksAndEngines()
+            {
+                Disks = disks,
+                Engines = engines
+            };
+        }
+
+        public class DisksAndEngines
+        {
+            public List<DriveDetails> Disks { get; set; }
+            public List<FioEnginesProvider.Engine> Engines { get; set; }
         }
 
         private DriveDetails FindDriveDetails(string mountPath)
