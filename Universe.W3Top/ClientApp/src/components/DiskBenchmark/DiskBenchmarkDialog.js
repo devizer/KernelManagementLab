@@ -137,7 +137,7 @@ const defaultOptions = {
     disableODirect: false,
     blockSize: 4096,
     threads: 16,
-    engine: "posixaio",
+    engine: "auto",
     errors: {isValid: true},
 };
 
@@ -238,7 +238,7 @@ function DiskBenchmarkDialog(props) {
                         onChange={handleChangeOption('engine')}
                         input={<Input name="engine" id="engine-helper" />}
                     >
-                        <MenuItem value="auto"><em>Auto</em></MenuItem>
+                        <MenuItem value="auto">Auto</MenuItem>
                         <MenuItem value="io_uring">io_uring</MenuItem>
                         <MenuItem value="libaio">libaio</MenuItem>
                         <MenuItem value="posixaio">posixaio</MenuItem>
