@@ -248,7 +248,7 @@ function DiskBenchmarkDialog(props) {
                         <MenuItem value="sync">sync</MenuItem>
                         <MenuItem value="mmap">mmap</MenuItem>
                     </Select>
-                    <FormHelperText>libaio|uring are preferred</FormHelperText>
+                    <FormHelperText>libaio is preferred</FormHelperText>
                 </FormControl>
 
 
