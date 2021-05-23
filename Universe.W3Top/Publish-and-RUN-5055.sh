@@ -17,6 +17,7 @@ function run_prod() {
   export ASPNETCORE_ENVIRONMENT=Production
   cd ClientApp; time (yarn install); cd ..
   time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="NO_DEBUG" -o bin/local  --self-contained -r $rid
+  dotnet restore
   cd bin/local
   echo VERSION: $(dotnet ./Universe.W3Top.dll --version)
   dotnet ./Universe.W3Top.dll | tee log.log

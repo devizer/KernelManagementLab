@@ -26,7 +26,6 @@ if [ -n "${SKIP_GIT_PUSH:-}" ]; then w3topBinRepo=https://github.com/devizer/w3t
 git clone ${w3topBinRepo} $clone
 
 
-
 work=$work/publish/KernelManagementLab;
 say "Loading source to [$work]"
 # work=/mnt/ftp-client/KernelManagementLab;
@@ -63,7 +62,8 @@ cd ClientApp; time (yarn test); cd ..
 say "yarn build [$ver]"
 cd ClientApp; time (yarn build); cd ..
 
-for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
+# export MSBuildSDKsPath=/usr/share/dotnet/sdk/3.1.408/Sdks
+for r in linux-musl-x64 linux-x64 linux-arm linux-arm64; do
 
   say "Building $r [$ver]"
   time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
@@ -102,11 +102,13 @@ popd >/dev/null
 say "Collecting garbage"
 bash $clone/git-gc/defrag.sh
 
+function _ignore_binstray_1 () {
 say "Delete bintray versions except stable [$ver]"
 export VERSION_STABLE="$ver"
 pushd $root/build
 bash delete-bintray-versions-except-stable.sh
 popd
+}
 
 cd $root
 say "RUN Create-GitHub-Release.sh [$ver]"

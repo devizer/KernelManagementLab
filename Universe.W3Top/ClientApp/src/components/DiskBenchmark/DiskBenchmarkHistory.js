@@ -90,8 +90,10 @@ export class DiskBenchmarkHistory extends React.Component {
         };
 
         let cellMountPath = row => (<span><span style={{fontWeight:'bold'}}>{row.original.mountPath}{row.original.fileSystem ? <span style={{opacity:0.55,fontWeight:'normal'}}> ({row.original.fileSystem})</span> : ""}</span></span>);
-        let sizeCell = row => <span>{row.value ? Helper.Common.formatBytes(row.value) : ""}</span>;
-        let speedCell = row => <span>{row.value ? `${Helper.Common.formatBytes(row.value, 2)}/s` : ""}</span>;
+        let sizeCell = row => <React.Fragment>{row.value ? Helper.Common.formatBytes(row.value) : ""}</React.Fragment>;
+        let speedCell = row => <React.Fragment>{row.value ? `${Helper.Common.formatBytes(row.value, 2)}/s` : ""}</React.Fragment>;
+        const defaultGreyCell = <span style={{color:"grey"}}>default</span>;
+        let engineCell = row => <React.Fragment>{row.original.engine ? `${row.original.engine} ${row.original.engineVersion}` : defaultGreyCell}</React.Fragment>
         let rightAlign = {textAlign: "right" };
         let centerAlign = {textAlign: "center" };
 
@@ -157,6 +159,16 @@ export class DiskBenchmarkHistory extends React.Component {
                                         id: "workingSetSize",
                                         Cell: sizeCell,
                                         accessor: "workingSetSize",
+                                        aggregate: () => null,
+                                    },
+                                    {
+                                        Header: "Engine",
+                                        id: "Engine",
+                                        Cell: engineCell,
+                                        // accessor: x => x.o_Direct !== undefined ? x.o_Direct.toLowerCase() : "",
+                                        accessor: x => x.engine,
+                                        minWidth: 88,
+                                        // style: ,
                                         aggregate: () => null,
                                     },
                                     {

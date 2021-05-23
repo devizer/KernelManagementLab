@@ -76,6 +76,8 @@ namespace Universe.Dashboard.DAL
         public DateTime CreatedAt { get; set; }
         public string MountPath { get; set; }
         public string FileSystem { get; set; }
+        public string Engine { get; set; }
+        public string EngineVersion { get; set; }
         public long WorkingSetSize { get; set; }
         public string O_Direct { get; set; } // "" (disabled) | "True" (present) | "False" (absent)
         public double? Allocate { get; set; }
@@ -103,6 +105,8 @@ namespace Universe.Dashboard.DAL
                 CreatedAt = benchmark.CreatedAt,
                 MountPath = benchmark.Args.WorkFolder,
                 FileSystem = benchmark.Environment?.FileSystems,
+                Engine = benchmark.Environment?.Engine,
+                EngineVersion = benchmark.Environment?.EngineVersion,
                 WorkingSetSize = benchmark.Args.WorkingSetSize,
                 O_Direct = Convert.ToString(GetStep(ProgressStepHistoryColumn.CheckODirect)?.Value),
                 Allocate = GetSpeed(ProgressStepHistoryColumn.Allocate),

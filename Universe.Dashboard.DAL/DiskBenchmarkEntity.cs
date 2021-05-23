@@ -25,5 +25,7 @@ namespace Universe.Dashboard.DAL
     public class DiskbenchmarkEnvironment
     {
         public string FileSystems { get; set; }
+        public string Engine { get; set; }
+        public string EngineVersion { get; set; }
     }
 }

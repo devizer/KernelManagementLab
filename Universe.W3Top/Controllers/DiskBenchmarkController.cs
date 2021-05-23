@@ -89,7 +89,12 @@ namespace Universe.W3Top.Controllers
             
             Guid token = Guid.NewGuid();
             var fileSystem = FindDriveDetails(Parameters.WorkFolder)?.MountEntry.FileSystem;
-            var diskbenchmarkEnvironment = new DiskbenchmarkEnvironment() { FileSystems = fileSystem};
+            var diskbenchmarkEnvironment = new DiskbenchmarkEnvironment()
+            {
+                FileSystems = fileSystem,
+                Engine = engine?.IdEngine,
+                EngineVersion = engine?.Version.ToString(),
+            };
             Queue.Enqueue(token, diskBenchmark, diskbenchmarkEnvironment);
             return new BenchmarkProgressResponse()
             {
