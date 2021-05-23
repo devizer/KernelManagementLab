@@ -180,6 +180,7 @@ namespace KernelManagementJam.Benchmarks
                     var bandwidth = progress.ReadBandwidth.GetValueOrDefault() + progress.WriteBandwidth.GetValueOrDefault();
                     double elapsedSeconds = startAt.Elapsed.TotalSeconds;
                     double percents = 1000 * elapsedSeconds / Parameters.StepDuration;
+                    percents = Math.Min(1d, percents);
                     var totalBytes = bandwidth * elapsedSeconds; 
                     var seconds = step.Seconds;
                     
@@ -194,6 +195,7 @@ namespace KernelManagementJam.Benchmarks
                     var bandwidth = summary.Bandwidth;
                     double elapsedSeconds = startAt.Elapsed.TotalSeconds;
                     double percents = 1000 * elapsedSeconds / Parameters.StepDuration;
+                    percents = Math.Min(1d, percents);
                     var totalBytes = bandwidth * elapsedSeconds; 
                     step.Progress(percents, (long) totalBytes);
                     Console.WriteLine($"---=== SUMMARY [{summary}] ===---");
