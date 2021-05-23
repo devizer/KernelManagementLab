@@ -60,6 +60,7 @@ namespace Universe.W3Top.Controllers
             DiskBenchmarkOptions Parameters = new DiskBenchmarkOptions()
             {
                 WorkFolder = options.MountPath,
+                Engine = options.Engine,
                 WorkingSetSize = options.WorkingSet * 1024L * 1024L,
                 Flavour = DataGeneratorFlavour.ILCode,
                 RandomAccessBlockSize = options.BlockSize,
@@ -144,6 +145,7 @@ namespace Universe.W3Top.Controllers
         public class StartBenchmarkArgs
         {
             public string MountPath { get; set; }
+            public string Engine { get; set; }
             public int WorkingSet { get; set; }
             public int RandomAccessDuration { get; set; }
             public bool DisableODirect { get; set; }

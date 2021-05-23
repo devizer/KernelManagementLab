@@ -7,6 +7,7 @@ namespace Universe.Benchmark.DiskBench
     public class DiskBenchmarkOptions
     {
         public string WorkFolder { get; set; }
+        public string Engine { get; set; }
         public int StepDuration { get; set;}
         public long WorkingSetSize { get; set;}
         public int ThreadsNumber { get; set;}
