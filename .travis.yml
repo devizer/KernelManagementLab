@@ -3,9 +3,9 @@ git:
   depth: false
 matrix:
   include:
-  - name: Ubuntu 14.04
-    os: linux
-    dist: trusty
+#  - name: Ubuntu 14.04
+#    os: linux
+#    dist: trusty
   - name: Ubuntu 16.04
     os: linux
     dist: xenial
@@ -13,18 +13,18 @@ matrix:
       chrome: stable
     # services:
     #  - xvfb
-  - name: Ubuntu 18.04
-    os: linux
-    dist: bionic
+#  - name: Ubuntu 18.04
+#    os: linux
+#    dist: bionic
 #  - name: OS X 10.12
 #    os: osx
 #    osx_image: xcode8.3
-  - name: OS X 10.13
-    os: osx
-    osx_image: xcode9.3
-  - name: OS X 10.14
-    os: osx
-    osx_image: xcode10.2
+#  - name: OS X 10.13
+#    os: osx
+#    osx_image: xcode9.3
+#  - name: OS X 10.14
+#    os: osx
+#    osx_image: xcode10.2
 
 # https://docs.travis-ci.com/user/caching/
 # cache:
@@ -55,6 +55,8 @@ before_script:
   try-and-retry dotnet tool install -g BenchmarkDotNet.Tool || true
   Say "Installing .NET Core 3.1 SDK"
   time try-and-retry sudo -E bash /tmp/_dotnet-install.sh -c 3.1 -i /opt/dotnet
+  Say "Installing .NET Core 5.0 SDK"
+  time try-and-retry sudo -E bash /tmp/_dotnet-install.sh -c 5.0 -i /opt/dotnet
   Say ".NET Core benchmark tool version: [$(dotnet benchmark --version 2>&1)]"
   
 - lscpu || true
@@ -132,8 +134,6 @@ script:
 
 - export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1; export DOTNET_CLI_TELEMETRY_OPTOUT=1;
   export CI=false
-
-- sudo ls -la || true; apt-cache policy dotnet-sdk-2.2 || true; apt-cache search dotnet-sdk || true
 
 - |
   # Install Build Tools
