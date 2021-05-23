@@ -184,7 +184,7 @@ namespace KernelManagementJam.Benchmarks
                     var totalBytes = bandwidth * elapsedSeconds; 
                     var seconds = step.Seconds;
                     
-                    Console.WriteLine($"---=== PROGRESS [{progress}] ===---");
+                    Console.WriteLine($"---=== FIO PROGRESS [{progress}] ===---");
 
                     var @break = @"here";
 
@@ -198,7 +198,7 @@ namespace KernelManagementJam.Benchmarks
                     percents = Math.Min(1d, percents);
                     var totalBytes = bandwidth * elapsedSeconds; 
                     step.Progress(percents, (long) totalBytes);
-                    Console.WriteLine($"---=== SUMMARY [{summary}] ===---");
+                    Console.WriteLine($"---=== FIO SUMMARY [{summary}] ===---");
                 };
                 rdr.ReadStreamToEnd(streamReader);
             }
