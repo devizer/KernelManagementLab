@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Universe.FioStream.Binaries
@@ -8,12 +9,12 @@ namespace Universe.FioStream.Binaries
     {
         public void Download(string url, string toFile)
         {
+            ConfigureCertificateValidation();
+
 #if NETCOREAPP1_0 || NETCOREAPP1_1 || NETSTANDARD1_3
             Download2(url, toFile).Wait();
 #else
             
-            // System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
             using (var wc = new System.Net.WebClient())
             {
                 wc.Headers["User-Agent"] = "w3-fio";
@@ -46,5 +47,23 @@ namespace Universe.FioStream.Binaries
             }
         }
 #endif
+
+        private static bool IsCertificateValidationConfigured = false;
+        static readonly object SyncCertificateValidation = new object();
+
+        static void ConfigureCertificateValidation()
+        {
+            if (IsCertificateValidationConfigured) return;
+            lock (SyncCertificateValidation)
+            {
+                if (IsCertificateValidationConfigured) return;
+#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETSTANDARD1_3
+                // nothing can do here
+#else
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) => { return true; };
+#endif
+                IsCertificateValidationConfigured = true;
+            }
+        }
     }
 }
