@@ -29,14 +29,6 @@ namespace Universe.W3Top.Controllers
             FioEnginesProvider = fioEnginesProvider;
         }
         
-        /*
-        public DiskBenchmarkController(DiskBenchmarkQueue queue, DiskBenchmarkDataAccess dbAccess)
-        {
-            Queue = queue;
-            DbAccess = dbAccess;
-        }
-        */
-
         [HttpGet, Route("get-disks")]
         public DisksAndEngines GetList()
         {
@@ -49,6 +41,7 @@ namespace Universe.W3Top.Controllers
             };
         }
 
+        // For the first step of benchmark wizard
         public class DisksAndEngines
         {
             public List<DriveDetails> Disks { get; set; }
@@ -89,6 +82,7 @@ namespace Universe.W3Top.Controllers
             if (!hasWritePermission)
             {
                 diskBenchmark = new ReadonlyDiskBenchmark(Parameters, MountsDataSource.Mounts);
+                engine = null;
             }
             else if (engine != null)
             {
