@@ -117,9 +117,10 @@ const optionStyles = {
         width: 201,
     },
     engineField: {
-        marginTop: 16,
+        marginTop: 4,
         marginLeft: 0,
         marginRight: 24,
+        marginBottom: 8,
         width: 201,
         textAlign: "left"
     },
@@ -239,8 +240,8 @@ function DiskBenchmarkDialog(props) {
         };
         return (
             <form className={optionStyles.container} noValidate autoComplete="off">
-                <Typography>Benchmark options:</Typography>
-                
+                {/*<Typography>Benchmark options:</Typography>*/}
+
                 <FormControl className={classes.formControl} style={optionStyles.engineField}>
                     <InputLabel htmlFor="engine-helper">Engine</InputLabel>
                     <Select
@@ -252,20 +253,10 @@ function DiskBenchmarkDialog(props) {
                         {safeEngines.map((engine, engineIndex) => (
                             <MenuItem value={engine.idEngine}>{engine.idEngine}{spanVersion(engine.version)}</MenuItem>
                         ))}
-{/*
-                        <MenuItem value="io_uring">io_uring</MenuItem>
-                        <MenuItem value="libaio">libaio</MenuItem>
-                        <MenuItem value="posixaio">posixaio</MenuItem>
-                        <MenuItem value="pvsync">pvsync</MenuItem>
-                        <MenuItem value="psync">psync</MenuItem>
-                        <MenuItem value="vsync">vsync</MenuItem>
-                        <MenuItem value="sync">sync</MenuItem>
-                        <MenuItem value="mmap">mmap</MenuItem>
-*/}
                     </Select>
                     <FormHelperText>libaio is preferred</FormHelperText>
                 </FormControl>
-
+                <span style={{fontSize:"1px"}}><br/></span>
 
                 <TextField
                     id="benchmark-options-working-set"
@@ -310,7 +301,8 @@ function DiskBenchmarkDialog(props) {
                     error={options.errors.randomAccessDuration}
                     helperText={errorText(options.errors.randomAccessDuration)}
                 />
-                
+
+
             </form>
         )
     }
