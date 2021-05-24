@@ -93,7 +93,7 @@ namespace Universe.FioStream.Binaries
 
         private static Lazy<string> _StateFolder = new Lazy<string>(() =>
         {
-            return GetDir($".local{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}state");
+            return GetDir($".local{Path.DirectorySeparatorChar}var{Path.DirectorySeparatorChar}fio-state");
         });
 
         private static readonly UTF8Encoding Utf8 = new UTF8Encoding(false);
