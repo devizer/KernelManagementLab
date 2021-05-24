@@ -236,7 +236,13 @@ function DiskBenchmarkDialog(props) {
                 if (version !== null && version !== undefined && version[part] !== null && version[part] !== undefined && version[part] !== -1) 
                     ret = ret + (ret.length === 0 ? "" : ".") + version[part]; 
             });
-            return ret === "" ? ret : (<span style={{color:"grey", fontSize:"85%"}}>&nbsp;&nbsp;v{ret}</span>);
+            return ret === "" ? ret : (<span style={{color:"grey", fontSize:"85%"}}>v{ret}</span>);
+        };
+        const spanEngine = engine => {
+            return <>
+                <span style={{width:112,minWidth:112}}>{engine.idEngine}&nbsp;&nbsp;</span>
+                <span style={{width:56,minWidth:56, textAlign: "right"}}>{spanVersion(engine.version)}</span>
+            </>;
         };
         return (
             <form className={optionStyles.container} noValidate autoComplete="off">
@@ -251,7 +257,7 @@ function DiskBenchmarkDialog(props) {
                     >
                         <MenuItem value="auto">auto</MenuItem>
                         {safeEngines.map((engine, engineIndex) => (
-                            <MenuItem value={engine.idEngine}>{engine.idEngine}{spanVersion(engine.version)}</MenuItem>
+                            <MenuItem value={engine.idEngine}>{spanEngine(engine)}</MenuItem>
                         ))}
                     </Select>
                     <FormHelperText>libaio is preferred</FormHelperText>

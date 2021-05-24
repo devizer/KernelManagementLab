@@ -118,8 +118,8 @@ namespace KernelManagementJam.Benchmarks
                 DoFioBenchmark(_seqWrite, engine, "write", _isODirectSupported, "1024k", 0);
                 DoFioBenchmark(_rndRead1T, engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
                 DoFioBenchmark(_rndWrite1T, engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 1);
-                DoFioBenchmark(_rndReadN, engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
-                DoFioBenchmark(_rndWriteN, engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), 64);
+                DoFioBenchmark(_rndReadN, engine,"randread", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), Parameters.ThreadsNumber);
+                DoFioBenchmark(_rndWriteN, engine,"randwrite", _isODirectSupported, Parameters.RandomAccessBlockSize.ToString("0"), Parameters.ThreadsNumber);
                 
                 doCleanUp(null);
             }
@@ -159,7 +159,7 @@ namespace KernelManagementJam.Benchmarks
                           $" --gtod_reduce=1" +
                           $" --filename={fileName}" +
                           (hasBlockSize ? $" --bs={blockSize}" : "")  +
-                          (hasIoDepth ? $" --iodepth={ioDepth}" : "") +
+                          (hasIoDepth ? $" --iodepth={(ioDepth == 1 ? 1 : ioDepth):0}" : "") +
                           $" --size={Parameters.WorkingSetSize:0}" +
                           $" --runtime={(Parameters.StepDuration / 1000)}" +
                           $" --ramp_time=0" +
