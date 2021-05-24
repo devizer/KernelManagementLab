@@ -235,7 +235,7 @@ function DiskBenchmarkDialog(props) {
                 if (version !== null && version !== undefined && version[part] !== null && version[part] !== undefined && version[part] !== -1) 
                     ret = ret + (ret.length === 0 ? "" : ".") + version[part]; 
             });
-            return ret === "" ? ret : `, v${ret}`;
+            return ret === "" ? ret : (<span style={{color:"grey", fontSize:"85%"}}>&nbsp;&nbsp;v{ret}</span>);
         };
         return (
             <form className={optionStyles.container} noValidate autoComplete="off">
