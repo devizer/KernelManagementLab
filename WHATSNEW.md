@@ -1,3 +1,6 @@
+##### 1.21
+- Added fio as backend for disk IO benchmarks
+
 ##### 1.20
 - Top Processes
 - Fixed full screen web app mode for iOS and Android
