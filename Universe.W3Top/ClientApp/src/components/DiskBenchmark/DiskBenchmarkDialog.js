@@ -229,6 +229,14 @@ function DiskBenchmarkDialog(props) {
     function renderStepTuneOptions() {
         const errorText = value => value ? value : " ";
         const safeEngines = engines === null ? [] : engines;
+        const spanVersion = version => {
+            let ret = "";
+            ["major", "minor", "build", "revision"].forEach(part => {
+                if (version !== null && version !== undefined && version[part] !== null && version[part] !== undefined && version[part] !== -1) 
+                    ret = ret + (ret.length === 0 ? "" : ".") + version[part]; 
+            });
+            return ret === "" ? ret : `, v${ret}`;
+        };
         return (
             <form className={optionStyles.container} noValidate autoComplete="off">
                 <Typography>Benchmark options:</Typography>
@@ -242,7 +250,7 @@ function DiskBenchmarkDialog(props) {
                     >
                         <MenuItem value="auto">auto</MenuItem>
                         {safeEngines.map((engine, engineIndex) => (
-                            <MenuItem value={engine.idEngine}>{engine.idEngine} {engine.version.major}.{engine.version.minor}</MenuItem>
+                            <MenuItem value={engine.idEngine}>{engine.idEngine}{spanVersion(engine.version)}</MenuItem>
                         ))}
 {/*
                         <MenuItem value="io_uring">io_uring</MenuItem>
