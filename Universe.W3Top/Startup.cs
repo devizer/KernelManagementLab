@@ -128,7 +128,8 @@ namespace Universe.W3Top
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var enginesProvider = scope.ServiceProvider.GetRequiredService<FioEnginesProvider>();
-                    enginesProvider.Discovery();
+                    Thread t = new Thread(_ => enginesProvider.Discovery()) {IsBackground = true};
+                    t.Start();
                 }
             });
             
