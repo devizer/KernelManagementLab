@@ -6,7 +6,8 @@ set -u
 export DOTNET_TARGET_DIR=/transient-builds/dotnet-3.1 DOTNET_VERSIONS="2.2 3.1"
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
 export PATH="/transient-builds/dotnet-3.1:$PATH"
-
+unset MSBuildSDKsPath || true
+ 
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 function header() {
   if [[ $(uname -s) != Darwin ]]; then
@@ -67,7 +68,7 @@ say "yarn build [$ver]"
 cd ClientApp; time (yarn build); cd ..
 
 # export MSBuildSDKsPath=/usr/share/dotnet/sdk/3.1.408/Sdks
-for r in linux-musl-x64 linux-x64 linux-arm linux-arm64; do
+for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 
   say "Building $r [$ver]"
   time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
