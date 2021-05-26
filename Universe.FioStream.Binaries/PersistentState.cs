@@ -83,17 +83,17 @@ namespace Universe.FioStream.Binaries
         
         private static Lazy<string> _TempFolder = new Lazy<string>(() =>
         {
-            return GetDir($".local{Path.DirectorySeparatorChar}tmp");
+            return GetDir($".cache{Path.DirectorySeparatorChar}fio{Path.DirectorySeparatorChar}tmp");
         });
 
         private static Lazy<string> _BinFolder = new Lazy<string>(() =>
         {
-            return GetDir($".local{Path.DirectorySeparatorChar}bin");
+            return GetDir($".cache{Path.DirectorySeparatorChar}fio{Path.DirectorySeparatorChar}bin");
         });
 
         private static Lazy<string> _StateFolder = new Lazy<string>(() =>
         {
-            return GetDir($".local{Path.DirectorySeparatorChar}var{Path.DirectorySeparatorChar}fio-state");
+            return GetDir($".cache{Path.DirectorySeparatorChar}fio{Path.DirectorySeparatorChar}state");
         });
 
         private static readonly UTF8Encoding Utf8 = new UTF8Encoding(false);
