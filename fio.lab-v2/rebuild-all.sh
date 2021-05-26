@@ -22,7 +22,7 @@ function set_title() {
 
 function prepare_libaio_src() {
   libaio_versions=""
-  cat ver-links.txt | while read -r ver link; do
+  cat libaio-ver-links.txt | while read -r ver link; do
       if [[ -z "$ver" ]]; then continue; fi
       Say "Downloading $ver: $link"
       work=/transient-builds/libaio-src/$ver
