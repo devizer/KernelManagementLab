@@ -37,7 +37,7 @@ function prepare_libaio_src() {
       libaio_versions="$libaio_versions $ver"
       # time make prefix=/transient-builds/libaio-dev/$ver install
       popd
-  done 
+  done
 }
 prepare_libaio_src
 libaio_versions="0.3.112 0.3.111 0.3.110 0.3.108 0.3.107 0.3.106"
@@ -88,7 +88,12 @@ function build() {
   
   # libaio varies only
   options_commands=("${cmd_i1};" "${cmd_r1};")
-  options_keys=("-libaio" "")
+  options_keys=("-libaio-system" "-libaio-missing")
+  
+  for ver in libaio_versions; do
+    options_commands+=("bash ../in-constaner-libaio.sh $ver")
+    options_keys+=("-libaio-$ver") 
+  done
 
   # ---=== ONLY libaio ===---
   options_commands=("${cmd_i1};")
