@@ -3,10 +3,12 @@ work_base=/transient-builds/libaio-src
 cat ver-links.txt | while read -r ver link; do
     echo "$ver" "$link"
     work=$work_base/$ver
-    cd $work
+    mkdir -p $work
+    pushd $work
     wget -O $ver $link
     tar xzf $ver
     cd lib*
     Say "VER $ver"
     time make prefix=`pwd`/usr install
+    popd
 done 
