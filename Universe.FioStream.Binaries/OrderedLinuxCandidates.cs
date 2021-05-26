@@ -97,7 +97,8 @@ namespace Universe.FioStream.Binaries
 
         private static List<LinuxCandidate> GetAllLinuxCandidates()
         {
-            var rawArray = RawList
+            
+            var rawArray = RawList_V2 // RawList_V1
                 .Split(new[] {'\r', '\n'})
                 .Select(x => x.Trim())
                 .Where(x => x.Length > 0)
@@ -108,6 +109,8 @@ namespace Universe.FioStream.Binaries
             {
                 var name = Path.GetFileNameWithoutExtension(rawName);
                 bool hasLibAio = rawName.IndexOf("libaio-", StringComparison.OrdinalIgnoreCase) >= 0;
+                // v2
+                hasLibAio = rawName.IndexOf("libaio-missing", StringComparison.OrdinalIgnoreCase) < 0; 
                 var parts = name.Replace("libaio-", "").Split('-');
                 var codename = parts[parts.Length - 1];
                 var codeInfo = Codenames.FirstOrDefault(x => x.Name.Equals(codename));
@@ -116,8 +119,9 @@ namespace Universe.FioStream.Binaries
                     Arch = parts[parts.Length - 2],
                     Name = name,
                     Codename = codename,
-                    Url = $"https://master.dl.sourceforge.net/project/fio/{rawName}?viasf=1",
-                    FioVersion = new Version(parts[parts.Length - 3]),
+                    // Url = $"https://master.dl.sourceforge.net/project/fio/{rawName}?viasf=1",
+                    Url = $"https://master.dl.sourceforge.net/project/fio/ver2/{rawName}?viasf=1",
+                    FioVersion = new Version(parts[1]),
                     HasLibAio = hasLibAio,
                     LibCVersion = codeInfo?.LibCVersion 
                 });
@@ -178,8 +182,104 @@ namespace Universe.FioStream.Binaries
             new Codename("rhel7", new Version("2.17")),
             new Codename("rhel6", new Version("2.12")),
         };
+
+        private const string RawList_V2 = @"
+fio-2.21-libaio-0.3.112-amd64-bionic.gz
+fio-2.21-libaio-0.3.112-amd64-jessie.gz
+fio-2.21-libaio-0.3.112-amd64-precise.gz
+fio-2.21-libaio-0.3.112-amd64-rhel7.gz
+fio-2.21-libaio-0.3.112-amd64-stretch.gz
+fio-2.21-libaio-0.3.112-amd64-trusty.gz
+fio-2.21-libaio-0.3.112-amd64-xenial.gz
+fio-2.21-libaio-0.3.112-arm64-bionic.gz
+fio-2.21-libaio-0.3.112-arm64-trusty.gz
+fio-2.21-libaio-0.3.112-arm64-xenial.gz
+fio-2.21-libaio-0.3.112-armel-stretch.gz
+fio-2.21-libaio-0.3.112-armel-wheezy.gz
+fio-2.21-libaio-0.3.112-armhf-bionic.gz
+fio-2.21-libaio-0.3.112-armhf-precise.gz
+fio-2.21-libaio-0.3.112-armhf-xenial.gz
+fio-2.21-libaio-0.3.112-i386-bionic.gz
+fio-2.21-libaio-0.3.112-i386-precise.gz
+fio-2.21-libaio-0.3.112-i386-xenial.gz
+fio-2.21-libaio-0.3.112-mips64el-stretch.gz
+fio-2.21-libaio-0.3.112-powerpc-wheezy.gz
+fio-2.21-libaio-0.3.112-ppc64el-bionic.gz
+fio-2.21-libaio-0.3.112-ppc64el-trusty.gz
+fio-2.21-libaio-0.3.112-ppc64el-xenial.gz
+fio-2.21-libaio-missing-amd64-bionic.gz
+fio-2.21-libaio-missing-amd64-jessie.gz
+fio-2.21-libaio-missing-amd64-precise.gz
+fio-2.21-libaio-missing-amd64-rhel7.gz
+fio-2.21-libaio-missing-amd64-stretch.gz
+fio-2.21-libaio-missing-amd64-trusty.gz
+fio-2.21-libaio-missing-amd64-xenial.gz
+fio-2.21-libaio-missing-arm64-bionic.gz
+fio-2.21-libaio-missing-arm64-trusty.gz
+fio-2.21-libaio-missing-arm64-xenial.gz
+fio-2.21-libaio-missing-armel-stretch.gz
+fio-2.21-libaio-missing-armel-wheezy.gz
+fio-2.21-libaio-missing-armhf-bionic.gz
+fio-2.21-libaio-missing-armhf-precise.gz
+fio-2.21-libaio-missing-armhf-xenial.gz
+fio-2.21-libaio-missing-i386-bionic.gz
+fio-2.21-libaio-missing-i386-precise.gz
+fio-2.21-libaio-missing-i386-xenial.gz
+fio-2.21-libaio-missing-mips64el-stretch.gz
+fio-2.21-libaio-missing-powerpc-wheezy.gz
+fio-2.21-libaio-missing-ppc64el-bionic.gz
+fio-2.21-libaio-missing-ppc64el-trusty.gz
+fio-2.21-libaio-missing-ppc64el-xenial.gz
+fio-3.26-libaio-0.3.112-amd64-bionic.gz
+fio-3.26-libaio-0.3.112-amd64-bullseye.gz
+fio-3.26-libaio-0.3.112-amd64-buster.gz
+fio-3.26-libaio-0.3.112-amd64-centosstream.gz
+fio-3.26-libaio-0.3.112-amd64-focal.gz
+fio-3.26-libaio-0.3.112-amd64-groovy.gz
+fio-3.26-libaio-0.3.112-amd64-hirsute.gz
+fio-3.26-libaio-0.3.112-amd64-rhel8.gz
+fio-3.26-libaio-0.3.112-amd64-stretch.gz
+fio-3.26-libaio-0.3.112-amd64-xenial.gz
+fio-3.26-libaio-0.3.112-arm64-bionic.gz
+fio-3.26-libaio-0.3.112-arm64-focal.gz
+fio-3.26-libaio-0.3.112-arm64-xenial.gz
+fio-3.26-libaio-0.3.112-armel-buster.gz
+fio-3.26-libaio-0.3.112-armel-stretch.gz
+fio-3.26-libaio-0.3.112-armhf-bionic.gz
+fio-3.26-libaio-0.3.112-armhf-focal.gz
+fio-3.26-libaio-0.3.112-armhf-xenial.gz
+fio-3.26-libaio-0.3.112-i386-bionic.gz
+fio-3.26-libaio-0.3.112-i386-xenial.gz
+fio-3.26-libaio-0.3.112-mips64el-stretch.gz
+fio-3.26-libaio-0.3.112-ppc64el-bionic.gz
+fio-3.26-libaio-0.3.112-ppc64el-focal.gz
+fio-3.26-libaio-0.3.112-ppc64el-xenial.gz
+fio-3.26-libaio-missing-amd64-bionic.gz
+fio-3.26-libaio-missing-amd64-bullseye.gz
+fio-3.26-libaio-missing-amd64-buster.gz
+fio-3.26-libaio-missing-amd64-centosstream.gz
+fio-3.26-libaio-missing-amd64-focal.gz
+fio-3.26-libaio-missing-amd64-groovy.gz
+fio-3.26-libaio-missing-amd64-hirsute.gz
+fio-3.26-libaio-missing-amd64-rhel8.gz
+fio-3.26-libaio-missing-amd64-stretch.gz
+fio-3.26-libaio-missing-amd64-xenial.gz
+fio-3.26-libaio-missing-arm64-bionic.gz
+fio-3.26-libaio-missing-arm64-focal.gz
+fio-3.26-libaio-missing-arm64-xenial.gz
+fio-3.26-libaio-missing-armel-buster.gz
+fio-3.26-libaio-missing-armel-stretch.gz
+fio-3.26-libaio-missing-armhf-bionic.gz
+fio-3.26-libaio-missing-armhf-focal.gz
+fio-3.26-libaio-missing-armhf-xenial.gz
+fio-3.26-libaio-missing-i386-bionic.gz
+fio-3.26-libaio-missing-i386-xenial.gz
+fio-3.26-libaio-missing-mips64el-stretch.gz
+fio-3.26-libaio-missing-ppc64el-bionic.gz
+fio-3.26-libaio-missing-ppc64el-focal.gz
+fio-3.26-libaio-missing-ppc64el-xenial.gz";
         
-        private const string RawList = @"
+        private const string RawList_V1 = @"
 fio-2.21-amd64-bionic.gz
 fio-2.21-amd64-jessie.gz
 fio-2.21-amd64-precise.gz
