@@ -28,7 +28,7 @@ rm -rf /out/*
 set -o pipefail
 short="1M 1 0" long="1G 3 3"
 # ========== DURATIN ============
-duration="$long"
+duration="$short"
 if [[ -d /usr/local/fio ]]; then
     pushd /usr/local/fio
     tar czf /out/fio-distribution.tar.gz .
