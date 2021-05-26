@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 export CFLAGS="-O2"
 export CXXFLAGS="-O2"
-test -s /vars.sh && source /vars.sh
+if [[ -s /vars.sh ]]; then
+  Say "Loading /vars.sh"
+  cat /vars.sh
+  source /vars.sh
+fi  
 echo "LIBC: $(ldd --version)"
 echo ""
 
