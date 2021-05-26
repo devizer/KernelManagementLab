@@ -97,8 +97,8 @@ function build() {
   done
 
   # ---=== ONLY libaio ===---
-  options_commands=("${cmd_i1};")
-  options_keys=("-testlog")
+  # options_commands=("${cmd_i1};")
+  # options_keys=("-testlog")
   
   # cut next two lines
   # options_commands=("${cmd_i1};${cmd_i2}")
