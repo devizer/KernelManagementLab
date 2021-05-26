@@ -42,7 +42,7 @@ function prepare_libaio_src() {
 prepare_libaio_src
 libaio_versions="0.3.112 0.3.111 0.3.110 0.3.108 0.3.107 0.3.106"
 Say "libaio versions: [$libaio_versions]"
-exit
+# exit
 
 function build() {
   image=$1
@@ -69,6 +69,7 @@ function build() {
   ldd_version="${ldd_version//[$'\t\r\n']}"
   Say "Installing build tools for container [$name]: $prepare_script"
   docker cp build-tools-in-container.sh "$name:/"
+  docker cp /transient-builds/libaio-src/ "$name:/transient-builds/libaio-src/"
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
   docker exec -t $name bash -c "source /build-tools-in-container.sh; $prepare_script"
   # yum info libaio-devel | grep Version | head -1
