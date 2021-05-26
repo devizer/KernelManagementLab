@@ -38,7 +38,6 @@ function prepare_libaio_src() {
       # time make prefix=/transient-builds/libaio-dev/$ver install
       popd
   done 
-  libaio_versions="${libaio_versions%"${libaio_versions##*[![:space:]]}"}"
   libaio_versions=$(echo $libaio_versions | xargs echo -n)
 }
 prepare_libaio_src
