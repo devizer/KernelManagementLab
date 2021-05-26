@@ -20,8 +20,8 @@ function set_title() {
   echo -e '\033k'$*'\033\\'
 }
 
+libaio_versions=""
 function prepare_libaio_src() {
-  libaio_versions=""
   cat libaio-ver-links.txt | while read -r ver link; do
       if [[ -z "$ver" ]]; then continue; fi
       Say "Downloading $ver: $link"
