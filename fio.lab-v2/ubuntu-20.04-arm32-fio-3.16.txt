@@ -1,0 +1,102 @@
+﻿> INFO > IO Engine: [libaio]. Direct IO: [Present]
+---------------------------------------------------
+┌─────────────────────────┐
+│ROOT: Sequential read (/)│
+└─────────────────────────┘
+Benchmark '/' folder using 'read' test during 10 seconds and heating 0 secs, size is 100M
+RUN_read: (g=0): rw=read, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=libaio, iodepth=1
+fio-3.16
+Starting 1 process
+RUN_read: Laying out IO file (1 file / 100MiB)
+Jobs: 1 (f=1): [R(1)][100.0%][r=22.0MiB/s][r=22 IOPS][eta 00m:00s]
+RUN_read: (groupid=0, jobs=1): err= 0: pid=9087: Sun Apr 25 22:16:44 2021
+  read: IOPS=22, BW=22.1MiB/s (23.1MB/s)(254MiB/11509msec)
+   bw (  KiB/s): min=20480, max=24576, per=99.67%, avg=22524.09, stdev=873.37, samples=23
+   iops        : min=   20, max=   24, avg=21.91, stdev= 0.90, samples=23
+  cpu          : usr=0.10%, sys=2.55%, ctx=265, majf=0, minf=277
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=254,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+   READ: bw=22.1MiB/s (23.1MB/s), 22.1MiB/s-22.1MiB/s (23.1MB/s-23.1MB/s), io=254MiB (266MB), run=11509-11509msec
+
+Disk stats (read/write):
+  mmcblk0: ios=270/0, merge=0/0, ticks=11320/0, in_queue=11319, util=99.10%
+
+┌──────────────────────────┐
+│ROOT: Sequential write (/)│
+└──────────────────────────┘
+Benchmark '/' folder using 'write' test during 10 seconds and heating 0 secs, size is 100M
+RUN_write: (g=0): rw=write, bs=(R) 1024KiB-1024KiB, (W) 1024KiB-1024KiB, (T) 1024KiB-1024KiB, ioengine=libaio, iodepth=1
+fio-3.16
+Starting 1 process
+Jobs: 1 (f=1): [W(1)][100.0%][w=16.0MiB/s][w=16 IOPS][eta 00m:00s]
+RUN_write: (groupid=0, jobs=1): err= 0: pid=9095: Sun Apr 25 22:16:58 2021
+  write: IOPS=15, BW=15.5MiB/s (16.3MB/s)(190MiB/12248msec); 0 zone resets
+   bw (  KiB/s): min=12288, max=18432, per=99.89%, avg=15867.37, stdev=1927.17, samples=24
+   iops        : min=   12, max=   18, avg=15.42, stdev= 1.79, samples=24
+  cpu          : usr=0.27%, sys=1.05%, ctx=747, majf=0, minf=18
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=0,190,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=15.5MiB/s (16.3MB/s), 15.5MiB/s-15.5MiB/s (16.3MB/s-16.3MB/s), io=190MiB (199MB), run=12248-12248msec
+
+Disk stats (read/write):
+  mmcblk0: ios=0/191, merge=0/2, ticks=0/12085, in_queue=12084, util=98.81%
+
+┌─────────────────────┐
+│ROOT: Random read (/)│
+└─────────────────────┘
+Benchmark '/' folder using 'randread' test during 10 seconds and heating 0 secs, size is 100M
+RUN_randread: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=64
+fio-3.16
+Starting 1 process
+Jobs: 1 (f=1): [r(1)][100.0%][r=7524KiB/s][r=1881 IOPS][eta 00m:00s]
+RUN_randread: (groupid=0, jobs=1): err= 0: pid=9103: Sun Apr 25 22:17:10 2021
+  read: IOPS=1849, BW=7399KiB/s (7577kB/s)(72.7MiB/10067msec)
+   bw (  KiB/s): min= 6472, max= 7600, per=99.96%, avg=7396.15, stdev=246.99, samples=20
+   iops        : min= 1618, max= 1900, avg=1849.00, stdev=61.74, samples=20
+  cpu          : usr=2.87%, sys=7.82%, ctx=21271, majf=0, minf=82
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.2%, >=64=99.7%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued rwts: total=18622,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+   READ: bw=7399KiB/s (7577kB/s), 7399KiB/s-7399KiB/s (7577kB/s-7577kB/s), io=72.7MiB (76.3MB), run=10067-10067msec
+
+Disk stats (read/write):
+  mmcblk0: ios=18241/11, merge=41/8, ticks=538990/281, in_queue=539272, util=99.07%
+
+┌──────────────────────┐
+│ROOT: Random write (/)│
+└──────────────────────┘
+Benchmark '/' folder using 'randwrite' test during 10 seconds and heating 0 secs, size is 100M
+RUN_randwrite: (g=0): rw=randwrite, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=64
+fio-3.16
+Starting 1 process
+Jobs: 1 (f=1): [w(1)][100.0%][w=3683KiB/s][w=920 IOPS][eta 00m:00s]
+RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=9120: Sun Apr 25 22:17:22 2021
+  write: IOPS=843, BW=3376KiB/s (3457kB/s)(33.2MiB/10084msec); 0 zone resets
+   bw (  KiB/s): min=   40, max= 4048, per=99.91%, avg=3372.05, stdev=918.44, samples=20
+   iops        : min=   10, max= 1012, avg=843.00, stdev=229.61, samples=20
+  cpu          : usr=1.25%, sys=27.23%, ctx=361819, majf=0, minf=16
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.2%, 32=0.4%, >=64=99.3%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued rwts: total=0,8510,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+  WRITE: bw=3376KiB/s (3457kB/s), 3376KiB/s-3376KiB/s (3457kB/s-3457kB/s), io=33.2MiB (34.9MB), run=10084-10084msec
+
+Disk stats (read/write):
+  mmcblk0: ios=0/8305, merge=0/6, ticks=0/315978, in_queue=315977, util=99.02%

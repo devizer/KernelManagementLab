@@ -1,0 +1,6 @@
+0.3.112 https://pagure.io/libaio/archive/libaio-0.3.112/libaio-libaio-0.3.112.tar.gz
+0.3.111 https://pagure.io/libaio/archive/libaio-0.3.111/libaio-libaio-0.3.111.tar.gz
+0.3.110 https://pagure.io/libaio/archive/libaio-0.3.110-1/libaio-libaio-0.3.110-1.tar.gz
+0.3.108 https://pagure.io/libaio/archive/libaio-0.3.108/libaio-libaio-0.3.108.tar.gz
+0.3.107 https://pagure.io/libaio/archive/libaio.0-3-107.1/libaio-libaio.0-3-107.1.tar.gz
+0.3.106 https://pagure.io/libaio/archive/libaio.0-3-106.1/libaio-libaio.0-3-106.1.tar.gz
