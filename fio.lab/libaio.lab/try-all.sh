@@ -3,7 +3,7 @@ cat ver-links.txt | while read -r ver link; do
     echo "$ver" "$link"
     work=bin/$ver
     mkdir -p $work
-    rm -rf $work
+    rm -rf $work/*
     pushd $work
     wget -O $ver $link
     tar xzf $ver
