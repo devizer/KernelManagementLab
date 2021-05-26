@@ -22,6 +22,7 @@ function set_title() {
 
 libaio_versions=""
 function prepare_libaio_src() {
+  rm -rf /transient-builds/libaio-src/* || true
   cat libaio-ver-links.txt | while read -r ver link; do
       if [[ -z "$ver" ]]; then continue; fi
       Say "Downloading $ver: $link"
@@ -70,6 +71,8 @@ function build() {
   Say "Installing build tools for container [$name]: $prepare_script"
   docker cp build-tools-in-container.sh "$name:/"
   docker cp /transient-builds/libaio-src/ "$name:/transient-builds/libaio-src/"
+  docker exec -t $name bash -c "find /transient-builds"
+  exit;
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
   docker exec -t $name bash -c "source /build-tools-in-container.sh; $prepare_script"
   # yum info libaio-devel | grep Version | head -1
