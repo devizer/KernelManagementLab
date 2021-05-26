@@ -35,16 +35,12 @@ function prepare_libaio_src() {
       cd lib*
       Say "VER $ver"
       libaio_versions="$libaio_versions $ver"
-      Say "temp libaio versions: [$libaio_versions]"
       # time make prefix=/transient-builds/libaio-dev/$ver install
       popd
   done 
-  # libaio_versions="0.3.112 0.3.111 0.3.110 0.3.108 0.3.107 0.3.106"
-  # libaio_versions=`echo $libaio_versions`
-  Say "final libaio versions: [${libaio_versions}]"
 }
 prepare_libaio_src
-# libaio_versions="0.3.112 0.3.111 0.3.110 0.3.108 0.3.107 0.3.106"
+libaio_versions="0.3.112 0.3.111 0.3.110 0.3.108 0.3.107 0.3.106"
 Say "libaio versions: [$libaio_versions]"
 exit
 
