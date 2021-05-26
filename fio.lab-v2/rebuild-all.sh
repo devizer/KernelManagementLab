@@ -160,7 +160,6 @@ function build() {
 
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
-exit;
 
 build ubuntu hirsute                                  amd64-hirsute       prepare_debian
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty        prepare_debian
