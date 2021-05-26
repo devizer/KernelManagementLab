@@ -44,6 +44,7 @@ function prepare_libaio_src() {
   Say "final libaio versions: [${libaio_versions}]"
 }
 prepare_libaio_src
+libaio_versions="0.3.112 0.3.111 0.3.110 0.3.108 0.3.107 0.3.106"
 Say "libaio versions: [$libaio_versions]"
 exit
 
