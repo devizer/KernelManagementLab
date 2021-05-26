@@ -102,7 +102,7 @@ function build() {
   options_keys=();
   
   for ver in $libaio_versions; do
-    options_commands+=("echo =========== COMPILING LIBAIO $ver =========; find /transient-builds; cat /build/in-container-libaio.sh; bash /build/in-container-libaio.sh $ver;")
+    options_commands+=("echo =========== COMPILING LIBAIO $ver =========; cat /build/in-container-libaio.sh; bash /build/in-container-libaio.sh $ver;")
     options_keys+=("-libaio-$ver") 
   done
 
