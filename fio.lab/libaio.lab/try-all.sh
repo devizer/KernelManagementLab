@@ -11,6 +11,6 @@ cat ver-links.txt | while read -r ver link; do
     rm -f $ver
     cd lib*
     Say "VER $ver"
-    time make prefix=`pwd`/usr install
+    time make prefix=/transient-builds/libaio-dev/$ver install
     popd
 done 
