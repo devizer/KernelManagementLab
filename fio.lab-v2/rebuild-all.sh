@@ -42,6 +42,7 @@ function prepare_libaio_src() {
 }
 prepare_libaio_src
 libaio_versions="0.3.112 0.3.111 0.3.110 0.3.108 0.3.107 0.3.106"
+libaio_versions="0.3.112"
 Say "libaio versions: [$libaio_versions]"
 # exit
 
@@ -93,6 +94,9 @@ function build() {
   # libaio varies only
   options_commands=("${cmd_i1};" "${cmd_r1};")
   options_keys=("-libaio-system" "-libaio-missing")
+
+  options_commands=("${cmd_r1};")
+  options_keys=("-libaio-missing")
   
   options_commands=();
   options_keys=();
@@ -189,7 +193,7 @@ build multiarch/ubuntu-debootstrap arm64-focal        arm64-focal         prepar
 build multiarch/ubuntu-debootstrap ppc64el-trusty     ppc64el-trusty      prepare_debian
 build multiarch/ubuntu-debootstrap ppc64el-xenial     ppc64el-xenial      prepare_debian
 build multiarch/ubuntu-debootstrap ppc64el-bionic     ppc64el-bionic      prepare_debian
-build multiarch/ubuntu-debootstrap ppc64el-focal      ppc64el-focal      prepare_debian
+build multiarch/ubuntu-debootstrap ppc64el-focal      ppc64el-focal       prepare_debian
 
 build multiarch/debian-debootstrap powerpc-wheezy     powerpc-wheezy      prepare_debian
 build multiarch/ubuntu-debootstrap powerpc-yakkety    powerpc-yakkety     prepare_debian

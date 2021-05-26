@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-export CFLAGS="-O2"
-export CXXFLAGS="-O2"
 if [[ -s /vars.sh ]]; then
   Say "Loading /vars.sh"
   cat /vars.sh
   source /vars.sh
 fi  
+export CFLAGS="-O2 $CFLAGS" CXXFLAGS="-O2 $CXXFLAGS" CPPFLAGS="-O2 $CPPFLAGS"
+
 echo "LIBC: $(ldd --version)"
 echo ""
 
@@ -19,8 +19,7 @@ export DEBIAN_FRONTEND=noninteractive
 cd fio* || true
 echo ""
 echo "CURRENT DIRECTORY: [$(pwd)]. Building"
-export CFLAGS="-O2" CXXFLAGS="-O2" CPPFLAGS="-O2"
-./configure --prefix=/usr/local/fio --build-static
+./configure --prefix=/usr/local/fio $FIO_CONFIGURE_OPTIONS
 cpus=$(cat /proc/cpuinfo | grep -E '^(P|p)rocessor' | wc -l)
 cpus=$((cpus + 1))
 make -j${cpus} && make install
