@@ -35,6 +35,7 @@ function prepare_libaio_src() {
       cd lib*
       Say "VER $ver"
       libaio_versions="$libaio_versions $ver"
+      Say "temp libaio versions: [$libaio_versions]"
       # time make prefix=/transient-builds/libaio-dev/$ver install
       popd
   done 
