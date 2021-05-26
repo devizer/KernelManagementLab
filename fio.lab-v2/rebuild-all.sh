@@ -98,8 +98,8 @@ function build() {
   options_commands=("${cmd_r1};")
   options_keys=("-libaio-missing")
   
-  options_commands=();
-  options_keys=();
+  # options_commands=();
+  # options_keys=();
   
   for ver in $libaio_versions; do
     options_commands+=("echo =========== COMPILING LIBAIO $ver =========; cat /build/in-container-libaio.sh; bash /build/in-container-libaio.sh $ver;")
