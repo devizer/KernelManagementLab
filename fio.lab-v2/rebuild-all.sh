@@ -91,7 +91,7 @@ function build() {
   options_commands=("${cmd_i1};" "${cmd_r1};")
   options_keys=("-libaio-system" "-libaio-missing")
   
-  for ver in libaio_versions; do
+  for ver in $libaio_versions; do
     options_commands+=("bash ../in-constaner-libaio.sh $ver")
     options_keys+=("-libaio-$ver") 
   done
