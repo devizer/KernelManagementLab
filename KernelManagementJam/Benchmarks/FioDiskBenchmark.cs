@@ -172,7 +172,9 @@ namespace KernelManagementJam.Benchmarks
                 rdr.NotifyEta += eta =>
                 {
                     CancelIfRequested();
+#if DEBUG
                     Console.WriteLine($"---=== ETA {eta} ===---");
+#endif
                 };
                 rdr.NotifyJobProgress += progress =>
                 {
@@ -184,12 +186,12 @@ namespace KernelManagementJam.Benchmarks
                     percents = Math.Min(1d, percents);
                     var totalBytes = bandwidth * elapsedSeconds; 
                     var seconds = step.Seconds;
-                    
-                    Console.WriteLine($"---=== FIO PROGRESS [{progress}] ===---");
-
-                    var @break = @"here";
-
                     step.Progress(percents, (long) totalBytes);
+                    
+#if DEBUG
+                    Console.WriteLine($"---=== FIO PROGRESS [{progress}] ===---");
+#endif
+
                 };
                 rdr.NotifyJobSummary += summary =>
                 {
@@ -199,7 +201,9 @@ namespace KernelManagementJam.Benchmarks
                     percents = Math.Min(1d, percents);
                     var totalBytes = bandwidth * elapsedSeconds; 
                     step.Progress(percents, (long) totalBytes);
+#if DEBUG
                     Console.WriteLine($"---=== FIO SUMMARY [{summary}] ===---");
+#endif
                 };
                 rdr.ReadStreamToEnd(streamReader);
             }
