@@ -70,6 +70,7 @@ function build() {
   ldd_version="${ldd_version//[$'\t\r\n']}"
   Say "Installing build tools for container [$name]: $prepare_script"
   docker cp build-tools-in-container.sh "$name:/"
+  docker exec -t $name bash -c "mkdir -p transient-builds/libaio-src"
   docker cp /transient-builds/libaio-src/ "$name:/transient-builds/libaio-src/"
   docker exec -t $name bash -c "find /transient-builds"
   exit;
