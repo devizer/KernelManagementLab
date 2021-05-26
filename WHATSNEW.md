@@ -1,3 +1,6 @@
+##### 1.22
+- Added precompiled fio for any linux arch and distribution
+
 ##### 1.21
 - Added fio as backend for disk IO benchmarks
 
