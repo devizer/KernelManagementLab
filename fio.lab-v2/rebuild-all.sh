@@ -71,7 +71,7 @@ function build() {
   Say "Installing build tools for container [$name]: $prepare_script"
   docker cp build-tools-in-container.sh "$name:/"
   docker exec -t $name bash -c "mkdir -p transient-builds/libaio-src"
-  docker cp /transient-builds/libaio-src/ "$name:/transient-builds/libaio-src/"
+  docker cp /transient-builds/libaio-src/. "$name:/transient-builds/libaio-src/"
   docker exec -t $name bash -c "find /transient-builds"
   exit;
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
