@@ -39,6 +39,7 @@ function prepare_libaio_src() {
       popd
   done 
   libaio_versions="${libaio_versions%"${libaio_versions##*[![:space:]]}"}"
+  libaio_versions=$(echo $libaio_versions | xargs echo -n)
 }
 prepare_libaio_src
 Say "libaio versions: [$libaio_versions]"
