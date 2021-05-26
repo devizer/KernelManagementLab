@@ -2,12 +2,13 @@
 cat ver-links.txt | while read -r ver link; do
     if [[ -z "$ver" ]]; then continue; fi
     echo "libaio $ver: $link"
-    work=bin/$ver
+    work=/transient-builds/libaio-src/$ver
     mkdir -p $work
     rm -rf $work/*
     pushd $work
     wget -O $ver $link
     tar xzf $ver
+    rm -f $ver
     cd lib*
     Say "VER $ver"
     time make prefix=`pwd`/usr install
