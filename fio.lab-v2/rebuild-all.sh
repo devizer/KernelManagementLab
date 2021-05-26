@@ -128,12 +128,12 @@ function build() {
      cd ..
      Say "($counter) Clean up container for [$vname${options_key}-$public_name]"
      docker exec -t $name bash -c "rm -rf /build; rm -rf /out; rm -rf /usr/local/fio"
+     Say "($counter) Copy files to container for [$vname${options_key}-$public_name]"
+     docker cp ./. "$name:/build/"
      Say "($counter) Configure options for [$options_key]"
      echo $options_cmd
      docker exec -t $name bash -c "$options_cmd"
      # building
-     Say "($counter) Copy files to container for [$vname${options_key}-$public_name]"
-     docker cp ./. "$name:/build/"
      Say "($counter) Exec BUILDING for [$vname${options_key}-$public_name]"
      mkdir -p result/$vname${options_key}-$public_name
      docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname${options_key}-$public_name/build.log
