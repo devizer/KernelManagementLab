@@ -277,7 +277,11 @@ fio-3.26-libaio-missing-i386-xenial.gz
 fio-3.26-libaio-missing-mips64el-stretch.gz
 fio-3.26-libaio-missing-ppc64el-bionic.gz
 fio-3.26-libaio-missing-ppc64el-focal.gz
-fio-3.26-libaio-missing-ppc64el-xenial.gz";
+fio-3.26-libaio-missing-ppc64el-xenial.gz
+
+fio-2.21-libaio-0.3.112-amd64-rhel6.gz
+fio-2.21-libaio-missing-amd64-rhel6.gz
+";
         
         private const string RawList_V1 = @"
 fio-2.21-amd64-bionic.gz
