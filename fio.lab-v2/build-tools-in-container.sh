@@ -63,7 +63,7 @@ echo "";
 # also depends on []zlib1g zlib1g-dev] but not included
 # removed: libncurses5-dev libncurses5 libncursesw5-dev libncursesw5
 Say "Installing build tools for [$image]"
-try-and-retry apt-get install --no-install-recommends tree libc6-dev gcc build-essential autoconf autoconf make -y -q
+try-and-retry apt-get install --no-install-recommends libc6-dev gcc build-essential autoconf autoconf make -y -q
 
 }
 

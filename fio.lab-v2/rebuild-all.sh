@@ -95,7 +95,7 @@ function build() {
   options_keys=();
   
   for ver in $libaio_versions; do
-    options_commands+=("echo =========== COMPILING LIBAIO $ver =========; tree --du -h /build; cat /build/in-constaner-libaio.sh; bash /build/in-constaner-libaio.sh $ver;")
+    options_commands+=("echo =========== COMPILING LIBAIO $ver =========; find /build; cat /build/in-constaner-libaio.sh; bash /build/in-constaner-libaio.sh $ver;")
     options_keys+=("-libaio-$ver") 
   done
 
