@@ -40,7 +40,7 @@ function prepare_libaio_src() {
       popd
   done 
   # libaio_versions=`echo $libaio_versions`
-  Say "final libaio versions: [$libaio_versions]"
+  Say "final libaio versions: [${libaio_versions}]"
 }
 prepare_libaio_src
 Say "libaio versions: [$libaio_versions]"
