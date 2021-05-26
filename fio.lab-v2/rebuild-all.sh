@@ -73,7 +73,7 @@ function build() {
   docker cp build-tools-in-container.sh "$name:/"
   docker exec -t $name bash -c "mkdir -p transient-builds/libaio-src"
   docker cp /transient-builds/libaio-src/. "$name:/transient-builds/libaio-src/"
-  docker exec -t $name bash -c "echo /transient-builds in container:; find /transient-builds"
+  # docker exec -t $name bash -c "echo /transient-builds in container:; find /transient-builds"
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
   docker exec -t $name bash -c "source /build-tools-in-container.sh; $prepare_script"
   # yum info libaio-devel | grep Version | head -1
