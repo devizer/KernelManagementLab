@@ -9,7 +9,7 @@ namespace Universe.FioStream.Binaries
     public class PersistentState
     {
 
-        private static readonly string MigrationVersion = "v1";
+        private static readonly string MigrationVersion = "v2";
 
         private static HashSet<string> Nulls = new HashSet<string>();
 
