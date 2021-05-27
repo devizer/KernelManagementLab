@@ -220,8 +220,10 @@ namespace KernelManagementJam.Benchmarks
             if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
             {
                 var err = launcher.ErrorText?.TrimEnd('\r', '\n');
-                var msg = $"Fio benchmark test failed for [{Engine}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]";
-                throw new Exception(msg);
+                var consoleMsg = $"Fio benchmark failed for [{Engine}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]";
+                Console.WriteLine(consoleMsg);
+                var uiMsg = $"Fio benchmark failed for [{Engine}]. Exit Code [{launcher.ExitCode}]. Error: [{err}].";
+                throw new Exception(uiMsg);
             }
             
             step.Complete();
