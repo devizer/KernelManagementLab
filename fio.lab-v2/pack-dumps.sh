@@ -6,3 +6,4 @@ find -type d -name dumps | while read d; do
     cp -r * $cur/DUMPS
   popd
 done
+
