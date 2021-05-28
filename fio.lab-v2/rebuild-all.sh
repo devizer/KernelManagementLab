@@ -75,7 +75,7 @@ function build() {
   docker cp /transient-builds/libaio-src/. "$name:/transient-builds/libaio-src/"
   # docker exec -t $name bash -c "echo /transient-builds in container:; find /transient-builds"
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
-  docker exec -t $name bash -c "source /build-tools-in-container.sh; $prepare_script"
+  docker exec -t $name bash -c "source /build-tools-in-container.sh; $prepare_script" | tee -a "$public_name.log"
   # yum info libaio-devel | grep Version | head -1
   libaio_version="$(docker exec -t $name apt-cache policy libaio-dev | grep andidate | awk '{print $NF}')" 
   echo "$public_name: libc $ldd_version, libaio: $libaio_version" | tee -a result/versions.txt
@@ -139,11 +139,11 @@ function build() {
      docker cp ./. "$name:/build/"
      Say "($counter) Configure options for [$options_key]"
      echo $options_cmd
-     docker exec -t $name bash -c "$options_cmd"
+     docker exec -t $name bash -c "$options_cmd" | tee -a result/$vname${options_key}-$public_name/build.log
      # building
      Say "($counter) Exec BUILDING for [$vname${options_key}-$public_name]"
      mkdir -p result/$vname${options_key}-$public_name
-     docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee result/$vname${options_key}-$public_name/build.log
+     docker exec -t $name bash -c "cd /build; cd fio-src; bash ../in-container.sh" | tee -a result/$vname${options_key}-$public_name/build.log
      Say "($counter) Grab binaries from /out to [result/$vname${options_key}-$public_name]"
      docker cp "$name:/out/." result/$vname${options_key}-$public_name/
      mkdir -p result/_benchmarks
@@ -159,7 +159,6 @@ function build() {
 }
 
 build centos 6                                        amd64-rhel6         prepare_centos
-exit;
 
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
