@@ -62,7 +62,7 @@ function build() {
   Say "Pull image [${image}:${tag}]"
   try-and-retry eval "$cmd"
   Say "Start container [$name]" # --privileged
-  docker run -d  --hostname $name --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done"
+  docker run -d  --hostname $name --name $name --rm "${image}:${tag}" bash -c "while true; do sleep 999; done" | tee -a "result/$public_name.log"
   docker exec -t $name bash -c "echo $image:$tag > /tmp/image-id"
   for script in File-IO-Benchmark Say try-and-retry; do
     docker cp /usr/local/bin/$script "$name:/usr/local/bin/"
@@ -75,7 +75,7 @@ function build() {
   docker cp /transient-builds/libaio-src/. "$name:/transient-builds/libaio-src/"
   # docker exec -t $name bash -c "echo /transient-builds in container:; find /transient-builds"
   libaio_version_cmd="bash -c \"apt-cache policy libaio-dev | grep andidate | awk '{print \\\$NF}'\""
-  docker exec -t $name bash -c "source /build-tools-in-container.sh; $prepare_script" | tee -a "$public_name.log"
+  docker exec -t $name bash -c "source /build-tools-in-container.sh; $prepare_script" | tee -a "result/$public_name.log"
   # yum info libaio-devel | grep Version | head -1
   libaio_version="$(docker exec -t $name apt-cache policy libaio-dev | grep andidate | awk '{print $NF}')" 
   echo "$public_name: libc $ldd_version, libaio: $libaio_version" | tee -a result/versions.txt
