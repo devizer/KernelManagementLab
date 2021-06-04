@@ -95,8 +95,7 @@ namespace Universe.FioStream.Tests
             Assert.True(jobSummaryResult.Bandwidth > 0, "JobSummaryResult.Bandwidth should be greater then zero");
             
             Assert.NotNull(jobSummaryCpuUsage, "FioStreamReader should provide JobSummaryCpuUsage");
-            Assert.True(jobSummaryCpuUsage.UserPercents >= 0, "jobSummaryCpuUsage.UserPercents should be greater then zero");
-            Assert.True(jobSummaryCpuUsage.KernelPercents > 0, "jobSummaryCpuUsage.KernelPercents should be greater then zero");
+            Assert.True(jobSummaryCpuUsage.UserPercents + jobSummaryCpuUsage.KernelPercents > 0, "jobSummaryCpuUsage.UserPercents + jobSummaryCpuUsage.KernelPercents should be greater then zero");
             
             
 
