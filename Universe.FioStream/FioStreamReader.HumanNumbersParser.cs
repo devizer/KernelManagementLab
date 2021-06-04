@@ -55,6 +55,22 @@ namespace Universe.FioStream
             return null;
         }
 
-        
+        double? TryParsePercents(string arg)
+        {
+            if (arg.Length > 1 && arg[arg.Length - 1] == '%')
+                arg = arg.Substring(0, arg.Length - 1);
+            
+            if (double.TryParse(arg, NumberStyles.AllowDecimalPoint, EnUs, out var ret))
+            {
+                return ret;
+            }
+            
+#if DEBUG
+            throw new ArgumentException($"Invalid per cents argument [{arg}]", arg);
+#endif
+            return null;
+
+        }
+
     }
 }

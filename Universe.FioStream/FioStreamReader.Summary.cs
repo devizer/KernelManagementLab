@@ -40,6 +40,33 @@ namespace Universe.FioStream
         }
 
 
-        
+        private JobSummaryCpuUsage ParseJobSummaryCpuUsage(string rawValue)
+        {
+            var summaryPartsRaw = rawValue.Split(new[] {',', ' '});
+            double? userPercents = null, kernelPercents = null;
+            foreach (var summaryPartRaw in summaryPartsRaw)
+            {
+                // cpu          : usr=2.11%, sys=8.62%, ctx=10571, majf=0, minf=68
+                // cpu          : usr=0.43%, sys=3.03%, ctx=6124, majf=0, minf=58
+                // cpu          : usr=0.06%, sys=0.77%, ctx=474, majf=0, minf=1
+                var pairRaw = summaryPartRaw.Split('=');
+                if (pairRaw.Length == 2)
+                {
+                    var summaryPairKey = pairRaw[0];
+                    var summaryPairValue = pairRaw[1];
+                    bool isUser = summaryPairKey.Equals("usr", IgnoreCaseComparision);
+                    bool isKernel = !isUser && summaryPairKey.Equals("sys", IgnoreCaseComparision);
+                    if (isUser) 
+                        userPercents = TryParsePercents(summaryPairValue);
+                    else if (isKernel) 
+                        kernelPercents = TryParsePercents(summaryPairValue);
+                }
+            }
+
+            if (userPercents.HasValue && kernelPercents.HasValue)
+                return new JobSummaryCpuUsage() {UserPercents = userPercents.Value, KernelPercents = kernelPercents.Value};
+
+            return null;
+        }
     }
 }

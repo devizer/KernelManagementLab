@@ -12,6 +12,7 @@ namespace Universe.FioStream
     {
         public static bool ConsolasDebug = false;
         public Action<TimeSpan> NotifyEta { get; set; }
+        public Action<JobSummaryCpuUsage> NotifyJobSummaryCpuUsage { get; set; }
         public Action<JobSummaryResult> NotifyJobSummary { get; set; }
         public Action<JobProgressInfo> NotifyJobProgress { get; set; }
 
@@ -111,11 +112,23 @@ namespace Universe.FioStream
                 if (ConsolasDebug)
                     Console.WriteLine($"SUMMARY: {value1}");
                 
-                var jobSummaryResult = ParseJobSummary(value1);
+                JobSummaryResult jobSummaryResult = ParseJobSummary(value1);
                 if (jobSummaryResult != null)
                 {
                     NotifyJobSummary?.Invoke(jobSummaryResult);
                 }
+            }
+            else if (key1.Equals("cpu", IgnoreCaseComparision))
+            {
+                if (ConsolasDebug)
+                    Console.WriteLine($"SUMMARY CPU USAGE: {value1}");
+
+                var jobSummaryCpuUsage = ParseJobSummaryCpuUsage(value1);
+                if (jobSummaryCpuUsage != null)
+                {
+                    NotifyJobSummaryCpuUsage?.Invoke(jobSummaryCpuUsage);
+                }
+
             }
         }
         

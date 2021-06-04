@@ -29,11 +29,18 @@ namespace Universe.FioStream.Tests
         public void FullFio(FioParserTestCase2 testCase)
         {
             JobSummaryResult jobSummaryResult = null;
+            JobSummaryCpuUsage jobSummaryCpuUsage = null;
             FioStreamReader reader = new FioStreamReader();
             reader.NotifyJobSummary += result =>
             {
                 Console.WriteLine($"JobSummaryResult: {result}");
                 jobSummaryResult = result;
+            };
+
+            reader.NotifyJobSummaryCpuUsage += cpuUsage =>
+            {
+                Console.WriteLine($"JobSummaryCpuUsage: {cpuUsage}");
+                jobSummaryCpuUsage = cpuUsage;
             };
 
             reader.NotifyEta += eta =>
@@ -86,6 +93,12 @@ namespace Universe.FioStream.Tests
             Assert.NotNull(jobSummaryResult, "FioStreamReader should provide JobSummaryResult");
             Assert.True(jobSummaryResult.Iops > 0, "JobSummaryResult.Iops should be greater then zero");
             Assert.True(jobSummaryResult.Bandwidth > 0, "JobSummaryResult.Bandwidth should be greater then zero");
+            
+            Assert.NotNull(jobSummaryCpuUsage, "FioStreamReader should provide JobSummaryCpuUsage");
+            Assert.True(jobSummaryCpuUsage.UserPercents >= 0, "jobSummaryCpuUsage.UserPercents should be greater then zero");
+            Assert.True(jobSummaryCpuUsage.KernelPercents > 0, "jobSummaryCpuUsage.KernelPercents should be greater then zero");
+            
+            
 
             // Progress
             if (/*testCase.Version != "2.11" && */testCase.Version != "3.0")
