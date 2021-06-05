@@ -6,7 +6,7 @@ using Tests;
 
 namespace Universe.FioStream.Tests
 {
-    public class FioStreamReaderTests : NUnitTestsBase
+    public class FioStreamReaderTests /*: NUnitTestsBase*/
     {
         [SetUp]
         public void SetUp() => FioStreamReader.ConsolasDebug = true;
@@ -95,7 +95,8 @@ namespace Universe.FioStream.Tests
             Assert.True(jobSummaryResult.Bandwidth > 0, "JobSummaryResult.Bandwidth should be greater then zero");
             
             Assert.NotNull(jobSummaryCpuUsage, "FioStreamReader should provide JobSummaryCpuUsage");
-            Assert.True(jobSummaryCpuUsage.UserPercents + jobSummaryCpuUsage.KernelPercents > 0, "jobSummaryCpuUsage.UserPercents + jobSummaryCpuUsage.KernelPercents should be greater then zero");
+            if (testCase.Version != "3.0")
+                Assert.True(jobSummaryCpuUsage.UserPercents + jobSummaryCpuUsage.KernelPercents > 0, "jobSummaryCpuUsage.UserPercents + jobSummaryCpuUsage.KernelPercents should be greater then zero");
             
             
 

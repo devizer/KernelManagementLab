@@ -22,7 +22,7 @@ namespace Universe.FioStream
 
         private static double? TryParseBandwidth(string arg)
         {
-            if (arg.EndsWith("/s", IgnoreCaseComparision) && arg.Length >= 3)
+            if (arg.Length >= 3 && arg.EndsWith("/s", IgnoreCaseComparision))
                 arg = arg.Substring(0, arg.Length - 2);
 
             return TryParseHumanDouble(arg);
@@ -36,7 +36,7 @@ namespace Universe.FioStream
             long scale = 1;
             foreach (var suffix in suffixes)
             {
-                if (arg.EndsWith(suffix.Suffix, IgnoreCaseComparision) && arg.Length >= suffix.SuffixLength + 1)
+                if (arg.Length >= suffix.SuffixLength + 1 && arg.EndsWith(suffix.Suffix, IgnoreCaseComparision))
                 {
                     arg = arg.Substring(0, arg.Length - suffix.Suffix.Length);
                     scale = suffix.Scale;

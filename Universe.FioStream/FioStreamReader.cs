@@ -53,32 +53,31 @@ namespace Universe.FioStream
             if (key1.Equals("Jobs", IgnoreCaseComparision))
             {
                 // PROGRESS
-                string[] brakets = ReadBracketSections(value1).ToArray();
+                string[] brackets = ReadBracketSections(value1).ToArray();
+                var bracketsLength = brackets.Length;
                 if (ConsolasDebug)
-                    if (brakets.Length > 0)
-                        Console.WriteLine($"PROGRESS ({brakets.Length} brakets): {string.Join("; ",brakets.Select(x => $"{{{x}}}").ToArray())}");
+                    if (bracketsLength > 0)
+                        Console.WriteLine($"PROGRESS ({bracketsLength} brakets): {string.Join("; ",brackets.Select(x => $"{{{x}}}").ToArray())}");
                 
-                if (brakets.Length >= 3)
+                if (bracketsLength >= 3)
                 {
-                    long? eta = ParseEta(brakets[brakets.Length - 1]);
+                    long? eta = ParseEta(brackets[bracketsLength - 1]);
                     if (eta != null)
                     {
-                        var notifyEta = NotifyEta;
-                        if (notifyEta != null)
-                            notifyEta(TimeSpan.FromSeconds(eta.Value));
+                        NotifyEta?.Invoke(TimeSpan.FromSeconds(eta.Value));
                     }
                     
-                    if (brakets.Length >= 5)
+                    if (bracketsLength >= 5)
                     {
                         JobProgressInfo jobProgressInfo = new JobProgressInfo
                         {
-                            PerCents = ParsePerCents(brakets[brakets.Length - 4]),
-                            Stage = TryParseProgressStage(brakets[brakets.Length - 5]),
+                            PerCents = ParsePerCents(brackets[bracketsLength - 4]),
+                            Stage = TryParseProgressStage(brackets[bracketsLength - 5]),
                             Eta = eta.HasValue ? TimeSpan.FromSeconds(eta.Value) : (TimeSpan?) null,
                         };
                         
                         // IOPS
-                        bool isIopsOk = TryParseProgressIops(brakets[brakets.Length - 2],out var iopsRead,out var iopsWrite); 
+                        bool isIopsOk = TryParseProgressIops(brackets[bracketsLength - 2],out var iopsRead,out var iopsWrite); 
                         if (isIopsOk)
                         {
                             jobProgressInfo.ReadIops = iopsRead;
@@ -86,7 +85,7 @@ namespace Universe.FioStream
                         }
                         
                         // Bandwidth
-                        bool isBandwidthOk = TryParseProgressBandwidth(brakets[brakets.Length - 3], out var bandwidthRead, out var bandwidthWrite);
+                        bool isBandwidthOk = TryParseProgressBandwidth(brackets[bracketsLength - 3], out var bandwidthRead, out var bandwidthWrite);
                         if (isBandwidthOk)
                         {
                             jobProgressInfo.ReadBandwidth = bandwidthRead;

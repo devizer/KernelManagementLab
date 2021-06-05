@@ -177,7 +177,7 @@ namespace Universe.FioStream
         {
             // if (arg.Equals("eta --", IgnoreCaseComparision)) return null;
 
-            if (arg.StartsWith("eta ", IgnoreCaseComparision) && arg.Length > 4)
+            if (arg.Length > 4 && arg.StartsWith("eta ", IgnoreCaseComparision))
             {
                 arg = arg.Substring(4);
                 if (arg == "--") return null;
