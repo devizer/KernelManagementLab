@@ -133,7 +133,7 @@ namespace Universe.FioStream
             }
         }
         
-#if !NET20 && !NET35
+#if !NET20 && !NET35 && !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         static bool IsJobs(string arg)
