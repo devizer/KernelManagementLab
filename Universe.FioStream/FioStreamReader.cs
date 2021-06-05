@@ -59,7 +59,7 @@ namespace Universe.FioStream
                 var bracketsLength = brackets.Length;
                 if (ConsolasDebug)
                     if (bracketsLength > 0)
-                        Console.WriteLine($"PROGRESS ({bracketsLength} brakets): {string.Join("; ",brackets.Select(x => $"{{{x}}}").ToArray())}");
+                        Console.WriteLine($"PROGRESS ({bracketsLength} brackets): {string.Join("; ",brackets.Select(x => $"{{{x}}}").ToArray())}");
                 
                 if (bracketsLength >= 3)
                 {
