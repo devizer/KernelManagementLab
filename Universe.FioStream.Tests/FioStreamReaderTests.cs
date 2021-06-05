@@ -28,24 +28,27 @@ namespace Universe.FioStream.Tests
         [Test, TestCaseSource(typeof(FioParserTestCase2), nameof(FioParserTestCase2.GetAll_V3))]
         public void FullFio(FioParserTestCase2 testCase)
         {
+            const bool DEBUG = false;
+            FioStreamReader.ConsolasDebug = DEBUG;
+
             JobSummaryResult jobSummaryResult = null;
             JobSummaryCpuUsage jobSummaryCpuUsage = null;
             FioStreamReader reader = new FioStreamReader();
             reader.NotifyJobSummary += result =>
             {
-                Console.WriteLine($"JobSummaryResult: {result}");
+                if (DEBUG) Console.WriteLine($"JobSummaryResult: {result}");
                 jobSummaryResult = result;
             };
 
             reader.NotifyJobSummaryCpuUsage += cpuUsage =>
             {
-                Console.WriteLine($"JobSummaryCpuUsage: {cpuUsage}");
+                if (DEBUG) Console.WriteLine($"JobSummaryCpuUsage: {cpuUsage}");
                 jobSummaryCpuUsage = cpuUsage;
             };
 
             reader.NotifyEta += eta =>
             {
-                Console.WriteLine($"ETA: {eta}");
+                if (DEBUG) Console.WriteLine($"ETA: {eta}");
             };
 
             bool isFirst = true;
@@ -53,7 +56,7 @@ namespace Universe.FioStream.Tests
             bool? hasIops = null, hasBandwidth = null;
             reader.NotifyJobProgress += jobProgress =>
             {
-                Console.WriteLine($"JobProgress: {jobProgress}");
+                if (DEBUG) Console.WriteLine($"JobProgress: {jobProgress}");
                 if (testCase.Version != "2.2.12")
                     Assert.IsTrue(jobProgress.Eta.HasValue, "ETA is not null");
                 
