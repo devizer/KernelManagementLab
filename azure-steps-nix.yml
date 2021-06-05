@@ -67,8 +67,9 @@ steps:
       cat /etc/environment
       Say "env"
       printenv | sort
+      rm -rf ~/.cache/fio || true
     condition: or(eq(variables['OS'], 'Linux'), eq(variables['OS'], 'OSX')) 
-    displayName: 'system info (bash)'
+    displayName: 'system info (bash) and clear fio cache'
 
   - script: |
       time list-packages
