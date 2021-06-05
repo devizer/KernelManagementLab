@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Universe.FioStream
@@ -50,7 +51,8 @@ namespace Universe.FioStream
             var key1 = line.Substring(0, colonCharIndex);
             var value1 = line.Substring(colonCharIndex + 1);
             key1 = key1.Trim();
-            if (key1.Equals("Jobs", IgnoreCaseComparision))
+            // if (key1.Equals("Jobs", IgnoreCaseComparision))
+            if (IsJobs(key1))
             {
                 // PROGRESS
                 string[] brackets = ReadBracketSections(value1).ToArray();
@@ -130,6 +132,20 @@ namespace Universe.FioStream
 
             }
         }
+        
+#if !NET20 && !NET35
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        static bool IsJobs(string arg)
+        {
+            char c;
+            return arg.Length == 4
+                   && ((c = arg[0]) == 'J' || c == 'j')
+                   && ((c = arg[1]) == 'O' || c == 'o')
+                   && ((c = arg[2]) == 'B' || c == 'b')
+                   && ((c = arg[3]) == 'S' || c == 's');
+        }
+
         
     }
 }
