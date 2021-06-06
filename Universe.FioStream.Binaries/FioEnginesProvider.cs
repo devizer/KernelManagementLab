@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Universe.FioStream.Binaries
 {
@@ -85,14 +86,14 @@ namespace Universe.FioStream.Binaries
             Stopwatch sw = Stopwatch.StartNew();
             List<Candidates.Info> candidates = Candidates.GetCandidates();
             candidates.Insert(0, new Candidates.Info() { Name = "fio", Url = "skip://downloading"});
-            Logger?.LogInfo($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
-            foreach (var bin in candidates)
+
+            void TryCandidate(Candidates.Info bin)
             {
-                if (TargetEngines.Length == candidatesByEngines.Count) break;
-                
+                if (TargetEngines.Length == candidatesByEngines.Count) return;
+
                 FioFeatures features = FeaturesCache[bin];
                 var engines = features.EngineList;
-                if (engines == null) continue;
+                if (engines == null) return;
                 var version = features.Version;
                 if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
                     if (!engines.Contains("windowsaio"))
@@ -118,19 +119,23 @@ namespace Universe.FioStream.Binaries
                                 Features = features
                             };
                         }
+
                         {
                             var todo = $"{(TargetEngines.Length - candidatesByEngines.Count)}";
-                            Logger?.LogInfo($"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
+                            Logger?.LogInfo(
+                                $"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
                         }
                     }
                 }
             }
+            
+            var threadsByCpuCount = new[] {4, 8, 12};
+            var threads = threadsByCpuCount[Math.Min(threadsByCpuCount.Length, Environment.ProcessorCount) - 1];
+            ParallelOptions parallelOptions = new ParallelOptions() {MaxDegreeOfParallelism = threads,};
+            Logger?.LogInfo($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu using up to {threads} threads");
+            Parallel.ForEach(candidates, parallelOptions, TryCandidate);
 
             var nl = Environment.NewLine;
-/*
-            var joined = string.Join(nl, candidatesByEngines.Select(x => $"{x.Key}: {x.Value.Name}").ToArray());
-            Logger?.LogInfo($"{nl}{nl}Found {candidatesByEngines.Count} supported engines: for engines{nl}{joined}");
-*/
             var enginesResult = this.GetEngines();
             var joined = string.Join(nl, enginesResult.Select(x => $" - {x}").ToArray());
             Logger?.LogInfo($"Found {enginesResult.Count} supported engines: {nl}{joined}");
