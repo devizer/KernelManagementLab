@@ -113,18 +113,23 @@ namespace Universe.FioStream.Binaries
                         candidatesByEngines[engine] = bin;
                         lock (SyncState)
                         {
-                            TheState[engine] = new EngineInternals()
+                            // check if already found
+                            TheState.TryGetValue(engine, out var found);
+                            if (found == null || (version != null && found.Version != null && version.CompareTo(found.Version) > 0))
                             {
-                                Executable = features.Executable,
-                                Version = version,
-                                Features = features
-                            };
+                                TheState[engine] = new EngineInternals()
+                                {
+                                    Executable = features.Executable,
+                                    Version = version,
+                                    Features = features
+                                };
+                            }
                         }
 
                         {
                             var todo = $"{(TargetEngines.Length - candidatesByEngines.Count)}";
-                            Logger?.LogInfo(
-                                $"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
+                            var progress = $"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}";
+                            Logger?.LogInfo(progress);
                         }
                     }
                 }
