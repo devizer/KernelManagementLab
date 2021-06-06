@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -81,7 +82,7 @@ namespace Universe.FioStream.Binaries
             
             Logger?.LogInfo($"Discovery Supported FIO Engines on {CrossInfo.ThePlatform}: {rawTargetEngines}");
 
-            Dictionary<string, Candidates.Info> candidatesByEngines = new Dictionary<string, Candidates.Info>();
+            ConcurrentDictionary<string, Candidates.Info> candidatesByEngines = new ConcurrentDictionary<string, Candidates.Info>();
 
             Stopwatch sw = Stopwatch.StartNew();
             List<Candidates.Info> candidates = Candidates.GetCandidates();
