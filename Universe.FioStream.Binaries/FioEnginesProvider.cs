@@ -57,6 +57,7 @@ namespace Universe.FioStream.Binaries
                 IdEngine = pair.Key,
                 Executable = pair.Value.Executable,
                 Version = pair.Value.Version,
+                LogDetails = pair.Value.LogDetails,
             })
                 .OrderBy(x => IndexOfEngine(x.IdEngine))
                 .ToList();
@@ -67,10 +68,12 @@ namespace Universe.FioStream.Binaries
             public string IdEngine { get; set; }
             public string Executable { get; set; }
             public Version Version { get; set; }
+            
+            public string LogDetails { get; set; }
 
             public override string ToString()
             {
-                return $"{IdEngine}-v{Version}: {Executable}";
+                return $"{IdEngine}-v{Version}: {Executable}{(string.IsNullOrEmpty(LogDetails) ? "" : ", " + LogDetails)}";
             }
         }
 
@@ -79,6 +82,7 @@ namespace Universe.FioStream.Binaries
             public string Executable;
             public Version Version;
             public FioFeatures Features;
+            public string LogDetails { get; set; }
         }
 
         public void Discovery()
@@ -127,7 +131,8 @@ namespace Universe.FioStream.Binaries
                                 {
                                     Executable = features.Executable,
                                     Version = version,
-                                    Features = features
+                                    Features = features,
+                                    LogDetails = $"at {sw.Elapsed.TotalSeconds:0.0} sec"
                                 };
                                 
                                 {
@@ -151,7 +156,7 @@ namespace Universe.FioStream.Binaries
 
             // Show Recap
             var nl = Environment.NewLine;
-            var enginesResult = this.GetEngines();
+            List<Engine> enginesResult = this.GetEngines();
             var joined = string.Join(nl, enginesResult.Select(x => $" - {x}").ToArray());
             Logger?.LogInfo($"Found {enginesResult.Count} supported fio engines in {sw.Elapsed.TotalSeconds:0.0} seconds: {nl}{joined}");
         }
