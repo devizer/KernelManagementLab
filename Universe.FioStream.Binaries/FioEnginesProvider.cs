@@ -83,7 +83,7 @@ namespace Universe.FioStream.Binaries
 
         public void Discovery()
         {
-            Logger?.LogInfo($"Discovering supported FIO Engines on {CrossInfo.ThePlatform}: [{string.Join(",", TargetEngines)}");
+            Logger?.LogInfo($"Discovering supported FIO Engines on {CrossInfo.ThePlatform}: [{string.Join(",", TargetEngines)}]");
 
             ConcurrentDictionary<string, Candidates.Info> candidatesByEngines = new ConcurrentDictionary<string, Candidates.Info>();
 
@@ -153,7 +153,7 @@ namespace Universe.FioStream.Binaries
             var nl = Environment.NewLine;
             var enginesResult = this.GetEngines();
             var joined = string.Join(nl, enginesResult.Select(x => $" - {x}").ToArray());
-            Logger?.LogInfo($"Found {enginesResult.Count} supported engines in {sw.Elapsed.TotalSeconds:0.0} seconds: {nl}{joined}");
+            Logger?.LogInfo($"Found {enginesResult.Count} supported fio engines in {sw.Elapsed.TotalSeconds:0.0} seconds: {nl}{joined}");
         }
 
     }
