@@ -106,6 +106,7 @@ namespace Universe.FioStream.Binaries
 
                 foreach (var engine in toFind)
                 {
+                    if (TargetEngines.Length == candidatesByEngines.Count) return;
                     Logger?.LogInfo($"Checking engine [{engine}] for [{bin.Name}]");
                     bool isEngineSupported = features.IsEngineSupported(engine);
                     if (isEngineSupported)
