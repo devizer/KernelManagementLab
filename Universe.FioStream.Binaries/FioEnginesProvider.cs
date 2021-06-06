@@ -153,7 +153,7 @@ namespace Universe.FioStream.Binaries
             var nl = Environment.NewLine;
             var enginesResult = this.GetEngines();
             var joined = string.Join(nl, enginesResult.Select(x => $" - {x}").ToArray());
-            Logger?.LogInfo($"Found {enginesResult.Count} supported engines in {sw.Elapsed.TotalSeconds:0.0}: {nl}{joined}");
+            Logger?.LogInfo($"Found {enginesResult.Count} supported engines in {sw.Elapsed.TotalSeconds:0.0} seconds: {nl}{joined}");
         }
 
     }
