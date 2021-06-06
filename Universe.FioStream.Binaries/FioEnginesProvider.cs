@@ -14,11 +14,24 @@ namespace Universe.FioStream.Binaries
 
         private Dictionary<string, EngineInternals> TheState = new Dictionary<string, EngineInternals>();
         private readonly object SyncState = new object();
-        private string[] TargetEngines;
+        private string[] TargetEngines => TargetEnginesByPlatform.Value;
 
         private const string LinuxEngines = "io_uring,libaio,posixaio,pvsync2,pvsync,vsync,psync,sync,mmap";
         private const string WindowsEngines = "windowsaio,psync,sync,mmap";
         private const string OsxEngines = "posixaio,pvsync2,pvsync,vsync,psync,sync,mmap";
+
+        private static Lazy<string[]> TargetEnginesByPlatform = new Lazy<string[]>(() =>
+        {
+            string rawTargetEngines;
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+                rawTargetEngines = WindowsEngines;
+            else if (CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX)
+                rawTargetEngines = OsxEngines;
+            else
+                rawTargetEngines = LinuxEngines;
+
+            return rawTargetEngines.Split(',');
+        });
         
         public FioEnginesProvider(FioFeaturesCache featuresCache, IPicoLogger logger)
         {
@@ -70,17 +83,7 @@ namespace Universe.FioStream.Binaries
 
         public void Discovery()
         {
-            string rawTargetEngines;
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
-                rawTargetEngines = WindowsEngines;
-            else if (CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX)
-                rawTargetEngines = OsxEngines;
-            else
-                rawTargetEngines = LinuxEngines;
-
-            TargetEngines = rawTargetEngines.Split(','); 
-            
-            Logger?.LogInfo($"Discovery Supported FIO Engines on {CrossInfo.ThePlatform}: {rawTargetEngines}");
+            Logger?.LogInfo($"Discovering supported FIO Engines on {CrossInfo.ThePlatform}: [{string.Join(",", TargetEngines)}");
 
             ConcurrentDictionary<string, Candidates.Info> candidatesByEngines = new ConcurrentDictionary<string, Candidates.Info>();
 
@@ -88,9 +91,11 @@ namespace Universe.FioStream.Binaries
             List<Candidates.Info> candidates = Candidates.GetCandidates();
             candidates.Insert(0, new Candidates.Info() { Name = "fio", Url = "skip://downloading"});
 
+            bool IsAllIsFound() => TargetEngines.Length == candidatesByEngines.Count; 
+
             void TryCandidate(Candidates.Info bin)
             {
-                if (TargetEngines.Length == candidatesByEngines.Count) return;
+                if (IsAllIsFound()) return;
 
                 FioFeatures features = FeaturesCache[bin];
                 var engines = features.EngineList;
@@ -106,7 +111,7 @@ namespace Universe.FioStream.Binaries
 
                 foreach (var engine in toFind)
                 {
-                    if (TargetEngines.Length == candidatesByEngines.Count) return;
+                    if (IsAllIsFound()) return;
                     Logger?.LogInfo($"Checking engine [{engine}] for [{bin.Name}]");
                     bool isEngineSupported = features.IsEngineSupported(engine);
                     if (isEngineSupported)
@@ -136,6 +141,7 @@ namespace Universe.FioStream.Binaries
                 }
             }
             
+            // Run In Parallel
             var threadsByCpuCount = new[] {4, 8, 12};
             var threads = threadsByCpuCount[Math.Min(threadsByCpuCount.Length, Environment.ProcessorCount) - 1];
             // threads = 1;
@@ -143,6 +149,7 @@ namespace Universe.FioStream.Binaries
             Logger?.LogInfo($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu using up to {threads} threads");
             Parallel.ForEach(candidates, parallelOptions, TryCandidate);
 
+            // Show Recap
             var nl = Environment.NewLine;
             var enginesResult = this.GetEngines();
             var joined = string.Join(nl, enginesResult.Select(x => $" - {x}").ToArray());
