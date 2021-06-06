@@ -123,13 +123,13 @@ namespace Universe.FioStream.Binaries
                                     Version = version,
                                     Features = features
                                 };
+                                
+                                {
+                                    var todo = $"{(TargetEngines.Length - candidatesByEngines.Count)}";
+                                    var progress = $"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}";
+                                    Logger?.LogInfo(progress);
+                                }
                             }
-                        }
-
-                        {
-                            var todo = $"{(TargetEngines.Length - candidatesByEngines.Count)}";
-                            var progress = $"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}";
-                            Logger?.LogInfo(progress);
                         }
                     }
                 }
