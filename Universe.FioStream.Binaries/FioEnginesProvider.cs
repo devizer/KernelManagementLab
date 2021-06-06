@@ -132,6 +132,7 @@ namespace Universe.FioStream.Binaries
             
             var threadsByCpuCount = new[] {4, 8, 12};
             var threads = threadsByCpuCount[Math.Min(threadsByCpuCount.Length, Environment.ProcessorCount) - 1];
+            threads = 1;
             ParallelOptions parallelOptions = new ParallelOptions() {MaxDegreeOfParallelism = threads,};
             Logger?.LogInfo($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu using up to {threads} threads");
             Parallel.ForEach(candidates, parallelOptions, TryCandidate);
