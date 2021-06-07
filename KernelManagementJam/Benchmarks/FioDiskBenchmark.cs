@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Universe.Benchmark.DiskBench;
+using Universe.CpuUsage;
 using Universe.DiskBench;
 using Universe.FioStream;
 using Universe.FioStream.Binaries;
@@ -166,6 +167,7 @@ namespace KernelManagementJam.Benchmarks
                           $" --readwrite={command}";
             
             Stopwatch startAt = null;
+            JobSummaryCpuUsage summaryCpuUsage = null;
             void Handler(StreamReader streamReader)
             {
                 FioStreamReader rdr = new FioStreamReader();
@@ -192,6 +194,10 @@ namespace KernelManagementJam.Benchmarks
                     Console.WriteLine($"---=== FIO PROGRESS [{progress}] ===---");
 #endif
 
+                };
+                rdr.NotifyJobSummaryCpuUsage += cpuUsage =>
+                {
+                    summaryCpuUsage = cpuUsage;
                 };
                 rdr.NotifyJobSummary += summary =>
                 {
@@ -227,6 +233,14 @@ namespace KernelManagementJam.Benchmarks
             }
             
             step.Complete();
+            if (step.Seconds.HasValue && summaryCpuUsage != null)
+            {
+                double stepSeconds = step.Seconds.Value;
+                step.CpuUsage = new CpuUsage(
+                    (long) (summaryCpuUsage.UserPercents / 100d * stepSeconds * 1000d),
+                    (long) (summaryCpuUsage.KernelPercents / 100d * stepSeconds * 1000d)
+                );
+            }
 
         }
 
