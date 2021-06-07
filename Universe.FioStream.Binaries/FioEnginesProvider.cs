@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,11 +14,24 @@ namespace Universe.FioStream.Binaries
 
         private Dictionary<string, EngineInternals> TheState = new Dictionary<string, EngineInternals>();
         private readonly object SyncState = new object();
-        private string[] TargetEngines;
+        private string[] TargetEngines => TargetEnginesByPlatform.Value;
 
         private const string LinuxEngines = "io_uring,libaio,posixaio,pvsync2,pvsync,vsync,psync,sync,mmap";
         private const string WindowsEngines = "windowsaio,psync,sync,mmap";
         private const string OsxEngines = "posixaio,pvsync2,pvsync,vsync,psync,sync,mmap";
+
+        private static Lazy<string[]> TargetEnginesByPlatform = new Lazy<string[]>(() =>
+        {
+            string rawTargetEngines;
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+                rawTargetEngines = WindowsEngines;
+            else if (CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX)
+                rawTargetEngines = OsxEngines;
+            else
+                rawTargetEngines = LinuxEngines;
+
+            return rawTargetEngines.Split(',');
+        });
         
         public FioEnginesProvider(FioFeaturesCache featuresCache, IPicoLogger logger)
         {
@@ -43,6 +57,7 @@ namespace Universe.FioStream.Binaries
                 IdEngine = pair.Key,
                 Executable = pair.Value.Executable,
                 Version = pair.Value.Version,
+                LogDetails = pair.Value.LogDetails,
             })
                 .OrderBy(x => IndexOfEngine(x.IdEngine))
                 .ToList();
@@ -53,10 +68,12 @@ namespace Universe.FioStream.Binaries
             public string IdEngine { get; set; }
             public string Executable { get; set; }
             public Version Version { get; set; }
+            
+            public string LogDetails { get; set; }
 
             public override string ToString()
             {
-                return $"{IdEngine}-v{Version}: {Executable}";
+                return $"{IdEngine}-v{Version}: {Executable}{(string.IsNullOrEmpty(LogDetails) ? "" : ", " + LogDetails)}";
             }
         }
 
@@ -65,31 +82,24 @@ namespace Universe.FioStream.Binaries
             public string Executable;
             public Version Version;
             public FioFeatures Features;
+            public string LogDetails { get; set; }
         }
 
         public void Discovery()
         {
-            string rawTargetEngines;
-            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
-                rawTargetEngines = WindowsEngines;
-            else if (CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX)
-                rawTargetEngines = OsxEngines;
-            else
-                rawTargetEngines = LinuxEngines;
+            Logger?.LogInfo($"Discovering supported FIO Engines on {CrossInfo.ThePlatform}: [{string.Join(",", TargetEngines)}]");
 
-            TargetEngines = rawTargetEngines.Split(','); 
-            
-            Logger?.LogInfo($"Discovery Supported FIO Engines on {CrossInfo.ThePlatform}: {rawTargetEngines}");
-
-            Dictionary<string, Candidates.Info> candidatesByEngines = new Dictionary<string, Candidates.Info>();
+            ConcurrentDictionary<string, Candidates.Info> candidatesByEngines = new ConcurrentDictionary<string, Candidates.Info>();
 
             Stopwatch sw = Stopwatch.StartNew();
             List<Candidates.Info> candidates = Candidates.GetCandidates();
             candidates.Insert(0, new Candidates.Info() { Name = "fio", Url = "skip://downloading"});
 
+            bool IsAllIsFound() => TargetEngines.Length == candidatesByEngines.Count; 
+
             void TryCandidate(Candidates.Info bin)
             {
-                if (TargetEngines.Length == candidatesByEngines.Count) return;
+                if (IsAllIsFound()) return;
 
                 FioFeatures features = FeaturesCache[bin];
                 var engines = features.EngineList;
@@ -105,6 +115,7 @@ namespace Universe.FioStream.Binaries
 
                 foreach (var engine in toFind)
                 {
+                    if (IsAllIsFound()) return;
                     Logger?.LogInfo($"Checking engine [{engine}] for [{bin.Name}]");
                     bool isEngineSupported = features.IsEngineSupported(engine);
                     if (isEngineSupported)
@@ -112,33 +123,42 @@ namespace Universe.FioStream.Binaries
                         candidatesByEngines[engine] = bin;
                         lock (SyncState)
                         {
-                            TheState[engine] = new EngineInternals()
+                            // check if already found
+                            TheState.TryGetValue(engine, out var found);
+                            if (found == null || (version != null && found.Version != null && version.CompareTo(found.Version) > 0))
                             {
-                                Executable = features.Executable,
-                                Version = version,
-                                Features = features
-                            };
-                        }
-
-                        {
-                            var todo = $"{(TargetEngines.Length - candidatesByEngines.Count)}";
-                            Logger?.LogInfo(
-                                $"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}");
+                                TheState[engine] = new EngineInternals()
+                                {
+                                    Executable = features.Executable,
+                                    Version = version,
+                                    Features = features,
+                                    LogDetails = $"at {sw.Elapsed.TotalSeconds:0.0} sec"
+                                };
+                                
+                                {
+                                    var todo = $"{(TargetEngines.Length - candidatesByEngines.Count)}";
+                                    var progress = $"{candidatesByEngines.Count}/{TargetEngines.Length} {sw.Elapsed} {engine}: {bin.Name}";
+                                    Logger?.LogInfo(progress);
+                                }
+                            }
                         }
                     }
                 }
             }
             
+            // Run In Parallel
             var threadsByCpuCount = new[] {4, 8, 12};
             var threads = threadsByCpuCount[Math.Min(threadsByCpuCount.Length, Environment.ProcessorCount) - 1];
+            // threads = 1;
             ParallelOptions parallelOptions = new ParallelOptions() {MaxDegreeOfParallelism = threads,};
             Logger?.LogInfo($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu using up to {threads} threads");
             Parallel.ForEach(candidates, parallelOptions, TryCandidate);
 
+            // Show Recap
             var nl = Environment.NewLine;
-            var enginesResult = this.GetEngines();
+            List<Engine> enginesResult = this.GetEngines();
             var joined = string.Join(nl, enginesResult.Select(x => $" - {x}").ToArray());
-            Logger?.LogInfo($"Found {enginesResult.Count} supported engines: {nl}{joined}");
+            Logger?.LogInfo($"Found {enginesResult.Count} supported fio engines in {sw.Elapsed.TotalSeconds:0.0} seconds: {nl}{joined}");
         }
 
     }
