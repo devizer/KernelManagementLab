@@ -81,14 +81,27 @@ namespace Universe.Dashboard.DAL
         public long WorkingSetSize { get; set; }
         public string O_Direct { get; set; } // "" (disabled) | "True" (present) | "False" (absent)
         public double? Allocate { get; set; }
+        public StepCpuUsage AllocateCpuUsage { get; set; }
         public double? SeqRead { get; set; }
+        public StepCpuUsage SeqReadCpuUsage { get; set; }
         public double? SeqWrite { get; set; }
+        public StepCpuUsage SeqWriteCpuUsage { get; set; }
         public int RandomAccessBlockSize { get; set; }
         public int ThreadsNumber { get; set; }
         public double? RandRead1T { get; set; } 
+        public StepCpuUsage RandRead1TCpuUsage { get; set; }
         public double? RandWrite1T { get; set; } 
+        public StepCpuUsage RandWrite1TCpuUsage { get; set; }
         public double? RandReadNT { get; set; } 
-        public double? RandWriteNT { get; set; } 
+        public StepCpuUsage RandReadNTCpuUsage { get; set; }
+        public double? RandWriteNT { get; set; }
+        public StepCpuUsage RandWriteNTCpuUsage { get; set; }
+
+        public class StepCpuUsage
+        {
+            public double User { get; set; }
+            public double Kernel { get; set; }
+        }
     }
 
     public static class DiskBenchmarkDataAccessExtensions
@@ -98,6 +111,21 @@ namespace Universe.Dashboard.DAL
             // TODO: Build history row on SaveChanges and store as additional column
             ProgressStep GetStep(ProgressStepHistoryColumn column) => benchmark.Report.Steps.FirstOrDefault(step => step.Column == column);
             double? GetSpeed(ProgressStepHistoryColumn column) => GetStep(column)?.AvgBytesPerSecond;
+
+            DiskBenchmarkHistoryRow.StepCpuUsage GetStepCpuUsage(ProgressStepHistoryColumn column)
+            {
+                var step = GetStep(column);
+                if (step != null)
+                {
+                    double? userUsage = step.CpuUsage?.UserUsage.TotalSeconds / step.Seconds;
+                    double? kernelUsage = step.CpuUsage?.KernelUsage.TotalSeconds / step.Seconds;
+                    return userUsage.HasValue && kernelUsage.HasValue
+                        ? new DiskBenchmarkHistoryRow.StepCpuUsage() {User = userUsage.Value, Kernel = kernelUsage.Value}
+                        : null;
+                }
+
+                return null;
+            }
             
             return new DiskBenchmarkHistoryRow()
             {
@@ -111,13 +139,19 @@ namespace Universe.Dashboard.DAL
                 O_Direct = Convert.ToString(GetStep(ProgressStepHistoryColumn.CheckODirect)?.Value),
                 Allocate = GetSpeed(ProgressStepHistoryColumn.Allocate),
                 SeqRead = GetSpeed(ProgressStepHistoryColumn.SeqRead),
+                SeqReadCpuUsage = GetStepCpuUsage(ProgressStepHistoryColumn.SeqRead), 
                 SeqWrite = GetSpeed(ProgressStepHistoryColumn.SeqWrite),
+                SeqWriteCpuUsage = GetStepCpuUsage(ProgressStepHistoryColumn.SeqWrite),
                 RandomAccessBlockSize = benchmark.Args.RandomAccessBlockSize,
                 ThreadsNumber = benchmark.Args.ThreadsNumber,
                 RandRead1T = GetSpeed(ProgressStepHistoryColumn.RandRead1T),
+                RandRead1TCpuUsage = GetStepCpuUsage(ProgressStepHistoryColumn.RandRead1T),
                 RandWrite1T = GetSpeed(ProgressStepHistoryColumn.RandWrite1T),
+                RandWrite1TCpuUsage = GetStepCpuUsage(ProgressStepHistoryColumn.RandWrite1T),
                 RandReadNT = GetSpeed(ProgressStepHistoryColumn.RandReadNT),
+                RandReadNTCpuUsage = GetStepCpuUsage(ProgressStepHistoryColumn.RandReadNT),
                 RandWriteNT = GetSpeed(ProgressStepHistoryColumn.RandWriteNT),
+                RandWriteNTCpuUsage = GetStepCpuUsage(ProgressStepHistoryColumn.RandWriteNT),
             };
         }
     }
