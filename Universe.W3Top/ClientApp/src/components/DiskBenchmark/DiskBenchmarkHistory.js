@@ -8,6 +8,7 @@ import * as Helper from "../../Helper";
 
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import {DiskBenchmarkResult} from "./DiskBenchmarkResult";
 
 const renderODirectIcon = o_Direct => {
     if (o_Direct === "True") return <FontAwesomeIcon style={{color:"#555"}} icon={faCheckDouble} />;
@@ -122,6 +123,8 @@ export class DiskBenchmarkHistory extends React.Component {
                         Helper.toConsole("Benchmark Selected", selectedRow);
                         if (this.props.onBenchmarkSelected)
                             this.props.onBenchmarkSelected(selectedRow);
+                        
+                        
                     },
                     style: {
                         background: token === this.state.selected ? '#ADDDFF' : '',
@@ -277,6 +280,10 @@ export class DiskBenchmarkHistory extends React.Component {
                     className="-striped -highlight"
                 />
                 <br />
+            <DiskBenchmarkResult
+                opened={this.state.selectedRow != null && process.env.NODE_ENV !== 'production'}
+                selectedRow={this.state.selectedRow}
+            />
             </div>
         );
     }
