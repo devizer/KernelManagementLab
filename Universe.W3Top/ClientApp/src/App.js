@@ -23,6 +23,7 @@ import PopperLab from "./components/Popper-Lab"
 import { ProcessListContainerV1 } from "./components/ProcessList/ProcessListContainerV1"
 import {RowsFiltersComponent} from "./components/ProcessList/RowsFiltersComponent";
 import {ColumnChooserComponent} from "./components/ProcessList/ColumnChooserComponent";
+import {DiskBenchmarkResult} from "./components/DiskBenchmark/DiskBenchmarkResult";
 
 
 
@@ -70,6 +71,7 @@ export default class App extends Component {
         DiskBenchmarkDialog.displayName = "DiskBenchmarkDialog";
         
         return [
+            DiskBenchmarkResult,
             NetChartContainer_V2,
             BlockChartContainer_V2,
             MNav,

@@ -138,6 +138,7 @@ namespace Universe.Dashboard.DAL
                 WorkingSetSize = benchmark.Args.WorkingSetSize,
                 O_Direct = Convert.ToString(GetStep(ProgressStepHistoryColumn.CheckODirect)?.Value),
                 Allocate = GetSpeed(ProgressStepHistoryColumn.Allocate),
+                AllocateCpuUsage = GetStepCpuUsage(ProgressStepHistoryColumn.Allocate),
                 SeqRead = GetSpeed(ProgressStepHistoryColumn.SeqRead),
                 SeqReadCpuUsage = GetStepCpuUsage(ProgressStepHistoryColumn.SeqRead), 
                 SeqWrite = GetSpeed(ProgressStepHistoryColumn.SeqWrite),
