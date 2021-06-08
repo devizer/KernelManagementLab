@@ -43,6 +43,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import {Help} from "@material-ui/icons";
 const WizardIcon = (size=34,color='#333') => (<WizardIconSvg style={{width: size,height:size,fill:color,strokeWidth:'6px',stroke:color }} />);
 
 var Color = require("color");
@@ -176,6 +177,7 @@ const getNeedHideDialog = (props) => {
 
 function DiskBenchmarkDialog(props) {
     const [open, setOpen] = React.useState(!getNeedHideDialog(props));
+    const [historySelectedToken, setHistorySelectedToken] = React.useState(null);
     const [activeStep, setActiveStep] = React.useState(0);
     const [disks, setDisks] = React.useState(null);
     const [engines, setEngines] = React.useState(null);
@@ -382,6 +384,7 @@ function DiskBenchmarkDialog(props) {
         setSelectedDisk(null);
         setActiveStep(0);
         setProgress(EMPTY_PROGRESS);
+        setHistorySelectedToken(null);
         setOpen(true);
     }
 
@@ -542,8 +545,13 @@ function DiskBenchmarkDialog(props) {
         );
 
 
-        
 
+    const handleBenchmarkSelected = selectedObject => {
+        const token = selectedObject ? selectedObject.token : null;
+        Helper.toConsole('onBenchmarkSelected', token);
+        setHistorySelectedToken(token);
+    }
+    
     return (
         <div>
             
@@ -551,7 +559,11 @@ function DiskBenchmarkDialog(props) {
                 {WizardIcon(34,'white')} Start disk benchmark
             </Button>
             
-            <DiskBenchmarkHistory trigger={historyTrigger}/>
+            <DiskBenchmarkHistory 
+                trigger={historyTrigger}
+                onBenchmarkSelected={handleBenchmarkSelected}
+                selected={historySelectedToken}
+            />
 
             <Popper id={errorId} open={errorOpened} anchorEl={errorAnchor} placement="bottom">
                 <React.Fragment>

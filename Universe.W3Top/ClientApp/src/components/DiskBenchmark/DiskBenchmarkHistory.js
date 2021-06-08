@@ -24,17 +24,27 @@ export class DiskBenchmarkHistory extends React.Component {
         super(props);
 
         this.tryBuildDiskHistorySource = this.tryBuildDiskHistorySource.bind(this);
+        
+        // on first render always null
+        const idSelected = props.selected;
 
         this.state = {
             history: this.tryBuildDiskHistorySource(),
+            selected: null, // token
+            selectedRow: null,
         };
-
     }
     
     componentDidMount() {
         this.fetchDiskHistorySource();
     }
     
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.selected !== this.props.selected) {
+            this.setState({selected:this.props.selected});
+        }
+    }
+
     historyProjection(history) {
         history.forEach(bechmark => {
             let mo = MomentFormat(bechmark.createdAt);
@@ -93,9 +103,36 @@ export class DiskBenchmarkHistory extends React.Component {
         let sizeCell = row => <React.Fragment>{row.value ? Helper.Common.formatBytes(row.value) : ""}</React.Fragment>;
         let speedCell = row => <React.Fragment>{row.value ? `${Helper.Common.formatBytes(row.value, 2)}/s` : ""}</React.Fragment>;
         const defaultGreyCell = <span style={{color:"grey"}}>default</span>;
-        let engineCell = row => <React.Fragment>{row.original.engine ? <>{row.original.engine} <span style={{color:"grey"}}>{row.original.engineVersion}</span></> : defaultGreyCell}</React.Fragment>
+        let engineCell = row => <React.Fragment>{row.original.engine ? <>{row.original.engine} <span style={{opacity:0.55}}>{row.original.engineVersion}</span></> : defaultGreyCell}</React.Fragment>
         let rightAlign = {textAlign: "right" };
         let centerAlign = {textAlign: "center" };
+
+        // use token instead of index
+        const selectedRowHandler = (state, rowInfo, column) => {
+            if (rowInfo && rowInfo.row) {
+                const token = rowInfo && rowInfo.original ? rowInfo.original.token : null;
+                const isSelected = token === this.state.selected;  
+                return {
+                    onClick: (e) => {
+                        const selectedRow = rowInfo.original;
+                        this.setState({
+                            selected: token,
+                            selectedRow: selectedRow,
+                        });
+                        Helper.toConsole("Benchmark Selected", selectedRow);
+                        if (this.props.onBenchmarkSelected)
+                            this.props.onBenchmarkSelected(selectedRow);
+                    },
+                    style: {
+                        background: token === this.state.selected ? '#ADDDFF' : '',
+                        color: token === this.state.selected ? '' : '',
+                        cursor: "pointer",
+                    }
+                }
+            } else {
+                return {}
+            }
+        }
 
 
         return (
@@ -104,44 +141,14 @@ export class DiskBenchmarkHistory extends React.Component {
                     data={this.state.history}
                     showPagination={false}
                     defaultPageSize={pageSize}
+                    getTrProps={selectedRowHandler}
                     pageSizeOptions={[pageSize]}
                     pageSize={pageSize}
                     noDataText="history is empty"
                     getNoDataProps={() => {return {style:{color:"gray", marginTop:30}}}}
-                    // pivotBy={["createdDate"]}
-                    // defaultExpanded={{2:true}}
-                    // pivotDefaults={}
-                    // defaultExpanded={{0:true,}}
-                    
-                    /*
-/ Special
-  pivot: false,
-  // Turns this column into a special column for specifying pivot position in your column definitions.
-  // The `pivotDefaults` options will be applied on top of this column's options.
-  // It will also let you specify rendering of the header (and header group if this special column is placed in the `columns` option of another column)
-  expander: false,
-  // Turns this column into a special column for specifying expander position and options in your column definitions.
-  // The `expanderDefaults` options will be applied on top of this column's options.
-  // It will also let you specify rendering of the header (and header group if this special column is placed in the `columns` option of another column) and
-  // the rendering of the expander itself via the `Expander` property
-                     
-                     */
 
                     columns={
                         [
-/*
-                            {
-                                Header: "Groups",
-                                columns: [
-                                    {
-                                        Header: "Created At",
-                                        accessor: "createdDate",
-                                        width: 180,
-                                    }
-                                ],
-                                show: false,
-                            },
-*/
                             {
                                 
                                 Header: "Disk Benchmark History",
