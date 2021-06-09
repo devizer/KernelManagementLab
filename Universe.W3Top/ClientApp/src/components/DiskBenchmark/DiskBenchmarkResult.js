@@ -112,15 +112,16 @@ function ActionPanel(xPosition, yPosition, action, bandwidth, blockSize, cpuUsag
     const left = widths.parameters + xPosition * (widths.panel + widths.panelSpace);
     const top = yPosition * (heights.panel + heights.panelSpace);
     const panelStyles = {...styles.panel, left: left, top: top};
-    const metricsStyle={fontSize:14};
+    const metricsStyle={fontSize:16};
     const unitsStyle={...metricsStyle, opacity:"0.55"};
-    const iops = blockSize ? bandwidth / blockSize : undefined;
+    const iopsRaw = blockSize ? bandwidth / blockSize : undefined;
+    const iops = Helper.Common.formatStructured(iopsRaw, 1, "");
     const bw = Helper.Common.formatStructured(bandwidth, 2, "B/s");
     return (
         <React.Fragment>
             <div style={panelStyles}>
-                {Metrics(iops, "right", 0, widths.iops, metricsStyle)}
-                {Metrics("K", "left", widths.iops, widths.iops + widths.iopsScale, unitsStyle)}
+                {Metrics(iops.value, "right", 0, widths.iops, metricsStyle)}
+                {Metrics(iops.units, "left", widths.iops, widths.iops + widths.iopsScale, unitsStyle)}
                 {Metrics(bw.value, "right", widths.iops + widths.iopsScale, widths.iops + widths.iopsScale + widths.bandwidth, metricsStyle)}
                 {Metrics(bw.units, "left", widths.iops + widths.iopsScale + widths.bandwidth, widths.iops + widths.iopsScale + widths.bandwidth + widths.bandwidthUnits, unitsStyle)}
                 <div style={styles.verticalAction}>
@@ -164,6 +165,7 @@ export class DiskBenchmarkResult extends React.Component {
     render() {
         // Helper.toConsole(`[DiskBenchmarkResult::render] this.state.opened=${this.state.opened}`);
         const full = this.state.selectedRow ? this.state.selectedRow : {};
+        const blockSize = full.randomAccessBlockSize;
         return (
             <Dialog open={this.state.opened} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={false} maxWidth={"md"}>
                 <DialogContent style={{textAlign: "center"}} >
@@ -171,10 +173,10 @@ export class DiskBenchmarkResult extends React.Component {
                         {ActionPanel(1, 0, "Allocate", full.allocate, null, full.allocateCpuUsage)}
                         {ActionPanel(0, 1, "Read", full.seqRead, null, full.seqReadCpuUsage)}
                         {ActionPanel(1, 1, "Write", full.seqWrite, null, full.seqWriteCpuUsage)}
-                        {ActionPanel(0, 2, "Read 4K")}
-                        {ActionPanel(1, 2, "Write 4K")}
-                        {ActionPanel(0, 3, "Read 4K")}
-                        {ActionPanel(1, 3, "Write 4K")}
+                        {ActionPanel(0, 2, "Read 4K", full.randRead1T, blockSize, full.randRead1TCpuUsage)}
+                        {ActionPanel(1, 2, "Write 4K", full.randWrite1T, blockSize, full.randWrite1TCpuUsage)}
+                        {ActionPanel(0, 3, "Read 4K", full.randReadNT, blockSize, full.randReadNTCpuUsage)}
+                        {ActionPanel(1, 3, "Write 4K", full.randWriteNT, blockSize, full.randWriteNTCpuUsage)}
                         {ParametersPanel(1,"SEQ")}
                         {ParametersPanel(2,"RND 1Q")}
                         {ParametersPanel(3,"RND 64Q")}
