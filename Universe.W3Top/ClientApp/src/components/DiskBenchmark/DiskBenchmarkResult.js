@@ -24,11 +24,11 @@ const widths = {
 };
 widths.panel = 22 + 78 + 4 + 116 + 24 + 4 + 116; // 364
 widths.panelSpace = 22;
-widths.parameters = 11;
+widths.parameters = 24;
 
 const heights = {
     panel: 72,
-    panelSpace: 16,
+    panelSpace: 12,
     metrics: 38, 
 };
 
@@ -77,25 +77,36 @@ const styles = {
         display: "block",
         width: heights.panel,
         height: widths.parameters,
-        lineHeight: `${widths.parameters + 2}px`,
-        verticalAlign: "middle",
+        lineHeight: `${widths.parameters + 4}px`,
+        verticalAlign: "bottom",
         border: "none",
         textAlign: "center",
         fontSize: "13px", fontWeight: 'bold', letterSpacing: "0.5px",
-        backgroundColor: "", // #CDAFCE 
+        backgroundColor: "#CDAFCE", // #CDAFCE 
         color: "black",
     },
 }
 
 function ParametersPanel(yPosition, parameters) {
-    const left = widths.parameters - 48;
-    const top = 31 + yPosition * (heights.panel + heights.panelSpace);
+    const left = widths.parameters - 56;
+    const top = 24 + yPosition * (heights.panel + heights.panelSpace);
     const panelStyles = {...styles.verticalParameters, left: left, top: top};
     return (
         <React.Fragment>
             <div style={panelStyles}>{parameters}</div>
         </React.Fragment>
     );
+}
+function CpuUsagePanel(cpuUsage) {
+    let format = num => (Math.round(num * 1000) / 10).toLocaleString(undefined, {useGrouping: true});
+    const style={
+        position: "absolute",
+        left: 0, width: widths.panel - widths.operation, top: heights.metrics, height: heights.metrics,
+        textAlign: "center",
+        fontSize: 10,
+        // border: "1px solid darkgreen",
+    };
+    return <div style={style}>cpu: {format(cpuUsage.user)}% user + {format(cpuUsage.kernel)}% kernel</div>;
 }
 function Metrics(text, align, left, right, style) {
     style={...style,
@@ -104,7 +115,7 @@ function Metrics(text, align, left, right, style) {
         verticalAlign: "bottom",
         lineHeight: `${heights.metrics+6}px`,
         textAlign: align,
-        border: "1px solid darkred",
+        // border: "1px solid darkred",
     };
     return <div style={style}>{text}</div>;
 }
@@ -113,17 +124,19 @@ function ActionPanel(xPosition, yPosition, action, bandwidth, blockSize, cpuUsag
     const top = yPosition * (heights.panel + heights.panelSpace);
     const panelStyles = {...styles.panel, left: left, top: top};
     const metricsStyle={fontSize:16};
-    const unitsStyle={...metricsStyle, opacity:"0.55"};
+    const unitsStyle={fontSize:14, opacity:"0.55"};
     const iopsRaw = blockSize ? bandwidth / blockSize : undefined;
     const iops = Helper.Common.formatStructured(iopsRaw, 1, "");
+    const iopsUnits = iops.units ? `${iops.units} IOPS` : ""; 
     const bw = Helper.Common.formatStructured(bandwidth, 2, "B/s");
     return (
         <React.Fragment>
             <div style={panelStyles}>
-                {Metrics(iops.value, "right", 0, widths.iops, metricsStyle)}
-                {Metrics(iops.units, "left", widths.iops, widths.iops + widths.iopsScale, unitsStyle)}
+                {Metrics(bandwidth ? iops.value : "", "right", 0, widths.iops, metricsStyle)}
+                {Metrics(iopsUnits, "left", 4 + widths.iops, 4 + widths.iops + 60, unitsStyle)}
                 {Metrics(bw.value, "right", widths.iops + widths.iopsScale, widths.iops + widths.iopsScale + widths.bandwidth, metricsStyle)}
-                {Metrics(bw.units, "left", widths.iops + widths.iopsScale + widths.bandwidth, widths.iops + widths.iopsScale + widths.bandwidth + widths.bandwidthUnits, unitsStyle)}
+                {Metrics(bw.units, "left", 4 + widths.iops + widths.iopsScale + widths.bandwidth, widths.iops + widths.iopsScale + widths.bandwidth + widths.bandwidthUnits, unitsStyle)}
+                {cpuUsage && CpuUsagePanel(cpuUsage)}
                 <div style={styles.verticalAction}>
                     {action}
                 </div>
@@ -178,8 +191,8 @@ export class DiskBenchmarkResult extends React.Component {
                         {ActionPanel(0, 3, "Read 4K", full.randReadNT, blockSize, full.randReadNTCpuUsage)}
                         {ActionPanel(1, 3, "Write 4K", full.randWriteNT, blockSize, full.randWriteNTCpuUsage)}
                         {ParametersPanel(1,"SEQ")}
-                        {ParametersPanel(2,"RND 1Q")}
-                        {ParametersPanel(3,"RND 64Q")}
+                        {ParametersPanel(2,<span>RND 1Q</span>)}
+                        {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
                     </div>
                     <div style={{wordBreak:"break-all", wordWrap: "break-word", display: "none"}}>
                         {JSON.stringify(this.state.selectedRow)}
