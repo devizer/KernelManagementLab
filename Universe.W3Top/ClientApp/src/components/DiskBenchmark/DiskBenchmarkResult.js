@@ -74,7 +74,7 @@ const styles = {
         // bottom: 0px, 
         width: heights.panel,
         height: widths.operation,
-        lineHeight: `${widths.operation}px`,
+        lineHeight: `${widths.operation + 2}px`,
         verticalAlign: "middle",
         border: "none",
         textAlign: "center",
@@ -90,7 +90,7 @@ const styles = {
         display: "block",
         width: heights.panel,
         height: widths.parameters,
-        lineHeight: `${widths.parameters + 4}px`,
+        lineHeight: `${widths.parameters}px`,
         verticalAlign: "bottom",
         border: "none",
         textAlign: "center",
@@ -159,13 +159,18 @@ function ActionPanel(xPosition, yPosition, action, bandwidth, blockSize, cpuUsag
     const metricsStyle={fontSize:16};
     const unitsStyle={fontSize:14, opacity:"0.55"};
     const iopsRaw = blockSize ? bandwidth / blockSize : undefined;
-    const iops = Helper.Common.formatStructured(iopsRaw, 1, "");
-    const iopsUnits = iops.units ? `${iops.units} IOPS` : ""; 
+    let iops = Helper.Common.formatStructured(iopsRaw, 1, "");
+    let iopsUnits = iopsRaw ? `${iops.units} IOPS` : "";
+    iopsUnits = bandwidth && blockSize ? "IOPS" : "";
+    let iops2 = "";
+    let format = (num,tens) => (Math.round(num * tens) / tens).toLocaleString(undefined, {useGrouping: true});
+    if (iopsRaw > 0) iops2 = format(iopsRaw, 1);
+    if (iopsRaw > 0 && iopsRaw < 299) iops2 = format(iopsRaw, 10);
     const bw = Helper.Common.formatStructured(bandwidth, 2, "B/s");
     return (
         <React.Fragment>
             <div style={panelStyles}>
-                {Metrics(bandwidth ? iops.value : "", "right", 0, widths.iops, metricsStyle)}
+                {Metrics(bandwidth ? /*iops.value*/ iops2 : "", "right", 0, widths.iops, metricsStyle)}
                 {Metrics(iopsUnits, "left", 4 + widths.iops, 4 + widths.iops + 60, unitsStyle)}
                 {Metrics(bw.value, "right", widths.iops + widths.iopsScale, widths.iops + widths.iopsScale + widths.bandwidth, metricsStyle)}
                 {Metrics(bw.units, "left", 4 + widths.iops + widths.iopsScale + widths.bandwidth, widths.iops + widths.iopsScale + widths.bandwidth + widths.bandwidthUnits, unitsStyle)}
