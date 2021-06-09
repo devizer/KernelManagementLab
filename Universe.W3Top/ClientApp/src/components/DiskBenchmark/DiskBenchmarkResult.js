@@ -97,14 +97,32 @@ function ParametersPanel(yPosition, parameters) {
         </React.Fragment>
     );
 }
-function ActionPanel(xPosition, yPosition, action) {
+function Metrics(text, align, left, right, style) {
+    style={...style,
+        position: "absolute",
+        left: left, width: right-left+1, top: 0, height: heights.metrics, 
+        verticalAlign: "bottom",
+        lineHeight: `${heights.metrics+6}px`,
+        textAlign: align,
+        border: "1px solid darkred",
+    };
+    return <div style={style}>{text}</div>;
+}
+function ActionPanel(xPosition, yPosition, action, bandwidth, blockSize, cpuUsage) {
     const left = widths.parameters + xPosition * (widths.panel + widths.panelSpace);
     const top = yPosition * (heights.panel + heights.panelSpace);
     const panelStyles = {...styles.panel, left: left, top: top};
+    const metricsStyle={fontSize:14};
+    const unitsStyle={...metricsStyle, opacity:"0.55"};
+    const iops = blockSize ? bandwidth / blockSize : undefined;
+    const bw = Helper.Common.formatStructured(bandwidth, 2, "B/s");
     return (
         <React.Fragment>
             <div style={panelStyles}>
-                <br/>under contruction
+                {Metrics(iops, "right", 0, widths.iops, metricsStyle)}
+                {Metrics("K", "left", widths.iops, widths.iops + widths.iopsScale, unitsStyle)}
+                {Metrics(bw.value, "right", widths.iops + widths.iopsScale, widths.iops + widths.iopsScale + widths.bandwidth, metricsStyle)}
+                {Metrics(bw.units, "left", widths.iops + widths.iopsScale + widths.bandwidth, widths.iops + widths.iopsScale + widths.bandwidth + widths.bandwidthUnits, unitsStyle)}
                 <div style={styles.verticalAction}>
                     {action}
                 </div>
@@ -145,14 +163,14 @@ export class DiskBenchmarkResult extends React.Component {
 
     render() {
         // Helper.toConsole(`[DiskBenchmarkResult::render] this.state.opened=${this.state.opened}`);
-        
+        const full = this.state.selectedRow ? this.state.selectedRow : {};
         return (
             <Dialog open={this.state.opened} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={false} maxWidth={"md"}>
                 <DialogContent style={{textAlign: "center"}} >
                     <div style={styles.main}>
-                        {ActionPanel(1, 0, "Allocate")}
-                        {ActionPanel(0, 1, "Read")}
-                        {ActionPanel(1, 1, "Write")}
+                        {ActionPanel(1, 0, "Allocate", full.allocate, null, full.allocateCpuUsage)}
+                        {ActionPanel(0, 1, "Read", full.seqRead, null, full.seqReadCpuUsage)}
+                        {ActionPanel(1, 1, "Write", full.seqWrite, null, full.seqWriteCpuUsage)}
                         {ActionPanel(0, 2, "Read 4K")}
                         {ActionPanel(1, 2, "Write 4K")}
                         {ActionPanel(0, 3, "Read 4K")}
@@ -164,20 +182,6 @@ export class DiskBenchmarkResult extends React.Component {
                     <div style={{wordBreak:"break-all", wordWrap: "break-word", display: "none"}}>
                         {JSON.stringify(this.state.selectedRow)}
                     </div>
-{/*
-                    <br/>
-                    a<br/>
-                    aa<br/>
-                    aaa<br/>
-                    aaaaa<br/>
-                    aaaaaa<br/>
-                    aaaaaa<br/>
-                    aaaaaaa<br/>
-                    aaaaaaaa<br/>
-                    aaaaaaaaaa<br/>
-                    aaaaaaaaaaa<br/>
-                    aaaaaaaaaaaa
-*/}
                 </DialogContent>
             </Dialog>
         );

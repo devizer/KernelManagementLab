@@ -103,8 +103,10 @@ export class Common {
     static htmlEncode(str) {
         return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
-
-    static formatAnything(number, fractionCount = 2, spacer = ' ', unit = "B") {
+    
+    static formatStructured(number, fractionCount = 2, unit = "B") {
+        if (number === null || number === undefined)
+            return {value: null, units: null};
 
         let scale = 1;
         if (fractionCount === 1) scale = 10.0;
@@ -113,25 +115,35 @@ export class Common {
         else if (fractionCount > 0) for(let i=0; i<fractionCount; i++) scale=scale*10.0;
 
         let format = num => (Math.round(num * scale) / scale).toLocaleString(undefined, {useGrouping: true});
-        if (number === null || number === undefined)
-            return null;
-
         if (number === 0)
-            return "0";
+            return {value: "0", units: null};
 
         if (number < 1499)
-            return `${format(number)}${spacer}${unit}`;
+            // return `${}${spacer}${unit}`;
+            return {value: format(number), units: `${unit}`};
 
         if (number < 1499999)
-            return `${format(number / 1024.0)}${spacer}K${unit}`;
+            // return `${format(number / 1024.0)}${spacer}K${unit}`;
+            return {value: format(number / 1024.0), units: `K${unit}`};
 
         if (number < 1499999999)
-            return `${format(number / 1024.0 / 1024.0)}${spacer}M${unit}`;
+            // return `${format(number / 1024.0 / 1024.0)}${spacer}M${unit}`;
+            return {value: format(number / 1024.0 / 1024.0), units: `M${unit}`};
 
         if (number < 1499999999999)
-            return `${format(number / 1024.0 / 1024.0 / 1024.0)}${spacer}G${unit}`;
+            // return `${format(number / 1024.0 / 1024.0 / 1024.0)}${spacer}G${unit}`;
+            return {value: format(number / 1024.0 / 1024.0 / 1024.0), units: `G${unit}`};
 
-        return `${format(number / 1024.0 / 1024.0 / 1024.0 / 1024.0)}${spacer}T${unit}`;
+        return {value: format(number / 1024.0 / 1024.0 / 1024.0 / 1024.0), units: `T${unit}`};
+        
+    }
+
+    static formatAnything(number, fractionCount = 2, spacer = ' ', unit = "B") {
+        const structured = Common.formatStructured(number, fractionCount, unit);
+        if (structured.units)
+            return `${structured.value}${spacer}${structured.units}`;
+        else 
+            return structured.value;
     }
     
     static formatBytes(number, fractionCount) {
