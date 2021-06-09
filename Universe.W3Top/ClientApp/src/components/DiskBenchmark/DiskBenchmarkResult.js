@@ -179,6 +179,8 @@ export class DiskBenchmarkResult extends React.Component {
         // Helper.toConsole(`[DiskBenchmarkResult::render] this.state.opened=${this.state.opened}`);
         const full = this.state.selectedRow ? this.state.selectedRow : {};
         const blockSize = full.randomAccessBlockSize;
+        let textBlockSize = `${blockSize / 1024}K`;
+        if (blockSize >= 512 * 1024) textBlockSize = `${blockSize / 1024.0 / 1024}M`;
         return (
             <Dialog open={this.state.opened} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={false} maxWidth={"md"}>
                 <DialogContent style={{textAlign: "center"}} >
@@ -186,10 +188,10 @@ export class DiskBenchmarkResult extends React.Component {
                         {ActionPanel(1, 0, "Allocate", full.allocate, null, full.allocateCpuUsage)}
                         {ActionPanel(0, 1, "Read", full.seqRead, null, full.seqReadCpuUsage)}
                         {ActionPanel(1, 1, "Write", full.seqWrite, null, full.seqWriteCpuUsage)}
-                        {ActionPanel(0, 2, "Read 4K", full.randRead1T, blockSize, full.randRead1TCpuUsage)}
-                        {ActionPanel(1, 2, "Write 4K", full.randWrite1T, blockSize, full.randWrite1TCpuUsage)}
-                        {ActionPanel(0, 3, "Read 4K", full.randReadNT, blockSize, full.randReadNTCpuUsage)}
-                        {ActionPanel(1, 3, "Write 4K", full.randWriteNT, blockSize, full.randWriteNTCpuUsage)}
+                        {ActionPanel(0, 2, `Read ${textBlockSize}`, full.randRead1T, blockSize, full.randRead1TCpuUsage)}
+                        {ActionPanel(1, 2, `Write ${textBlockSize}`, full.randWrite1T, blockSize, full.randWrite1TCpuUsage)}
+                        {ActionPanel(0, 3, `Read ${textBlockSize}`, full.randReadNT, blockSize, full.randReadNTCpuUsage)}
+                        {ActionPanel(1, 3, `Write ${textBlockSize}`, full.randWriteNT, blockSize, full.randWriteNTCpuUsage)}
                         {ParametersPanel(1,"SEQ")}
                         {ParametersPanel(2,<span>RND 1Q</span>)}
                         {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
