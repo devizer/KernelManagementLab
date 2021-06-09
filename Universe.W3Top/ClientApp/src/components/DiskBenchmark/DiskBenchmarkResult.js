@@ -24,7 +24,7 @@ const widths = {
 };
 widths.panel = 22 + 78 + 4 + 116 + 24 + 4 + 116; // 364
 widths.panelSpace = 22;
-widths.parameters = 20;
+widths.parameters = 11;
 
 const heights = {
     panel: 72,
@@ -71,7 +71,7 @@ const styles = {
     },
     verticalParameters: {
         position: "absolute",
-        zIndex: 9999,
+        // zIndex: 9999,
         transform: "translate(0px, 0px) rotate(-90deg)",
         whiteSpace: "nowrap",
         display: "block",
@@ -82,14 +82,14 @@ const styles = {
         border: "none",
         textAlign: "center",
         fontSize: "13px", fontWeight: 'bold', letterSpacing: "0.5px",
-        backgroundColor: "", // #CDAFCE
+        backgroundColor: "", // #CDAFCE 
         color: "black",
     },
 }
 
 function ParametersPanel(yPosition, parameters) {
-    const left = -28;
-    const top = 26 + yPosition * (heights.panel + heights.panelSpace);
+    const left = widths.parameters - 48;
+    const top = 31 + yPosition * (heights.panel + heights.panelSpace);
     const panelStyles = {...styles.verticalParameters, left: left, top: top};
     return (
         <React.Fragment>
