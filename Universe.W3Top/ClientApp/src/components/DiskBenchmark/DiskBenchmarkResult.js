@@ -23,8 +23,8 @@ const widths = {
     operation: 22, // vertical
 };
 widths.panel = 22 + 78 + 4 + 116 + 24 + 4 + 116; // 364
-widths.panelSpace = 16;
-widths.options = 30;
+widths.panelSpace = 22;
+widths.parameters = 20;
 
 const heights = {
     panel: 72,
@@ -34,7 +34,7 @@ const heights = {
 
 const styles = {
     main: {
-        width: widths.panel * 2 + widths.panelSpace + widths.options,
+        width: widths.panel * 2 + widths.panelSpace + widths.parameters,
         height: 4 * heights.panel + 3 * heights.panelSpace,
         position: "relative",
         // border: "1px solid green",
@@ -76,20 +76,20 @@ const styles = {
         whiteSpace: "nowrap",
         display: "block",
         width: heights.panel,
-        height: widths.options,
-        lineHeight: `${widths.options+2}px`,
+        height: widths.parameters,
+        lineHeight: `${widths.parameters + 2}px`,
         verticalAlign: "middle",
         border: "none",
         textAlign: "center",
         fontSize: "13px", fontWeight: 'bold', letterSpacing: "0.5px",
-        backgroundColor: "",
+        backgroundColor: "", // #CDAFCE
         color: "black",
     },
 }
 
 function ParametersPanel(yPosition, parameters) {
-    const left = -30;
-    const top = 22 + yPosition * (heights.panel + heights.panelSpace);
+    const left = -28;
+    const top = 26 + yPosition * (heights.panel + heights.panelSpace);
     const panelStyles = {...styles.verticalParameters, left: left, top: top};
     return (
         <React.Fragment>
@@ -98,7 +98,7 @@ function ParametersPanel(yPosition, parameters) {
     );
 }
 function ActionPanel(xPosition, yPosition, action) {
-    const left = widths.options + xPosition * (widths.panel + widths.panelSpace);
+    const left = widths.parameters + xPosition * (widths.panel + widths.panelSpace);
     const top = yPosition * (heights.panel + heights.panelSpace);
     const panelStyles = {...styles.panel, left: left, top: top};
     return (
