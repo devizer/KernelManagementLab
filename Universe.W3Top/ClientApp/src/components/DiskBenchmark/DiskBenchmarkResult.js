@@ -49,6 +49,19 @@ const styles = {
         border: "1px solid #B7B9BF",
         color: "black",
     },
+    details: {
+        position: "absolute",
+        width: widths.panel,
+        height: heights.panel,
+        margin: 0,
+        padding: 0,
+        fontSize: 9,
+        left: widths.parameters,
+        textAlign: "left",
+        // backgroundColor: "#EBECEF",
+        // border: "1px solid #B7B9BF",
+        // color: "black",
+    },
     verticalAction: {
         position: "absolute",
         zIndex: 9999,
@@ -87,6 +100,25 @@ const styles = {
     },
 }
 
+function Details({row}) {
+    const full = row ? row : {};
+    const theRootSpan = _ => (<span style={{opacity:0.55}}>&nbsp;(the root)</span>);
+    return <React.Fragment>
+        <div style={styles.details}>
+            <div>Disk Benchmark</div>
+            <div style={{fontSize: 16}}>
+                {full.mountPath}{full.mountPath === '/' ? theRootSpan() : ""}
+                {full.fileSystem ? `, ${full.fileSystem}` : ""}
+            </div>
+            <div>
+                engine: {full.engine ? full.engine : "default"},{" "}
+                {full.engineVersion ? `fio: v${full.engineVersion}, ` : ""}
+                file system: {full.fileSystem},
+                working set: {Helper.Common.formatAnything(full.workingSetSize, 0, ' ', 'B')}
+            </div>
+        </div>
+    </React.Fragment>
+}
 function ParametersPanel(yPosition, parameters) {
     const left = widths.parameters - 56;
     const top = 24 + yPosition * (heights.panel + heights.panelSpace);
@@ -108,6 +140,7 @@ function CpuUsagePanel(cpuUsage) {
     };
     return <div style={style}>cpu: {format(cpuUsage.user)}% user + {format(cpuUsage.kernel)}% kernel</div>;
 }
+
 function Metrics(text, align, left, right, style) {
     style={...style,
         position: "absolute",
@@ -185,6 +218,7 @@ export class DiskBenchmarkResult extends React.Component {
             <Dialog open={this.state.opened} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={false} maxWidth={"md"}>
                 <DialogContent style={{textAlign: "center"}} >
                     <div style={styles.main}>
+                        <Details row={this.state.selectedRow} />
                         {ActionPanel(1, 0, "Allocate", full.allocate, null, full.allocateCpuUsage)}
                         {ActionPanel(0, 1, "Read", full.seqRead, null, full.seqReadCpuUsage)}
                         {ActionPanel(1, 1, "Write", full.seqWrite, null, full.seqWriteCpuUsage)}

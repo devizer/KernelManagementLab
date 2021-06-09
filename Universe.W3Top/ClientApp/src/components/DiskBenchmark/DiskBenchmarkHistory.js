@@ -281,7 +281,7 @@ export class DiskBenchmarkHistory extends React.Component {
                 />
                 <br />
             <DiskBenchmarkResult
-                opened={this.state.selectedRow != null && process.env.NODE_ENV !== 'production'}
+                opened={this.state.selectedRow != null}
                 selectedRow={this.state.selectedRow}
             />
             </div>
