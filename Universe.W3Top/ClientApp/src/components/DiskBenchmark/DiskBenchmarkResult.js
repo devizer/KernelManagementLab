@@ -23,7 +23,7 @@ const widths = {
     operation: 22, // vertical
 };
 widths.panel = Object.values(widths).reduce((sum, current) => sum + current);
-widths.panelSpace = 22;
+widths.panelSpace = 10;
 widths.parameters = 24;
 
 const heights = {
@@ -65,7 +65,7 @@ const styles = {
     verticalAction: {
         position: "absolute",
         zIndex: 9999,
-        left: widths.panel - 49,
+        left: widths.panel - 47,
         top: 24,
         // paddingTop: "-30px",
         transform: "translate(0px, 0px) rotate(-90deg)",
@@ -112,7 +112,7 @@ function Details({row}) {
             </div>
             <div>
                 <span className='nowrap'>engine: {full.engine ? full.engine : "default"}</span>,{' '}
-                {full.engineVersion && <span className='nowrap'>{`fio: v${full.engineVersion}`}, </span>}
+                {full.engineVersion && <><span className='nowrap'>{`fio: v${full.engineVersion}`},</span>{' '}</>}
                 <span className='nowrap'>file system: {full.fileSystem}</span>
                 , <span className='nowrap'>working set: {Helper.Common.formatAnything(full.workingSetSize, 0, ' ', 'B')}</span>
                 , <span className='nowrap'>{full.o_Direct === "True" ? "direct access: present" : "missing direct access"}</span>            
@@ -137,9 +137,10 @@ function CpuUsagePanel(cpuUsage) {
         left: 0, width: widths.panel - widths.operation, top: 3 + heights.metrics, height: heights.metrics,
         textAlign: "center",
         fontSize: 12,
+        // color: 'grey',
         // border: "1px solid darkgreen",
     };
-    const cpu = {fontWeight: 'bold', fontSize: 13};
+    const cpu = {fontWeight: 'bold', fontSize: 13, color: 'black'};
     return <div style={style}>cpu: <span style={cpu}>{format(cpuUsage.user)}</span>% user + <span style={cpu}>{format(cpuUsage.kernel)}</span>% kernel</div>;
 }
 
@@ -239,9 +240,11 @@ export class DiskBenchmarkResult extends React.Component {
                         {ParametersPanel(2,<span>RND 1Q</span>)}
                         {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
                     </div>
-                    <div style={{wordBreak:"break-all", wordWrap: "break-word", display: "block"}}>
+{/*
+                    <div style={{wordBreak:"break-all", wordWrap: "break-word", display: "none"}}>
                         {JSON.stringify(this.state.selectedRow)}
                     </div>
+*/}
                 </DialogContent>
             </Dialog>
         );
