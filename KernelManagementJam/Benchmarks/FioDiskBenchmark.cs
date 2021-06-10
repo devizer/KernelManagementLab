@@ -210,9 +210,8 @@ namespace KernelManagementJam.Benchmarks
                     percents = Math.Min(1d, percents);
                     var totalBytes = bandwidth * elapsedSeconds; 
                     step.Progress(percents, (long) totalBytes);
-#if DEBUG
-                    Console.WriteLine($"---=== FIO SUMMARY [{summary}] ===---");
-#endif
+                    if (DebugParsing)                    
+                        Console.WriteLine($"---=== FIO SUMMARY [{summary}] ===---");
                 };
                 rdr.ReadStreamToEnd(streamReader);
             }

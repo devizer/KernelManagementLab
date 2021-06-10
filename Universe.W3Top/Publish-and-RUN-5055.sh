@@ -20,7 +20,7 @@ function run_prod() {
   dotnet restore
   cd bin/local
   echo VERSION: $(dotnet ./Universe.W3Top.dll --version)
-  dotnet ./Universe.W3Top.dll | tee log.log
+  sudo dotnet ./Universe.W3Top.dll | tee log.log
 }
 
 
