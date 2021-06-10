@@ -11,7 +11,7 @@ namespace KernelManagementJam.Benchmarks
 {
     public class FioDiskBenchmark : IDiskBenchmark
     {
-        private const bool DebugParsing = true; // TODO: after test should be false
+        private const bool DebugParsing = false; // TODO: after test should be false
         public DiskBenchmarkOptions Parameters { get; }
         public FioEnginesProvider.Engine Engine { get; set; }
         public ProgressInfo Progress { get; private set; }
@@ -200,7 +200,7 @@ namespace KernelManagementJam.Benchmarks
                 {
                     summaryCpuUsage = cpuUsage;
                     if (DebugParsing)
-                        Console.WriteLine($"---=== FIO PROGRESS [{cpuUsage}] ===---");
+                        Console.WriteLine($"---=== FIO CPU USAGE [{cpuUsage}] ===---");
                 };
                 rdr.NotifyJobSummary += summary =>
                 {
@@ -239,8 +239,8 @@ namespace KernelManagementJam.Benchmarks
             {
                 double stepSeconds = step.Seconds.Value;
                 step.CpuUsage = new CpuUsage(
-                    (long) (summaryCpuUsage.UserPercents / 1.0d * stepSeconds * 1000d),
-                    (long) (summaryCpuUsage.KernelPercents / 1.0d * stepSeconds * 1000d)
+                    (long) (summaryCpuUsage.UserPercents / 1.0d * stepSeconds * 1000d * 10),
+                    (long) (summaryCpuUsage.KernelPercents / 1.0d * stepSeconds * 1000d * 10)
                 );
             }
 
