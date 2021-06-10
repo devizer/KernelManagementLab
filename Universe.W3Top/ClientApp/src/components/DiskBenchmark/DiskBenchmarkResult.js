@@ -14,21 +14,21 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const widths = {
-    iops: 116,     // right aligned
+    iops: 88,     // right aligned
     spaceIops: 4,
     iopsScale: 24, // static label IOPS, left aligned, grey
-    bandwidth: 116, // right aligned
+    bandwidth: 88, // right aligned
     spaceBandwidth: 4, // bandwidth ]---[ bandwidth units 
-    bandwidthUnits: 78, // grey, left aligned
+    bandwidthUnits: 66, // grey, left aligned
     operation: 22, // vertical
 };
-widths.panel = 22 + 78 + 4 + 116 + 24 + 4 + 116; // 364
+widths.panel = Object.values(widths).reduce((sum, current) => sum + current);
 widths.panelSpace = 22;
 widths.parameters = 24;
 
 const heights = {
     panel: 72,
-    panelSpace: 12,
+    panelSpace: 18,
     metrics: 38, 
 };
 
@@ -55,7 +55,7 @@ const styles = {
         height: heights.panel,
         margin: 0,
         padding: 0,
-        fontSize: 9,
+        fontSize: 11,
         left: widths.parameters,
         textAlign: "left",
         // backgroundColor: "#EBECEF",
@@ -65,7 +65,7 @@ const styles = {
     verticalAction: {
         position: "absolute",
         zIndex: 9999,
-        left: 322,
+        left: widths.panel - 49,
         top: 24,
         // paddingTop: "-30px",
         transform: "translate(0px, 0px) rotate(-90deg)",
@@ -111,10 +111,11 @@ function Details({row}) {
                 {full.fileSystem ? `, ${full.fileSystem}` : ""}
             </div>
             <div>
-                engine: {full.engine ? full.engine : "default"},{" "}
-                {full.engineVersion ? `fio: v${full.engineVersion}, ` : ""}
-                file system: {full.fileSystem},
-                working set: {Helper.Common.formatAnything(full.workingSetSize, 0, ' ', 'B')}
+                <span className='nowrap'>engine: {full.engine ? full.engine : "default"}</span>,{' '}
+                {full.engineVersion && <span className='nowrap'>{`fio: v${full.engineVersion}`}, </span>}
+                <span className='nowrap'>file system: {full.fileSystem}</span>
+                , <span className='nowrap'>working set: {Helper.Common.formatAnything(full.workingSetSize, 0, ' ', 'B')}</span>
+                , <span className='nowrap'>{full.o_Direct === "True" ? "direct access: present" : "missing direct access"}</span>            
             </div>
         </div>
     </React.Fragment>
@@ -133,12 +134,13 @@ function CpuUsagePanel(cpuUsage) {
     let format = num => (Math.round(num * 1000) / 10).toLocaleString(undefined, {useGrouping: true});
     const style={
         position: "absolute",
-        left: 0, width: widths.panel - widths.operation, top: heights.metrics, height: heights.metrics,
+        left: 0, width: widths.panel - widths.operation, top: 3 + heights.metrics, height: heights.metrics,
         textAlign: "center",
-        fontSize: 10,
+        fontSize: 12,
         // border: "1px solid darkgreen",
     };
-    return <div style={style}>cpu: {format(cpuUsage.user)}% user + {format(cpuUsage.kernel)}% kernel</div>;
+    const cpu = {fontWeight: 'bold', fontSize: 13};
+    return <div style={style}>cpu: <span style={cpu}>{format(cpuUsage.user)}</span>% user + <span style={cpu}>{format(cpuUsage.kernel)}</span>% kernel</div>;
 }
 
 function Metrics(text, align, left, right, style) {
@@ -156,7 +158,7 @@ function ActionPanel(xPosition, yPosition, action, bandwidth, blockSize, cpuUsag
     const left = widths.parameters + xPosition * (widths.panel + widths.panelSpace);
     const top = yPosition * (heights.panel + heights.panelSpace);
     const panelStyles = {...styles.panel, left: left, top: top};
-    const metricsStyle={fontSize:16};
+    const metricsStyle={fontSize:16, fontWeight:900};
     const unitsStyle={fontSize:14, opacity:"0.55"};
     const iopsRaw = blockSize ? bandwidth / blockSize : undefined;
     let iops = Helper.Common.formatStructured(iopsRaw, 1, "");
@@ -166,7 +168,9 @@ function ActionPanel(xPosition, yPosition, action, bandwidth, blockSize, cpuUsag
     let format = (num,tens) => (Math.round(num * tens) / tens).toLocaleString(undefined, {useGrouping: true});
     if (iopsRaw > 0) iops2 = format(iopsRaw, 1);
     if (iopsRaw > 0 && iopsRaw < 299) iops2 = format(iopsRaw, 10);
-    const bw = Helper.Common.formatStructured(bandwidth, 2, "B/s");
+    // iops2 = "17,234,567";
+    let bw = Helper.Common.formatStructured(bandwidth, 2, "B/s");
+    // if (bw.value) bw.value = "1,567.99";
     return (
         <React.Fragment>
             <div style={panelStyles}>
@@ -235,7 +239,7 @@ export class DiskBenchmarkResult extends React.Component {
                         {ParametersPanel(2,<span>RND 1Q</span>)}
                         {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
                     </div>
-                    <div style={{wordBreak:"break-all", wordWrap: "break-word", display: "none"}}>
+                    <div style={{wordBreak:"break-all", wordWrap: "break-word", display: "block"}}>
                         {JSON.stringify(this.state.selectedRow)}
                     </div>
                 </DialogContent>
