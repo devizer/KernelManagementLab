@@ -104,7 +104,7 @@ export class DiskBenchmarkHistory extends React.Component {
         let sizeCell = row => <React.Fragment>{row.value ? Helper.Common.formatBytes(row.value) : ""}</React.Fragment>;
         let speedCell = row => <React.Fragment>{row.value ? `${Helper.Common.formatBytes(row.value, 2)}/s` : ""}</React.Fragment>;
         const defaultGreyCell = <span style={{color:"grey"}}>default</span>;
-        let engineCell = row => <React.Fragment>{row.original.engine ? <>{row.original.engine} <span style={{opacity:0.55}}>{row.original.engineVersion}</span></> : defaultGreyCell}</React.Fragment>
+        let engineCell = row => row.original.fileSystem ? <React.Fragment>{row.original.engine ? <>{row.original.engine} <span style={{opacity:0.55}}>{row.original.engineVersion}</span></> : defaultGreyCell}</React.Fragment> : null;
         let rightAlign = {textAlign: "right" };
         let centerAlign = {textAlign: "center" };
 
