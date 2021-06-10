@@ -239,8 +239,8 @@ namespace KernelManagementJam.Benchmarks
             {
                 double stepSeconds = step.Seconds.Value;
                 step.CpuUsage = new CpuUsage(
-                    (long) (summaryCpuUsage.UserPercents / 100d * stepSeconds * 1000d),
-                    (long) (summaryCpuUsage.KernelPercents / 100d * stepSeconds * 1000d)
+                    (long) (summaryCpuUsage.UserPercents / 1.0d * stepSeconds * 1000d),
+                    (long) (summaryCpuUsage.KernelPercents / 1.0d * stepSeconds * 1000d)
                 );
             }
 
