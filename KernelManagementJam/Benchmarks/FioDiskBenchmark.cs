@@ -11,11 +11,13 @@ namespace KernelManagementJam.Benchmarks
 {
     public class FioDiskBenchmark : IDiskBenchmark
     {
+        private const bool DebugParsing = true; // TODO: after test should be false
         public DiskBenchmarkOptions Parameters { get; }
         public FioEnginesProvider.Engine Engine { get; set; }
         public ProgressInfo Progress { get; private set; }
         public static readonly string BenchmarkTempFile = DiskBenchmark.BenchmarkTempFile;
         private string TempFile;
+        
         
         private ProgressStep _allocate;
         private ProgressStep _seqRead;
@@ -146,6 +148,7 @@ namespace KernelManagementJam.Benchmarks
 
         private void DoFioBenchmark(ProgressStep step, string engine, string command, bool needDirectIo, string blockSize, int ioDepth, string options = "--eta=always --time_based ")
         {
+            FioStreamReader.ConsolasDebug = DebugParsing;
             CancelIfRequested();
             string workingDirectory = Path.GetDirectoryName(this.TempFile);
             string fileName = Path.GetFileName(this.TempFile);
@@ -174,9 +177,8 @@ namespace KernelManagementJam.Benchmarks
                 rdr.NotifyEta += eta =>
                 {
                     CancelIfRequested();
-#if DEBUG
-                    Console.WriteLine($"---=== ETA {eta} ===---");
-#endif
+                    if (DebugParsing)
+                        Console.WriteLine($"---=== ETA {eta} ===---");
                 };
                 rdr.NotifyJobProgress += progress =>
                 {
@@ -190,14 +192,15 @@ namespace KernelManagementJam.Benchmarks
                     var seconds = step.Seconds;
                     step.Progress(percents, (long) totalBytes);
                     
-#if DEBUG
-                    Console.WriteLine($"---=== FIO PROGRESS [{progress}] ===---");
-#endif
+                    if (DebugParsing)
+                        Console.WriteLine($"---=== FIO PROGRESS [{progress}] ===---");
 
                 };
                 rdr.NotifyJobSummaryCpuUsage += cpuUsage =>
                 {
                     summaryCpuUsage = cpuUsage;
+                    if (DebugParsing)
+                        Console.WriteLine($"---=== FIO PROGRESS [{cpuUsage}] ===---");
                 };
                 rdr.NotifyJobSummary += summary =>
                 {
