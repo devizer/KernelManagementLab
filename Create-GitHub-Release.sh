@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-command -v dpl || (sudo apt-get update -yq; sudo apt-get install -y ruby-dev; sudo gem install dpl --pre)
+command -v dpl || (sudo apt-get update -yq; sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases --pre)
 
 set -e
 set -u
