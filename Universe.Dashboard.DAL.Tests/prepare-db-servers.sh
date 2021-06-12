@@ -50,7 +50,7 @@ echo '
 for p in {54321..54328}; do
   name="PGSQL_TEST_SERVER_$p"
   line="$name=\"Host=localhost;Port=$p;Database=postgres;Username=postgres;Password=$POSTGRESQL_PASS;Timeout=15;Pooling=false;\""
-  if [[ $p -ne 54328 ]] || [[ -n "$has_avx" ]]; then
+  if [[ $p -ne 54328 ]]; then
     echo "$line" >> $file
     echo "export $name" >> $file
   fi
