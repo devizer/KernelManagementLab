@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-command -v dpl || (sudo apt-get update -yq; sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases --pre)
-
+command -v dpl || (sudo apt-get update -yq; sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases)
+# gem list --local
+# gem uninstall dpl dpl-releases
+echo "Deploy tool version: $(gem list --local | grep dpl | sort | less)"
 set -e
 set -u
 
@@ -39,9 +41,11 @@ function new_dpl() {
 
 function old_dpl() {
     # sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases
+    # for dpl 1.x
     for files in "./Universe.W3Top/bin/w3top*.tar.gz*" "WHATSNEW.md"; do
       echo "KEY: $GITHUB_RELEASE_TOKEN"
       dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
+        --file-glob=true --overwrite=true \
         --name="W3Top Stable ${ver}" \
         --body="It is not supposed to direct downloading files here. Please take a look on installation options on https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries" \
         --file="$files" \
@@ -52,4 +56,4 @@ function old_dpl() {
 
 old_dpl
 # $GITHUB_RELEASE_TOKEN
-# --file-glob=true \ --overwrite=true \
+# --file-glob=true --overwrite=true \
