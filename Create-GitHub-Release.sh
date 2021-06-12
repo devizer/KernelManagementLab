@@ -42,7 +42,6 @@ function old_dpl() {
     for files in "./Universe.W3Top/bin/w3top*.tar.gz*" "WHATSNEW.md"; do
       echo "KEY: $GITHUB_RELEASE_TOKEN"
       dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
-        --overwrite=true \
         --name="W3Top Stable ${ver}" \
         --body="It is not supposed to direct downloading files here. Please take a look on installation options on https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries" \
         --file="$files" \
@@ -53,4 +52,4 @@ function old_dpl() {
 
 old_dpl
 # $GITHUB_RELEASE_TOKEN
-# --file-glob=true \
+# --file-glob=true \ --overwrite=true \
