@@ -11,7 +11,7 @@ namespace KernelManagementJam.Benchmarks
 {
     public class FioDiskBenchmark : IDiskBenchmark
     {
-        private const bool DebugParsing = true; // TODO: after test should be false
+        private const bool DebugParsing = false; // TODO: after test should be false
         public DiskBenchmarkOptions Parameters { get; }
         public FioEnginesProvider.Engine Engine { get; set; }
         public ProgressInfo Progress { get; private set; }
