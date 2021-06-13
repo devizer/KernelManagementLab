@@ -5,7 +5,7 @@ using System.Text;
 
 namespace KernelManagementJam
 {
-    // in KB
+    // IN KB
     public class LinuxMemorySummary
     {
         public long Total { get; set; }

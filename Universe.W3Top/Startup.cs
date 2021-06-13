@@ -127,7 +127,14 @@ namespace Universe.W3Top
             {
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    var enginesProvider = scope.ServiceProvider.GetRequiredService<FioEnginesProvider>();
+                    if (LinuxMemorySummary.TryParse(out var memoryInfo))
+                    {
+                        var mbAvail = memoryInfo.Available / 1024;
+                        int maxDiscoveryThreads = (int) Math.Max(1, mbAvail / 200);
+                        FioEnginesProvider.DiscoveryThreadsLimit = maxDiscoveryThreads;
+                        Console.WriteLine($"Available memory: {mbAvail:n0} MB, Max Discovery Threads: {maxDiscoveryThreads}");
+                    }
+                    FioEnginesProvider enginesProvider = scope.ServiceProvider.GetRequiredService<FioEnginesProvider>();
                     Thread t = new Thread(_ => enginesProvider.Discovery()) {IsBackground = true};
                     t.Start();
                 }
