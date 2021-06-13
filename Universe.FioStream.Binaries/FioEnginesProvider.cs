@@ -151,7 +151,7 @@ namespace Universe.FioStream.Binaries
             // Run In Parallel
             var threadsByCpuCount = new[] {4, 8, 12};
             var threads = threadsByCpuCount[Math.Min(threadsByCpuCount.Length, Environment.ProcessorCount) - 1];
-            threads = Math.Max(threads, DiscoveryThreadsLimit);
+            threads = Math.Min(threads, DiscoveryThreadsLimit);
             threads = Math.Max(threads, 1);
             // threads = 1;
             ParallelOptions parallelOptions = new ParallelOptions() {MaxDegreeOfParallelism = threads,};

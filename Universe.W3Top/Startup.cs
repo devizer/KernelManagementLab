@@ -130,7 +130,7 @@ namespace Universe.W3Top
                     if (LinuxMemorySummary.TryParse(out var memoryInfo))
                     {
                         var mbAvail = memoryInfo.Available / 1024;
-                        int maxDiscoveryThreads = (int) Math.Max(1, mbAvail / 200);
+                        int maxDiscoveryThreads = (int) Math.Max(1, mbAvail / 150);
                         FioEnginesProvider.DiscoveryThreadsLimit = maxDiscoveryThreads;
                         Console.WriteLine($"Available memory: {mbAvail:n0} MB, Max Discovery Threads: {maxDiscoveryThreads}");
                     }
