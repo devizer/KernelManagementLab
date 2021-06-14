@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <!-- netcoreapp3.1; -->
+        <InvariantGlobalization>true</InvariantGlobalization>
         <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
