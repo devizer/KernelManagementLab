@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -121,13 +122,20 @@ namespace Universe.W3Top
                         ;
                 }));
             
-            services.AddSignalR(x =>
+            ISignalRServerBuilder signalR = services.AddSignalR(x =>
             {
                 x.EnableDetailedErrors = true;
                 // x.SupportedProtocols = new List<string>() {"longPolling"};
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
 
+#if NETCOREAPP3_1                
+            signalR.AddNewtonsoftJsonProtocol(options =>
+            {
+                options.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+#endif
+            
             var ver = Assembly.GetEntryAssembly().GetName().Version;
             var miniProfilerReportFile = Path.Combine(DebugDumper.DumpDir, $"Mini-Profiler.Report-{ver}.txt");
             AdvancedMiniProfilerReport.ReportToFile(miniProfilerReportFile);
