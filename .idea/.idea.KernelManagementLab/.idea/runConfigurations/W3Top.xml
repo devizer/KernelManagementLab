@@ -8,7 +8,7 @@
       <env name="DUMPS_ARE_ENABLED" value="SideBySide" />
       <env name="MYSQL_DATABASE_Ignore" value="Server=localhost;Database=w3top;Port=3306;Uid=w3top;Pwd=w3top;Connect Timeout=5;Pooling=false;" />
       <env name="ASPNETCORE_ENVIRONMENT" value="Development" />
-      <env name="ASPNETCORE_URLS" value="http://localhost:5010;https://0.0.0.0:5011" />
+      <env name="ASPNETCORE_URLS" value="http://localhost:5010;https://0.0.0.0:5011;;http://0.0.0.0:5012" />
       <env name="PID_FILE_FULL_PATH" value="$USER_HOME$/.local/w3top.pid" />
       <env name="RESPONSE_COMPRESSION" value="True" />
       <env name="PGSQL_DATABASE_Ignore" value="Host=localhost;Database=w3top;Username=w3top;Password=pass" />
