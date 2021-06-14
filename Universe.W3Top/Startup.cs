@@ -173,7 +173,6 @@ namespace Universe.W3Top
             app.UseMiddleware<PreventSpaHtmlCachingMiddleware>();
             
             if (!env.IsProduction()) app.UseMiddleware<KillerMiddleware>();
-                
             
             lifetime.ApplicationStopping.Register(() =>
             {
