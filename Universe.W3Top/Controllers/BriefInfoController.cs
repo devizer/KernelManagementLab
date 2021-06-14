@@ -6,13 +6,14 @@ using Universe.Dashboard.Agent;
 
 namespace Universe.W3Top.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class BriefInfoController
     {
         [HttpGet, Route("")]
         public SystemBriefInfo Get()
         {
-            var hostInfo = new
+            var hostInfo = new HostSystemInfo()
             {
                 Hostname = Environment.MachineName,
                 Os = HugeCrossInfo.OsDisplayName,
@@ -42,9 +43,17 @@ namespace Universe.W3Top.Controllers
     
     public class SystemBriefInfo
     {
-        public dynamic System;
+        public HostSystemInfo System;
         public List<string> InterfaceNames;
         public List<string> BlockNames;
         public JObject NewVer;
     }
+    public class HostSystemInfo
+    {
+        public string Hostname { get; set; } 
+        public string Os { get; set; } 
+        public string Processor { get; set; } 
+        public string Memory { get; set; } 
+    }
+
 }

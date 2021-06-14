@@ -7,11 +7,9 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.App" />
-      <PackageReference Include="Universe.CpuUsage">
-        <Version>2.2.497.598</Version>
+      <PackageReference Include="Universe.CpuUsage" Version="2.2.497.598">
       </PackageReference>
-      <PackageReference Include="Universe.LinuxTaskStats">
-        <Version>0.42.166-pre-1391</Version>
+      <PackageReference Include="Universe.LinuxTaskStats" Version="0.42.166-pre-1391">
       </PackageReference>
       <!--PackageReference Include="Microsoft.Extensions.Logging"  / -->
     </ItemGroup>

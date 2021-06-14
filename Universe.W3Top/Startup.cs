@@ -20,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json.Serialization;
 using Polly;
 using Polly.Timeout;
 using Universe.Dashboard.Agent;
@@ -59,6 +60,14 @@ namespace Universe.W3Top
             services.AddSingleton<DiskBenchmarkQueue>(new DiskBenchmarkQueue(() => new DashboardContext()));
             services.AddScoped<DiskBenchmarkDataAccess>();
             
+#if NETCOREAPP3_1                
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                // Use the default property (Pascal) casing
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+#endif
+#if NETCOREAPP2_2                
             services
                 .AddMvc(options =>
                 {
@@ -66,6 +75,7 @@ namespace Universe.W3Top
                     options.EnableEndpointRouting = false;
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+#endif
 
             if (StartupOptions.NeedResponseCompression)
                 services.AddResponseCompression(x => { x.MimeTypes = CompressedMimeTypes.List; });
@@ -129,10 +139,11 @@ namespace Universe.W3Top
                 {
                     if (LinuxMemorySummary.TryParse(out var memoryInfo))
                     {
+                        // each fio needs 150 MB of ram
                         var mbAvail = memoryInfo.Available / 1024;
                         int maxDiscoveryThreads = (int) Math.Max(1, mbAvail / 150);
                         FioEnginesProvider.DiscoveryThreadsLimit = maxDiscoveryThreads;
-                        Console.WriteLine($"Available memory: {mbAvail:n0} MB, Max Discovery Threads: {maxDiscoveryThreads}");
+                        Console.WriteLine($"[fio-features] Available memory: {mbAvail:n0} MB, Max Discovery Threads: {maxDiscoveryThreads}");
                     }
                     FioEnginesProvider enginesProvider = scope.ServiceProvider.GetRequiredService<FioEnginesProvider>();
                     Thread t = new Thread(_ => enginesProvider.Discovery()) {IsBackground = true};
@@ -149,8 +160,8 @@ namespace Universe.W3Top
 
             app.UseMiddleware<PreventSpaHtmlCachingMiddleware>();
             
-            if (!env.IsProduction())
-                app.UseMiddleware<KillerMiddleware>();
+            if (!env.IsProduction()) app.UseMiddleware<KillerMiddleware>();
+                
             
             lifetime.ApplicationStopping.Register(() =>
             {
@@ -186,6 +197,8 @@ namespace Universe.W3Top
                 routes.MapHub<DataSourceHub>("/dataSourceHub");
             });
 
+
+#if NETCOREAPP2_2
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -193,7 +206,18 @@ namespace Universe.W3Top
                     template: "{controller}/{action=Index}/{id?}");
                 
             });
+#endif
+#if NETCOREAPP3_1
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+            });
 
+#endif            
+            
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
@@ -218,6 +242,7 @@ namespace Universe.W3Top
 
         static void DumpHeaders(HttpContext context)
         {
+            return;
             StringBuilder info = new StringBuilder();
             info.AppendLine($"About {context.Request.Method} {context.Request.GetDisplayUrl()}:");
             int n = 0;
