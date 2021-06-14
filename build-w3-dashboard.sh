@@ -26,7 +26,7 @@ function run_debug() {
   export ASPNETCORE_ENVIRONMENT=Development
   rm -rf ClientApp/build 2>/dev/null
   cd ClientApp; time (yarn install); cd ..
-  dotnet run -c Debug -f netcoreapp2.2
+  dotnet run -c Debug -f netcoreapp3.1
 }
 
 function run_prod() {
