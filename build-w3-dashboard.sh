@@ -34,7 +34,7 @@ function run_prod() {
   export ASPNETCORE_ENVIRONMENT=Production
   cd ClientApp; time (yarn install); cd ..
   dotnet restore --disable-parallel
-  time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/ --self-contained -r $rid
+  time dotnet publish -c Release -f netcoreapp3.1 /p:DefineConstants="DUMPS" -o bin/ --self-contained -r $rid
   cd bin
   ./Universe.W3Top
 }
