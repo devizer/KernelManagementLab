@@ -1,24 +1,27 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
-
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json.Serialization;
-
+using Polly;
+using Polly.Timeout;
 using Universe.Dashboard.Agent;
 using Universe.Dashboard.DAL;
 using Universe.FioStream;
@@ -26,10 +29,6 @@ using Universe.FioStream.Binaries;
 
 namespace Universe.W3Top
 {
-    // Migrations 2.x -> 3.x
-    // https://docs.microsoft.com/ru-ru/aspnet/core/migration/22-to-30?view=aspnetcore-5.0&tabs=visual-studio
-    // https://stackoverflow.com/questions/58392039/how-to-set-json-serializer-settings-in-asp-net-core-3/58392090#58392090
-    // "@aspnet/signalr": "^1.1.4", --> "@microsoft/signalr", connection.status is string 
     public partial class Startup
     {
 
@@ -60,11 +59,13 @@ namespace Universe.W3Top
             services.AddSingleton<DiskBenchmarkQueue>(new DiskBenchmarkQueue(() => new DashboardContext()));
             services.AddScoped<DiskBenchmarkDataAccess>();
             
-            services.AddControllersWithViews().AddNewtonsoftJson(options =>
-            {
-                // Use the default property (Pascal) casing
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
+            services
+                .AddMvc(options =>
+                {
+                    options.Filters.Add(new KillerActionFilter());
+                    options.EnableEndpointRouting = false;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             if (StartupOptions.NeedResponseCompression)
                 services.AddResponseCompression(x => { x.MimeTypes = CompressedMimeTypes.List; });
@@ -106,18 +107,13 @@ namespace Universe.W3Top
                         ;
                 }));
             
-            var signalR = services.AddSignalR(x =>
+            services.AddSignalR(x =>
             {
                 x.EnableDetailedErrors = true;
-                // x.SupportedProtocols = new List<string>() {"longPolling"};
+                x.SupportedProtocols = new List<string>() {"longPolling"};
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
 
-            signalR.AddNewtonsoftJsonProtocol(options =>
-            {
-                options.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
-            
             var ver = Assembly.GetEntryAssembly().GetName().Version;
             var miniProfilerReportFile = Path.Combine(DebugDumper.DumpDir, $"Mini-Profiler.Report-{ver}.txt");
             AdvancedMiniProfilerReport.ReportToFile(miniProfilerReportFile);
@@ -133,11 +129,10 @@ namespace Universe.W3Top
                 {
                     if (LinuxMemorySummary.TryParse(out var memoryInfo))
                     {
-                        // each fio needs 150 MB of ram
                         var mbAvail = memoryInfo.Available / 1024;
                         int maxDiscoveryThreads = (int) Math.Max(1, mbAvail / 150);
                         FioEnginesProvider.DiscoveryThreadsLimit = maxDiscoveryThreads;
-                        Console.WriteLine($"[fio-features] Available memory: {mbAvail:n0} MB, Max Discovery Threads: {maxDiscoveryThreads}");
+                        Console.WriteLine($"Available memory: {mbAvail:n0} MB, Max Discovery Threads: {maxDiscoveryThreads}");
                     }
                     FioEnginesProvider enginesProvider = scope.ServiceProvider.GetRequiredService<FioEnginesProvider>();
                     Thread t = new Thread(_ => enginesProvider.Discovery()) {IsBackground = true};
@@ -154,7 +149,8 @@ namespace Universe.W3Top
 
             app.UseMiddleware<PreventSpaHtmlCachingMiddleware>();
             
-            if (true || !env.IsProduction()) app.UseMiddleware<KillerMiddleware>();
+            if (!env.IsProduction())
+                app.UseMiddleware<KillerMiddleware>();
             
             lifetime.ApplicationStopping.Register(() =>
             {
@@ -185,18 +181,19 @@ namespace Universe.W3Top
             app.UseSpaStaticFiles();
             
             app.UseCors("CorsPolicy");
-
-
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
+            app.UseSignalR(routes =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-                
-                endpoints.MapHub<DataSourceHub>("/dataSourceHub");
+                routes.MapHub<DataSourceHub>("/dataSourceHub");
             });
-            
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+                
+            });
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
@@ -221,7 +218,6 @@ namespace Universe.W3Top
 
         static void DumpHeaders(HttpContext context)
         {
-            return;
             StringBuilder info = new StringBuilder();
             info.AppendLine($"About {context.Request.Method} {context.Request.GetDisplayUrl()}:");
             int n = 0;
