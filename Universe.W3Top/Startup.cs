@@ -34,7 +34,7 @@ namespace Universe.W3Top
     // Migrations 2.x -> 3.x
     // https://docs.microsoft.com/ru-ru/aspnet/core/migration/22-to-30?view=aspnetcore-5.0&tabs=visual-studio
     // https://stackoverflow.com/questions/58392039/how-to-set-json-serializer-settings-in-asp-net-core-3/58392090#58392090
-    // "@aspnet/signalr": "^1.1.4", --> 
+    // "@aspnet/signalr": "^1.1.4", --> "@microsoft/signalr", connection.status is string 
     public partial class Startup
     {
 
@@ -66,7 +66,7 @@ namespace Universe.W3Top
             services.AddScoped<DiskBenchmarkDataAccess>();
             
 #if NETCOREAPP3_1                
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
             {
                 // Use the default property (Pascal) casing
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
