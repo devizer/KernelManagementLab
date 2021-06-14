@@ -30,6 +30,10 @@ using Universe.FioStream.Binaries;
 
 namespace Universe.W3Top
 {
+    // Migrations 2.x -> 3.x
+    // https://docs.microsoft.com/ru-ru/aspnet/core/migration/22-to-30?view=aspnetcore-5.0&tabs=visual-studio
+    // https://stackoverflow.com/questions/58392039/how-to-set-json-serializer-settings-in-asp-net-core-3/58392090#58392090
+    // "@aspnet/signalr": "^1.1.4", --> 
     public partial class Startup
     {
 
@@ -120,7 +124,7 @@ namespace Universe.W3Top
             services.AddSignalR(x =>
             {
                 x.EnableDetailedErrors = true;
-                x.SupportedProtocols = new List<string>() {"longPolling"};
+                // x.SupportedProtocols = new List<string>() {"longPolling"};
                 // x.HandshakeTimeout = TimeSpan.FromSeconds(2);
             });
 
@@ -192,13 +196,13 @@ namespace Universe.W3Top
             app.UseSpaStaticFiles();
             
             app.UseCors("CorsPolicy");
+
+
+#if NETCOREAPP2_2
             app.UseSignalR(routes =>
             {
                 routes.MapHub<DataSourceHub>("/dataSourceHub");
             });
-
-
-#if NETCOREAPP2_2
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -214,8 +218,9 @@ namespace Universe.W3Top
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                
+                endpoints.MapHub<DataSourceHub>("/dataSourceHub");
             });
-
 #endif            
             
             app.UseSpa(spa =>

@@ -1,5 +1,5 @@
 import * as DataSourceActions from './DataSourceActions'
-import * as signalR from '@aspnet/signalr'
+import * as signalR from '@microsoft/signalr'
 import * as Helper from "../Helper";
 import DataSourceStore from "./DataSourceStore";
 
@@ -17,7 +17,7 @@ class DataSourceListener {
         this.isConnecting = false;
 
         let hub = new signalR.HubConnectionBuilder().withUrl("/dataSourceHub");
-        // hub.
+        // hub.build().state
         this.connection = hub.build();
         this.connection.on("ReceiveDataSource", dataSource => {
             Helper.notifyTrigger("MetricsArriving", "true");
@@ -108,6 +108,7 @@ class DataSourceListener {
     // available for callbacks
     tryToConnect()
     {
+        // Helper.toConsole("tryToConnect()...", "sure");
         this.isConnecting = true;
         this.connection.start().then(() => {
             DataSourceActions.ConnectionStatusUpdated(true);
@@ -132,7 +133,7 @@ state: ${this.connection.state}`);
         
         if (this.needConnection) {
             if (!this.isConnected && !this.isConnecting) {
-                if (this.connection.state === 0) {
+                if (this.connection.state === "Disconnected" || this.connection.state === 0) {
                     this.tryToConnect();
                 }
             }

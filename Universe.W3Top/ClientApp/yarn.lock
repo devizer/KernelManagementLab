@@ -2,15 +2,6 @@
 # yarn lockfile v1
 
 
-"@aspnet/signalr@^1.1.2":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@aspnet/signalr/-/signalr-1.1.4.tgz#417cf808f4074a8aec45d27f03c4b8df9d96bb0b"
-  integrity sha512-Jp9nPc8hmmhbG9OKiHe2fOKskBHfg+3Y9foSKHxjgGtyI743hXjGFv3uFlUg503K9f8Ilu63gQt3fDkLICBRyg==
-  dependencies:
-    eventsource "^1.0.7"
-    request "^2.88.0"
-    ws "^6.0.0"
-
 "@babel/code-frame@7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -1057,6 +1048,15 @@
     "@babel/runtime" "^7.2.0"
     prop-types "^15.6.0"
     react-is "^16.6.3"
+
+"@microsoft/signalr@^3.1.16":
+  version "3.1.16"
+  resolved "https://registry.yarnpkg.com/@microsoft/signalr/-/signalr-3.1.16.tgz#ff2e64d0a77f0f2e3fb7f3a0cf7015b0c7b96b5e"
+  integrity sha512-qKXCJhpljxyXtr5QDFBgteooqWYAlu7TWXb4HRc+ILjcqmKoA+6N/nMWRn0fcpYnTO8Qou4R7VAlnKzToauEiQ==
+  dependencies:
+    eventsource "^1.0.7"
+    request "^2.88.0"
+    ws "^6.0.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
