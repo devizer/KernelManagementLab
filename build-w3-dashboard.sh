@@ -5,10 +5,9 @@ set -u
 if [[ $(uname -m) == armv7* ]]; then rid=linux-arm; elif [[ $(uname -m) == aarch64 ]]; then rid=linux-arm64; elif [[ $(uname -m) == x86_64 ]]; then rid=linux-x64; fi; if [[ $(uname -s) == Darwin ]]; then rid=osx-x64; fi;
 echo "The current OS architecture: $rid"
 
-work=$HOME/transient-builds
-if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
-if [[ -d "/ssd" ]]; then work=/ssd/transient-builds; fi
-work=$work/KernelManagementLab;
+work=$HOME/build/w3top-source
+if [[ -d "/transient-builds" ]]; then work=/transient-builds/w3top-source; fi
+if [[ -d "/ssd" ]]; then work=/ssd/transient-builds/w3top-source; fi
 mkdir -p "$(dirname $work)"
 cd $(dirname $work);
 rm -rf $work;
