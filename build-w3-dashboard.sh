@@ -10,7 +10,7 @@ if [[ -d "/transient-builds" ]]; then work=/transient-builds/w3top-source; fi
 if [[ -d "/ssd" ]]; then work=/ssd/transient-builds/w3top-source; fi
 mkdir -p "$(dirname $work)"
 cd $(dirname $work);
-rm -rf $work;
+rm -rf KernelManagementLab;
 git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
 # dotnet restore --disable-parallel
