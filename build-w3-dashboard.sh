@@ -49,7 +49,7 @@ function reinstall_service() {
   cd ..
   # time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service
   dotnet restore || dotnet restore --disable-parallel
-  time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
+  time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp3.1 /p:DefineConstants="DUMPS" -o bin/service --self-contained -r $rid
   cd bin/service
   chmod 644 *.dll
   chmod 755 Universe.W3Top
