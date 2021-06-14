@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <!-- netcoreapp3.1; -->
-        <TargetFrameworks>netcoreapp3.1;netcoreapp2.2</TargetFrameworks>
+        <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
         <IsPackable>false</IsPackable>
@@ -40,6 +40,7 @@
     <ItemGroup>
       <Compile Include="..\build\*.cs" />
       <Compile Remove="ClientApp\build\**" />
+      <Compile Remove="Startup-2.2-only.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -99,6 +100,10 @@
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
         <None Remove="ClientApp\build\**" />
         <Content Remove="ClientApp\build\**" />
+        <Compile Remove="Startup-3.1-and-2.2.cs" />
+        <None Include="Startup-3.1-and-2.2.cs" />
+        <Compile Remove="Startup-2.2-only.cs" />
+        <None Include="Startup-2.2-only.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -148,7 +153,7 @@
     </Target>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DUMPS</DefineConstants>
+    <DefineConstants>$(DefineConstants);TRACE;DUMPS</DefineConstants>
   </PropertyGroup>
 
 

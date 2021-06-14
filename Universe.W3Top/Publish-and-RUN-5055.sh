@@ -14,11 +14,11 @@ popd >/dev/null
 
 function run_prod() {
   cd $dir
-  export ASPNETCORE_ENVIRONMENT=Production
+  # export ASPNETCORE_ENVIRONMENT=Production
   cd ClientApp; time (yarn install); cd ..
   rm -rf bin/local
   rm -rf ~/.cache/google-chrome/
-  time dotnet publish -c Release -f netcoreapp2.2 /p:DefineConstants="NO_DEBUG" -o bin/local --self-contained -r $rid
+  time dotnet publish -c Release -f netcoreapp3.1 /p:DefineConstants="NO_DEBUG" -o bin/local --self-contained -r $rid
   function dot_restore() {
     Say "HACK: Restoring"
     cmdRestore="dotnet restore >/dev/null || true; msbuild /t:restore >/dev/null || true"
@@ -27,6 +27,7 @@ function run_prod() {
     Say "HACK: Restored"
     sleep 2
   }
+  dot_restore
   cd bin/local
   echo VERSION: $(dotnet ./Universe.W3Top.dll --version); sleep 3
   echo "DIR is [$(pwd)]"
