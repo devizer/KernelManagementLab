@@ -3,7 +3,8 @@
 set -e
 set -u
 if [[ $(uname -m) == armv7* ]]; then rid=linux-arm; elif [[ $(uname -m) == aarch64 ]]; then rid=linux-arm64; elif [[ $(uname -m) == x86_64 ]]; then rid=linux-x64; fi; if [[ $(uname -s) == Darwin ]]; then rid=osx-x64; fi;
-echo "The current OS architecture: $rid"
+Say --Reset-Stopwatch
+Say "The current OS architecture: $rid"
 
 unset MSBuildSDKsPath
 dir=$(pwd)
@@ -19,6 +20,7 @@ function run_prod() {
   rm -rf bin/local
   rm -rf ~/.cache/google-chrome/
   # /p:PublishTrimmed=true /p:PublishReadyToRun=true
+  Say "Building"
   time dotnet publish -c Release -f netcoreapp3.1 /p:PublishReadyToRun=true /p:DefineConstants="NO_DEBUG" -o bin/local --self-contained -r $rid
   function dot_restore() {
     Say "HACK: Restoring"
