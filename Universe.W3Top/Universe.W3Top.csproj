@@ -157,6 +157,45 @@
     <DefineConstants>$(DefineConstants);TRACE;DUMPS</DefineConstants>
   </PropertyGroup>
 
+    <ItemGroup>
+        <TrimmerRootAssembly Include="System.Linq" />
+        <TrimmerRootAssembly Include="System.Security.Cryptography.Xml" />
+        <TrimmerRootAssembly Include="Microsoft.Extensions.Identity.Core" />
+        <TrimmerRootAssembly Include="Microsoft.AspNetCore.Server.HttpSys" />
+        <TrimmerRootAssembly Include="System.Threading.Tasks.Dataflow" />
+        <TrimmerRootAssembly Include="System.Net.Mail" />
+        <TrimmerRootAssembly Include="Microsoft.AspNetCore.Server.IIS" />
+        <TrimmerRootAssembly Include="System.Net.Sockets" />
+        <TrimmerRootAssembly Include="System.Security.Cryptography.X509Certificates" />
+        <TrimmerRootAssembly Include="Microsoft.AspNetCore.Routing" />
+        <TrimmerRootAssembly Include="System.Net.Security" />
+        <TrimmerRootAssembly Include="System.Security.Cryptography.Algorithms" />
+        <TrimmerRootAssembly Include="System.Collections.Immutable" />
+        <TrimmerRootAssembly Include="Newtonsoft.Json" />
+        <TrimmerRootAssembly Include="System.ComponentModel.TypeConverter" />
+        <TrimmerRootAssembly Include="Npgsql" />
+        <TrimmerRootAssembly Include="Microsoft.AspNetCore.Mvc.ViewFeatures" />
+        <TrimmerRootAssembly Include="System.Security.Cryptography.Pkcs" />
+        <TrimmerRootAssembly Include="Microsoft.AspNetCore.Components.Server" />
+        <TrimmerRootAssembly Include="MySql.Data" />
+        <TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Relational" />
+        <TrimmerRootAssembly Include="Microsoft.CSharp" />
+        <TrimmerRootAssembly Include="System.Drawing.Common" />
+        <TrimmerRootAssembly Include="System.Text.Json" />
+        <TrimmerRootAssembly Include="System.Text.Encoding.CodePages" />
+        <TrimmerRootAssembly Include="System.Data.SqlClient" />
+        <TrimmerRootAssembly Include="System.Reflection.Metadata" />
+        <TrimmerRootAssembly Include="Microsoft.VisualBasic.Core" />
+        <TrimmerRootAssembly Include="System.Linq.Parallel" />
+        <TrimmerRootAssembly Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
+        <TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore" />
+        <TrimmerRootAssembly Include="System.Net.Http" />
+        <TrimmerRootAssembly Include="Microsoft.AspNetCore.Mvc.Core" />
+        <TrimmerRootAssembly Include="BouncyCastle.Crypto" />
+        <TrimmerRootAssembly Include="System.Data.Common" />
+        <TrimmerRootAssembly Include="System.Linq.Expressions" />
+    </ItemGroup>
+
 
 
 </Project>

@@ -18,7 +18,8 @@ function run_prod() {
   cd ClientApp; time (yarn install); cd ..
   rm -rf bin/local
   rm -rf ~/.cache/google-chrome/
-  time dotnet publish -c Release -f netcoreapp3.1 /p:DefineConstants="NO_DEBUG" -o bin/local --self-contained -r $rid
+  # /p:PublishTrimmed=true /p:PublishReadyToRun=true
+  time dotnet publish -c Release -f netcoreapp3.1 /p:PublishReadyToRun=true /p:DefineConstants="NO_DEBUG" -o bin/local --self-contained -r $rid
   function dot_restore() {
     Say "HACK: Restoring"
     cmdRestore="dotnet restore >/dev/null || true; msbuild /t:restore >/dev/null || true"

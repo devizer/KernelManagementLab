@@ -133,9 +133,9 @@ namespace Universe.W3Top
                 {
                     if (LinuxMemorySummary.TryParse(out var memoryInfo))
                     {
-                        // each fio needs 150 MB of ram
+                        // each fio needs ~250 MB of ram
                         var mbAvail = memoryInfo.Available / 1024;
-                        int maxDiscoveryThreads = (int) Math.Max(1, mbAvail / 150);
+                        int maxDiscoveryThreads = (int) Math.Max(1, mbAvail / 250);
                         FioEnginesProvider.DiscoveryThreadsLimit = maxDiscoveryThreads;
                         Console.WriteLine($"[fio-features] Available memory: {mbAvail:n0} MB, Max Discovery Threads: {maxDiscoveryThreads}");
                     }
@@ -148,13 +148,13 @@ namespace Universe.W3Top
             app.Use(async (context, next) =>
             {
                 Action dumpHeaders = () => DumpHeaders(context);
-                dumpHeaders.RunOnly(count: 4, "Dump Request Headers for " + context.Request.Path + context.Request.PathBase);
+                dumpHeaders.RunOnly(count: 4, "Dump Request Headers for " + context.Request.Path);
                 await next.Invoke();
             });
 
             app.UseMiddleware<PreventSpaHtmlCachingMiddleware>();
             
-            if (true || !env.IsProduction()) app.UseMiddleware<KillerMiddleware>();
+            if (!env.IsProduction()) app.UseMiddleware<KillerMiddleware>();
             
             lifetime.ApplicationStopping.Register(() =>
             {
@@ -224,10 +224,9 @@ namespace Universe.W3Top
             return;
             StringBuilder info = new StringBuilder();
             info.AppendLine($"About {context.Request.Method} {context.Request.GetDisplayUrl()}:");
-            int n = 0;
-            info.AppendLine($"  - Connection: {context.Connection}");
-            info.AppendLine($"  - Connection: {context.Connection?.GetType()}");
             info.AppendLine($"  - Connection.RemoteIpAddress: {context.Connection?.RemoteIpAddress}");
+            int n = 0;
+            // info.AppendLine($"  - Connection: {context.Connection}");
             foreach (KeyValuePair<string,StringValues> header in context.Request.Headers)
             {
                 foreach (var value in header.Value)
