@@ -75,7 +75,7 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   say "Building $r [$ver]"
   time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp3.1 /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
   pushd bin/$r
-  rm -f System.*.a
+  # rm -f System.*.a - included in manifest
   chmod 644 *.dll
   chmod 755 Universe.W3Top
   chmod 755 install-systemd-service.sh
