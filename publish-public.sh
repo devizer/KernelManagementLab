@@ -3,6 +3,8 @@
 set -e
 set -u
 
+Say --Reset-Stopwatch || true
+
 export DOTNET_TARGET_DIR=/transient-builds/dotnet-3.1 DOTNET_VERSIONS="2.2 3.1" SKIP_DOTNET_ENVIRONMENT=true
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
 export PATH="/transient-builds/dotnet-3.1:$PATH"
