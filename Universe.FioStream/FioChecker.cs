@@ -13,7 +13,7 @@ namespace Universe.FioStream
             Executable = executable;
         }
 
-        public JobSummaryResult CheckBenchmark(string workingDirectory, string args)
+        public JobSummaryResult CheckBenchmark(string workingDirectory, string args, string kind = "generic")
         {
             JobSummaryResult ret = null;
             try
@@ -34,17 +34,17 @@ namespace Universe.FioStream
                 if (!string.IsNullOrEmpty(launcher.ErrorText) || launcher.ExitCode != 0)
                 {
                     var err = launcher.ErrorText?.TrimEnd('\r', '\n');
-                    Logger?.LogWarning($"Fio benchmark test failed for [{Executable}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]");
+                    Logger?.LogWarning($"Fio {kind} benchmark test failed for [{Executable}]. Exit Code [{launcher.ExitCode}]. Error: [{err}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}]");
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                Logger?.LogWarning($"Fio benchmark test failed for [{Executable}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}] {ex.GetExceptionDigest()}");
+                Logger?.LogWarning($"Fio {kind} benchmark test failed for [{Executable}]. Args: [{args}]. Working Directory [{workingDirectory ?? "<current>"}] {ex.GetExceptionDigest()}");
                 return null;
             }
 
-            Logger?.LogInfo($"Fio benchmark test results looks good for [{Executable}]");
+            Logger?.LogInfo($"Fio {kind} benchmark test results looks good for [{Executable}]");
             return ret;
         }
 

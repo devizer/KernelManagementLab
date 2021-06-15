@@ -70,7 +70,7 @@ namespace Universe.FioStream.Binaries
                 {
                     FioChecker checker = new FioChecker(Executable) {Logger = Logger};
                     var args = $"--name=my --bs=8k --size=8k --ioengine={engine} --filename={file}"; 
-                    JobSummaryResult summary = checker.CheckBenchmark(dir, args);
+                    JobSummaryResult summary = checker.CheckBenchmark(dir, args, kind: $"{{{engine}}}");
                     return summary == null ? null : "Ok";
                 });
             }
