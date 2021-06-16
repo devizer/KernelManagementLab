@@ -12,3 +12,8 @@ done
 ls -la /mnt/ramdisk
 rm -rf /mnt/ramdisk/*
 sudo umount /mnt/ramdisk
+
+echo 'TROUBLE
+for seq access we need single thread and single file sized as working set
+for random access using N threads we need N files sized as (working set / N)
+' > /dev/null
