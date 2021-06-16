@@ -1,3 +1,5 @@
+Say --Reset-Stopwatch
+
 test -s /etc/os-release && source /etc/os-release
 
 if [[ -s /tmp/image-id ]]; then
