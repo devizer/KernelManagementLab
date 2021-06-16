@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+Say --Reset-Stopwatch
 if [[ -s /vars.sh ]]; then
   Say "Loading /vars.sh"
   cat /vars.sh
