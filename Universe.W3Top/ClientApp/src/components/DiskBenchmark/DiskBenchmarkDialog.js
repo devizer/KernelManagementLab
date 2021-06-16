@@ -233,6 +233,7 @@ function DiskBenchmarkDialog(props) {
         const errorText = value => value ? value : " ";
         const safeEngines = engines === null ? [] : engines;
         const spanVersion = version => {
+            return version ? (<span style={{color:"grey", fontSize:"85%"}}>v{version}</span>) : "";
             let ret = "";
             ["major", "minor", "build", "revision"].forEach(part => {
                 if (version !== null && version !== undefined && version[part] !== null && version[part] !== undefined && version[part] !== -1) 
