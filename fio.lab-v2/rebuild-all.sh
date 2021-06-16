@@ -159,13 +159,13 @@ function build() {
   docker rmi -f "${image}:${tag}"
 }
 
-build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial        prepare_debian
+build multiarch/debian-debootstrap amd64-jessie       amd64-jessie        prepare_debian
+build ubuntu hirsute                                  amd64-hirsute       prepare_debian
 exit;
 build centos 6                                        amd64-rhel6         prepare_centos
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
 
-build ubuntu hirsute                                  amd64-hirsute       prepare_debian
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty        prepare_debian
 build ubuntu groovy                                   amd64-groovy        prepare_debian
 build centos 8                                        amd64-rhel8         prepare_centos
@@ -173,9 +173,7 @@ build quay.io/centos/centos stream                    amd64-centosstream  prepar
 build centos 7                                        amd64-rhel7         prepare_centos
 
 
-build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial        prepare_debian
 build multiarch/debian-debootstrap amd64-stretch      amd64-stretch       prepare_debian
-build multiarch/debian-debootstrap amd64-jessie       amd64-jessie        prepare_debian
 build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy        prepare_debian
 
 build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise       prepare_debian
