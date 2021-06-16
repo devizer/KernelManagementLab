@@ -96,8 +96,9 @@ function build() {
   options_commands=("${cmd_i1};" "${cmd_r1};")
   options_keys=("-libaio-system" "-libaio-missing")
 
-  # options_commands=("${cmd_r1};")
-  # options_keys=("-libaio-missing")
+  # for old fio system libaio is required
+  options_commands=("${cmd_i1};")
+  options_keys=("-libaio-system")
   
   # options_commands=();
   # options_keys=();
