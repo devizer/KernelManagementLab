@@ -1,3 +1,5 @@
+Say --Reset-Stopwatch
+
 test -s /etc/os-release && source /etc/os-release
 
 if [[ -s /tmp/image-id ]]; then
@@ -63,7 +65,7 @@ echo "";
 # also depends on []zlib1g zlib1g-dev] but not included
 # removed: libncurses5-dev libncurses5 libncursesw5-dev libncursesw5
 Say "Installing build tools for [$image]"
-try-and-retry apt-get install --no-install-recommends libc6-dev gcc build-essential autoconf autoconf make -y -q
+try-and-retry apt-get install --no-install-recommends libc6-dev libpthread-stubs0-dev gcc build-essential autoconf autoconf make -y -q
 
 }
 

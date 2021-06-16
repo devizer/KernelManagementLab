@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+Say --Reset-Stopwatch
 if [[ -s /vars.sh ]]; then
   Say "Loading /vars.sh"
   cat /vars.sh
@@ -26,9 +27,9 @@ make -j${cpus} && make install
 mkdir -p /out
 rm -rf /out/*
 set -o pipefail
-short="1M 1 0" long="1G 3 3"
-# ========== DURATIN ============
-duration="$short"
+short="1M 1 0" long="1G 4 2"
+# ========== DURATION ============
+duration="$long"
 if [[ -d /usr/local/fio ]]; then
     pushd /usr/local/fio
     tar czf /out/fio-distribution.tar.gz .
@@ -61,10 +62,14 @@ if [[ -d /usr/local/fio ]]; then
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
     export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps
     File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee /out/Benchmark.log
+    export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based --numjobs=8"
+    export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps-8-jobs
+    File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee -a /out/Benchmark.log
     exit_code=$?
     gzip -9 /out/Benchmark.log
     fio --enghelp > /out/enghelp-show-engine-list.log
-    fio --name=my --bs=1k --size=1k --ioengine=io_uring 1>/out/uring.output 2>/out/uring.error 
+    fio --name=my --bs=1k --size=1k --ioengine=io_uring 1>/out/uring.output 2>/out/uring.error
+    fio --name=my --eta=always --bs=4k --size=150M --iodepth=64 --numjobs=8 --gtod_reduce=1 --ioengine=sync --runtime=4 --time_based 1>/out/8-numjobs.output 2>/out/8-numjobs.error   
     Say "EXIT CODE of File-IO-Benchmark: $exit_code"
     # cd $FILE_IO_BENCHMARK_DUMP_FOLDER; cd *
     popd >/dev/null
@@ -85,8 +90,12 @@ elif [[ -s /usr/local/bin/fio ]]; then
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based"
     export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps
     File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee /out/Benchmark.log
+    export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based --numjobs=8"
+    export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps-8-jobs
+    File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee -a /out/Benchmark.log
     exit_code=$?
     gzip -9 /out/Benchmark.log
+    fio --name=my --eta=always --bs=4k --size=150M --iodepth=64 --numjobs=8 --gtod_reduce=1 --ioengine=sync --runtime=4 --time_based 1>/out/8-numjobs.output 2>/out/8-numjobs.error   
     fio --enghelp > /out/enghelp-show-engine-list.log
     Say "EXIT CODE of File-IO-Benchmark: $exit_code"
   popd >/dev/null

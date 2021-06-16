@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+Say --Reset-Stopwatch
 
 export DEBIAN_FRONTEND=noninteractive
 if [[ "$(command -v qemu-arm-static)" == "" || "$(command -v toilet)" == "" ]]; then 
@@ -95,8 +96,9 @@ function build() {
   options_commands=("${cmd_i1};" "${cmd_r1};")
   options_keys=("-libaio-system" "-libaio-missing")
 
-  options_commands=("${cmd_r1};")
-  options_keys=("-libaio-missing")
+  # for old fio system libaio is required
+  options_commands=("${cmd_i1};")
+  options_keys=("-libaio-system")
   
   # options_commands=();
   # options_keys=();
@@ -158,12 +160,13 @@ function build() {
   docker rmi -f "${image}:${tag}"
 }
 
+build multiarch/debian-debootstrap amd64-jessie       amd64-jessie        prepare_debian
+build ubuntu hirsute                                  amd64-hirsute       prepare_debian
+exit;
 build centos 6                                        amd64-rhel6         prepare_centos
-
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
 
-build ubuntu hirsute                                  amd64-hirsute       prepare_debian
 build multiarch/ubuntu-debootstrap amd64-trusty       amd64-trusty        prepare_debian
 build ubuntu groovy                                   amd64-groovy        prepare_debian
 build centos 8                                        amd64-rhel8         prepare_centos
@@ -171,9 +174,7 @@ build quay.io/centos/centos stream                    amd64-centosstream  prepar
 build centos 7                                        amd64-rhel7         prepare_centos
 
 
-build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial        prepare_debian
 build multiarch/debian-debootstrap amd64-stretch      amd64-stretch       prepare_debian
-build multiarch/debian-debootstrap amd64-jessie       amd64-jessie        prepare_debian
 build multiarch/debian-debootstrap amd64-wheezy       amd64-wheezy        prepare_debian
 
 build multiarch/ubuntu-debootstrap armhf-precise      armhf-precise       prepare_debian
