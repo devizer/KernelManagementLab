@@ -66,7 +66,7 @@ if [[ -d /usr/local/fio ]]; then
     gzip -9 /out/Benchmark.log
     fio --enghelp > /out/enghelp-show-engine-list.log
     fio --name=my --bs=1k --size=1k --ioengine=io_uring 1>/out/uring.output 2>/out/uring.error
-    fio --name=my --bs=4k --size=150M --iodepth=64 --numjobs=8 --gtod_reduce=1 --ioengine=sync --runtime=4 --time_based 1>/out/8-numjobs.output 1>/out/8-numjobs.error   
+    fio --name=my --bs=4k --size=150M --iodepth=64 --numjobs=8 --gtod_reduce=1 --ioengine=sync --runtime=4 --time_based 1>/out/8-numjobs.output 2>/out/8-numjobs.error   
     Say "EXIT CODE of File-IO-Benchmark: $exit_code"
     # cd $FILE_IO_BENCHMARK_DUMP_FOLDER; cd *
     popd >/dev/null
@@ -89,7 +89,7 @@ elif [[ -s /usr/local/bin/fio ]]; then
     File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee /out/Benchmark.log
     exit_code=$?
     gzip -9 /out/Benchmark.log
-    fio --name=my --bs=4k --size=150M --iodepth=64 --numjobs=8 --gtod_reduce=1 --ioengine=sync --runtime=4 --time_based 1>/out/8-numjobs.output 1>/out/8-numjobs.error   
+    fio --name=my --bs=4k --size=150M --iodepth=64 --numjobs=8 --gtod_reduce=1 --ioengine=sync --runtime=4 --time_based 1>/out/8-numjobs.output 2>/out/8-numjobs.error   
     fio --enghelp > /out/enghelp-show-engine-list.log
     Say "EXIT CODE of File-IO-Benchmark: $exit_code"
   popd >/dev/null
