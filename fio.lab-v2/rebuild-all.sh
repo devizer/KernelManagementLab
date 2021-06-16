@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+Say --Reset-Stopwatch
 
 export DEBIAN_FRONTEND=noninteractive
 if [[ "$(command -v qemu-arm-static)" == "" || "$(command -v toilet)" == "" ]]; then 
