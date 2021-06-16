@@ -159,9 +159,10 @@ function build() {
   docker rmi -f "${image}:${tag}"
 }
 
+build multiarch/ubuntu-debootstrap amd64-xenial       amd64-xenial        prepare_debian
+exit;
 build centos 6                                        amd64-rhel6         prepare_centos
 build multiarch/ubuntu-debootstrap amd64-focal        amd64-focal         prepare_debian
-exit;
 build multiarch/ubuntu-debootstrap amd64-precise      amd64-precise       prepare_debian
 
 build ubuntu hirsute                                  amd64-hirsute       prepare_debian
