@@ -31,10 +31,8 @@ namespace Universe.FioStream
                     else if (isBandwidth) 
                         bandwidth = TryParseBandwidth(summaryPairValue);
 
-                    var @break = "true";
                 }
-                Console.WriteLine($"summaryPartRaw: {summaryPartRaw}");
-
+                // Console.WriteLine($"summaryPartRaw: {summaryPartRaw}");
             }
 
             if (iops.HasValue && bandwidth.HasValue)
