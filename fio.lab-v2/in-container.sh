@@ -64,7 +64,9 @@ if [[ -d /usr/local/fio ]]; then
     timeout 666 File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee /out/Benchmark.log
     export FILE_IO_BENCHMARK_OPTIONS="--eta=always --time_based --numjobs=8"
     export FILE_IO_BENCHMARK_DUMP_FOLDER=/out/dumps-8-jobs
-    timeout 666 File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee -a /out/Benchmark.log
+    if [[ "$fio_ver" != "fio-2.10" ]]; then
+      timeout 666 File-IO-Benchmark "CONTAINER" $(pwd) $duration | tee -a /out/Benchmark.log
+    fi
     exit_code=$?
     gzip -9 /out/Benchmark.log
     fio --enghelp > /out/enghelp-show-engine-list.log

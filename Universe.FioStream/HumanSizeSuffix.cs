@@ -30,6 +30,8 @@ namespace Universe.FioStream
             new HumanSizeSuffix("P", 1024L*1024*1024*1024*1024),
             new HumanSizeSuffix("PB", 1024L*1024*1024*1024*1024),
             new HumanSizeSuffix("PiB", 1024L*1024*1024*1024*1024),
+            // should be LAST
+            new HumanSizeSuffix("B", 1),
         };
 
     }

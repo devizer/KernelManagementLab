@@ -101,7 +101,7 @@ namespace Universe.FioStream
                 return ret * scale;
             }
             */
-            if (TryParseDouble(arg, out var ret))
+            if (TryParseDouble(arg.Trim(), out var ret))
             {
                 return ret * scale;
             }
