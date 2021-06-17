@@ -1,5 +1,5 @@
 ##### 1.23
-- Added fio benchmark summary
+- Added fio benchmark summary details including cpu usage
 
 ##### 1.22
 - Added precompiled fio for any linux arch and distribution
