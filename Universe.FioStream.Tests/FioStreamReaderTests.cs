@@ -32,12 +32,14 @@ namespace Universe.FioStream.Tests
             FioStreamReader.ConsolasDebug = DEBUG;
 
             JobSummaryResult jobSummaryResult = null;
+            int jobSummaryResultCount = 0;
             JobSummaryCpuUsage jobSummaryCpuUsage = null;
             FioStreamReader reader = new FioStreamReader();
             reader.NotifyJobSummary += result =>
             {
                 if (DEBUG) Console.WriteLine($"JobSummaryResult: {result}");
                 jobSummaryResult = result;
+                jobSummaryResultCount++;
             };
 
             reader.NotifyJobSummaryCpuUsage += cpuUsage =>
@@ -94,6 +96,7 @@ namespace Universe.FioStream.Tests
             
             // Summary
             Assert.NotNull(jobSummaryResult, "FioStreamReader should provide JobSummaryResult");
+            Assert.AreEqual(testCase.NumJobs, jobSummaryResultCount, $"jobSummaryResultCount == {testCase.NumJobs}");
             Assert.True(jobSummaryResult.Iops > 0, "JobSummaryResult.Iops should be greater then zero");
             Assert.True(jobSummaryResult.Bandwidth > 0, "JobSummaryResult.Bandwidth should be greater then zero");
             

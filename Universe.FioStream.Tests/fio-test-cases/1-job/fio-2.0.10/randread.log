@@ -1,0 +1,14 @@
+RUN_randread: (g=0): rw=randread, bs=4K-4K/4K-4K/4K-4K, ioengine=libaio, iodepth=64
+fio-2.0.10
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/] [-.-% done] [0K/0K/0K /s] [0 /0 /0  iops] [eta 00m:04s]Jobs: 1 (f=1): [r] [50.0% done] [444K/0K/0K /s] [111 /0 /0  iops] [eta 00m:03s]Jobs: 1 (f=1): [r] [66.7% done] [6416K/0K/0K /s] [1604 /0 /0  iops] [eta 00m:02s]Jobs: 1 (f=1): [r] [83.3% done] [6492K/0K/0K /s] [1623 /0 /0  iops] [eta 00m:01s]Jobs: 1 (f=1): [r] [100.0% done] [6396K/0K/0K /s] [1599 /0 /0  iops] [eta 00m:00s]
+RUN_randread: (groupid=0, jobs=1): err= 0: pid=193882: Thu Jun 17 09:14:44 2021
+  read : io=25844KB, bw=6452.1KB/s, iops=1597 , runt=  4005msec
+  cpu          : usr=1.92%, sys=9.04%, ctx=9635, majf=0, minf=67
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.3%, 32=0.5%, >=64=149.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued    : total=r=6398/w=0/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+   READ: io=25844KB, aggrb=6452KB/s, minb=6452KB/s, maxb=6452KB/s, mint=4005msec, maxt=4005msec

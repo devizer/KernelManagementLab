@@ -1,0 +1,16 @@
+RUN_randwrite: (g=0): rw=randwrite, bs=4K-4K/4K-4K/4K-4K, ioengine=libaio, iodepth=64
+fio-2.10
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=1): [w(1)] [50.0% done] [0KB/366KB/0KB /s] [0/91/0 iops] [eta 00m:03s]Jobs: 1 (f=1): [w(1)] [66.7% done] [0KB/5859KB/0KB /s] [0/1464/0 iops] [eta 00m:02s]Jobs: 1 (f=1): [w(1)] [83.3% done] [0KB/5764KB/0KB /s] [0/1441/0 iops] [eta 00m:01s]Jobs: 1 (f=1): [w(1)] [100.0% done] [0KB/5860KB/0KB /s] [0/1465/0 iops] [eta 00m:00s]
+RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=276842: Thu Jun 17 11:26:43 2021
+  write: io=23708KB, bw=5875.7KB/s, iops=1453, runt=  4035msec
+    bw (KB  /s): min= 5648, max= 5944, per=98.94%, avg=5813.00, stdev=99.18
+  cpu          : usr=0.52%, sys=5.88%, ctx=5884, majf=0, minf=1
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.3%, 32=0.5%, >=64=146.2%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued    : total=r=0/w=5864/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+  WRITE: io=23708KB, aggrb=5875KB/s, minb=5875KB/s, maxb=5875KB/s, mint=4035msec, maxt=4035msec

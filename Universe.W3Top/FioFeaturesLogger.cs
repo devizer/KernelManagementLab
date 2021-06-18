@@ -27,7 +27,7 @@ namespace Universe.W3Top
 
         public void LogWarning(string message)
         {
-            Logger.LogWarning(message);
+            Logger.LogDebug(message);
         }
     }
 }
