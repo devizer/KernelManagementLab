@@ -21,8 +21,8 @@ namespace Universe.FioStream.Binaries
                     {
                         // TODO: try and retry
                         GZipCachedDownloader d = new GZipCachedDownloader() { Logger = Logger};
-                        var cached = d.CacheGZip(candidate.Name, candidate.Url);
-                        ret = new FioFeatures(cached) {Logger = Logger};
+                        var cachedBinary = d.CacheGZip(candidate.Name, candidate.Url);
+                        ret = new FioFeatures(cachedBinary) {Logger = Logger};
                     }
 
                     Features[candidate.Name] = ret;

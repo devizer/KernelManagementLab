@@ -84,7 +84,7 @@ steps:
     displayName: 'dotnet restore'
 
   - script: |
-      dotnet test -f netcoreapp2.2 -c Release --collect:"XPlat Code Coverage" --logger trx -- NUnit.NumberOfTestWorkers=1
+      dotnet test -f netcoreapp3.1 -c Release --collect:"XPlat Code Coverage" --logger trx -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
 
   - script: |
