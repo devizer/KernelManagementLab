@@ -1,65 +1,0 @@
-RUN_randwrite: (g=0): rw=randwrite, bs=4K-4K/4K-4K, ioengine=libaio, iodepth=64
-...
-RUN_randwrite: (g=0): rw=randwrite, bs=4K-4K/4K-4K, ioengine=libaio, iodepth=64
-fio 2.0.6
-Starting 8 processes
-Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0): [////////] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:04s]Jobs: 8 (f=8): [wwwwwwww] [50.0% done] [0K/134K /s] [0 /32  iops] [eta 00m:03s]Jobs: 8 (f=8): [wwwwwwww] [66.7% done] [0K/2355K /s] [0 /575  iops] [eta 00m:02s]Jobs: 8 (f=8): [wwwwwwww] [83.3% done] [0K/2039K /s] [0 /498  iops] [eta 00m:01s]Jobs: 8 (f=8): [wwwwwwww] [100.0% done] [0K/2056K /s] [0 /502  iops] [eta 00m:00s]Jobs: 8 (f=8): [wwwwwwww] [0.1% done] [0K/1970K /s] [0 /481  iops] [eta 01h:30m:56s]
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=191470
-  write: io=1484.0KB, bw=351275 B/s, iops=71 , runt=  4326msec
-  cpu          : usr=0.12%, sys=11.31%, ctx=903, majf=0, minf=6
-  IO depths    : 1=0.3%, 2=0.6%, 4=1.3%, 8=2.6%, 16=5.2%, 32=10.4%, >=64=124.4%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=99.7%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.3%, >=64=0.0%
-     issued    : total=r=0/w=308/d=0, short=r=0/w=0/d=0
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=191471
-  write: io=1464.0KB, bw=341488 B/s, iops=69 , runt=  4390msec
-  cpu          : usr=0.00%, sys=11.41%, ctx=912, majf=0, minf=5
-  IO depths    : 1=0.3%, 2=0.7%, 4=1.3%, 8=2.6%, 16=5.3%, 32=10.6%, >=64=126.4%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=99.7%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.3%, >=64=0.0%
-     issued    : total=r=0/w=303/d=0, short=r=0/w=0/d=0
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=191472
-  write: io=1276.0KB, bw=310952 B/s, iops=60 , runt=  4202msec
-  cpu          : usr=0.02%, sys=9.24%, ctx=857, majf=0, minf=5
-  IO depths    : 1=0.4%, 2=0.8%, 4=1.6%, 8=3.1%, 16=6.2%, 32=12.5%, >=64=124.6%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=99.7%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.3%, >=64=0.0%
-     issued    : total=r=0/w=256/d=0, short=r=0/w=0/d=0
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=191473
-  write: io=1464.0KB, bw=346300 B/s, iops=69 , runt=  4329msec
-  cpu          : usr=0.00%, sys=11.58%, ctx=893, majf=0, minf=5
-  IO depths    : 1=0.3%, 2=0.7%, 4=1.3%, 8=2.6%, 16=5.3%, 32=10.6%, >=64=126.4%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=99.7%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.3%, >=64=0.0%
-     issued    : total=r=0/w=303/d=0, short=r=0/w=0/d=0
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=191474
-  write: io=1480.0KB, bw=345457 B/s, iops=69 , runt=  4387msec
-  cpu          : usr=0.05%, sys=11.99%, ctx=906, majf=0, minf=5
-  IO depths    : 1=0.3%, 2=0.7%, 4=1.3%, 8=2.6%, 16=5.2%, 32=10.4%, >=64=124.8%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=99.7%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.3%, >=64=0.0%
-     issued    : total=r=0/w=307/d=0, short=r=0/w=0/d=0
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=191475
-  write: io=1340.0KB, bw=325387 B/s, iops=64 , runt=  4217msec
-  cpu          : usr=0.14%, sys=9.32%, ctx=862, majf=0, minf=5
-  IO depths    : 1=0.4%, 2=0.7%, 4=1.5%, 8=2.9%, 16=5.9%, 32=11.8%, >=64=117.3%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=99.7%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.3%, >=64=0.0%
-     issued    : total=r=0/w=272/d=0, short=r=0/w=0/d=0
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=191476
-  write: io=1488.0KB, bw=345669 B/s, iops=70 , runt=  4408msec
-  cpu          : usr=0.11%, sys=10.73%, ctx=894, majf=0, minf=4
-  IO depths    : 1=0.3%, 2=0.6%, 4=1.3%, 8=2.6%, 16=5.2%, 32=10.4%, >=64=123.9%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=99.7%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.3%, >=64=0.0%
-     issued    : total=r=0/w=309/d=0, short=r=0/w=0/d=0
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=191477
-  write: io=1252.0KB, bw=302583 B/s, iops=59 , runt=  4237msec
-  cpu          : usr=0.00%, sys=9.80%, ctx=835, majf=0, minf=5
-  IO depths    : 1=0.4%, 2=0.8%, 4=1.6%, 8=3.2%, 16=6.4%, 32=12.8%, >=64=127.6%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=99.7%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.3%, >=64=0.0%
-     issued    : total=r=0/w=250/d=0, short=r=0/w=0/d=0
-
-Run status group 0 (all jobs):
-  WRITE: io=11248KB, aggrb=2551KB/s, minb=302KB/s, maxb=351KB/s, mint=4202msec, maxt=4408msec

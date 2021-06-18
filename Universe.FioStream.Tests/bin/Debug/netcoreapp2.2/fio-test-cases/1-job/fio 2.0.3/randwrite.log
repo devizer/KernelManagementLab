@@ -1,14 +1,0 @@
-RUN_randwrite: (g=0): rw=randwrite, bs=4K-4K/4K-4K, ioengine=libaio, iodepth=64
-fio 2.0.3
-Starting 1 process
-Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/] [-.-% done] [0K/0K /s] [0 /0  iops] [eta 00m:04s]Jobs: 1 (f=1): [w] [50.0% done] [0K/347K /s] [0 /84  iops] [eta 00m:03s]Jobs: 1 (f=1): [w] [66.7% done] [0K/5881K /s] [0 /1436  iops] [eta 00m:02s]Jobs: 1 (f=1): [w] [83.3% done] [0K/5890K /s] [0 /1438  iops] [eta 00m:01s]Jobs: 1 (f=1): [w] [100.0% done] [0K/5562K /s] [0 /1358  iops] [eta 00m:00s]
-RUN_randwrite: (groupid=0, jobs=1): err= 0: pid=189538
-  write: io=22900KB, bw=5676.8KB/s, iops=1403 , runt=  4034msec
-  cpu          : usr=1.41%, sys=8.83%, ctx=8582, majf=0, minf=4
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.3%, 32=0.6%, >=64=150.3%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=0/w=5662/d=0, short=r=0/w=0/d=0
-
-Run status group 0 (all jobs):
-  WRITE: io=22900KB, aggrb=5676KB/s, minb=5812KB/s, maxb=5812KB/s, mint=4034msec, maxt=4034msec

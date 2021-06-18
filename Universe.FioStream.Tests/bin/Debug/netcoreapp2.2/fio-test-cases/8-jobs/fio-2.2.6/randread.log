@@ -1,72 +1,0 @@
-RUN_randread: (g=0): rw=randread, bs=4K-4K/4K-4K/4K-4K, ioengine=libaio, iodepth=64
-...
-fio-2.2.6
-Starting 8 processes
-Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0): [/(8)] [-.-% done] [0KB/0KB/0KB /s] [0/0/0 iops] [eta 00m:04s]Jobs: 8 (f=8): [r(8)] [50.0% done] [3266KB/0KB/0KB /s] [816/0/0 iops] [eta 00m:03s]Jobs: 8 (f=8): [r(8)] [66.7% done] [59044KB/0KB/0KB /s] [14.8K/0/0 iops] [eta 00m:02s]Jobs: 8 (f=8): [r(8)] [83.3% done] [6008KB/0KB/0KB /s] [1502/0/0 iops] [eta 00m:01s]  Jobs: 8 (f=8): [r(8)] [100.0% done] [6004KB/0KB/0KB /s] [1501/0/0 iops] [eta 00m:00s]Jobs: 6 (f=5): [r(4),_(1),r(2),_(1)] [50.0% done] [6756KB/0KB/0KB /s] [1689/0/0 iops] [eta 00m:07s]
-RUN_randread: (groupid=0, jobs=1): err= 0: pid=242952: Thu Jun 17 10:36:55 2021
-  read : io=10920KB, bw=2601.9KB/s, iops=635, runt=  4197msec
-  cpu          : usr=1.07%, sys=6.10%, ctx=6689, majf=0, minf=71
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.3%, 16=0.6%, 32=1.2%, >=64=244.7%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=2667/w=0/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
-     latency   : target=0, window=0, percentile=100.00%, depth=64
-RUN_randread: (groupid=0, jobs=1): err= 0: pid=242953: Thu Jun 17 10:36:55 2021
-  read : io=10960KB, bw=2612.7KB/s, iops=638, runt=  4195msec
-  cpu          : usr=0.88%, sys=6.51%, ctx=6739, majf=0, minf=74
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.3%, 16=0.6%, 32=1.2%, >=64=246.2%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=2677/w=0/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
-     latency   : target=0, window=0, percentile=100.00%, depth=64
-RUN_randread: (groupid=0, jobs=1): err= 0: pid=242954: Thu Jun 17 10:36:55 2021
-  read : io=10780KB, bw=2609.6KB/s, iops=637, runt=  4131msec
-  cpu          : usr=1.79%, sys=5.57%, ctx=6706, majf=0, minf=71
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.2%, 8=0.3%, 16=0.6%, 32=1.2%, >=64=250.4%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=2632/w=0/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
-     latency   : target=0, window=0, percentile=100.00%, depth=64
-RUN_randread: (groupid=0, jobs=1): err= 0: pid=242955: Thu Jun 17 10:36:55 2021
-  read : io=10940KB, bw=2605.4KB/s, iops=636, runt=  4199msec
-  cpu          : usr=1.38%, sys=6.19%, ctx=6750, majf=0, minf=72
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.3%, 16=0.6%, 32=1.2%, >=64=246.7%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=2672/w=0/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
-     latency   : target=0, window=0, percentile=100.00%, depth=64
-RUN_randread: (groupid=0, jobs=1): err= 0: pid=242956: Thu Jun 17 10:36:55 2021
-  read : io=10796KB, bw=2672.1KB/s, iops=652, runt=  4039msec
-  cpu          : usr=1.93%, sys=5.52%, ctx=6669, majf=0, minf=71
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.2%, 8=0.3%, 16=0.6%, 32=1.2%, >=64=247.6%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=2636/w=0/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
-     latency   : target=0, window=0, percentile=100.00%, depth=64
-RUN_randread: (groupid=0, jobs=1): err= 0: pid=242957: Thu Jun 17 10:36:55 2021
-  read : io=10944KB, bw=2622.6KB/s, iops=640, runt=  4173msec
-  cpu          : usr=0.93%, sys=6.85%, ctx=6800, majf=0, minf=73
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.3%, 16=0.6%, 32=1.2%, >=64=249.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=2673/w=0/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
-     latency   : target=0, window=0, percentile=100.00%, depth=64
-RUN_randread: (groupid=0, jobs=1): err= 0: pid=242958: Thu Jun 17 10:36:55 2021
-  read : io=10888KB, bw=2622.4KB/s, iops=640, runt=  4152msec
-  cpu          : usr=0.84%, sys=6.43%, ctx=6727, majf=0, minf=70
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.2%, 8=0.3%, 16=0.6%, 32=1.2%, >=64=247.9%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=2659/w=0/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
-     latency   : target=0, window=0, percentile=100.00%, depth=64
-RUN_randread: (groupid=0, jobs=1): err= 0: pid=242959: Thu Jun 17 10:36:55 2021
-  read : io=10560KB, bw=2628.2KB/s, iops=641, runt=  4018msec
-  cpu          : usr=1.44%, sys=6.42%, ctx=6628, majf=0, minf=71
-  IO depths    : 1=0.1%, 2=0.1%, 4=0.2%, 8=0.3%, 16=0.6%, 32=1.2%, >=64=250.8%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
-     issued    : total=r=2577/w=0/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
-     latency   : target=0, window=0, percentile=100.00%, depth=64
-
-Run status group 0 (all jobs):
-   READ: io=86788KB, aggrb=20668KB/s, minb=2601KB/s, maxb=2672KB/s, mint=4018msec, maxt=4199msec

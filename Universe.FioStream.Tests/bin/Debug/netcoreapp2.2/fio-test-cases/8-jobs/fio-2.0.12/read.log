@@ -1,66 +1,0 @@
-RUN_read: (g=0): rw=read, bs=1M-1M/1M-1M/1M-1M, ioengine=libaio, iodepth=1
-...
-RUN_read: (g=0): rw=read, bs=1M-1M/1M-1M/1M-1M, ioengine=libaio, iodepth=1
-fio-2.0.12
-Starting 8 processes
-RUN_read: Laying out IO file(s) (1 file(s) / 1024MB)
-Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0): [////////] [-.-% done] [0K/0K/0K /s] [0 /0 /0  iops] [eta 00m:04s]Jobs: 8 (f=8): [RRRRRRRR] [50.0% done] [18545K/0K/0K /s] [18 /0 /0  iops] [eta 00m:03s]Jobs: 8 (f=8): [RRRRRRRR] [66.7% done] [25600K/0K/0K /s] [25 /0 /0  iops] [eta 00m:02s]Jobs: 8 (f=8): [RRRRRRRR] [83.3% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 00m:01s]Jobs: 8 (f=8): [RRRRRRRR] [100.0% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 00m:00s]Jobs: 8 (f=8): [RRRRRRRR] [2.3% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 04m:56s]  Jobs: 8 (f=8): [RRRRRRRR] [2.6% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:01s]Jobs: 8 (f=8): [RRRRRRRR] [2.9% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:04s]Jobs: 8 (f=8): [RRRRRRRR] [3.2% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:07s]Jobs: 8 (f=8): [RRRRRRRR] [3.4% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:08s]Jobs: 8 (f=8): [RRRRRRRR] [3.7% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:10s]Jobs: 8 (f=8): [RRRRRRRR] [4.0% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:10s]Jobs: 8 (f=8): [RRRRRRRR] [4.3% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:11s]Jobs: 8 (f=8): [RRRRRRRR] [4.6% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:11s]Jobs: 8 (f=8): [RRRRRRRR] [4.9% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:11s]Jobs: 8 (f=8): [RRRRRRRR] [5.2% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:11s]Jobs: 8 (f=8): [RRRRRRRR] [5.5% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:11s]Jobs: 8 (f=8): [RRRRRRRR] [5.8% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:11s]Jobs: 8 (f=8): [RRRRRRRR] [6.0% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:11s]Jobs: 8 (f=8): [RRRRRRRR] [6.3% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 05m:10s]Jobs: 2 (f=2): [_____R_R] [18.5% done] [24576K/0K/0K /s] [24 /0 /0  iops] [eta 01m:37s]
-RUN_read: (groupid=0, jobs=1): err= 0: pid=196578: Thu Jun 17 09:21:28 2021
-  read : io=63488KB, bw=3343.3KB/s, iops=3 , runt= 18990msec
-  cpu          : usr=0.03%, sys=0.11%, ctx=134, majf=0, minf=260
-  IO depths    : 1=203.2%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=62/w=0/d=0, short=r=0/w=0/d=0
-RUN_read: (groupid=0, jobs=1): err= 0: pid=196579: Thu Jun 17 09:21:28 2021
-  read : io=64512KB, bw=3378.2KB/s, iops=3 , runt= 19097msec
-  cpu          : usr=0.00%, sys=0.14%, ctx=135, majf=0, minf=262
-  IO depths    : 1=200.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=63/w=0/d=0, short=r=0/w=0/d=0
-RUN_read: (groupid=0, jobs=1): err= 0: pid=196580: Thu Jun 17 09:21:28 2021
-  read : io=63488KB, bw=3336.8KB/s, iops=3 , runt= 19027msec
-  cpu          : usr=0.13%, sys=0.00%, ctx=135, majf=0, minf=261
-  IO depths    : 1=203.2%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=62/w=0/d=0, short=r=0/w=0/d=0
-RUN_read: (groupid=0, jobs=1): err= 0: pid=196581: Thu Jun 17 09:21:28 2021
-  read : io=63488KB, bw=3349.1KB/s, iops=3 , runt= 18952msec
-  cpu          : usr=0.00%, sys=0.11%, ctx=131, majf=0, minf=260
-  IO depths    : 1=203.2%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=62/w=0/d=0, short=r=0/w=0/d=0
-RUN_read: (groupid=0, jobs=1): err= 0: pid=196582: Thu Jun 17 09:21:28 2021
-  read : io=64512KB, bw=3371.7KB/s, iops=3 , runt= 19134msec
-  cpu          : usr=0.00%, sys=0.10%, ctx=132, majf=0, minf=261
-  IO depths    : 1=200.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=63/w=0/d=0, short=r=0/w=0/d=0
-RUN_read: (groupid=0, jobs=1): err= 0: pid=196583: Thu Jun 17 09:21:28 2021
-  read : io=64512KB, bw=3351.7KB/s, iops=3 , runt= 19248msec
-  cpu          : usr=0.01%, sys=0.12%, ctx=135, majf=0, minf=260
-  IO depths    : 1=200.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=63/w=0/d=0, short=r=0/w=0/d=0
-RUN_read: (groupid=0, jobs=1): err= 0: pid=196584: Thu Jun 17 09:21:28 2021
-  read : io=64512KB, bw=3364.8KB/s, iops=3 , runt= 19173msec
-  cpu          : usr=0.00%, sys=0.10%, ctx=134, majf=0, minf=260
-  IO depths    : 1=200.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=63/w=0/d=0, short=r=0/w=0/d=0
-RUN_read: (groupid=0, jobs=1): err= 0: pid=196585: Thu Jun 17 09:21:28 2021
-  read : io=64512KB, bw=3358.8KB/s, iops=3 , runt= 19211msec
-  cpu          : usr=0.00%, sys=0.11%, ctx=133, majf=0, minf=260
-  IO depths    : 1=200.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
-     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued    : total=r=63/w=0/d=0, short=r=0/w=0/d=0
-
-Run status group 0 (all jobs):
-   READ: io=513024KB, aggrb=26653KB/s, minb=3336KB/s, maxb=3378KB/s, mint=18952msec, maxt=19248msec
