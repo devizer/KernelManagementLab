@@ -14,7 +14,7 @@
     </ItemGroup>
 
   <ItemGroup>
-    <Content Include="fio-test-cases\**">
+    <Content Include="fio-test-cases/**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
