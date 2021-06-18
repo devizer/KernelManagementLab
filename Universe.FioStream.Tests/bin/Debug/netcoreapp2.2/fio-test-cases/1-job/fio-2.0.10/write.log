@@ -1,0 +1,14 @@
+RUN_write: (g=0): rw=write, bs=1M-1M/1M-1M/1M-1M, ioengine=libaio, iodepth=1
+fio-2.0.10
+Starting 1 process
+Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0)Jobs: 1 (f=0): [/] [-.-% done] [0K/0K/0K /s] [0 /0 /0  iops] [eta 00m:04s]Jobs: 1 (f=1): [W] [50.0% done] [0K/9553K/0K /s] [0 /9 /0  iops] [eta 00m:03s]Jobs: 1 (f=1): [W] [66.7% done] [0K/171.0M/0K /s] [0 /171 /0  iops] [eta 00m:02s]Jobs: 1 (f=1): [W] [83.3% done] [0K/84992K/0K /s] [0 /83 /0  iops] [eta 00m:01s] Jobs: 1 (f=1): [W] [100.0% done] [0K/24576K/0K /s] [0 /24 /0  iops] [eta 00m:00s]Jobs: 1 (f=1): [W] [41.2% done] [0K/24576K/0K /s] [0 /24 /0  iops] [eta 00m:10s] Jobs: 1 (f=1): [W] [42.1% done] [0K/24576K/0K /s] [0 /24 /0  iops] [eta 00m:11s]
+RUN_write: (groupid=0, jobs=1): err= 0: pid=193872: Thu Jun 17 09:14:38 2021
+  write: io=362496KB, bw=66795KB/s, iops=65 , runt=  5427msec
+  cpu          : usr=0.76%, sys=2.78%, ctx=720, majf=0, minf=4
+  IO depths    : 1=198.3%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=354/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+  WRITE: io=362496KB, aggrb=66794KB/s, minb=66794KB/s, maxb=66794KB/s, mint=5427msec, maxt=5427msec
