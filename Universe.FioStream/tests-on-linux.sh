@@ -8,3 +8,4 @@ time dotnet test  --filter "FullyQualifiedName~FioEngineListTests" -f net5.0 | t
 time dotnet test  --filter "FullyQualifiedName~FioLauncherSmokeTests" -f net5.0 | tee test-launcher.log
 time dotnet test -f net5.0 | tee tests-all.log
 
+dotnet test  --filter "FullyQualifiedName~FioStreamReaderTests" -f netcoreapp2.2
