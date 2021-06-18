@@ -1,0 +1,65 @@
+RUN_write: (g=0): rw=write, bs=1M-1M/1M-1M/1M-1M, ioengine=libaio, iodepth=1
+...
+RUN_write: (g=0): rw=write, bs=1M-1M/1M-1M/1M-1M, ioengine=libaio, iodepth=1
+fio-2.1.2
+Starting 8 processes
+Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=0)Jobs: 8 (f=8): [WWWWWWWW] [50.0% done] [0KB/6823KB/0KB /s] [0/6/0 iops] [eta 00m:03s]Jobs: 8 (f=8): [WWWWWWWW] [66.7% done] [0KB/162.0MB/0KB /s] [0/162/0 iops] [eta 00m:02s]Jobs: 8 (f=8): [WWWWWWWW] [83.3% done] [0KB/93184KB/0KB /s] [0/91/0 iops] [eta 00m:01s] Jobs: 8 (f=8): [WWWWWWWW] [100.0% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 00m:00s]Jobs: 8 (f=8): [WWWWWWWW] [4.1% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 02m:45s]  Jobs: 8 (f=8): [WWWWWWWW] [4.1% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 03m:06s]Jobs: 8 (f=8): [WWWWWWWW] [4.1% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 03m:30s]Jobs: 8 (f=8): [WWWWWWWW] [4.2% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 03m:46s]Jobs: 8 (f=8): [WWWWWWWW] [4.3% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 04m:07s]Jobs: 8 (f=8): [WWWWWWWW] [4.4% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 04m:19s]Jobs: 8 (f=8): [WWWWWWWW] [4.6% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 04m:30s]Jobs: 8 (f=8): [WWWWWWWW] [4.7% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 04m:47s]Jobs: 8 (f=8): [WWWWWWWW] [4.8% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 04m:56s]Jobs: 8 (f=8): [WWWWWWWW] [5.0% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 05m:04s]Jobs: 8 (f=8): [WWWWWWWW] [5.1% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 05m:18s]Jobs: 8 (f=8): [WWWWWWWW] [5.2% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 05m:25s]Jobs: 5 (f=5): [WW__W_WW] [36.5% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 00m:33s]Jobs: 3 (f=3): [WW__W___] [23.8% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 01m:04s]Jobs: 1 (f=1): [_W______] [17.8% done] [0KB/24576KB/0KB /s] [0/24/0 iops] [eta 01m:37s]
+RUN_write: (groupid=0, jobs=1): err= 0: pid=204301: Thu Jun 17 09:34:24 2021
+  write: io=83968KB, bw=4872.9KB/s, iops=4, runt= 17232msec
+  cpu          : usr=0.03%, sys=0.78%, ctx=278, majf=0, minf=6
+  IO depths    : 1=153.7%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=82/d=0, short=r=0/w=0/d=0
+RUN_write: (groupid=0, jobs=1): err= 0: pid=204302: Thu Jun 17 09:34:24 2021
+  write: io=93184KB, bw=4966.2KB/s, iops=4, runt= 18764msec
+  cpu          : usr=0.03%, sys=0.40%, ctx=309, majf=0, minf=8
+  IO depths    : 1=138.5%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=91/d=0, short=r=0/w=0/d=0
+RUN_write: (groupid=0, jobs=1): err= 0: pid=204303: Thu Jun 17 09:34:24 2021
+  write: io=81920KB, bw=5127.4KB/s, iops=5, runt= 15977msec
+  cpu          : usr=0.01%, sys=0.80%, ctx=265, majf=0, minf=8
+  IO depths    : 1=157.5%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=80/d=0, short=r=0/w=0/d=0
+RUN_write: (groupid=0, jobs=1): err= 0: pid=204304: Thu Jun 17 09:34:24 2021
+  write: io=79872KB, bw=5185.2KB/s, iops=5, runt= 15404msec
+  cpu          : usr=0.03%, sys=0.72%, ctx=259, majf=0, minf=7
+  IO depths    : 1=161.5%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=78/d=0, short=r=0/w=0/d=0
+RUN_write: (groupid=0, jobs=1): err= 0: pid=204305: Thu Jun 17 09:34:24 2021
+  write: io=92160KB, bw=5354.5KB/s, iops=5, runt= 17212msec
+  cpu          : usr=0.06%, sys=0.69%, ctx=262, majf=0, minf=6
+  IO depths    : 1=140.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=90/d=0, short=r=0/w=0/d=0
+RUN_write: (groupid=0, jobs=1): err= 0: pid=204306: Thu Jun 17 09:34:24 2021
+  write: io=77824KB, bw=5062.6KB/s, iops=4, runt= 15374msec
+  cpu          : usr=0.05%, sys=0.82%, ctx=219, majf=0, minf=6
+  IO depths    : 1=165.8%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=76/d=0, short=r=0/w=0/d=0
+RUN_write: (groupid=0, jobs=1): err= 0: pid=204307: Thu Jun 17 09:34:24 2021
+  write: io=83968KB, bw=5146.2KB/s, iops=5, runt= 16314msec
+  cpu          : usr=0.07%, sys=0.76%, ctx=268, majf=0, minf=6
+  IO depths    : 1=153.7%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=82/d=0, short=r=0/w=0/d=0
+RUN_write: (groupid=0, jobs=1): err= 0: pid=204308: Thu Jun 17 09:34:24 2021
+  write: io=90112KB, bw=5368.1KB/s, iops=5, runt= 16784msec
+  cpu          : usr=0.06%, sys=0.68%, ctx=252, majf=0, minf=6
+  IO depths    : 1=143.2%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued    : total=r=0/w=88/d=0, short=r=0/w=0/d=0
+
+Run status group 0 (all jobs):
+  WRITE: io=683008KB, aggrb=36399KB/s, minb=4872KB/s, maxb=5368KB/s, mint=15374msec, maxt=18764msec
