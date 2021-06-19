@@ -90,9 +90,14 @@ export default class App extends Component {
     };
     
     render () {
-        const benchmarkResult = SharedDiskBenchmarkFlow.tryParse();
-        if (benchmarkResult) {
-            return <DiskBenchmarkResult opened={true} selectedRow={benchmarkResult} forced={true}/>;
+        if (SharedDiskBenchmarkFlow.isSharedBenchmarkResult()) {
+            const benchmarkResult = SharedDiskBenchmarkFlow.tryParse();
+            if (benchmarkResult) {
+                return <DiskBenchmarkResult opened={true} selectedRow={benchmarkResult} forced={true}/>;
+            }
+            else {
+                return <h3 style={{}}>no results.</h3>
+            }
         }
         
         return (

@@ -211,8 +211,10 @@ export class DiskBenchmarkResult extends React.Component {
                 opened: this.props.opened,
                 selectedRow: this.props.selectedRow,
             });
-            const link = SharedDiskBenchmarkFlow.buildLink(selectedRow);
-            Helper.toConsole("shared link", link);
+            if (this.props.selectedRow) {
+                const link = SharedDiskBenchmarkFlow.buildLink(this.props.selectedRow);
+                Helper.toConsole("shared link", link);
+            }
         }
     }
 
