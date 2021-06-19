@@ -1,7 +1,6 @@
 import "c3/c3.css"
 import "./App.css"
 import AppGitInfo from './AppGitInfo'
-import * as Helper from "Helper";
 
 import 'babel-polyfill';
 import React, { Component } from 'react';
@@ -25,8 +24,7 @@ import { ProcessListContainerV1 } from "./components/ProcessList/ProcessListCont
 import {RowsFiltersComponent} from "./components/ProcessList/RowsFiltersComponent";
 import {ColumnChooserComponent} from "./components/ProcessList/ColumnChooserComponent";
 import {DiskBenchmarkResult} from "./components/DiskBenchmark/DiskBenchmarkResult";
-
-
+import * as Helper from "./Helper";
 
 require('typeface-roboto')
 
@@ -92,7 +90,7 @@ export default class App extends Component {
     };
     
     render () {
-        Helper.toConsole("window.location on app render", window.location);
+        const benchmarkResult = Helper.SharedDiskBenchmark.tryParse();
         return (
             <Layout>
                     <Switch>

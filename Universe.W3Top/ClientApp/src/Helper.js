@@ -10,6 +10,8 @@ export const toConsole = function(caption, obj) {
     }
 }
 
+
+
 export const runInBackground = callBack => {
     if (typeof callBack !== "function") console.warn(`callback is not a function. it's a ${typeof callBack}`);
     
@@ -255,4 +257,25 @@ export class NetDev
         throw Error("interface property is expected for globalDataSource");
     }
 
+}
+
+/*
+window.location properties:
+    hostname: "localhost"
+    host: "localhost:5010"
+    search: "?sdfsdfsdf"
+    hash: "#45646"
+    href: "http://localhost:5010/disk-benchmark?sdfsdfsdf#45646"
+    origin: "http://localhost:5010"
+    pathname: "/disk-benchmark"
+    port: "5010"
+    protocol: "http:"
+ */
+export class SharedDiskBenchmark
+{
+    static tryParse()
+    {
+        const loc = window && window.location ? window.location : null;
+        if (!loc) return null;
+    }
 }
