@@ -164,7 +164,8 @@ function Details({row, allowShare}) {
                         color="inherit"
                         aria-label="Copy to cloud"
                         onClick={() => copyTextToClipboard(SharedDiskBenchmarkFlow.buildLink(row))}
-            ><CopyToCloudIcon />
+            >
+                <CopyToCloudIcon />
             </IconButton>
         </div>}
         
