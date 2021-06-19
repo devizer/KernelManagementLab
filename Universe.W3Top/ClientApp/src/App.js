@@ -24,7 +24,7 @@ import { ProcessListContainerV1 } from "./components/ProcessList/ProcessListCont
 import {RowsFiltersComponent} from "./components/ProcessList/RowsFiltersComponent";
 import {ColumnChooserComponent} from "./components/ProcessList/ColumnChooserComponent";
 import {DiskBenchmarkResult} from "./components/DiskBenchmark/DiskBenchmarkResult";
-import * as Helper from "./Helper";
+import {SharedDiskBenchmarkFlow} from "./SharedDiskBenchmarkFlow";
 
 require('typeface-roboto')
 
@@ -90,7 +90,7 @@ export default class App extends Component {
     };
     
     render () {
-        const benchmarkResult = Helper.SharedDiskBenchmark.tryParse();
+        const benchmarkResult = SharedDiskBenchmarkFlow.tryParse();
         if (benchmarkResult) {
             return <DiskBenchmarkResult opened={true} selectedRow={benchmarkResult} forced={true}/>;
         }

@@ -12,6 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {SharedDiskBenchmarkFlow} from "../../SharedDiskBenchmarkFlow";
 
 const widths = {
     iops: 88,     // right aligned
@@ -210,6 +211,8 @@ export class DiskBenchmarkResult extends React.Component {
                 opened: this.props.opened,
                 selectedRow: this.props.selectedRow,
             });
+            const link = SharedDiskBenchmarkFlow.buildLink(selectedRow);
+            Helper.toConsole("shared link", link);
         }
     }
 
