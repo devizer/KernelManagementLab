@@ -39,6 +39,8 @@ namespace Universe.W3Top
                 var msec = startAt.ElapsedTicks * 1000d / Stopwatch.Frequency;
                 context.Response.Headers.Add("X-Duration-in-Milliseconds", msec.ToString("0.00"));
                 context.Response.Headers.Add("X-Ver", _Ver.Value);
+                context.Response.Headers.Remove("Server");
+                context.Response.Headers.Add("Server","devizer/w3top");
 
                 var type = context.Response.ContentType ?? "";
                 bool isIt2 =
