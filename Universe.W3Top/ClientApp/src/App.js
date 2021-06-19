@@ -1,6 +1,7 @@
 import "c3/c3.css"
 import "./App.css"
 import AppGitInfo from './AppGitInfo'
+import * as Helper from "Helper";
 
 import 'babel-polyfill';
 import React, { Component } from 'react';
@@ -91,6 +92,7 @@ export default class App extends Component {
     };
     
     render () {
+        Helper.toConsole("window.location", window.location);
         return (
             <Layout>
                     <Switch>
