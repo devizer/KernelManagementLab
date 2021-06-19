@@ -91,6 +91,10 @@ export default class App extends Component {
     
     render () {
         const benchmarkResult = Helper.SharedDiskBenchmark.tryParse();
+        if (benchmarkResult) {
+            return <DiskBenchmarkResult opened={true} selectedRow={benchmarkResult} forced={true}/>;
+        }
+        
         return (
             <Layout>
                     <Switch>

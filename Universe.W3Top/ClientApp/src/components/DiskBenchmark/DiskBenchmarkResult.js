@@ -195,8 +195,8 @@ export class DiskBenchmarkResult extends React.Component {
         super(props);
         
         this.state = {
-            opened: false,
-            selectedRow: null,
+            opened: props.opened,
+            selectedRow: props.selectedRow,
         };
         
         this.handleClose = this.handleClose.bind(this);
@@ -214,8 +214,10 @@ export class DiskBenchmarkResult extends React.Component {
     }
 
     handleClose() {
-        this.setState({opened: false});
-        // alert("CLOSED, opened: " + this.state.opened);
+        if (!this.props.forced) {
+            this.setState({opened: false});
+            // alert("CLOSED, opened: " + this.state.opened);
+        }
     }
 
     render() {
