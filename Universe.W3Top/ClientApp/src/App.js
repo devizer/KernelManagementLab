@@ -91,12 +91,13 @@ export default class App extends Component {
     
     render () {
         if (SharedDiskBenchmarkFlow.isSharedBenchmarkResult()) {
+            if (typeof document === "object") document.title = "Drive Benchmark by W3Top";
             const benchmarkResult = SharedDiskBenchmarkFlow.tryParse();
             if (benchmarkResult) {
                 return <DiskBenchmarkResult opened={true} selectedRow={benchmarkResult} forced={true}/>;
             }
             else {
-                return <h3 style={{}}>no results.</h3>
+                return <h4 style={{}}>broken url</h4>
             }
         }
         

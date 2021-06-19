@@ -143,3 +143,7 @@ table.benchmark-progress td.step-status  {
      width: 500px;
      margin-bottom: 12px;
  }
+
+button:focus {
+    outline: none !important;
+}

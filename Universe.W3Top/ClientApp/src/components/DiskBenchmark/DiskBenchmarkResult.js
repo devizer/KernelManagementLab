@@ -3,7 +3,7 @@ import MomentFormat from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCheck, faCheckDouble} from '@fortawesome/free-solid-svg-icons'
 import * as Helper from "../../Helper";
-
+import { ReactComponent as CopyToCloudIconSvg } from '../../icons/copy2cloud-v2.svg';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +13,47 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {SharedDiskBenchmarkFlow} from "../../SharedDiskBenchmarkFlow";
+import {ReactComponent as MainIconSvg} from "../../icons/w3top-3.svg";
+import IconButton from "@material-ui/core/IconButton";
+import classNames from "classnames";
+
+const CopyToCloudIcon = ({size=16,color='black'}) => (<CopyToCloudIconSvg style={{width: size,height:size,fill:color,strokeWidth:'3px',stroke:color }} />);
+
+function fallbackCopyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+
+    // Avoid scrolling to bottom
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Fallback: Copying text command was ' + msg);
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+    }
+
+    document.body.removeChild(textArea);
+}
+
+function copyTextToClipboard(text) {
+    if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text);
+        return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
+    }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+    });
+}
 
 const widths = {
     iops: 88,     // right aligned
@@ -49,6 +90,18 @@ const styles = {
         backgroundColor: "#EBECEF",
         border: "1px solid #B7B9BF",
         color: "black",
+    },
+    copyToCloud: {
+        position: "absolute",
+        width: 50,
+        height: 50,
+        margin: 0,
+        padding: 0,
+        fontSize: 11,
+        left: -15,
+        top: -12,
+        textAlign: "left",
+        zIndex: 99999,
     },
     details: {
         position: "absolute",
@@ -101,10 +154,20 @@ const styles = {
     },
 }
 
-function Details({row}) {
+function Details({row, allowShare}) {
     const full = row ? row : {};
     const theRootSpan = _ => (<span style={{opacity:0.55}}>&nbsp;(the root)</span>);
     return <React.Fragment>
+
+        {allowShare === true && <div style={styles.copyToCloud}>
+            <IconButton id={"COPY_TO_CLOUD_ICON"}
+                        color="inherit"
+                        aria-label="Copy to cloud"
+                        onClick={() => copyTextToClipboard(SharedDiskBenchmarkFlow.buildLink(row))}
+            ><CopyToCloudIcon />
+            </IconButton>
+        </div>}
+        
         <div style={styles.details}>
             <div>Disk Benchmark</div>
             <div style={{fontSize: 16}}>
@@ -235,7 +298,7 @@ export class DiskBenchmarkResult extends React.Component {
             <Dialog open={this.state.opened} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={false} maxWidth={"md"}>
                 <DialogContent style={{textAlign: "center"}} >
                     <div style={styles.main}>
-                        <Details row={this.state.selectedRow} />
+                        <Details row={this.state.selectedRow} allowShare={!this.props.forced} />
                         {ActionPanel(1, 0, "Allocate", full.allocate, null, full.allocateCpuUsage)}
                         {ActionPanel(0, 1, "Read", full.seqRead, null, full.seqReadCpuUsage)}
                         {ActionPanel(1, 1, "Write", full.seqWrite, null, full.seqWriteCpuUsage)}
