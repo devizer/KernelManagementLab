@@ -31,24 +31,6 @@ wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
 ### Common .net core dependencies:
 https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites
 
-### Specific runtime Dependency: libMonoPosixHelper.so
-Minimum version is **`4.6`**
-
-Depending on runtime identifier this library may be missed on publish. 
-Xamarin already prepared it for most of runtimes of dotnet core, but for for all.
-It can be installed using:
-
-```bash
-# Alpine Linux
-sudo apk add mono
-
-# Fedora/CentOS/RedHat
-sudo yum install mono-core
-
-# Debian/Ubuntu derivatives
-sudo apt install mono-runtime-common
-```
-
 ### Unininstall
 ```bash
 sudo systemctl disable w3top.service
