@@ -92,7 +92,7 @@ export default class App extends Component {
     };
     
     render () {
-        Helper.toConsole("window.location", window.location);
+        Helper.toConsole("window.location on app render", window.location);
         return (
             <Layout>
                     <Switch>
