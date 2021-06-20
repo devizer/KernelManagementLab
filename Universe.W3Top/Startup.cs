@@ -194,7 +194,7 @@ namespace Universe.W3Top
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 
-                endpoints.MapHub<DataSourceHub>("/dataSourceHub");
+                endpoints.MapHub<DataSourceHub>("/api-hubs/dataSourceHub");
             });
             
             app.UseSpa(spa =>
