@@ -2,6 +2,7 @@
 import base32Encode from "base32-encode"
 import base32Decode from "base32-decode"
 import {TextDecoder, TextEncoder} from "text-encoding"
+const queryString = require('query-string');
 
 /*
 window.location properties:
@@ -69,6 +70,10 @@ export class SharedDiskBenchmarkFlow
 {
 
     static isSharedBenchmarkResult() {
+        if (process.env.NODE_ENV !== 'production') {
+            // return true;
+        }
+
         const loc = window && window.location ? window.location : null;
         if (!loc) return false;
         return loc.hostname === "my-drive.github.io";
@@ -79,19 +84,19 @@ export class SharedDiskBenchmarkFlow
         const loc = window && window.location ? window.location : null;
         if (!loc) return null;
 
-        if (loc.search === "?v=1") {
-            const rawHash = loc.hash;
-            if (rawHash.length > 1 && rawHash.substring(0,1) == '#') {
-                const base32encoded = rawHash.substring(1);
-                try {
-                    const bytes = base32Decode(base32encoded, 'RFC4648');
-                    const jsonString = new TextDecoder().decode(bytes);
-                    const ret = JSON.parse(jsonString);
-                    return ret;
-                }
-                catch (e) {
-                    return null;
-                }
+        const queryParameters = queryString.parse(loc.search);
+        const version = queryParameters.v;
+        const performance = queryParameters.performance;
+        if (version === "2" && performance) {
+            const base32encoded = performance;
+            try {
+                const bytes = base32Decode(base32encoded, 'RFC4648');
+                const jsonString = new TextDecoder().decode(bytes);
+                const ret = JSON.parse(jsonString);
+                return ret;
+            }
+            catch (e) {
+                return null;
             }
         }
         // WORKS
@@ -103,7 +108,7 @@ export class SharedDiskBenchmarkFlow
         const jsonString = JSON.stringify(selectedRow);
         var uint8array = new TextEncoder().encode(jsonString);
         const safeUrlEncoded = base32Encode(uint8array, 'RFC4648', { padding: false });
-        const ret = `https://my-drive.github.io/?v=1#${safeUrlEncoded}`;
+        const ret = `https://my-drive.github.io/?v=2&performance=${safeUrlEncoded}`;
         return ret;
     }
 }
