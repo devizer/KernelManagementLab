@@ -32,6 +32,7 @@ require('typeface-roboto')
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
+
 export default class App extends Component {
     static displayName = App.name;
 
@@ -50,7 +51,8 @@ export default class App extends Component {
     }
     
     componentDidMount() {
-        dataSourceListener.start();
+        if (!SharedDiskBenchmarkFlow.isSharedBenchmarkResult())
+            dataSourceListener.start();
     }
     
     componentWillUnmount() {
