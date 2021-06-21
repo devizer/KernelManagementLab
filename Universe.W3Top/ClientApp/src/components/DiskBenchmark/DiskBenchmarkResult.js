@@ -5,6 +5,7 @@ import {faCheck, faCheckDouble} from '@fortawesome/free-solid-svg-icons'
 import * as Helper from "../../Helper";
 import { ReactComponent as CopyToCloudIconSvg } from '../../icons/copy2cloud-v2.svg';
 import { ReactComponent as ShareIconSvg } from '../../icons/Share-Icon.svg';
+import { ReactComponent as ShareOutlinedIconSvg } from '../../icons/Share-Outlines-Icon.svg';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -19,7 +20,9 @@ import IconButton from "@material-ui/core/IconButton";
 import classNames from "classnames";
 
 const CopyToCloudIcon = ({size=16,color='black'}) => (<CopyToCloudIconSvg style={{width: size,height:size,fill:color,strokeWidth:'3px',stroke:color }} />);
-const ShareIcon = ({size=16,color='#BBB'}) => (<ShareIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
+const ShareIconSize=18;
+const ShareIcon = ({size=ShareIconSize,color='#BBB'}) => (<ShareOutlinedIconSvg style={{width: size, height: size, fill:color,strokeWidth:'1px',stroke:color }} />);
+
 
 function selectNodeText(containerid) {
     if (document.selection) { // IE
@@ -128,14 +131,18 @@ const styles = {
 
     shareIcon: {
         position: "absolute",
-        width: 15,
-        height: heights.share,
+        width: ShareIconSize+1, height: ShareIconSize+1,
         margin: 0,
         padding: 0,
         left: -5, 
         textAlign: "left",
-        top: (heights.panel + heights.panelSpace) * 4 - 2,
+        fontSize: "1px",
+        top: (heights.panel + heights.panelSpace) * 4 + 1,
         zIndex: 99999,
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        // border: "1px solid blue",
+        
     },
     shareBar: {
         position: "absolute",
@@ -371,6 +378,7 @@ export class DiskBenchmarkResult extends React.Component {
             <Dialog open={this.state.opened} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={false} maxWidth={"md"}>
                 <DialogContent style={{textAlign: "center"}} >
                     <div style={styles.main}>
+                        {!this.props.forced && <div style={styles.shareIcon}><ShareIcon /></div>}
                         <Details row={this.state.selectedRow} allowShare={!this.props.forced} />
                         {ActionPanel(1, 0, "Allocate", full.allocate, null, full.allocateCpuUsage)}
                         {ActionPanel(0, 1, "Read", full.seqRead, null, full.seqReadCpuUsage)}
@@ -383,12 +391,11 @@ export class DiskBenchmarkResult extends React.Component {
                         {ParametersPanel(2,<span>RND 1Q</span>)}
                         {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
 
-                        {!this.props.forced && <><div id="SHARED_DRIVE_BENCHMARK_BAR" style={styles.shareBar} onClick={onSharedLinkClick} title="Click & Ctrl-C to share">
+                        {!this.props.forced && <div id="SHARED_DRIVE_BENCHMARK_BAR" style={styles.shareBar} onClick={onSharedLinkClick} title="Click & Ctrl-C to share">
                             {/*https://stackoverflow.com/questions/1173194/select-all-div-text-with-single-mouse-click/1173319*/}
                             {SharedDiskBenchmarkFlow.buildLink(full)}
-                        </div>
-                            <div style={styles.shareIcon}><ShareIcon /></div>
-                        </>}
+                        </div>}
+                        
 
                         {this.props.forced && <div style={styles.poweredByBar}>
                             powered by <a href="https://github.com/devizer/w3top-bin">w3top</a>
