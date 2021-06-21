@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCheck, faCheckDouble} from '@fortawesome/free-solid-svg-icons'
 import * as Helper from "../../Helper";
 import { ReactComponent as CopyToCloudIconSvg } from '../../icons/copy2cloud-v2.svg';
+import { ReactComponent as ShareIconSvg } from '../../icons/Share-Icon.svg';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -18,6 +19,7 @@ import IconButton from "@material-ui/core/IconButton";
 import classNames from "classnames";
 
 const CopyToCloudIcon = ({size=16,color='black'}) => (<CopyToCloudIconSvg style={{width: size,height:size,fill:color,strokeWidth:'3px',stroke:color }} />);
+const ShareIcon = ({size=16,color='black'}) => (<ShareIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
 
 function fallbackCopyTextToClipboard(text) {
     var textArea = document.createElement("textarea");
@@ -72,12 +74,13 @@ const heights = {
     panel: 72,
     panelSpace: 18,
     metrics: 38, 
+    share: 20,
 };
 
 const styles = {
     main: {
         width: widths.panel * 2 + widths.panelSpace + widths.parameters,
-        height: 4 * heights.panel + 3 * heights.panelSpace,
+        height: 4 * heights.panel + (3+1) * heights.panelSpace + heights.share,
         position: "relative",
         // border: "1px solid green",
     },
@@ -102,6 +105,40 @@ const styles = {
         top: -12,
         textAlign: "left",
         zIndex: 99999,
+    },
+
+    shareBar: {
+        position: "absolute",
+        width: 2*widths.panel + widths.panelSpace,
+        height: heights.share,
+        margin: 0,
+        padding: 2,
+        fontSize: 10,
+        left: widths.parameters,
+        top: (heights.panel + heights.panelSpace) * 4,
+        textAlign: "center",
+        zIndex: 99999,
+        border: "1px solid #B7B9BF",
+        color: "#666",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+    },
+    poweredByBar: {
+        position: "absolute",
+        width: 2*widths.panel + widths.panelSpace,
+        height: heights.share,
+        margin: 0,
+        padding: 2,
+        fontSize: 10,
+        left: widths.parameters,
+        top: (heights.panel + heights.panelSpace) * 4,
+        textAlign: "center",
+        zIndex: 99999,
+        color: "#666",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
     },
     details: {
         position: "absolute",
@@ -310,6 +347,16 @@ export class DiskBenchmarkResult extends React.Component {
                         {ParametersPanel(1,"SEQ")}
                         {ParametersPanel(2,<span>RND 1Q</span>)}
                         {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
+
+                        {!this.props.forced && <div style={styles.shareBar}>
+                            {SharedDiskBenchmarkFlow.buildLink(full)}
+                        </div>}
+
+                        {this.props.forced && <div style={styles.poweredByBar}>
+                            powered by <a href="https://github.com/devizer/w3top-bin">w3top</a>
+                        </div>}
+
+
                     </div>
 {/*
                     <div style={{wordBreak:"break-all", wordWrap: "break-word", display: "none"}}>
