@@ -21,6 +21,19 @@ import classNames from "classnames";
 const CopyToCloudIcon = ({size=16,color='black'}) => (<CopyToCloudIconSvg style={{width: size,height:size,fill:color,strokeWidth:'3px',stroke:color }} />);
 const ShareIcon = ({size=16,color='black'}) => (<ShareIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
 
+function selectNodeText(containerid) {
+    if (document.selection) { // IE
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById(containerid));
+        range.select();
+    } else if (window.getSelection) {
+        var range = document.createRange();
+        range.selectNode(document.getElementById(containerid));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    }
+}
+
 function fallbackCopyTextToClipboard(text) {
     var textArea = document.createElement("textarea");
     textArea.value = text;
@@ -123,6 +136,7 @@ const styles = {
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         overflow: "hidden",
+        cursor: "pointer",
     },
     poweredByBar: {
         position: "absolute",
@@ -327,6 +341,10 @@ export class DiskBenchmarkResult extends React.Component {
     }
 
     render() {
+        
+        const onSharedLinkClick = () => {
+            selectNodeText('SHARED_DRIVE_BENCHMARK_BAR');
+        };
         // Helper.toConsole(`[DiskBenchmarkResult::render] this.state.opened=${this.state.opened}`);
         const full = this.state.selectedRow ? this.state.selectedRow : {};
         const blockSize = full.randomAccessBlockSize;
@@ -348,7 +366,8 @@ export class DiskBenchmarkResult extends React.Component {
                         {ParametersPanel(2,<span>RND 1Q</span>)}
                         {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
 
-                        {!this.props.forced && <div style={styles.shareBar}>
+                        {!this.props.forced && <div id="SHARED_DRIVE_BENCHMARK_BAR" style={styles.shareBar} onClick={onSharedLinkClick} title="Click & Ctrl-C to share">
+                            {/*https://stackoverflow.com/questions/1173194/select-all-div-text-with-single-mouse-click/1173319*/}
                             {SharedDiskBenchmarkFlow.buildLink(full)}
                         </div>}
 
