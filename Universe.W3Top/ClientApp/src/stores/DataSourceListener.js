@@ -126,10 +126,10 @@ class DataSourceListener {
     watchdogTick()
     {
         if (this.isConnected !== this.needConnection)
-        console.warn(`[watchdog] isConnected: ${this.isConnected}
-needConnection: ${this.needConnection},
-isConnecting: ${this.isConnecting}
-state: ${this.connection.state}`);
+            console.log(`%c[watchdog] isConnected: ${this.isConnected},
+           needConnection: ${this.needConnection},
+           isConnecting: ${this.isConnecting},
+           state: ${this.connection.state}`, 'color:#4615b2');
         
         if (this.needConnection) {
             if (!this.isConnected && !this.isConnecting) {

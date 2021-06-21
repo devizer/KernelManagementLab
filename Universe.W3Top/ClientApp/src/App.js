@@ -25,6 +25,7 @@ import {RowsFiltersComponent} from "./components/ProcessList/RowsFiltersComponen
 import {ColumnChooserComponent} from "./components/ProcessList/ColumnChooserComponent";
 import {DiskBenchmarkResult} from "./components/DiskBenchmark/DiskBenchmarkResult";
 import {SharedDiskBenchmarkFlow} from "./SharedDiskBenchmarkFlow";
+import * as Helper from "./Helper";
 
 require('typeface-roboto')
 
@@ -40,14 +41,14 @@ export default class App extends Component {
         super(props);
 
         this.logVersionInfo();
-        console.log(`window.jQuery is ${typeof window.$}`)
+        Helper.toConsole(`window.jQuery is [${typeof window.$}]`)
     }
     
     logVersionInfo()
     {
         AppGitInfo.CommitAt = new Date(AppGitInfo.CommitDate*1000).toLocaleString();
         AppGitInfo.BuildAt = new Date(AppGitInfo.BuildDate*1000).toLocaleString();
-        console.log(AppGitInfo);
+        Helper.toConsole("W3Top build info", AppGitInfo, {force: true});
     }
     
     componentDidMount() {

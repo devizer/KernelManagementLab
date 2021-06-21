@@ -167,9 +167,9 @@ let token = null; // for progress
 const getNeedHideDialog = (props) => {
     let needHideDialog = false;
     // do we need to calc it on each render?
-    Helper.toConsole(`DiskBenchmarkDialog::props are`, props);
+    Helper.toConsole(`DiskBenchmarkDialog::props`, props);
     let queryParams = queryString.parse(props.location ? props.location.search : "");
-    Helper.toConsole(`DiskBenchmarkDialog::query string is`, queryParams);
+    Helper.toConsole(`DiskBenchmarkDialog::query_string`, queryParams);
     needHideDialog = queryParams['history'] !== undefined;
     Helper.log(`DiskBenchmarkDialog::needHideDialog ${needHideDialog}`);
     return needHideDialog;
