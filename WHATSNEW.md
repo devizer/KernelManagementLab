@@ -1,3 +1,7 @@
+##### 1.24
+- Added sharing for drive benchmarks
+  <img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Shared-Drive-Benchmark.png" width="1016px" Alt="Shared Drive benchmark" Title="Shared Drive benchmark">
+  
 ##### 1.23
 - Added fio benchmark summary details including cpu usage
 

@@ -2,11 +2,22 @@ import React from 'react';
 import * as Enumerable from "linq-es2015"
 import MomentFormat from 'moment';
 
-export const toConsole = function(caption, obj) {
-    if (process.env.NODE_ENV !== 'production') {
-        console.log(`--===**** ${caption} ****===--`);
-        console.log(obj);
-        console.log('\r\n');
+export const toConsole = function(caption, obj, {force} = {force:false}) {
+    if (process.env.NODE_ENV !== 'production' || force) {
+        // console.log(`≡≡≡✵✵✵ ${caption} ✵✵✵≡≡≡`);
+        // console.log(obj);
+        // console.log('\r\n');
+        const c1='color:#440B0B';
+        const c2='color:#440B0B;font-weight: '; // bold?
+        const c3='color:#440B0B;font-weight:';
+        const c4='color:;font-weight:';
+
+        const hasObj = arguments.length >= 2;
+        if (hasObj)
+            console.log(`%c┈🛈┈ ${caption}\r\n%o`, c1, obj);
+        else
+            // console.log(`%c≡≡≡✵✵✵ %c${caption}%c ✵✵✵≡≡≡`, color);
+            console.log(`%c┈🛈┈ ${caption}`, c1);
     }
 }
 
