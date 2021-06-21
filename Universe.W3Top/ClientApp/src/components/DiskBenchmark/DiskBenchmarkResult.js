@@ -92,7 +92,7 @@ const heights = {
 
 const styles = {
     main: {
-        width: widths.panel * 2 + widths.panelSpace + widths.parameters,
+        width: widths.panel * 2 + widths.panelSpace + widths.parameters + 2, // +2 for IE
         height: 4 * heights.panel + (3+1) * heights.panelSpace + heights.share,
         position: "relative",
         // border: "1px solid green",
