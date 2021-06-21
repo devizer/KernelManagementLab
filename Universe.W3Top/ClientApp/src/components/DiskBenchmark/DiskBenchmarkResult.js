@@ -5,7 +5,7 @@ import {faCheck, faCheckDouble} from '@fortawesome/free-solid-svg-icons'
 import * as Helper from "../../Helper";
 import { ReactComponent as CopyToCloudIconSvg } from '../../icons/copy2cloud-v2.svg';
 import { ReactComponent as ShareIconSvg } from '../../icons/Share-Icon.svg';
-import { ReactComponent as ShareOutlinedIconSvg } from '../../icons/Share-Outlines-Icon.svg';
+import { ReactComponent as ShareOutlinedIconSvg } from '../../icons/Share-Outlined-Icon.svg';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -40,7 +40,7 @@ function selectNodeText(containerid) {
 function canAccessClipboard() {
     const loc = window && window.location ? window.location : null;
     if (!loc) return false;
-    return loc.protocol === "https://" || loc.hostname === "localhost";
+    return loc.protocol === "https:" || loc.hostname === "localhost";
 }
 
 function fallbackCopyTextToClipboard(text) {
