@@ -17,6 +17,8 @@
     "base32-encode": "^1.2.0",
     "base32-decode": "^1.0.0",
     "text-encoding": "^0.7.0",
+    "utf8": "^3.0.0",
+    "chalk": "",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",
     "c3": "^0.7.4",
