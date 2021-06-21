@@ -5,10 +5,6 @@ set -u
 
 Say --Reset-Stopwatch || true
 
-export DOTNET_TARGET_DIR=/transient-builds/dotnet-3.1 DOTNET_VERSIONS="2.2 3.1" SKIP_DOTNET_ENVIRONMENT=true
-script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
-export PATH="/transient-builds/dotnet-3.1:$PATH"
-unset MSBuildSDKsPath || true
  
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 function header() {
@@ -20,6 +16,12 @@ function header() {
 }
 counter=0;
 function say() { counter=$((counter+1)); header "STEP $counter" "$1"; }
+say reset>/dev/null
+
+export DOTNET_TARGET_DIR=/transient-builds/dotnet-3.1 DOTNET_VERSIONS="2.2 3.1" SKIP_DOTNET_ENVIRONMENT=true
+script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
+export PATH="/transient-builds/dotnet-3.1:$PATH"
+unset MSBuildSDKsPath || true
 
 work=$HOME/transient-builds
 if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
