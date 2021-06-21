@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCheck, faCheckDouble} from '@fortawesome/free-solid-svg-icons'
 import * as Helper from "../../Helper";
 import { ReactComponent as CopyToCloudIconSvg } from '../../icons/copy2cloud-v2.svg';
+import { ReactComponent as ShareIconSvg } from '../../icons/Share-Icon.svg';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -18,6 +19,26 @@ import IconButton from "@material-ui/core/IconButton";
 import classNames from "classnames";
 
 const CopyToCloudIcon = ({size=16,color='black'}) => (<CopyToCloudIconSvg style={{width: size,height:size,fill:color,strokeWidth:'3px',stroke:color }} />);
+const ShareIcon = ({size=16,color='#BBB'}) => (<ShareIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
+
+function selectNodeText(containerid) {
+    if (document.selection) { // IE
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById(containerid));
+        range.select();
+    } else if (window.getSelection) {
+        var range = document.createRange();
+        range.selectNode(document.getElementById(containerid));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    }
+}
+
+function canAccessClipboard() {
+    const loc = window && window.location ? window.location : null;
+    if (!loc) return false;
+    return loc.protocol === "https://" || loc.hostname === "localhost";
+}
 
 function fallbackCopyTextToClipboard(text) {
     var textArea = document.createElement("textarea");
@@ -72,12 +93,13 @@ const heights = {
     panel: 72,
     panelSpace: 18,
     metrics: 38, 
+    share: 20,
 };
 
 const styles = {
     main: {
-        width: widths.panel * 2 + widths.panelSpace + widths.parameters,
-        height: 4 * heights.panel + 3 * heights.panelSpace,
+        width: widths.panel * 2 + widths.panelSpace + widths.parameters + 2, // +2 for IE
+        height: 4 * heights.panel + (3+1) * heights.panelSpace + heights.share,
         position: "relative",
         // border: "1px solid green",
     },
@@ -102,6 +124,52 @@ const styles = {
         top: -12,
         textAlign: "left",
         zIndex: 99999,
+    },
+
+    shareIcon: {
+        position: "absolute",
+        width: 15,
+        height: heights.share,
+        margin: 0,
+        padding: 0,
+        left: -5, 
+        textAlign: "left",
+        top: (heights.panel + heights.panelSpace) * 4 - 2,
+        zIndex: 99999,
+    },
+    shareBar: {
+        position: "absolute",
+        width: 2*widths.panel + widths.panelSpace,
+        height: heights.share,
+        margin: 0,
+        padding: 2,
+        fontSize: 10,
+        left: widths.parameters,
+        top: (heights.panel + heights.panelSpace) * 4,
+        textAlign: "center",
+        zIndex: 99999,
+        border: "1px solid #B7B9BF",
+        color: "#666",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        cursor: "pointer",
+    },
+    poweredByBar: {
+        position: "absolute",
+        width: 2*widths.panel + widths.panelSpace,
+        height: heights.share,
+        margin: 0,
+        padding: 2,
+        fontSize: 10,
+        left: widths.parameters,
+        top: (heights.panel + heights.panelSpace) * 4,
+        textAlign: "center",
+        zIndex: 99999,
+        color: "#666",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
     },
     details: {
         position: "absolute",
@@ -159,7 +227,7 @@ function Details({row, allowShare}) {
     const theRootSpan = _ => (<span style={{opacity:0.55}}>&nbsp;(the root)</span>);
     return <React.Fragment>
 
-        {allowShare === true && <div style={styles.copyToCloud}>
+        {allowShare === true && canAccessClipboard() && <div style={styles.copyToCloud}>
             <IconButton id={"COPY_TO_CLOUD_ICON"}
                         color="inherit"
                         aria-label="Copy to cloud"
@@ -290,6 +358,10 @@ export class DiskBenchmarkResult extends React.Component {
     }
 
     render() {
+        
+        const onSharedLinkClick = () => {
+            selectNodeText('SHARED_DRIVE_BENCHMARK_BAR');
+        };
         // Helper.toConsole(`[DiskBenchmarkResult::render] this.state.opened=${this.state.opened}`);
         const full = this.state.selectedRow ? this.state.selectedRow : {};
         const blockSize = full.randomAccessBlockSize;
@@ -310,6 +382,19 @@ export class DiskBenchmarkResult extends React.Component {
                         {ParametersPanel(1,"SEQ")}
                         {ParametersPanel(2,<span>RND 1Q</span>)}
                         {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
+
+                        {!this.props.forced && <><div id="SHARED_DRIVE_BENCHMARK_BAR" style={styles.shareBar} onClick={onSharedLinkClick} title="Click & Ctrl-C to share">
+                            {/*https://stackoverflow.com/questions/1173194/select-all-div-text-with-single-mouse-click/1173319*/}
+                            {SharedDiskBenchmarkFlow.buildLink(full)}
+                        </div>
+                            <div style={styles.shareIcon}><ShareIcon /></div>
+                        </>}
+
+                        {this.props.forced && <div style={styles.poweredByBar}>
+                            powered by <a href="https://github.com/devizer/w3top-bin">w3top</a>
+                        </div>}
+
+
                     </div>
 {/*
                     <div style={{wordBreak:"break-all", wordWrap: "break-word", display: "none"}}>
