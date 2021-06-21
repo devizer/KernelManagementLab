@@ -99,10 +99,12 @@ const heights = {
     share: 20,
 };
 
+const isSharedBenchmarkResult = SharedDiskBenchmarkFlow.isSharedBenchmarkResult();
+
 const styles = {
     main: {
         width: widths.panel * 2 + widths.panelSpace + widths.parameters + 2, // +2 for IE
-        height: 4 * heights.panel + (3+1) * heights.panelSpace + heights.share,
+        height: 4 * heights.panel + (3+1) * heights.panelSpace + heights.share - (isSharedBenchmarkResult ? 16 : 0),
         position: "relative",
         // border: "1px solid green",
     },
@@ -165,12 +167,12 @@ const styles = {
     poweredByBar: {
         position: "absolute",
         width: 2*widths.panel + widths.panelSpace,
-        height: heights.share,
+        height: /*heights.share*/ 16,
         margin: 0,
         padding: 2,
         fontSize: 10,
         left: widths.parameters,
-        top: (heights.panel + heights.panelSpace) * 4,
+        top: (heights.panel + heights.panelSpace) * 4 - 6,
         textAlign: "center",
         zIndex: 99999,
         color: "#666",
