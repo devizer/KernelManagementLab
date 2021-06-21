@@ -19,7 +19,7 @@ import IconButton from "@material-ui/core/IconButton";
 import classNames from "classnames";
 
 const CopyToCloudIcon = ({size=16,color='black'}) => (<CopyToCloudIconSvg style={{width: size,height:size,fill:color,strokeWidth:'3px',stroke:color }} />);
-const ShareIcon = ({size=16,color='black'}) => (<ShareIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
+const ShareIcon = ({size=16,color='#BBB'}) => (<ShareIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
 
 function selectNodeText(containerid) {
     if (document.selection) { // IE
@@ -32,6 +32,12 @@ function selectNodeText(containerid) {
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
     }
+}
+
+function canAccessClipboard() {
+    const loc = window && window.location ? window.location : null;
+    if (!loc) return false;
+    return loc.protocol === "https://" || loc.hostname === "localhost";
 }
 
 function fallbackCopyTextToClipboard(text) {
@@ -120,6 +126,17 @@ const styles = {
         zIndex: 99999,
     },
 
+    shareIcon: {
+        position: "absolute",
+        width: 15,
+        height: heights.share,
+        margin: 0,
+        padding: 0,
+        left: -5, 
+        textAlign: "left",
+        top: (heights.panel + heights.panelSpace) * 4 - 2,
+        zIndex: 99999,
+    },
     shareBar: {
         position: "absolute",
         width: 2*widths.panel + widths.panelSpace,
@@ -210,7 +227,7 @@ function Details({row, allowShare}) {
     const theRootSpan = _ => (<span style={{opacity:0.55}}>&nbsp;(the root)</span>);
     return <React.Fragment>
 
-        {allowShare === true && <div style={styles.copyToCloud}>
+        {allowShare === true && canAccessClipboard() && <div style={styles.copyToCloud}>
             <IconButton id={"COPY_TO_CLOUD_ICON"}
                         color="inherit"
                         aria-label="Copy to cloud"
@@ -366,10 +383,12 @@ export class DiskBenchmarkResult extends React.Component {
                         {ParametersPanel(2,<span>RND 1Q</span>)}
                         {ParametersPanel(3,<span>RND {full.threadsNumber ? `${full.threadsNumber}Q` : ""}</span>)}
 
-                        {!this.props.forced && <div id="SHARED_DRIVE_BENCHMARK_BAR" style={styles.shareBar} onClick={onSharedLinkClick} title="Click & Ctrl-C to share">
+                        {!this.props.forced && <><div id="SHARED_DRIVE_BENCHMARK_BAR" style={styles.shareBar} onClick={onSharedLinkClick} title="Click & Ctrl-C to share">
                             {/*https://stackoverflow.com/questions/1173194/select-all-div-text-with-single-mouse-click/1173319*/}
                             {SharedDiskBenchmarkFlow.buildLink(full)}
-                        </div>}
+                        </div>
+                            <div style={styles.shareIcon}><ShareIcon /></div>
+                        </>}
 
                         {this.props.forced && <div style={styles.poweredByBar}>
                             powered by <a href="https://github.com/devizer/w3top-bin">w3top</a>
