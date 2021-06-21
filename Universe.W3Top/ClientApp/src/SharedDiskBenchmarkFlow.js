@@ -147,3 +147,11 @@ export class SharedDiskBenchmarkFlow
         return uint8array;
     }
 }
+
+/*
+# HOWTO: unicode mount path
+path="/weїrd, but gzýppéd"
+sudo mkdir "$path"
+sudo mount -t tmpfs -o size=512m tmpfs /mnt/ramdisk
+sudo chown -R user:user "$path"
+*/
