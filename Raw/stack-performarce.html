@@ -1,0 +1,22 @@
+﻿<script>
+var stackExample;
+function benchmark(title,func) {
+  var durationLimit = 2000;
+  func();
+  var startAt = (window.performance) ? window.performance.now() : +new Date();
+  var duration = 0, count = 0;
+  while(duration < durationLimit) {
+    var batch = 1234, i;
+    for(i=0; i<batch; i++) { func(); }
+    count += batch;
+    var stopwatch = (window.performance) ? window.performance.now() : +new Date();
+    duration = stopwatch - startAt;
+  }
+  function format(num) { return (Math.round(num * 100.0) / 100.0).toLocaleString(undefined, {useGrouping: true}); }
+  console.log(title + " PERFORMANCE: " + format(count * 1000.0 / duration) + " op/s");
+}
+console.log("Starting benchmark");
+benchmark("[Error.stack] ", function() { stackExample = new Error().stack });
+benchmark("[No Operation]", function() { var ok = "sure" });
+console.log("Statck Example:\n" + stackExample);
+</script>
