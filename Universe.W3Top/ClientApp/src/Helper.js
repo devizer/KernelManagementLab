@@ -2,8 +2,22 @@ import React from 'react';
 import * as Enumerable from "linq-es2015"
 import MomentFormat from 'moment';
 
+const toConsoleCalls = {};
+
+const getIsFirstCall = stackTrace => {
+    let isFirstCall = false;
+    if (stackTrace !== null) {
+        // is stackTrace is unsupported return false
+        if (!toConsoleCalls[stackTrace]) {
+            toConsoleCalls[stackTrace] = true;
+            isFirstCall = true;
+        }
+    }
+    return isFirstCall;
+}
 export const toConsole = function(caption, obj, {force} = {force:false}) {
-    if (process.env.NODE_ENV !== 'production' || force) {
+    let isFirstCall = getIsFirstCall(Common.getStackTrace());
+    if (process.env.NODE_ENV !== 'production' || force || isFirstCall) {
         // console.log(`≡≡≡✵✵✵ ${caption} ✵✵✵≡≡≡`);
         // console.log(obj);
         // console.log('\r\n');
@@ -99,7 +113,17 @@ export class Numbers
 
 }
 
+
 export class Common {
+    
+    // Benchmark: 150 - 200 thousands a sec
+    static getStackTrace() {
+        if (typeof Error != "undefined") {
+            let err = new Error();
+            return err.stack ? err.stack : null; 
+        }
+        return null;
+    }
     
     static tryGetProperty(obj, propertyName) {
         if (typeof obj == "object" && (propertyName in obj))
