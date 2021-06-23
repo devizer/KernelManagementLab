@@ -122,6 +122,22 @@ namespace KernelManagementJam
         private static readonly string[] PathsToSkip = new[] {"/run", "/sys", "/dev"};
         private static readonly string[] DevicesToSkip = new[] {"shm", "overlay"};
 
+        // keep only biggest snap
+        public static IEnumerable<DriveDetails> FilterForBenchmark(this IEnumerable<DriveDetails> list)
+        {
+            var copy = list.ToList();
+            bool IsSnap(DriveDetails drive) => drive.MountEntry?.MountPath?.StartsWith("/snap/") ?? false;
+            var snaps = copy.Where(IsSnap).ToArray();
+            if (snaps.Length > 1)
+            {
+                var biggestSnap = snaps.OrderByDescending(x => x.TotalSize).FirstOrDefault();
+                foreach (var snap in snaps)
+                    if (snap != biggestSnap) copy.Remove(snap);
+            }
+
+            return copy;
+        }
+        
         public static IEnumerable<DriveDetails> FilterForHuman(this IEnumerable<DriveDetails> list)
         {
             var filtered = list
