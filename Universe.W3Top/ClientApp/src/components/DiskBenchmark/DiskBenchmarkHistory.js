@@ -91,6 +91,7 @@ export class DiskBenchmarkHistory extends React.Component {
         return true;
     }
 
+    openingResultCounter = 0;
     render() {
         
         let pageSize = this.state.history.length === 0 ? 6 : Math.max(this.state.history.length, 1);
@@ -115,6 +116,7 @@ export class DiskBenchmarkHistory extends React.Component {
                 const isSelected = token === this.state.selected;  
                 return {
                     onClick: (e) => {
+                        this.openingResultCounter = this.openingResultCounter + 1;
                         const selectedRow = rowInfo.original;
                         this.setState({
                             selected: token,
@@ -281,6 +283,7 @@ export class DiskBenchmarkHistory extends React.Component {
                 />
                 <br />
             <DiskBenchmarkResult
+                increment={this.openingResultCounter}
                 opened={this.state.selectedRow != null}
                 selectedRow={this.state.selectedRow}
             />

@@ -337,6 +337,7 @@ export class DiskBenchmarkResult extends React.Component {
         super(props);
         
         this.state = {
+            increment: props.increment,
             opened: props.opened,
             selectedRow: props.selectedRow,
         };
@@ -346,8 +347,9 @@ export class DiskBenchmarkResult extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const isOpenedChanged = prevProps.opened !== this.props.opened;
-        const isRowChanged = (prevProps.selectedRow ? prevProps.selectedRow.token : '') !== (this.props.selectedRow ? this.props.selectedRow.token : '');   
-        if (isOpenedChanged || isRowChanged) {
+        const isRowChanged = (prevProps.selectedRow ? prevProps.selectedRow.token : '') !== (this.props.selectedRow ? this.props.selectedRow.token : '');
+        const isIncrementChanged = prevProps.increment !== this.props.increment;
+        if (isOpenedChanged || isRowChanged || isIncrementChanged) {
             this.setState({
                 opened: this.props.opened,
                 selectedRow: this.props.selectedRow,
