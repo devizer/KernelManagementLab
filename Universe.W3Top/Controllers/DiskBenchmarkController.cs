@@ -32,7 +32,7 @@ namespace Universe.W3Top.Controllers
         [HttpGet, Route("get-disks")]
         public DisksAndEngines GetList()
         {
-            var disks = MountsDataSource.Mounts.FilterForHuman().OrderBy(x => x.MountEntry.MountPath).ToList();
+            var disks = MountsDataSource.Mounts.FilterForHuman().FilterForBenchmark().OrderBy(x => x.MountEntry.MountPath).ToList();
             var engines = FioEnginesProvider.GetEngines();
             return new DisksAndEngines()
             {
@@ -162,8 +162,6 @@ namespace Universe.W3Top.Controllers
             List<DiskBenchmarkHistoryRow> ret = entities.Select(x => x.ToHistoryItem().RoundBenchmarkHistoryRow()).ToList();
             return ret;
         }
-
-
 
 
         public class StartBenchmarkArgs
