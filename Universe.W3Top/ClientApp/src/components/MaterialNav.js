@@ -48,8 +48,6 @@ const DisksIcon = (size=24,color='#333') => (<DisksIconSvg style={{width: size,h
 const MainIcon = ({size=40,color='#FFF'}) => (<MainIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
 const ProcessListIcon = ({size=24,color='#333'}) => (<ProcessListIconSvg style={{width: size,height:size,fill:color,strokeWidth:'2px',stroke:color }} />);
 
-
-
 const drawerWidth = 250;
 
 const styles = theme => ({
