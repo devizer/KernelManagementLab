@@ -73,6 +73,10 @@ const styles = theme => ({
         marginLeft: 12,
         marginRight: 20,
     },
+    newVersionInfoButton: {
+        color: "white",
+        fontSize: "10px",
+    },
     hide: {
         display: 'none',
     },
@@ -157,12 +161,26 @@ class PersistentDrawerLeft extends React.Component {
         let system = dataSourceStore.getDataSource().system;
         if (Helper.Common.objectIsNotEmpty(system))
             this.setState({system: system});
+        
+        let newVer = dataSourceStore.getDataSource().newVer;
+        let isNewVersionAvailable = PersistentDrawerLeft.getIsNewVersionAvailable(newVer);
+        if (isNewVersionAvailable) {
+            this.setState({isNewVersionAvailable});
+        }
+        
     }
 
     updateBrief()
     {
         console.log("BRIEF UPDATED handler AT MaterialNav");
         this.setState({system: dataSourceStore.getBriefInfo().system});
+    }
+    
+    static getIsNewVersionAvailable(newVer) {
+        if (AppGitInfo.CommitCount && newVer && newVer.CommitCount && newVer.CommitCount > AppGitInfo.CommitCount)
+            return true;
+        
+        return false;
     }
     
     sis = {
@@ -196,6 +214,8 @@ class PersistentDrawerLeft extends React.Component {
     
 
     render() {
+        const newVer = dataSourceStore.getDataSource().newVer;
+        const newVerTitle = `New version ${newVer && newVer.Version ? newVer.Version : ""} is available`; 
         const { classes, theme } = this.props;
         const { open } = this.state;
         
@@ -246,9 +266,22 @@ class PersistentDrawerLeft extends React.Component {
                         >
                             <MainIcon />
                         </IconButton>
-                        <Typography variant="h6" color="inherit" noWrap>
-                            W3 Top
-                        </Typography>
+                        <div style={{position:"relative", width: "100%", fontSize: "10px"}}>
+                            <div style={{textAlign:"left", width: "100%", position2:"absolute", top:0}}>
+                                <Typography variant="h6" color="inherit" noWrap>
+                                    W3 Top
+                                </Typography>
+                            </div>
+
+                            <div style={{textAlign:"right", width: "100%", position:"absolute", top:-10, fontSize: "10px", display: this.state.isNewVersionAvailable ? "block" : "none"}}>
+                                <IconButton 
+                                    title={newVerTitle}
+                                    className={classNames(classes.newVersionInfoButton, open && classes.hide)}>
+                                    <InfoOutlinedIcon style={{fontSize:"24px"}}/>
+                                </IconButton>
+                            </div>
+
+                        </div>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -269,7 +302,6 @@ class PersistentDrawerLeft extends React.Component {
                                         <ListItemText primary={"v" + AppGitInfo.Version} className={"version"} />
                                     </ListItem>
                             </List>
-                            
                             
                             {/*<small><InfoOutlinedIcon stye={{width: "9px", fontSize: 44}}/> v{AppGitInfo.Version}</small>*/}
                         </td><td width="24px">
