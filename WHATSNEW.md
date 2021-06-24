@@ -1,3 +1,6 @@
+##### 1.25
+- Added notification for new version
+
 ##### 1.24
 - Added sharing for drive benchmarks
   <img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Shared-Drive-Benchmark.png" width="1016px" Alt="Shared Drive benchmark" Title="Shared Drive benchmark">
