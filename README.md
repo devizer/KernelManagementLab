@@ -1,9 +1,8 @@
 ## W3-Top &nbsp;&nbsp;&nbsp;[![W3Top Stable Version](https://img.shields.io/github/v/release/devizer/KernelManagementLab?label=Stable)](https://github.com/devizer/w3top-bin/blob/master/README.md#reinstallation-of-precompiled-binaries)
 
-
 Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relies on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
 
-Supported CPU architectures are restricted by dotnet-sdk: x86_64, arm and arm64 are fully supported
+Supported CPU architectures are x86_64, arm, and arm64.
 
 ### Install from source
 The easiest way to (re)install it as a SystemD service, namely w3top, is to build from source:
@@ -28,7 +27,7 @@ script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and
 wget -q -nv --no-check-certificate -O - $script | bash -s dotnet node pwsh
 ```
 
-### Common .net core dependencies:
+### Optional .net core dependencies:
 https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites
 
 ### Unininstall
@@ -38,6 +37,5 @@ sudo rm -f /etc/systemd/system/w3top.service
 sudo rm -rf /opt/w3top
 ```
 
-### master branch &nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/devizer/KernelManagementLab.svg?branch=master)](https://travis-ci.org/devizer/KernelManagementLab)
 
 
