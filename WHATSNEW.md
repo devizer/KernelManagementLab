@@ -75,7 +75,7 @@
 - Publishing to cloud: http://w3-top-on-xeon.devizer.tech, http://w3-top-on-pi.devizer.tech
 - Added customizable one line installer:
 ```bash
-# Default values below ar shown for illustration
+# Default values below are shown for illustration
 export HTTP_PORT=5050
 export INSTALL_DIR=/opt/w3top
 export RESPONSE_COMPRESSION=True
