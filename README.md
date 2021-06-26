@@ -1,8 +1,11 @@
 ## W3-Top &nbsp;&nbsp;&nbsp;[![W3Top Stable Version](https://img.shields.io/github/v/release/devizer/KernelManagementLab?label=Stable)](https://github.com/devizer/w3top-bin/blob/master/README.md#reinstallation-of-precompiled-binaries)
 
-Is a web-based linux-bound monitor and benchmark UI. As of now w3-top it relies on `/proc` and `/sys` kernel-bound "filesystems". Mac OS and Windows are not supported.
+Is a web-based linux-bound monitor and benchmark UI. Mac OS and Windows are not supported.
 
-Supported CPU architectures are x86_64, arm, and arm64.
+Supported CPU architectures are x86_64, armv7, and arm64.
+
+### History and Screenshots
+[WHATSNEW.md](https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md)
 
 ### Install from source
 The easiest way to (re)install it as a SystemD service, namely w3top, is to build from source:
