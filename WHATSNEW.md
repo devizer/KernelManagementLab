@@ -1,3 +1,6 @@
+##### 1.25
+- Added notification for new version
+
 ##### 1.24
 - Added sharing for drive benchmarks
   <img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Shared-Drive-Benchmark.png" width="1016px" Alt="Shared Drive benchmark" Title="Shared Drive benchmark">
@@ -72,7 +75,7 @@
 - Publishing to cloud: http://w3-top-on-xeon.devizer.tech, http://w3-top-on-pi.devizer.tech
 - Added customizable one line installer:
 ```bash
-# Default values below ar shown for illustration
+# Default values below are shown for illustration
 export HTTP_PORT=5050
 export INSTALL_DIR=/opt/w3top
 export RESPONSE_COMPRESSION=True

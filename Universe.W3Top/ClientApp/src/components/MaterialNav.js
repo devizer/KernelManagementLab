@@ -31,6 +31,9 @@ import { Link } from 'react-router-dom';
 import { faServer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ReactComponent as HardDiskIcon } from '../icons/hard-disk.svg';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+import green from '@material-ui/core/colors/green';
 
 import AppGitInfo from "../AppGitInfo"
 import dataSourceStore from "../stores/DataSourceStore";
@@ -44,10 +47,6 @@ const DisksIcon = (size=24,color='#333') => (<DisksIconSvg style={{width: size,h
 // const MainIcon = (size=24,color='#FFF') => (<MainIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
 const MainIcon = ({size=40,color='#FFF'}) => (<MainIconSvg style={{width: size,height:size,fill:color,strokeWidth:'1px',stroke:color }} />);
 const ProcessListIcon = ({size=24,color='#333'}) => (<ProcessListIconSvg style={{width: size,height:size,fill:color,strokeWidth:'2px',stroke:color }} />);
-
-
-
-
 
 const drawerWidth = 250;
 
@@ -72,6 +71,10 @@ const styles = theme => ({
     menuButton: {
         marginLeft: 12,
         marginRight: 20,
+    },
+    newVersionInfoButton: {
+        color: "white",
+        fontSize: "10px",
     },
     hide: {
         display: 'none',
@@ -121,6 +124,7 @@ class PersistentDrawerLeft extends React.Component {
     
     state = {
         open: false,
+        newVersionOpened: false,
     };
     
     constructor(props) {
@@ -128,6 +132,7 @@ class PersistentDrawerLeft extends React.Component {
         
         this.updateBrief = this.updateBrief.bind(this);
         this.updateGlobalDataSource = this.updateGlobalDataSource.bind(this);
+        this.closeNewVersionBar = this.closeNewVersionBar.bind(this);
     }
     
 
@@ -157,12 +162,26 @@ class PersistentDrawerLeft extends React.Component {
         let system = dataSourceStore.getDataSource().system;
         if (Helper.Common.objectIsNotEmpty(system))
             this.setState({system: system});
+        
+        let newVer = dataSourceStore.getDataSource().newVer;
+        let isNewVersionAvailable = PersistentDrawerLeft.getIsNewVersionAvailable(newVer);
+        if (isNewVersionAvailable) {
+            this.setState({isNewVersionAvailable});
+        }
+        
     }
 
     updateBrief()
     {
         console.log("BRIEF UPDATED handler AT MaterialNav");
         this.setState({system: dataSourceStore.getBriefInfo().system});
+    }
+    
+    static getIsNewVersionAvailable(newVer) {
+        if (AppGitInfo.CommitCount && newVer && newVer.CommitCount && newVer.CommitCount > AppGitInfo.CommitCount)
+            return true;
+        
+        return false;
     }
     
     sis = {
@@ -193,9 +212,14 @@ class PersistentDrawerLeft extends React.Component {
 
     };
     
+    closeNewVersionBar() {
+        this.setState({newVersionOpened: false});
+    }
     
 
     render() {
+        const newVer = dataSourceStore.getDataSource().newVer;
+        const newVerTitle = `New version ${newVer && newVer.Version ? newVer.Version : ""} is available`; 
         const { classes, theme } = this.props;
         const { open } = this.state;
         
@@ -230,6 +254,32 @@ class PersistentDrawerLeft extends React.Component {
         return (
             <div className={classes.root}>
                 <CssBaseline />
+
+                <Snackbar 
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    open={this.state.newVersionOpened}
+                    autoHideDuration={6000}
+                    onClose={this.closeNewVersionBar}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">{newVerTitle}</span>}
+                    action={[
+                        <IconButton
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
+                            className2={"classes.close"}
+                            onClick={this.closeNewVersionBar}
+                        >
+                            <CloseIcon />
+                        </IconButton>,
+                    ]}
+                />
+                
                 <AppBar
                     position="fixed"
                     className={classNames(classes.appBar, {
@@ -246,9 +296,23 @@ class PersistentDrawerLeft extends React.Component {
                         >
                             <MainIcon />
                         </IconButton>
-                        <Typography variant="h6" color="inherit" noWrap>
-                            W3 Top
-                        </Typography>
+                        <div style={{position:"relative", width: "100%", fontSize: "10px"}}>
+                            <div style={{textAlign:"left", width: "100%", position2:"absolute", top:0}}>
+                                <Typography variant="h6" color="inherit" noWrap>
+                                    W3 Top
+                                </Typography>
+                            </div>
+
+                            <div style={{textAlign:"right", width: "100%", position:"absolute", top:-10, fontSize: "10px", display: this.state.isNewVersionAvailable ? "block" : "none"}}>
+                                <IconButton 
+                                    title={newVerTitle}
+                                    onClick={() => this.setState({newVersionOpened: true})}
+                                    className={classNames(classes.newVersionInfoButton, open && classes.hide)}>
+                                    <InfoOutlinedIcon style={{fontSize:"24px"}}/>
+                                </IconButton>
+                            </div>
+
+                        </div>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -269,7 +333,6 @@ class PersistentDrawerLeft extends React.Component {
                                         <ListItemText primary={"v" + AppGitInfo.Version} className={"version"} />
                                     </ListItem>
                             </List>
-                            
                             
                             {/*<small><InfoOutlinedIcon stye={{width: "9px", fontSize: 44}}/> v{AppGitInfo.Version}</small>*/}
                         </td><td width="24px">
