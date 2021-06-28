@@ -3,6 +3,7 @@
     background-repeat:repeat;
     background-position:center;
     background-size:cover;
+    
 }
 
 @media screen and (max-width: 5120px) {
@@ -26,6 +27,15 @@
 @media screen and (max-width: 2560px) {
     .TheBody {
         background: url('./images/background-wallpper-blue-2560.jpg');
+        background-repeat:repeat;
+        background-position:center;
+        background-size:cover;
+    }
+}
+
+@media screen and (max-width: 1950px) {
+    .TheBody {
+        background: url('./images/background-wallpper-blue-1950.jpg');
         background-repeat:repeat;
         background-position:center;
         background-size:cover;
