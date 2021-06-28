@@ -1,4 +1,4 @@
-import "./SharedBenchmark.css"
+// import "./SharedBenchmark.css"
 import React, { Component } from 'react';
 
 export default function SharedBenchmarkLazyCss() {
