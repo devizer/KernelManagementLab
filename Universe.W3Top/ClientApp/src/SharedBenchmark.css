@@ -1,5 +1,5 @@
 .TheBody {
-    background: url('./images/background-wallpper-blue-1950.jpg');
+    background: url('./images/background-wallpper-1950.jpg');
     background-repeat:repeat;
     background-position:center;
     background-size:cover;
@@ -8,7 +8,7 @@
 
 @media screen and (max-width: 5120px) {
     .TheBody {
-        background: url('./images/background-wallpper-blue-5120.jpg');
+        background: url('./images/background-wallpper-5120.jpg');
         background-repeat:repeat;
         background-position:center;
         background-size:cover;
@@ -17,7 +17,7 @@
 
 @media screen and (max-width: 3840px) {
     .TheBody {
-        background: url('./images/background-wallpper-blue-3840.jpg');
+        background: url('./images/background-wallpper-3840.jpg');
         background-repeat:repeat;
         background-position:center;
         background-size:cover;
@@ -26,7 +26,7 @@
 
 @media screen and (max-width: 2560px) {
     .TheBody {
-        background: url('./images/background-wallpper-blue-2560.jpg');
+        background: url('./images/background-wallpper-2560.jpg');
         background-repeat:repeat;
         background-position:center;
         background-size:cover;
@@ -35,7 +35,7 @@
 
 @media screen and (max-width: 1950px) {
     .TheBody {
-        background: url('./images/background-wallpper-blue-1950.jpg');
+        background: url('./images/background-wallpper-1950.jpg');
         background-repeat:repeat;
         background-position:center;
         background-size:cover;
