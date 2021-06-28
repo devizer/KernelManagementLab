@@ -3,7 +3,7 @@ import "./App.css"
 import AppGitInfo from './AppGitInfo'
 
 import 'babel-polyfill';
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Route, Switch, Router } from 'react-router';
 import { Layout } from './components/Layout';
 import { Poc1Chart } from './components/Poc1Chart';
@@ -97,7 +97,11 @@ export default class App extends Component {
             if (typeof document === "object") document.title = "Drive Benchmark by W3Top";
             const benchmarkResult = SharedDiskBenchmarkFlow.tryParse();
             if (benchmarkResult) {
-                return <DiskBenchmarkResult opened={true} selectedRow={benchmarkResult} forced={true}/>;
+                const LazyCss = React.lazy(() => import('./SharedBenchmarkLazyCss'));
+                return <>
+                    <Suspense fallback={null}><LazyCss /></Suspense>
+                    <DiskBenchmarkResult opened={true} selectedRow={benchmarkResult} forced={true}/>
+                </>;
             }
             else {
                 return <h4 style={{}}>broken url</h4>
