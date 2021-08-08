@@ -125,6 +125,7 @@ class DataSourceListener {
     // available for callbacks
     watchdogTick()
     {
+        this.needConnection = !Helper.isDocumentHidden(); 
         if (this.isConnected !== this.needConnection)
             console.log(`%c[watchdog] isConnected: ${this.isConnected},
            needConnection: ${this.needConnection},

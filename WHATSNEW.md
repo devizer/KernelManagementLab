@@ -1,5 +1,7 @@
 ##### 1.25
 - Added notification for new version
+- Updated runtime
+- Reduced traffic for background window 
 
 ##### 1.24
 - Added sharing for drive benchmarks
