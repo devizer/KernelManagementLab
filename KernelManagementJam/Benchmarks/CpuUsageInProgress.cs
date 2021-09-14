@@ -31,7 +31,7 @@ namespace Universe.Benchmark.DiskBench
         public bool AggregateCpuUsage(bool force = false)
         {
             var nextElapsed = Stopwatch.ElapsedMilliseconds;
-            if (nextElapsed > PrevElapsed + 2333 || force)
+            if (nextElapsed > PrevElapsed + 333 || force)
             {
                 PrevElapsed = nextElapsed;
                 if (CpuUsageOnStart.HasValue)

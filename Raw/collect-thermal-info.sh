@@ -1,9 +1,9 @@
-﻿report=/tmp/thermal-from-sys.tar
+report=/tmp/thermal-from-sys.tar
 tar -cf $report -T /dev/null
 
 # sensors
 for basedir in /sys/class/thermal /sys/class/hwmon; do
-	tar uf $report $(echo $basedir/*/*)
+        tar uf $report $(echo $basedir/*/*)
 done
 
 # PC and Motherboard name
@@ -18,7 +18,7 @@ files='
 '
 for f in $files; do
   if [[ -s $f ]]; then
-  	tar uf $report $f
+        tar uf $report $f
   fi
 done
 
@@ -31,3 +31,5 @@ gzip -f $report
 
 # https://paste.c-net.org выдаст короткую ссылку на выгруженный thermal-from-sys.tar.gz
 curl --upload-file ${report}.gz 'https://paste.c-net.org/'
+
+

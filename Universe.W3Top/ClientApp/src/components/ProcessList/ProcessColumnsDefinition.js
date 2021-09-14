@@ -27,23 +27,23 @@ class ProcessColumnsDefinition {
         {
             caption: "CPU Usage", id: "CpuUsage",
             columns: [
-                { caption: "User",      field: "userCpuUsage" }, // double in seconds
                 { caption: "User, %%",  field: "userCpuUsage_PerCents" },
-                { caption: "Kernel",        field: "kernelCpuUsage" },
+                { caption: "User",      field: "userCpuUsage" }, // double in seconds
                 { caption: "Kernel, %%",    field: "kernelCpuUsage_PerCents" },
-                { caption: "∑ = User+Kernel",       field: "totalCpuUsage" }, // calculated
+                { caption: "Kernel",        field: "kernelCpuUsage" },
                 { caption: "∑ = User+Kernel, %%",   field: "totalCpuUsage_PerCents" },
+                { caption: "∑ = User+Kernel",       field: "totalCpuUsage" }, // calculated
             ]
         },
         {
             caption: "Children CPU Usage", id: "ChildrenCpuUsage",
             columns: [
-                { caption: "User",      field: "childrenUserCpuUsage" }, // double in seconds
                 { caption: "User, %%",  field: "childrenUserCpuUsage_PerCents" },
-                { caption: "Kernel",        field: "childrenKernelCpuUsage" },
+                { caption: "User",      field: "childrenUserCpuUsage" }, // double in seconds
                 { caption: "Kernel, %%",    field: "childrenKernelCpuUsage_PerCents" },
-                { caption: "∑ = User+Kernel",       field: "childrenTotalCpuUsage" }, // calculated
+                { caption: "Kernel",        field: "childrenKernelCpuUsage" },
                 { caption: "∑ = User+Kernel, %%",   field: "childrenTotalCpuUsage_PerCents" },
+                { caption: "∑ = User+Kernel",       field: "childrenTotalCpuUsage" }, // calculated
             ]
         },
         {
@@ -116,7 +116,8 @@ class ProcessColumnsDefinition {
         "IoTransfer.writeBytes_Current",
         "PageFaults.majorPageFaults_Current",
         "CpuUsage.totalCpuUsage_PerCents",
-        "ChildrenCpuUsage.childrenTotalCpuUsage_PerCents",
+        "CpuUsage.totalCpuUsage",
+        // "ChildrenCpuUsage.childrenTotalCpuUsage_PerCents",
         // "CommandLine.CommandLine",
     ];
     
