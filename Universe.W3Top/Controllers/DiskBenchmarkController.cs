@@ -159,7 +159,10 @@ namespace Universe.W3Top.Controllers
         public List<DiskBenchmarkHistoryRow> GetDiskBenchmarkHistory()
         {
             List<DiskBenchmarkEntity> entities = this.DbAccess.GetHistory();
-            List<DiskBenchmarkHistoryRow> ret = entities.Select(x => x.ToHistoryItem().RoundBenchmarkHistoryRow()).ToList();
+            List<DiskBenchmarkHistoryRow> ret = entities
+                .Select(x => x.ToHistoryItem().RoundBenchmarkHistoryRow())
+                .ToList();
+            
             return ret;
         }
 
