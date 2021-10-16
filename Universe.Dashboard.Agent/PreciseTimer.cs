@@ -175,10 +175,17 @@ namespace Universe.Dashboard.Agent
                 
                 mounts.AddRange(swaps);
 
+                string FormatMem(long? amountKb)
+                {
+                    return amountKb.HasValue
+                        ? ((long) Math.Round(amountKb.Value / 1024f, 0)).ToString("n0")
+                        : "";
+                }
+
                 // Next line is not thread safe
                 var memSummary = MemorySummaryDataSource.Instance.By_1_Seconds.LastOrDefault();
-                var memAvailable = memSummary?.Summary.Available;
-                var memFree = memSummary?.Summary.Free;
+                long? memAvailable = memSummary?.Summary.Available;
+                long? memFree = memSummary?.Summary.Free;
                 var hostInfo = new
                 {
                     Hostname = Environment.MachineName,
@@ -186,8 +193,8 @@ namespace Universe.Dashboard.Agent
                     Processor = HugeCrossInfo.ProcessorName,
                     Memory = HugeCrossInfo.TotalMemory == null
                         ? "n/a"
-                        : string.Format("{0:n0} Mb", HugeCrossInfo.TotalMemory / 1024)
-                          + (memAvailable.HasValue && memFree.HasValue ? $" ({(memAvailable.Value / 1024):n0} available, {(memFree.Value/1024):n0} free)" : ""),
+                        : $"{FormatMem(HugeCrossInfo.TotalMemory)} Mb"
+                          + (memAvailable.HasValue && memFree.HasValue ? $" ({FormatMem(memAvailable)} available, {FormatMem(memFree)} free)" : ""),
                 };
                 
                 var broadcastMessage = new
