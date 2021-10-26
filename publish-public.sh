@@ -29,8 +29,8 @@ function _install_prev_sdk_() {
   DOTNET_Url=https://dot.net/v1/dotnet-install.sh; 
   try-and-retry curl -o /tmp/_dotnet-install.sh -ksSL $DOTNET_Url
   time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -version 3.1.100 -i /transient-builds/dotnet-3.1
-  /tmp/dotnet-3.1-first/dotnet --info
   export PATH="/transient-builds/dotnet-3.1:$PATH"
+  dotnet --info
   unset MSBuildSDKsPath || true
 }
 
