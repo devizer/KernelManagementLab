@@ -18,7 +18,8 @@ for base_image in $base_images; do
     -t $tag . #| tee Log/x64-build-image-log.log
     
     Say "Checking packages for [$tag]"
-    docker run --rm -it $tag bash -c "apt-get update > /dev/null; apt-get install curl -y > /dev/null; script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; list-packages" > packages-$tag_short.log
+    # shellcheck disable=SC2069
+    docker run --rm -it $tag bash -c 'apt-get update > /dev/null; apt-get install curl -y > /dev/null; script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; list-packages' 2>&1 > packages-$tag_short.log
 
 done
 
