@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 base_images="ubuntu:focal ubuntu:bionic ubuntu:21.10 debian:stretch-slim debian:buster-slim debian:bullseye-slim"
 for base_image in $base_images; do
-  tag=$(echo "$base_image" | sed -r 's/:/-/g')
-  echo $tag, $base_image 
+  tag_short=$(echo "$base_image" | sed -r 's/:/-/g')
+  tag=w3top-tmp/$tag_tag_short
+  echo $tag, $base_image
+   
 
   time docker build \
     --build-arg BASE_IMAGE="${base_image}" \
@@ -11,7 +13,9 @@ for base_image in $base_images; do
     --build-arg BUILD_SOURCEVERSION="${BUILD_SOURCEVERSION}" \
     --build-arg BUILD_SOURCEBRANCHNAME="${BUILD_SOURCEBRANCHNAME}" \
     --build-arg BUILD_BUILDID="${BUILD_BUILDID}" \
-    -t w3top-tmp/$tag . #| tee Log/x64-build-image-log.log
+    -t $tag . #| tee Log/x64-build-image-log.log
+    
+    docker run --rm -it $tag bash -c "script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; list-packages" > packages-$tag_short.log
 
 done
 
