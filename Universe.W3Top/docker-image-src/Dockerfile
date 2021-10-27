@@ -25,7 +25,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN echo; \
  export HTTP_PORT RESPONSE_COMPRESSION INSTALL_DIR DOTNET_SYSTEM_GLOBALIZATION_INVARIANT DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER; \
- apt-get update; apt-get install sudo wget libstdc++6 -y -qq; \
+ apt-get update; apt-get install sudo curl libstdc++6 -y -qq; \
  url=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-dependencies.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | UPDATE_REPOS=true bash -e && echo "Successfully installed .NET Core Dependencies"; \
  script=https://raw.githubusercontent.com/devizer/w3top-bin/master/install-w3top-service.sh; \
  (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; \
