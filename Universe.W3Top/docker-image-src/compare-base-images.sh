@@ -25,10 +25,10 @@ w3top-tmp/ubuntu-focal            282MB
 '
 
 next='
-w3top-tmp/debian-bullseye-slim   247MB
-w3top-tmp/debian-buster-slim     239MB
-w3top-tmp/debian-stretch-slim    230MB
-w3top-tmp/ubuntu-21.10           243MB
-w3top-tmp/ubuntu-bionic          237MB
-w3top-tmp/ubuntu-focal           251MB
+w3top-tmp/debian-bullseye-slim   211MB
+w3top-tmp/debian-buster-slim     204MB
+w3top-tmp/debian-stretch-slim    197MB
+w3top-tmp/ubuntu-21.10           207MB
+w3top-tmp/ubuntu-bionic          200MB
+w3top-tmp/ubuntu-focal           212MB
 '
