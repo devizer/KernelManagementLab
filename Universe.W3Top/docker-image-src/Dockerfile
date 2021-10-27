@@ -29,6 +29,7 @@ RUN echo; \
  url=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-dependencies.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | UPDATE_REPOS=true bash -e && echo "Successfully installed .NET Core Dependencies"; \
  script=https://raw.githubusercontent.com/devizer/w3top-bin/master/install-w3top-service.sh; \
  (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; \
+ apt-get purge curl libunwind8 -y -q
  rm -rf /var/cache/apt/*; rm -rf /tmp/*; rm -rf /var/lib/apt/*; \
  echo "COMPLETED";
  
