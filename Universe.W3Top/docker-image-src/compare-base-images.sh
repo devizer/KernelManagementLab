@@ -15,7 +15,8 @@ for base_image in $base_images; do
     --build-arg BUILD_BUILDID="${BUILD_BUILDID}" \
     -t $tag . #| tee Log/x64-build-image-log.log
     
-    docker run --rm -it $tag bash -c "script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; list-packages" > packages-$tag_short.log
+    Say "Checking packages for [$tag]"
+    docker run --rm -it $tag bash -c "apt-get update > /dev/null; apt-get install curl -y > /dev/null; script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; list-packages" > packages-$tag_short.log
 
 done
 
