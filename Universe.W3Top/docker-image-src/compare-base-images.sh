@@ -2,7 +2,7 @@
 base_images="ubuntu:focal ubuntu:bionic ubuntu:21.10 debian:stretch-slim debian:buster-slim debian:bullseye-slim"
 for base_image in $base_images; do
   tag_short=$(echo "$base_image" | sed -r 's/:/-/g')
-  tag=w3top-tmp/$tag_tag_short
+  tag=w3top-tmp/$tag_short
   echo $tag, $base_image
    
 
