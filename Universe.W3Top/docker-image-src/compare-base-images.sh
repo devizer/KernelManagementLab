@@ -14,3 +14,12 @@ for base_image in $base_images; do
     -t w3top-tmp/$tag . #| tee Log/x64-build-image-log.log
 
 done
+
+first='
+w3top-tmp/debian-bullseye-slim    265MB
+w3top-tmp/debian-buster-slim      257MB
+w3top-tmp/debian-stretch-slim     247MB
+w3top-tmp/ubuntu-21.10            275MB
+w3top-tmp/ubuntu-bionic           276MB
+w3top-tmp/ubuntu-focal            282MB
+'
