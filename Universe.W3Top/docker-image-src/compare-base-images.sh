@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+Say --Reset-Stopwatch
+
 base_images="ubuntu:focal ubuntu:bionic ubuntu:21.10 debian:stretch-slim debian:buster-slim debian:bullseye-slim"
 for base_image in $base_images; do
   tag_short=$(echo "$base_image" | sed -r 's/:/-/g')
