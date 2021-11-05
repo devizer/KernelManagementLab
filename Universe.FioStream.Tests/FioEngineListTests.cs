@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using NUnit.Framework;
 using Tests;
 using Universe.FioStream.Binaries;
@@ -25,6 +26,10 @@ namespace Universe.FioStream.Tests
             List<string> ret = new List<string>();
             Stopwatch sw = Stopwatch.StartNew();
             var candidates = Candidates.GetCandidates();
+            
+            if (Env.ShortFioTests)
+                candidates = candidates.Take(1).ToList();
+            
             Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
             {
