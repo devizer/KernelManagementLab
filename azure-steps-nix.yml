@@ -7,7 +7,8 @@ steps:
       Say --Reset-Stopwatch
 
       is_qemu="$(sudo grep -rnw /sys/devices/platform -e QEMU 2>/dev/null || true)"
-      if [[ "$is_qemu" == *"QEMU"* ]] || [[ -d /sys/firmware/qemu_fw_cfg ]]; then
+      # test -d /sys/firmware/qemu_fw_cfg && echo "Ampere on this Oracle Cloud"
+      if [[ "$is_qemu" == *"QEMU"* ]]; then
         export QEMU=True
         export SHORT_FIO_TESTS=True
         echo "##vso[task.setvariable variable=QEMU]$QEMU"
