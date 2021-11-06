@@ -95,11 +95,8 @@ steps:
     displayName: 'dotnet restore'
 
   - script: |
-      printenv | sort
-      Say "run tests"
-      cmd='dotnet test -f netcoreapp3.1 -c Release --collect:"XPlat Code Coverage" --logger trx -- NUnit.NumberOfTestWorkers=1'
-      echo $cmd
-      eval "$cmd"
+     dotnet test -f netcoreapp3.1 -c Release --collect:"XPlat Code Coverage" --logger trx -- NUnit.NumberOfTestWorkers=1
+     echo ""
     displayName: 'dotnet test'
 
   - script: |
