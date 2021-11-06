@@ -51,7 +51,7 @@ jobs:
     timeoutInMinutes: 99
     cancelTimeoutInMinutes: 1
     pool:
-      vmImage: 'macOS-latest'
+      vmImage: 'macOS-10.14'
     steps:
       - template: azure-steps-nix.yml
 
