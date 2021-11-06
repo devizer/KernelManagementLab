@@ -96,7 +96,6 @@ steps:
 
   - script: |
      dotnet test -f netcoreapp3.1 -c Release --collect:"XPlat Code Coverage" --logger trx -- NUnit.NumberOfTestWorkers=1
-     echo ""
     displayName: 'dotnet test'
 
   - script: |
