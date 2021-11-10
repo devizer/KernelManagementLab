@@ -1,5 +1,7 @@
 
 using System;
+using System.Globalization;
+using System.Linq;
 
 namespace Universe
 {
@@ -8,9 +10,38 @@ namespace Universe
     {
         public static bool TryGetName(int implementer, int part, out string name)
         {
-            throw new NotImplementedException();
+            var parts = hw_implementer.FirstOrDefault(x => x.id == implementer);
+            if (parts == null)
+            {
+                name = null;
+                return false;
+            }
 
-        } 
+            if (parts.parts != null && !parts.parts.TryGetValue(part, out string ret))
+            {
+                name = ret;
+                return true;
+            }
+
+            name = parts.name;
+            return true;
+        }
+
+        public static bool TryGetName(string implementer, string part, out string name)
+        {
+            return TryGetName(ParseHexId(implementer), ParseHexId(part), out name);
+        }
+
+        static int ParseHexId(string arg)
+        {
+            int y;
+            if (arg.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                int.TryParse(arg.Substring(2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out y);
+            else 
+                int.TryParse(arg, NumberStyles.Any, CultureInfo.InvariantCulture, out y);
+
+            return y;
+        }
         
         private static readonly Dictionary<int, string> arm_part = new Dictionary<int, string>
         {
@@ -190,7 +221,7 @@ namespace Universe
         };
 
 
-        private struct hw_impl
+        private class hw_impl
         {
             public int id;
             public Dictionary<int, string> parts;
