@@ -96,7 +96,6 @@ namespace Universe
             {0xd42, "Cortex-A78AE"},
             {0xd4a, "Neoverse-E1"},
             {0xd4b, "Cortex-A78C"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> brcm_part = new Dictionary<int, string>
@@ -104,14 +103,12 @@ namespace Universe
             {0x0f, "Brahma B15"},
             {0x100, "Brahma B53"},
             {0x516, "ThunderX2"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> dec_part = new Dictionary<int, string>
         {
             {0xa10, "SA110"},
             {0xa11, "SA1100"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> cavium_part = new Dictionary<int, string>
@@ -121,13 +118,11 @@ namespace Universe
             {0x0a2, "ThunderX 81XX"},
             {0x0a3, "ThunderX 83XX"},
             {0x0af, "ThunderX2 99xx"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> apm_part = new Dictionary<int, string>
         {
             {0x000, "X-Gene"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> qcom_part = new Dictionary<int, string>
@@ -143,13 +138,11 @@ namespace Universe
             {0x801, "Kryo V2"},
             {0xc00, "Falkor"},
             {0xc01, "Saphira"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> samsung_part = new Dictionary<int, string>
         {
             {0x001, "exynos-m1"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> nvidia_part = new Dictionary<int, string>
@@ -157,7 +150,6 @@ namespace Universe
             {0x000, "Denver"},
             {0x003, "Denver 2"},
             {0x004, "Carmel"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> marvell_part = new Dictionary<int, string>
@@ -165,14 +157,12 @@ namespace Universe
             {0x131, "Feroceon 88FR131"},
             {0x581, "PJ4/PJ4b"},
             {0x584, "PJ4B-MP"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> faraday_part = new Dictionary<int, string>
         {
             {0x526, "FA526"},
             {0x626, "FA626"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> intel_part = new Dictionary<int, string>
@@ -198,26 +188,22 @@ namespace Universe
             {0x689, "PXA31x"},
             {0xb11, "SA1110"},
             {0xc12, "IPX1200"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> fujitsu_part = new Dictionary<int, string>
         {
             {0x001, "A64FX"},
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> hisi_part = new Dictionary<int, string>
         {
             {0xd01, "Kunpeng-920"}, /* aka tsv110 */
-            {-1, "unknown"}
         };
 
         private static readonly Dictionary<int, string> ft_part = new Dictionary<int, string>
         {
             {0x662, "FT2000PLUS"},
             {0x663, "S2500"},
-            {-1, "unknown"}
         };
 
 
