@@ -14,6 +14,13 @@ namespace KernelManagementJam.Tests
     [TestFixture]
     public class LinuxResourcesUsage_Tests : NUnitTestsBase
     {
+
+        [Test]
+        public void TestHugeCrossInfo()
+        {
+            Console.WriteLine(HugeCrossInfo.HumanReadableEnvironment(4));
+        }
+        
         [Test]
         public void Is_Supported()
         {
