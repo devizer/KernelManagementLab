@@ -17,7 +17,7 @@ namespace Universe
                 return false;
             }
 
-            if (parts.parts != null && !parts.parts.TryGetValue(part, out string ret))
+            if (parts.parts != null && parts.parts.TryGetValue(part, out string ret))
             {
                 name = ret;
                 return true;

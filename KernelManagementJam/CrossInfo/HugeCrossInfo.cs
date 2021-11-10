@@ -770,6 +770,13 @@ BuildVersion:	14B25
         }
 
         model_name = model_name ?? cpu_model;
+        
+        /*
+        Console.WriteLine($@"
+CPU implementer: {cpuImplementer}
+CPU part: {cpuPart}
+");
+*/
 
         if (string.IsNullOrEmpty(model_name) && !string.IsNullOrEmpty(processor))
             model_name = processor;
@@ -782,7 +789,12 @@ BuildVersion:	14B25
             if (!string.IsNullOrEmpty(cpuImplementer))
             {
                 if (CpuIdAndNames.TryGetName(cpuImplementer, cpuPart, out var name))
+                {
                     model_name = name;
+                    var machine = ExecUName("-m");
+                    if (model_name?.Length > 0 && machine?.Length > 0)
+                        model_name += ", " + machine;
+                }
             }
             
             if (string.IsNullOrEmpty(model_name))
