@@ -44,6 +44,9 @@ namespace Universe.FioStream.Tests
                     Name = x.Name,
                     Url = x.Url,
                 }).ToArray();
+
+            if (Env.ShortFioTests)
+                candidates = candidates.Take(1).ToArray();
             
             RunGetVersions(candidates);
         }
@@ -57,6 +60,9 @@ namespace Universe.FioStream.Tests
             var binaries = Candidates.AllWindowsCandidates()
                 .Concat(Candidates.AllMacOsCandidates())
                 .ToArray();
+
+            if (Env.ShortFioTests)
+                binaries = binaries.Take(1).ToArray();
 
             RunGetVersions(binaries);
         }

@@ -6,7 +6,7 @@ using Universe.Dashboard.DAL;
 
 namespace Universe.W3Top
 {
-    class DbPreJitter
+    static class DbPreJitter
     {
 
         public static void PreJIT()
@@ -23,7 +23,7 @@ namespace Universe.W3Top
             using (DashboardContext db = new DashboardContext())
             {
                 
-                DiskBenchmarkDataAccess benchmarkDA = new DiskBenchmarkDataAccess(db);
+                DiskBenchmarkDataAccess benchmarkDataAccess = new DiskBenchmarkDataAccess(db);
                 DiskBenchmark benchmark = new DiskBenchmark(".");
 
                 Guid token = Guid.NewGuid();
@@ -44,14 +44,14 @@ namespace Universe.W3Top
                 if (copy1 == null)
                     throw new Exception($"Can't retrieve DiskBenchmarkEntity by id = {idEntity}");
 
-                var copy2 = benchmarkDA.GetDiskBenchmarkResult(token);
+                var copy2 = benchmarkDataAccess.GetDiskBenchmarkResult(token);
                 if (copy2 == null)
                     throw new Exception($"Can't retrieve DiskBenchmarkEntity by token = {token}");
 
                 db.DiskBenchmark.Remove(copy1);
                 db.SaveChanges();
 
-                benchmarkDA.GetHistory().Select(x => x.ToHistoryItem()).ToList();
+                benchmarkDataAccess.GetHistory().Select(x => x.ToHistoryItem()).ToList();
             }
             
         }

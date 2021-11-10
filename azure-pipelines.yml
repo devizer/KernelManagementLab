@@ -7,7 +7,7 @@ jobs:
   - job: Arm32
     variables:
       OS: Linux
-    timeoutInMinutes: 99
+    timeoutInMinutes: 360
     cancelTimeoutInMinutes: 1
     pool:
       name: 'armv7-pool'
@@ -17,7 +17,7 @@ jobs:
   - job: Arm64
     variables:
       OS: Linux
-    timeoutInMinutes: 99
+    timeoutInMinutes: 360
     cancelTimeoutInMinutes: 1
     pool:
       name: 'arm64-pool'
@@ -51,7 +51,7 @@ jobs:
     timeoutInMinutes: 99
     cancelTimeoutInMinutes: 1
     pool:
-      vmImage: 'macOS-latest'
+      vmImage: 'macOS-10.14'
     steps:
       - template: azure-steps-nix.yml
 

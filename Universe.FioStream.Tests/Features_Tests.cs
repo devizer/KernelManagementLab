@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Tests;
 using Universe.FioStream.Binaries;
@@ -17,7 +18,11 @@ namespace Universe.FioStream.Tests
         [TestCase(TestName = "B. Features Next")]
         public void Test_for_Current_Platform()
         {
-            var candidates = Candidates.GetCandidates();
+            List<Candidates.Info> candidates = Candidates.GetCandidates();
+
+            if (Env.ShortFioTests)
+                candidates = candidates.TakeLast(1).ToList();
+            
             Console.WriteLine(
                 $"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             List<string> okList = new List<string>();

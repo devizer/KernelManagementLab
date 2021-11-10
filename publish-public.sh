@@ -18,10 +18,24 @@ counter=0;
 function say() { counter=$((counter+1)); header "STEP $counter" "$1"; }
 say reset>/dev/null
 
-export DOTNET_TARGET_DIR=/transient-builds/dotnet-3.1 DOTNET_VERSIONS="2.2 3.1" SKIP_DOTNET_ENVIRONMENT=true
-script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
-export PATH="/transient-builds/dotnet-3.1:$PATH"
-unset MSBuildSDKsPath || true
+function _install_latest_sdk_() {
+  export DOTNET_TARGET_DIR=/transient-builds/dotnet-3.1 DOTNET_VERSIONS="2.2 3.1" SKIP_DOTNET_ENVIRONMENT=true
+  script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
+  export PATH="/transient-builds/dotnet-3.1:$PATH"
+  unset MSBuildSDKsPath || true
+}
+
+function _install_prev_sdk_() {
+  DOTNET_Url=https://dot.net/v1/dotnet-install.sh; 
+  try-and-retry curl -o /tmp/_dotnet-install.sh -ksSL $DOTNET_Url
+  time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -version 3.1.100 -i /transient-builds/dotnet-3.1
+  export PATH="/transient-builds/dotnet-3.1:$PATH"
+  dotnet --info
+  unset MSBuildSDKsPath || true
+}
+
+_install_prev_sdk_
+
 
 work=$HOME/transient-builds
 if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi

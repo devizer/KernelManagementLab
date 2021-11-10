@@ -133,7 +133,7 @@ namespace Universe.W3Top
                 {
                     if (LinuxMemorySummary.TryParse(out var memoryInfo))
                     {
-                        // each fio needs ~250 MB of ram
+                        // each fio needs 40+ or about ~250 MB of ram
                         var mbAvail = memoryInfo.Available / 1024;
                         int maxDiscoveryThreads = (int) Math.Max(1, mbAvail / 250);
                         FioEnginesProvider.DiscoveryThreadsLimit = maxDiscoveryThreads;
