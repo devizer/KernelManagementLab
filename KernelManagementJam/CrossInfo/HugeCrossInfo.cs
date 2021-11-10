@@ -742,7 +742,8 @@ BuildVersion:	14B25
 
         var comp = IgnoreCaseComparision;
         var procCpuInfo = File.ReadAllText("/proc/cpuinfo");
-            
+
+        string cpuImplementer = null, cpuPart = null;
         foreach (var line in EnumLines(new StringReader(procCpuInfo)))
         {
             string key, value;
@@ -754,6 +755,10 @@ BuildVersion:	14B25
                     model_name = value;
                 else if ("cpu model".Equals(key, comp))
                     cpu_model = value;
+                else if ("CPU part".Equals(key, comp))
+                    cpuPart = value;
+                else if ("CPU implementer".Equals(key, comp))
+                    cpuImplementer = value;
                 else if ("Processor".Equals(key, StringComparison.Ordinal))
                     processor = value;
                 else if ("Hardware".Equals(key, StringComparison.Ordinal))
@@ -769,10 +774,20 @@ BuildVersion:	14B25
         if (string.IsNullOrEmpty(model_name) && !string.IsNullOrEmpty(processor))
             model_name = processor;
 
+        
         model_name = model_name + (string.IsNullOrEmpty(hardware) ? "" : (( !string.IsNullOrEmpty(model_name) ? ", " : "") + hardware));
 
         if (string.IsNullOrEmpty(model_name))
-            model_name = ExecUName("-m");
+        {
+            if (!string.IsNullOrEmpty(cpuImplementer))
+            {
+                if (CpuIdAndNames.TryGetName(cpuImplementer, cpuPart, out var name))
+                    model_name = name;
+            }
+            
+            if (string.IsNullOrEmpty(model_name))
+                model_name = ExecUName("-m");
+        }
 
         model_name = StripDoubleWhitespace(model_name.Trim());
         cache = (cache ?? "").Trim();
