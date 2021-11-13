@@ -21,7 +21,8 @@ namespace Universe.FioStream.Tests
             List<Candidates.Info> candidates = Candidates.GetCandidates();
 
             if (Env.ShortFioTests)
-                candidates = candidates.TakeLast(1).ToList();
+                if (candidates.Any())
+                    candidates = new List<Candidates.Info>() { candidates.Last() };
             
             Console.WriteLine(
                 $"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");

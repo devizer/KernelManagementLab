@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net5.0;net35;netcoreapp2.2;netcoreapp3.1;</TargetFrameworks>
+        <!-- net35 -->
+        <TargetFrameworks>net5.0;net462;netcoreapp2.2;netcoreapp3.1;</TargetFrameworks>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
