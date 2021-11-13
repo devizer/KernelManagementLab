@@ -101,19 +101,16 @@ steps:
         cd $f
           dotnet build -c Release -f net462
           ls -la bin/Release/net462
-          mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/$f 
-          # cp 
+          mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f 
+          cp -rf bin/Release/net462 $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f
         cd ..
       done
-      cd Universe.CpuUsage.Tests
-      # msbuild Universe.CpuUsage.Tests.csproj /p:TargetFramework=net46;Configuration=Release
-      msbuild Universe.CpuUsage.Tests.csproj /p:TargetFramework=net46 /p:Configuration=Release
     condition: eq(variables['Agent.JobName'], 'Ubuntu_20_04')
     displayName: 'BinTests: Build'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: '$(Build.Repository.LocalPath)/Universe.CpuUsage.Tests/bin/Release/net46'
+      pathtoPublish: '$(Build.StagingDirectory)/BinTests'
       artifactName: 'BinTests'
     condition: eq(variables['Agent.JobName'], 'Ubuntu_20_04')
     displayName: 'BinTests: Publish'
