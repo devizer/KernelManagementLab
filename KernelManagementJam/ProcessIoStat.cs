@@ -193,6 +193,7 @@ namespace KernelManagementJam
             }
         }
 
+        [Obsolete]
         static string GetNameByUid_Legacy(int uid)
         {
             return Mono.Posix.Syscall.getusername(uid);
