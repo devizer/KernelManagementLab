@@ -102,7 +102,7 @@ steps:
           dotnet build -c Release -f net462
           ls -la bin/Release/net462
           mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f 
-          cp -rf bin/Release/net462 $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f
+          cp -rf bin/Release/net462/* $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f
         cd ..
       done
     condition: eq(variables['Agent.JobName'], 'Ubuntu_20_04')
