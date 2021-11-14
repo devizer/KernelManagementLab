@@ -19,7 +19,7 @@ namespace KernelManagementJam.Tests
             Console.WriteLine($"Flavour : {fla}");
             // return;
 
-            var sizes = new[] {1, 2, 3, 4, 8, 16, 1024 * 1024, 128 * 1024 * 1024};
+            var sizes = new[] {1, 2, 3, 4, 8, 16, 1024 * 1024/*, 128 * 1024 * 1024*/};
             foreach (var size in sizes)
             {
                 var bytes = Generate(fla, size);
@@ -33,7 +33,7 @@ namespace KernelManagementJam.Tests
             Console.WriteLine($"Flavour : {fla}");
             // return;
 
-            var sizes = new[] {1, 2, 3, 4, 8, 16, 1024 * 1024, 16 * 1024 * 1024};
+            var sizes = new[] {1, 2, 3, 4, 8, 16, 1024 * 1024, 4 * 1024 * 1024};
             foreach (var size in sizes)
             {
                 var bytes = Generate(fla, size);
