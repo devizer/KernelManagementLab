@@ -186,11 +186,16 @@ namespace Universe.Dashboard.Agent
                 var memSummary = MemorySummaryDataSource.Instance.By_1_Seconds.LastOrDefault();
                 long? memAvailable = memSummary?.Summary.Available;
                 long? memFree = memSummary?.Summary.Free;
+                string processorInfo = HugeCrossInfo.ProcessorName;
+                var cpuFreqInfo = CpuFreqDataSource.Instance?.ToShortHtmlInfo();
+                if (!string.IsNullOrEmpty(cpuFreqInfo))
+                    processorInfo += $", {cpuFreqInfo}";
+                
                 var hostInfo = new
                 {
                     Hostname = Environment.MachineName,
                     Os = HugeCrossInfo.OsDisplayName,
-                    Processor = HugeCrossInfo.ProcessorName,
+                    Processor = processorInfo,
                     Memory = HugeCrossInfo.TotalMemory == null
                         ? "n/a"
                         : $"{FormatMem(HugeCrossInfo.TotalMemory)} Mb"

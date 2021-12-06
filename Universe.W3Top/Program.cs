@@ -48,8 +48,8 @@ namespace Universe.W3Top
                 Console.WriteLine($"Warning! /proc/uptime is not available on the system. The ProcessList page may not work properly");
             }
 
-
             PreciseTimer.Services = webHost.Services;
+            CpuFreqInfoSummaryTimer.Process();
             NetStatTimer.Process();
             BlockDiskTimer.Process();
             MemorySummaryTimer.Process();
