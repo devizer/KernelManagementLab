@@ -20,6 +20,12 @@ namespace KernelManagementJam.Tests
         {
             Console.WriteLine(HugeCrossInfo.HumanReadableEnvironment(4));
         }
+
+        [Test]
+        public void ShowRuntime()
+        {
+            Console.WriteLine($"Environment.Version {Environment.Version}");
+        }
         
         [Test]
         public void Is_Supported()
