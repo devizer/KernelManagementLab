@@ -123,6 +123,7 @@ steps:
         pids=$(ps -ax | grep 'dotnet ' | grep 'MSBuild.dll' | awk '{print $1}')
         for pid in $pids; do Say "Stop MSBUILD SERVICE $pid"; kill $pid; done
       }
+      kill_msbuild_service
       Say "Install NET Core 6.0"
       export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
