@@ -121,7 +121,7 @@ steps:
   - script: |
       function kill_msbuild_service() {
         pids=$(ps -ax | grep 'dotnet ' | grep 'MSBuild.dll' | awk '{print $1}')
-        for pid in $pids; do kill $pid; done
+        for pid in $pids; do Say "Stop MSBUILD SERVICE $pid"; kill $pid; done
       }
       Say "Install NET Core 6.0"
       export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
@@ -146,6 +146,8 @@ steps:
       export DOTNET_CLI_HOME="$DOTNET_INSTALL_DIR"
       echo "##vso[task.setvariable variable=PATH]$PATH"
       echo "##vso[task.setvariable variable=DOTNET_CLI_HOME]$DOTNET_CLI_HOME"
+      kill_msbuild_service
+      kill_msbuild_service
     condition: eq(variables.QEMU, 'True')
     displayName: '3.1 on qemu'
 
