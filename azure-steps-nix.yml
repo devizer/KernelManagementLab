@@ -60,6 +60,7 @@ steps:
        & npm --version
        & yarn --version
        "PATH: [" + [Environment]::GetEnvironmentVariable("PATH") + "]"
+    condition: ne(variables.QEMU, 'True')
     displayName: 'system info (pwsh)'
 
   - script: |
@@ -86,7 +87,7 @@ steps:
   - script: |
       time list-packages
       true
-    condition: eq(variables['OS'], 'Linux')
+    condition: and(eq(variables['OS'], 'Linux'), ne(variables.QEMU, 'True'))
     displayName: 'List Packages'
 
   - script: |
