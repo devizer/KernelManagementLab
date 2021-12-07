@@ -94,6 +94,7 @@ steps:
   - script: |
       dotnet restore || dotnet restore --disable-parallel
       echo 
+    condition: ne(variables.QEMU, 'True')
     displayName: 'dotnet restore'
 
   - script: |
