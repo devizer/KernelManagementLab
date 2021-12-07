@@ -146,14 +146,14 @@ steps:
 
 
   - task: PublishTestResults@2
-    condition: succeededOrFailed()
+    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
     inputs:
       testRunner: VSTest
       testResultsFiles: '**/*.trx'
       testRunTitle: 'All the tests for $(Agent.JobName)'
       
   - task: PublishCodeCoverageResults@1
-    condition: succeededOrFailed()
+    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
     inputs:
       codeCoverageTool: cobertura
       failIfCoverageEmpty: false 
@@ -164,7 +164,7 @@ steps:
       
 
   - task: PublishBuildArtifacts@1
-    condition: succeededOrFailed()
+    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
     inputs:
       pathtoPublish: '$(Build.Repository.LocalPath)'
       artifactName: '$(Agent.JobName)-$(Build.BuildNumber)'
