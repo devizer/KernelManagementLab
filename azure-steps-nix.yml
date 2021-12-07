@@ -124,8 +124,8 @@ steps:
       try-and-retry curl -o /tmp/_dotnet-install.sh -ksSL $DOTNET_Url
       DOTNET_INSTALL_DIR=$HOME/dotnet-3.1.120-builder
       time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -version 3.1.120 -i $DOTNET_INSTALL_DIR
-      Say "User: $USER"
-      sudo chown -R $USER $DOTNET_INSTALL_DIR
+      Say "User: $(whoami)"
+      sudo chown -R $(whoami) $DOTNET_INSTALL_DIR
       export PATH="$DOTNET_INSTALL_DIR:$PATH"
       export DOTNET_ROOT="$DOTNET_INSTALL_DIR"
       # sudo ln -f -s $DOTNET_INSTALL_DIR/dotnet /usr/local/bin/dotnet || true
@@ -135,7 +135,8 @@ steps:
       echo "##vso[task.setvariable variable=PATH]$PATH"
       echo "##vso[task.setvariable variable=DOTNET_CLI_HOME]$DOTNET_CLI_HOME"
       Say "dotnet restore"
-      dotnet restore || dotnet restore --disable-parallel || true
+      dotnet restore || dotnet restore --disable-parallel
+      exit=$?; Say "Restore status: $exit"
     condition: eq(variables.QEMU, 'True')
     displayName: '3.1 on qemu'
 
