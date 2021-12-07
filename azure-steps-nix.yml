@@ -25,6 +25,7 @@ steps:
       echo "uname -m: '$(uname -m)'"
       echo "PATH    : '$PATH'"
       dotnet --info
+      if [[ "$QEMU" == "True" ]]; then exit 0; fi
       export TMPDIR=$HOME/.tmp-dotnet; mkdir -p $TMPDIR
       DOTNET_TARGET_DIR=/usr/share/dotnet
       if [[ "$(uname -s)" != "Linux" ]]; then DOTNET_TARGET_DIR=$HOME/.dotnet; fi
