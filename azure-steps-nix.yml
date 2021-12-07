@@ -135,7 +135,7 @@ steps:
       echo "##vso[task.setvariable variable=PATH]$PATH"
       echo "##vso[task.setvariable variable=DOTNET_CLI_HOME]$DOTNET_CLI_HOME"
       Say "dotnet restore"
-      dotnet restore || dotnet restore --disable-parallel
+      dotnet restore -v:d || dotnet restore -v:d --disable-parallel
       exit=$?; Say "Restore status: $exit"
     condition: eq(variables.QEMU, 'True')
     displayName: '3.1 on qemu'
