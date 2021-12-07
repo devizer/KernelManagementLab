@@ -119,15 +119,21 @@ steps:
     displayName: 'BinTests: Publish'
 
   - script: |
+      function kill_msbuild_service() {
+        pids=$(ps -ax | grep 'dotnet ' | grep 'MSBuild.dll' | awk '{print $1}')
+        for pid in $pids; do kill $pid; done
+      }
       Say "Install NET Core 6.0"
       export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
       (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
       test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
       Say "dotnet restore using net 5.0"
-      dotnet restore -v:n || dotnet restore -v:n --disable-parallel
-      exit=$?; Say "Restore status: $exit"
+      kill_msbuild_service
+      dotnet restore -v:n || (e=$?; Say "Error $e. Faullback restore"; kill_msbuild_service; dotnet restore -v:n --disable-parallel)
+      exit=$?; Say "Final Restore status: $exit"
       
+      Say "Setup dotnet core 3.1 as default"
       export DOTNET_VERSIONS="3.1" DOTNET_TARGET_DIR=/usr/share/dotnet-3.1
       (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 
