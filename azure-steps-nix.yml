@@ -124,6 +124,8 @@ steps:
       try-and-retry curl -o /tmp/_dotnet-install.sh -ksSL $DOTNET_Url
       DOTNET_INSTALL_DIR=$HOME/dotnet-3.1.120-builder
       time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -version 3.1.120 -i $DOTNET_INSTALL_DIR
+      Say "User: $USER"
+      sudo chown -R $USER $DOTNET_INSTALL_DIR
       export PATH="$DOTNET_INSTALL_DIR:$PATH"
       export DOTNET_ROOT="$DOTNET_INSTALL_DIR"
       # sudo ln -f -s $DOTNET_INSTALL_DIR/dotnet /usr/local/bin/dotnet || true
