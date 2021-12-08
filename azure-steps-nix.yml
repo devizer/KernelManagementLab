@@ -136,7 +136,7 @@ steps:
       exi=$?; Say "Final Restore status: $exi"
       
       Say "Setup dotnet core 3.1 as default"
-      export DOTNET_VERSIONS="3.1" DOTNET_TARGET_DIR=/usr/share/dotnet-3.1
+      export DOTNET_VERSIONS="3.1.120" DOTNET_TARGET_DIR=/usr/share/dotnet-3.1
       (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 
       Say "User: $(whoami)"
