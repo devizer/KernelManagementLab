@@ -153,6 +153,7 @@ steps:
       kill_msbuild_service
       kill_msbuild_service
       Reset-Target-Framework -fw netcoreapp3.1
+      true
     # condition: eq(variables.QEMU, 'True')
     displayName: '3.1 on qemu'
 
