@@ -136,6 +136,7 @@ steps:
       exi=$?; Say "Final Restore status: $exi"
       
       Say "Setup dotnet core 3.1 as default"
+      sudo rm /etc/dotnet/install_location
       export DOTNET_VERSIONS="3.1.120" DOTNET_TARGET_DIR=/usr/share/dotnet-3.1
       (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 
@@ -145,9 +146,10 @@ steps:
       export DOTNET_ROOT="$DOTNET_TARGET_DIR"
       dotnet --info
       unset MSBuildSDKsPath || true
-      export DOTNET_CLI_HOME="$DOTNET_INSTALL_DIR"
+      export DOTNET_CLI_HOME="$DOTNET_INSTALL_DIR" DOTNET_ROOT="$DOTNET_INSTALL_DIR"
       echo "##vso[task.setvariable variable=PATH]$PATH"
       echo "##vso[task.setvariable variable=DOTNET_CLI_HOME]$DOTNET_CLI_HOME"
+      echo "##vso[task.setvariable variable=DOTNET_ROOT]$DOTNET_ROOT"
       kill_msbuild_service
       kill_msbuild_service
     condition: eq(variables.QEMU, 'True')
