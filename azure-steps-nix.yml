@@ -119,6 +119,7 @@ steps:
     displayName: 'BinTests: Publish'
 
   - script: |
+      export SKIP_DOTNET_DEPENDENCIES=True
       function kill_msbuild_service() {
         pids=$(ps -ax | grep 'dotnet ' | grep 'MSBuild.dll' | awk '{print $1}')
         for pid in $pids; do Say "Stop MSBUILD SERVICE $pid"; kill $pid; done
@@ -131,8 +132,8 @@ steps:
       test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
       Say "dotnet restore using net 5.0"
       kill_msbuild_service
-      dotnet restore -v:n || (e=$?; Say "Error $e. Faullback restore"; kill_msbuild_service; dotnet restore -v:n --disable-parallel)
-      exit=$?; Say "Final Restore status: $exit"
+      dotnet restore -v:m || (e=$?; Say "Error $e. Faullback restore"; kill_msbuild_service; dotnet restore -v:m --disable-parallel)
+      exi=$?; Say "Final Restore status: $exi"
       
       Say "Setup dotnet core 3.1 as default"
       export DOTNET_VERSIONS="3.1" DOTNET_TARGET_DIR=/usr/share/dotnet-3.1
