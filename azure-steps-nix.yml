@@ -126,16 +126,16 @@ steps:
       }
       kill_msbuild_service
       Say "Install NET Core 6.0"
-      export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
+      export DOTNET_VERSIONS="6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
       (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
       test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
-      Say "dotnet restore using net 5.0"
+      Say "dotnet restore using net 6.0"
       kill_msbuild_service
       dotnet restore -v:m || (e=$?; Say "Error $e. Faullback restore"; kill_msbuild_service; dotnet restore -v:m --disable-parallel)
       exi=$?; Say "Final Restore status: $exi"
       
-      Say "Setup dotnet core 3.1 as default"
+      Say "Setup dotnet core 3.1.120 as default"
       sudo rm /etc/dotnet/install_location
       export DOTNET_VERSIONS="3.1.120" DOTNET_TARGET_DIR=/usr/share/dotnet-3.1
       (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
@@ -152,7 +152,8 @@ steps:
       echo "##vso[task.setvariable variable=DOTNET_ROOT]$DOTNET_ROOT"
       kill_msbuild_service
       kill_msbuild_service
-    condition: eq(variables.QEMU, 'True')
+      Reset-Target-Framework -fw netcoreapp3.1
+    # condition: eq(variables.QEMU, 'True')
     displayName: '3.1 on qemu'
 
   - script: |
