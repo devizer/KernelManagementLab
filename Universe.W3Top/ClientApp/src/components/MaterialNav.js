@@ -298,12 +298,16 @@ class PersistentDrawerLeft extends React.Component {
                         </IconButton>
                         <div style={{position:"relative", width: "100%", fontSize: "10px"}}>
                             <div style={{textAlign:"left", width: "100%", position2:"absolute", top:0}}>
-                                <Typography variant="h6" color="inherit" noWrap>
+                                <Typography variant="overline" color="inherit" noWrap style={{paddingBottom: 0, marginBottom: -10 }}>
                                     W3 Top
                                 </Typography>
+                                <Typography variant="h6" color="inherit" noWrap>
+                                    Welcome
+                                </Typography>
+                                
                             </div>
-
-                            <div style={{textAlign:"right", width: "100%", position:"absolute", top:-10, fontSize: "10px", display: this.state.isNewVersionAvailable ? "block" : "none"}}>
+                            
+                            <div style={{textAlign:"right", width: "100%", position:"absolute", top:"3%", fontSize: "10px", display: this.state.isNewVersionAvailable ? "block" : "none"}}>
                                 <IconButton 
                                     title={newVerTitle}
                                     onClick={() => this.setState({newVersionOpened: true})}

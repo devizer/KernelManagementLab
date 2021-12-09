@@ -42,6 +42,7 @@ export default class App extends Component {
 
         this.logVersionInfo();
         Helper.toConsole(`window.jQuery is [${typeof window.$}]`)
+        this.onRouteChanged = this.onRouteChanged.bind(this);
     }
     
     logVersionInfo()
@@ -91,7 +92,20 @@ export default class App extends Component {
             ColumnChooserComponent,
         ];
     };
+
     
+    componentDidUpdate(prevProps) {
+        console.log(`componentDidUpdate: ${this.props.location.pathname}`);
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            this.onRouteChanged();
+        }
+    }
+
+    onRouteChanged() {
+        console.log(`ROUTE CHANGED: ${this.props.location.pathname}`);
+    }
+
+
     render () {
         if (SharedDiskBenchmarkFlow.isSharedBenchmarkResult()) {
             if (typeof document === "object") document.title = "Drive Benchmark by W3Top";
@@ -107,7 +121,7 @@ export default class App extends Component {
                 return <h4 style={{}}>broken url</h4>
             }
         }
-        
+
         return (
             <Layout>
                     <Switch>
