@@ -39,6 +39,9 @@ import AppGitInfo from "../AppGitInfo"
 import dataSourceStore from "../stores/DataSourceStore";
 import * as Helper from "../Helper";
 
+import navStore from "../stores/NavStore"
+import * as NavActions from "../stores/NavActions"
+
 // ICONS
 import { ReactComponent as DisksIconSvg } from '../icons/Disks-Icon.svg';
 import { ReactComponent as MainIconSvg } from '../icons/w3top-3.svg';
@@ -125,6 +128,7 @@ class PersistentDrawerLeft extends React.Component {
     state = {
         open: false,
         newVersionOpened: false,
+        navKind: 'Welcome'
     };
     
     constructor(props) {
@@ -139,6 +143,14 @@ class PersistentDrawerLeft extends React.Component {
     componentDidMount() {
         let x1 = dataSourceStore.on('storeUpdated', this.updateGlobalDataSource);
         let x2 = dataSourceStore.on('briefUpdated', this.updateBrief);
+        let xNav = navStore.on('storeUpdated', this.handleNav);
+        this.handleNav();
+    }
+    
+    handleNav = () => {
+        const kind = navStore.getNavKind();
+        console.log(`Routing real kind: [${kind}]`);
+        this.setState({navKind: kind});
     }
     
     // It is never called, but 
@@ -215,7 +227,9 @@ class PersistentDrawerLeft extends React.Component {
     closeNewVersionBar() {
         this.setState({newVersionOpened: false});
     }
-    
+
+
+
 
     render() {
         const newVer = dataSourceStore.getDataSource().newVer;
@@ -250,6 +264,12 @@ class PersistentDrawerLeft extends React.Component {
         // let [hasSystem, system] = Helper.Common.tryGetProperty(dataSourceStore.getDataSource(), "system");
         // if (!hasSystem) system = {};
         // let hostname = Helper.System.getHostName(dataSourceStore.getDataSource());
+        
+        let navTitle = null;
+        Object.entries(NavActions.NavDefinitions).forEach( ([kind, info]) => {
+            if (this.state.navKind === kind)
+                navTitle = info.title;
+        });
         
         return (
             <div className={classes.root}>
@@ -302,7 +322,7 @@ class PersistentDrawerLeft extends React.Component {
                                     W3 Top
                                 </Typography>
                                 <Typography variant="h6" color="inherit" noWrap>
-                                    Welcome
+                                    {navTitle}
                                 </Typography>
                                 
                             </div>

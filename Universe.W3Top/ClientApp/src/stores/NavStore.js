@@ -2,14 +2,6 @@ import dispatcher from "./NavDispatcher";
 import {EventEmitter} from "events";
 import * as NavActions from "./NavActions";
 
-export const NavDefinitions = {
-    Welcome: {        title: "Welcome"},
-    NetLiveChart: {   title: "Network Live Chart"},
-    LiveMounts: {     title: "Live Mounts"},
-    DisksLiveChart: { title: "Disks Live Chart"},
-    DiskBenchmark: {  title: "Disk Benchmark"},
-    TopProcesses: {   title: "Top Processes"}
-}
 
 class NavStore extends EventEmitter {
 

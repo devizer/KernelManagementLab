@@ -2,6 +2,8 @@ import "c3/c3.css"
 import "./App.css"
 import AppGitInfo from './AppGitInfo'
 
+import { withRouter } from "react-router-dom";
+import * as NavActions from './stores/NavActions'
 import 'babel-polyfill';
 import React, { Component, Suspense } from 'react';
 import { Route, Switch, Router } from 'react-router';
@@ -34,7 +36,7 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 
-export default class App extends Component {
+class App extends Component {
     static displayName = App.name;
 
     constructor (props) {
@@ -42,7 +44,28 @@ export default class App extends Component {
 
         this.logVersionInfo();
         Helper.toConsole(`window.jQuery is [${typeof window.$}]`)
-        this.onRouteChanged = this.onRouteChanged.bind(this);
+        // this.onRouteChanged = this.onRouteChanged.bind(this);
+    }
+
+    componentWillMount() {
+        this.unlistenNav = this.props.history.listen((location, action) => {
+            this.raiseNavKind(location, "changed to");
+        });
+        this.raiseNavKind(this.props.history.location, "starts with");
+    }
+    
+    raiseNavKind = (location, stage) => {
+        let navKink = "Welcome";
+        // for (let [kind, info] of Object.entries(NavActions.NavDefinitions)) {
+        Object.entries(NavActions.NavDefinitions).forEach( ([kind, info]) => {
+            if (info.path === location.pathname) {
+                navKink = kind;
+            }
+            if (location.pathname === "/") { navKink = NavActions.RootNavKind }
+        });
+        
+        console.log(`Routing ${stage} [${navKink}]`, location);
+        NavActions.NavUpdated(navKink);
     }
     
     logVersionInfo()
@@ -59,6 +82,10 @@ export default class App extends Component {
     
     componentWillUnmount() {
         dataSourceListener.stop();
+        if (this.unlistenNav) {
+            this.unlistenNav();
+            this.unlisten = null;
+        }
     }
     
     static _404 = () => (
@@ -93,7 +120,8 @@ export default class App extends Component {
         ];
     };
 
-    
+
+/*
     componentDidUpdate(prevProps) {
         console.log(`componentDidUpdate: ${this.props.location.pathname}`);
         if (this.props.location.pathname !== prevProps.location.pathname) {
@@ -104,6 +132,7 @@ export default class App extends Component {
     onRouteChanged() {
         console.log(`ROUTE CHANGED: ${this.props.location.pathname}`);
     }
+*/
 
 
     render () {
@@ -144,3 +173,5 @@ export default class App extends Component {
         );
     }
 }
+
+export default withRouter(App);
