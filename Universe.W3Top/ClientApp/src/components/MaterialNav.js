@@ -324,7 +324,6 @@ class PersistentDrawerLeft extends React.Component {
                                 <Typography variant="h6" color="inherit" noWrap>
                                     {navTitle}
                                 </Typography>
-                                
                             </div>
                             
                             <div style={{textAlign:"right", width: "100%", position:"absolute", top:"3%", fontSize: "10px", display: this.state.isNewVersionAvailable ? "block" : "none"}}>
