@@ -152,7 +152,7 @@ const netStatTest = async(context) => {
 
 
 let pages = [
-    { url:'/net-v2', width: 570, height: 800, fileName:"net-live-chart", tests: [commonTest, netStatTest] },
+    { url:'/net', width: 570, height: 800, fileName:"net-live-chart", tests: [commonTest, netStatTest] },
     { url:`/`,      width: 570, height: 800, fileName:"[home]", tests: [commonTest] },
     { url:`/`,      width: 700, height: 730, fileName:"Menu [home]", tests: [commonTest, showDrawerTest] },
     { url:'/disk-benchmark', width: 1180, height: 768, fileName:"disk-benchmark-progress", tests: [diskBenchmarkFullTest] },

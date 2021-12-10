@@ -157,6 +157,7 @@ class PersistentDrawerLeft extends React.Component {
     componentWillUnmount() {
         let x1 = dataSourceStore.removeListener('storeUpdated', this.updateGlobalDataSource);
         let x2 = dataSourceStore.removeListener('briefUpdated', this.updateBrief);
+        let xNav = navStore.removeListener('storeUpdated', this.handleNav);
     }
 
 
@@ -366,7 +367,7 @@ class PersistentDrawerLeft extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        {MainMenuLink(<InsertChartOutlinedIcon/>,"/net-v2", "Network Live Chart")}
+                        {MainMenuLink(<InsertChartOutlinedIcon/>,"/net", "Network Live Chart")}
                         <Divider />
                         {/*{MainMenuLink(<FontAwesomeIcon icon={faServer} style={{marginLeft:4, marginRight:5}}/>,"Live Mounts", "/mounts")}*/}
                         {/*{MainMenuLink(<HardDiskIcon style={{width:20,height:20,marginLeft:2,marginRight:2,opacity:0.6}}/>,"Live Mounts", "/mounts")}*/}

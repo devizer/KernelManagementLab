@@ -11,7 +11,7 @@ export function NavUpdated(navKind) {
 
 export const NavDefinitions = {
     Welcome: {        title: "Welcome"},
-    NetLiveChart: {   title: "Network Live Chart", path: "/net-v2" },
+    NetLiveChart: {   title: "Network Live Chart", path: "/net" },
     LiveMounts: {     title: "Live Mounts",        path: "/mounts" },
     DisksLiveChart: { title: "Disks Live Chart",   path: "/disks" },
     DiskBenchmark: {  title: "Disk Benchmark",     path: "/disk-benchmark" },

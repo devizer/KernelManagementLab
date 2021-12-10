@@ -162,7 +162,7 @@ class App extends Component {
                         <Route exact path='/1-axis' component={Poc1Chart} />
                         <Route exact path='/2-axis' component={Poc2Chart} />
                         <Route exact path='/net-v1' component={NetChartContainer} />
-                        <Route exact path='/net-v2' component={NetChartContainer_V2} />
+                        <Route exact path='/net' component={NetChartContainer_V2} />
                         <Route exact path='/mounts' component={MountsList} />
                         <Route exact path='/disk-benchmark' component={DiskBenchmarkDialog} />
                         <Route exact path='/net-benchmark-pre1' component={NetBenchmarkV1} />
