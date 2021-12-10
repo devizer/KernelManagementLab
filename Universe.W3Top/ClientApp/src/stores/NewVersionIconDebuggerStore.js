@@ -1,5 +1,6 @@
 let initDone = false;
 let forced = false;
+
 if (!initDone) {
     initDone = true;
     if (document && document.addEventListener) {
@@ -11,7 +12,7 @@ if (!initDone) {
                 }
             }
         });
-        console.log('Press Ctrl-Alt-Sshift-N to test new version layout');
+        console.log('Press Ctrl-Alt-Shift-N to test new version layout');
     }
 }
 
