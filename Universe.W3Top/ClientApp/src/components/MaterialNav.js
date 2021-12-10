@@ -41,6 +41,7 @@ import * as Helper from "../Helper";
 
 import navStore from "../stores/NavStore"
 import * as NavActions from "../stores/NavActions"
+import * as NewVersionIconDebuggerStore from '../stores/NewVersionIconDebuggerStore'
 
 // ICONS
 import { ReactComponent as DisksIconSvg } from '../icons/Disks-Icon.svg';
@@ -327,7 +328,7 @@ class PersistentDrawerLeft extends React.Component {
                                 </Typography>
                             </div>
                             
-                            <div style={{textAlign:"right", width: "100%", position:"absolute", top:"3%", fontSize: "10px", display: this.state.isNewVersionAvailable ? "block" : "none"}}>
+                            <div style={{textAlign:"right", width: "100%", position:"absolute", top:"3%", fontSize: "10px", display: this.state.isNewVersionAvailable || NewVersionIconDebuggerStore.getForced() ? "block" : "none"}}>
                                 <IconButton 
                                     title={newVerTitle}
                                     onClick={() => this.setState({newVersionOpened: true})}
