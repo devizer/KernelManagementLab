@@ -16,13 +16,14 @@ namespace Universe.FioStream
             TextVersion = new Lazy<string>(() =>
             {
                 string rawVersion = null;
-                Action<StreamReader> handler = streamReader =>
+
+                void Handler(StreamReader streamReader)
                 {
                     rawVersion = streamReader.ReadToEnd();
                     rawVersion = rawVersion.Trim('\r', '\n');
-                };
+                }
 
-                FioLauncher launcher = new FioLauncher(this.Executable, "--version", handler);
+                FioLauncher launcher = new FioLauncher(this.Executable, "--version", Handler);
                 launcher.Start();
 
                 if (launcher.ExitCode != 0 || !string.IsNullOrEmpty(launcher.ErrorText))
@@ -34,7 +35,6 @@ namespace Universe.FioStream
                 return rawVersion;
 
             }, LazyThreadSafetyMode.ExecutionAndPublication);
-
         }
 
         public FioVersionReader(string executable) : this()
@@ -47,6 +47,12 @@ namespace Universe.FioStream
         public Version GetVersion()
         {
             var textVersion = GetTextVersion();
+            var ret = StripVersionText(textVersion);
+            return new Version(ret);
+        }
+        
+        static string StripVersionText(string textVersion)
+        {
             StringBuilder ret = new StringBuilder();
             foreach (var c in textVersion)
             {
@@ -61,8 +67,9 @@ namespace Universe.FioStream
                 }
             }
 
-            return new Version(ret.ToString());
+            return ret.ToString();
         }
+
 
     }
 }
