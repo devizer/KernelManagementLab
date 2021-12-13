@@ -71,10 +71,13 @@ namespace KernelManagementJam
                 units = "MHz";
                 format = "f0";
             }
-            if (max == min)
-                return $"{(max / (double)scale).ToString(format)} {units}";
+
+            var maxStr = (max / (double) scale).ToString(format);
+            var minStr = (min / (double) scale).ToString(format);
+            if (maxStr == minStr)
+                return $"{maxStr} {units}";
             else 
-                return $"{(min / (double)scale).ToString(format)}…{(max / (double)scale):f2} {units}";
+                return $"{minStr} … {maxStr} {units}";
         }
     }
 }
