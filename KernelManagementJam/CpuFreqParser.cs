@@ -64,15 +64,17 @@ namespace KernelManagementJam
 
             long scale = 1000000;
             string units = "GHz";
+            string format = "f2";
             if (max < 1000000)
             {
                 scale = 1000;
                 units = "MHz";
+                format = "f0";
             }
             if (max == min)
-                return $"{(max / (double)scale):f2} {units}";
+                return $"{(max / (double)scale).ToString(format)} {units}";
             else 
-                return $"{(min / (double)scale):f2} … {(max / (double)scale):f2} {units}";
+                return $"{(min / (double)scale).ToString(format)}…{(max / (double)scale):f2} {units}";
         }
     }
 }
