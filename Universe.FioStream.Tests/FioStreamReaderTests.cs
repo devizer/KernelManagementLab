@@ -37,20 +37,20 @@ namespace Universe.FioStream.Tests
             FioStreamReader reader = new FioStreamReader();
             reader.NotifyJobSummary += result =>
             {
-                if (DEBUG) Console.WriteLine($"JobSummaryResult: {result}");
+                if (DEBUG) Console.WriteLine($"[JobSummaryResult Structured]: {result}");
                 jobSummaryResult = result;
                 jobSummaryResultCount++;
             };
 
             reader.NotifyJobSummaryCpuUsage += cpuUsage =>
             {
-                if (DEBUG) Console.WriteLine($"JobSummaryCpuUsage: {cpuUsage}");
+                if (DEBUG) Console.WriteLine($"[JobSummaryCpuUsage Structured]: {cpuUsage}");
                 jobSummaryCpuUsage = cpuUsage;
             };
 
             reader.NotifyEta += eta =>
             {
-                if (DEBUG) Console.WriteLine($"ETA: {eta}");
+                if (DEBUG) Console.WriteLine($"[ETA Structured]: {eta}");
             };
 
             bool isFirst = true;
