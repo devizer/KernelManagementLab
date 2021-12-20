@@ -103,7 +103,11 @@ steps:
         Say "Build BinTests for $f"
         cd $f
           dotnet build -c Release -f net462
-          ls -la bin/Release/net462
+          pushd bin/Release/net462
+            ls -la
+            echo fix mono runtimes for $(pwd)
+            url=https://raw.githubusercontent.com/devizer/glist/master/bin/fix-mono-runtimes.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
+          popd
           mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f 
           cp -rf bin/Release/net462/* $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f
         cd ..
@@ -126,7 +130,7 @@ steps:
       }
       kill_msbuild_service
       Say "Install NET Core 6.0"
-      export DOTNET_VERSIONS="6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
+      export DOTNET_VERSIONS="3.1.120 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
       (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
       test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
@@ -162,8 +166,9 @@ steps:
       echo %PATH%
       echo $PATH
       dotnet --info
-      dotnet test -f netcoreapp3.1 -c Release --collect:"XPlat Code Coverage" --logger trx -- NUnit.NumberOfTestWorkers=1
+      dotnet test -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
+    # --collect:"XPlat Code Coverage" --logger trx 
 
   - script: |
       printenv | sort
@@ -173,22 +178,19 @@ steps:
     displayName: 'System Stat'
 
 
-  - task: PublishTestResults@2
-    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
-    inputs:
-      testRunner: VSTest
-      testResultsFiles: '**/*.trx'
-      testRunTitle: 'All the tests for $(Agent.JobName)'
-      
-  - task: PublishCodeCoverageResults@1
-    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
-    inputs:
-      codeCoverageTool: cobertura
-      failIfCoverageEmpty: false 
-      summaryFileLocation: '**/In/**/coverage.cobertura.xml'
-      #pathToSources: # Optional
-      #reportDirectory: # Optional
-      #additionalCodeCoverageFiles: # Optional
+#  - task: PublishTestResults@2
+#    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
+#    inputs:
+#      testRunner: VSTest
+#      testResultsFiles: '**/*.trx'
+#      testRunTitle: 'All the tests for $(Agent.JobName)'
+#      
+#  - task: PublishCodeCoverageResults@1
+#    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
+#    inputs:
+#      codeCoverageTool: cobertura
+#      failIfCoverageEmpty: false 
+#      summaryFileLocation: '**/In/**/coverage.cobertura.xml'
       
 
   - task: PublishBuildArtifacts@1
