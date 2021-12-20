@@ -166,9 +166,9 @@ steps:
       echo %PATH%
       echo $PATH
       dotnet --info
-      dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1
+      dotnet test -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
-    # --collect:"XPlat Code Coverage" 
+    # --collect:"XPlat Code Coverage" --logger trx 
 
   - script: |
       printenv | sort
@@ -178,13 +178,13 @@ steps:
     displayName: 'System Stat'
 
 
-  - task: PublishTestResults@2
-    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
-    inputs:
-      testRunner: VSTest
-      testResultsFiles: '**/*.trx'
-      testRunTitle: 'All the tests for $(Agent.JobName)'
-      
+#  - task: PublishTestResults@2
+#    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
+#    inputs:
+#      testRunner: VSTest
+#      testResultsFiles: '**/*.trx'
+#      testRunTitle: 'All the tests for $(Agent.JobName)'
+#      
 #  - task: PublishCodeCoverageResults@1
 #    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
 #    inputs:
