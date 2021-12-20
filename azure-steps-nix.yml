@@ -103,7 +103,11 @@ steps:
         Say "Build BinTests for $f"
         cd $f
           dotnet build -c Release -f net462
-          ls -la bin/Release/net462
+          pushd bin/Release/net462
+            ls -la
+            echo fix mono runtimes for $(pwd)
+            url=https://raw.githubusercontent.com/devizer/glist/master/bin/fix-mono-runtimes.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
+          popd
           mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f 
           cp -rf bin/Release/net462/* $BUILD_ARTIFACTSTAGINGDIRECTORY/BinTests/$f
         cd ..
