@@ -166,8 +166,9 @@ steps:
       echo %PATH%
       echo $PATH
       dotnet --info
-      dotnet test -f netcoreapp3.1 -c Release --collect:"XPlat Code Coverage" --logger trx -- NUnit.NumberOfTestWorkers=1
+      dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
+    # --collect:"XPlat Code Coverage" 
 
   - script: |
       printenv | sort
@@ -184,15 +185,12 @@ steps:
       testResultsFiles: '**/*.trx'
       testRunTitle: 'All the tests for $(Agent.JobName)'
       
-  - task: PublishCodeCoverageResults@1
-    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
-    inputs:
-      codeCoverageTool: cobertura
-      failIfCoverageEmpty: false 
-      summaryFileLocation: '**/In/**/coverage.cobertura.xml'
-      #pathToSources: # Optional
-      #reportDirectory: # Optional
-      #additionalCodeCoverageFiles: # Optional
+#  - task: PublishCodeCoverageResults@1
+#    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
+#    inputs:
+#      codeCoverageTool: cobertura
+#      failIfCoverageEmpty: false 
+#      summaryFileLocation: '**/In/**/coverage.cobertura.xml'
       
 
   - task: PublishBuildArtifacts@1
