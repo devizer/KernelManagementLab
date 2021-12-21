@@ -171,7 +171,7 @@ steps:
       # for d in $(find -maxdepth 1 -type d | grep -E '\.Tests'); do 
         pushd $d
         Say "Building $d" || echo "Building $d"
-        dotnet build -f netcoreapp3.1 -c Release /v:m
+        dotnet build -f netcoreapp3.1 -c Release -v:m
         popd
       done
       dotnet test --no-build -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
