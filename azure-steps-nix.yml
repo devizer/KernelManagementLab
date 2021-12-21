@@ -164,6 +164,11 @@ steps:
 
   - bash: |
       echo $PATH
+      function kill_msbuild_service() {
+        pids=$(ps -ax | grep 'dotnet ' | grep 'MSBuild.dll' | awk '{print $1}')
+        for pid in $pids; do Say "Stop MSBUILD SERVICE $pid"; kill $pid || true; done
+      }
+      kill_msbuild_service
       dotnet --info
       # dotnet build -f netcoreapp3.1 -c Release /v:m
       for d in Universe.Dashboard.DAL.Tests JsonLab.Tests Universe.FioStream.Tests KernelManagementJam.Tests; do
@@ -173,6 +178,7 @@ steps:
         dotnet build -f netcoreapp3.1 -c Release -v:m
         popd
       done
+      kill_msbuild_service
       set -e
       dotnet test --blame --no-build -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
