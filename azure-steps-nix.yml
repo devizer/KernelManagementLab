@@ -163,7 +163,6 @@ steps:
     displayName: '3.1 on qemu'
 
   - bash: |
-      set -e
       echo $PATH
       dotnet --info
       # dotnet build -f netcoreapp3.1 -c Release /v:m
@@ -174,6 +173,7 @@ steps:
         dotnet build -f netcoreapp3.1 -c Release -v:m
         popd
       done
+      set -e
       dotnet test --blame --no-build -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
     # --collect:"XPlat Code Coverage" --logger trx 
