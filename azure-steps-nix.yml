@@ -162,11 +162,12 @@ steps:
     condition: eq(variables['Agent.OS'], 'Linux')
     displayName: '3.1 on qemu'
 
-  - script: |
-      echo %PATH%
+  - bash: |
       echo $PATH
       dotnet --info
-      dotnet test -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
+      set -e
+      dotnet build -f netcoreapp3.1 -c Release /v:m
+      dotnet test --no-build -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
     # --collect:"XPlat Code Coverage" --logger trx 
 
