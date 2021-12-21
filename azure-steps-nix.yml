@@ -174,7 +174,7 @@ steps:
         dotnet build -f netcoreapp3.1 -c Release -v:m
         popd
       done
-      dotnet test --no-build -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
+      dotnet test --blame --no-build -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
     # --collect:"XPlat Code Coverage" --logger trx 
 
