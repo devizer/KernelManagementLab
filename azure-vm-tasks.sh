@@ -24,14 +24,14 @@ echo starting in $(pwd);
 cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
 cd KernelManagementLab
 Say "Install NET Core 6.0 & 3.1"
-export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
+export DOTNET_VERSIONS="3.1.120" DOTNET_TARGET_DIR=/usr/share/dotnet
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
 (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
-dotnet restore -v:m || (e=$?; Say "Error $e. Faullback restore"; kill_msbuild_service; dotnet restore -v:m --disable-parallel)
-exi=$?; Say "Final Restore status: $exi"
+# dotnet restore -v:m || (e=$?; Say "Error $e. Faullback restore"; kill_msbuild_service; dotnet restore -v:m --disable-parallel)
+# exi=$?; Say "Final Restore status: $exi"
 export VSTEST_CONNECTION_TIMEOUT=300000
-dotnet test --logger trx -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
+dotnet test -f netcoreapp3.1 -c Release
 e=$?
 Say "TEST STATUS: $e"
 '
