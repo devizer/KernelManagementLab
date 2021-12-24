@@ -18,6 +18,8 @@ source "$api_code_file"
 DownloadVM $VM_KEY
 
 cmd='
+echo;
+free -m;
 echo starting in $(pwd); 
 cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
 cd KernelManagementLab
@@ -33,7 +35,8 @@ dotnet test --logger trx -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorker
 e=$?
 Say "TEST STATUS: $e"
 '
-export VM_SSH_PORT=2207
+export VM_SSH_PORT=2207 VM_MEM=2000M VM_CPUS=2
+
 RunVM $VM_KEY
 Say "VM_ROOT_FS is [$VM_ROOT_FS]"
 EvaluateCommand "$cmd"
