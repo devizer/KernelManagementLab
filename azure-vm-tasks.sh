@@ -28,7 +28,8 @@ script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/insta
 test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
 dotnet restore -v:m || (e=$?; Say "Error $e. Faullback restore"; kill_msbuild_service; dotnet restore -v:m --disable-parallel)
 exi=$?; Say "Final Restore status: $exi"
-dotnet test --collect:"XPlat Code Coverage" --logger trx -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
+export VSTEST_CONNECTION_TIMEOUT=300000
+dotnet test --logger trx -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
 e=$?
 Say "TEST STATUS: $e"
 '
