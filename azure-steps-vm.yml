@@ -1,0 +1,23 @@
+# AGENT_OS=Linux|Darwin|Windows_NT
+
+steps:
+
+  - bash: |
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+      Say --Reset-Stopwatch
+      Say "VM: $VM_KEY"
+      export SHORT_FIO_TESTS=True
+      sudo apt-get install qemu-system-arm -y -qq
+    displayName: 'Provisioning'
+
+  - bash: |
+      export VM_KEY
+      bash azure-vm-tasks.sh 
+    displayName: 'Tests'
+
+  - task: PublishBuildArtifacts@1
+    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
+    inputs:
+      pathtoPublish: '$(Build.Repository.LocalPath)'
+      artifactName: '$(Agent.JobName)-$(Build.BuildNumber)'
+      

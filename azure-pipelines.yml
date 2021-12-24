@@ -4,6 +4,28 @@ variables:
 
 jobs:
 
+  - job: VM_Arm32
+    variables:
+      OS: Linux
+      VM_KEY: ARMv7
+    timeoutInMinutes: 360
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'ubuntu-20.04'
+    steps:
+      - template: azure-steps-vm.yml
+
+  - job: VM_Arm64
+    variables:
+      OS: Linux
+      VM_KEY: ARMv8
+    timeoutInMinutes: 360
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'ubuntu-20.04'
+    steps:
+      - template: azure-steps-vm.yml
+
   - job: Arm32
     variables:
       OS: Linux
