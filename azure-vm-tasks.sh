@@ -21,8 +21,8 @@ cmd='
 echo starting in $(pwd); 
 cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
 cd KernelManagementLab
-Say "Install NET Core 6.0 & 3.1.120"
-export DOTNET_VERSIONS="3.1.120 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
+Say "Install NET Core 6.0 & 3.1"
+export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
 (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
