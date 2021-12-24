@@ -16,9 +16,9 @@ steps:
       bash azure-vm-tasks.sh 
     displayName: 'Tests'
 
-  - task: PublishBuildArtifacts@1
-    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
-    inputs:
-      pathtoPublish: '$(Build.Repository.LocalPath)'
-      artifactName: '$(Agent.JobName)-$(Build.BuildNumber)'
+#  - task: PublishBuildArtifacts@1
+#    condition: and(succeededOrFailed(), ne(variables.QEMU, 'True'))
+#    inputs:
+#      pathtoPublish: '$(Build.Repository.LocalPath)'
+#      artifactName: '$(Agent.JobName)-$(Build.BuildNumber)'
       
