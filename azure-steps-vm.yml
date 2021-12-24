@@ -7,7 +7,7 @@ steps:
       Say --Reset-Stopwatch
       Say "VM: $VM_KEY"
       export SHORT_FIO_TESTS=True
-      sudo apt-get install qemu-system-arm -y -qq
+      sudo apt-get install qemu-system-arm sshfs -y -qq
     displayName: 'Provisioning'
 
   - bash: |
