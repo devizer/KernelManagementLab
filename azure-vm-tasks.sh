@@ -36,6 +36,10 @@ export SHORT_FIO_TESTS=True
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=1
 Say "env"
 printenv | sort
+
+Say "Acceptance test (dotnet new console)"
+mkdir /tmp/app1; pushd /tmp/app1; dotnet new console; dotnet run; popd
+
 Say "dotnet test -f netcoreapp3.1 -c Release"
 dotnet test -f netcoreapp3.1 -c Release
 e=$?
