@@ -4,6 +4,18 @@ variables:
 
 jobs:
 
+  - job: VM_Arm32_Stretch
+    variables:
+      OS: Linux
+      VM_KEY: ARMv7-Stretch
+      QEMU_VER: 6.2.0
+    timeoutInMinutes: 360
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'ubuntu-20.04'
+    steps:
+      - template: azure-steps-vm.yml
+
   - job: VM_Arm32
     variables:
       OS: Linux
