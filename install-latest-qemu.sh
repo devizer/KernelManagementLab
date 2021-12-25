@@ -20,7 +20,7 @@ sudo apt-get install -y -q valgrind xfslibs-dev
 
 QEMU_VER=5.0.0 # 5.0.0 | 4.2.0 | 4.1.1
 QEMU_VER=6.2.0 # 5.0.0 | 4.2.0 | 4.1.1
-Say "Building qemu ${QEMU_VER}"
+Say "Downloading qemu ${QEMU_VER}"
 work=$HOME/build/qemu-user-static-src
 mkdir -p $work
 pushd $work
