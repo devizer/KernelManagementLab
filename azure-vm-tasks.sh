@@ -20,6 +20,7 @@ DownloadVM $VM_KEY
 cmd='
 echo;
 free -m;
+sudo ip addr show;
 echo starting in $(pwd); 
 cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
 cd KernelManagementLab
