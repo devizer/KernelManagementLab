@@ -8,6 +8,7 @@ jobs:
     variables:
       OS: Linux
       VM_KEY: ARMv7
+      QEMU_VER: 5.2.0
     timeoutInMinutes: 360
     cancelTimeoutInMinutes: 1
     pool:
