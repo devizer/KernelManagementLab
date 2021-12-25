@@ -3,10 +3,10 @@ sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
 cat /etc/apt/sources.list
 sudo apt-get update      
 Say "Installing qemu build dependencies"
-time sudo apt-get build-dep qemu -y
+time sudo apt-get build-dep qemu -y -q
 sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev
-
-sudo apt-get install libnfs-dev libiscsi-dev
+sudo apt-get install ninja-build cmake -q -y
+sudo apt-get install -q -y libnfs-dev libiscsi-dev
 
 sudo apt-get install -y -q git-email
 sudo apt-get install -y -q libaio-dev libbluetooth-dev libbrlapi-dev libbz2-dev
