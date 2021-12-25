@@ -12,8 +12,8 @@ steps:
     displayName: 'Provisioning'
 
   - bash: |
-      Say "Installing qemu build dependencies"
-      time sudo apt-get build-dep qemu -y
+      bash install-latest-qemu.sh
+    condition: eq(variables['Agent.JobName'], 'VM_Arm32')
     displayName: 'qemu vLatest'
 
   - bash: |
