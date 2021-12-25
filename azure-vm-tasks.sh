@@ -33,7 +33,7 @@ test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/
 # exi=$?; Say "Final Restore status: $exi"
 export VSTEST_CONNECTION_TIMEOUT=300000
 export SHORT_FIO_TESTS=True
-export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=1
+export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 Say "env"
 printenv | sort
 
