@@ -18,10 +18,12 @@ sudo apt-get install -y -q libvde-dev libvdeplug-dev libvte-2.90-dev libxen-dev 
 sudo apt-get install -y -q valgrind xfslibs-dev 
 
 
-QEMU_VER=5.0.0
-QEMU_VER=6.2.0 
-QEMU_VER=2.11.2 
-QEMU_VER=2.12.1 
+qv=5.0.0
+qv=6.2.0 
+qv=2.11.2 # needs python 2 
+qv=2.12.1
+QEMU_VER=${QEMU_VER:-$qv}
+
 Say "Downloading qemu ${QEMU_VER}"
 work=$HOME/build/qemu-user-static-src
 mkdir -p $work
