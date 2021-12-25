@@ -9,6 +9,10 @@ steps:
       export SHORT_FIO_TESTS=True
       sudo apt-get install qemu-system-arm sshfs sshpass -y -qq
       sudo apt-get install time -y -qq
+      Say "qemu-arm-static: $(qemu-arm-static --version | head -1)"
+      Say "qemu-aarch64-static: $(qemu-aarch64-static --version | head -1)"
+      Say "qemu-system-arm: $(qemu-system-arm --version | head -1)"
+      Say "qemu-system-aarch64: $(qemu-system-aarch64 --version | head -1)"
     displayName: 'Provisioning'
 
   - bash: |
