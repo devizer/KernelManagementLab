@@ -34,6 +34,14 @@ test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/
 export VSTEST_CONNECTION_TIMEOUT=300000
 export SHORT_FIO_TESTS=True
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
+
+Say "Installing actual CA Bundle for Buster $(uname -m)"
+file=/usr/local/share/ssl/cacert.pem
+url=https://curl.haxx.se/ca/cacert.pem
+sudo mkdir -p $(dirname $file)
+sudo wget -q -nv --no-check-certificate -O $file $url 2>/dev/null || sudo curl -ksSL $url -o $url
+test -s $file && export CURL_CA_BUNDLE="$file"
+
 Say "env"
 printenv | sort
 
