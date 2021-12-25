@@ -52,7 +52,10 @@ prefix=/usr/local
 
 set -o pipefail
 cpus=$(nproc); cpus=$((cpus+1))
-time make -j${cpus} && sudo make install
+Say "Building qemu ${QEMU_VER}"
+time make -j${cpus}
+Say "Installing qemu ${QEMU_VER} to $prefix"
+sudo make install
 popd
 
 
