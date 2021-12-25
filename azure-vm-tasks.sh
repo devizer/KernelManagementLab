@@ -47,5 +47,5 @@ RunVM $VM_KEY
 Say "VM_ROOT_FS is [$VM_ROOT_FS]"
 EvaluateCommand "$cmd"
 ls -la $VM_ROOT_FS
-ShutdownVM $VM_KEY
+# ShutdownVM $VM_KEY
 
