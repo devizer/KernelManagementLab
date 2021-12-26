@@ -80,13 +80,33 @@ jobs:
       - template: azure-steps-nix.yml
 
   # needs explicit dotnet core installation
-  - job: MacOS_Latest
+  - job: MacOS_10_14
     variables:
       OS: OSX
     timeoutInMinutes: 99
     cancelTimeoutInMinutes: 1
     pool:
       vmImage: 'macOS-10.14'
+    steps:
+      - template: azure-steps-nix.yml
+
+  - job: MacOS_10_15
+    variables:
+      OS: OSX
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'macOS-10.15'
+    steps:
+      - template: azure-steps-nix.yml
+
+  - job: MacOS_11
+    variables:
+      OS: OSX
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'macOS-11'
     steps:
       - template: azure-steps-nix.yml
 
@@ -106,7 +126,17 @@ jobs:
     timeoutInMinutes: 99
     cancelTimeoutInMinutes: 1
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'windows-2019'
+    steps:
+      - template: azure-steps-nix.yml
+
+  - job: WIN2022
+    variables:
+      OS: Windows
+    timeoutInMinutes: 99
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'windows-2022'
     steps:
       - template: azure-steps-nix.yml
 
