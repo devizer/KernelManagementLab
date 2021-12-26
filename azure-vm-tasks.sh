@@ -25,6 +25,11 @@ source "$api_code_file"
 
 DownloadVM $VM_KEY
 
+export VM_SSH_PORT=2207 VM_MEM=2000M VM_CPUS=2
+
+RunVM $VM_KEY
+
+
 cmd='
 echo;
 free -m;
@@ -69,13 +74,18 @@ printenv | sort
 Say "dotnet test -f netcoreapp3.1 -c Release --logger trx"
 time dotnet test -f netcoreapp3.1 -c Release --logger trx
 e=$?
+echo $e > tests-exit-code
 Say "TEST STATUS: $e"
 '
-export VM_SSH_PORT=2207 VM_MEM=2000M VM_CPUS=2
 
-RunVM $VM_KEY
 Say "VM_ROOT_FS is [$VM_ROOT_FS]"
 EvaluateCommand "$cmd"
+
+Say "Grab Test Result"
+cp -v -f -r $VM_ROOT_FS/root/KernelManagementLab/ .
+
+Say "tests-exit-code: $(cat tests-exit-code)"
+
 ls -la $VM_ROOT_FS
 # ShutdownVM $VM_KEY
 
