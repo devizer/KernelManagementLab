@@ -180,9 +180,9 @@ steps:
       done
       kill_msbuild_service
       set -e
-      dotnet test --blame --no-build -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
+      dotnet test --collect:"XPlat Code Coverage" --logger trx --blame -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
     displayName: 'dotnet test'
-    # --collect:"XPlat Code Coverage" --logger trx 
+    # 
 
   - script: |
       printenv | sort
