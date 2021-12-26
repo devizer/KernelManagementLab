@@ -3,6 +3,7 @@ using System.Threading;
 using NUnit.Framework;
 using Polly;
 using Universe.Dashboard.DAL;
+using Universe.NUnitTests;
 
 namespace Tests
 {

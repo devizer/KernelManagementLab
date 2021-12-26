@@ -11,6 +11,7 @@ using Universe.Dashboard.DAL;
 using Universe.Dashboard.DAL.MultiProvider;
 using Universe.Dashboard.DAL.Tests;
 using Universe.DiskBench;
+using Universe.NUnitTests;
 
 namespace Tests
 {

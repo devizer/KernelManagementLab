@@ -7,7 +7,7 @@ using System.Threading;
 using NUnit.Framework;
 using Universe.CpuUsage;
 
-namespace Tests
+namespace Universe.NUnitTests
 {
     public class NUnitTestsBase
     {
@@ -15,7 +15,7 @@ namespace Tests
 
         protected static TextWriter OUT;
         private Stopwatch StartAt;
-        private CpuUsage? _CpuUsage_OnStart;
+        private CpuUsage.CpuUsage? _CpuUsage_OnStart;
         private int TestCounter = 0;
 
         [SetUp]
@@ -32,12 +32,12 @@ namespace Tests
             Console.WriteLine($"#{TestCounter} {{{TestContext.CurrentContext.Test.Name}}} @ {testClassName} starting...");
         }
 
-        CpuUsage? GetCpuUsage()
+        CpuUsage.CpuUsage? GetCpuUsage()
         {
             try
             {
                 // return LinuxResourceUsage.GetByThread();
-                return CpuUsage.Get(CpuUsageScope.Thread);
+                return CpuUsage.CpuUsage.Get(CpuUsageScope.Thread);
             }
             catch
             {
@@ -56,7 +56,7 @@ namespace Tests
                 var onEnd = GetCpuUsage();
                 if (onEnd != null)
                 {
-                    var delta = CpuUsage.Substruct(onEnd.Value, _CpuUsage_OnStart.Value);
+                    var delta = CpuUsage.CpuUsage.Substruct(onEnd.Value, _CpuUsage_OnStart.Value);
                     double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                     double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
                     double perCents = (user + kernel) / 1000d / elapsed.TotalSeconds; 

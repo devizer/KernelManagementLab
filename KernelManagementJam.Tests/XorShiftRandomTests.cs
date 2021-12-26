@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using KernelManagementJam.Benchmarks;
 using NUnit.Framework;
-using Tests;
+using Universe.NUnitTests;
 
 namespace KernelManagementJam.Tests
 {

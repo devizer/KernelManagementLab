@@ -6,9 +6,8 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
-    <Import Project="..\Shared-Files\Test-Libraries.props" />
+    <Import Project="..\Shared-Files\NUnit-Platform.props" />
     <ItemGroup>
-        <PackageReference Include="Universe.CpuUsage" Version="2.2.497.598" />
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     </ItemGroup>
 
@@ -17,10 +16,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-
-    <ItemGroup>
-      <Compile Include="..\Shared-Files\NUnitTestsBase.cs" />
-    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Universe.FioStream.Binaries\Universe.FioStream.Binaries.csproj" />

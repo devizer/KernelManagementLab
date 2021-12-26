@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
-using Tests;
+using Universe.NUnitTests;
 
 namespace KernelManagementJam.Tests
 {

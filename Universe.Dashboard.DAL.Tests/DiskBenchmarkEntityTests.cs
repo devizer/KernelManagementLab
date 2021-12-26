@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Universe.Benchmark.DiskBench;
 using Universe.Dashboard.DAL;
 using Universe.Dashboard.DAL.Tests;
+using Universe.NUnitTests;
 
 namespace Tests
 {

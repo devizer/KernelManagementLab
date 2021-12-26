@@ -1,8 +1,7 @@
 using System;
 using NUnit.Framework;
-using Tests;
+using Universe.NUnitTests;
 using Universe;
-using Universe.CpuUsage;
 
 namespace KernelManagementJam.Tests
 {

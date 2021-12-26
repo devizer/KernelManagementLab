@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
-using Tests;
+using Universe.NUnitTests;
 using Universe.FioStream.Binaries;
 
 namespace Universe.FioStream.Tests

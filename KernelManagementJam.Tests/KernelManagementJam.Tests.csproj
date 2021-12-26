@@ -10,15 +10,12 @@
       <WarningLevel>3</WarningLevel>
     </PropertyGroup>
 
-    <Import Project="..\Shared-Files\Test-Libraries.props" />
+    <Import Project="..\Shared-Files\NUnit-Platform.props" />
 
     <ItemGroup>
       <PackageReference Include="Universe.LinuxTaskStats" Version="0.42.180-pre-1635" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Include="..\Shared-Files\NUnitTestsBase.cs" />
-    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\KernelManagementJam\KernelManagementJam.csproj" />

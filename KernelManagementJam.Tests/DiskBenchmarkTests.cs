@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using KernelManagementJam.Benchmarks;
 using NUnit.Framework;
-using Tests;
+using Universe.NUnitTests;
 using Universe;
 using Universe.Benchmark.DiskBench;
 

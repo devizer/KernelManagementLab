@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using KernelManagementJam.DebugUtils;
 using NUnit.Framework;
-using Tests;
+using Universe.NUnitTests;
 
 namespace KernelManagementJam.Tests
 {

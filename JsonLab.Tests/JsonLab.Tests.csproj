@@ -6,8 +6,8 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
-    <Import Project="..\Shared-Files\Test-Libraries.props" />
-
+    <Import Project="..\Shared-Files\NUnit-Platform.props" />
+    
     <ItemGroup>
       <ProjectReference Include="..\JsonLab\JsonLab.csproj" />
     </ItemGroup>

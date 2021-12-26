@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
-using Tests;
+using Universe.NUnitTests;
 using Universe;
 
 namespace KernelManagementJam.Tests

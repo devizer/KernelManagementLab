@@ -6,11 +6,7 @@
         <!-- IsPackable>false</IsPackable -->
     </PropertyGroup>
 
-    <ItemGroup>
-      <Compile Include="..\Shared-Files\NUnitTestsBase.cs" />
-    </ItemGroup>
-
-    <Import Project="..\Shared-Files\Test-Libraries.props" />
+    <Import Project="..\Shared-Files\NUnit-Platform.props" />
     
     <ItemGroup>
         <PackageReference Include="Polly" Version="7.1.0" />
