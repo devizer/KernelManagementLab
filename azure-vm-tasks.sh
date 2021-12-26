@@ -2,6 +2,14 @@
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
 Say --Reset-Stopwatch
 
+mkdir -p ~/.ssh 
+echo '
+Host *
+   StrictHostKeyChecking no
+   UserKnownHostsFile /dev/null
+   LogLevel ERROR
+' > ~/.ssh/config
+
 home=~
 export VM_STORAGE="${VM_STORAGE:-$home/vm}"
 export VM_USER="${VM_USER:-root}"
