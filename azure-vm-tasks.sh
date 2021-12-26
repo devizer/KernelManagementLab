@@ -38,18 +38,17 @@ echo starting in $(pwd);
 lazy-apt-update
 cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
 cd KernelManagementLab
+
 Say "Install NET Core 6.0 & 3.1"
 export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
 (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
-# dotnet restore -v:m || (e=$?; Say "Error $e. Faullback restore"; kill_msbuild_service; dotnet restore -v:m --disable-parallel)
-# exi=$?; Say "Final Restore status: $exi"
+
 export VSTEST_CONNECTION_TIMEOUT=300000
 export SHORT_FIO_TESTS=True
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=1
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-
 
 Say "Installing actual CA Bundle for Buster $(uname -m)"
 file=/usr/local/share/ssl/cacert.pem
@@ -60,16 +59,6 @@ test -s $file && export CURL_CA_BUNDLE="$file"
 
 Say "env"
 printenv | sort
-
-# Say "Acceptance test (dotnet new console)"
-# mkdir /tmp/app1; pushd /tmp/app1; dotnet new console; dotnet run; popd
-
-# Say "Explicit Restore"; dotnet restore
-
-# Say "Reset sdk to 3.1"
-# sudo rm -rf /usr/share/dotnet/*
-# export DOTNET_VERSIONS="3.1" DOTNET_TARGET_DIR=/usr/share/dotnet
-# (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 
 Say "dotnet test -f netcoreapp3.1 -c Release --logger trx"
 time dotnet test -f netcoreapp3.1 -c Release --logger trx
