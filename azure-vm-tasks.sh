@@ -71,9 +71,13 @@ Say "VM_ROOT_FS is [$VM_ROOT_FS]"
 EvaluateCommand "$cmd"
 
 Say "Grab Test Result"
-cp -v -f -r $VM_ROOT_FS/root/KernelManagementLab/* .
+cp -f -r $VM_ROOT_FS/root/KernelManagementLab/* .
 
-Say "tests-exit-code: $(cat tests-exit-code)"
+testExitCode="$(cat tests-exit-code)"
+Say "tests-exit-code: $testExitCode"
+if [[ -n "$testExitCode" ]] && [ $testExitCode -ne 0 ]; then
+  exit 222;
+fi
 
 ls -la $VM_ROOT_FS
 # ShutdownVM $VM_KEY

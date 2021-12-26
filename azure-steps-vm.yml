@@ -22,8 +22,14 @@ steps:
 
   - bash: |
       export VM_KEY
-      bash azure-vm-tasks.sh 
+      bash azure-vm-tasks.sh
     displayName: 'Tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'
+      testRunTitle: 'All the tests for $(Agent.JobName)'
 
   - task: PublishBuildArtifacts@1
     inputs:
