@@ -9,7 +9,7 @@ jobs:
       OS: Linux
       VM_KEY: ARMv7-Stretch
       # QEMU_VER: 6.2.0
-    timeoutInMinutes: 360
+    timeoutInMinutes: 180
     cancelTimeoutInMinutes: 1
     pool:
       vmImage: 'ubuntu-18.04'
@@ -32,7 +32,7 @@ jobs:
     variables:
       OS: Linux
       VM_KEY: ARMv8
-    timeoutInMinutes: 360
+    timeoutInMinutes: 180
     cancelTimeoutInMinutes: 1
     pool:
       vmImage: 'ubuntu-20.04'
