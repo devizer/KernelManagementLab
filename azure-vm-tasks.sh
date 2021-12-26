@@ -75,7 +75,7 @@ cp -f -r $VM_ROOT_FS/root/KernelManagementLab/* .
 
 testExitCode="$(cat tests-exit-code)"
 Say "tests-exit-code: $testExitCode"
-ls -la $VM_ROOT_FS/root/KernelManagementLab/*
+ls -la $VM_ROOT_FS/root/KernelManagementLab || true
 # ShutdownVM $VM_KEY
 if [[ "$testExitCode" != "0" ]]; then
   exit 222;
