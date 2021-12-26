@@ -59,16 +59,15 @@ printenv | sort
 Say "Acceptance test (dotnet new console)"
 mkdir /tmp/app1; pushd /tmp/app1; dotnet new console; dotnet run; popd
 
-Say "Explicit Restore"
-dotnet restore
+# Say "Explicit Restore"; dotnet restore
 
 # Say "Reset sdk to 3.1"
 # sudo rm -rf /usr/share/dotnet/*
 # export DOTNET_VERSIONS="3.1" DOTNET_TARGET_DIR=/usr/share/dotnet
 # (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 
-Say "dotnet test --no-restore -f netcoreapp3.1 -c Release"
-dotnet test --no-restore -f netcoreapp3.1 -c Release
+Say "dotnet test -f netcoreapp3.1 -c Release --logger trx"
+time dotnet test -f netcoreapp3.1 -c Release --logger trx
 e=$?
 Say "TEST STATUS: $e"
 '
