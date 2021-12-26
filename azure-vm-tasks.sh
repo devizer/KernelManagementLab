@@ -56,8 +56,8 @@ test -s $file && export CURL_CA_BUNDLE="$file"
 Say "env"
 printenv | sort
 
-Say "Acceptance test (dotnet new console)"
-mkdir /tmp/app1; pushd /tmp/app1; dotnet new console; dotnet run; popd
+# Say "Acceptance test (dotnet new console)"
+# mkdir /tmp/app1; pushd /tmp/app1; dotnet new console; dotnet run; popd
 
 # Say "Explicit Restore"; dotnet restore
 
