@@ -17,7 +17,7 @@ steps:
 
   - bash: |
       bash install-latest-qemu.sh
-    condition: eq(variables['Agent.JobName'], 'VM_Arm32')
+    condition: ne(variables.QEMU_VER, '')
     displayName: 'qemu vLatest'
 
   - bash: |
