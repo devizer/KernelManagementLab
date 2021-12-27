@@ -60,8 +60,8 @@ test -s $file && export CURL_CA_BUNDLE="$file"
 Say "env"
 printenv | sort
 
-Say "dotnet test --blame -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1"
-time dotnet test --blame -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1
+Say "dotnet test --blame -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=7"
+time dotnet test --blame -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=7
 e=$?
 echo $e > tests-exit-code
 Say "TEST STATUS: $e"
