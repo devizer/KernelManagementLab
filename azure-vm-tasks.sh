@@ -65,8 +65,8 @@ Say "env"
 printenv | sort
 
 #  --logger trx
-Say "dotnet test --blame -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1"
-time dotnet test --blame -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
+Say "dotnet test -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1"
+time dotnet test -f netcoreapp3.1 -c Release -- NUnit.NumberOfTestWorkers=1
 e=$?
 echo $e > tests-exit-code
 Say "TEST STATUS: $e"
