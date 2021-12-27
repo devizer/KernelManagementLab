@@ -25,9 +25,13 @@ source "$api_code_file"
 
 DownloadVM $VM_KEY
 
-export VM_SSH_PORT=2207 VM_MEM=2000M VM_CPUS=2
+export VM_SSH_PORT=2207 VM_MEM=3000M VM_CPUS=2
 
 RunVM $VM_KEY
+if [ "$VM_SSHFS_MAP_ERROR" -ne 0 ]; then
+  Say "ERROR. Unable to map guest fs. Code is $VM_SSHFS_MAP_ERROR"
+  exit 234
+fi
 
 
 cmd='
