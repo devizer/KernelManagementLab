@@ -9,7 +9,7 @@ using Universe;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class ProcessIoStat_Tests /*: NUnitTestsBase*/
+    public class ProcessIoStat_Tests: NUnitTestsBase
     {
 
         [Test]
