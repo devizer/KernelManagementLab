@@ -167,7 +167,7 @@ namespace KernelManagementJam
         private static void FullFillKind(ProcessIoStat[] ret)
         {
             const string containerd_shim = "containerd-shim", containerd = "containerd"; 
-            var byId = ret.ToDictionary(x => x.Pid);
+            var byId = ret.SafeToDictionary(x => x.Pid);
             for(int i=0, n=ret.Length; i<n; i++)
             {
                 if (ret[i].IsZombie) continue;
