@@ -1,0 +1,10 @@
+﻿ Error Message:
+   System.ArgumentException : An item with the same key has already been added. Key: 19
+  Stack Trace:
+     at System.Collections.Generic.Dictionary`2.TryInsert(TKey key, TValue value, InsertionBehavior behavior)
+   at System.Linq.Enumerable.ToDictionary[TSource,TKey](TSource[] source, Func`2 keySelector, IEqualityComparer`1 comparer)
+   at System.Linq.Enumerable.ToDictionary[TSource,TKey](IEnumerable`1 source, Func`2 keySelector, IEqualityComparer`1 comparer)
+   at KernelManagementJam.ProcessIoStat.FullFillKind(ProcessIoStat[] ret) in /root/KernelManagementLab/KernelManagementJam/ProcessIoStat.cs:line 170
+   at KernelManagementJam.ProcessIoStat.GetProcesses() in /root/KernelManagementLab/KernelManagementJam/ProcessIoStat.cs:line 162
+   at KernelManagementJam.Tests.ProcessIoStat_Tests.Test_UserName() in /root/KernelManagementLab/KernelManagementJam.Tests/ProcessIoStat_Tests.cs:line 40
+
