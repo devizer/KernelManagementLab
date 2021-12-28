@@ -2,6 +2,10 @@
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
 Say --Reset-Stopwatch
 
+export VM_SSH_PORT=2207 VM_MEM=3000M 
+export VM_CPUS=${VM_CPUS:-2}
+Say "VM: [$VM_KEY], CPUs:[$VM_CPUS], MEM [$VM_MEM]"
+
 mkdir -p ~/.ssh 
 echo '
 Host *
@@ -25,7 +29,8 @@ source "$api_code_file"
 
 DownloadVM $VM_KEY
 
-export VM_SSH_PORT=2207 VM_MEM=3000M VM_CPUS=2
+export VM_SSH_PORT=2207 VM_MEM=3000M 
+export VM_CPUS=${VM_CPUS:-2}
 
 RunVM $VM_KEY
 if [ "$VM_SSHFS_MAP_ERROR" -ne 0 ]; then
