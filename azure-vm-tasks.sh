@@ -2,6 +2,9 @@
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
 Say --Reset-Stopwatch
 
+Say "qemu-system-arm: $(qemu-system-arm --version | head -1)"
+Say "qemu-system-aarch64: $(qemu-system-aarch64 --version | head -1)"
+
 export VM_SSH_PORT=2207 VM_MEM=3000M 
 export VM_CPUS=${VM_CPUS:-2}
 Say "VM: [$VM_KEY], CPUs:[$VM_CPUS], MEM [$VM_MEM]"
