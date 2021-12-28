@@ -81,6 +81,11 @@ steps:
       cat /etc/environment
       Say "env"
       printenv | sort
+
+      # remove next two lines
+      url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-Docker-Compose.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
+      url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-PowerShell.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
+
       rm -rf ~/.cache/fio || true
     condition: or(eq(variables['OS'], 'Linux'), eq(variables['OS'], 'OSX')) 
     displayName: 'system info (bash) and clear fio cache'

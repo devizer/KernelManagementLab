@@ -45,6 +45,11 @@ free -m;
 sudo ip addr show;
 echo starting in $(pwd); 
 lazy-apt-update
+
+# remove the two lines below
+url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-Docker-Compose.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
+url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-PowerShell.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
+
 cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
 cd KernelManagementLab
 
