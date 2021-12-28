@@ -43,6 +43,7 @@ cd qemu*
 # --static \
 
 
+cpus=$(nproc); cpus=$((cpus+1))
 Say "Building qemu-arm and qemu-aarch64 using $cpus cores"
 mkdir -p bin
 pushd bin
@@ -53,7 +54,6 @@ prefix=/usr/local
     --disable-gtk 
 
 set -o pipefail
-cpus=$(nproc); cpus=$((cpus+1))
 Say "Building qemu ${QEMU_VER}"
 time make -j${cpus}
 Say "Installing qemu ${QEMU_VER} to $prefix"
