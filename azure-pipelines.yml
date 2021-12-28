@@ -4,29 +4,29 @@ variables:
 
 jobs:
 
-  - job: VM_Arm32_Bullseye
-    variables:
-      OS: Linux
-      VM_KEY: ARMv7-Bullseye
-      # QEMU_VER: 6.2.0
-    timeoutInMinutes: 180
-    cancelTimeoutInMinutes: 1
-    pool:
-      vmImage: 'ubuntu-20.04'
-    steps:
-      - template: azure-steps-vm.yml
+  # - job: VM_Arm32_Bullseye
+  #   variables:
+  #     OS: Linux
+  #     VM_KEY: ARMv7-Bullseye
+  #     # QEMU_VER: 6.2.0
+  #   timeoutInMinutes: 180
+  #   cancelTimeoutInMinutes: 1
+  #   pool:
+  #     vmImage: 'ubuntu-20.04'
+  #   steps:
+  #     - template: azure-steps-vm.yml
 
-  - job: VM_Arm32_Bullseye_1Core
-    variables:
-      OS: Linux
-      VM_KEY: ARMv7-Bullseye
-      VM_CPUS: 1
-    timeoutInMinutes: 180
-    cancelTimeoutInMinutes: 1
-    pool:
-      vmImage: 'ubuntu-20.04'
-    steps:
-      - template: azure-steps-vm.yml
+  # - job: VM_Arm32_Bullseye_1Core
+  #   variables:
+  #     OS: Linux
+  #     VM_KEY: ARMv7-Bullseye
+  #     VM_CPUS: 1
+  #   timeoutInMinutes: 180
+  #   cancelTimeoutInMinutes: 1
+  #   pool:
+  #     vmImage: 'ubuntu-20.04'
+  #   steps:
+  #     - template: azure-steps-vm.yml
 
   - job: VM_Arm32_Stretch
     variables:
@@ -40,18 +40,18 @@ jobs:
     steps:
       - template: azure-steps-vm.yml
 
-  - job: VM_Arm32_Stretch_1Core
-    variables:
-      OS: Linux
-      VM_KEY: ARMv7-Stretch
-      VM_CPUS: 1
-      # QEMU_VER: 6.2.0
-    timeoutInMinutes: 180
-    cancelTimeoutInMinutes: 1
-    pool:
-      vmImage: 'ubuntu-18.04'
-    steps:
-      - template: azure-steps-vm.yml
+  # - job: VM_Arm32_Stretch_1Core
+  #   variables:
+  #     OS: Linux
+  #     VM_KEY: ARMv7-Stretch
+  #     VM_CPUS: 1
+  #     # QEMU_VER: 6.2.0
+  #   timeoutInMinutes: 180
+  #   cancelTimeoutInMinutes: 1
+  #   pool:
+  #     vmImage: 'ubuntu-18.04'
+  #   steps:
+  #     - template: azure-steps-vm.yml
 
   # - job: VM_Arm32_Buster
   #   variables:
