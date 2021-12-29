@@ -114,9 +114,9 @@ namespace Universe.NUnitTests
 //                        value = value.Substring(0, value.Length - Environment.NewLine.Length);
                     
                     
-                    TestContext.Progress.WriteLine(value);
                     try
                     {
+                        TestContext.Progress.WriteLine(value);
                         // TestContext.Error.WriteLine(value); // .WriteLine();
                     }
                     catch

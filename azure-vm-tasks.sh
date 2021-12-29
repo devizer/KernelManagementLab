@@ -86,6 +86,7 @@ printenv | sort
 
 #  --logger trx
 Say "dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1"
+set -o pipefail
 time dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1 | tee dotnet-test.log
 e=$?
 echo $e > tests-exit-code
