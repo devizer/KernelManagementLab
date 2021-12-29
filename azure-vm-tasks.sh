@@ -50,6 +50,10 @@ echo starting in $(pwd). Installing buildtools bundle;
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
 lazy-apt-update
 
+Say "Befow: /etc/sysctl.conf"
+cat /etc/sysctl.conf | grep -v -E "^#" | grep -v -e "^$"
+echo ""
+
 # remove the two lines below
 Say "jq [$(jq --version)]"
 Say "Get-GitHub-Latest-Release: [$(command -v Get-GitHub-Latest-Release)]"
