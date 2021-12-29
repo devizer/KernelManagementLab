@@ -63,8 +63,8 @@ url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-PowerS
 cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
 cd KernelManagementLab
 
-Say "Install NET Core 3.1"
-export DOTNET_VERSIONS="3.1.100" DOTNET_TARGET_DIR=/usr/share/dotnet
+Say "Install NET Core 5.0.101"
+export DOTNET_VERSIONS="5.0.101" DOTNET_TARGET_DIR=/usr/share/dotnet
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
 (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
 test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
