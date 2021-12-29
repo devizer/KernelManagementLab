@@ -27,18 +27,6 @@ jobs:
     steps:
       - template: azure-steps-vm.yml
 
-  - job: VM_Arm32_Bullseye_6_2
-    variables:
-      OS: Linux
-      VM_KEY: ARMv7-Bullseye
-      QEMU_VER: 6.2.0
-    timeoutInMinutes: 180
-    cancelTimeoutInMinutes: 1
-    pool:
-      vmImage: 'ubuntu-20.04'
-    steps:
-      - template: azure-steps-vm.yml
-
   - job: VM_Arm32_Bullseye_2_11
     variables:
       OS: Linux
@@ -48,6 +36,18 @@ jobs:
     cancelTimeoutInMinutes: 1
     pool:
       vmImage: 'ubuntu-18.04'
+    steps:
+      - template: azure-steps-vm.yml
+
+  - job: VM_Arm32_Bullseye_6_2
+    variables:
+      OS: Linux
+      VM_KEY: ARMv7-Bullseye
+      QEMU_VER: 6.2.0
+    timeoutInMinutes: 180
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'ubuntu-20.04'
     steps:
       - template: azure-steps-vm.yml
 
