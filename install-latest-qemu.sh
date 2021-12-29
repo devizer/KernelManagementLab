@@ -35,13 +35,12 @@ wget -q --no-check-certificate -O _$file $url || curl -ksSL -o _$file $url
 tar xjf _$file
 rm _$file
 cd qemu*
-    # --target-list=arm-linux-user,aarch64-linux-user \
 
+# --target-list=arm-linux-user,aarch64-linux-user \
 # --target-list=arm-linux-user,aarch64-linux-user
 # --enable-linux-user
 # --disable-avx2 \
 # --static \
-
 
 cpus=$(nproc); cpus=$((cpus+1))
 Say "Building qemu-arm and qemu-aarch64 using $cpus cores"
