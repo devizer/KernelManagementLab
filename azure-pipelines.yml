@@ -4,7 +4,7 @@ variables:
 
 jobs:
 
-  - job: VM_Arm32_Bullseye_6_20
+  - job: VM_Arm32_Bullseye_6_2
     variables:
       OS: Linux
       VM_KEY: ARMv7-Bullseye
