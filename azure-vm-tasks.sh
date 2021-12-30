@@ -69,6 +69,7 @@ export VSTEST_CONNECTION_TIMEOUT=300000
 export SHORT_FIO_TESTS=True
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=1
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 Say "Installing actual CA Bundle for Buster $(uname -m)"
 file=/usr/local/share/ssl/cacert.pem
