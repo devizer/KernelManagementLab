@@ -39,6 +39,8 @@ if [ "$VM_SSHFS_MAP_ERROR" -ne 0 ]; then
   exit 234
 fi
 
+commit=$(git rev-parse HEAD)
+Say "Host Commit: $commit"
 
 cmd='
 echo;
@@ -54,6 +56,8 @@ echo ""
 
 cd ~; git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
+git checkout '$commit'
+Say "VM Commit: $commit"
 
 Say "Install NET Core 3.1 6.0"
 export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
