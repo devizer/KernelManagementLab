@@ -57,7 +57,7 @@ echo ""
 cd ~; git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
 git checkout '$commit'
-Say "VM Commit: $commit"
+Say "VM Commit: $(git rev-parse HEAD)"
 
 Say "Install NET Core 3.1 6.0"
 export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
@@ -81,9 +81,9 @@ Say "env"
 printenv | sort
 
 #  --logger trx
-Say "dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1 | tee dotnet-test.log"
+Say "dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1 # | tee dotnet-test.log"
 set -o pipefail
-time dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1 | tee dotnet-test.log
+time dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1 # | tee dotnet-test.log
 e=$?
 echo $e > tests-exit-code
 Say "TEST STATUS: $e"
