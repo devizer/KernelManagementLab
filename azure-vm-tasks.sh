@@ -23,17 +23,15 @@ export VM_USER="${VM_USER:-root}"
 export VM_PASS="${VM_PASS:-pass}"
 export VM_SSH_PORT="${VM_SSH_PORT:-2202}"
 export VM_MEM=2000M
+export VM_CPUS=${VM_CPUS:-2}
+
 
 api_code_url=https://raw.githubusercontent.com/devizer/glist/master/vm-build-agent.sh
 api_code_file=/tmp/vm-build-agent-$(whoami).sh
 try-and-retry wget -q -nv --no-check-certificate -O "$api_code_file" "$api_code_url" 2>/dev/null || try-and-retry curl -ksSL -o "$api_code_file" "$api_code_url"
 source "$api_code_file"
 
-
 DownloadVM $VM_KEY
-
-export VM_SSH_PORT=2207 VM_MEM=3000M 
-export VM_CPUS=${VM_CPUS:-2}
 
 RunVM $VM_KEY
 if [ "$VM_SSHFS_MAP_ERROR" -ne 0 ]; then
@@ -54,13 +52,7 @@ Say "Befow: /etc/sysctl.conf"
 cat /etc/sysctl.conf | grep -v -E "^#" | grep -v -e "^$"
 echo ""
 
-# remove the two lines below
-Say "jq [$(jq --version)]"
-Say "Get-GitHub-Latest-Release: [$(command -v Get-GitHub-Latest-Release)]"
-url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-Docker-Compose.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
-url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-PowerShell.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
-
-cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
+cd ~; git clone https://github.com/devizer/KernelManagementLab;
 cd KernelManagementLab
 
 Say "Install NET Core 3.1 6.0"
@@ -85,7 +77,7 @@ Say "env"
 printenv | sort
 
 #  --logger trx
-Say "dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1"
+Say "dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1 | tee dotnet-test.log"
 set -o pipefail
 time dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1 | tee dotnet-test.log
 e=$?
@@ -101,7 +93,6 @@ cp -f -r $VM_ROOT_FS/root/KernelManagementLab/* .
 
 testExitCode="$(cat tests-exit-code)"
 Say "tests-exit-code: $testExitCode"
-ls -la $VM_ROOT_FS/root/KernelManagementLab || true
 # ShutdownVM $VM_KEY
 if [[ "$testExitCode" != "0" ]]; then
   exit 222;
