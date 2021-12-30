@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Include="$([System.IO.Path]::GetDirectoryName('$(MSBuildThisFileFullPath)'))\NUnitTestsBase.cs" />
+        <!-- Compile Include="$([System.IO.Path]::GetDirectoryName('$(MSBuildThisFileFullPath)'))\NUnitTestsBase.cs" / -->
+        <Compile Include="$(MSBuildThisFileDirectory)NUnitTestsBase.cs" />
     </ItemGroup>
 </Project>
