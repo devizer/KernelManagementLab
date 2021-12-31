@@ -33,6 +33,7 @@ steps:
       testRunTitle: 'All the tests for $(Agent.JobName)'
 
   - task: PublishBuildArtifacts@1
+    condition: succeededOrFailed()
     inputs:
       pathtoPublish: '$(Build.Repository.LocalPath)'
       artifactName: '$(Agent.JobName)-$(Build.BuildNumber)'
