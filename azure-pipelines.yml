@@ -28,6 +28,17 @@ jobs:
     steps:
       - template: azure-steps-vm.yml
 
+  - job: VM_Arm64_Bullseye
+    variables:
+      OS: Linux
+      VM_KEY: ARMv8-Bullseye
+    timeoutInMinutes: 180
+    cancelTimeoutInMinutes: 1
+    pool:
+      vmImage: 'ubuntu-20.04'
+    steps:
+      - template: azure-steps-vm.yml
+
   # - job: VM_Arm32_Bullseye_2_11
   #   variables:
   #     OS: Linux
