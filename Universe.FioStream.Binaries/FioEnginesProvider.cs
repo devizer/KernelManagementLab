@@ -111,6 +111,7 @@ namespace Universe.FioStream.Binaries
                 catch (Exception ex)
                 {
                     this.Logger.LogWarning($"Skipped. Unable to obtain fio ${bin.Name} from {bin.Url}{Environment.NewLine}{ex}");
+                    return;
                 }
                 
                 var engines = features.EngineList;
