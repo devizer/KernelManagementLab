@@ -103,7 +103,16 @@ namespace Universe.FioStream.Binaries
             {
                 if (IsAllIsFound()) return;
 
-                FioFeatures features = FeaturesCache[bin];
+                FioFeatures features = null;
+                try
+                {
+                    features = FeaturesCache[bin];
+                }
+                catch (Exception ex)
+                {
+                    this.Logger.LogWarning($"Skipped. Unable to obtain fio ${bin.Name} from {bin.Url}{Environment.NewLine}{ex}");
+                }
+                
                 var engines = features.EngineList;
                 if (engines == null) return;
                 var version = features.Version;
