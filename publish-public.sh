@@ -7,6 +7,7 @@ Say --Reset-Stopwatch || true
 
  
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
+
 function header() {
   if [[ $(uname -s) != Darwin ]]; then
     startAt=${startAt:-$(date +%s)}; elapsed=$(date +%s); elapsed=$((elapsed-startAt)); elapsed=$(TZ=UTC date -d "@${elapsed}" "+%_H:%M:%S");
@@ -17,6 +18,14 @@ function header() {
 counter=0;
 function say() { counter=$((counter+1)); header "STEP $counter" "$1"; }
 say reset>/dev/null
+
+DOTNETHOME=/transient-builds/dotnet4publish
+function _install_proper_sdk_() {
+  for sdk in 3.1 3.1.120; do
+    export DOTNET_VERSIONS=$sdk DOTNET_TARGET_DIR=$DOTNETHOME/$sdk SKIP_DOTNET_ENVIRONMENT=true
+    script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
+  done
+}
 
 function _install_latest_sdk_() {
   export DOTNET_TARGET_DIR=/transient-builds/dotnet-3.1 DOTNET_VERSIONS="2.2 3.1" SKIP_DOTNET_ENVIRONMENT=true
@@ -34,7 +43,7 @@ function _install_prev_sdk_() {
   unset MSBuildSDKsPath || true
 }
 
-_install_prev_sdk_
+_install_proper_sdk_
 
 
 work=$HOME/transient-builds
@@ -88,8 +97,12 @@ cd ClientApp; time (yarn build); cd ..
 # export MSBuildSDKsPath=/usr/share/dotnet/sdk/3.1.408/Sdks
 for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 
-  say "Building $r [$ver]"
-  time SKIP_CLIENTAPP=true dotnet publish -c Release -f netcoreapp3.1 /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
+  if [[ $r == rhel.6-x64 ]]; then sdk=3.1.120; else sdk=3.1; fi
+  say "Building $r [$ver] using [sdk $sdk]"
+  dotnetpath=$DOTNETHOME/$sdk
+  export PATH="$dotnetpath:$PATH"
+  unset MSBuildSDKsPath || true
+  time SKIP_CLIENTAPP=true $dotnetpath/dotnet publish -c Release -f netcoreapp3.1 /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
   pushd bin/$r
   # rm -f System.*.a - included in manifest
   chmod 644 *.dll
