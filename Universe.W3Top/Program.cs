@@ -10,6 +10,7 @@ using KernelManagementJam.DebugUtils;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.Extensions.Configuration;
 using Universe.Dashboard.Agent;
 
 namespace Universe.W3Top
@@ -150,6 +151,10 @@ namespace Universe.W3Top
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile("appsettings.json", true, false);
+                })
                 .UseStartup<Startup>();
     }
 }

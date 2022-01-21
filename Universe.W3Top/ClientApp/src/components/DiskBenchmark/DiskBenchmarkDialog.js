@@ -107,31 +107,6 @@ const styles = {
     }
 };
 
-const optionStyles = {
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: 0,
-        marginRight: 24,
-        width: 201,
-    },
-    engineField: {
-        marginTop: 4,
-        marginLeft: 0,
-        marginRight: 24,
-        marginBottom: 8,
-        width: 201,
-        textAlign: "left"
-    },
-    dense: {
-        marginTop: 19,
-    },
-    menu: {
-        width: 160,
-    },
-};
 
 const defaultOptions = {
     workingSet: 1024,
@@ -156,7 +131,7 @@ const validateOptions = (options) => {
     });
 
     if (!options.errors.blockSize && Number(options.blockSize) % 512 != 0) {
-        options.errors.blockSize = "Should be multiplier of 512"; 
+        options.errors.blockSize = "Should be power of 2"; 
         options.errors.isValid = false;
     }
 };
@@ -247,6 +222,41 @@ function DiskBenchmarkDialog(props) {
                 <span style={{width:56,minWidth:56, textAlign: "right"}}>{spanVersion(engine.version)}</span>
             </>;
         };
+        
+        const windowSize = Helper.getWindowSize();
+        const isNarrow =  windowSize.width < 640;
+
+        const optionStyles = {
+            container: {
+                display: 'flex',
+                flexWrap: 'wrap',
+            },
+            textField: {
+                marginLeft: 0,
+                marginRight: 24,
+                width: !isNarrow ? 222 : 201,
+            },
+            textFieldNarrow: {
+                marginLeft: 0,
+                marginRight: 24,
+                width: !isNarrow ? 140: 201,
+            },
+            engineField: {
+                marginTop: 16,
+                marginLeft: 0,
+                marginRight: 24,
+                /*marginBottom: 0,*/
+                width: !isNarrow ? 140 : 201,
+                textAlign: "left"
+            },
+            dense: {
+                marginTop: 19,
+            },
+            menu: {
+                width: 160,
+            },
+        };
+
         return (
             <form className={optionStyles.container} noValidate autoComplete="off">
                 {/*<Typography>Benchmark options:</Typography>*/}
@@ -265,12 +275,11 @@ function DiskBenchmarkDialog(props) {
                     </Select>
                     <FormHelperText>libaio is preferred</FormHelperText>
                 </FormControl>
-                <span style={{fontSize:"1px"}}><br/></span>
-
+                
                 <TextField
                     id="benchmark-options-working-set"
                     label="Working Set (MB)"
-                    style={optionStyles.textField}
+                    style={optionStyles.textFieldNarrow}
                     value={options.workingSet}
                     onChange={handleChangeOption('workingSet')}
                     margin="normal"
@@ -281,13 +290,15 @@ function DiskBenchmarkDialog(props) {
                 <TextField
                     id="benchmark-options-block-size"
                     label="Block Size (bytes)"
-                    style={optionStyles.textField}
+                    style={optionStyles.textFieldNarrow}
                     value={options.blockSize}
                     onChange={handleChangeOption('blockSize')}
                     margin="normal"
                     error={options.errors.blockSize}
                     helperText={errorText(options.errors.blockSize)}
                 />
+                
+                <span style={{fontSize:1}}><br/></span>
 
                 <TextField
                     id="benchmark-options-threads"
