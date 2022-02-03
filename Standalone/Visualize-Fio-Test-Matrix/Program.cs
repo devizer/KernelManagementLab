@@ -15,8 +15,11 @@ namespace VisualizeFioTestMatrix
 
             ExcelReportBuilder xlBuilder = new ExcelReportBuilder(dataSource);
             var excelFile = @$"FIO-Matrix-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.xlsx";
-            xlBuilder.Build(excelFile);
-            
+            using (Log.Duration("Generate Excel Report"))
+            {
+                xlBuilder.Build(excelFile);
+            }
+
             ProcessStartInfo si = new ProcessStartInfo(excelFile);
             si.UseShellExecute = true;
             Process.Start(si);
