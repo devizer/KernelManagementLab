@@ -2,23 +2,30 @@
 using System.Diagnostics;
 using System.IO;
 
-class Program
+namespace VisualizeFioTestMatrix
 {
-    public static void Main()
+    class Program
     {
-        Console.WriteLine("Hello, World!");
-        ExtractRawSources();
-    }
-
-    static void ExtractRawSources()
-    {
-        if (!Directory.Exists("structured-fio-benchmark-results "))
+        public static void Main()
         {
-            Console.WriteLine("Extract structured-fio-benchmark-results.7z");
-            ProcessStartInfo si = new ProcessStartInfo("7z", "x -y structured-fio-benchmark-results.7z");
-            using (Process p = Process.Start(si))
+            Console.WriteLine("Hello, World!");
+            ExtractRawSources();
+            var rawBenchmarks = DataSourceReader.Read();
+            DataSource dataSource = new DataSource(rawBenchmarks);
+            
+            
+        }
+
+        static void ExtractRawSources()
+        {
+            if (!Directory.Exists("structured-fio-benchmark-results "))
             {
-                p.WaitForExit();
+                Console.WriteLine("Extract structured-fio-benchmark-results.7z");
+                ProcessStartInfo si = new ProcessStartInfo("7z", "x -y structured-fio-benchmark-results.7z");
+                using (Process p = Process.Start(si))
+                {
+                    p.WaitForExit();
+                }
             }
         }
     }
