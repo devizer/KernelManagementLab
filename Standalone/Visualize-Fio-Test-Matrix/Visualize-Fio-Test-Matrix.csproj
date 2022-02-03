@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Visualize_Fio_Test_Matrix</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="structured-fio-benchmark-results.7z" />
+      <Content Include="structured-fio-benchmark-results.7z">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>
