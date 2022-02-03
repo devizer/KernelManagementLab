@@ -16,6 +16,7 @@ sudo apt-get install -y -q librbd-dev librdmacm-dev
 sudo apt-get install -y -q libsasl2-dev libsdl1.2-dev libseccomp-dev libsnappy-dev libssh2-1-dev
 sudo apt-get install -y -q libvde-dev libvdeplug-dev libvte-2.90-dev libxen-dev liblzo2-dev
 sudo apt-get install -y -q valgrind xfslibs-dev 
+sudo apt-get install -y -q python2
 
 
 qv=5.0.0

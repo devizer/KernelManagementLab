@@ -28,9 +28,14 @@ echo Configuring w3top service $ver located at ${ScriptPath} for 'http://<ip|nam
 hasUpdateRc=""; hasChkConfig=""; hasSystemCtl=""; hasJournalProcess=""; hasSystemD="";
 command -v update-rc.d >/dev/null && hasUpdateRc=true || true
 command -v chkconfig >/dev/null && hasChkConfig=true || true
+# V1. service name matters, works
+# systemctl is-active systemd-journald.service >/dev/null 2>&1 && hasSystemD=true || true
+# V2. needs psproc
 command -v systemctl >/dev/null && hasSystemCtl=true || true
 pgrep systemd-journal >/dev/null 2>&1 && hasJournalProcess=true || true
 if [[ -n "$hasSystemCtl" ]] && [[ -n "$hasJournalProcess" ]]; then hasSystemD=true; fi
+# v3. the wrong
+# systemctl is-system-running >/dev/null 2>&1 && hasSystemD=true || true
 
 
 function Install_SystemD_Service() {
