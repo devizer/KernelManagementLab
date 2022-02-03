@@ -90,8 +90,9 @@ namespace VisualizeFioTestMatrix
                     {
                         int headerFioX = 4 + (iFio+1) * archEngines.Length;
                         var headerFioCell = archSheet.Cells[1, headerFioX, 1, headerFioX + archEngines.Length - 1];
-                        headerFioCell.Value = fioRaw + Environment.NewLine + "hehe";
-                        headerFioCell.Style.TextRotation = 90;
+                        headerFioCell.Value = FioHeaderFormatter.Format(fioRaw);
+                        headerFioCell.Style.WrapText = true;
+                        // headerFioCell.Style.TextRotation = 90;
                         headerFioCell.Merge = true;
                         headerFioCell.Style.VerticalAlignment = ExcelVerticalAlignment.Bottom;
                         headerFioCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
