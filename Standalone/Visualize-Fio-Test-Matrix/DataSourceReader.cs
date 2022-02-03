@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace VisualizeFioTestMatrix
 {
@@ -11,15 +13,17 @@ namespace VisualizeFioTestMatrix
         {
             List<RawBenchmark> ret = new List<RawBenchmark>();
             var dirs1 = new DirectoryInfo("structured-fio-benchmark-results").GetDirectories();
+            using(Log.Duration("Read raw structured-fio-benchmark-results"))
             foreach (var dir1 in dirs1)
             {
                 var summaryFiles = dir1.GetFiles("*.summary");
                 Console.WriteLine($"{summaryFiles.Length} benchmarks in [{dir1.Name}]");
-                foreach (var summaryFile in summaryFiles)
+                ParallelOptions po = new ParallelOptions() { MaxDegreeOfParallelism = 8 };
+                Parallel.ForEach(summaryFiles, po, summaryFile =>
                 {
                     RawBenchmark rawBenchmark = Parse(File.ReadAllText(summaryFile.FullName));
-                    ret.Add(rawBenchmark);
-                }
+                    lock (ret) ret.Add(rawBenchmark);
+                });
             }
 
             return ret;
