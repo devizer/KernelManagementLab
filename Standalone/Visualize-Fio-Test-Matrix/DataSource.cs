@@ -20,6 +20,8 @@ namespace VisualizeFioTestMatrix
             
             AllArchs = RawBenchmarkList.Select(x => x.Arch).Distinct().ToList();
             Console.WriteLine($"All Archs: [{string.Join(",", AllArchs)}]");
+
+            
         }
     }
     

@@ -12,8 +12,14 @@ namespace VisualizeFioTestMatrix
             ExtractRawSources();
             var rawBenchmarks = DataSourceReader.Read();
             DataSource dataSource = new DataSource(rawBenchmarks);
+
+            ExcelReportBuilder xlBuilder = new ExcelReportBuilder(dataSource);
+            var excelFile = @$"FIO-Matrix-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.xlsx";
+            xlBuilder.Build(excelFile);
             
-            
+            ProcessStartInfo si = new ProcessStartInfo(excelFile);
+            si.UseShellExecute = true;
+            Process.Start(si);
         }
 
         static void ExtractRawSources()

@@ -51,6 +51,11 @@ namespace VisualizeFioTestMatrix
                 }
             }
 
+            if ((ret.OsAndVersion?.EndsWith(":")).GetValueOrDefault())
+            {
+                ret.OsAndVersion = ret.OsAndVersion.TrimEnd(':');
+            }
+
             return ret;
         }
     }

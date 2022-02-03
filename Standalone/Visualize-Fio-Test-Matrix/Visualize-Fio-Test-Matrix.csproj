@@ -13,4 +13,9 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="EPPlus" Version="5.8.6" />
+    </ItemGroup>
+
+
 </Project>
