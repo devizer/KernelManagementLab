@@ -15,6 +15,7 @@ const getIsFirstCall = stackTrace => {
     }
     return isFirstCall;
 }
+
 export const toConsole = function(caption, obj, {force} = {force:false}) {
     let isFirstCall = getIsFirstCall(Common.getStackTrace());
     if (process.env.NODE_ENV !== 'production' || force || isFirstCall) {
@@ -51,6 +52,20 @@ export const isDocumentHidden = () => {
     let isHidden = false;
     if (document && document.visibilityState && document.visibilityState !== 'visible') { isHidden = true; }
     return isHidden;
+}
+
+export const getWindowSize = () => {
+    
+    const 
+        win = window,
+        doc = document,
+        docElem = document ? doc.documentElement : undefined,
+        bodyArr = doc.getElementsByTagName('body'),
+        body = bodyArr && bodyArr.length ? bodyArr[0] : undefined,
+        x = win.innerWidth || docElem.clientWidth || body.clientWidth,
+        y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+    
+        return {width: x, height: y};
 }
 
 global.ApplicationLevelTriggers = {};
