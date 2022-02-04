@@ -13,6 +13,10 @@ namespace VisualizeFioTestMatrix
             var rawBenchmarks = DataSourceReader.Read();
             DataSource dataSource = new DataSource(rawBenchmarks);
 
+            ManualFioTest manualFioTest = new ManualFioTest(dataSource);
+            manualFioTest.Build();
+            
+
             ExcelReportBuilder xlBuilder = new ExcelReportBuilder(dataSource);
             var excelFile = @$"FIO-Matrix-{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.xlsx";
             using (Log.Duration("Generate Excel Report"))

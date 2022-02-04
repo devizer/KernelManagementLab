@@ -11,6 +11,10 @@
       <Content Include="structured-fio-benchmark-results.7z">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="Fio-Manual-Test.sh" />
+      <Content Include="Fio-Manual-Test.sh">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

@@ -7,12 +7,11 @@ using OfficeOpenXml.Style;
 
 namespace VisualizeFioTestMatrix
 {
-    // TODO: Manually test armv7 and aarch64 with libaio
+    
     class ExcelReportBuilder
     {
         static Color HeaderColor = Color.Black;
         static Color DataColor = Color.FromArgb(255, 170, 170, 170);
-        private static readonly string SheetName = "TLS Report";
 
         public DataSource DataSource { get; }
 
@@ -92,8 +91,9 @@ namespace VisualizeFioTestMatrix
                         int headerFioX = 4 + (iFio+1) * archEngines.Length;
                         var headerFioCell = archSheet.Cells[1, headerFioX, 1, headerFioX + archEngines.Length - 1];
                         headerFioCell.Value = FioHeaderFormatter.Format(fioRaw);
+                        // headerFioCell.RichText.Add("xx").
                         headerFioCell.Style.WrapText = true;
-                        // headerFioCell.Style.TextRotation = 90;
+                        // var comment = headerFioCell.AddComment(fioRaw);
                         headerFioCell.Merge = true;
                         headerFioCell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                         headerFioCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
