@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -eu; set -o pipefail
+Say --Reset-Stopwatch
 
 FIO_TOTAL=666
 FIO_COUNT=0
@@ -22,19 +23,23 @@ function Fio-Manual-Test() {
         cat "$dirBuffer/${caption}.xz" | xz -d > "$dirExtracted/fio"
         chmod +x "$dirExtracted/fio"
       fi
-
   fi
 
-  # TEST
+  dirRun="$HOME/fio-runner"
+  mkdir -p "$dirRun"
+  rm -f "$dirRun/"*
+  cp -f "$dirExtracted/"* "$dirRun/"
+
+  # TEST, https://github.com/intel/fiovisualizer/issues/13 '--minimal', '--eta=0', '--status-interval=1'
+  Say "${FIO_COUNT}/${FIO_TOTAL} Benchmark: [$caption]"
   for engine in libaio; do
-      Say "${FIO_COUNT}/${FIO_TOTAL} Benchmark: $caption"
       local err=0
-      LD_LIBRARY_PATH="$dirExtracted" "$dirExtracted/fio" fio --name=test --randrepeat=1 --ioengine=$engine --gtod_reduce=1 --filename=$HOME/fio-test.tmp --bs=4k --size=32K --readwrite=read 2>&1 || err=$?
+      LD_LIBRARY_PATH="$dirRun" "$dirRun/fio" --name=test --randrepeat=1 --ioengine=$engine --gtod_reduce=1 --filename=$HOME/fio-test.tmp --bs=4k --size=32K --readwrite=read 2>&1 || err=$?
       if [[ "$err" -eq 0 ]]; then
-        Say "${FIO_COUNT}/${FIO_TOTAL} (OK:$FIO_SUCCESS) $engine SUCCESS: $caption"
-      else
         FIO_SUCCESS=$((FIO_SUCCESS+1))
-        Say --Display-As=Error "${FIO_COUNT}/${FIO_TOTAL} (OK:$FIO_SUCCESS) $engine failed: $caption"
+        Say "${FIO_COUNT}/${FIO_TOTAL} (OK:$FIO_SUCCESS) $engine SUCCESS: [$caption]"
+      else
+        Say --Display-As=Error "${FIO_COUNT}/${FIO_TOTAL} (OK:$FIO_SUCCESS) $engine failed: [$caption]"
       fi
   done 
 }
