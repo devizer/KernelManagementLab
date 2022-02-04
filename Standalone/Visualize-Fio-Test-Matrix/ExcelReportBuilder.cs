@@ -7,6 +7,7 @@ using OfficeOpenXml.Style;
 
 namespace VisualizeFioTestMatrix
 {
+    // TODO: Manually test armv7 and aarch64 with libaio
     class ExcelReportBuilder
     {
         static Color HeaderColor = Color.Black;
@@ -94,7 +95,7 @@ namespace VisualizeFioTestMatrix
                         headerFioCell.Style.WrapText = true;
                         // headerFioCell.Style.TextRotation = 90;
                         headerFioCell.Merge = true;
-                        headerFioCell.Style.VerticalAlignment = ExcelVerticalAlignment.Bottom;
+                        headerFioCell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                         headerFioCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
                         int iEngine = 0;
@@ -154,8 +155,6 @@ namespace VisualizeFioTestMatrix
                         iImage++;
                     }
 
-                    archSheet.Rows[1].Height = 100;
-                    archSheet.View.FreezePanes(3, 2);
 
                     string[] topLeftHeaders = new[] { "OS", "libc", "Image" };
                     for (int c = 0; c < topLeftHeaders.Length; c++)
@@ -168,6 +167,9 @@ namespace VisualizeFioTestMatrix
                     }
                     
                     archSheet.Rows[2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    archSheet.Rows[1].Height = 66;
+                    archSheet.View.FreezePanes(3, 3);
+                    
 
                 }
                 
