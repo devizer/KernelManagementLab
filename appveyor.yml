@@ -23,7 +23,7 @@ environment:
     - JOB: "Only SQLite 3.22"
       SqlServers: ''
 
-      # Rest of MySQL Server versions are tested using travis-ci.org usaing docker on linux
+      # Rest of MySQL Server versions are tested using travis-ci.org using docker on linux
     - JOB: "Pre-installed MySQL 5.7.27"
       MYSQL_TEST_SERVER_1:       'Server=localhost;Database=mysql;Port=3306;Uid=root;Pwd=Password12!;Connect Timeout=15;Pooling=false;'
 
@@ -55,8 +55,8 @@ environment:
       MSSQL_TEST_SERVER_2005:    'Server=(local)\EXPRESS_2005;    Integrated Security=SSPI;Pooling=false'
 
 init:
-- docker version -f '{{.Server.Experimental}}'
-- docker version -f '{{.Server.Version}}'
+# - docker version -f '{{.Server.Experimental}}'
+# - docker version -f '{{.Server.Version}}'
 - cmd: bash -c 'time echo "Hello from BASH $(bash --version)"'
 - cmd: set
 - ps: |
