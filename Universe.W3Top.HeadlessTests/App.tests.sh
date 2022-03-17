@@ -6,6 +6,8 @@ curl -i -H "Accept: application/json" \
     http://localhost:5050/api/benchmark/disk/start-disk-benchmark
 }
 
-export W3TOP_APP_URL="http://localhost:5050"
+test ! -d node_modules && yarn install
+
+export W3TOP_APP_URL="http://localhost:${PORT:-5055}"
 yarn test
 

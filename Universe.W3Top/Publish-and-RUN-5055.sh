@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # wget -q -nv --no-check-certificate -O - https://raw.githubusercontent.com/devizer/KernelManagementLab/master/build-w3-dashboard.sh | bash -s reinstall_service  
+PORT="${PORT:-5055}"
 set -e
 set -u
 if [[ $(uname -m) == armv7* ]]; then rid=linux-arm; elif [[ $(uname -m) == aarch64 ]]; then rid=linux-arm64; elif [[ $(uname -m) == x86_64 ]]; then rid=linux-x64; fi; if [[ $(uname -s) == Darwin ]]; then rid=osx-x64; fi;
@@ -35,12 +36,12 @@ function run_prod() {
   echo VERSION: $(dotnet ./Universe.W3Top.dll --version); sleep 3
   echo "DIR is [$(pwd)]"
   find .
-  nohup bash -c "sleep 2; xdg-open http://localhost:5055" &
+  nohup bash -c "sleep 2; xdg-open http://localhost:${PORT}" &
   dotnet ./Universe.W3Top.dll | tee log.log
   # sudo bash -c "dotnet ./Universe.W3Top.dll" | tee log.log
 }
 
 
 export DUMPS_ARE_ENABLED=SideBySide
-export ASPNETCORE_URLS="http://0.0.0.0:5055;https://0.0.0.0:5056"
+export ASPNETCORE_URLS="http://0.0.0.0:${PORT};https://0.0.0.0:$((PORT+1))"
 run_prod
