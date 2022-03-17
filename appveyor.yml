@@ -96,10 +96,8 @@ install:
       Say "Installing dotnet core 2.2"
       pushd "$($Env:UserProfile)"
       Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
-      ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '2.2.204';
-
-      Say "Installing dotnet core 2.2"
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Channel 2.2;
+
       Say "Installing dotnet core 3.1"
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Channel 3.1;
       
