@@ -19,10 +19,10 @@ sudo apt-get install -y -q valgrind xfslibs-dev
 sudo apt-get install -y -q python2
 
 
-qv=5.0.0
-qv=6.2.0 
 qv=2.11.2 # needs python 2 
 qv=2.12.1
+qv=5.0.0
+qv=6.2.0 
 QEMU_VER=${QEMU_VER:-$qv}
 
 Say "Downloading qemu ${QEMU_VER}"
@@ -71,3 +71,6 @@ Say "qemu-arm-static: $(qemu-arm-static --version | head -1)"
 Say "qemu-aarch64-static: $(qemu-aarch64-static --version | head -1)"
 Say "qemu-system-arm: $(qemu-system-arm --version | head -1)"
 Say "qemu-system-aarch64: $(qemu-system-aarch64 --version | head -1)"
+
+# cp /usr/local/bin/qemu-arm /usr/bin/qemu-arm-static
+# cp /usr/local/bin/qemu-aarch64 /usr/bin/qemu-aarch64-static

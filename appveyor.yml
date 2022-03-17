@@ -97,9 +97,11 @@ install:
       pushd "$($Env:UserProfile)"
       Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1';
       ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '2.2.204';
-      
-      Say "Installing dotnet core 3.0"
-      ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Version '3.0.100';
+
+      Say "Installing dotnet core 2.2"
+      ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Channel 2.2;
+      Say "Installing dotnet core 3.1"
+      ./dotnet-install.ps1 -InstallDir '~/.dotnet' -Channel 3.1;
       
       $path="$($Env:UserProfile)\.dotnet;$($Env:UserProfile)\.dotnet\tools;$($Env:PATH)"; ${Env:PATH}=$path; [Environment]::SetEnvironmentVariable("PATH", $path, "User")
       Say ".net core installed"
@@ -130,7 +132,7 @@ test_script:
 after_test:
 - ps: |
     Say "Store project folder as 'AppVeyor Build Folder.7z' artifact"
-    & "7z" a -t7z -mx=3 -ms=on "-xr!.git" "AppVeyor Build Folder.7z" .
+    & "7z" a -t7z -mx=1 -ms=on "-xr!.git" "AppVeyor Build Folder.7z" .
 
 # cache:
 # - '%USERPROFILE%\.nuget\packages -> appveyor.yml'
