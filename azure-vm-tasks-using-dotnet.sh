@@ -55,29 +55,34 @@ url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-PowerS
 cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
 cd KernelManagementLab
 
+Say "Install NET Core 6.0 & 3.1"
+export DOTNET_VERSIONS="3.1 6.0" DOTNET_TARGET_DIR=/usr/share/dotnet
+script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; 
+(wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; 
+test -s /usr/share/dotnet/dotnet && sudo ln -f -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet
 
 export VSTEST_CONNECTION_TIMEOUT=300000
 export SHORT_FIO_TESTS=True
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=1
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
+Say "Installing actual CA Bundle for Buster $(uname -m)"
+file=/usr/local/share/ssl/cacert.pem
+url=https://curl.haxx.se/ca/cacert.pem
+sudo mkdir -p $(dirname $file)
+sudo wget -q -nv --no-check-certificate -O $file $url 2>/dev/null || sudo curl -ksSL $url -o $url
+test -s $file && export CURL_CA_BUNDLE="$file"
 
 Say "env"
 printenv | sort
 
-apt-get update; apt-get install build-essential binutils -y -q | { grep "Setting\|Unpacking" || true; }
-script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
-export INSTALL_DIR=/usr/local TOOLS="bash git jq 7z nano gnu-tools cmake curl mono"; time (script="https://master.dl.sourceforge.net/project/gcc-precompiled/build-tools/Install-Build-Tools.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash)
-time mono --aot -O=all "$INSTALL_DIR/lib/mono/4.5/mscorlib.dll"
-script="https://master.dl.sourceforge.net/project/gcc-precompiled/ca-certificates/update-ca-certificates.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
-rm -f /usr/local/bin/grep
-export MSBUILD_INSTALL_VER=16.10.1
-export MSBUILD_INSTALL_VER=16.6
-export MSBUILD_INSTALL_DIR=/usr/local; script="https://master.dl.sourceforge.net/project/gcc-precompiled/msbuild/Install-MSBuild.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
-url=https://raw.githubusercontent.com/devizer/glist/master/bin/net-test-runners.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
-curl -kSL -o $HOME/test-cpu-usage.sh https://raw.githubusercontent.com/devizer/Universe.CpuUsage/master/test-on-mono-only-platforms.sh
-time bash $HOME/test-cpu-usage.sh
-Say "DONE. Complete"
+#  --logger trx
+# --blame-crash --blame-crash-dump-type full --diag diag.log 
+Say "dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1"
+time dotnet test -f netcoreapp3.1 -c Release --logger trx -- NUnit.NumberOfTestWorkers=1
+e=$?
+echo $e > tests-exit-code
+Say "TEST STATUS: $e"
 '
 
 Say "VM_ROOT_FS is [$VM_ROOT_FS]"
