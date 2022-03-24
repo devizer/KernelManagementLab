@@ -15,5 +15,6 @@ for prj in KernelManagementJam KernelManagementJam.Tests Universe.FioStream Univ
 done
 cd KernelManagementJam.Tests
 msbuild /t:Build /p:Configuration=Release
+dir="."; url=https://github.com/devizer/glist/blob/master/bin/libMono.Unix.so/download-libMono-Unix-so.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash -s "$dir"
 cd bin/Release/net462
 nunit3-console --workers=1 KernelManagementJam.Tests.dll
