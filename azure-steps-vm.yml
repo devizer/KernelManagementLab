@@ -22,7 +22,7 @@ steps:
 
   - bash: |
       export VM_KEY
-      bash azure-vm-tasks.sh
+      bash azure-vm-tasks-using-mono.sh
     displayName: 'Tests'
 
   - task: PublishTestResults@2

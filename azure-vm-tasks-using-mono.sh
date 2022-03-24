@@ -68,6 +68,7 @@ printenv | sort
 apt-get update; apt-get install build-essential binutils -y -q | { grep "Setting\|Unpacking" || true; }
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
 export INSTALL_DIR=/usr/local TOOLS="bash git jq 7z nano gnu-tools cmake curl mono"; time (script="https://master.dl.sourceforge.net/project/gcc-precompiled/build-tools/Install-Build-Tools.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash)
+Say "$INSTALL_DIR/lib/mono/4.5/mscorlib.dll"
 time mono --aot -O=all "$INSTALL_DIR/lib/mono/4.5/mscorlib.dll"
 script="https://master.dl.sourceforge.net/project/gcc-precompiled/ca-certificates/update-ca-certificates.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
 rm -f /usr/local/bin/grep
