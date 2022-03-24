@@ -78,8 +78,8 @@ export MSBUILD_INSTALL_DIR=/usr/local; script="https://master.dl.sourceforge.net
 url=https://raw.githubusercontent.com/devizer/glist/master/bin/net-test-runners.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
 curl -kSL -o $HOME/test-cpu-usage.sh https://raw.githubusercontent.com/devizer/Universe.CpuUsage/master/test-on-mono-only-platforms.sh
 time bash -e $HOME/test-cpu-usage.sh
-Say "Write exit code to $(pwd)/tests-exit-code"
-err=$?; echo $err | tee tests-exit-code
+err=$?; Say "Write exit code [$err] to $(pwd)/tests-exit-code"
+echo $err | tee tests-exit-code
 Say "DONE. Complete"
 '
 
