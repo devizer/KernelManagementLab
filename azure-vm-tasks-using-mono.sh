@@ -77,7 +77,9 @@ export MSBUILD_INSTALL_VER=16.6
 export MSBUILD_INSTALL_DIR=/usr/local; script="https://master.dl.sourceforge.net/project/gcc-precompiled/msbuild/Install-MSBuild.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
 url=https://raw.githubusercontent.com/devizer/glist/master/bin/net-test-runners.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash
 curl -kSL -o $HOME/test-cpu-usage.sh https://raw.githubusercontent.com/devizer/Universe.CpuUsage/master/test-on-mono-only-platforms.sh
-time bash $HOME/test-cpu-usage.sh
+time bash -e $HOME/test-cpu-usage.sh
+Say "Write exit code to $(pwd)/tests-exit-code"
+err=$?; echo $err | tee tests-exit-code
 Say "DONE. Complete"
 '
 
