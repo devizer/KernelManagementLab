@@ -24,7 +24,7 @@ jobs:
     timeoutInMinutes: 180
     cancelTimeoutInMinutes: 1
     pool:
-      vmImage: 'ubuntu-20.04'
+      vmImage: 'ubuntu-18.04'
     steps:
       - template: azure-steps-vm.yml
 
