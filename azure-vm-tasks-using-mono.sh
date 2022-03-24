@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
 Say --Reset-Stopwatch
+Say "ASLR: /proc/sys/kernel/randomize_va_space"
+sudo cat /proc/sys/kernel/randomize_va_space
+echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
+
 
 export VM_SSH_PORT=2207 VM_MEM=3000M 
 export VM_CPUS=${VM_CPUS:-2}
@@ -67,6 +71,9 @@ printenv | sort
 
 apt-get update; apt-get install build-essential binutils -y -q | { grep "Setting\|Unpacking" || true; }
 script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+Say "ASLR: /proc/sys/kernel/randomize_va_space"
+sudo cat /proc/sys/kernel/randomize_va_space
+echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
 export INSTALL_DIR=/usr/local TOOLS="bash git jq 7z nano gnu-tools cmake curl mono"; time (script="https://master.dl.sourceforge.net/project/gcc-precompiled/build-tools/Install-Build-Tools.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash)
 # Say "AOTing $INSTALL_DIR/lib/mono/4.5/mscorlib.dll"
 # time mono --aot -O=all "$INSTALL_DIR/lib/mono/4.5/mscorlib.dll"
