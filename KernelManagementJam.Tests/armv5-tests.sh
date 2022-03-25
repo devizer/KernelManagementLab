@@ -15,6 +15,8 @@ for prj in KernelManagementJam KernelManagementJam.Tests Universe.FioStream Univ
 done
 cd KernelManagementJam.Tests
 msbuild /t:Build /p:Configuration=Release
+echo "Before fix"
+ls -la ./bin/Release/net462/libMono.Unix.so || true
 dir="."; url=https://raw.githubusercontent.com/devizer/glist/master/bin/libMono.Unix.so/download-libMono-Unix-so.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -sSL $url) | bash -s "$dir"
 echo "ALL THE RELEASE FILES"
 ls -la bin/Release/net462
