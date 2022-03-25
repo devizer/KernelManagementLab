@@ -52,19 +52,18 @@ lazy-apt-update
 
 # remove the two lines below
 Say "jq [$(jq --version)]"
-Say "Get-GitHub-Latest-Release: [$(command -v Get-GitHub-Latest-Release)]"
-url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-Docker-Compose.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
-url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-PowerShell.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
+# Say "Get-GitHub-Latest-Release: [$(command -v Get-GitHub-Latest-Release)]"
+# url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-Docker-Compose.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
+# url=https://raw.githubusercontent.com/devizer/glist/master/Install-Latest-PowerShell.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
 
-cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
-cd KernelManagementLab
+# cd ~; git clone https://github.com/devizer/KernelManagementLab; pwd; uname -a
+# cd KernelManagementLab
 
 
 export VSTEST_CONNECTION_TIMEOUT=300000
 export SHORT_FIO_TESTS=True
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=1
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-
 
 Say "env"
 printenv | sort
@@ -74,7 +73,9 @@ script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-b
 Say "ASLR: /proc/sys/kernel/randomize_va_space"
 sudo cat /proc/sys/kernel/randomize_va_space
 echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
-export INSTALL_DIR=/usr/local TOOLS="bash git jq 7z nano gnu-tools cmake curl mono"; time (script="https://master.dl.sourceforge.net/project/gcc-precompiled/build-tools/Install-Build-Tools.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash)
+export TOOLS="bash git jq 7z nano gnu-tools cmake curl mono"
+export TOOLS="mono"
+export INSTALL_DIR=/usr/local; time (script="https://master.dl.sourceforge.net/project/gcc-precompiled/build-tools/Install-Build-Tools.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash)
 # Say "AOTing $INSTALL_DIR/lib/mono/4.5/mscorlib.dll"
 # time mono --aot -O=all "$INSTALL_DIR/lib/mono/4.5/mscorlib.dll"
 script="https://master.dl.sourceforge.net/project/gcc-precompiled/ca-certificates/update-ca-certificates.sh?viasf=1"; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
