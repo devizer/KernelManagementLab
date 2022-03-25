@@ -97,7 +97,7 @@ Say "VM_ROOT_FS is [$VM_ROOT_FS]"
 EvaluateCommand "$cmd"
 
 Say "Grab Test Result"
-cp -f -r $VM_ROOT_FS/root/KernelManagementLab/* .
+cp -f $VM_ROOT_FS/root/tests-exit-code .
 
 testExitCode="$(cat tests-exit-code)"
 Say "tests-exit-code: $testExitCode"
