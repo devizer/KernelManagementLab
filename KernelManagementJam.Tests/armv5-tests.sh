@@ -10,7 +10,7 @@ Reset-Target-Framework -fw net462 -l latest
 for prj in KernelManagementJam KernelManagementJam.Tests Universe.FioStream Universe.FioStream.Binaries; do
   cd $prj
   echo NUGET RESTORE PROJECT: *.csproj
-  time try-and-retry nuget restore *.csproj
+  time try-and-retry try-and-retry nuget restore *.csproj
   cd ..
 done
 cd KernelManagementJam.Tests
