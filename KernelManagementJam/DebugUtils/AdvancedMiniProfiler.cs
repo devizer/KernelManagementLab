@@ -155,6 +155,24 @@ namespace KernelManagementJam.DebugUtils
         {
         }
 
+        // For tests only
+        public List<KeyValuePair<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>> AsPlainCopy
+        {
+            get
+            {
+                List<KeyValuePair<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>> ret = new List<KeyValuePair<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics>>();
+                lock (Sync)
+                {
+                    foreach (KeyValuePair<AdvancedMiniProfilerKeyPath, AdvancedMiniProfilerMetrics> pair in Report)
+                    {
+                        ret.Add(pair);
+                    }
+                }
+
+                return ret;
+            }
+        }
+
         public long Timestamp
         {
             get
