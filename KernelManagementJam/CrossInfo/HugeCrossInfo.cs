@@ -845,7 +845,7 @@ BuildVersion:	14B25
 
         static string Windows_OsVersion()
         {
-#if NETCORE
+#if NETCORE || NETCOREAPP
             var retCore = WindowsSystemInfo.Default.OsDescription;
             if (string.IsNullOrEmpty(retCore))
                 retCore = RuntimeInformation.OSDescription;
