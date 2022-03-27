@@ -6,7 +6,7 @@ using Universe.NUnitTests;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class AdvancedMiniProfilerTests : NUnitTestsBase
+    public class AdvancedMiniProfiler_Tests : NUnitTestsBase
     {
         [Test]
         public void _1_Simple()
