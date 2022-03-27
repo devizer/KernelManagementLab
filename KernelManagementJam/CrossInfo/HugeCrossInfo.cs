@@ -828,7 +828,7 @@ BuildVersion:	14B25
 
         static int? Windows_TotalMemory()
         {
-#if NETCORE
+#if NETCORE || NETCOREAPP
             return WindowsSystemInfo.Default.TotalMemory;
 #else
             if (IsMono && ThePlatform == Platform.Windows)
