@@ -220,15 +220,16 @@ jobs:
     steps:
       - template: azure-steps-nix.yml
 
-  - job: WIN2016_VS2017
-    variables:
-      OS: Windows
-    timeoutInMinutes: 99
-    cancelTimeoutInMinutes: 1
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - template: azure-steps-nix.yml
+#  Windows-2016 brownout
+#  - job: WIN2016_VS2017
+#    variables:
+#      OS: Windows
+#    timeoutInMinutes: 99
+#    cancelTimeoutInMinutes: 1
+#    pool:
+#      vmImage: 'vs2017-win2016'
+#    steps:
+#      - template: azure-steps-nix.yml
 
   - job: WIN2019_VS2019
     variables:

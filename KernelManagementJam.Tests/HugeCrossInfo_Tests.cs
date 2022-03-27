@@ -17,15 +17,15 @@ namespace KernelManagementJam.Tests
         }
 
         [Test]
-        public void _1_OsName()
+        public void _2_OsName()
         {
             Console.WriteLine($"OS: [{HugeCrossInfo.OsDisplayName}]");
             Assert.NotNull(HugeCrossInfo.OsDisplayName);
             Assert.IsNotEmpty(HugeCrossInfo.OsDisplayName.Trim());
         }
 
-        [Test/*, Explicit*/]
-        public void _1_MemorySize()
+        [Test]
+        public void _3_MemorySize()
         {
             Console.WriteLine($"Total Memory: [{HugeCrossInfo.TotalMemory:n0}]");
             Assert.IsTrue(HugeCrossInfo.TotalMemory.GetValueOrDefault() > 0);
