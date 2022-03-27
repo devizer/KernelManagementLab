@@ -24,7 +24,7 @@ namespace KernelManagementJam.Tests
             Assert.IsNotEmpty(HugeCrossInfo.OsDisplayName.Trim());
         }
 
-        [Test, Explicit]
+        [Test/*, Explicit*/]
         public void _1_MemorySize()
         {
             Console.WriteLine($"Total Memory: [{HugeCrossInfo.TotalMemory:n0}]");
