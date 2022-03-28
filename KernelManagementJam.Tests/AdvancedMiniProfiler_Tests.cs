@@ -17,7 +17,7 @@ namespace KernelManagementJam.Tests
                 var subKey = key.Child("Sub Sub Child");
                 using (AdvancedMiniProfiler.Step(subKey))
                 {
-                    CrossPlatformCpuUsage_Tests.LoadThread(100);
+                    CpuLoader.LoadThread(100);
                 }
             }
 
