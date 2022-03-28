@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using KernelManagementJam.DebugUtils;
 using NUnit.Framework;
+using Universe;
 using Universe.Benchmark.DiskBench;
 using Universe.NUnitTests;
 
@@ -13,6 +14,9 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Simple()
         {
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+                return;
+            
             var diskBenchmarkOptions = new DiskBenchmarkOptions()
             {
                 StepDuration = 1,
@@ -22,6 +26,7 @@ namespace KernelManagementJam.Tests
                 RandomAccessBlockSize = 512,
             };
 
+            Console.WriteLine($"ReadonlyDiskBenchmark for {diskBenchmarkOptions.WorkFolder}");
             ReadonlyDiskBenchmark ro = new ReadonlyDiskBenchmark(diskBenchmarkOptions);
             ro.Perform();
             Console.WriteLine(ro.Progress.AsJson());
