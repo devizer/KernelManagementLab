@@ -5,7 +5,7 @@ using Universe;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
-    public class LinuxMemorySummary_Tests
+    public class LinuxMemorySummary_Tests 
     {
 
         [Test]
