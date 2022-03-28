@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Threading;
-using KernelManagementJam.ThreadInfo;
+using Universe.CpuUsage;
 
 namespace KernelManagementJam
 {
@@ -13,7 +13,7 @@ namespace KernelManagementJam
         {
             internal string Caption = null;
             internal Stopwatch Stowatch = null;
-            internal TempCpuUsage? CpuUsageAtStart = null;
+            internal CpuUsage? CpuUsageAtStart = null;
             
             private long Id;
 
@@ -31,7 +31,7 @@ namespace KernelManagementJam
                     var onEnd = GetCpuUsage();
                     if (onEnd != null)
                     {
-                        var delta = TempCpuUsage.Substruct(onEnd.Value, CpuUsageAtStart.Value);
+                        var delta = CpuUsage.Substruct(onEnd.Value, CpuUsageAtStart.Value);
                         // milli seconds
                         double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                         double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;
@@ -43,12 +43,12 @@ namespace KernelManagementJam
                 Console.WriteLine($"Stopwatch #{Id}: {Caption} in {msec:n3} msec{cpuUsage}");
             }
             
-            internal static TempCpuUsage? GetCpuUsage()
+            internal static CpuUsage? GetCpuUsage()
             {
                 try
                 {
                     // return LinuxResourceUsage.GetByThread();
-                    return CpuUsageReader.Get(CpuUsageScope.Thread);
+                    return CpuUsage.Get(CpuUsageScope.Thread);
                 }
                 catch
                 {
@@ -61,7 +61,7 @@ namespace KernelManagementJam
         static Func<string> StartTimer()
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            TempCpuUsage? atStart = CpuUsageReader.SafeGet(CpuUsageScope.Thread);
+            CpuUsage? atStart = CpuUsage.SafeGet(CpuUsageScope.Thread);
             
             return () =>
             {
@@ -69,10 +69,10 @@ namespace KernelManagementJam
                 string cpuUsage = null;
                 if (atStart.HasValue)
                 {
-                    var onEnd = CpuUsageReader.SafeGet(CpuUsageScope.Thread);
+                    var onEnd = CpuUsage.SafeGet(CpuUsageScope.Thread);
                     if (onEnd != null)
                     {
-                        var delta = TempCpuUsage.Substruct(onEnd.Value, atStart.Value);
+                        var delta = CpuUsage.Substruct(onEnd.Value, atStart.Value);
                         // milli seconds
                         double user = delta.UserUsage.TotalMicroSeconds / 1000d;
                         double kernel = delta.KernelUsage.TotalMicroSeconds / 1000d;

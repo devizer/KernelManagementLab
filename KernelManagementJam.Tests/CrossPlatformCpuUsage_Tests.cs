@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using KernelManagementJam.ThreadInfo;
 using NUnit.Framework;
 using Universe.NUnitTests;
 using Universe;
+using Universe.CpuUsage;
 
 namespace KernelManagementJam.Tests
 {
@@ -40,12 +40,12 @@ namespace KernelManagementJam.Tests
             
             LoadThread(1);
             Console.WriteLine($"Usage scope: {scope}");
-            CpuUsageReader.Get(scope);
-            var prev = CpuUsageReader.Get(scope);
+            CpuUsage.Get(scope);
+            var prev = CpuUsage.Get(scope);
             for (int i = 0; i < 10; i++)
             {
                 LoadThread(9);
-                TempCpuUsage? next = CpuUsageReader.Get(scope);
+                CpuUsage? next = CpuUsage.Get(scope);
                 Console.WriteLine($" {i} -> {next}");
                 Assert.GreaterOrEqual(next.Value.KernelUsage.TotalMicroSeconds, prev.Value.KernelUsage.TotalMicroSeconds);
                 Assert.GreaterOrEqual(next.Value.UserUsage.TotalMicroSeconds, prev.Value.UserUsage.TotalMicroSeconds);
@@ -56,16 +56,16 @@ namespace KernelManagementJam.Tests
         [Test]
         public void Get_Process_Usage()
         {
-            var usage = CpuUsageReader.GetByProcess();
-            Console.WriteLine($"CpuUsageReader.GetByProcess(): {usage}");
+            var usage = CpuUsage.GetByProcess();
+            Console.WriteLine($"CpuUsage.GetByProcess(): {usage}");
         }
         
 
         [Test]
         public void Get_Thread_Usage()
         {
-            var usage = CpuUsageReader.GetByThread();
-            Console.WriteLine($"CpuUsageReader.GetByThread(): {usage}");
+            var usage = CpuUsage.GetByThread();
+            Console.WriteLine($"CpuUsage.GetByThread(): {usage}");
         }
         
         public static void LoadThread(long milliseconds)
