@@ -27,7 +27,7 @@ namespace KernelManagementJam.Tests
             Console.WriteLine(ro.Progress.AsJson());
             
             var progress = ro.Progress;
-            string stepNames = string.Join(Environment.NewLine, progress.Steps.Select(x => $" --- {x.Name}"));
+            string stepNames = string.Join(Environment.NewLine, progress.Steps.Select(x => $" --- {x.Name}: {x.AvgBytesPerSecond:n0}"));
             Console.WriteLine(stepNames);
             
             Assert.IsTrue(ro.Progress.IsCompleted);
