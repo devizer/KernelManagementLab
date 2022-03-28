@@ -19,8 +19,10 @@ namespace KernelManagementJam.Tests
             if (CrossInfo.ThePlatform != CrossInfo.Platform.Linux) return;
             var snapshot = SysBlocksReader.GetSnapshot(new AdvancedMiniProfilerKeyPath("Test SysBlocksReader"));
             CollectionAssert.IsNotEmpty(snapshot);
-            var info = snapshot.Select(x => $" --- {x.DevFileType}: {x.DiskKey}");
+            var info = snapshot.Select(d => $" --- {d.DevFileType}: {d.DiskKey} ({string.Join(",", d.Volumes.Select(v =>v.VolumeKey))})");
+            // var info = snapshot.Select(d => $" --- {d.DevFileType}: {d.DiskKey}");
             Console.WriteLine(string.Join(Environment.NewLine, info));
+            Console.WriteLine(snapshot.AsJson());
         }
     }
 }
