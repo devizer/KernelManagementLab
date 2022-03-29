@@ -37,7 +37,7 @@ namespace KernelManagementJam.Tests
         }
         
         [Test]
-        public void _2_Run()
+        public void _2_FioBenchmark()
         {
             if (_EnginesProvider == null) { _1_Discovery(); }
             
