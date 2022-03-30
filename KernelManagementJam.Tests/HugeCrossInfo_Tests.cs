@@ -31,16 +31,5 @@ namespace KernelManagementJam.Tests
             Assert.IsTrue(HugeCrossInfo.TotalMemory.GetValueOrDefault() > 0);
         }
 
-        [Test]
-        public void FirstRoundTest()
-        {
-            int y1 = 0, y2 = 0, y3 = 0;
-            FirstRound.RunOnce(() => y1 = 1, "test-1");
-            FirstRound.RunOnly(() => y2 = 2, 1, "test-2");
-            FirstRound.RunTwice(() => y3 = 3, "test-3");
-            Assert.AreEqual(1, y1);
-            Assert.AreEqual(2, y2);
-            Assert.AreEqual(3, y3);
-        }
     }
 }
