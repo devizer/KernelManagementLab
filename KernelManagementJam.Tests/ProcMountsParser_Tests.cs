@@ -42,6 +42,20 @@ namespace KernelManagementJam.Tests
             
             Assert.IsNotNull(root2.MountEntry?.FileSystem, "MountEntry.FileSystem of the '/' is not null");
             Assert.IsNotEmpty(root2.MountEntry?.FileSystem, "MountEntry.FileSystem of the '/' is not empty");
+
+
+            ProcMountsAnalyzer analizer = ProcMountsAnalyzer.Create(mounts);
+            CollectionAssert.IsNotEmpty(analizer.Details, "analizer.Details is not empty");
+            var forBenchmark = analizer.Details.FilterForBenchmark();
+            Console.WriteLine($"Drives for benchmark: {forBenchmark.Count()}{Environment.NewLine}{forBenchmark.AsJson()}");
+            var forHuman = analizer.Details.FilterForHuman();
+            Console.WriteLine($"Drives for a human: {forHuman.Count()}{Environment.NewLine}{forHuman.AsJson()}");
+
+            foreach (DriveDetails drive in analizer.Details)
+            {
+                var json = drive.AsJson();
+            }
+
         }
         
     }
