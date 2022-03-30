@@ -98,6 +98,8 @@ namespace Tests
             Assert.IsNotNull(copy, "entity found by token");
             Assert.IsNotNull(copy.Environment, "entity.Environment != null");
             Assert.AreEqual(expectedFileSystem, copy.Environment.FileSystems, "entity.Environment.FileSystem is received");
+            
         }
+
     }
 }

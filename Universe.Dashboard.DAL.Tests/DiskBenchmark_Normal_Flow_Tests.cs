@@ -68,8 +68,22 @@ namespace Tests
             Assert.IsTrue(historyRow.RandRead1T.GetValueOrDefault() > 0, "RandRead1T > 0");
             Assert.IsTrue(historyRow.RandReadNT.GetValueOrDefault() > 0, "RandReadNT > 0");
             Console.WriteLine("DiskBenchmarkDataAccess.GetHistory -> ToHistoryItem() works properly");
+            
+            HistoryLogic historyLogic = new HistoryLogic(context);
+            TestAtHistoryItem testedAt = new TestAtHistoryItem() {At = DateTime.UtcNow};
+            historyLogic.Save("TestedAt", testedAt);
+            TestAtHistoryItem testedAtCopy;
+            historyLogic.TryLoad("TestedAt", out testedAtCopy);
+            Assert.IsNotNull(testedAtCopy, "HistoryLogic: testedAtCopy != null");
+            Assert.AreEqual(testedAt.At, testedAtCopy.At, "HistoryLogic: testedAt.At == testedAtCopy.At");
 
         }
+        
+        class TestAtHistoryItem
+        {
+            public DateTime At;
+        }
+
         
         void ShowDbTestArgument(TestDatabase arg)
         {
