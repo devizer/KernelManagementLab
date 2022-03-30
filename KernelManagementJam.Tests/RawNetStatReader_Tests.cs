@@ -7,6 +7,18 @@ using Universe.NUnitTests;
 namespace KernelManagementJam.Tests
 {
     [TestFixture]
+    public class CpiIdAndNames_Tests : NUnitTestsBase
+    {
+        [Test]
+        public void TestAll()
+        {
+            bool isOk = CpuIdAndNames.TryGetName(0x51, 0x211, out string cpuName);
+            Assert.IsTrue(isOk);
+            CollectionAssert.IsNotEmpty(cpuName);
+        }
+    }
+
+    [TestFixture]
     public class RawNetStatReader_Tests : NUnitTestsBase
     {
         [Test]
