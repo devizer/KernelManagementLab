@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text;
 using NUnit.Framework;
+using Universe;
 using Universe.NUnitTests;
 
 namespace KernelManagementJam.Tests
@@ -11,6 +12,7 @@ namespace KernelManagementJam.Tests
         [Test]
         public void ReadRawNetStat()
         {
+            if (CrossInfo.ThePlatform != CrossInfo.Platform.Linux) return;
             var reader = new RawNetStatReader(new StringReader(GetRawNetStat()));
             CollectionAssert.IsNotEmpty(reader.NetStatItems);
             
