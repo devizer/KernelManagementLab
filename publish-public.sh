@@ -48,7 +48,7 @@ _install_proper_sdk_
 
 work=$HOME/transient-builds
 if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
-if [[ -d "/ssd" ]]; then work=/ssd/transient-builds; fi
+# if [[ -d "/ssd" ]]; then work=/ssd/transient-builds; fi
 
 clone=$work/publish/w3top-bin
 say "Clean w3top-bin clone location: [$clone]"
