@@ -11,6 +11,7 @@ Supported CPU architectures are x86_64, armv7, and arm64.
 The easiest way to (re)install it as a SystemD service, namely w3top, is to build from source:
 
 ```bash
+export HTTP_HOST=0.0.0.0
 export HTTP_PORT=5050
 export INSTALL_DIR=/opt/w3top
 export RESPONSE_COMPRESSION=True
