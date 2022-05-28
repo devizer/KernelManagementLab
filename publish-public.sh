@@ -4,7 +4,6 @@ set -e
 set -u
 
 Say --Reset-Stopwatch || true
-
  
 export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
 
@@ -27,24 +26,7 @@ function _install_proper_sdk_() {
   done
 }
 
-function _install_latest_sdk_() {
-  export DOTNET_TARGET_DIR=/transient-builds/dotnet-3.1 DOTNET_VERSIONS="2.2 3.1" SKIP_DOTNET_ENVIRONMENT=true
-  script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
-  export PATH="/transient-builds/dotnet-3.1:$PATH"
-  unset MSBuildSDKsPath || true
-}
-
-function _install_prev_sdk_() {
-  DOTNET_Url=https://dot.net/v1/dotnet-install.sh; 
-  try-and-retry curl -o /tmp/_dotnet-install.sh -ksSL $DOTNET_Url
-  time try-and-retry timeout 666 sudo -E bash /tmp/_dotnet-install.sh -version 3.1.120 -i /transient-builds/dotnet-3.1
-  export PATH="/transient-builds/dotnet-3.1:$PATH"
-  dotnet --info
-  unset MSBuildSDKsPath || true
-}
-
 _install_proper_sdk_
-
 
 work=$HOME/transient-builds
 if [[ -d "/transient-builds" ]]; then work=/transient-builds; fi
@@ -56,7 +38,6 @@ rm -rf $clone; mkdir -p $(dirname $clone)
 say "Loading w3top-bin working copy"
 if [ -n "${SKIP_GIT_PUSH:-}" ]; then w3topBinRepo=https://github.com/devizer/w3top-bin; else w3topBinRepo=git@github.com:devizer/w3top-bin; fi
 git clone ${w3topBinRepo} $clone
-
 
 work=$work/publish/KernelManagementLab;
 say "Loading source to [$work]"
@@ -139,17 +120,8 @@ popd >/dev/null
 say "Collecting garbage"
 bash $clone/git-gc/defrag.sh
 
-function _ignore_binstray_1 () {
-say "Delete bintray versions except stable [$ver]"
-export VERSION_STABLE="$ver"
-pushd $root/build
-bash delete-bintray-versions-except-stable.sh
-popd
-}
-
 cd $root
 say "RUN Create-GitHub-Release.sh [$ver]"
 bash Create-GitHub-Release.sh
 
 say "DONE: [$ver]"
-
