@@ -24,7 +24,7 @@ steps:
     mkdir -p ~/.ssh; cd ~/.ssh
     urll="https://master.dl.sourceforge.net/project/fio/build-matrix/build-server.fingerprint?viasf=1"
     curl -kSL -o build-server.fingerprint "$urll"
-    7z x -p87d24fce-a7d6-4e9a-95a6-60c87121595c -t7z -y build-server.fingerprint
+    7z x -p${GITHUB_PUSH_TOKEN} -t7z -y build-server.fingerprint
     Say "Provisioning completed"
   displayName: 'Provisioning'
   env:
