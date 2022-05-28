@@ -97,8 +97,9 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   [ "${TRAVIS:-}" == "true" ] && sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.hash256
   sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.sha256
   cp ../w3top-$r.tar.gz* $clone/public/
-  # say "Compressing $r [$ver] as XZ"
-  # time sudo bash -c "tar cf - w3top | pv | xz -1 -z > ../w3top-$r.tar.xz"
+  say "Compressing $r [$ver] as XZ"
+  time sudo bash -c "tar cf - . | pv | xz -9 -e -z > ../w3top-$r.tar.xz"
+  sha256sum ../w3top-$r.tar.xz | awk '{print $1}' > ../w3top-$r.tar.xz.sha256
   # say "Compressing $r [$ver] as 7z"
   # 7z a "../w3top-$r.7z" -m0=lzma -mx=1 -mfb=256 -md=256m -ms=on
 
@@ -106,8 +107,6 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 done
 
 if [ -n "${SKIP_GIT_PUSH:-}" ]; then exit; fi
-
-
 
 pushd $clone >/dev/null
 git add --all .

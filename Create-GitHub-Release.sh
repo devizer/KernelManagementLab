@@ -42,8 +42,8 @@ function new_dpl() {
 function dpl_v1() {
     # sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases
     # for dpl 1.x
-    for files in "./Universe.W3Top/bin/w3top*.tar.gz*" "WHATSNEW.md"; do
-      echo "KEY: $GITHUB_RELEASE_TOKEN"
+    for files in "./Universe.W3Top/bin/w3top*.tar.*" "WHATSNEW.md"; do
+      echo "KEY: ${#GITHUB_RELEASE_TOKEN} chars"
       dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
         --file-glob=true --overwrite=true \
         --name="W3Top Stable ${ver}" \
@@ -54,6 +54,7 @@ function dpl_v1() {
     done
 }
 
+set -eu;
 dpl_v1
 # $GITHUB_RELEASE_TOKEN
 # --file-glob=true --overwrite=true \
