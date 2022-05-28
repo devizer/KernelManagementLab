@@ -100,6 +100,7 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   say "Compressing $r [$ver] as XZ"
   time sudo bash -c "tar cf - . | pv | xz -9 -e -z > ../w3top-$r.tar.xz"
   sha256sum ../w3top-$r.tar.xz | awk '{print $1}' > ../w3top-$r.tar.xz.sha256
+  cp ../w3top-$r.tar.xz* $clone/public/
   # say "Compressing $r [$ver] as 7z"
   # 7z a "../w3top-$r.7z" -m0=lzma -mx=1 -mfb=256 -md=256m -ms=on
 
