@@ -7,7 +7,7 @@ trigger:
 - manual
 
 jobs:
-- job: publish-w3top
+- job: publish_w3top
   pool:
     vmImage: 'ubuntu-20.04'
   timeoutInMinutes: 100
