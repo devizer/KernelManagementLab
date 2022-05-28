@@ -1,10 +1,11 @@
 trigger:
 - manual
 
+pool:
+  vmImage: 'ubuntu-20.04'
+  
 jobs:
 - job: publish_w3top
-  pool:
-    vmImage: 'ubuntu-20.04'
   timeoutInMinutes: 100
 
   steps:
