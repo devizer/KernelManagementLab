@@ -11,6 +11,7 @@ pool:
 
 steps:
 - script: |
+    set -eu;
     script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
     Say --Reset-Stopwatch
     Say "apt"
@@ -19,10 +20,21 @@ steps:
     Say "/transient-builds"
     sudo mkdir -p /transient-builds
     sudo chown -R $(whoami) /transient-builds
+    Say "push token"
+    mkdir -p ~/.ssh; cd ~/.ssh
+    urll="https://master.dl.sourceforge.net/project/fio/build-matrix/build-server.fingerprint?viasf=1"
+    curl -kSL -o build-server.fingerprint "$urll"
+    7z x -p87d24fce-a7d6-4e9a-95a6-60c87121595c -t7z -y build-server.fingerprint
     Say "Provisioning completed"
   displayName: 'Provisioning'
+  env:
+    GITHUB_PUSH_TOKEN: $(SECRET_ID1)
 
 - script: |
-     bash publish-public.sh
+    set -eu;
+    export GITHUB_RELEASE_TOKEN; 
+    bash publish-public.sh
   displayName: 'Publush W3Top'
+  env:
+    GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
 
