@@ -16,6 +16,9 @@ steps:
     Say "apt"
     sudo apt-get update;
     sudo apt install openjdk-11-jdk tree git ruby-dev p7zip-full -y -qq
+    Say "/transient-builds"
+    sudo mkdir -p /transient-builds
+    sudo chown -R $(whoami) /transient-builds
     Say "Provisioning completed"
   displayName: 'Provisioning'
 
