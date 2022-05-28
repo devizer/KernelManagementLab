@@ -37,6 +37,8 @@ jobs:
   
   - script: |
       set -eu;
+      git config --global user.email "devizer@github.io"
+      git config --global user.name "devizer"
       export GITHUB_RELEASE_TOKEN; 
       bash -eu publish-public.sh
     displayName: 'Publish W3Top'
