@@ -41,7 +41,14 @@ jobs:
       git config --global user.name "devizer"
       export GITHUB_RELEASE_TOKEN; 
       bash -eu publish-public.sh
+      7z a -mx=1 $SYSTEM_ARTIFACTSDIRECTORY/transient-builds.7z /transient-builds  
     displayName: 'Publish W3Top'
     env:
       GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
-  
+
+  - task: PublishBuildArtifacts@1
+    condition: succeededOrFailed()
+    displayName: 'Drop Transient Builds'
+    inputs:
+      pathtoPublish: '$(System.ARTIFACTSDIRECTORY)'
+      artifactName: '$(Agent.JobName)'
