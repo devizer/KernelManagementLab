@@ -19,7 +19,9 @@ jobs:
       Say --Reset-Stopwatch
       Say "apt"
       sudo apt-get update;
-      sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full -y -qq
+      sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full pv jq -y -qq
+      Say "dpl"
+      sudo gem install dpl dpl-releases
       Say "/transient-builds"
       sudo mkdir -p /transient-builds
       sudo chown -R $(whoami) /transient-builds
@@ -36,7 +38,7 @@ jobs:
   - script: |
       set -eu;
       export GITHUB_RELEASE_TOKEN; 
-      bash publish-public.sh
+      bash -eu publish-public.sh
     displayName: 'Publish W3Top'
     env:
       GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
