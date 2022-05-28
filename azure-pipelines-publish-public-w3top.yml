@@ -18,8 +18,8 @@ jobs:
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
       Say --Reset-Stopwatch
       Say "apt"
-      sudo apt-get update;
-      sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full pv jq -y -qq
+      sudo apt-get update -qq;
+      sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full pv jq -y -qq | {grep "Setting\|Unpack" || true; }
       Say "dpl"
       sudo gem install dpl dpl-releases
       Say "/transient-builds"
