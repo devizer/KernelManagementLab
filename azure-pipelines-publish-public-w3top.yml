@@ -19,7 +19,7 @@ jobs:
       Say --Reset-Stopwatch
       Say "apt"
       sudo apt-get update -qq;
-      sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full pv jq -y -qq | {grep "Setting\|Unpack" || true; }
+      sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full pv jq -y -qq | { grep "Setting\|Unpack" || true; }
       Say "dpl"
       sudo gem install dpl dpl-releases
       Say "/transient-builds"
