@@ -6,35 +6,38 @@
 trigger:
 - manual
 
-pool:
-  vmImage: ubuntu-20.04
+jobs:
+  - job: publish-w3top
+    pool:
+      vmImage: 'ubuntu-20.04'
+    timeoutInMinutes: 100
 
-steps:
-- script: |
-    set -eu;
-    script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
-    Say --Reset-Stopwatch
-    Say "apt"
-    sudo apt-get update;
-    sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full -y -qq
-    Say "/transient-builds"
-    sudo mkdir -p /transient-builds
-    sudo chown -R $(whoami) /transient-builds
-    Say "push token"
-    mkdir -p ~/.ssh; cd ~/.ssh
-    urll="https://master.dl.sourceforge.net/project/fio/build-matrix/build-server.fingerprint?viasf=1"
-    curl -kSL -o build-server.fingerprint "$urll"
-    7z x -p${GITHUB_PUSH_TOKEN} -t7z -y build-server.fingerprint
-    Say "Provisioning completed"
-  displayName: 'Provisioning'
-  env:
-    GITHUB_PUSH_TOKEN: $(SECRET_ID1)
-
-- script: |
-    set -eu;
-    export GITHUB_RELEASE_TOKEN; 
-    bash publish-public.sh
-  displayName: 'Publush W3Top'
-  env:
-    GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
-
+  steps:
+  - script: |
+      set -eu;
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+      Say --Reset-Stopwatch
+      Say "apt"
+      sudo apt-get update;
+      sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full -y -qq
+      Say "/transient-builds"
+      sudo mkdir -p /transient-builds
+      sudo chown -R $(whoami) /transient-builds
+      Say "push token"
+      mkdir -p ~/.ssh; cd ~/.ssh
+      urll="https://master.dl.sourceforge.net/project/fio/build-matrix/build-server.fingerprint?viasf=1"
+      curl -kSL -o build-server.fingerprint "$urll"
+      7z x -p${GITHUB_PUSH_TOKEN} -t7z -y build-server.fingerprint
+      Say "Provisioning completed"
+    displayName: 'Provisioning'
+    env:
+      GITHUB_PUSH_TOKEN: $(SECRET_ID1)
+  
+  - script: |
+      set -eu;
+      export GITHUB_RELEASE_TOKEN; 
+      bash publish-public.sh
+    displayName: 'Publish W3Top'
+    env:
+      GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
+  
