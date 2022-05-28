@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- manual
+
+pool:
+  vmImage: ubuntu-20.04
+
+steps:
+- script: |
+    script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+    Say --Reset-Stopwatch
+    Say "apt"
+    sudo apt-get update;
+    sudo apt install openjdk-11-jdk tree git ruby-dev p7zip-full -y -qq
+    Say "Provisioning completed"
+  displayName: 'Provisioning'
+
+- script: |
+     bash publish-public.sh
+  displayName: 'Publush W3Top'
+
