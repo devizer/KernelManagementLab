@@ -40,11 +40,7 @@ function new_dpl() {
 
 
 function dpl_v1() {
-    local body="(Re) Installation options:
-https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries.
-
-History:
-https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md"
+    local body="(Re) Installation options:\nhttps://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries.\n\nHistory:\nhttps://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md"
     # sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases
     # for dpl 1.x
     for files in "./Universe.W3Top/bin/w3top*.tar.*" "WHATSNEW.md"; do
