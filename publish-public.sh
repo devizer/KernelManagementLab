@@ -127,8 +127,6 @@ popd >/dev/null
 say "Collecting garbage and trigger pipeline for w3top-bin"
 bash $clone/git-gc/defrag.sh
 
-
-
 cd $root
 say "RUN Create-GitHub-Release.sh [$ver]"
 echo "Current Folder is [$(pwd)]"

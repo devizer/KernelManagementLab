@@ -47,7 +47,8 @@ function dpl_v1() {
       dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
         --file-glob=true --overwrite=true \
         --name="W3Top Stable ${ver}" \
-        --body="(Re) installation options: https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries. History: https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md" \
+        --body="(Re) installation options: https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries.
+History: https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md" \
         --file="$files" \
         --skip-cleanup \
         --repo=devizer/$repo_name
