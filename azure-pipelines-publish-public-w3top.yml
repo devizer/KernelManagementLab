@@ -15,7 +15,7 @@ jobs:
       Say --Reset-Stopwatch
       Say "apt"
       sudo apt-get update -qq;
-      sudo apt-get install openjdk-11-jdk tree git ruby-dev p7zip-full pv jq -y -qq | { grep "Setting\|Unpack" || true; }
+      sudo apt-get install sshpass rsync openjdk-11-jdk tree git ruby-dev p7zip-full pv jq -y -qq | { grep "Setting\|Unpack" || true; }
       Say "dpl"
       sudo gem install dpl dpl-releases
       Say "/transient-builds"
@@ -35,17 +35,20 @@ jobs:
       set -eu;
       git config --global user.email "devizer@github.io"
       git config --global user.name "devizer"
-      export GITHUB_RELEASE_TOKEN; 
+      export GITHUB_RELEASE_TOKEN;
       bash -eu publish-public.sh
 
+      sshpass -p "${SF_TOKEN}" rsync -r /transient-builds/w3top-new-version-for-sf/. archivarius@frs.sourceforge.net:/home/frs/p/w3top/
+
       Say "Pack /transient-builds"
-      7z a -mx=2 -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/transient-builds.7z /transient-builds
+      7z a -mx=1 -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/transient-builds.7z /transient-builds
       Say "Pack ${BUILD_SOURCESDIRECTORY}"
-      7z a -mx=2 -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/Sources-Directory.7z ${BUILD_SOURCESDIRECTORY}
+      7z a -mx=1 -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/Sources-Directory.7z ${BUILD_SOURCESDIRECTORY}
       ls -la $SYSTEM_ARTIFACTSDIRECTORY
     displayName: 'Publish W3Top'
     env:
       GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
+      SF_TOKEN: $(SECRET_ID3)
 
   - task: PublishBuildArtifacts@1
     condition: succeededOrFailed()
