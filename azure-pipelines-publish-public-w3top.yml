@@ -39,6 +39,7 @@ jobs:
       bash -eu publish-public.sh
 
       Say "Deploying sf.net release"
+      mkdir -p ~/.ssh; printf "Host *\n   StrictHostKeyChecking no\n   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
       sshpass -p "${SF_TOKEN}" rsync -r /transient-builds/w3top-new-version-for-sf/. archivarius@frs.sourceforge.net:/home/frs/p/w3top/
 
       Say "Pack /transient-builds"
