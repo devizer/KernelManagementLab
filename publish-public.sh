@@ -119,12 +119,12 @@ if [ -n "${SKIP_GIT_PUSH:-}" ]; then exit; fi
 pushd $clone >/dev/null
 git add --all .
 say "Commit binaries [$ver]"
-git commit -am "Update $ver"
+git commit -am "Update $ver ***NO_CI***"
 say "Publish binaries [$ver]"
 git push
 popd >/dev/null
 
-say "Collecting garbage"
+say "Collecting garbage and trigger pipeline for w3top-bin"
 bash $clone/git-gc/defrag.sh
 
 cd $root
