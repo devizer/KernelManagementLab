@@ -137,9 +137,8 @@ bash Create-GitHub-Release.sh
 # TODO: Trigger tests
 say "Trigger w3top bin tests [$(pwd)]"
 rm -rf $clone
-git clone $w3topBinRepo $clone
-cd $clone
-pushd $clone
+git clone $w3topBinRepo $clone-again
+pushd $clone-again
 ver=$(cat ./public/version.txt)
 echo "VERSION [$ver]"
 git commit --allow-empty -m "Update $ver"
