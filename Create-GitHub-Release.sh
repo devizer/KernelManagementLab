@@ -52,7 +52,7 @@ https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md"
       dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
         --file-glob=true --overwrite=true \
         --name="W3Top Stable ${ver}" \
-        --body=$body \
+        --body="$body" \
         --file="$files" \
         --skip-cleanup \
         --repo=devizer/$repo_name
