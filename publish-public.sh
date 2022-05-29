@@ -107,6 +107,14 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   popd
 done
 
+sf_release_dir=/transient-builds/w3top-new-version-for-sf
+mkdir -p "${sf_release_dir}"; rm -rf "${sf_release_dir}"/*
+mkdir -p "${sf_release_dir}/$ver"
+cp $clone/public/* "${sf_release_dir}"
+
+echo "NOT IMPLEMENTED"
+exit 1
+
 if [ -n "${SKIP_GIT_PUSH:-}" ]; then exit; fi
 
 pushd $clone >/dev/null
@@ -122,6 +130,9 @@ bash $clone/git-gc/defrag.sh
 
 cd $root
 say "RUN Create-GitHub-Release.sh [$ver]"
+echo "Current Folder is [$(pwd)]"
 bash Create-GitHub-Release.sh
+
+
 
 say "DONE: [$ver]"
