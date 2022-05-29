@@ -119,7 +119,7 @@ if [ -n "${SKIP_GIT_PUSH:-}" ]; then exit; fi
 pushd $clone >/dev/null
 git add --all .
 say "Commit binaries [$ver]"
-git commit -am "Update $ver ***NO_CI***"
+git commit -am "Update $ver ***NO_CI*** (by deploy pipeline)"
 say "Publish binaries [$ver]"
 git push
 popd >/dev/null
@@ -134,13 +134,13 @@ say "RUN Create-GitHub-Release.sh [$ver]"
 echo "Current Folder is [$(pwd)]"
 bash Create-GitHub-Release.sh
 
-# TODO: Trigger tests
 say "Trigger w3top bin tests [$(pwd)]"
 rm -rf $clone
 git clone $w3topBinRepo $clone-again
 pushd $clone-again
 ver=$(cat ./public/version.txt)
 echo "VERSION [$ver]"
+# TODO: Pass commit message to $clone/git-gc/defrag.sh
 git commit --allow-empty -m "Update $ver"
 git push
 popd
