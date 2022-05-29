@@ -40,6 +40,3 @@ sudo systemctl disable w3top.service
 sudo rm -f /etc/systemd/system/w3top.service 
 sudo rm -rf /opt/w3top
 ```
-
-
-
