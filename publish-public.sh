@@ -127,11 +127,23 @@ popd >/dev/null
 say "Collecting garbage and trigger pipeline for w3top-bin"
 bash $clone/git-gc/defrag.sh
 
+
+
 cd $root
 say "RUN Create-GitHub-Release.sh [$ver]"
 echo "Current Folder is [$(pwd)]"
 bash Create-GitHub-Release.sh
 
-
+# TODO: Trigger tests
+say "Trigger w3top bin tests [$(pwd)]"
+rm -rf $clone
+git clone $w3topBinRepo $clone
+cd $clone
+pushd $clone
+ver=$(cat ./public/version.txt)
+echo "VERSION [$ver]"
+git commit --allow-empty -m "Update $ver"
+git push
+popd
 
 say "DONE: [$ver]"
