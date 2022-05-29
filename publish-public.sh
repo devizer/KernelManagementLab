@@ -125,22 +125,12 @@ git push
 popd >/dev/null
 
 say "Collecting garbage and trigger pipeline for w3top-bin"
+export TRIGGER_COMMIT_MESSAGE="Update $ver"
 bash $clone/git-gc/defrag.sh
 
 cd $root
 say "RUN Create-GitHub-Release.sh [$ver]"
 echo "Current Folder is [$(pwd)]"
 bash Create-GitHub-Release.sh
-
-say "Trigger w3top bin tests [$(pwd)]"
-rm -rf $clone
-git clone $w3topBinRepo $clone-again
-pushd $clone-again
-ver=$(cat ./public/version.txt)
-echo "VERSION [$ver]"
-# TODO: Pass commit message to $clone/git-gc/defrag.sh
-git commit --allow-empty -m "Update $ver"
-git push
-popd
 
 say "DONE: [$ver]"
