@@ -108,12 +108,11 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 done
 
 sf_release_dir=/transient-builds/w3top-new-version-for-sf
+say "Prepare sf release: [${sf_release_dir}]"
 mkdir -p "${sf_release_dir}"; rm -rf "${sf_release_dir}"/*
 mkdir -p "${sf_release_dir}/$ver"
-cp $clone/public/* "${sf_release_dir}"
-
-echo "NOT IMPLEMENTED"
-exit 1
+cp -fr $clone/public/* "${sf_release_dir}/$ver"
+tree -sh "${sf_release_dir}" || true
 
 if [ -n "${SKIP_GIT_PUSH:-}" ]; then exit; fi
 

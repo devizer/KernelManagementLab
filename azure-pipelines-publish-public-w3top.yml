@@ -38,6 +38,7 @@ jobs:
       export GITHUB_RELEASE_TOKEN;
       bash -eu publish-public.sh
 
+      Say "Deploying sf.net release"
       sshpass -p "${SF_TOKEN}" rsync -r /transient-builds/w3top-new-version-for-sf/. archivarius@frs.sourceforge.net:/home/frs/p/w3top/
 
       Say "Pack /transient-builds"
