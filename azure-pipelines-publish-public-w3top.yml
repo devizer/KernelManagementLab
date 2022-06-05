@@ -42,12 +42,19 @@ jobs:
       mkdir -p ~/.ssh; printf "Host *\n   StrictHostKeyChecking no\n   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
       sshpass -p "${SF_TOKEN}" rsync -r /transient-builds/w3top-new-version-for-sf/. archivarius@frs.sourceforge.net:/home/frs/p/w3top/
 
-      Say "Pack /transient-builds"
-      7z a -mx=1 -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/transient-builds.7z /transient-builds
-      Say "Pack ${BUILD_SOURCESDIRECTORY}"
-      7z a -mx=1 -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/Sources-Directory.7z ${BUILD_SOURCESDIRECTORY}
-      ls -la $SYSTEM_ARTIFACTSDIRECTORY
     displayName: 'Publish W3Top'
+    env:
+      GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
+      SF_TOKEN: $(SECRET_ID3)
+
+  - script: |
+      set -eu;
+      Say "Pack /transient-builds"
+      7z a -mx=1 -md=64M -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/transient-builds.7z /transient-builds
+      Say "Pack ${BUILD_SOURCESDIRECTORY}"
+      7z a -mx=1 -md=64M -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/Sources-Directory.7z ${BUILD_SOURCESDIRECTORY}
+      ls -la $SYSTEM_ARTIFACTSDIRECTORY
+    displayName: 'Pack Artifacts'
     env:
       GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
       SF_TOKEN: $(SECRET_ID3)
