@@ -45,6 +45,7 @@ function dpl_v1() {
     # for dpl 1.x
     for files in "./Universe.W3Top/bin/w3top*.tar.*" "WHATSNEW.md"; do
       echo "KEY: ${#GITHUB_RELEASE_TOKEN} chars"
+      echo "FILE: [$files]"
       dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
         --file-glob=true --overwrite=true \
         --name="W3Top Stable ${ver}" \
@@ -56,6 +57,7 @@ function dpl_v1() {
 }
 
 set -eu;
+Say "PUBLISH GITHUB RELEASE"
 dpl_v1
 # $GITHUB_RELEASE_TOKEN
 # --file-glob=true --overwrite=true \
