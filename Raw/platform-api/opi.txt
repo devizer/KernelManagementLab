@@ -1,0 +1,7 @@
+/sys/devices/virtual/dmi/id/chassis_vendor: []
+/sys/devices/virtual/dmi/id/sys_vendor: []
+/sys/devices/virtual/dmi/id/board_vendor: []
+/sys/devices/virtual/dmi/id/product_name: []
+/sys/devices/virtual/dmi/id/board_name: []
+-bash: warning: command substitution: ignored null byte in input
+/sys/firmware/devicetree/base/model: [Xunlong Orange Pi PC]

@@ -1,0 +1,6 @@
+/sys/devices/virtual/dmi/id/chassis_vendor: [Microsoft Corporation]
+/sys/devices/virtual/dmi/id/sys_vendor: [Microsoft Corporation]
+/sys/devices/virtual/dmi/id/board_vendor: [Microsoft Corporation]
+/sys/devices/virtual/dmi/id/product_name: [Virtual Machine]
+/sys/devices/virtual/dmi/id/board_name: [Virtual Machine]
+/sys/firmware/devicetree/base/model: []
