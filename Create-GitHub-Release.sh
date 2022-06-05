@@ -39,7 +39,7 @@ function new_dpl() {
 }
 
 
-function dpl_v1() {
+function dpl_v1_legacy() {
     local body="Installation and upgrade options: <br> https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries. <br> <br> History: <br> https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md"
     # sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases
     # for dpl 1.x
@@ -55,6 +55,21 @@ function dpl_v1() {
         --repo=devizer/$repo_name
     done
 }
+
+function dpl_v1() {
+    local body="Installation and upgrade options: <br> https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries. <br> <br> History: <br> https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md"
+    # sudo apt-get install -y ruby-dev; sudo gem install dpl dpl-releases
+    # for dpl 1.x
+    echo "KEY: ${#GITHUB_RELEASE_TOKEN} chars"
+    dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
+      --file-glob=true --overwrite=true \
+      --name="W3Top Stable ${ver}" \
+      --body="$body" \
+      --file="./Universe.W3Top/bin/w3top*.tar.*" --file="WHATSNEW.md" \
+      --skip-cleanup \
+      --repo=devizer/$repo_name
+}
+
 
 set -eu;
 Say "PUBLISH GITHUB RELEASE"
