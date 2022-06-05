@@ -136,6 +136,24 @@ say "Tag w3top-bin [$ver]"
 git tag -f "v${ver}"
 say "Tag w3top-bin [$ver]"
 git push --tags
+
+# PUBLISH RELEASE TO W3Top-bin repo
+body="Installation and upgrade options: <br> https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries. <br> <br> History: <br> https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md"
+echo "KEY: ${#GITHUB_RELEASE_TOKEN} chars"
+echo "clone: [$clone]"
+echo "work: [$work]"
+Say "About [$work/WHATSNEW.md]"
+ls -la "$work/WHATSNEW.md" || true
+Say "About [$clone/public]"
+ls -la "$clone/public" || true
+dpl --provider=releases --api-key=$GITHUB_RELEASE_TOKEN \
+  --file-glob=true --overwrite=true \
+  --name="W3Top Stable ${ver}" \
+  --body="$PUBLISH_GIT_TEXT" \
+  --file="$clone/public/w3top*.tar.*" --file="$work/WHATSNEW.md" \
+  --skip-cleanup \
+  --repo=devizer/w3top-bin
+
 popd >/dev/null
 
 say "Collecting garbage and trigger pipeline for w3top-bin"
