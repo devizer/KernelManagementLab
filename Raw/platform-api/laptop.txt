@@ -1,0 +1,6 @@
+/sys/devices/virtual/dmi/id/chassis_vendor: [Dell Inc.]
+/sys/devices/virtual/dmi/id/sys_vendor: [Dell Inc.]
+/sys/devices/virtual/dmi/id/board_vendor: [Dell Inc.]
+/sys/devices/virtual/dmi/id/product_name: [Precision M2800]
+/sys/devices/virtual/dmi/id/board_name: [07C6X3]
+/sys/firmware/devicetree/base/model: []
