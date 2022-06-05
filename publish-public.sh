@@ -66,6 +66,16 @@ ver=$(cat $verFile | jq -r ".Version")
 cp $verFile $clone/public/version.json
 echo $ver > $clone/public/version.txt
 
+export PUBLISH_GIT_TAG="v${ver}"
+export PUBLISH_GIT_REPO=w3top-bin
+export PUBLISH_GIT_OWNER=devizer
+export PUBLISH_GIT_PATH=$clone/publish/w3top-bin
+export PUBLISH_GIT_TEXT="Installation and upgrade options: <br> https://github.com/devizer/w3top-bin#reinstallation-of-precompiled-binaries. <br> <br> History: <br> https://github.com/devizer/KernelManagementLab/blob/master/WHATSNEW.md"
+export PUBLISH_GIT_FILES="?"
+
+say "GitHub Release Parameters"
+printenv | grep PUBLISH_GIT | sort
+
 say "yarn install [$ver]"
 cd ClientApp; time (yarn install); cd ..
 
@@ -122,6 +132,10 @@ say "Commit binaries [$ver]"
 git commit -am "Update $ver ***NO_CI*** (by deploy pipeline)"
 say "Publish binaries [$ver]"
 git push
+say "Tag w3top-bin [$ver]"
+git tag -f "v${ver}"
+say "Tag w3top-bin [$ver]"
+git push --tags
 popd >/dev/null
 
 say "Collecting garbage and trigger pipeline for w3top-bin"
