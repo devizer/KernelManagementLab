@@ -176,7 +176,7 @@ steps:
       kill_msbuild_service
       dotnet --info
       # dotnet build -f netcoreapp3.1 -c Release /v:m
-      for d in Universe.Dashboard.DAL.Tests JsonLab.Tests Universe.FioStream.Tests KernelManagementJam.Tests; do
+      for d in Universe.ExternalIp.Tests Universe.Dashboard.DAL.Tests JsonLab.Tests Universe.FioStream.Tests KernelManagementJam.Tests; do
       # for d in $(find -maxdepth 1 -type d | grep -E '\.Tests'); do 
         pushd $d
         Say "Building $d" || echo "Building $d"
