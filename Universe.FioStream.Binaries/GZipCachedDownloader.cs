@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using Universe.Shared;
 
 namespace Universe.FioStream.Binaries
 {
@@ -45,7 +46,7 @@ namespace Universe.FioStream.Binaries
             var guid = Guid.NewGuid().ToString("N");
             var tempGZip = Path.Combine(PersistentState.TempFolder, $"{name}.{guid}.gzipped");
             var wd = new WebDownloader();
-            wd.Download(url, tempGZip);
+            wd.DownloadFile(url, tempGZip);
             
             
             using(FileStream from = new FileStream(tempGZip, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
