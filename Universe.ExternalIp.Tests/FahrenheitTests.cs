@@ -1,9 +1,11 @@
 using System;
 using NUnit.Framework;
+using Universe.NUnitTests;
 
 namespace Universe.ExternalIp.Tests
 {
-    public class FahrenheitTests
+    [TestFixture]
+    public class FahrenheitTests : NUnitTestsBase
     {
         [Test]
         public void Test1()
