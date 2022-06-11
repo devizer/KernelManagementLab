@@ -18,7 +18,7 @@ namespace Universe.ExternalIp
 
         public static bool Contains(string countryName)
         {
-            return FahrenheitCountriesSet.Contains(countryName);
+            return countryName != null && FahrenheitCountriesSet.Contains(countryName);
         }
     }
 }

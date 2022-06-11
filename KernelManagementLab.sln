@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.FioStream.Profiler
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.ExternalIp", "Universe.ExternalIp\Universe.ExternalIp.csproj", "{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.ExternalIp.Tests", "Universe.ExternalIp.Tests\Universe.ExternalIp.Tests.csproj", "{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -229,6 +231,14 @@ Global
 		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Release|x86.ActiveCfg = Release|Any CPU
 		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Release|x86.Build.0 = Release|Any CPU
+		{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}.Debug|x86.Build.0 = Debug|Any CPU
+		{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}.Release|x86.ActiveCfg = Release|Any CPU
+		{3BB4C96C-FE70-45A6-9BDC-EC6246B359E7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

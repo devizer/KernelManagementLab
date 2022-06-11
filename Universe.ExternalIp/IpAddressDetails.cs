@@ -10,6 +10,11 @@ namespace Universe.ExternalIp
             public string Name { get; set; }
             public string IsoCode { get; set; }
             public bool IsInEuropeanUnion { get; set; }
+
+            public override string ToString()
+            {
+                return $"{nameof(Name)}: {Name}, {nameof(IsoCode)}: {IsoCode}, {nameof(IsInEuropeanUnion)}: {IsInEuropeanUnion}";
+            }
         }
 
         public static Country GetCountry(string ip)
