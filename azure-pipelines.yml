@@ -160,25 +160,25 @@ jobs:
   #   steps:
   #     - template: azure-steps-vm.yml
 
- - job: Arm32
-   variables:
-     OS: Linux
-   timeoutInMinutes: 360
-   cancelTimeoutInMinutes: 1
-   pool:
-     name: 'armv7-pool'
-   steps:
-     - template: azure-steps-nix.yml
+  - job: Arm32
+    variables:
+      OS: Linux
+    timeoutInMinutes: 360
+    cancelTimeoutInMinutes: 1
+    pool:
+      name: 'armv7-pool'
+    steps:
+      - template: azure-steps-nix.yml
 
- - job: Arm64
-   variables:
-     OS: Linux
-   timeoutInMinutes: 360
-   cancelTimeoutInMinutes: 1
-   pool:
-     name: 'arm64-pool'
-   steps:
-     - template: azure-steps-nix.yml
+  - job: Arm64
+    variables:
+      OS: Linux
+    timeoutInMinutes: 360
+    cancelTimeoutInMinutes: 1
+    pool:
+      name: 'arm64-pool'
+    steps:
+      - template: azure-steps-nix.yml
 
   - job: Ubuntu_20_04
     variables:
