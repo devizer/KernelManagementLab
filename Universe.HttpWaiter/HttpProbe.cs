@@ -16,7 +16,7 @@ namespace Universe.HttpWaiter
             if (cancellationToken == default(CancellationToken))
                 cancellationToken = CancellationToken.None;
 
-            HttpClient c = new HttpClient()
+            HttpClient c = new HttpClient(_ClientHandler.Value)
             {
                 Timeout = TimeSpan.FromSeconds(cs.Timeout),
             };
@@ -93,6 +93,16 @@ namespace Universe.HttpWaiter
             {"Post", HttpMethod.Post},
             {"Trace", HttpMethod.Trace},
         };
+
+        private static Lazy<HttpClientHandler> _ClientHandler = new Lazy<HttpClientHandler>(() =>
+            {
+                var handler = new HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback += (message, certificate2, arg3, arg4) => true;
+                return handler;
+            }
+        );
+
+
 
     }
 }

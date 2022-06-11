@@ -1,6 +1,9 @@
 using System;
 using System.IO;
 using System.Net;
+#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETSTANDARD1_3
+using System.Net.Http;
+#endif
 using System.Threading.Tasks;
 
 namespace Universe.FioStream.Binaries
@@ -27,7 +30,7 @@ namespace Universe.FioStream.Binaries
 #if NETCOREAPP1_0 || NETCOREAPP1_1 || NETSTANDARD1_3
         private async Task Download2(string url, string toFile)
         {
-            using (var client = new System.Net.Http.HttpClient())
+            using (var client = new System.Net.Http.HttpClient(_ClientHandler.Value))
             {
                 using (var result = await client.GetAsync(url))
                 {
@@ -46,6 +49,15 @@ namespace Universe.FioStream.Binaries
                 }
             }
         }
+        
+        private static Lazy<HttpClientHandler> _ClientHandler = new Lazy<HttpClientHandler>(() =>
+            {
+                var handler = new HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback += (message, certificate2, arg3, arg4) => true;
+                return handler;
+            }
+        );
+
 #endif
 
         private static bool IsCertificateValidationConfigured = false;
