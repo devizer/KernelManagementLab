@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.FioStream.Binaries
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.FioStream.Profiler", "Universe.FioStream.Profiler\Universe.FioStream.Profiler.csproj", "{DED94032-E500-413D-AED2-FF558401BA8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Universe.ExternalIp", "Universe.ExternalIp\Universe.ExternalIp.csproj", "{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,6 +221,14 @@ Global
 		{DED94032-E500-413D-AED2-FF558401BA8E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DED94032-E500-413D-AED2-FF558401BA8E}.Release|x86.ActiveCfg = Release|Any CPU
 		{DED94032-E500-413D-AED2-FF558401BA8E}.Release|x86.Build.0 = Release|Any CPU
+		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Debug|x86.Build.0 = Debug|Any CPU
+		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Release|x86.ActiveCfg = Release|Any CPU
+		{5470A9D9-E905-4FCD-9EF2-7D4BF4E2BA36}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

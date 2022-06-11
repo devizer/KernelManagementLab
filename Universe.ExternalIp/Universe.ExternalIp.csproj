@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared-Files\WebDownloader.cs" Link="WebDownloader.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaxMind.GeoIP2" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Countries.mmf" />
+    <Content Include="Countries.mmf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+</Project>
