@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using KernelManagementJam;
 using KernelManagementJam.DebugUtils;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Universe.Dashboard.Agent
 {
@@ -36,8 +37,17 @@ namespace Universe.Dashboard.Agent
             {
                 while (!PreciseTimer.Shutdown.WaitOne(0))
                 {
-                    using(AdvancedMiniProfiler.Step(SharedDefinitions.RootKernelMetricsObserverKey, "SwapsDataSource.Iteration()"))
-                        Iteration();
+                    using (AdvancedMiniProfiler.Step(SharedDefinitions.RootKernelMetricsObserverKey, "SwapsDataSource.Iteration()"))
+                    {
+                        try
+                        {
+                            Iteration();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Warning! {nameof(SwapsDataSource)}.{nameof(Iteration)} failed.{Environment.NewLine}{ex}");
+                        }
+                    }
                     
                     IsFirstIterationReady.Set();
                     PreciseTimer.Shutdown.WaitOne(1000);
