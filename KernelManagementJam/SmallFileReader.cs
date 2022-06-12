@@ -60,6 +60,12 @@ namespace KernelManagementJam
                 AppendSingleLinerLog(() => string.Format("[{0}] single-line file not found", fileName));
                 return null;
             }
+            catch (IOException)
+            {
+                // a copypaste
+                AppendSingleLinerLog(() => string.Format("System.IO.IOException for [{0}]", fileName));
+                return null;
+            }
         }
 
         [Conditional("DEBUG")]
