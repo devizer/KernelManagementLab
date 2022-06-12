@@ -65,10 +65,8 @@ namespace KernelManagementJam
                         }
                     }
                 }
-
-
-
-
+                
+                ret.Add(hwmonSensor);
             }
 
             return ret;

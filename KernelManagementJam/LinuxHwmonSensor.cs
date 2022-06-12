@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace KernelManagementJam
 {
@@ -22,6 +24,7 @@ namespace KernelManagementJam
     
     public class LinuxHwmonSensorInput
     {
+        [JsonConverter(typeof(StringEnumConverter))]
         public LinuxHwmonSensorKind Kind { get; set; }
         public string Label { get; set; }
         public int Index { get; set; }
