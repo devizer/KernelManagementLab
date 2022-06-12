@@ -47,7 +47,7 @@ namespace KernelManagementJam
                             if (!inputFilesLabels.Contains(labelFile)) continue;
 
                             var valueFile = Path.Combine(hwmonDir.FullName, inputValueFile);
-                            Console.WriteLine($"LABEL=[{labelFile}] INPUT=[{valueFile}]");
+                            Console.WriteLine($"INDEX=[{valueIndex.Value}] LABEL=[{labelFile}] INPUT=[{valueFile}]");
                             var rawValue = SmallFileReader.ReadFirstLine(valueFile);
                             if (int.TryParse(rawValue, out var value))
                             {
@@ -68,6 +68,7 @@ namespace KernelManagementJam
                     }
                 }
                 
+                hwmonSensor.Inputs.Sort((left, right) => left.Index.CompareTo(right.Index));
                 ret.Add(hwmonSensor);
             }
 
@@ -83,7 +84,11 @@ namespace KernelManagementJam
                 if (underPos > 0)
                 {
                     if (int.TryParse(nameWithoutPrefix.Substring(0, underPos), out var valueIndex))
-                        return underPos;
+                    {
+                        Console.WriteLine($"FOR [{inputValueFile}] index is {valueIndex}");
+                        return valueIndex;
+                    }
+                        
                 }
             }
             return null;
