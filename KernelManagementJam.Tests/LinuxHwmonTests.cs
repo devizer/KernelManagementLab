@@ -15,7 +15,7 @@ namespace KernelManagementJam.Tests
         public void Perform(string counter)
         {
             var sensors = LinuxHwmonParser.GetAll();
-            Console.WriteLine(sensors.AsJson());
+            Console.WriteLine($"HWMON Sensors:{Environment.NewLine}{sensors.AsJson()}");
         }
     }
 }
