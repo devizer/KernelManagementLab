@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using KernelManagementJam.DebugUtils;
 using NUnit.Framework;
+using Universe;
 using Universe.NUnitTests;
 
 namespace KernelManagementJam.Tests
@@ -15,6 +16,8 @@ namespace KernelManagementJam.Tests
         [TestCase("2nd")]
         public void Perform(string counter)
         {
+            if (CrossInfo.ThePlatform != CrossInfo.Platform.Linux) return;
+            
             Stopwatch sw = Stopwatch.StartNew();
             var sensors = LinuxHwmonParser.GetAll();
             var milliseconds = sw.ElapsedTicks * 1000d / (double) Stopwatch.Frequency;
