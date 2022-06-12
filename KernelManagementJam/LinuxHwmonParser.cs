@@ -8,46 +8,86 @@ namespace KernelManagementJam
     public class LinuxHwmonParser
     {
         // HwmonSensor  /sys/class/hwmon/hwmon*
-        public static IEnumerable<HwmonSensor> GetAll()
+        public static IEnumerable<LinuxHwmonSensor> GetAll()
         {
+            List<LinuxHwmonSensor> ret = new List<LinuxHwmonSensor>();
+            
             var hwmonDirs = new DirectoryInfo("/sys/class/hwmon").GetDirectories("hwmon*");
             foreach (var hwmonDir in hwmonDirs)
             {
+                LinuxHwmonSensor hwmonSensor = new LinuxHwmonSensor();
+                
+                // hwmonSensor.Index
+                var hwmonDirName = hwmonDir.Name;
+                if (int.TryParse(hwmonDirName.Substring("hwmon".Length), out var rawHwMonDirIndex))
+                    hwmonSensor.Index = rawHwMonDirIndex;
+                
                 var files = hwmonDir.GetFiles("*");
 
-                string name = null;
                 if (files.Any(x => x.Name == "name"))
-                    name = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, "name"));
+                    hwmonSensor.Name = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, "name"));
+
+                var sensorKindInfoList = new[]
+                {
+                    new {Kind = LinuxHwmonSensorKind.Fan, Prefix = "fan"},
+                    new {Kind = LinuxHwmonSensorKind.Temperature, Prefix = "temp"},
+                };
+
+                foreach (var kindInfo in sensorKindInfoList)
+                {
+                    var inputFiles = files.Select(x => x.Name).Where(x => x.StartsWith(kindInfo.Prefix));
+                    var inputFilesLabels = inputFiles.Where(x => x.EndsWith("_label")).ToArray();
+                    var inputFilesValues = inputFiles.Where(x => x.EndsWith("_input")).ToArray();
+                    foreach (string inputValueFile in inputFilesValues)
+                    {
+                        int? valueIndex = TryParseValueIndex(inputValueFile, kindInfo.Prefix);
+                        if (valueIndex.HasValue)
+                        {
+                            var labelFile = $"{kindInfo.Prefix}{valueIndex.Value:0}_label";
+                            if (!inputFilesLabels.Contains(labelFile)) continue;
+                            
+                            var rawValue = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, inputValueFile));
+                            if (int.TryParse(rawValue, out var value))
+                            {
+                                var label = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, labelFile));
+                                if (!string.IsNullOrEmpty(labelFile))
+                                {
+                                    LinuxHwmonSensorInput input = new LinuxHwmonSensorInput()
+                                    {
+                                        Kind = kindInfo.Kind,
+                                        Index = valueIndex.Value,
+                                        Value = value,
+                                        Label = label,
+                                    };
+                                    hwmonSensor.Inputs.Add(input);
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+
             }
-            
-            throw new NotImplementedException();
+
+            return ret;
         }
-        
-    }
-    
-    // fan[1-*]_
-    // temp[1-*]_
-    public class HwmonSensor
-    {
-        public string Name { get; set; }
-        public int Index { get; set; }
-        public IEnumerable<HwmonSensorInput> Inputs { get; set; }
-    }
 
-    public class HwmonSensorInput
-    {
-        private HwmonSensorKind Kind { get; set; }
-        public string Label { get; set; }
-        public int Index { get; set; }
-        public int Value { get; set; }
-    }
+        private static int? TryParseValueIndex(string inputValueFile, string prefix)
+        {
+            if (inputValueFile.Length > prefix.Length + 1)
+            {
+                var nameWithoutPrefix = inputValueFile.Substring(prefix.Length);
+                int underPos = nameWithoutPrefix.IndexOf('_');
+                if (underPos > 0)
+                {
+                    if (int.TryParse(nameWithoutPrefix.Substring(0, underPos), out var valueIndex))
+                        return underPos;
+                }
+            }
+            return null;
+        }
 
-    public enum HwmonSensorKind
-    {
-        Fan,
-        Temperature,
-        Pwm,
-        Current,
-        Voltage,
     }
 }
