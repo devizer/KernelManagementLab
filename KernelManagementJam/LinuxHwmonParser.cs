@@ -44,14 +44,17 @@ namespace KernelManagementJam
                         if (valueIndex.HasValue)
                         {
                             var labelFile = $"{kindInfo.Prefix}{valueIndex.Value:0}_label";
-                            if (!inputFilesLabels.Contains(labelFile)) continue;
+                            var hasLabelFile = inputFilesLabels.Contains(labelFile);
+                            string label = null;
+                            if (hasLabelFile)
+                                label = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, labelFile));
 
                             var valueFile = Path.Combine(hwmonDir.FullName, inputValueFile);
                             // Console.WriteLine($"INDEX=[{valueIndex.Value}] LABEL=[{labelFile}] INPUT=[{valueFile}]");
                             var rawValue = SmallFileReader.ReadFirstLine(valueFile);
                             if (int.TryParse(rawValue, out var value))
                             {
-                                var label = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, labelFile));
+                                
                                 if (!string.IsNullOrEmpty(labelFile))
                                 {
                                     LinuxHwmonSensorInput input = new LinuxHwmonSensorInput()
