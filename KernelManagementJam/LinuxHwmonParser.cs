@@ -50,11 +50,10 @@ namespace KernelManagementJam
                                 label = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, labelFile));
 
                             var valueFile = Path.Combine(hwmonDir.FullName, inputValueFile);
-                            Console.WriteLine($"SENSOR=[{hwmonSensor.Index}] INDEX=[{valueIndex.Value}] LABEL=[{labelFile}] INPUT=[{valueFile}]");
-                            var rawValue = SmallFileReader.ReadFirstLine(valueFile);
+                            // Console.WriteLine($"SENSOR=[{hwmonSensor.Index}] INDEX=[{valueIndex.Value}] LABEL=[{labelFile}] INPUT=[{valueFile}]");
+                            string rawValue = SmallFileReader.ReadFirstLine(valueFile);
                             if (int.TryParse(rawValue, out var value))
                             {
-                                
                                 if (!string.IsNullOrEmpty(labelFile))
                                 {
                                     LinuxHwmonSensorInput input = new LinuxHwmonSensorInput()
