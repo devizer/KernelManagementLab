@@ -45,8 +45,10 @@ namespace KernelManagementJam
                         {
                             var labelFile = $"{kindInfo.Prefix}{valueIndex.Value:0}_label";
                             if (!inputFilesLabels.Contains(labelFile)) continue;
-                            
-                            var rawValue = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, inputValueFile));
+
+                            var valueFile = Path.Combine(hwmonDir.FullName, inputValueFile);
+                            Console.WriteLine($"LABEL=[{labelFile}] INPUT=[{valueFile}]");
+                            var rawValue = SmallFileReader.ReadFirstLine(valueFile);
                             if (int.TryParse(rawValue, out var value))
                             {
                                 var label = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, labelFile));
