@@ -1,6 +1,8 @@
+##### 1.27
+- Added CPU temperature to the UI header.
+
 ##### 1.26
-- Primary distribution CDN moved top w3top-bin github releases repo
-- Added SourceForce as the secondary distribution CDN
+- Added xz compression as a primary distrubution format. Primary distribution CDN moved top w3top-bin github releases repo. Added SourceForce as the secondary distribution CDN
 
 ##### 1.25
 - Added notification for new version
