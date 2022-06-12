@@ -68,11 +68,11 @@ namespace KernelManagementJam
                     }
                 }
                 
-                hwmonSensor.Inputs.Sort((left, right) => left.Index.CompareTo(right.Index));
+                hwmonSensor.Inputs.Sort((left, right) => (left?.Index ?? 0).CompareTo(right?.Index ?? 0));
                 ret.Add(hwmonSensor);
             }
 
-            return ret;
+            return ret.OrderBy(x => x.Index).ToList();
         }
 
         private static int? TryParseValueIndex(string inputValueFile, string prefix)
