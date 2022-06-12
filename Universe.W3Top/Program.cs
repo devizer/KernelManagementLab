@@ -51,6 +51,7 @@ namespace Universe.W3Top
 
             PreciseTimer.Services = webHost.Services;
             CpuFreqInfoSummaryTimer.Process();
+            CpuTemperatureTimer.Process();
             NetStatTimer.Process();
             BlockDiskTimer.Process();
             MemorySummaryTimer.Process();

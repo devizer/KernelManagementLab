@@ -187,9 +187,16 @@ namespace Universe.Dashboard.Agent
                 long? memAvailable = memSummary?.Summary.Available;
                 long? memFree = memSummary?.Summary.Free;
                 string processorInfo = HugeCrossInfo.ProcessorName;
+
                 var cpuFreqInfo = CpuFreqDataSource.Instance?.ToShortHtmlInfo();
                 if (!string.IsNullOrEmpty(cpuFreqInfo))
                     processorInfo += $", {cpuFreqInfo}";
+                
+                var cpuTemperatureInfo = CpuTemperatureDataSource.Instance?.ToShortCpuTemperatureHtmlInfo();
+                if (!string.IsNullOrEmpty(cpuTemperatureInfo))
+                    processorInfo += $", {cpuTemperatureInfo}";
+                    
+
                 
                 var hostInfo = new
                 {
