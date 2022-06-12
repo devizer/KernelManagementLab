@@ -1,0 +1,21 @@
+HWMON Sensors:
+[
+  {
+    "Name": "cpu_thermal",
+    "Index": 0,
+    "Inputs": [
+      {
+        "Kind": "Temperature",
+        "Label": null,
+        "Index": 1,
+        "Value": 63296
+      }
+    ]
+  },
+  {
+    "Name": "rpi_volt",
+    "Index": 1,
+    "Inputs": []
+  }
+]
+Took 3.297 milliseconds

@@ -1,0 +1,98 @@
+HWMON Sensors:
+[
+  {
+    "Name": "AC",
+    "Index": 0,
+    "Inputs": []
+  },
+  {
+    "Name": "acpitz",
+    "Index": 1,
+    "Inputs": [
+      {
+        "Kind": "Temperature",
+        "Label": null,
+        "Index": 1,
+        "Value": 25000
+      }
+    ]
+  },
+  {
+    "Name": "dell_smm",
+    "Index": 2,
+    "Inputs": [
+      {
+        "Kind": "Fan",
+        "Label": "Processor Fan",
+        "Index": 1,
+        "Value": 3780
+      },
+      {
+        "Kind": "Temperature",
+        "Label": "CPU",
+        "Index": 1,
+        "Value": 68000
+      },
+      {
+        "Kind": "Temperature",
+        "Label": "Ambient",
+        "Index": 2,
+        "Value": 52000
+      },
+      {
+        "Kind": "Temperature",
+        "Label": "SODIMM",
+        "Index": 3,
+        "Value": 39000
+      },
+      {
+        "Kind": "Temperature",
+        "Label": "GPU",
+        "Index": 4,
+        "Value": 46000
+      }
+    ]
+  },
+  {
+    "Name": "coretemp",
+    "Index": 3,
+    "Inputs": [
+      {
+        "Kind": "Temperature",
+        "Label": "Package id 0",
+        "Index": 1,
+        "Value": 71000
+      },
+      {
+        "Kind": "Temperature",
+        "Label": "Core 0",
+        "Index": 2,
+        "Value": 71000
+      },
+      {
+        "Kind": "Temperature",
+        "Label": "Core 1",
+        "Index": 3,
+        "Value": 70000
+      },
+      {
+        "Kind": "Temperature",
+        "Label": "Core 2",
+        "Index": 4,
+        "Value": 68000
+      },
+      {
+        "Kind": "Temperature",
+        "Label": "Core 3",
+        "Index": 5,
+        "Value": 66000
+      }
+    ]
+  },
+  {
+    "Name": "radeon",
+    "Index": 4,
+    "Inputs": []
+  }
+]
+Took 5.462 milliseconds
