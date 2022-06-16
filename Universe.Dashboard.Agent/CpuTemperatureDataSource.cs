@@ -25,7 +25,7 @@ namespace Universe.Dashboard.Agent
                         ?.Value;
                 }
                 
-                else if (sensor.Name == "coretemp")
+                else if (sensor.Name?.StartsWith("coretemp") == true)
                 {
                     temperature = sensor
                         .Inputs
