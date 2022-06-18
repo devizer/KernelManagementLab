@@ -7,12 +7,31 @@ namespace KernelManagementJam
 {
     public class LinuxHwmonParser
     {
-        // HwmonSensor  /sys/class/hwmon/hwmon*
+        static T SafeQuery<T>(string title, Func<T> query)
+        {
+            try
+            {
+                return query();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Information: {title} failed{Environment.NewLine}{ex}");
+                return default(T);
+            }
+        }
+        
+        // HwmonSensor  /sys/class/hwmon/hwmon*t
         public static IEnumerable<LinuxHwmonSensor> GetAll()
         {
             List<LinuxHwmonSensor> ret = new List<LinuxHwmonSensor>();
+
+            var hwmonDirs = SafeQuery(
+                "Get directories in /sys/class/hwmon/hwmon*",
+                () => new DirectoryInfo("/sys/class/hwmon").GetDirectories("hwmon*")
+            );
+
+            if (hwmonDirs == null) return ret;
             
-            var hwmonDirs = new DirectoryInfo("/sys/class/hwmon").GetDirectories("hwmon*");
             foreach (var hwmonDir in hwmonDirs)
             {
                 LinuxHwmonSensor hwmonSensor = new LinuxHwmonSensor();
@@ -21,8 +40,13 @@ namespace KernelManagementJam
                 var hwmonDirName = hwmonDir.Name;
                 if (int.TryParse(hwmonDirName.Substring("hwmon".Length), out var rawHwMonDirIndex))
                     hwmonSensor.Index = rawHwMonDirIndex;
+
+                var files = SafeQuery(
+                    $"Get file list in {hwmonDir}",
+                    () => hwmonDir.GetFiles("*")
+                );
                 
-                var files = hwmonDir.GetFiles("*");
+                if (files == null) continue;
 
                 if (files.Any(x => x.Name == "name"))
                     hwmonSensor.Name = SmallFileReader.ReadFirstLine(Path.Combine(hwmonDir.FullName, "name"));
