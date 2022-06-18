@@ -25,10 +25,14 @@ namespace KernelManagementJam
         {
             List<LinuxHwmonSensor> ret = new List<LinuxHwmonSensor>();
 
+            /*
             var hwmonDirs = SafeQuery(
                 "Get directories in /sys/class/hwmon/hwmon*",
                 () => new DirectoryInfo("/sys/class/hwmon").GetDirectories("hwmon*")
             );
+            */
+
+            var hwmonDirs = new DirectoryInfo("/sys/class/hwmon").GetDirectories("hwmon*");
 
             if (hwmonDirs == null) return ret;
             
