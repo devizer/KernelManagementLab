@@ -13,7 +13,9 @@ jobs:
           script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
           Say --Reset-Stopwatch
           dotnet --list-sdks
+          Say "Clients"
           cd Universe.Dashboard.DAL.Tests
+          export HIDE_PULL_PROGRESS=True
           time bash local-tests.sh
           Say "Done"
         displayName: 'Test'
