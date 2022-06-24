@@ -1,0 +1,29 @@
+variables:
+    buildConfiguration: "Release"
+    solution: "KernelManagementLab.sln"
+
+jobs:
+
+  - job: DB_Access_Tests
+    pool:
+      vmImage: 'ubuntu-20.04'
+    steps:
+      - bash: |
+          set -eu; set -o pipefail
+          script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+          Say --Reset-Stopwatch
+          dotnet --list-sdks
+          cd Universe.Dashboard.DAL.Tests
+          time bash local-tests.sh
+          Say "Done"
+        displayName: 'Test'
+
+trigger:
+  - master
+
+pr:
+  branches:
+    exclude:
+      - '*'
+
+
