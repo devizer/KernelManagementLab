@@ -2,7 +2,7 @@
 set -e
 rm -rf Migrations
 dotnet build
-mysql -u admin -p'admin' -e "drop database w3top_b1;"
+mysql -u admin -p'admin' -e "drop database w3top_b1;" || true
 dotnet ef migrations add Initial 
 dotnet ef database update;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 namespace Universe.Dashboard.DAL.MySQL.Migrations
 {
@@ -12,7 +13,7 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Version = table.Column<string>(type: "VARCHAR(20000)", nullable: true)
                 },
                 constraints: table =>
@@ -25,7 +26,7 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Token = table.Column<string>(type: "VARCHAR(36)", nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     MountPath = table.Column<string>(type: "VARCHAR(20000)", nullable: true),
@@ -43,7 +44,7 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(type: "VARCHAR(20000)", nullable: true),
                     JsonBlob = table.Column<string>(type: "LONGTEXT", nullable: true)
                 },

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
+using MySql.EntityFrameworkCore.Metadata;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Universe.Dashboard.DAL.MultiProvider
@@ -68,6 +69,7 @@ namespace Universe.Dashboard.DAL.MultiProvider
             if (operation == null) throw new ArgumentNullException(nameof(operation));
             operation.Annotation("Sqlite:Autoincrement", true);
             operation.Annotation("MySQL:AutoIncrement", true);
+            operation.Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn);
             operation.Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
             operation.Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
                 

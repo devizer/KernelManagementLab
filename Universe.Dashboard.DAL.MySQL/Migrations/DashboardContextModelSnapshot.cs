@@ -14,12 +14,14 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+                .HasAnnotation("ProductVersion", "3.1.26")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Universe.Dashboard.DAL.DbInfo", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("Version")
                         .HasColumnType("VARCHAR(20000)");
@@ -32,14 +34,17 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
             modelBuilder.Entity("Universe.Dashboard.DAL.DiskBenchmarkEntity", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("Args")
                         .HasColumnType("LONGTEXT");
 
-                    b.Property<DateTime>("CreatedAt");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
 
-                    b.Property<string>("ErrorInfo");
+                    b.Property<string>("ErrorInfo")
+                        .HasColumnType("text");
 
                     b.Property<string>("MountPath")
                         .HasColumnType("VARCHAR(20000)");
@@ -58,7 +63,8 @@ namespace Universe.Dashboard.DAL.MySQL.Migrations
             modelBuilder.Entity("Universe.Dashboard.DAL.HistoryCopy", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("JsonBlob")
                         .HasColumnType("LONGTEXT");
