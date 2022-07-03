@@ -50,7 +50,7 @@
     "typeface-roboto": "^0.0.75"
   },
   "devDependencies": {
-    "ajv": "^6.10.0",
+    "ajv": "^6.12.3",
     "cross-env": "^5.2.0",
     "downshift": "^3.2.10",
     "eslint-config-react-app": "^3.0.8",
