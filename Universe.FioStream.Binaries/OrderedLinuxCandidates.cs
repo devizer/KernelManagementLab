@@ -98,11 +98,7 @@ namespace Universe.FioStream.Binaries
         private static List<LinuxCandidate> GetAllLinuxCandidates()
         {
             
-            var rawArray = RawList_V2 // RawList_V1
-                .Split(new[] {'\r', '\n'})
-                .Select(x => x.Trim())
-                .Where(x => x.Length > 0)
-                .ToArray();
+            string[] rawArray = List_V2;
 
             List<LinuxCandidate> ret = new List<LinuxCandidate>();
             foreach (var rawName in rawArray)
@@ -183,324 +179,162 @@ namespace Universe.FioStream.Binaries
             new Codename("rhel6", new Version("2.12")),
         };
 
-        private const string RawList_V2 = @"
-fio-2.21-libaio-0.3.112-amd64-bionic.gz
-fio-2.21-libaio-0.3.112-amd64-jessie.gz
-fio-2.21-libaio-0.3.112-amd64-rhel6.gz
-fio-2.21-libaio-0.3.112-amd64-rhel7.gz
-fio-2.21-libaio-0.3.112-amd64-stretch.gz
-fio-2.21-libaio-0.3.112-amd64-trusty.gz
-fio-2.21-libaio-0.3.112-amd64-wheezy.gz
-fio-2.21-libaio-0.3.112-amd64-xenial.gz
-fio-2.21-libaio-0.3.112-arm64-bionic.gz
-fio-2.21-libaio-0.3.112-arm64-trusty.gz
-fio-2.21-libaio-0.3.112-arm64-xenial.gz
-fio-2.21-libaio-0.3.112-armel-stretch.gz
-fio-2.21-libaio-0.3.112-armel-wheezy.gz
-fio-2.21-libaio-0.3.112-armhf-bionic.gz
-fio-2.21-libaio-0.3.112-armhf-xenial.gz
-fio-2.21-libaio-0.3.112-i386-bionic.gz
-fio-2.21-libaio-0.3.112-i386-xenial.gz
-fio-2.21-libaio-0.3.112-mips64el-stretch.gz
-fio-2.21-libaio-0.3.112-powerpc-wheezy.gz
-fio-2.21-libaio-0.3.112-ppc64el-bionic.gz
-fio-2.21-libaio-0.3.112-ppc64el-trusty.gz
-fio-2.21-libaio-0.3.112-ppc64el-xenial.gz
-fio-2.21-libaio-missing-amd64-bionic.gz
-fio-2.21-libaio-missing-amd64-jessie.gz
-fio-2.21-libaio-missing-amd64-rhel6.gz
-fio-2.21-libaio-missing-amd64-rhel7.gz
-fio-2.21-libaio-missing-amd64-stretch.gz
-fio-2.21-libaio-missing-amd64-trusty.gz
-fio-2.21-libaio-missing-amd64-wheezy.gz
-fio-2.21-libaio-missing-amd64-xenial.gz
-fio-2.21-libaio-missing-arm64-bionic.gz
-fio-2.21-libaio-missing-arm64-trusty.gz
-fio-2.21-libaio-missing-arm64-xenial.gz
-fio-2.21-libaio-missing-armel-stretch.gz
-fio-2.21-libaio-missing-armel-wheezy.gz
-fio-2.21-libaio-missing-armhf-bionic.gz
-fio-2.21-libaio-missing-armhf-xenial.gz
-fio-2.21-libaio-missing-i386-bionic.gz
-fio-2.21-libaio-missing-i386-xenial.gz
-fio-2.21-libaio-missing-mips64el-stretch.gz
-fio-2.21-libaio-missing-powerpc-wheezy.gz
-fio-2.21-libaio-missing-ppc64el-bionic.gz
-fio-2.21-libaio-missing-ppc64el-trusty.gz
-fio-2.21-libaio-missing-ppc64el-xenial.gz
-fio-3.16-libaio-0.3.112-amd64-bionic.gz
-fio-3.16-libaio-0.3.112-amd64-buster.gz
-fio-3.16-libaio-0.3.112-amd64-centosstream.gz
-fio-3.16-libaio-0.3.112-amd64-focal.gz
-fio-3.16-libaio-0.3.112-amd64-jessie.gz
-fio-3.16-libaio-0.3.112-amd64-rhel6.gz
-fio-3.16-libaio-0.3.112-amd64-rhel7.gz
-fio-3.16-libaio-0.3.112-amd64-rhel8.gz
-fio-3.16-libaio-0.3.112-amd64-stretch.gz
-fio-3.16-libaio-0.3.112-amd64-trusty.gz
-fio-3.16-libaio-0.3.112-amd64-wheezy.gz
-fio-3.16-libaio-0.3.112-amd64-xenial.gz
-fio-3.16-libaio-0.3.112-arm64-bionic.gz
-fio-3.16-libaio-0.3.112-arm64-focal.gz
-fio-3.16-libaio-0.3.112-arm64-trusty.gz
-fio-3.16-libaio-0.3.112-arm64-xenial.gz
-fio-3.16-libaio-0.3.112-armel-buster.gz
-fio-3.16-libaio-0.3.112-armel-stretch.gz
-fio-3.16-libaio-0.3.112-armel-wheezy.gz
-fio-3.16-libaio-0.3.112-armhf-bionic.gz
-fio-3.16-libaio-0.3.112-armhf-focal.gz
-fio-3.16-libaio-0.3.112-armhf-xenial.gz
-fio-3.16-libaio-0.3.112-i386-bionic.gz
-fio-3.16-libaio-0.3.112-i386-xenial.gz
-fio-3.16-libaio-0.3.112-mips64el-stretch.gz
-fio-3.16-libaio-0.3.112-powerpc-wheezy.gz
-fio-3.16-libaio-0.3.112-ppc64el-bionic.gz
-fio-3.16-libaio-0.3.112-ppc64el-focal.gz
-fio-3.16-libaio-0.3.112-ppc64el-trusty.gz
-fio-3.16-libaio-0.3.112-ppc64el-xenial.gz
-fio-3.16-libaio-missing-amd64-bionic.gz
-fio-3.16-libaio-missing-amd64-buster.gz
-fio-3.16-libaio-missing-amd64-centosstream.gz
-fio-3.16-libaio-missing-amd64-focal.gz
-fio-3.16-libaio-missing-amd64-jessie.gz
-fio-3.16-libaio-missing-amd64-rhel6.gz
-fio-3.16-libaio-missing-amd64-rhel7.gz
-fio-3.16-libaio-missing-amd64-rhel8.gz
-fio-3.16-libaio-missing-amd64-stretch.gz
-fio-3.16-libaio-missing-amd64-trusty.gz
-fio-3.16-libaio-missing-amd64-wheezy.gz
-fio-3.16-libaio-missing-amd64-xenial.gz
-fio-3.16-libaio-missing-arm64-bionic.gz
-fio-3.16-libaio-missing-arm64-focal.gz
-fio-3.16-libaio-missing-arm64-trusty.gz
-fio-3.16-libaio-missing-arm64-xenial.gz
-fio-3.16-libaio-missing-armel-buster.gz
-fio-3.16-libaio-missing-armel-stretch.gz
-fio-3.16-libaio-missing-armel-wheezy.gz
-fio-3.16-libaio-missing-armhf-bionic.gz
-fio-3.16-libaio-missing-armhf-focal.gz
-fio-3.16-libaio-missing-armhf-xenial.gz
-fio-3.16-libaio-missing-i386-bionic.gz
-fio-3.16-libaio-missing-i386-xenial.gz
-fio-3.16-libaio-missing-mips64el-stretch.gz
-fio-3.16-libaio-missing-powerpc-wheezy.gz
-fio-3.16-libaio-missing-ppc64el-bionic.gz
-fio-3.16-libaio-missing-ppc64el-focal.gz
-fio-3.16-libaio-missing-ppc64el-trusty.gz
-fio-3.16-libaio-missing-ppc64el-xenial.gz
-fio-3.26-libaio-0.3.112-amd64-bionic.gz
-fio-3.26-libaio-0.3.112-amd64-bullseye.gz
-fio-3.26-libaio-0.3.112-amd64-buster.gz
-fio-3.26-libaio-0.3.112-amd64-centosstream.gz
-fio-3.26-libaio-0.3.112-amd64-focal.gz
-fio-3.26-libaio-0.3.112-amd64-groovy.gz
-fio-3.26-libaio-0.3.112-amd64-hirsute.gz
-fio-3.26-libaio-0.3.112-amd64-rhel8.gz
-fio-3.26-libaio-0.3.112-amd64-stretch.gz
-fio-3.26-libaio-0.3.112-amd64-xenial.gz
-fio-3.26-libaio-0.3.112-arm64-bionic.gz
-fio-3.26-libaio-0.3.112-arm64-focal.gz
-fio-3.26-libaio-0.3.112-arm64-xenial.gz
-fio-3.26-libaio-0.3.112-armel-buster.gz
-fio-3.26-libaio-0.3.112-armel-stretch.gz
-fio-3.26-libaio-0.3.112-armhf-bionic.gz
-fio-3.26-libaio-0.3.112-armhf-focal.gz
-fio-3.26-libaio-0.3.112-armhf-xenial.gz
-fio-3.26-libaio-0.3.112-i386-bionic.gz
-fio-3.26-libaio-0.3.112-i386-xenial.gz
-fio-3.26-libaio-0.3.112-mips64el-stretch.gz
-fio-3.26-libaio-0.3.112-ppc64el-bionic.gz
-fio-3.26-libaio-0.3.112-ppc64el-focal.gz
-fio-3.26-libaio-0.3.112-ppc64el-xenial.gz
-fio-3.26-libaio-missing-amd64-bionic.gz
-fio-3.26-libaio-missing-amd64-bullseye.gz
-fio-3.26-libaio-missing-amd64-buster.gz
-fio-3.26-libaio-missing-amd64-centosstream.gz
-fio-3.26-libaio-missing-amd64-focal.gz
-fio-3.26-libaio-missing-amd64-groovy.gz
-fio-3.26-libaio-missing-amd64-hirsute.gz
-fio-3.26-libaio-missing-amd64-rhel8.gz
-fio-3.26-libaio-missing-amd64-stretch.gz
-fio-3.26-libaio-missing-amd64-xenial.gz
-fio-3.26-libaio-missing-arm64-bionic.gz
-fio-3.26-libaio-missing-arm64-focal.gz
-fio-3.26-libaio-missing-arm64-xenial.gz
-fio-3.26-libaio-missing-armel-buster.gz
-fio-3.26-libaio-missing-armel-stretch.gz
-fio-3.26-libaio-missing-armhf-bionic.gz
-fio-3.26-libaio-missing-armhf-focal.gz
-fio-3.26-libaio-missing-armhf-xenial.gz
-fio-3.26-libaio-missing-i386-bionic.gz
-fio-3.26-libaio-missing-i386-xenial.gz
-fio-3.26-libaio-missing-mips64el-stretch.gz
-fio-3.26-libaio-missing-ppc64el-bionic.gz
-fio-3.26-libaio-missing-ppc64el-focal.gz
-fio-3.26-libaio-missing-ppc64el-xenial.gz
-";
+        private static readonly string[] List_V2 = new[]
+        {
+            "fio-2.21-libaio-0.3.112-amd64-bionic.gz",
+            "fio-2.21-libaio-0.3.112-amd64-jessie.gz",
+            "fio-2.21-libaio-0.3.112-amd64-rhel6.gz",
+            "fio-2.21-libaio-0.3.112-amd64-rhel7.gz",
+            "fio-2.21-libaio-0.3.112-amd64-stretch.gz",
+            "fio-2.21-libaio-0.3.112-amd64-trusty.gz",
+            "fio-2.21-libaio-0.3.112-amd64-wheezy.gz",
+            "fio-2.21-libaio-0.3.112-amd64-xenial.gz",
+            "fio-2.21-libaio-0.3.112-arm64-bionic.gz",
+            "fio-2.21-libaio-0.3.112-arm64-trusty.gz",
+            "fio-2.21-libaio-0.3.112-arm64-xenial.gz",
+            "fio-2.21-libaio-0.3.112-armel-stretch.gz",
+            "fio-2.21-libaio-0.3.112-armel-wheezy.gz",
+            "fio-2.21-libaio-0.3.112-armhf-bionic.gz",
+            "fio-2.21-libaio-0.3.112-armhf-xenial.gz",
+            "fio-2.21-libaio-0.3.112-i386-bionic.gz",
+            "fio-2.21-libaio-0.3.112-i386-xenial.gz",
+            "fio-2.21-libaio-0.3.112-mips64el-stretch.gz",
+            "fio-2.21-libaio-0.3.112-powerpc-wheezy.gz",
+            "fio-2.21-libaio-0.3.112-ppc64el-bionic.gz",
+            "fio-2.21-libaio-0.3.112-ppc64el-trusty.gz",
+            "fio-2.21-libaio-0.3.112-ppc64el-xenial.gz",
+            "fio-2.21-libaio-missing-amd64-bionic.gz",
+            "fio-2.21-libaio-missing-amd64-jessie.gz",
+            "fio-2.21-libaio-missing-amd64-rhel6.gz",
+            "fio-2.21-libaio-missing-amd64-rhel7.gz",
+            "fio-2.21-libaio-missing-amd64-stretch.gz",
+            "fio-2.21-libaio-missing-amd64-trusty.gz",
+            "fio-2.21-libaio-missing-amd64-wheezy.gz",
+            "fio-2.21-libaio-missing-amd64-xenial.gz",
+            "fio-2.21-libaio-missing-arm64-bionic.gz",
+            "fio-2.21-libaio-missing-arm64-trusty.gz",
+            "fio-2.21-libaio-missing-arm64-xenial.gz",
+            "fio-2.21-libaio-missing-armel-stretch.gz",
+            "fio-2.21-libaio-missing-armel-wheezy.gz",
+            "fio-2.21-libaio-missing-armhf-bionic.gz",
+            "fio-2.21-libaio-missing-armhf-xenial.gz",
+            "fio-2.21-libaio-missing-i386-bionic.gz",
+            "fio-2.21-libaio-missing-i386-xenial.gz",
+            "fio-2.21-libaio-missing-mips64el-stretch.gz",
+            "fio-2.21-libaio-missing-powerpc-wheezy.gz",
+            "fio-2.21-libaio-missing-ppc64el-bionic.gz",
+            "fio-2.21-libaio-missing-ppc64el-trusty.gz",
+            "fio-2.21-libaio-missing-ppc64el-xenial.gz",
+            "fio-3.16-libaio-0.3.112-amd64-bionic.gz",
+            "fio-3.16-libaio-0.3.112-amd64-buster.gz",
+            "fio-3.16-libaio-0.3.112-amd64-centosstream.gz",
+            "fio-3.16-libaio-0.3.112-amd64-focal.gz",
+            "fio-3.16-libaio-0.3.112-amd64-jessie.gz",
+            "fio-3.16-libaio-0.3.112-amd64-rhel6.gz",
+            "fio-3.16-libaio-0.3.112-amd64-rhel7.gz",
+            "fio-3.16-libaio-0.3.112-amd64-rhel8.gz",
+            "fio-3.16-libaio-0.3.112-amd64-stretch.gz",
+            "fio-3.16-libaio-0.3.112-amd64-trusty.gz",
+            "fio-3.16-libaio-0.3.112-amd64-wheezy.gz",
+            "fio-3.16-libaio-0.3.112-amd64-xenial.gz",
+            "fio-3.16-libaio-0.3.112-arm64-bionic.gz",
+            "fio-3.16-libaio-0.3.112-arm64-focal.gz",
+            "fio-3.16-libaio-0.3.112-arm64-trusty.gz",
+            "fio-3.16-libaio-0.3.112-arm64-xenial.gz",
+            "fio-3.16-libaio-0.3.112-armel-buster.gz",
+            "fio-3.16-libaio-0.3.112-armel-stretch.gz",
+            "fio-3.16-libaio-0.3.112-armel-wheezy.gz",
+            "fio-3.16-libaio-0.3.112-armhf-bionic.gz",
+            "fio-3.16-libaio-0.3.112-armhf-focal.gz",
+            "fio-3.16-libaio-0.3.112-armhf-xenial.gz",
+            "fio-3.16-libaio-0.3.112-i386-bionic.gz",
+            "fio-3.16-libaio-0.3.112-i386-xenial.gz",
+            "fio-3.16-libaio-0.3.112-mips64el-stretch.gz",
+            "fio-3.16-libaio-0.3.112-powerpc-wheezy.gz",
+            "fio-3.16-libaio-0.3.112-ppc64el-bionic.gz",
+            "fio-3.16-libaio-0.3.112-ppc64el-focal.gz",
+            "fio-3.16-libaio-0.3.112-ppc64el-trusty.gz",
+            "fio-3.16-libaio-0.3.112-ppc64el-xenial.gz",
+            "fio-3.16-libaio-missing-amd64-bionic.gz",
+            "fio-3.16-libaio-missing-amd64-buster.gz",
+            "fio-3.16-libaio-missing-amd64-centosstream.gz",
+            "fio-3.16-libaio-missing-amd64-focal.gz",
+            "fio-3.16-libaio-missing-amd64-jessie.gz",
+            "fio-3.16-libaio-missing-amd64-rhel6.gz",
+            "fio-3.16-libaio-missing-amd64-rhel7.gz",
+            "fio-3.16-libaio-missing-amd64-rhel8.gz",
+            "fio-3.16-libaio-missing-amd64-stretch.gz",
+            "fio-3.16-libaio-missing-amd64-trusty.gz",
+            "fio-3.16-libaio-missing-amd64-wheezy.gz",
+            "fio-3.16-libaio-missing-amd64-xenial.gz",
+            "fio-3.16-libaio-missing-arm64-bionic.gz",
+            "fio-3.16-libaio-missing-arm64-focal.gz",
+            "fio-3.16-libaio-missing-arm64-trusty.gz",
+            "fio-3.16-libaio-missing-arm64-xenial.gz",
+            "fio-3.16-libaio-missing-armel-buster.gz",
+            "fio-3.16-libaio-missing-armel-stretch.gz",
+            "fio-3.16-libaio-missing-armel-wheezy.gz",
+            "fio-3.16-libaio-missing-armhf-bionic.gz",
+            "fio-3.16-libaio-missing-armhf-focal.gz",
+            "fio-3.16-libaio-missing-armhf-xenial.gz",
+            "fio-3.16-libaio-missing-i386-bionic.gz",
+            "fio-3.16-libaio-missing-i386-xenial.gz",
+            "fio-3.16-libaio-missing-mips64el-stretch.gz",
+            "fio-3.16-libaio-missing-powerpc-wheezy.gz",
+            "fio-3.16-libaio-missing-ppc64el-bionic.gz",
+            "fio-3.16-libaio-missing-ppc64el-focal.gz",
+            "fio-3.16-libaio-missing-ppc64el-trusty.gz",
+            "fio-3.16-libaio-missing-ppc64el-xenial.gz",
+            "fio-3.26-libaio-0.3.112-amd64-bionic.gz",
+            "fio-3.26-libaio-0.3.112-amd64-bullseye.gz",
+            "fio-3.26-libaio-0.3.112-amd64-buster.gz",
+            "fio-3.26-libaio-0.3.112-amd64-centosstream.gz",
+            "fio-3.26-libaio-0.3.112-amd64-focal.gz",
+            "fio-3.26-libaio-0.3.112-amd64-groovy.gz",
+            "fio-3.26-libaio-0.3.112-amd64-hirsute.gz",
+            "fio-3.26-libaio-0.3.112-amd64-rhel8.gz",
+            "fio-3.26-libaio-0.3.112-amd64-stretch.gz",
+            "fio-3.26-libaio-0.3.112-amd64-xenial.gz",
+            "fio-3.26-libaio-0.3.112-arm64-bionic.gz",
+            "fio-3.26-libaio-0.3.112-arm64-focal.gz",
+            "fio-3.26-libaio-0.3.112-arm64-xenial.gz",
+            "fio-3.26-libaio-0.3.112-armel-buster.gz",
+            "fio-3.26-libaio-0.3.112-armel-stretch.gz",
+            "fio-3.26-libaio-0.3.112-armhf-bionic.gz",
+            "fio-3.26-libaio-0.3.112-armhf-focal.gz",
+            "fio-3.26-libaio-0.3.112-armhf-xenial.gz",
+            "fio-3.26-libaio-0.3.112-i386-bionic.gz",
+            "fio-3.26-libaio-0.3.112-i386-xenial.gz",
+            "fio-3.26-libaio-0.3.112-mips64el-stretch.gz",
+            "fio-3.26-libaio-0.3.112-ppc64el-bionic.gz",
+            "fio-3.26-libaio-0.3.112-ppc64el-focal.gz",
+            "fio-3.26-libaio-0.3.112-ppc64el-xenial.gz",
+            "fio-3.26-libaio-missing-amd64-bionic.gz",
+            "fio-3.26-libaio-missing-amd64-bullseye.gz",
+            "fio-3.26-libaio-missing-amd64-buster.gz",
+            "fio-3.26-libaio-missing-amd64-centosstream.gz",
+            "fio-3.26-libaio-missing-amd64-focal.gz",
+            "fio-3.26-libaio-missing-amd64-groovy.gz",
+            "fio-3.26-libaio-missing-amd64-hirsute.gz",
+            "fio-3.26-libaio-missing-amd64-rhel8.gz",
+            "fio-3.26-libaio-missing-amd64-stretch.gz",
+            "fio-3.26-libaio-missing-amd64-xenial.gz",
+            "fio-3.26-libaio-missing-arm64-bionic.gz",
+            "fio-3.26-libaio-missing-arm64-focal.gz",
+            "fio-3.26-libaio-missing-arm64-xenial.gz",
+            "fio-3.26-libaio-missing-armel-buster.gz",
+            "fio-3.26-libaio-missing-armel-stretch.gz",
+            "fio-3.26-libaio-missing-armhf-bionic.gz",
+            "fio-3.26-libaio-missing-armhf-focal.gz",
+            "fio-3.26-libaio-missing-armhf-xenial.gz",
+            "fio-3.26-libaio-missing-i386-bionic.gz",
+            "fio-3.26-libaio-missing-i386-xenial.gz",
+            "fio-3.26-libaio-missing-mips64el-stretch.gz",
+            "fio-3.26-libaio-missing-ppc64el-bionic.gz",
+            "fio-3.26-libaio-missing-ppc64el-focal.gz",
+            "fio-3.26-libaio-missing-ppc64el-xenial.gz",
+        };
+
         
-        private const string RawList_V1 = @"
-fio-2.21-amd64-bionic.gz
-fio-2.21-amd64-jessie.gz
-fio-2.21-amd64-precise.gz
-fio-2.21-amd64-rhel6.gz
-fio-2.21-amd64-rhel7.gz
-fio-2.21-amd64-stretch.gz
-fio-2.21-amd64-trusty.gz
-fio-2.21-amd64-wheezy.gz
-fio-2.21-amd64-xenial.gz
-fio-2.21-arm64-bionic.gz
-fio-2.21-arm64-trusty.gz
-fio-2.21-arm64-xenial.gz
-fio-2.21-armel-stretch.gz
-fio-2.21-armel-wheezy.gz
-fio-2.21-armhf-bionic.gz
-fio-2.21-armhf-precise.gz
-fio-2.21-armhf-xenial.gz
-fio-2.21-i386-bionic.gz
-fio-2.21-i386-precise.gz
-fio-2.21-i386-xenial.gz
-fio-2.21-libaio-amd64-bionic.gz
-fio-2.21-libaio-amd64-jessie.gz
-fio-2.21-libaio-amd64-precise.gz
-fio-2.21-libaio-amd64-rhel6.gz
-fio-2.21-libaio-amd64-rhel7.gz
-fio-2.21-libaio-amd64-stretch.gz
-fio-2.21-libaio-amd64-trusty.gz
-fio-2.21-libaio-amd64-wheezy.gz
-fio-2.21-libaio-amd64-xenial.gz
-fio-2.21-libaio-arm64-bionic.gz
-fio-2.21-libaio-arm64-trusty.gz
-fio-2.21-libaio-arm64-xenial.gz
-fio-2.21-libaio-armel-stretch.gz
-fio-2.21-libaio-armel-wheezy.gz
-fio-2.21-libaio-armhf-bionic.gz
-fio-2.21-libaio-armhf-precise.gz
-fio-2.21-libaio-armhf-xenial.gz
-fio-2.21-libaio-i386-bionic.gz
-fio-2.21-libaio-i386-precise.gz
-fio-2.21-libaio-i386-xenial.gz
-fio-2.21-libaio-mips64el-stretch.gz
-fio-2.21-libaio-powerpc-wheezy.gz
-fio-2.21-libaio-ppc64el-bionic.gz
-fio-2.21-libaio-ppc64el-trusty.gz
-fio-2.21-libaio-ppc64el-xenial.gz
-fio-2.21-mips64el-stretch.gz
-fio-2.21-powerpc-wheezy.gz
-fio-2.21-ppc64el-bionic.gz
-fio-2.21-ppc64el-trusty.gz
-fio-2.21-ppc64el-xenial.gz
-fio-3.16-amd64-bionic.gz
-fio-3.16-amd64-buster.gz
-fio-3.16-amd64-centosstream.gz
-fio-3.16-amd64-focal.gz
-fio-3.16-amd64-jessie.gz
-fio-3.16-amd64-rhel6.gz
-fio-3.16-amd64-rhel7.gz
-fio-3.16-amd64-rhel8.gz
-fio-3.16-amd64-stretch.gz
-fio-3.16-amd64-trusty.gz
-fio-3.16-amd64-wheezy.gz
-fio-3.16-amd64-xenial.gz
-fio-3.16-arm64-bionic.gz
-fio-3.16-arm64-focal.gz
-fio-3.16-arm64-trusty.gz
-fio-3.16-arm64-xenial.gz
-fio-3.16-armel-buster.gz
-fio-3.16-armel-stretch.gz
-fio-3.16-armel-wheezy.gz
-fio-3.16-armhf-bionic.gz
-fio-3.16-armhf-focal.gz
-fio-3.16-armhf-precise.gz
-fio-3.16-armhf-xenial.gz
-fio-3.16-i386-bionic.gz
-fio-3.16-i386-precise.gz
-fio-3.16-i386-xenial.gz
-fio-3.16-libaio-amd64-bionic.gz
-fio-3.16-libaio-amd64-buster.gz
-fio-3.16-libaio-amd64-centosstream.gz
-fio-3.16-libaio-amd64-focal.gz
-fio-3.16-libaio-amd64-jessie.gz
-fio-3.16-libaio-amd64-rhel6.gz
-fio-3.16-libaio-amd64-rhel7.gz
-fio-3.16-libaio-amd64-rhel8.gz
-fio-3.16-libaio-amd64-stretch.gz
-fio-3.16-libaio-amd64-trusty.gz
-fio-3.16-libaio-amd64-wheezy.gz
-fio-3.16-libaio-amd64-xenial.gz
-fio-3.16-libaio-arm64-bionic.gz
-fio-3.16-libaio-arm64-focal.gz
-fio-3.16-libaio-arm64-trusty.gz
-fio-3.16-libaio-arm64-xenial.gz
-fio-3.16-libaio-armel-buster.gz
-fio-3.16-libaio-armel-stretch.gz
-fio-3.16-libaio-armel-wheezy.gz
-fio-3.16-libaio-armhf-bionic.gz
-fio-3.16-libaio-armhf-focal.gz
-fio-3.16-libaio-armhf-precise.gz
-fio-3.16-libaio-armhf-xenial.gz
-fio-3.16-libaio-i386-bionic.gz
-fio-3.16-libaio-i386-precise.gz
-fio-3.16-libaio-i386-xenial.gz
-fio-3.16-libaio-mips64el-stretch.gz
-fio-3.16-libaio-powerpc-wheezy.gz
-fio-3.16-libaio-ppc64el-bionic.gz
-fio-3.16-libaio-ppc64el-focal.gz
-fio-3.16-libaio-ppc64el-trusty.gz
-fio-3.16-libaio-ppc64el-xenial.gz
-fio-3.16-mips64el-stretch.gz
-fio-3.16-powerpc-wheezy.gz
-fio-3.16-ppc64el-bionic.gz
-fio-3.16-ppc64el-focal.gz
-fio-3.16-ppc64el-trusty.gz
-fio-3.16-ppc64el-xenial.gz
-fio-3.26-amd64-bionic.gz
-fio-3.26-amd64-bullseye.gz
-fio-3.26-amd64-buster.gz
-fio-3.26-amd64-centosstream.gz
-fio-3.26-amd64-focal.gz
-fio-3.26-amd64-groovy.gz
-fio-3.26-amd64-hirsute.gz
-fio-3.26-amd64-rhel8.gz
-fio-3.26-amd64-stretch.gz
-fio-3.26-amd64-xenial.gz
-fio-3.26-arm64-bionic.gz
-fio-3.26-arm64-focal.gz
-fio-3.26-arm64-xenial.gz
-fio-3.26-armel-buster.gz
-fio-3.26-armel-stretch.gz
-fio-3.26-armhf-bionic.gz
-fio-3.26-armhf-focal.gz
-fio-3.26-armhf-xenial.gz
-fio-3.26-i386-bionic.gz
-fio-3.26-i386-xenial.gz
-fio-3.26-libaio-amd64-bionic.gz
-fio-3.26-libaio-amd64-bullseye.gz
-fio-3.26-libaio-amd64-buster.gz
-fio-3.26-libaio-amd64-centosstream.gz
-fio-3.26-libaio-amd64-focal.gz
-fio-3.26-libaio-amd64-groovy.gz
-fio-3.26-libaio-amd64-hirsute.gz
-fio-3.26-libaio-amd64-rhel8.gz
-fio-3.26-libaio-amd64-stretch.gz
-fio-3.26-libaio-amd64-xenial.gz
-fio-3.26-libaio-arm64-bionic.gz
-fio-3.26-libaio-arm64-focal.gz
-fio-3.26-libaio-arm64-xenial.gz
-fio-3.26-libaio-armel-buster.gz
-fio-3.26-libaio-armel-stretch.gz
-fio-3.26-libaio-armhf-bionic.gz
-fio-3.26-libaio-armhf-focal.gz
-fio-3.26-libaio-armhf-xenial.gz
-fio-3.26-libaio-i386-bionic.gz
-fio-3.26-libaio-i386-xenial.gz
-fio-3.26-libaio-mips64el-stretch.gz
-fio-3.26-libaio-ppc64el-bionic.gz
-fio-3.26-libaio-ppc64el-focal.gz
-fio-3.26-libaio-ppc64el-xenial.gz
-fio-3.26-mips64el-stretch.gz
-fio-3.26-ppc64el-bionic.gz
-fio-3.26-ppc64el-focal.gz
-fio-3.26-ppc64el-xenial.gz
-";
     }
 }
