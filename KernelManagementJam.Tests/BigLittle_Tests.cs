@@ -151,6 +151,19 @@ CPU revision    : 1
 Hardware        : Qualcomm Technologies, Inc MSM8998
 ";
 
+        private static readonly string Armv6_Raw = @"
+BogoMIPS        : 997.08
+Features        : half thumb fastmult vfp edsp java tls
+CPU implementer : 0x41
+CPU architecture: 7
+CPU variant     : 0x0
+CPU part        : 0xb76
+CPU revision    : 7
+
+Hardware        : BCM2708
+Revision        : 900092
+Serial          : 00000000e0de355d";
+
 
 
     }

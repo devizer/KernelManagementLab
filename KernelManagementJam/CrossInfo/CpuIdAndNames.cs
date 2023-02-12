@@ -1,11 +1,11 @@
-
-using System;
-using System.Globalization;
-using System.Linq;
-
 namespace Universe
 {
+    using System;
+    using System.Globalization;
+    using System.Linq;
     using System.Collections.Generic;
+    
+    // https://github.com/util-linux/util-linux/blob/master/sys-utils/lscpu-arm.c
     public class CpuIdAndNames
     {
         public static bool TryGetName(int implementer, int part, out string name)
