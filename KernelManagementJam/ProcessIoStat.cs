@@ -323,7 +323,7 @@ namespace KernelManagementJam
             return null;
         }
 
-        static readonly CultureInfo EnUS = new CultureInfo("en-US");
+        static readonly CultureInfo EnUS = CultureInfo.InvariantCulture /*new CultureInfo("en-US")*/;
         private static readonly UTF8Encoding Utf8Encoding = new UTF8Encoding(false);
 
 

@@ -108,7 +108,7 @@ namespace KernelManagementJam
                     {
                         var part = encodedString.Substring(i + 1, 3);
                         int octal;
-                        var isOctal = int.TryParse(part, NumberStyles.Integer, new CultureInfo("en-US"), out octal);
+                        var isOctal = int.TryParse(part, NumberStyles.Integer, CultureInfo.InvariantCulture /*new CultureInfo("en-US")*/, out octal);
                         if (isOctal)
                         {
                             var integer = Convert.ToInt32(octal.ToString("0"), 8);
