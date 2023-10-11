@@ -3,7 +3,7 @@
 - Updated runtime
 
 ##### 1.26
-- Added xz compression as a primary distrubution format. Primary distribution CDN moved to w3top-bin repo releases. Added SourceForge as the secondary distribution CDN
+- Added xz compression as a primary distribution format. Primary distribution CDN moved to w3top-bin repo releases. Added SourceForge as the secondary distribution CDN
 
 ##### 1.25
 - Added notification for new version
