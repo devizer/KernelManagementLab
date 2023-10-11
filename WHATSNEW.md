@@ -1,8 +1,9 @@
 ##### 1.27
 - Added CPU temperature to the UI header.
+- Updated runtime
 
 ##### 1.26
-- Added xz compression as a primary distrubution format. Primary distribution CDN moved top w3top-bin github releases repo. Added SourceForce as the secondary distribution CDN
+- Added xz compression as a primary distrubution format. Primary distribution CDN moved to w3top-bin repo releases. Added SourceForge as the secondary distribution CDN
 
 ##### 1.25
 - Added notification for new version
@@ -12,7 +13,7 @@
 ##### 1.24
 - Added sharing for drive benchmarks
   <img src="https://github.com/devizer/KernelManagementLab/raw/master/images/Shared-Drive-Benchmark.png" width="1016px" Alt="Shared Drive benchmark" Title="Shared Drive benchmark">
-  
+
 ##### 1.23
 - Added fio benchmark summary details including cpu usage
 
@@ -29,7 +30,7 @@
 ##### 1.19
 - Friendly disk live chart
 - Reduced CPU usage for background flow
-  
+
 ##### 1.18
 - Added Disk Benchmark History 
 
