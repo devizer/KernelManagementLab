@@ -20,7 +20,7 @@ say reset>/dev/null
 
 DOTNETHOME=/transient-builds/dotnet4publish
 function _install_proper_sdk_() {
-  for sdk in 3.1 3.1.120; do
+  for sdk in 3.1 3.1.120 6.0; do
     export DOTNET_VERSIONS=$sdk DOTNET_TARGET_DIR=$DOTNETHOME/$sdk SKIP_DOTNET_ENVIRONMENT=true
     script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
   done
@@ -88,12 +88,13 @@ cd ClientApp; time (yarn build); cd ..
 # export MSBuildSDKsPath=/usr/share/dotnet/sdk/3.1.408/Sdks
 for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 
-  if [[ $r == rhel.6-x64 ]]; then sdk=3.1.120; else sdk=3.1; fi
-  say "Building $r [$ver] using [sdk $sdk]"
+  if [[ $r == rhel.6-x64 ]]; then sdk=3.1.120; fw=netcoreapp3.1; else sdk=3.1; fw=net6.0 fi
+  say "Building $r [$ver] using [sdk $sdk] using target [$fw]"
   dotnetpath=$DOTNETHOME/$sdk
   export PATH="$dotnetpath:$PATH"
   unset MSBuildSDKsPath || true
-  time SKIP_CLIENTAPP=true $dotnetpath/dotnet publish -c Release -f netcoreapp3.1 /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
+  Reset-Target-Framework -fw "$fw"
+  time SKIP_CLIENTAPP=true $dotnetpath/dotnet publish -c Release -f $fw /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
   pushd bin/$r
   # rm -f System.*.a - included in manifest
   chmod 644 *.dll
