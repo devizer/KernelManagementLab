@@ -46,6 +46,7 @@ jobs:
       mkdir -p ~/.ssh; printf "Host *\n   StrictHostKeyChecking no\n   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
       sshpass -p "${SF_TOKEN}" rsync -r /transient-builds/w3top-new-version-for-sf/. archivarius@frs.sourceforge.net:/home/frs/p/w3top/
 
+      Say "Publish complete"
     displayName: 'Publish W3Top'
     env:
       GITHUB_RELEASE_TOKEN: $(SECRET_ID2)
