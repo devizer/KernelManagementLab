@@ -23,6 +23,8 @@ jobs:
       Say "/transient-builds"
       sudo mkdir -p /transient-builds
       sudo chown -R $(whoami) /transient-builds
+      Say "Node"
+      script=https://raw.githubusercontent.com/devizer/glist/master/install-dotnet-and-nodejs.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash -s node
       Say "push token"
       mkdir -p ~/.ssh; cd ~/.ssh
       urll="https://master.dl.sourceforge.net/project/fio/build-matrix/build-server.fingerprint?viasf=1"
