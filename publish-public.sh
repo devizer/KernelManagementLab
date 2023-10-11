@@ -88,7 +88,7 @@ cd ClientApp; time (yarn build); cd ..
 # export MSBuildSDKsPath=/usr/share/dotnet/sdk/3.1.408/Sdks
 for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
 
-  if [[ $r == rhel.6-x64 ]]; then sdk=3.1.120; fw=netcoreapp3.1; else sdk=3.1; fw=net6.0 fi
+  if [[ $r == rhel.6-x64 ]]; then sdk=3.1.120; fw=netcoreapp3.1; else sdk=6.0; fw=net6.0; fi
   say "Building $r [$ver] using [sdk $sdk] using target [$fw]"
   dotnetpath=$DOTNETHOME/$sdk
   export PATH="$dotnetpath:$PATH"
