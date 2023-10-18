@@ -1,15 +1,17 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using KernelManagementJam;
 using Newtonsoft.Json.Linq;
+using Universe.Shared;
 
 namespace Universe.Dashboard.Agent
 {
     public class NewVersionFetcher
     {
-        private const int FETCH_INTERVAL_IN_SECONDS = 5*60;
+        private const int FETCH_INTERVAL_IN_SECONDS = 10*60;
         public static readonly string Url = "https://raw.githubusercontent.com/devizer/w3top-bin/master/public/version.json";
         
         static ManualResetEvent FirstRoundDone = new ManualResetEvent(false);
@@ -40,6 +42,14 @@ namespace Universe.Dashboard.Agent
         {
             try
             {
+                var rawJsonNewVerBytes = new WebDownloader().DownloadContent(Url);
+                var rawJsonNewVer = new UTF8Encoding(false).GetString(rawJsonNewVerBytes);
+                JObject jsonNewVer = JObject.Parse(rawJsonNewVer);
+                Console.WriteLine($"W3Top Latest Version: '{jsonNewVer["Version"]}'");
+                NewVersionDataSource.NewVersion = jsonNewVer;
+                return true;
+                
+                // Obsolete
                 using (HttpClientHandler handler = new HttpClientHandler())
                 using (HttpClient httpClient = new HttpClient(handler))
                 {
@@ -55,7 +65,7 @@ namespace Universe.Dashboard.Agent
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         var jsonString = response.Content.ReadAsStringAsync().Result;
-                        var newVer = JObject.Parse(jsonString);
+                        JObject newVer = JObject.Parse(jsonString);
                         // Console.WriteLine($"New Ver: {newVer["Version"]}");
                         NewVersionDataSource.NewVersion = newVer;
                     }

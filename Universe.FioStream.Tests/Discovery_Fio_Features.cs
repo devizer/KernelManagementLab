@@ -48,7 +48,7 @@ namespace Universe.FioStream.Tests
 
             Stopwatch sw = Stopwatch.StartNew();
             List<Candidates.Info> candidates = Candidates.GetCandidates();
-            candidates.Insert(0, new Candidates.Info() { Name = "fio", Url = "skip://downloading"});
+            candidates.Insert(0, Candidates.Info.LocalFio);
             Console.WriteLine($"Checking [{candidates.Count}] candidates for [{Candidates.PosixSystem}] running on [{Candidates.PosixMachine}] cpu");
             foreach (var bin in candidates)
             {

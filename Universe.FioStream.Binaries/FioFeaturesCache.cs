@@ -14,7 +14,7 @@ namespace Universe.FioStream.Binaries
             {
                 if (!Features.TryGetValue(candidate.Name, out var ret))
                 {
-                    if (candidate.Url == "skip://downloading")
+                    if (candidate.Url == Candidates.Info.LocalFioFakeUrl)
                         ret = new FioFeatures(candidate.Name) {Logger = Logger};
                     
                     else

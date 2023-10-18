@@ -14,6 +14,7 @@ namespace Universe.FioStream.Binaries
         
         public IPicoLogger Logger { get; set; }
 
+        // It throws exception on fail
         public string CacheGZip(string name, string url)
         {
             try

@@ -12,6 +12,14 @@ namespace Universe.FioStream.Binaries
         {
             public string Url { get; set; }
             public string Name { get; set; }
+
+            public static Info LocalFio => new Info() {Name = "fio", Url = LocalFioFakeUrl};
+            public static readonly string LocalFioFakeUrl = "skip://downloading";
+
+            public override string ToString()
+            {
+                return $"{nameof(Url)}: '{Url}', {nameof(Name)}: '{Name}'";
+            }
         }
 
         static Lazy<string> _PosixMachine = new Lazy<string>(GetPosixMachine);
@@ -36,13 +44,15 @@ namespace Universe.FioStream.Binaries
             }
             else
             {
-                var ret = OrderedLinuxCandidates.FindCandidateByLinuxMachine(PosixMachine);
+                var linuxCandidatesForTheCurrentPlatform = OrderedLinuxCandidates.FindCandidateByLinuxMachine(PosixMachine);
 
-                return ret.Select(x => new Info()
+                var ret = linuxCandidatesForTheCurrentPlatform.Select(x => new Info()
                 {
                     Name = x.Name,
                     Url = x.Url
                 }).ToList();
+                
+                return ret;
             }
         }
 

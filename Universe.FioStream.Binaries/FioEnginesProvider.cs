@@ -9,6 +9,8 @@ namespace Universe.FioStream.Binaries
 {
     public class FioEnginesProvider
     {
+        // public static bool EnableFioDownload = true;
+
         // Depends on available memory - thus it is static
         public static int DiscoveryThreadsLimit { get; set; } = 12;
         private readonly FioFeaturesCache FeaturesCache;
@@ -95,7 +97,7 @@ namespace Universe.FioStream.Binaries
 
             Stopwatch sw = Stopwatch.StartNew();
             List<Candidates.Info> candidates = Candidates.GetCandidates();
-            candidates.Insert(0, new Candidates.Info() { Name = "fio", Url = "skip://downloading"});
+            candidates.Insert(0, Candidates.Info.LocalFio);
 
             bool IsAllIsFound() => TargetEngines.Length == candidatesByEngines.Count; 
 

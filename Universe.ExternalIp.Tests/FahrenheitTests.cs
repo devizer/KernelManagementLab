@@ -11,13 +11,11 @@ namespace Universe.ExternalIp.Tests
         public void Test1()
         {
             string ip = ExternalIpFetcher.Fetch();
-            Console.WriteLine($"ip=[{ip}]");
+            Console.WriteLine($"External IP Address is '{ip}'");
             IpAddressDetails.Country country = IpAddressDetails.GetCountry(ip);
-            Console.WriteLine($"country=[{country}]");
+            Console.WriteLine($"Country by External IP Address is '{country}'");
             bool isFahrenheit = FahrenheitCountries.Contains(country?.Name);
-            Console.WriteLine($"isFahrenheit=[{isFahrenheit}]");
-
-
+            Console.WriteLine($"Is Fahrenheit by External IP Address is '{isFahrenheit}'");
         }
     }
 }
