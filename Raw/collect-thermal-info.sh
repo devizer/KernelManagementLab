@@ -30,6 +30,6 @@ cp /proc/cpuinfo /tmp/cpuinfo; tar uf $report /tmp/cpuinfo;
 gzip -f $report
 
 # https://paste.c-net.org выдаст короткую ссылку на выгруженный thermal-from-sys.tar.gz
-curl --upload-file ${report}.gz 'https://paste.c-net.org/'
+curl -kSL --upload-file ${report}.gz 'https://paste.c-net.org/'
 
 

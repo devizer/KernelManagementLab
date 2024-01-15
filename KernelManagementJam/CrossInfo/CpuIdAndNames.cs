@@ -10,7 +10,7 @@ namespace Universe
     {
         public static bool TryGetName(int implementer, int part, out string name)
         {
-            var parts = hw_implementer.FirstOrDefault(x => x.id == implementer);
+            hw_impl parts = hw_implementer.FirstOrDefault(x => x.id == implementer);
             if (parts == null)
             {
                 name = null;

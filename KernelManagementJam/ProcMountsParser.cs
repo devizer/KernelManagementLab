@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Universe;
 
 namespace KernelManagementJam
 {
@@ -55,6 +56,9 @@ namespace KernelManagementJam
 
         private void ParseImpl(string fileName)
         {
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows)
+                throw new NotSupportedException("Windows Platform is not supported by ProcMountsParser");
+            
             Entries = new List<MountEntry>();
             using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var rdr = new StreamReader(fs, FileEncoding))

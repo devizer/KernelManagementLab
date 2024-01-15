@@ -50,14 +50,18 @@ namespace Universe.W3Top
             }
 
             PreciseTimer.Services = webHost.Services;
-            CpuFreqInfoSummaryTimer.Process();
-            CpuTemperatureTimer.Process();
-            NetStatTimer.Process();
-            BlockDiskTimer.Process();
-            MemorySummaryTimer.Process();
-            ProcessListTimer_Smarty.Instance.Process();
+            // TODO: Windows is unsupported
+            if (CrossInfo.ThePlatform != CrossInfo.Platform.Windows)
+            {
+                CpuFreqInfoSummaryTimer.Process();
+                CpuTemperatureTimer.Process();
+                NetStatTimer.Process();
+                BlockDiskTimer.Process();
+                MemorySummaryTimer.Process();
+                ProcessListTimer_Smarty.Instance.Process();
+            }
             DebugPreciseTimer();
-            
+
             webHost.Run();
         }
 
@@ -96,6 +100,8 @@ namespace Universe.W3Top
 
         private static void CheckCompliance()
         {
+            if (HugeCrossInfo.ThePlatform == HugeCrossInfo.Platform.Windows) return;
+            
             ThreadPool.QueueUserWorkItem(_ =>
             {
 /*
