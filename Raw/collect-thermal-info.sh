@@ -1,4 +1,5 @@
-report=/tmp/thermal-from-sys.tar
+report=/opt/tmp/thermal-from-sys.tar
+mkdir -p $(dirname $report)
 tar -cf $report -T /dev/null
 
 # sensors

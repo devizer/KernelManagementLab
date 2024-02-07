@@ -95,6 +95,11 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   unset MSBuildSDKsPath || true
   Reset-Target-Framework -fw "$fw"
   time SKIP_CLIENTAPP=true $dotnetpath/dotnet publish -c Release -f $fw /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
+  # openssl 1.1
+  if [[ -f $root/Dependencies/libssl-1.1-$r.tar.xz ]]; then
+    mkdir -p bin/$r/optional/libssl-1.1
+    tar xJf $root/Dependencies/libssl-1.1-$r.tar.xz -C bin/$r/optional/libssl-1.1
+  fi
   pushd bin/$r
   # rm -f System.*.a - included in manifest
   chmod 644 *.dll
