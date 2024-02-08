@@ -1,3 +1,7 @@
+##### 1.28
+- Better support for Ubuntu 22.04+, Debian 12+, Fedora 36+ for x64, armv7 and arm64v8
+- Upgrade runtime for security fixes.
+
 ##### 1.27
 - Added CPU temperature to the UI header.
 - Updated runtime
