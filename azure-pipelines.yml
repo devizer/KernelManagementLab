@@ -190,33 +190,23 @@ jobs:
     steps:
       - template: azure-steps-nix.yml
 
-  - job: Ubuntu_18_04
+  - job: Ubuntu_22_04
     variables:
       OS: Linux
     timeoutInMinutes: 99
     cancelTimeoutInMinutes: 1
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-22.04'
     steps:
       - template: azure-steps-nix.yml
 
-  - job: MacOS_10_15
+  - job: MacOS_12
     variables:
       OS: OSX
     timeoutInMinutes: 99
     cancelTimeoutInMinutes: 1
     pool:
-      vmImage: 'macOS-10.15'
-    steps:
-      - template: azure-steps-nix.yml
-
-  - job: MacOS_11
-    variables:
-      OS: OSX
-    timeoutInMinutes: 99
-    cancelTimeoutInMinutes: 1
-    pool:
-      vmImage: 'macOS-11'
+      vmImage: 'macOS-12'
     steps:
       - template: azure-steps-nix.yml
 
