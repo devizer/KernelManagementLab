@@ -18,7 +18,7 @@ jobs:
       Say "CPU: $(Get-CpuName)"
       # LOOP | BLOCK
       export SECOND_DISK_MODE=LOOP
-      export RESET_FOLDERS_TO_RAID="/var/lib/apt;/transient-builds;/var/cache/apt;$SYSTEM_ARTIFACTSDIRECTORY;/tmp;/var/tmp;"
+      export RESET_FOLDERS_TO_RAID="/var/lib/apt;/transient-builds;/var/cache/apt;$SYSTEM_ARTIFACTSDIRECTORY;/tmp;/var/tmp;$HOME/.local/share/NuGet;$HOME/.nuget"
       export LOOP_DIRECT_IO=off
       export MOVE_DOCKER_TO_RAID=True
       export FS=BTRFS-Compressed
