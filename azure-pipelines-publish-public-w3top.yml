@@ -11,6 +11,21 @@ jobs:
   timeoutInMinutes: 100
 
   steps:
+
+  - bash: |
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+      Say --Reset-Stopwatch
+      Say "CPU: $(Get-CpuName)"
+      # LOOP | BLOCK
+      export SECOND_DISK_MODE=LOOP
+      export RESET_FOLDERS_TO_RAID="/var/lib/apt;/transient-builds;/var/cache/apt;$SYSTEM_ARTIFACTSDIRECTORY;/tmp;/var/tmp;"
+      export LOOP_DIRECT_IO=off
+      export MOVE_DOCKER_TO_RAID=True
+      export FS=BTRFS-Compressed
+      url=https://raw.githubusercontent.com/devizer/glist/master/Raid0-on-Azure-Pipelines-Linux.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
+    condition: succeededOrFailed()
+    displayName: 'Install Raid-0'
+
   - script: |
       set -eu;
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
