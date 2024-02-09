@@ -111,6 +111,9 @@
       <Content Include="install-systemd-service.sh">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Include="Universe.W3Top.sh">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 
@@ -155,6 +158,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);TRACE;DUMPS</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Universe.W3Top.sh" />
+  </ItemGroup>
 
     <ItemGroup>
         <TrimmerRootAssembly Include="System.Linq" />

@@ -104,6 +104,7 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   # rm -f System.*.a - included in manifest
   chmod 644 *.dll
   chmod 755 Universe.W3Top
+  chmod 755 Universe.W3Top.sh
   chmod 755 install-systemd-service.sh
 
   say "Compressing $r [$ver] as GZIP"
