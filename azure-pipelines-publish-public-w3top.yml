@@ -23,6 +23,8 @@ jobs:
       export MOVE_DOCKER_TO_RAID=True
       export FS=BTRFS-Compressed
       url=https://raw.githubusercontent.com/devizer/glist/master/Raid0-on-Azure-Pipelines-Linux.sh; (wget -q -nv --no-check-certificate -O - $url 2>/dev/null || curl -ksSL $url) | bash
+
+      df -h -T
     condition: succeededOrFailed()
     displayName: 'Install Raid-0'
 
