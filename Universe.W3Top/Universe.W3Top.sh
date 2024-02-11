@@ -19,9 +19,7 @@ export PID_FILE_FULL_PATH=/var/run/w3top.pid
 export ASPNETCORE_URLS="http://$HTTP_HOST:$HTTP_PORT"
 export INSTALL_DIR="$ScriptPath"
 
-# checking libssl.so v1.1.*
 if [[ -n "$(command -v ldconfig)" ]] && [[ -z "$(ldconfig -p | grep libssl.so.1.1)" ]]; then
-  echo "Using private $ScriptPath/optional/libssl-1.1/libssl.so and libcrypto.so"
   export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}:$ScriptPath/optional/libssl-1.1"
 else
   echo "Using preinstalled libssl.so.1.1"

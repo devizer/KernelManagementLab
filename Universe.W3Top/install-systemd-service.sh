@@ -23,9 +23,7 @@ export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 ver=$("$ScriptPath/Universe.W3Top" --version)
 echo Configuring w3top service $ver located at ${ScriptPath} for 'http://<ip|name>:'${HTTP_PORT} listener
 
-# checking libssl.so v1.1.*
 if [[ -n "$(command -v ldconfig)" ]] && [[ -z "$(ldconfig -p | grep libssl.so.1.1)" ]]; then
-  echo "Missing shared libssl.so v1.1.*. Will use private $ScriptPath/optional/libssl-1.1/libssl.so and libcrypto.so"
   export APP_LD_LIBRARY_PATH="${APP_LD_LIBRARY_PATH:-}:$ScriptPath/optional/libssl-1.1"
 fi
 
