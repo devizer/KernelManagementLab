@@ -70,8 +70,10 @@ namespace Universe.FioStream.Binaries
         {
             List<string> urls = new List<string>()
             {
+                "https://master.dl.sourceforge.net/project/fio/fio-3.36-x64-windows.exe.gz?viasf=1",
                 "https://master.dl.sourceforge.net/project/fio/fio-3.25-x64-windows.exe.gz?viasf=1",
-                "https://master.dl.sourceforge.net/project/fio/fio-3.25-x86-windows.exe.gz?viasf=1"
+                "https://master.dl.sourceforge.net/project/fio/fio-3.25-x86-windows.exe.gz?viasf=1",
+                "https://master.dl.sourceforge.net/project/fio/fio-3.36-x86-windows.exe.gz?viasf=1"
             };
             if (IntPtr.Size == 32) urls.Reverse();
             return urls.Select(Url2Info).ToList();
