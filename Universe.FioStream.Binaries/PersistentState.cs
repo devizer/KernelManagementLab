@@ -12,10 +12,12 @@ namespace Universe.FioStream.Binaries
         private static readonly string MigrationVersion = "v3";
 
         private static HashSet<string> Nulls = new HashSet<string>();
+        private static readonly object SyncNulls = new object();
 
         public static T GetOrStore<T>(string key, Func<T> getValue)
         {
-            if (Nulls.Contains(key)) return default(T);
+            lock(SyncNulls)
+                if (Nulls.Contains(key)) return default(T);
 
             var nameOnly = key;
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows || CrossInfo.ThePlatform == CrossInfo.Platform.MacOSX) 
@@ -46,7 +48,7 @@ namespace Universe.FioStream.Binaries
 
             if (ret == null)
             {
-                Nulls.Add(key);
+                lock(SyncNulls) Nulls.Add(key);
                 return ret;
             }
             
