@@ -8,22 +8,38 @@ namespace Universe
     // https://github.com/util-linux/util-linux/blob/master/sys-utils/lscpu-arm.c
     public class CpuIdAndNames
     {
-        public static bool TryGetName(int implementer, int part, out string name)
+        // coreName may be null on success.
+        public static bool TryGetDetailedName(int implementer, int part, out string vendor, out string coreName)
         {
             hw_impl parts = hw_implementer.FirstOrDefault(x => x.id == implementer);
             if (parts == null)
             {
-                name = null;
+                vendor = null;
+                coreName = null;
                 return false;
             }
 
             if (parts.parts != null && parts.parts.TryGetValue(part, out string ret))
             {
-                name = ret;
+                vendor = parts.name;
+                coreName = ret;
                 return true;
             }
 
-            name = parts.name;
+            vendor = parts.name;
+            coreName = null;
+            return true;
+        }
+
+        public static bool TryGetName(int implementer, int part, out string name)
+        {
+            if (TryGetDetailedName(implementer, part, out var vendor, out var coreName))
+            {
+                name = coreName ?? vendor;
+                return true;
+            }
+
+            name = null;
             return true;
         }
 
@@ -32,8 +48,15 @@ namespace Universe
             return TryGetName(ParseHexId(implementer), ParseHexId(part), out name);
         }
 
-        static int ParseHexId(string arg)
+        public static bool TryGetDetailedName(string implementer, string part, out string vendor, out string coreName)
         {
+            return TryGetDetailedName(ParseHexId(implementer), ParseHexId(part), out vendor, out coreName);
+        }
+
+        internal static int ParseHexId(string arg)
+        {
+            if (string.IsNullOrEmpty(arg)) return 0;
+
             int y;
             if (arg.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
                 int.TryParse(arg.Substring(2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out y);

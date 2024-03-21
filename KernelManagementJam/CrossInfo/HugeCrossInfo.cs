@@ -1,4 +1,6 @@
-﻿namespace Universe
+using System.Linq;
+
+namespace Universe
 {
     using System;
     using System.Collections.Generic;
@@ -12,6 +14,7 @@
     using System.Runtime.InteropServices;
     using System.Threading;
     using SysGZip = System.IO.Compression;
+    using System.Xml.Linq;
 
     public class HugeCrossInfo
     {
@@ -733,6 +736,105 @@ BuildVersion:	14B25
         return name + (cache.Length == 0 ? "" : (", Cache " + cache));
     }
 
+    public class ProcessorCore
+    {
+        public int Index { get; set; }
+        public int Implementer { get; set; }
+        public int Part { get; set; }
+        public string Vendor { get; set; }
+        public string CoreName { get; set; }
+        public string PrettyName { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Index)}: {Index}, {nameof(Implementer)}: {Implementer}, {nameof(Part)}: {Part}, {nameof(Vendor)}: {Vendor}, {nameof(CoreName)}: {CoreName}, {nameof(PrettyName)}: {PrettyName}";
+        }
+    }
+
+    public static string GetCpuPrettyName(IEnumerable<ProcessorCore> knownCores)
+    {
+        // todo: name can be null or empty
+        bool hasEmptyName = knownCores.Any(x => string.IsNullOrEmpty(x.CoreName));
+        if (hasEmptyName) return knownCores.FirstOrDefault(x => !string.IsNullOrEmpty(x.Vendor))?.Vendor;
+        HashSet<string> names = new HashSet<string>(knownCores.Select(x => x.CoreName));
+
+        Func<string, int> indexOfCoreName = name => (knownCores.FirstOrDefault(x => x.CoreName == name)?.Part).GetValueOrDefault();
+        var orderedNames = names.OrderByDescending(x => indexOfCoreName(x));
+        names = new HashSet<string>(orderedNames);
+
+        Func<string, int> getCountByName = (name) => knownCores.Count(x => x.CoreName == name);
+        string formatBigOrLittle(int count, string name)
+        {
+            return $"{count}x {name}";
+        }
+
+        var formattedGroups = names.Select(x => formatBigOrLittle(getCountByName(x), x));
+        var ret = string.Join(" + ", formattedGroups);
+        var vendor = knownCores.FirstOrDefault(x => !string.IsNullOrEmpty(x.Vendor))?.Vendor;
+        if (!string.IsNullOrEmpty(vendor))
+            ret = $"{vendor} {ret}";
+
+        return ret;
+    }
+
+    public static List<ProcessorCore> GetLinuxProcCores(string procCpuInfo)
+    {
+        List<ProcessorCore> ret = new List<ProcessorCore>();
+        string cpuImplementer = null, cpuPart = null;
+        int? coreIndex = null;
+        var comp = IgnoreCaseComparision;
+        
+        Action tryAddBuffer = () =>
+        {
+            if (coreIndex.HasValue)
+            {
+                ret.Add(new ProcessorCore()
+                {
+                    Index = coreIndex.Value,
+                    Implementer = CpuIdAndNames.ParseHexId(cpuImplementer),
+                    Part = CpuIdAndNames.ParseHexId(cpuPart),
+                });
+            }
+        };
+
+        foreach (var line in EnumLines(new StringReader(procCpuInfo)))
+        {
+            string key, value;
+            TrySplit(line, ':', out key, out value);
+            if (key != null)
+            {
+                key = key.Trim();
+                if ("CPU implementer".Equals(key, comp))
+                    cpuImplementer = value;
+                else if ("CPU part".Equals(key, comp))
+                    cpuPart = value;
+                else if ("processor".Equals(key, StringComparison.Ordinal))
+                {
+                    tryAddBuffer();
+                    cpuImplementer = null;
+                    cpuPart = null;
+                    coreIndex = null;
+                    if (int.TryParse(value, out var validCoreIndex))
+                        coreIndex = validCoreIndex;
+                }
+            }
+        }
+
+        tryAddBuffer();
+
+        foreach (var processorCore in ret)
+        {
+            if (CpuIdAndNames.TryGetDetailedName(processorCore.Implementer, processorCore.Part, out var vendor, out var coreName))
+            {
+                processorCore.CoreName = coreName;
+                processorCore.Vendor = vendor;
+            }
+        }
+
+        ret = ret.Where(x => !string.IsNullOrEmpty(x.Vendor)).ToList();
+        return ret;
+    }
+
     private static string Linux_ProcName()
     {
         String model_name = null, cpu_model = null, cache = null, processor = null, hardware = null;
@@ -770,11 +872,11 @@ BuildVersion:	14B25
         }
 
         model_name = model_name ?? cpu_model;
-        
+
         if (string.IsNullOrEmpty(model_name) && !string.IsNullOrEmpty(processor))
             model_name = processor;
 
-        model_name = model_name + (string.IsNullOrEmpty(hardware) ? "" : (( !string.IsNullOrEmpty(model_name) ? ", " : "") + hardware));
+        model_name = model_name + (string.IsNullOrEmpty(hardware) ? "" : ((!string.IsNullOrEmpty(model_name) ? ", " : "") + hardware));
 
         if (string.IsNullOrEmpty(model_name))
         {
@@ -790,7 +892,7 @@ BuildVersion:	14B25
                 */
                 }
             }
-            
+
             if (string.IsNullOrEmpty(model_name))
                 model_name = ExecUName("-m");
         }
@@ -801,7 +903,8 @@ BuildVersion:	14B25
         return model_name + (cache.Length == 0 ? "" : (", Cache " + cache));
     }
 
-        private static string Windows_ProcName()
+
+    private static string Windows_ProcName()
         {
 #if NETCORE
             return WindowsSystemInfo.Default.ProcName;
@@ -955,16 +1058,38 @@ BuildVersion:	14B25
 
             return arg;
         }
-        
-        static Lazy<string> _OsDisplayName = new Lazy<string>(() =>
+
+        static string IsTermux()
+        {
+            var termuxVersion = Environment.GetEnvironmentVariable("TERMUX_VERSION");
+            var prefix = Environment.GetEnvironmentVariable("PREFIX");
+            if (!string.IsNullOrEmpty(termuxVersion) && !string.IsNullOrEmpty(prefix))
+            {
+                if (Directory.Exists(prefix))
+                    return $"Termux {termuxVersion}";
+            }
+
+            return null;
+        }
+
+        private static Lazy<string> _OsDisplayName = new Lazy<string>(() =>
         {
             if (ThePlatform == Platform.Linux)
             {
-                var arch = MacOS_AndLinux_AndFreeBSD_OsArch();
-                var archSuffix = string.IsNullOrEmpty(arch) ? "" : " (" + arch + ")";
-                var s1 = Linux_OsName();
-                var s2 = ExecUName("-r");
-                return s1 + (!string.IsNullOrEmpty(s2) ? (", Kernel " + s2) : "") + archSuffix;
+                    var arch = MacOS_AndLinux_AndFreeBSD_OsArch();
+                    var archSuffix = string.IsNullOrEmpty(arch) ? "" : " (" + arch + ")";
+                    string s1;
+                    try
+                    {
+                        s1 = Linux_OsName();
+                    }
+                    catch (Exception ex)
+                    {
+                        s1 = IsTermux();
+                    }
+
+                    var s2 = ExecUName("-r");
+                    return s1 + (!string.IsNullOrEmpty(s2) ? (", Kernel " + s2) : "") + archSuffix;
             }
 
             else if (ThePlatform == Platform.MacOSX)
