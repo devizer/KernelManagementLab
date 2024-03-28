@@ -18,13 +18,8 @@ namespace KernelManagementJam.Tests
             Assert.IsNotEmpty(HugeCrossInfo.ProcessorName.Trim());
         }
 
-        [Test]
-        public void _1a_ProcessorCores()
+        private static void ShowProcCoresSummary(string procCpuInfo)
         {
-            Console.WriteLine($"Platform: {CrossInfo.ThePlatform}");
-            if (CrossInfo.ThePlatform != CrossInfo.Platform.Linux) return;
-
-            var procCpuInfo = File.ReadAllText("/proc/cpuinfo");
             var procCores = HugeCrossInfo.GetLinuxProcCores(procCpuInfo);
             foreach (var processorCore in procCores)
             {
@@ -35,6 +30,23 @@ namespace KernelManagementJam.Tests
             Console.WriteLine($"KNOWN CORES: {procCores.Count}");
 
             Console.WriteLine($"CPU GROUPED NAME: {HugeCrossInfo.GetCpuPrettyName(procCores)}");
+        }
+
+        [Test]
+        public void _1a_ProcessorCores()
+        {
+            Console.WriteLine($"Platform: {CrossInfo.ThePlatform}");
+            if (CrossInfo.ThePlatform != CrossInfo.Platform.Linux) return;
+
+            var procCpuInfo = File.ReadAllText("/proc/cpuinfo");
+            ShowProcCoresSummary(procCpuInfo);
+        }
+
+
+        [TestCaseSource(typeof(ProcCpuInfoTestCase), nameof(ProcCpuInfoTestCase.AllCases))]
+        public void _1b_ProcessorCoreCopies(ProcCpuInfoTestCase testCase)
+        {
+            ShowProcCoresSummary(testCase.ProcCpuInfo);
         }
 
 

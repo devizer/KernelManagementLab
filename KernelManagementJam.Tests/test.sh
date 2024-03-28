@@ -8,10 +8,9 @@ if [[ "$(command -v dotnet)" == "" ]] || [[ "$(command -v git)" == "" ]]; then
   dotnet --info
   unset MSBuildSDKsPath || true
 fi
-cd ~
-rm -rf KernelManagementLab || true
-git clone https://github.com/devizer/KernelManagementLab
-cd KernelManagementLab/KernelManagementJam.Tests
-
-export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-git pull; time dotnet test -f netcoreapp3.1 
+work=$HOME/build/KernelManagementJam.Tests
+git clone https://github.com/devizer/KernelManagementLab $work
+cd $work
+git pull
+cd KernelManagementJam.Tests
+time dotnet test -f netcoreapp3.1 --filter "FullyQualifiedName ~ HugeCrossInfo_Tests"

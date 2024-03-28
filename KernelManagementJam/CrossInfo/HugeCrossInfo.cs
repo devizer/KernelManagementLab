@@ -743,11 +743,10 @@ BuildVersion:	14B25
         public int Part { get; set; }
         public string Vendor { get; set; }
         public string CoreName { get; set; }
-        public string PrettyName { get; set; }
 
         public override string ToString()
         {
-            return $"{nameof(Index)}: {Index}, {nameof(Implementer)}: {Implementer}, {nameof(Part)}: {Part}, {nameof(Vendor)}: {Vendor}, {nameof(CoreName)}: {CoreName}, {nameof(PrettyName)}: {PrettyName}";
+            return $"{nameof(Index)}: {Index}, {nameof(Implementer)}: {Implementer}, {nameof(Part)}: {Part}, {nameof(Vendor)}: '{Vendor}', {nameof(CoreName)}: '{CoreName}'";
         }
     }
 
