@@ -119,8 +119,13 @@ namespace Universe.FioStream.Binaries
             else
             {
                 candidates.Add(Environment.GetEnvironmentVariable("HOME"));
+                var snapUserData = Environment.GetEnvironmentVariable("SNAP_USER_DATA");
+                if (!string.IsNullOrEmpty(snapUserData))
+                    candidates.Add(snapUserData);
+
                 candidates.Add(Environment.GetEnvironmentVariable("TMPDIR"));
-                candidates.Add(Environment.GetEnvironmentVariable("/tmp"));
+                candidates.Add("/tmp");
+                
             }
 
             foreach (var candidate in candidates)
