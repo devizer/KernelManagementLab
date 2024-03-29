@@ -15,6 +15,12 @@ namespace KernelManagementJam
             ProcMountsAnalyzer analyz = ProcMountsAnalyzer.Create(mounts);
             string logDetails = analyz.RawDetailsLog;
             analyz = ProcMountsAnalyzer.Create(mounts, skipDetailsLog: true);
+            var humanInfo = analyz.Details
+                .Where(x => !string.IsNullOrEmpty(x.MountEntry?.MountPath) && !string.IsNullOrEmpty(x.MountEntry?.FileSystem))
+                .OrderBy(x => x.MountEntry.MountPath)
+                .Select(x => $"{x.MountEntry.MountPath} ({x.MountEntry.FileSystem})");
+
+            Console.WriteLine($"Preliminary system volumes: {Environment.NewLine}{string.Join(Environment.NewLine, humanInfo.Select(x => $"  • {x}"))}");
             // Console.WriteLine(logDetails);
             // Console.WriteLine(analyz.RawDetailsLog);
 
