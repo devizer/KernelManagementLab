@@ -15,10 +15,21 @@ namespace KernelManagementJam
             ProcMountsAnalyzer analyz = ProcMountsAnalyzer.Create(mounts);
             string logDetails = analyz.RawDetailsLog;
             analyz = ProcMountsAnalyzer.Create(mounts, skipDetailsLog: true);
+            
+            // Only for logs below
+            Func<DriveDetails, string> driveDetailsForHuman = driveDetails =>
+            {
+                var mountPath = driveDetails.MountEntry?.MountPath;
+                var fileSystem = driveDetails.MountEntry?.FileSystem;
+                if (string.IsNullOrEmpty(mountPath) || string.IsNullOrEmpty(fileSystem)) return null;
+                string humanSize = driveDetails.TotalSize > 0 ? Formatter.FormatBytes(driveDetails.TotalSize) : null;
+                return $"{mountPath} ({fileSystem}{(humanSize == null ? "" : $", {humanSize}")})";
+            };
+            
             var humanInfo = analyz.Details
-                .Where(x => !string.IsNullOrEmpty(x.MountEntry?.MountPath) && !string.IsNullOrEmpty(x.MountEntry?.FileSystem))
-                .OrderBy(x => x.MountEntry.MountPath)
-                .Select(x => $"{x.MountEntry.MountPath} ({x.MountEntry.FileSystem})");
+                .Where(x => driveDetailsForHuman(x) != null)
+                .OrderBy(x => x.MountEntry?.MountPath)
+                .Select(x => driveDetailsForHuman(x));
 
             Console.WriteLine($"Preliminary system volumes: {Environment.NewLine}{string.Join(Environment.NewLine, humanInfo.Select(x => $"  • {x}"))}");
             // Console.WriteLine(logDetails);
