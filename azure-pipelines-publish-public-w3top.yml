@@ -75,9 +75,9 @@ jobs:
   - script: |
       set -eu;
       Say "Pack /transient-builds"
-      7z a -mx=3  -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/transient-builds.7z /transient-builds
+      7z a -mx=3 -ms=on -mqs=on -mmt=$(nproc) $SYSTEM_ARTIFACTSDIRECTORY/transient-builds.7z /transient-builds
       Say "Pack ${BUILD_SOURCESDIRECTORY}"
-      7z a -mx=3 -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/Sources-Directory.7z ${BUILD_SOURCESDIRECTORY}
+      7z a -mx=9 -ms=on -mqs=on $SYSTEM_ARTIFACTSDIRECTORY/Sources-Directory.7z ${BUILD_SOURCESDIRECTORY}
       ls -la $SYSTEM_ARTIFACTSDIRECTORY
     displayName: 'Pack Artifacts'
     env:
