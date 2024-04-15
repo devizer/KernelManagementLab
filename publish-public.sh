@@ -125,14 +125,19 @@ function build_self_contained() {
   popd
 }
 
-build_self_contained linux-x64                 linux-x64 8.0 net8.0
-build_self_contained linux-x64-for-legacy-os   linux-x64 6.0 net6.0
-build_self_contained linux-arm                 linux-arm 8.0 net8.0
-build_self_contained linux-arm-for-legacy-os   linux-arm 6.0 net6.0
-build_self_contained linux-arm64               linux-arm64 8.0 net8.0
-build_self_contained linux-arm64-for-legacy-os linux-arm64 6.0 net6.0
-build_self_contained linux-musl-x64            linux-musl-x64 8.0 net8.0
-build_self_contained rhel.6-x64                rhel.6-x64 3.1.120 netcoreapp3.1
+# The type or namespace name 'SpaServices' does not exist in the namespace 'Microsoft.AspNetCore'
+# build_self_contained linux-x64                 linux-x64 8.0 net8.0
+# build_self_contained linux-x64-for-legacy-os   linux-x64 6.0 net6.0
+# build_self_contained linux-arm                 linux-arm 8.0 net8.0
+# build_self_contained linux-arm-for-legacy-os   linux-arm 6.0 net6.0
+# build_self_contained linux-arm64               linux-arm64 8.0 net8.0
+# build_self_contained linux-arm64-for-legacy-os linux-arm64 6.0 net6.0
+build_self_contained linux-x64       linux-x64 6.0 net6.0
+build_self_contained linux-arm       linux-arm 6.0 net6.0
+build_self_contained linux-arm64     linux-arm64 6.0 net6.0
+
+build_self_contained linux-musl-x64  linux-musl-x64 6.0 net6.0
+build_self_contained rhel.6-x64      rhel.6-x64 3.1.120 netcoreapp3.1
 
 sf_release_dir=/transient-builds/w3top-new-version-for-sf
 say "Prepare sf release: [${sf_release_dir}]"
