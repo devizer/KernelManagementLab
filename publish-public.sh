@@ -86,15 +86,18 @@ say "yarn build [$ver]"
 cd ClientApp; time (yarn build); cd ..
 
 # export MSBuildSDKsPath=/usr/share/dotnet/sdk/3.1.408/Sdks
-for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
+function build_self_contained() {
+  suffix="$1"
+  r="$2"
+  sdk="$3"
+  fw="$4"
 
-  if [[ $r == rhel.6-x64 ]]; then sdk=3.1.120; fw=netcoreapp3.1; else sdk=6.0; fw=net6.0; fi
-  say "Building $r [$ver] using [sdk $sdk] using target [$fw]"
+  say "Building w3top-$suffix.tar RID=$r [$ver] using [sdk=$sdk] using target [fw=$fw]"
   dotnetpath=$DOTNETHOME/$sdk
   export PATH="$dotnetpath:$PATH"
   unset MSBuildSDKsPath || true
   Reset-Target-Framework -fw "$fw"
-  time SKIP_CLIENTAPP=true $dotnetpath/dotnet publish -c Release -f $fw /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r
+  time SKIP_CLIENTAPP=true $dotnetpath/dotnet publish -c Release -f $fw /p:DefineConstants="DUMPS" -o bin/$r --self-contained -r $r -v q
   # openssl 1.1
   if [[ -f $root/Dependencies/libssl-1.1-$r.tar.xz ]]; then
     mkdir -p bin/$r/optional/libssl-1.1
@@ -112,19 +115,24 @@ for r in linux-musl-x64 rhel.6-x64 linux-x64 linux-arm linux-arm64; do
   compress="pigz -p 8 -b 128 -9" # v1
   compress="gzip -9" # v2
   compress="7z a -mx=9 -tgzip -si -so -bso0 -bsp0 -mmt=1 1.gz" #vBest
-  time sudo bash -c "tar cf - . | pv | $compress > ../w3top-$r.tar.gz"
-  [ "${TRAVIS:-}" == "true" ] && sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.hash256
-  sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$r.tar.gz.sha256
-  cp ../w3top-$r.tar.gz* $clone/public/
+  time sudo bash -c "tar cf - . | pv | $compress > ../w3top-$suffix.tar.gz"
+  sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$suffix.tar.gz.sha256
+  cp ../w3top-$suffix.tar.gz* $clone/public/
   say "Compressing $r [$ver] as XZ"
-  time sudo bash -c "tar cf - . | pv | xz -9 -e -z > ../w3top-$r.tar.xz"
-  sha256sum ../w3top-$r.tar.xz | awk '{print $1}' > ../w3top-$r.tar.xz.sha256
-  cp ../w3top-$r.tar.xz* $clone/public/
-  # say "Compressing $r [$ver] as 7z"
-  # 7z a "../w3top-$r.7z" -m0=lzma -mx=1 -mfb=256 -md=256m -ms=on
-
+  time sudo bash -c "tar cf - . | pv | xz -9 -e -z > ../w3top-$suffix.tar.xz"
+  sha256sum ../w3top-$r.tar.xz | awk '{print $1}' > ../w3top-$suffix.tar.xz.sha256
+  cp ../w3top-$suffix.tar.xz* $clone/public/
   popd
-done
+}
+
+build_self_contained linux-x64                 linux-x64 8.0 net8.0
+build_self_contained linux-x64-for-legacy-os   linux-x64 6.0 net6.0
+build_self_contained linux-arm                 linux-arm 8.0 net8.0
+build_self_contained linux-arm-for-legacy-os   linux-arm 6.0 net6.0
+build_self_contained linux-arm64               linux-arm64 8.0 net8.0
+build_self_contained linux-arm64-for-legacy-os linux-arm64 6.0 net6.0
+build_self_contained linux-musl-x64            linux-musl-x64 8.0 net8.0
+build_self_contained rhel.6-x64                rhel.6-x64 3.1.120 netcoreapp3.1
 
 sf_release_dir=/transient-builds/w3top-new-version-for-sf
 say "Prepare sf release: [${sf_release_dir}]"
