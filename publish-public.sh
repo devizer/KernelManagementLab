@@ -20,7 +20,7 @@ say reset>/dev/null
 
 DOTNETHOME=/transient-builds/dotnet4publish
 function _install_proper_sdk_() {
-  for sdk in 3.1 3.1.120 6.0; do
+  for sdk in 3.1 3.1.120 6.0 8.0; do
     export DOTNET_VERSIONS=$sdk DOTNET_TARGET_DIR=$DOTNETHOME/$sdk SKIP_DOTNET_ENVIRONMENT=true
     script=https://raw.githubusercontent.com/devizer/test-and-build/master/lab/install-DOTNET.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash;
   done
