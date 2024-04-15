@@ -110,7 +110,7 @@ function build_self_contained() {
   chmod 755 Universe.W3Top.sh
   chmod 755 install-systemd-service.sh
 
-  say "Compressing $r [$ver] as GZIP"
+  say "Compressing $suffix [$ver] as GZIP"
   echo $ver > VERSION
   compress="pigz -p 8 -b 128 -9" # v1
   compress="gzip -9" # v2
@@ -118,14 +118,14 @@ function build_self_contained() {
   time sudo bash -c "tar cf - . | pv | $compress > ../w3top-$suffix.tar.gz"
   sha256sum ../w3top-$r.tar.gz | awk '{print $1}' > ../w3top-$suffix.tar.gz.sha256
   cp ../w3top-$suffix.tar.gz* $clone/public/
-  say "Compressing $r [$ver] as XZ"
+  say "Compressing $suffix [$ver] as XZ"
   time sudo bash -c "tar cf - . | pv | xz -9 -e -z > ../w3top-$suffix.tar.xz"
   sha256sum ../w3top-$r.tar.xz | awk '{print $1}' > ../w3top-$suffix.tar.xz.sha256
   cp ../w3top-$suffix.tar.xz* $clone/public/
   popd
 }
 
-# The type or namespace name 'SpaServices' does not exist in the namespace 'Microsoft.AspNetCore'
+# Runtime 8.0.4 needs more memory 
 # build_self_contained linux-x64                 linux-x64 8.0 net8.0
 # build_self_contained linux-x64-for-legacy-os   linux-x64 6.0 net6.0
 # build_self_contained linux-arm                 linux-arm 8.0 net8.0
